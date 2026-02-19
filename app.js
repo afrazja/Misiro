@@ -1495,5 +1495,116 @@ window.playWord = function (word) {
 
 
 
+// =====================
+// MOBILE: Draggable Script Panel
+// Users can drag the handle to resize the script panel (see more/fewer sentences)
+// =====================
+(function setupScriptDrag() {
+    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent) || window.innerWidth <= 600;
+    if (!isMobile) return;
+
+    const handle = document.getElementById('script-drag-handle');
+    const panel = document.getElementById('script-view');
+    if (!handle || !panel) return;
+
+    let dragging = false;
+    let startY = 0;
+    let startHeight = 0;
+    const minH = 60;   // px — collapsed: just the handle + title visible
+    const maxHPercent = 0.75; // 75% of viewport
+
+    function getMaxH() {
+        return window.innerHeight * maxHPercent;
+    }
+
+    // Set initial height from CSS variable or default
+    function initHeight() {
+        const vh35 = window.innerHeight * 0.35;
+        panel.style.height = vh35 + 'px';
+    }
+
+    handle.addEventListener('touchstart', function (e) {
+        dragging = true;
+        startY = e.touches[0].clientY;
+        startHeight = panel.getBoundingClientRect().height;
+        panel.style.transition = 'none';
+        document.body.style.overflow = 'hidden';
+        e.preventDefault();
+    }, { passive: false });
+
+    handle.addEventListener('mousedown', function (e) {
+        dragging = true;
+        startY = e.clientY;
+        startHeight = panel.getBoundingClientRect().height;
+        panel.style.transition = 'none';
+        document.body.style.overflow = 'hidden';
+        e.preventDefault();
+    });
+
+    function onMove(clientY) {
+        if (!dragging) return;
+        // Dragging UP = larger panel (clientY decreases)
+        const delta = startY - clientY;
+        let newH = startHeight + delta;
+        newH = Math.max(minH, Math.min(newH, getMaxH()));
+        panel.style.height = newH + 'px';
+    }
+
+    document.addEventListener('touchmove', function (e) {
+        if (!dragging) return;
+        onMove(e.touches[0].clientY);
+        e.preventDefault();
+    }, { passive: false });
+
+    document.addEventListener('mousemove', function (e) {
+        if (!dragging) return;
+        onMove(e.clientY);
+    });
+
+    function onEnd() {
+        if (!dragging) return;
+        dragging = false;
+        panel.style.transition = '';
+        document.body.style.overflow = '';
+    }
+
+    document.addEventListener('touchend', onEnd);
+    document.addEventListener('mouseup', onEnd);
+
+    // Double-tap to snap: toggle between collapsed and expanded
+    let lastTap = 0;
+    handle.addEventListener('touchend', function () {
+        const now = Date.now();
+        if (now - lastTap < 300) {
+            const currentH = panel.getBoundingClientRect().height;
+            const midpoint = window.innerHeight * 0.3;
+            if (currentH > midpoint) {
+                // Collapse
+                panel.style.transition = 'height 0.3s ease';
+                panel.style.height = minH + 'px';
+            } else {
+                // Expand to 50%
+                panel.style.transition = 'height 0.3s ease';
+                panel.style.height = (window.innerHeight * 0.5) + 'px';
+            }
+            setTimeout(() => { panel.style.transition = ''; }, 350);
+        }
+        lastTap = now;
+    });
+
+    // Initialize on load
+    window.addEventListener('load', initHeight);
+    // Also handle orientation change
+    window.addEventListener('resize', () => {
+        if (!dragging) {
+            const currentH = panel.getBoundingClientRect().height;
+            const maxH = getMaxH();
+            if (currentH > maxH) {
+                panel.style.height = maxH + 'px';
+            }
+        }
+    });
+})();
+
 window.addEventListener('load', init);
 window.playAudio = playAudio;
