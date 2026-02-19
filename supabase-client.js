@@ -98,6 +98,10 @@
             if (!supabase) return { error: null };
             try {
                 const { error } = await supabase.auth.signOut();
+                // Clear all Misiro localStorage data on sign-out
+                if (window.MisiroData?.clearAllLocal) {
+                    MisiroData.clearAllLocal();
+                }
                 return { error: error ? error.message : null };
             } catch (e) {
                 return { error: e.message };

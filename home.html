@@ -507,11 +507,11 @@
         }
 
         // --- Init ---
-        document.addEventListener('DOMContentLoaded', () => {
+        document.addEventListener('DOMContentLoaded', async () => {
             const langSelect = document.getElementById('language-select');
 
-            // Load saved language via data layer
-            const savedLang = MisiroData.getLanguage();
+            // Load saved language via data layer (async — server-first)
+            const savedLang = await MisiroData.getLanguage();
             if (savedLang) {
                 langSelect.value = savedLang;
             } else {

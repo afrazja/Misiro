@@ -580,13 +580,13 @@
                 document.getElementById('account-email').textContent = user.email;
             }
 
-            // Load preferences
-            const savedLang = MisiroData.getLanguage();
+            // Load preferences (async — server-first)
+            const savedLang = await MisiroData.getLanguage();
             if (savedLang) {
                 document.getElementById('pref-language').value = savedLang;
             }
 
-            const savedSpeed = MisiroData.getVoiceSpeed();
+            const savedSpeed = await MisiroData.getVoiceSpeed();
             if (savedSpeed !== null) {
                 document.getElementById('pref-speed').value = savedSpeed;
                 document.getElementById('speed-display').textContent = savedSpeed.toFixed(1) + 'x';

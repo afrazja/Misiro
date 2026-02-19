@@ -83,15 +83,15 @@ if (SpeechRecognition) {
 }
 
 // --- Load/Save State ---
-function loadConversationState() {
-    // Load saved language preference
-    const savedLang = MisiroData.getLanguage();
+async function loadConversationState() {
+    // Load saved language preference (async — server-first)
+    const savedLang = await MisiroData.getLanguage();
     if (savedLang) {
         appData.language = savedLang;
     }
 
     // Load completed lessons first (needed to determine which day to show)
-    appData.completedLessons = MisiroData.getCompletedLessons();
+    appData.completedLessons = await MisiroData.getCompletedLessons();
 
     // Find the last completed day and show that lesson
     try {
@@ -119,9 +119,9 @@ function isDayUnlocked(day) {
     return !!(appData.completedLessons && appData.completedLessons[d - 1]);
 }
 
-function saveProgress() {
-    MisiroData.saveProgress(appData.currentDay, appData.currentSentenceIndex);
-    MisiroData.saveCompletedLessons(appData.completedLessons || {});
+async function saveProgress() {
+    await MisiroData.saveProgress(appData.currentDay, appData.currentSentenceIndex);
+    await MisiroData.saveCompletedLessons(appData.completedLessons || {});
 }
 
 function saveLanguagePreference() {
@@ -135,20 +135,20 @@ function saveLanguagePreference() {
 const SR_MIN_EASE = 1.3;
 const SR_INITIAL_INTERVAL = 1;  // 1 day
 
-function loadSRData() {
-    return MisiroData.loadSRData();
+async function loadSRData() {
+    return await MisiroData.loadSRData();
 }
 
-function saveSRData(srData) {
-    MisiroData.saveSRData(srData);
+async function saveSRData(srData) {
+    await MisiroData.saveSRData(srData);
 }
 
 function getSRKey(day, sentenceId) {
     return `${day}:${sentenceId}`;
 }
 
-function recordSRAttempt(day, sentenceId, wasCorrect) {
-    const srData = loadSRData();
+async function recordSRAttempt(day, sentenceId, wasCorrect) {
+    const srData = await loadSRData();
     const key = getSRKey(day, sentenceId);
     const now = Date.now();
 
@@ -185,11 +185,11 @@ function recordSRAttempt(day, sentenceId, wasCorrect) {
     card.lastReview = now;
 
     srData[key] = card;
-    saveSRData(srData);
+    await saveSRData(srData);
 }
 
-function getDueReviewItems() {
-    const srData = loadSRData();
+async function getDueReviewItems() {
+    const srData = await loadSRData();
     const now = Date.now();
     const due = [];
 
@@ -214,12 +214,12 @@ function getDueReviewItems() {
     return due;
 }
 
-function getDueCount() {
-    return getDueReviewItems().length;
+async function getDueCount() {
+    return (await getDueReviewItems()).length;
 }
 
 async function startReviewMode() {
-    const dueItems = getDueReviewItems().slice(0, 15); // Max 15 per review session
+    const dueItems = (await getDueReviewItems()).slice(0, 15); // Max 15 per review session
 
     if (dueItems.length === 0) {
         const noMsg = appData.language === 'fa' ? 'هیچ موردی برای مرور نیست!' : 'No items due for review!';
@@ -297,14 +297,14 @@ async function startReviewMode() {
     processNextExamQuestion();
 }
 
-function populateDaySelect() {
+async function populateDaySelect() {
     const select = dom.daySelect;
     if (!select) return;
 
     select.innerHTML = ''; // Clear existing
 
     // Add review option at the top if items are due
-    const dueCount = getDueCount();
+    const dueCount = await getDueCount();
     if (dueCount > 0) {
         const reviewGroup = document.createElement('optgroup');
         const isFa = appData.language === 'fa';
@@ -367,10 +367,10 @@ function populateDaySelect() {
     });
 }
 
-function updateDaySelectMarkers() {
+async function updateDaySelectMarkers() {
     // Re-render the day select to show updated completion markers
     const currentVal = dom.daySelect ? dom.daySelect.value : null;
-    populateDaySelect();
+    await populateDaySelect();
     if (currentVal && dom.daySelect) {
         dom.daySelect.value = currentVal;
     }
@@ -378,24 +378,22 @@ function updateDaySelectMarkers() {
 
 // --- Initialization ---
 async function init() {
-    loadConversationState();
-    populateDaySelect();
+    await loadConversationState();
+    await populateDaySelect();
     setupVoiceUI();
     setupLanguageSelection();
-    setupSpeedSelection();
+    await setupSpeedSelection();
     setupDaySelection();
 
     // Sync data from cloud if user is logged in
     if (window.MisiroData && window.misiroAuth) {
-        misiroAuth.isAuthenticated().then(authed => {
-            if (authed) {
-                MisiroData.syncOnLogin().then(() => {
-                    // Reload state after sync in case cloud data was newer
-                    loadConversationState();
-                    populateDaySelect();
-                });
-            }
-        });
+        const authed = await misiroAuth.isAuthenticated();
+        if (authed) {
+            await MisiroData.syncOnLogin();
+            // Reload state after sync in case cloud data was newer
+            await loadConversationState();
+            await populateDaySelect();
+        }
     }
 
     // Load current lesson data + glossary before starting
@@ -473,11 +471,11 @@ function getTranslationLang() {
 }
 
 // --- Speed Selection ---
-function setupSpeedSelection() {
+async function setupSpeedSelection() {
     if (!dom.speedSelect) return;
 
-    // Load saved speed preference
-    const savedSpeed = MisiroData.getVoiceSpeed();
+    // Load saved speed preference (async — server-first)
+    const savedSpeed = await MisiroData.getVoiceSpeed();
     if (savedSpeed !== null) {
         appData.voiceSpeed = savedSpeed;
     }
@@ -593,7 +591,7 @@ function setupDaySelection() {
         appData.currentSentenceIndex = 0;
         appData.sessionID++;
 
-        saveProgress();
+        await saveProgress();
 
         // Load the new lesson data before rendering
         await loadLesson(newDay);
@@ -678,8 +676,8 @@ async function processNextStep() {
             completedAt: Date.now(),
             sentenceCount: lesson.sentences.length
         };
-        saveProgress();
-        updateDaySelectMarkers();
+        await saveProgress();
+        await updateDaySelectMarkers();
         return;
     }
 
@@ -764,7 +762,7 @@ async function processNextStep() {
     dom.answerLine.innerHTML = `<span class="placeholder-text">${promptMsg}</span>`;
 }
 
-appData.manualNext = function () {
+appData.manualNext = async function () {
     // Manual Next Button Clicked
     const lesson = getCurrentLesson();
     const currentStep = lesson.sentences[appData.currentSentenceIndex];
@@ -784,7 +782,7 @@ appData.manualNext = function () {
     stopAllAudio();
 
     appData.currentSentenceIndex++;
-    saveProgress();
+    await saveProgress();
     processNextStep();
 };
 
@@ -801,7 +799,7 @@ async function prepareUserTurn(step, germanText) {
     }
 }
 
-function handleVoiceInput(transcript) {
+async function handleVoiceInput(transcript) {
     // Determine target text based on mode
     let targetGerman;
     const lesson = !appData.isExamMode ? getCurrentLesson() : null;
@@ -843,7 +841,7 @@ function handleVoiceInput(transcript) {
             // Track SR for exam/review questions
             const examQ = appData.examQuestions[appData.currentExamIndex];
             if (examQ && examQ.day && examQ.sentenceId) {
-                recordSRAttempt(examQ.day, examQ.sentenceId, true);
+                await recordSRAttempt(examQ.day, examQ.sentenceId, true);
             }
             const correctMsg = appData.language === 'fa' ? 'درسته!' : 'Correct!';
             dom.answerLine.innerHTML = `<span style="color:green">${correctMsg}</span>`;
@@ -876,15 +874,14 @@ function handleVoiceInput(transcript) {
 
         // Track spaced repetition (correct in lesson mode)
         if (currentStep) {
-            recordSRAttempt(appData.currentDay, currentStep.id, true);
+            await recordSRAttempt(appData.currentDay, currentStep.id, true);
         }
 
         // Feedback
-        playAudioPromise("Good.", 1.2, 'en-US').then(() => {
-            appData.currentSentenceIndex++;
-            saveProgress();
-            processNextStep();
-        });
+        await playAudioPromise("Good.", 1.2, 'en-US');
+        appData.currentSentenceIndex++;
+        await saveProgress();
+        processNextStep();
 
     } else {
         playTone('error');
@@ -918,7 +915,7 @@ function handleVoiceInput(transcript) {
                 // Track SR failure for exam/review questions
                 const examQ = appData.examQuestions[appData.currentExamIndex];
                 if (examQ && examQ.day && examQ.sentenceId) {
-                    recordSRAttempt(examQ.day, examQ.sentenceId, false);
+                    await recordSRAttempt(examQ.day, examQ.sentenceId, false);
                 }
                 // Record wrong answer for review
                 if (!appData.examWrongAnswers) appData.examWrongAnswers = [];
@@ -937,7 +934,7 @@ function handleVoiceInput(transcript) {
         } else {
             // Track SR failure in lesson mode
             if (currentStep) {
-                recordSRAttempt(appData.currentDay, currentStep.id, false);
+                await recordSRAttempt(appData.currentDay, currentStep.id, false);
             }
             playAudioPromise(targetGerman, 0.8, 'de-DE');
         }
@@ -1092,7 +1089,7 @@ function processNextExamQuestion() {
     }
 }
 
-function finishExam() {
+async function finishExam() {
     const wasReview = appData.isReviewMode || false;
     appData.isExamMode = false;
     appData.isReviewMode = false;
@@ -1114,7 +1111,7 @@ function finishExam() {
         date: Date.now(),
         wrongAnswers: appData.examWrongAnswers || []
     };
-    MisiroData.saveExamResult(weekKey, examResultData);
+    await MisiroData.saveExamResult(weekKey, examResultData);
 
     // Build wrong answers review
     let wrongReviewHTML = '';

@@ -173,15 +173,15 @@ let voiceSpeed = 1.0;
 // INITIALIZATION
 // =====================
 
-document.addEventListener('DOMContentLoaded', () => {
-    loadPreferences();
+document.addEventListener('DOMContentLoaded', async () => {
+    await loadPreferences();
     setupControls();
     renderCategories();
     updatePageLanguage();
 });
 
-function loadPreferences() {
-    const savedLang = window.MisiroData ? MisiroData.getLanguage() : localStorage.getItem('misiro_language');
+async function loadPreferences() {
+    const savedLang = window.MisiroData ? await MisiroData.getLanguage() : localStorage.getItem('misiro_language');
     if (savedLang) {
         currentLang = savedLang;
     } else {
@@ -189,7 +189,7 @@ function loadPreferences() {
         currentLang = browserLang.startsWith('fa') ? 'fa' : 'en';
     }
 
-    const savedSpeed = window.MisiroData ? MisiroData.getVoiceSpeed() : localStorage.getItem('misiro_voice_speed');
+    const savedSpeed = window.MisiroData ? await MisiroData.getVoiceSpeed() : localStorage.getItem('misiro_voice_speed');
     if (savedSpeed !== null) {
         voiceSpeed = typeof savedSpeed === 'number' ? savedSpeed : parseFloat(savedSpeed);
     }
