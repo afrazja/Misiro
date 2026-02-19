@@ -425,7 +425,7 @@ function setupLanguageSelection() {
 
         // Stop current activities
         if (appData.isListening && recognition) recognition.stop();
-        window.speechSynthesis.cancel();
+        stopAllAudio();
 
         // Remove teach bubble if exists
         if (appData.currentTeachBubble) {
@@ -550,7 +550,7 @@ function setupDaySelection() {
 
         // Stop current activities
         if (appData.isListening && recognition) recognition.stop();
-        window.speechSynthesis.cancel();
+        stopAllAudio();
 
         // Clear teach bubble
         if (appData.currentTeachBubble) {
@@ -704,7 +704,7 @@ async function processNextStep() {
     const speakerIcon = teachBubble.querySelector('#speaker-icon');
     if (speakerIcon) {
         speakerIcon.onclick = async () => {
-            window.speechSynthesis.cancel();
+            stopAllAudio();
             if (appData.isListening && recognition) recognition.stop();
             await playAudioPromise(germanText, 0.8, 'de-DE');
         };
@@ -723,7 +723,7 @@ async function processNextStep() {
     if (isBlindMode && textContainer) {
         textContainer.style.cursor = 'pointer';
         textContainer.onclick = async () => {
-            window.speechSynthesis.cancel();
+            stopAllAudio();
             if (appData.isListening && recognition) recognition.stop();
             await playAudioPromise(germanText, 0.8, 'de-DE');
         };
@@ -765,7 +765,7 @@ appData.manualNext = function () {
 
     // Stop things
     if (appData.isListening && recognition) recognition.stop();
-    window.speechSynthesis.cancel();
+    stopAllAudio();
 
     appData.currentSentenceIndex++;
     saveProgress();
@@ -1172,7 +1172,7 @@ function addMessageBubble(step) {
     bubble.style.cursor = 'pointer';
     bubble.onclick = () => {
         // Just play the audio
-        window.speechSynthesis.cancel();
+        stopAllAudio();
         if (appData.isListening && recognition) recognition.stop();
         playAudioPromise(textToPlay, 0.8, 'de-DE');
     };
@@ -1224,6 +1224,16 @@ const _isLocalDev = (window.location.hostname === 'localhost' || window.location
     && window.location.protocol !== 'file:';
 const _hasTTSProxy = !!_MISIRO_API || _isLocalDev;
 
+// Stop ALL audio sources (browser TTS + proxy Audio element)
+function stopAllAudio() {
+    stopAllAudio();
+    if (window.currentAudio) {
+        window.currentAudio.pause();
+        window.currentAudio.currentTime = 0;
+        window.currentAudio = null;
+    }
+}
+
 function _browserTTS(text, lang) {
     return new Promise((resolve) => {
         const u = new SpeechSynthesisUtterance(text);
@@ -1269,7 +1279,7 @@ function playWebAudio(text, lang) {
 
 function playAudioPromise(text, rate, lang = 'de-DE') {
     return new Promise(resolve => {
-        window.speechSynthesis.cancel();
+        stopAllAudio();
 
         // Apply user's voice speed setting
         const effectiveRate = rate * appData.voiceSpeed;
@@ -1328,7 +1338,7 @@ function createInteractiveSentence(text) {
 window.playWord = function (word) {
     // Clean punctuation for TTS
     const clean = word.replace(/[.,!?]/g, '');
-    window.speechSynthesis.cancel();
+    stopAllAudio();
     if (appData.isListening && recognition) recognition.stop();
     // Use voice speed setting for word playback (base rate 0.8)
     playAudioPromise(clean, 0.8, 'de-DE');
