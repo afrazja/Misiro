@@ -666,14 +666,12 @@ body {
     }
 
     body.lesson-page .day-selection-control select {
-        padding: 5px 8px;
+        padding: 5px 8px !important;
         font-size: 0.9em;
         color: #333 !important;
         background: #fff !important;
-        border: 1px solid #ccc !important;
+        border: 2px solid #ddd !important;
         border-radius: 8px !important;
-        -webkit-appearance: menulist !important;
-        appearance: menulist !important;
     }
 
     body.lesson-page .blind-mode-control {
@@ -698,14 +696,12 @@ body {
 
     body.lesson-page .language-control select,
     body.lesson-page .speed-control select {
-        padding: 4px 6px !important;
+        padding: 5px 8px !important;
         font-size: 0.85em !important;
         color: #333 !important;
         background: #fff !important;
-        border: 1px solid #ccc !important;
+        border: 2px solid #ddd !important;
         border-radius: 8px !important;
-        -webkit-appearance: menulist !important;
-        appearance: menulist !important;
     }
 
     body.lesson-page .progress-info {
