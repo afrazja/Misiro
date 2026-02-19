@@ -703,8 +703,12 @@ async function processNextStep() {
     const mySessionID = appData.sessionID; // Capture current session
     const lesson = getCurrentLesson();
     if (appData.currentSentenceIndex >= lesson.sentences.length) {
-        const doneMsg = appData.language === 'fa' ? 'آفرین! درس تموم شد.' : 'Great job! You finished the lesson.';
-        playAudio(doneMsg, 1.0, getTranslationLang());
+        const wasAlreadyCompleted = !!(appData.completedLessons && appData.completedLessons[appData.currentDay]);
+
+        if (!wasAlreadyCompleted) {
+            const doneMsg = appData.language === 'fa' ? 'آفرین! درس تموم شد.' : 'Great job! You finished the lesson.';
+            playAudio(doneMsg, 1.0, getTranslationLang());
+        }
 
         // Mark lesson as completed and save progress
         if (!appData.completedLessons) appData.completedLessons = {};
