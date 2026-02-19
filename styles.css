@@ -531,8 +531,13 @@ body {
     border-radius: 8px;
     background: #f9f9f9;
     border-left: 4px solid transparent;
-    cursor: default;
+    cursor: pointer;
     transition: all 0.3s;
+}
+
+.script-item:hover {
+    background: #eef5ff;
+    border-left-color: #2196F3;
 }
 
 .script-item.active {

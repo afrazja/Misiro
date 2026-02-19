@@ -98,7 +98,13 @@ async function loadConversationState() {
         if (completedDays.length > 0) {
             const lastCompletedDay = Math.max(...completedDays);
             appData.currentDay = lastCompletedDay;
-            appData.currentSentenceIndex = 0; // Start from beginning of completed lesson
+            // If this day is completed, set index past end to show completion card
+            const lesson = dailyLessons[lastCompletedDay];
+            if (lesson && appData.completedLessons[lastCompletedDay]) {
+                appData.currentSentenceIndex = lesson.sentences.length;
+            } else {
+                appData.currentSentenceIndex = 0;
+            }
         } else {
             // No completed lessons — start at Day 1
             appData.currentDay = 1;
@@ -587,7 +593,13 @@ function setupDaySelection() {
 
         appData.isExamMode = false;
         appData.currentDay = newDay;
-        appData.currentSentenceIndex = 0;
+        // If this day is completed, show completion card; otherwise start from sentence 0
+        const selectedLesson = dailyLessons[newDay];
+        if (appData.completedLessons && appData.completedLessons[newDay] && selectedLesson) {
+            appData.currentSentenceIndex = selectedLesson.sentences.length;
+        } else {
+            appData.currentSentenceIndex = 0;
+        }
         appData.sessionID++;
 
         await saveProgress();
@@ -638,6 +650,22 @@ function renderScript() {
             <div class="german">${german}</div>
             <div class="translation" style="direction: ${appData.language === 'fa' ? 'rtl' : 'ltr'};">${translation}</div>
         `;
+
+        // Make sidebar sentences clickable — jump to that sentence for practice
+        div.addEventListener('click', () => {
+            if (appData.isListening && recognition) recognition.stop();
+            stopAllAudio();
+            if (appData.currentTeachBubble) {
+                appData.currentTeachBubble.remove();
+                appData.currentTeachBubble = null;
+            }
+            appData.sessionID++;
+            appData.currentSentenceIndex = index;
+            dom.chatHistory.innerHTML = '<div class="date-divider">Today</div>';
+            dom.answerLine.innerHTML = '';
+            processNextStep();
+        });
+
         dom.scriptContainer.appendChild(div);
     });
 }
