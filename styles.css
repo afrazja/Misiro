@@ -599,9 +599,9 @@ body {
     }
 }
 
-/* Phone breakpoint — full-screen app layout */
+/* Phone breakpoint — lesson page only gets locked viewport */
 @media (max-width: 600px) {
-    body {
+    body.lesson-page {
         padding: 0;
         background: #e5ddd5;
         min-height: 100vh;
@@ -610,7 +610,7 @@ body {
         overflow: hidden;
     }
 
-    .container {
+    body.lesson-page .container {
         display: flex;
         flex-direction: column;
         max-width: 100%;
@@ -621,8 +621,8 @@ body {
         overflow: hidden;
     }
 
-    /* --- Two-row mobile header --- */
-    .header {
+    /* --- Two-row mobile header (lesson page) --- */
+    body.lesson-page .header {
         border-radius: 0;
         padding: 8px 10px;
         gap: 8px;
@@ -633,55 +633,55 @@ body {
         justify-content: space-between;
     }
 
-    /* Row 1: Home button + title + Day selector (takes full width) */
-    .header-left {
+    /* Row 1: Home button + title + Day selector */
+    body.lesson-page .header-left {
         gap: 8px;
     }
 
-    .header-left a {
+    body.lesson-page .header-left a {
         padding: 5px 10px !important;
         font-size: 0.85em !important;
         margin-right: 0 !important;
     }
 
-    .header h1 {
+    body.lesson-page .header h1 {
         font-size: 1.15em;
     }
 
-    .day-selection-control {
+    body.lesson-page .day-selection-control {
         gap: 5px;
     }
 
-    .day-selection-control label {
+    body.lesson-page .day-selection-control label {
         font-size: 0.85em;
     }
 
-    .day-selection-control select {
+    body.lesson-page .day-selection-control select {
         padding: 4px 8px;
         font-size: 0.9em;
     }
 
-    /* Row 2: Blind mode + Language + Speed (wraps to second line) */
-    .blind-mode-control {
+    /* Row 2: Blind mode + Language + Speed */
+    body.lesson-page .blind-mode-control {
         gap: 4px !important;
     }
 
-    .blind-mode-control label {
+    body.lesson-page .blind-mode-control label {
         font-size: 0.82em !important;
     }
 
-    .blind-mode-control input {
+    body.lesson-page .blind-mode-control input {
         width: 16px !important;
         height: 16px !important;
     }
 
-    .language-control select,
-    .speed-control select {
+    body.lesson-page .language-control select,
+    body.lesson-page .speed-control select {
         padding: 4px 6px !important;
         font-size: 0.85em !important;
     }
 
-    .progress-info {
+    body.lesson-page .progress-info {
         display: none;
     }
 
