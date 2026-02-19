@@ -1359,11 +1359,9 @@ function wait(ms) { return new Promise(resolve => setTimeout(resolve, ms)); }
 
 // =====================
 // AUDIO — 3-tier: Google TTS direct → Render proxy → browser speechSynthesis
-// Google TTS works on all devices (returns MP3), no proxy needed
+// Vercel /api/tts proxy (same-origin, works on all devices)
+// Falls back to browser speechSynthesis if proxy fails
 // =====================
-const _MISIRO_API = window.MISIRO_CONFIG?.apiUrl || '';
-const _isLocalDev = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')
-    && window.location.protocol !== 'file:';
 const _isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
 
 // Stop ALL audio sources (browser TTS + proxy Audio element)
@@ -1397,27 +1395,10 @@ function _browserTTS(text, lang, rate) {
     });
 }
 
-// Play audio via Google Translate TTS (direct MP3 URL — works on all devices)
-function _playGoogleTTS(text, lang) {
+// Play via same-origin Vercel serverless TTS proxy
+function playWebAudio(text, lang) {
     const shortLang = lang.split('-')[0];
-    const url = `https://translate.google.com/translate_tts?ie=UTF-8&q=${encodeURIComponent(text)}&tl=${shortLang}&client=tw-ob`;
-    return new Promise((resolve) => {
-        if (window.currentAudio) {
-            window.currentAudio.pause();
-            window.currentAudio = null;
-        }
-        const audio = new Audio(url);
-        window.currentAudio = audio;
-        audio.onended = () => resolve();
-        audio.onerror = () => resolve('error');
-        audio.play().catch(() => resolve('error'));
-    });
-}
-
-function _playProxy(text, lang) {
-    const baseUrl = _MISIRO_API || '';
-    const shortLang = lang.split('-')[0];
-    const url = `${baseUrl}/tts?q=${encodeURIComponent(text)}&tl=${shortLang}`;
+    const url = `/api/tts?q=${encodeURIComponent(text)}&tl=${shortLang}`;
     return new Promise((resolve) => {
         if (window.currentAudio) {
             window.currentAudio.pause();
@@ -1427,26 +1408,15 @@ function _playProxy(text, lang) {
         const fallback = () => {
             if (fellBack) return;
             fellBack = true;
+            if (DEBUG) console.warn('TTS proxy failed, using browser speech');
             _browserTTS(text, lang).then(resolve);
         };
         const audio = new Audio(url);
         window.currentAudio = audio;
         audio.onerror = fallback;
-        const timeout = setTimeout(fallback, 3000);
+        const timeout = setTimeout(fallback, 4000);
         audio.onended = () => { clearTimeout(timeout); if (!fellBack) resolve(); };
         audio.play().catch(fallback);
-    });
-}
-
-// Unified TTS: Google direct → proxy → browser speech
-function playWebAudio(text, lang) {
-    return _playGoogleTTS(text, lang).then((result) => {
-        if (result === 'error') {
-            if (_MISIRO_API || _isLocalDev) {
-                return _playProxy(text, lang);
-            }
-            return _browserTTS(text, lang);
-        }
     });
 }
 
@@ -1454,20 +1424,9 @@ function playAudioPromise(text, rate, lang = 'de-DE') {
     return new Promise(resolve => {
         stopAllAudio();
 
-        // Apply user's voice speed setting
-        const effectiveRate = rate * appData.voiceSpeed;
-
-        // For German: use Google TTS direct (best quality, works everywhere)
-        if (lang.startsWith('de')) {
+        // German, Farsi, or missing native voice → use Vercel TTS proxy
+        if (lang.startsWith('de') || lang.startsWith('fa')) {
             playWebAudio(text, lang).then(resolve);
-            return;
-        }
-
-        const isFarsi = lang.startsWith('fa');
-        // Farsi: use Google TTS (browser support unreliable)
-        if (isFarsi) {
-            if (DEBUG) console.log("Using Google TTS for Farsi");
-            playWebAudio(text, 'fa').then(resolve);
             return;
         }
 
@@ -1476,10 +1435,13 @@ function playAudioPromise(text, rate, lang = 'de-DE') {
         const hasNativeVoice = voices.some(v => v.lang === lang || v.lang.startsWith(lang.split('-')[0]));
 
         if (!hasNativeVoice) {
-            if (DEBUG) console.log(`No native voice for ${lang}, using Google TTS`);
+            if (DEBUG) console.log(`No native voice for ${lang}, using TTS proxy`);
             playWebAudio(text, lang).then(resolve);
             return;
         }
+
+        // Apply user's voice speed setting
+        const effectiveRate = rate * appData.voiceSpeed;
 
         window.speechSynthesis.cancel();
         const u = new SpeechSynthesisUtterance(text);

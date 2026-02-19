@@ -330,10 +330,9 @@ function toggleCategory(key) {
 }
 
 // =====================
-// AUDIO — 3-tier: Google TTS direct → Render proxy → browser speechSynthesis
-// Google TTS works on all devices (returns MP3), no proxy needed
+// AUDIO — Vercel /api/tts proxy (same-origin, works on all devices)
+// Falls back to browser speechSynthesis if proxy fails
 // =====================
-const _MISIRO_API = window.MISIRO_CONFIG?.apiUrl || '';
 const _isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
 
 function stopAllAudio() {
@@ -366,40 +365,10 @@ function _browserTTS(text, lang, rate) {
     });
 }
 
-// Play audio via Google Translate TTS (direct MP3 URL — works on all devices)
-function _playGoogleTTS(text, lang) {
-    const shortLang = lang.split('-')[0];
-    const url = `https://translate.google.com/translate_tts?ie=UTF-8&q=${encodeURIComponent(text)}&tl=${shortLang}&client=tw-ob`;
-    return new Promise((resolve) => {
-        if (window.currentAudio) {
-            window.currentAudio.pause();
-            window.currentAudio = null;
-        }
-        const audio = new Audio(url);
-        window.currentAudio = audio;
-        audio.onended = () => resolve();
-        audio.onerror = () => resolve('error');
-        audio.play().catch(() => resolve('error'));
-    });
-}
-
 function playTTS(text, lang) {
-    // Tier 1: Google Translate TTS (direct, works everywhere)
-    return _playGoogleTTS(text, lang).then((result) => {
-        if (result === 'error') {
-            // Tier 2: Render proxy (if available)
-            if (_MISIRO_API) {
-                return _playProxy(text, lang);
-            }
-            // Tier 3: Browser speechSynthesis
-            return _browserTTS(text, lang, voiceSpeed);
-        }
-    });
-}
-
-function _playProxy(text, lang) {
     const shortLang = lang.split('-')[0];
-    const url = `${_MISIRO_API}/tts?q=${encodeURIComponent(text)}&tl=${shortLang}`;
+    // Same-origin Vercel serverless proxy — no CORS/referer issues
+    const url = `/api/tts?q=${encodeURIComponent(text)}&tl=${shortLang}`;
     return new Promise((resolve) => {
         if (window.currentAudio) {
             window.currentAudio.pause();
@@ -409,13 +378,13 @@ function _playProxy(text, lang) {
         const fallback = () => {
             if (fellBack) return;
             fellBack = true;
+            console.warn('TTS proxy failed, using browser speech');
             _browserTTS(text, lang, voiceSpeed).then(resolve);
         };
         const audio = new Audio(url);
         window.currentAudio = audio;
-        audio.onended = () => { if (!fellBack) resolve(); };
         audio.onerror = fallback;
-        const timeout = setTimeout(fallback, 3000);
+        const timeout = setTimeout(fallback, 4000);
         audio.onended = () => { clearTimeout(timeout); if (!fellBack) resolve(); };
         audio.play().catch(fallback);
     });
