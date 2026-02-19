@@ -4,6 +4,47 @@
     box-sizing: border-box;
 }
 
+/* ===================== */
+/* ACCESSIBILITY         */
+/* ===================== */
+
+/* Keyboard focus visibility (only shows for keyboard nav, not mouse clicks) */
+:focus-visible {
+    outline: 3px solid #2196F3;
+    outline-offset: 2px;
+}
+
+/* Skip navigation link — hidden until focused */
+.skip-link {
+    position: absolute;
+    top: -100px;
+    left: 10px;
+    background: #2196F3;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 8px;
+    z-index: 10001;
+    font-weight: 600;
+    text-decoration: none;
+    transition: top 0.2s;
+}
+.skip-link:focus {
+    top: 10px;
+}
+
+/* Screen-reader only utility */
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
 :root {
     --primary-color: #4CAF50;
     --secondary-color: #2196F3;
@@ -998,4 +1039,32 @@ body {
     /* Red-100 */
     border-color: #E57373;
     color: #B71C1C;
+}
+
+/* ===================== */
+/* FOCUS STYLES          */
+/* ===================== */
+
+.word-chip:focus-visible {
+    border-color: #075E54;
+    background: #f5f5f5;
+    transform: translateY(-2px);
+}
+
+.interactive-word:focus-visible {
+    background: #e3f2fd;
+    border-color: #4CAF50;
+    color: #1B5E20;
+    z-index: 10;
+}
+
+.btn-send:focus-visible {
+    outline: 3px solid #fff;
+    outline-offset: 2px;
+    box-shadow: 0 0 0 5px rgba(33, 150, 243, 0.5);
+}
+
+.script-item:focus-visible {
+    background: #eef5ff;
+    border-left-color: #2196F3;
 }

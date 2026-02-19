@@ -246,8 +246,15 @@
                     return { url: null, error: 'Image must be less than 5MB' };
                 }
 
-                // Get file extension
-                const ext = file.name.split('.').pop().toLowerCase() || 'png';
+                // Validate file type (only safe image formats)
+                const allowedTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
+                if (!allowedTypes.includes(file.type)) {
+                    return { url: null, error: 'Only JPG, PNG, GIF, or WebP images are allowed' };
+                }
+
+                // Map MIME type to safe extension (ignore user-provided filename)
+                const mimeToExt = { 'image/jpeg': 'jpg', 'image/png': 'png', 'image/gif': 'gif', 'image/webp': 'webp' };
+                const ext = mimeToExt[file.type] || 'png';
                 const filePath = `${user.id}/avatar.${ext}`;
 
                 // Upload to Supabase Storage (upsert to overwrite existing)

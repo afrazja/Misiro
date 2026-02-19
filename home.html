@@ -309,6 +309,8 @@
 </head>
 
 <body>
+    <a href="#categories-grid" class="skip-link">Skip to navigation</a>
+
     <!-- Email Confirmation Toast -->
     <div class="confirm-toast" id="confirm-toast">✅ Email confirmed! You can now sign in.</div>
 
@@ -331,21 +333,21 @@
         </div>
 
         <!-- Auth Modal -->
-        <div id="auth-modal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.7); z-index:1000; justify-content:center; align-items:center;">
+        <div id="auth-modal" role="dialog" aria-modal="true" aria-labelledby="auth-title" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.7); z-index:1000; justify-content:center; align-items:center;">
             <div style="background:linear-gradient(145deg, #1a1a2e, #16213e); border-radius:20px; padding:40px; max-width:400px; width:90%; border:1px solid rgba(255,255,255,0.1); position:relative;">
-                <button onclick="toggleAuthModal()" style="position:absolute; top:15px; right:20px; background:none; border:none; color:#a0a0a0; font-size:1.5rem; cursor:pointer;">x</button>
+                <button onclick="toggleAuthModal()" aria-label="Close dialog" style="position:absolute; top:15px; right:20px; background:none; border:none; color:#a0a0a0; font-size:1.5rem; cursor:pointer;">x</button>
                 <h2 id="auth-title" style="margin-bottom:20px; color:#e94560;">Sign In</h2>
                 <div id="auth-error" style="display:none; background:rgba(233,69,96,0.2); color:#ff6b6b; padding:10px; border-radius:10px; margin-bottom:15px; font-size:0.9rem;"></div>
                 <div id="signup-name-field" style="display:none; margin-bottom:15px;">
-                    <input type="text" id="auth-name" placeholder="Display Name"
+                    <input type="text" id="auth-name" placeholder="Display Name" aria-label="Display Name"
                         style="width:100%; padding:12px; border-radius:10px; border:1px solid rgba(255,255,255,0.2); background:rgba(255,255,255,0.05); color:#fff; font-size:1rem;">
                 </div>
                 <div style="margin-bottom:15px;">
-                    <input type="email" id="auth-email" placeholder="Email"
+                    <input type="email" id="auth-email" placeholder="Email" aria-label="Email address"
                         style="width:100%; padding:12px; border-radius:10px; border:1px solid rgba(255,255,255,0.2); background:rgba(255,255,255,0.05); color:#fff; font-size:1rem;">
                 </div>
                 <div style="margin-bottom:20px;">
-                    <input type="password" id="auth-password" placeholder="Password"
+                    <input type="password" id="auth-password" placeholder="Password" aria-label="Password"
                         style="width:100%; padding:12px; border-radius:10px; border:1px solid rgba(255,255,255,0.2); background:rgba(255,255,255,0.05); color:#fff; font-size:1rem;">
                 </div>
                 <button id="auth-submit" onclick="submitAuth()"
@@ -369,14 +371,14 @@
         <!-- Controls -->
         <div class="home-controls">
             <span class="lang-label" id="lang-label">What is your first language?</span>
-            <select id="language-select">
+            <select id="language-select" aria-label="Select your first language">
                 <option value="fa">فارسی</option>
                 <option value="en">English</option>
             </select>
         </div>
 
         <!-- Navigation Cards -->
-        <div class="nav-cards">
+        <div class="nav-cards" id="categories-grid">
             <!-- Daily Lessons -->
             <a href="index.html" class="nav-card lessons">
                 <div class="icon">📚</div>
@@ -412,9 +414,38 @@
         // --- Auth UI ---
         function toggleAuthModal() {
             const modal = document.getElementById('auth-modal');
-            modal.style.display = modal.style.display === 'flex' ? 'none' : 'flex';
+            const isOpening = modal.style.display !== 'flex';
+            modal.style.display = isOpening ? 'flex' : 'none';
             document.getElementById('auth-error').style.display = 'none';
+            if (isOpening) {
+                setTimeout(() => document.getElementById('auth-email').focus(), 100);
+            }
         }
+
+        // Escape key closes modal
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                const modal = document.getElementById('auth-modal');
+                if (modal && modal.style.display === 'flex') {
+                    toggleAuthModal();
+                }
+            }
+        });
+
+        // Focus trap for auth modal
+        document.addEventListener('keydown', (e) => {
+            if (e.key !== 'Tab') return;
+            const modal = document.getElementById('auth-modal');
+            if (!modal || modal.style.display !== 'flex') return;
+            const focusable = modal.querySelectorAll('input:not([style*="display:none"]):not([style*="display: none"]), button, a[href], [tabindex]:not([tabindex="-1"])');
+            const visible = Array.from(focusable).filter(el => {
+                let p = el; while (p && p !== modal) { if (p.style && (p.style.display === 'none')) return false; p = p.parentElement; } return true;
+            });
+            if (visible.length === 0) return;
+            const first = visible[0], last = visible[visible.length - 1];
+            if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+            else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+        });
 
         function toggleAuthMode(e) {
             if (e) e.preventDefault();

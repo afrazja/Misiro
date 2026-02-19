@@ -203,6 +203,7 @@
 </head>
 
 <body>
+    <a href="#categories-container" class="skip-link">Skip to categories</a>
     <div class="basics-container">
         <!-- Header -->
         <header class="basics-header">
@@ -212,7 +213,7 @@
                 <p id="page-subtitle">Choose a category to start learning</p>
             </div>
             <div class="controls">
-                <select id="language-select">
+                <select id="language-select" aria-label="Select language">
                     <option value="fa">فارسی</option>
                     <option value="en">English</option>
                 </select>
@@ -229,19 +230,9 @@
     <script src="config.js"></script>
     <script src="supabase-client.js"></script>
     <script src="data-layer.js"></script>
+    <script src="basics.js"></script>
     <script>
-        // Category data with metadata
-        const categories = [
-            { key: 'pronounsAndSein', icon: '👤', title: { en: 'Pronouns, Possessives & Verb: Sein', fa: 'ضمایر، ملکی و فعل بودن' }, desc: { en: 'Personal/object pronouns, possessives & to be', fa: 'ضمایر شخصی/مفعولی، ملکی و فعل بودن' }, count: 37 },
-            { key: 'articles', icon: '📝', title: { en: 'Articles', fa: 'حروف تعریف' }, desc: { en: 'der, die, das - German has 3 genders!', fa: 'حروف تعریف - آلمانی ۳ جنسیت دارد!' }, count: 5 },
-            { key: 'conjunctions', icon: '🔗', title: { en: 'Conjunctions', fa: 'حروف ربط' }, desc: { en: 'Connect words and sentences: und, oder, aber', fa: 'کلمات و جملات را به هم وصل می‌کنند' }, count: 12 },
-            { key: 'prepositions', icon: '📍', title: { en: 'Prepositions', fa: 'حروف اضافه' }, desc: { en: 'für, mit, in, aus, nach, auf, über', fa: 'حروف اضافه مکان و زمان' }, count: 12 },
-            { key: 'numbers', icon: '🔢', title: { en: 'Numbers 1-20', fa: 'اعداد ۱ تا ۲۰' }, desc: { en: 'Learn to count in German', fa: 'شمردن به آلمانی را یاد بگیرید' }, count: 20 },
-            { key: 'colors', icon: '🎨', title: { en: 'Colors', fa: 'رنگ‌ها' }, desc: { en: 'Basic colors in German', fa: 'رنگ‌های پایه به آلمانی' }, count: 11 },
-            { key: 'days', icon: '📅', title: { en: 'Days of the Week', fa: 'روزهای هفته' }, desc: { en: 'Monday to Sunday', fa: 'دوشنبه تا یکشنبه' }, count: 7 },
-            { key: 'months', icon: '🗓️', title: { en: 'Months', fa: 'ماه‌ها' }, desc: { en: 'January to December', fa: 'ژانویه تا دسامبر' }, count: 12 }
-        ];
-
+        // Derive category cards from basicsData (single source of truth)
         let currentLang = 'en';
 
         document.addEventListener('DOMContentLoaded', () => {
@@ -252,7 +243,7 @@
         });
 
         function loadPreferences() {
-            const savedLang = MisiroData.getLanguage();
+            const savedLang = window.MisiroData ? MisiroData.getLanguage() : localStorage.getItem('misiro_language');
             if (savedLang) {
                 currentLang = savedLang;
             } else {
@@ -267,7 +258,8 @@
 
             langSelect.addEventListener('change', (e) => {
                 currentLang = e.target.value;
-                MisiroData.setLanguage(currentLang);
+                if (window.MisiroData) MisiroData.setLanguage(currentLang);
+                else localStorage.setItem('misiro_language', currentLang);
                 renderCategories();
                 updatePageLanguage();
             });
@@ -293,15 +285,20 @@
             const container = document.getElementById('categories-container');
             const wordsLabel = currentLang === 'fa' ? 'کلمه' : 'words';
 
-            container.innerHTML = categories.map(cat => `
-                <a href="basics/category.html?cat=${cat.key}" class="category-card">
-                    <div class="category-icon">${cat.icon}</div>
-                    <div class="category-title">${cat.title[currentLang] || cat.title.en}</div>
-                    <div class="category-desc">${cat.desc[currentLang] || cat.desc.en}</div>
-                    <div class="category-count">${cat.count} ${wordsLabel}</div>
-                    <div class="category-arrow">→</div>
-                </a>
-            `).join('');
+            container.innerHTML = Object.entries(basicsData).map(([key, cat]) => {
+                const title = cat.title[currentLang] || cat.title.en;
+                const desc = cat.description[currentLang] || cat.description.en;
+                const count = basicsWordCount(cat);
+                return `
+                    <a href="basics/category.html?cat=${key}" class="category-card">
+                        <div class="category-icon">${cat.icon}</div>
+                        <div class="category-title">${title}</div>
+                        <div class="category-desc">${desc}</div>
+                        <div class="category-count">${count} ${wordsLabel}</div>
+                        <div class="category-arrow">→</div>
+                    </a>
+                `;
+            }).join('');
         }
     </script>
 </body>

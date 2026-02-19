@@ -417,6 +417,7 @@ async function init() {
 
 // Early-registered start button handler — works even before init() finishes
 let _userClickedStart = false;
+let _resizeListenerAttached = false;
 function _startLessonIfClicked() {
     if (!_userClickedStart || !window._misiroReady) return;
     const overlay = document.getElementById('start-overlay');
@@ -443,29 +444,32 @@ function _startLessonIfClicked() {
             if (panel) panel.style.height = Math.round(newH * 0.28) + 'px';
         }, 400);
 
-        // Also listen for resize to update locked height
-        let resizeTimer;
-        window.addEventListener('resize', function _onResize() {
-            clearTimeout(resizeTimer);
-            resizeTimer = setTimeout(() => {
-                const h = window.innerHeight;
-                document.body.style.height = h + 'px';
-                document.body.style.minHeight = h + 'px';
-                if (container) container.style.height = h + 'px';
-            }, 100);
-        });
+        // Also listen for resize to update locked height (only attach once)
+        if (!_resizeListenerAttached) {
+            _resizeListenerAttached = true;
+            let resizeTimer;
+            window.addEventListener('resize', function _onResize() {
+                clearTimeout(resizeTimer);
+                resizeTimer = setTimeout(() => {
+                    const h = window.innerHeight;
+                    document.body.style.height = h + 'px';
+                    document.body.style.minHeight = h + 'px';
+                    if (container) container.style.height = h + 'px';
+                }, 100);
+            });
+        }
     }
 
     if (overlay) overlay.style.display = 'none';
 
-    // Resume AudioContext
-    const ctx = new (window.AudioContext || window.webkitAudioContext)();
-    if (ctx.state === 'suspended') ctx.resume();
+    // Resume AudioContext (reuse tone context if available)
+    if (!_toneCtx || _toneCtx.state === 'closed') {
+        _toneCtx = new (window.AudioContext || window.webkitAudioContext)();
+    }
+    if (_toneCtx.state === 'suspended') _toneCtx.resume();
 
-    // Start flow
-    processNextStep();
-    const startMsg = appData.language === 'fa' ? 'شروع درس.' : 'Starting lesson.';
-    playAudio(startMsg, 1.0, appData.language === 'fa' ? 'fa-IR' : 'en-US');
+    // Start flow (skip auto-play audio on first sentence)
+    processNextStep(true);
 }
 
 // Register click handler immediately when script loads (before init)
@@ -556,11 +560,13 @@ function getVoiceSpeed() {
     return appData.voiceSpeed;
 }
 
+let _voiceKeydownHandler = null;
 function setupVoiceUI() {
     const wb = document.getElementById('word-bank');
     if (wb) wb.innerHTML = '<div style="text-align:center; width:100%; color:#888; padding:10px;">🎙️ Voice Mode Active</div>';
 
     dom.btnSend.innerHTML = '🎤';
+    dom.btnSend.setAttribute('aria-label', 'Microphone - tap to record');
     dom.btnSend.classList.add('ready');
     dom.btnSend.style.fontSize = "24px";
 
@@ -571,12 +577,17 @@ function setupVoiceUI() {
 
     dom.btnSend.addEventListener('click', toggleMic);
 
-    document.addEventListener('keydown', (e) => {
+    // Remove previous keydown handler before adding new one (prevents stacking)
+    if (_voiceKeydownHandler) {
+        document.removeEventListener('keydown', _voiceKeydownHandler);
+    }
+    _voiceKeydownHandler = (e) => {
         if (e.code === 'Space' && !appData.isListening) {
             e.preventDefault();
             toggleMic();
         }
-    });
+    };
+    document.addEventListener('keydown', _voiceKeydownHandler);
 }
 
 function toggleMic() {
@@ -593,15 +604,18 @@ function updateMicUI(state) {
     if (state === 'listening') {
         dom.btnSend.style.background = '#f44336';
         dom.btnSend.innerHTML = '🛑';
+        dom.btnSend.setAttribute('aria-label', 'Stop recording');
         dom.btnSend.classList.add('pulse');
         dom.answerLine.innerHTML = '<span style="color:#f44336">Listening...</span>';
     } else if (state === 'idle') {
         dom.btnSend.style.background = '#075E54';
         dom.btnSend.innerHTML = '🎤';
+        dom.btnSend.setAttribute('aria-label', 'Microphone - tap to record');
         dom.btnSend.classList.remove('pulse');
     } else if (state === 'error') {
         dom.btnSend.style.background = '#aaa';
         dom.btnSend.innerHTML = '⚠️';
+        dom.btnSend.setAttribute('aria-label', 'Microphone error');
     }
 }
 
@@ -712,11 +726,16 @@ function renderScript() {
 
         div.innerHTML = `
             <div class="german">${german}</div>
-            <div class="translation" style="direction: ${appData.language === 'fa' ? 'rtl' : 'ltr'};">${translation}</div>
+            <div class="translation" style="direction: ${appData.language === 'fa' ? 'rtl' : 'ltr'};"${appData.language === 'fa' ? ' lang="fa"' : ''}>${translation}</div>
         `;
 
+        // Accessibility: make script items keyboard-interactive
+        div.setAttribute('tabindex', '0');
+        div.setAttribute('role', 'button');
+        div.setAttribute('aria-label', `Sentence ${index + 1}: ${german}`);
+
         // Make sidebar sentences clickable — jump to that sentence for practice
-        div.addEventListener('click', () => {
+        const jumpToSentence = () => {
             if (appData.isListening && recognition) recognition.stop();
             stopAllAudio();
             if (appData.currentTeachBubble) {
@@ -728,6 +747,10 @@ function renderScript() {
             dom.chatHistory.innerHTML = '<div class="date-divider">Today</div>';
             dom.answerLine.innerHTML = '';
             processNextStep();
+        };
+        div.addEventListener('click', jumpToSentence);
+        div.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); jumpToSentence(); }
         });
 
         dom.scriptContainer.appendChild(div);
@@ -758,7 +781,7 @@ function markScriptItemDone(index) {
 
 function getCurrentLesson() { return dailyLessons[appData.currentDay]; }
 
-async function processNextStep() {
+async function processNextStep(skipAudio = false) {
     const mySessionID = appData.sessionID; // Capture current session
     const lesson = getCurrentLesson();
     if (appData.currentSentenceIndex >= lesson.sentences.length) {
@@ -866,9 +889,9 @@ async function processNextStep() {
     const teachBubble = document.createElement('div');
     teachBubble.className = 'message instruction';
     teachBubble.innerHTML = `
-        <div style="font-size:1.2em; color:#333; margin-bottom:5px; direction:${isFaDir ? 'rtl' : 'ltr'};">${translationText}</div>
+        <div style="font-size:1.2em; color:#333; margin-bottom:5px; direction:${isFaDir ? 'rtl' : 'ltr'};"${isFaDir ? ' lang="fa"' : ''}>${translationText}</div>
         <div style="font-weight:bold; font-size:1.1em; color:#555; display:flex; align-items:center; gap:10px;">
-            <span id="speaker-icon" style="cursor:pointer; font-size:1.2em;" title="Play Full Sentence">🔊</span>
+            <span id="speaker-icon" style="cursor:pointer; font-size:1.2em;" title="Play Full Sentence" tabindex="0" role="button" aria-label="Play full sentence audio">🔊</span>
             <span id="teach-text-container">${visualContent}</span>
             <button id="btn-inline-next" style="padding:6px 16px; border-radius:20px; border:none; background:#4CAF50; color:white; cursor:pointer; font-weight:bold; font-size:0.95em; margin-left:10px; transition:all 0.3s ease;"
                 onmouseover="this.style.transform='translateY(-1px)'; this.style.boxShadow='0 3px 10px rgba(76,175,80,0.3)'"
@@ -880,10 +903,14 @@ async function processNextStep() {
     // Add Listener for Full Sentence Replay (Speaker Icon)
     const speakerIcon = teachBubble.querySelector('#speaker-icon');
     if (speakerIcon) {
-        speakerIcon.onclick = async () => {
+        const playSentence = async () => {
             stopAllAudio();
             if (appData.isListening && recognition) recognition.stop();
             await playAudioPromise(germanText, 0.8, 'de-DE');
+        };
+        speakerIcon.onclick = playSentence;
+        speakerIcon.onkeydown = (e) => {
+            if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); playSentence(); }
         };
     }
 
@@ -909,16 +936,18 @@ async function processNextStep() {
     appData.currentTeachBubble = teachBubble; // Store reference to remove later
     scrollToBottom();
 
-    // AUDIO SEQUENCE:
-    // 1. Translation (Persian or English based on language setting)
-    await playAudioPromise(translationText, 1.1, getTranslationLang());
-    if (appData.sessionID !== mySessionID) return; // Abort if session changed
-    await wait(300);
-    if (appData.sessionID !== mySessionID) return;
+    if (!skipAudio) {
+        // AUDIO SEQUENCE:
+        // 1. Translation (Persian or English based on language setting)
+        await playAudioPromise(translationText, 1.1, getTranslationLang());
+        if (appData.sessionID !== mySessionID) return; // Abort if session changed
+        await wait(300);
+        if (appData.sessionID !== mySessionID) return;
 
-    // 2. German (Slower)
-    await playAudioPromise(germanText, 0.8, 'de-DE');
-    if (appData.sessionID !== mySessionID) return;
+        // 2. German (Slower)
+        await playAudioPromise(germanText, 0.8, 'de-DE');
+        if (appData.sessionID !== mySessionID) return;
+    }
 
     // Stop here. Wait for user.
     const promptMsg = appData.language === 'fa' ? 'برای تمرین 🎙️ را بزنید یا بعدی.' : 'Tap 🎙️ to practice or Next to skip.';
@@ -1337,6 +1366,7 @@ async function finishExam() {
 function addMessageBubble(step) {
     const bubble = document.createElement('div');
     bubble.className = `message ${step.role}`;
+    bubble.setAttribute('role', 'status');
 
     const textToPlay = step.role === 'received' ? step.audioText : step.targetText;
 
@@ -1356,12 +1386,14 @@ function addMessageBubble(step) {
     };
 
     dom.chatHistory.appendChild(bubble);
+    trimChatHistory();
     scrollToBottom();
 }
 
 function addSystemMessage(text) {
     const div = document.createElement('div');
     div.className = 'date-divider';
+    div.setAttribute('role', 'status');
     div.textContent = text;
     dom.chatHistory.appendChild(div);
 }
@@ -1370,28 +1402,51 @@ function scrollToBottom() {
     dom.chatHistory.scrollTop = dom.chatHistory.scrollHeight;
 }
 
-function playTone(type) {
-    const ctx = new (window.AudioContext || window.webkitAudioContext)();
-    const osc = ctx.createOscillator();
-    const gain = ctx.createGain();
-
-    osc.connect(gain);
-    gain.connect(ctx.destination);
-
-    if (type === 'start') {
-        osc.frequency.setValueAtTime(440, ctx.currentTime);
-        osc.frequency.exponentialRampToValueAtTime(880, ctx.currentTime + 0.1);
-    } else if (type === 'success') {
-        osc.frequency.setValueAtTime(523, ctx.currentTime);
-        osc.frequency.exponentialRampToValueAtTime(1046, ctx.currentTime + 0.2);
-    } else if (type === 'error') {
-        osc.type = 'sawtooth';
-        osc.frequency.setValueAtTime(200, ctx.currentTime);
-        osc.frequency.linearRampToValueAtTime(100, ctx.currentTime + 0.3);
+// Trim old chat messages to prevent unbounded DOM growth
+const MAX_CHAT_MESSAGES = 80;
+function trimChatHistory() {
+    const children = dom.chatHistory.children;
+    if (children.length <= MAX_CHAT_MESSAGES) return;
+    const excess = children.length - MAX_CHAT_MESSAGES;
+    for (let i = 0; i < excess; i++) {
+        dom.chatHistory.removeChild(children[0]);
     }
+}
 
-    osc.start();
-    osc.stop(ctx.currentTime + 0.3);
+// Reuse a single AudioContext for all tone effects (browsers limit to ~6 contexts)
+let _toneCtx = null;
+function playTone(type) {
+    try {
+        if (!_toneCtx || _toneCtx.state === 'closed') {
+            _toneCtx = new (window.AudioContext || window.webkitAudioContext)();
+        }
+        if (_toneCtx.state === 'suspended') _toneCtx.resume();
+
+        const osc = _toneCtx.createOscillator();
+        const gain = _toneCtx.createGain();
+
+        osc.connect(gain);
+        gain.connect(_toneCtx.destination);
+
+        if (type === 'start') {
+            osc.frequency.setValueAtTime(440, _toneCtx.currentTime);
+            osc.frequency.exponentialRampToValueAtTime(880, _toneCtx.currentTime + 0.1);
+        } else if (type === 'success') {
+            osc.frequency.setValueAtTime(523, _toneCtx.currentTime);
+            osc.frequency.exponentialRampToValueAtTime(1046, _toneCtx.currentTime + 0.2);
+        } else if (type === 'error') {
+            osc.type = 'sawtooth';
+            osc.frequency.setValueAtTime(200, _toneCtx.currentTime);
+            osc.frequency.linearRampToValueAtTime(100, _toneCtx.currentTime + 0.3);
+        }
+
+        gain.gain.setValueAtTime(0.3, _toneCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.01, _toneCtx.currentTime + 0.3);
+        osc.start();
+        osc.stop(_toneCtx.currentTime + 0.3);
+    } catch (e) {
+        // AudioContext not available — silently skip tone
+    }
 }
 
 function wait(ms) { return new Promise(resolve => setTimeout(resolve, ms)); }
@@ -1408,7 +1463,8 @@ function stopAllAudio() {
     window.speechSynthesis.cancel();
     if (window.currentAudio) {
         window.currentAudio.pause();
-        window.currentAudio.currentTime = 0;
+        window.currentAudio.removeAttribute('src'); // Abort pending network request
+        window.currentAudio.load(); // Release resources
         window.currentAudio = null;
     }
 }
@@ -1421,16 +1477,20 @@ function _browserTTS(text, lang, rate) {
         const r = rate || 0.9;
         u.rate = (isFinite(r) && r > 0) ? r : 1.0;
         let resolved = false;
-        const done = () => { if (!resolved) { resolved = true; resolve(); } };
+        let mobileResumeTimer = null;
+        const done = () => {
+            if (!resolved) {
+                resolved = true;
+                if (mobileResumeTimer) { clearInterval(mobileResumeTimer); mobileResumeTimer = null; }
+                resolve();
+            }
+        };
         u.onend = done;
         u.onerror = done;
         if (_isMobile) {
-            const timer = setInterval(() => {
+            mobileResumeTimer = setInterval(() => {
                 if (!window.speechSynthesis.speaking || window.speechSynthesis.paused) window.speechSynthesis.resume();
             }, 5000);
-            const cleanup = () => clearInterval(timer);
-            u.onend = () => { cleanup(); done(); };
-            u.onerror = () => { cleanup(); done(); };
         }
         // Safety timeout: never hang more than 10s
         setTimeout(done, 10000);
@@ -1522,7 +1582,8 @@ function createInteractiveSentence(text) {
         const meaning = getGlossaryMeaning(cleanKey) || "";
         const tooltipAttr = meaning ? `data-meaning="${meaning.replace(/"/g, '&quot;')}"` : "";
 
-        return `<span class="interactive-word" ${tooltipAttr} onclick="playWord(this, '${safeWord.replace(/'/g, "\\'")}')">${safeWord}</span>`;
+        const ariaLabel = meaning ? `${safeWord}, meaning: ${meaning}` : safeWord;
+        return `<span class="interactive-word" ${tooltipAttr} tabindex="0" role="button" aria-label="${ariaLabel.replace(/"/g, '&quot;')}" onclick="playWord(this, '${safeWord.replace(/'/g, "\\'")}')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();playWord(this,'${safeWord.replace(/'/g, "\\'")}')}">${safeWord}</span>`;
     }).join(' ');
 }
 
@@ -1676,3 +1737,37 @@ window.playWord = function (el, word) {
 
 window.addEventListener('load', init);
 window.playAudio = playAudio;
+
+// =====================
+// SYNC STATUS INDICATOR
+// =====================
+(function setupSyncIndicator() {
+    const statusEl = document.getElementById('sync-status');
+    const dotEl = document.getElementById('sync-dot');
+    const textEl = document.getElementById('sync-text');
+    if (!statusEl || !dotEl || !textEl) return;
+
+    const statusConfig = {
+        synced:  { color: '#4CAF50', text: '', title: 'All changes saved', show: false },
+        pending: { color: '#FF9800', text: '...', title: 'Saving...', show: true },
+        offline: { color: '#9E9E9E', text: 'offline', title: 'You are offline — changes saved locally', show: true },
+        error:   { color: '#f44336', text: 'sync error', title: 'Some changes failed to save', show: true }
+    };
+
+    window.addEventListener('misiro-sync-status', (e) => {
+        const status = e.detail?.status || 'synced';
+        const cfg = statusConfig[status] || statusConfig.synced;
+        dotEl.style.background = cfg.color;
+        textEl.textContent = cfg.text;
+        statusEl.title = cfg.title;
+        statusEl.style.display = cfg.show ? 'flex' : 'none';
+
+        // Auto-hide "synced" after showing briefly
+        if (status === 'synced' && statusEl.style.display === 'none') return;
+        if (status === 'synced') {
+            textEl.textContent = '✓';
+            statusEl.style.display = 'flex';
+            setTimeout(() => { statusEl.style.display = 'none'; }, 2000);
+        }
+    });
+})();

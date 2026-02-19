@@ -4,6 +4,13 @@
 
 const https = require('https');
 
+const ALLOWED_ORIGINS = [
+    'https://misiro.vercel.app',
+    'http://localhost:3000',
+    'http://localhost:5500',
+    'http://127.0.0.1:5500'
+];
+
 function fetchAudio(url, headers) {
     return new Promise((resolve, reject) => {
         const request = https.get(url, { headers }, (response) => {
@@ -25,6 +32,19 @@ function fetchAudio(url, headers) {
 }
 
 module.exports = async function handler(req, res) {
+    // Set CORS headers early (applies to all responses including errors)
+    const origin = req.headers.origin || '';
+    const corsOrigin = ALLOWED_ORIGINS.includes(origin) ? origin : ALLOWED_ORIGINS[0];
+    res.setHeader('Access-Control-Allow-Origin', corsOrigin);
+
+    // Handle CORS preflight
+    if (req.method === 'OPTIONS') {
+        res.setHeader('Access-Control-Allow-Methods', 'GET, OPTIONS');
+        res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+        res.status(204).end();
+        return;
+    }
+
     const text = req.query.q;
     const lang = (req.query.tl || 'de').split('-')[0];
 
@@ -62,7 +82,6 @@ module.exports = async function handler(req, res) {
             res.setHeader('Content-Type', 'audio/mpeg');
             res.setHeader('Content-Length', audioData.length);
             res.setHeader('Cache-Control', 'public, max-age=86400');
-            res.setHeader('Access-Control-Allow-Origin', '*');
             res.status(200).send(audioData);
             return;
         } catch (err) {

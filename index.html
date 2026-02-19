@@ -5,10 +5,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Misiro - Learn German</title>
-    <link rel="stylesheet" href="styles.css?v=16">
+    <link rel="stylesheet" href="styles.css?v=17">
 </head>
 
 <body class="lesson-page">
+    <a href="#chat-history" class="skip-link">Skip to lesson</a>
 
     <!-- Audio Unlock Overlay -->
     <div id="start-overlay"
@@ -41,14 +42,14 @@
                 <label for="blind-mode-toggle" style="font-weight:600; cursor:pointer;">🙈 Blind Mode</label>
             </div>
             <div class="language-control" style="display:flex; align-items:center; gap:5px;">
-                <select id="language-select"
+                <select id="language-select" aria-label="Select language"
                     style="padding:5px 10px; border-radius:8px; font-weight:600; cursor:pointer; color:#333; background:#fff; border:2px solid #ddd;">
                     <option value="fa">فارسی</option>
                     <option value="en">English</option>
                 </select>
             </div>
             <div class="speed-control" style="display:flex; align-items:center; gap:5px;">
-                <select id="speed-select" style="padding:5px 10px; border-radius:8px; font-weight:600; cursor:pointer; color:#333; background:#fff; border:2px solid #ddd;">
+                <select id="speed-select" aria-label="Select voice speed" style="padding:5px 10px; border-radius:8px; font-weight:600; cursor:pointer; color:#333; background:#fff; border:2px solid #ddd;">
                     <option value="1">🔊 1x</option>
                     <option value="0.75">🔉 0.75x</option>
                     <option value="0.5">🐢 0.5x</option>
@@ -56,6 +57,12 @@
                 </select>
             </div>
             <!-- Voice Eval Removed -->
+
+            <!-- Sync Status Indicator -->
+            <div id="sync-status" title="Synced" style="display:none; align-items:center; gap:4px; font-size:0.75em; color:#888; cursor:help;">
+                <span id="sync-dot" style="width:8px; height:8px; border-radius:50%; background:#4CAF50; display:inline-block;"></span>
+                <span id="sync-text"></span>
+            </div>
 
             <div class="progress-info">
                 <span>Level <span id="current-level">1</span> / 100</span>
@@ -78,7 +85,7 @@
                 </div>
 
                 <!-- 2. Message History (Scrollable) -->
-                <div class="chat-history" id="chat-history">
+                <div class="chat-history" id="chat-history" role="log" aria-live="polite" aria-label="Chat history">
                     <div class="date-divider">Today</div>
                 </div>
 
@@ -86,13 +93,13 @@
                 <div class="chat-interaction-area">
 
                     <!-- The "Draft" the user is building -->
-                    <div class="message-composer" id="answer-line">
+                    <div class="message-composer" id="answer-line" aria-live="polite" aria-label="Your reply">
                         <span class="placeholder-text">Tap words to reply...</span>
                     </div>
 
                     <!-- Action Button (Send/Mic) -->
-                    <button class="btn-send" id="btn-send" style="display:flex;">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                    <button class="btn-send" id="btn-send" style="display:flex;" aria-label="Microphone - tap to record">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
                             <path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3z" />
                             <path
                                 d="M17 11c0 2.76-2.24 5-5 5s-5-2.24-5-5H5c0 3.53 2.61 6.43 6 6.92V21h2v-3.08c3.39-.49 6-3.39 6-6.92h-2z" />
@@ -125,7 +132,7 @@
     <script src="data-layer.js"></script>
     <script src="ai-integration.js"></script>
     <script src="lessons_data.js"></script>
-    <script src="app.js?v=15"></script>
+    <script src="app.js?v=18"></script>
 </body>
 
 </html>
