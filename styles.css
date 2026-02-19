@@ -603,10 +603,10 @@ body {
 @media (max-width: 600px) {
     body {
         padding: 0;
-        background: #f0f0f0;
+        background: #e5ddd5;
         min-height: 100vh;
         height: 100vh;
-        height: 100dvh; /* dynamic viewport height — excludes mobile browser chrome */
+        height: 100dvh;
         overflow: hidden;
     }
 
@@ -621,56 +621,82 @@ body {
         overflow: hidden;
     }
 
-    /* --- Compact header --- */
+    /* --- Single-row compact header --- */
     .header {
         border-radius: 0;
-        padding: 8px 12px;
-        gap: 6px;
+        padding: 6px 8px;
+        gap: 0;
         box-shadow: 0 1px 3px rgba(0,0,0,0.15);
-        flex-wrap: wrap;
+        flex-wrap: nowrap;
         z-index: 100;
+        flex-shrink: 0;
+        justify-content: flex-start;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    /* Hide scrollbar on header */
+    .header::-webkit-scrollbar { display: none; }
+    .header { scrollbar-width: none; }
+
+    .header-left {
+        gap: 4px;
         flex-shrink: 0;
     }
 
-    .header-left {
-        gap: 6px;
-    }
-
     .header-left a {
-        padding: 4px 10px !important;
-        font-size: 0.8em !important;
-        margin-right: 4px !important;
+        padding: 4px 8px !important;
+        font-size: 0.75em !important;
+        margin-right: 2px !important;
+        white-space: nowrap;
     }
 
+    /* Hide title on phone — saves ~80px */
     .header h1 {
-        font-size: 1.2em;
+        display: none;
     }
 
     .day-selection-control {
-        gap: 4px;
+        gap: 3px;
+        flex-shrink: 0;
+        margin-left: 4px;
     }
 
     .day-selection-control label {
-        font-size: 0.8em;
+        font-size: 0.75em;
+        white-space: nowrap;
     }
 
     .day-selection-control select {
-        padding: 4px 8px;
-        font-size: 0.85em;
+        padding: 3px 6px;
+        font-size: 0.8em;
     }
 
     .progress-info {
-        display: none; /* Hide on phone — not useful */
+        display: none;
+    }
+
+    .language-control,
+    .speed-control {
+        flex-shrink: 0;
+        margin-left: 4px;
     }
 
     .language-control select,
     .speed-control select {
-        padding: 3px 6px !important;
-        font-size: 0.8em !important;
+        padding: 3px 4px !important;
+        font-size: 0.75em !important;
+    }
+
+    .blind-mode-control {
+        flex-shrink: 0;
+        margin-left: 4px;
+        gap: 2px !important;
     }
 
     .blind-mode-control label {
-        font-size: 0.75em !important;
+        font-size: 0.7em !important;
+        white-space: nowrap;
     }
 
     .blind-mode-control input {
@@ -678,10 +704,10 @@ body {
         height: 14px !important;
     }
 
-    /* --- Chat fills remaining space --- */
+    /* --- Chat fills all remaining space --- */
     .learning-area {
         flex: 1;
-        min-height: 0; /* allow flex shrink */
+        min-height: 0;
         display: flex;
         flex-direction: column;
         overflow: hidden;
@@ -697,58 +723,60 @@ body {
     }
 
     .chat-header {
-        padding: 8px 12px;
+        padding: 6px 10px;
         gap: 8px;
     }
 
     .chat-header .avatar-circle {
-        width: 32px;
-        height: 32px;
-        font-size: 18px;
+        width: 28px;
+        height: 28px;
+        font-size: 16px;
     }
 
     .chat-header .header-info h3 {
-        font-size: 0.95em;
+        font-size: 0.9em;
     }
 
     .chat-header .header-info .status {
-        font-size: 0.7em;
+        font-size: 0.65em;
     }
 
     .chat-history {
-        padding: 10px;
-        gap: 10px;
+        padding: 8px;
+        gap: 8px;
     }
 
     .message {
-        max-width: 90%;
-        padding: 8px 12px;
-        font-size: 0.92em;
+        max-width: 92%;
+        padding: 8px 10px;
+        font-size: 0.9em;
     }
 
     .message.instruction {
-        width: 95%;
+        width: 96%;
+        padding: 8px 10px;
     }
 
+    /* --- Interaction area --- */
     .chat-interaction-area {
-        padding: 6px 8px;
-        gap: 6px;
+        padding: 5px 8px;
+        gap: 5px;
+        position: relative;
     }
 
     .message-composer {
-        padding: 8px 12px;
-        min-height: 40px;
-        font-size: 0.9em;
-        padding-right: 55px; /* room for send button */
+        padding: 8px 50px 8px 12px; /* right padding for send button */
+        min-height: 38px;
+        font-size: 0.88em;
     }
 
     .btn-send {
-        width: 40px;
-        height: 40px;
+        width: 36px;
+        height: 36px;
         right: 14px;
         bottom: auto;
         position: absolute;
-        top: 10px; /* aligned with message composer row */
+        top: 6px;
         transform: none;
     }
 
@@ -756,9 +784,9 @@ body {
         transform: scale(1.05);
     }
 
-    /* Position send button relative to interaction area */
-    .chat-interaction-area {
-        position: relative;
+    .btn-send svg {
+        width: 20px;
+        height: 20px;
     }
 
     .btn-next {
@@ -766,53 +794,59 @@ body {
         bottom: auto;
         position: absolute;
         top: 6px;
-        font-size: 0.9em;
-        padding: 8px 16px;
+        font-size: 0.85em;
+        padding: 7px 14px;
     }
 
     .word-bank-scroll {
-        gap: 6px;
+        gap: 5px;
         padding: 2px 0;
     }
 
     .word-chip {
-        padding: 6px 10px;
-        font-size: 0.82em;
-        min-width: 60px;
+        padding: 5px 8px;
+        font-size: 0.8em;
+        min-width: 55px;
     }
 
     .word-chip-composer {
-        padding: 3px 8px;
-        font-size: 0.82em;
+        padding: 3px 7px;
+        font-size: 0.8em;
     }
 
-    /* --- Script panel slides up from bottom with drag handle --- */
+    /* --- Bottom script panel with drag handle --- */
     .script-view {
         width: 100%;
-        height: var(--script-panel-height, 35vh);
+        height: var(--script-panel-height, 28vh);
         margin-top: 0;
-        border-radius: 16px 16px 0 0;
-        padding: 0 12px 12px 12px;
-        box-shadow: 0 -2px 10px rgba(0,0,0,0.15);
+        border-radius: 14px 14px 0 0;
+        padding: 0 10px 0 10px;
+        padding-bottom: env(safe-area-inset-bottom, 0px); /* iPhone notch bar */
+        box-shadow: 0 -2px 8px rgba(0,0,0,0.12);
         flex-shrink: 0;
         position: relative;
         transition: height 0.05s linear;
         z-index: 50;
+        overflow: hidden;
     }
 
     .script-view h3 {
-        margin-bottom: 8px;
-        padding-bottom: 6px;
-        font-size: 0.9em;
+        margin-bottom: 6px;
+        padding-bottom: 4px;
+        font-size: 0.85em;
         padding-top: 0;
     }
 
-    /* Drag handle bar */
+    #script-container {
+        padding-bottom: 8px;
+    }
+
+    /* Drag handle */
     .script-drag-handle {
         display: flex;
         justify-content: center;
         align-items: center;
-        padding: 10px 0 6px 0;
+        padding: 8px 0 4px 0;
         cursor: grab;
         touch-action: none;
         -webkit-user-select: none;
@@ -820,44 +854,51 @@ body {
     }
 
     .script-drag-handle .handle-bar {
-        width: 40px;
-        height: 5px;
-        background: #ccc;
-        border-radius: 3px;
+        width: 36px;
+        height: 4px;
+        background: #bbb;
+        border-radius: 2px;
         transition: background 0.2s;
     }
 
     .script-drag-handle:active .handle-bar {
-        background: #999;
+        background: #888;
     }
 
     .script-item {
-        padding: 8px;
-        margin-bottom: 6px;
-        font-size: 0.88em;
+        padding: 7px 8px;
+        margin-bottom: 5px;
+        font-size: 0.85em;
     }
 
     .script-item .german {
-        font-size: 0.88em;
+        font-size: 0.85em;
+        margin-bottom: 2px;
     }
 
     .script-item .translation {
-        font-size: 0.78em;
+        font-size: 0.75em;
     }
 
-    /* Interactive word sizing for touch */
+    /* Interactive word touch sizing */
     .interactive-word {
-        padding: 6px 8px;
-        font-size: 0.95em;
+        padding: 5px 7px;
+        font-size: 0.92em;
+    }
+
+    /* Tooltip positioning for mobile */
+    .interactive-word[data-tooltip]:hover::after {
+        font-size: 0.78em;
     }
 
     /* Start overlay mobile */
     #start-overlay h1 {
-        font-size: 1.5em;
+        font-size: 1.4em;
     }
 
     #start-overlay p {
-        font-size: 1em !important;
+        font-size: 0.95em !important;
+        margin: 12px 0 !important;
     }
 
     #start-overlay button {

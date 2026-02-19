@@ -1517,10 +1517,10 @@ window.playWord = function (word) {
         return window.innerHeight * maxHPercent;
     }
 
-    // Set initial height from CSS variable or default
+    // Set initial height — 28vh matches CSS default
     function initHeight() {
-        const vh35 = window.innerHeight * 0.35;
-        panel.style.height = vh35 + 'px';
+        const vh28 = window.innerHeight * 0.28;
+        panel.style.height = vh28 + 'px';
     }
 
     handle.addEventListener('touchstart', function (e) {
