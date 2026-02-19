@@ -468,8 +468,8 @@ function _startLessonIfClicked() {
     }
     if (_toneCtx.state === 'suspended') _toneCtx.resume();
 
-    // Start flow (skip auto-play audio on first sentence)
-    processNextStep(true);
+    // Start flow
+    processNextStep();
 }
 
 // Register click handler immediately when script loads (before init)
