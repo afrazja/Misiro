@@ -282,8 +282,43 @@
         <!-- Top Bar with Profile -->
         <div class="top-bar">
             <div class="profile-section">
-                <div class="profile-avatar" title="Profile">👤</div>
+                <div class="profile-avatar" title="Profile" id="profile-avatar">👤</div>
                 <span class="profile-name" id="profile-name">Learner</span>
+                <button id="auth-btn" onclick="toggleAuthModal()"
+                    style="padding:6px 16px; border-radius:20px; border:1px solid rgba(255,255,255,0.3); background:transparent; color:#fff; cursor:pointer; font-size:0.85rem; transition:all 0.3s ease;"
+                    onmouseover="this.style.borderColor='#e94560'; this.style.background='rgba(233,69,96,0.2)'"
+                    onmouseout="this.style.borderColor='rgba(255,255,255,0.3)'; this.style.background='transparent'">
+                    Sign In
+                </button>
+            </div>
+        </div>
+
+        <!-- Auth Modal -->
+        <div id="auth-modal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.7); z-index:1000; justify-content:center; align-items:center;">
+            <div style="background:linear-gradient(145deg, #1a1a2e, #16213e); border-radius:20px; padding:40px; max-width:400px; width:90%; border:1px solid rgba(255,255,255,0.1); position:relative;">
+                <button onclick="toggleAuthModal()" style="position:absolute; top:15px; right:20px; background:none; border:none; color:#a0a0a0; font-size:1.5rem; cursor:pointer;">x</button>
+                <h2 id="auth-title" style="margin-bottom:20px; color:#e94560;">Sign In</h2>
+                <div id="auth-error" style="display:none; background:rgba(233,69,96,0.2); color:#ff6b6b; padding:10px; border-radius:10px; margin-bottom:15px; font-size:0.9rem;"></div>
+                <div id="signup-name-field" style="display:none; margin-bottom:15px;">
+                    <input type="text" id="auth-name" placeholder="Display Name"
+                        style="width:100%; padding:12px; border-radius:10px; border:1px solid rgba(255,255,255,0.2); background:rgba(255,255,255,0.05); color:#fff; font-size:1rem;">
+                </div>
+                <div style="margin-bottom:15px;">
+                    <input type="email" id="auth-email" placeholder="Email"
+                        style="width:100%; padding:12px; border-radius:10px; border:1px solid rgba(255,255,255,0.2); background:rgba(255,255,255,0.05); color:#fff; font-size:1rem;">
+                </div>
+                <div style="margin-bottom:20px;">
+                    <input type="password" id="auth-password" placeholder="Password"
+                        style="width:100%; padding:12px; border-radius:10px; border:1px solid rgba(255,255,255,0.2); background:rgba(255,255,255,0.05); color:#fff; font-size:1rem;">
+                </div>
+                <button id="auth-submit" onclick="submitAuth()"
+                    style="width:100%; padding:12px; border-radius:10px; border:none; background:linear-gradient(90deg,#e94560,#ff6b6b); color:#fff; font-size:1rem; font-weight:600; cursor:pointer;">
+                    Sign In
+                </button>
+                <p style="text-align:center; margin-top:15px; color:#a0a0a0; font-size:0.9rem;">
+                    <span id="auth-toggle-text">Don't have an account?</span>
+                    <a href="#" id="auth-toggle-link" onclick="toggleAuthMode(event)" style="color:#e94560; text-decoration:none; font-weight:600;"> Sign Up</a>
+                </p>
             </div>
         </div>
 
@@ -330,31 +365,87 @@
         </footer>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+    <script src="config.js"></script>
+    <script src="supabase-client.js"></script>
+    <script src="data-layer.js"></script>
     <script>
-        // Load saved preferences
-        document.addEventListener('DOMContentLoaded', () => {
-            const langSelect = document.getElementById('language-select');
+        let authMode = 'signin'; // 'signin' or 'signup'
 
-            // Load saved language
-            const savedLang = localStorage.getItem('misiro_language');
-            if (savedLang) {
-                langSelect.value = savedLang;
-            } else {
-                // Detect browser language
-                const browserLang = navigator.language || navigator.userLanguage || 'en';
-                langSelect.value = browserLang.startsWith('fa') ? 'fa' : 'en';
+        // --- Auth UI ---
+        function toggleAuthModal() {
+            const modal = document.getElementById('auth-modal');
+            modal.style.display = modal.style.display === 'flex' ? 'none' : 'flex';
+            document.getElementById('auth-error').style.display = 'none';
+        }
+
+        function toggleAuthMode(e) {
+            if (e) e.preventDefault();
+            authMode = authMode === 'signin' ? 'signup' : 'signin';
+            document.getElementById('auth-title').textContent = authMode === 'signin' ? 'Sign In' : 'Sign Up';
+            document.getElementById('auth-submit').textContent = authMode === 'signin' ? 'Sign In' : 'Sign Up';
+            document.getElementById('signup-name-field').style.display = authMode === 'signup' ? 'block' : 'none';
+            document.getElementById('auth-toggle-text').textContent = authMode === 'signin' ? "Don't have an account?" : 'Already have an account?';
+            document.getElementById('auth-toggle-link').textContent = authMode === 'signin' ? ' Sign Up' : ' Sign In';
+            document.getElementById('auth-error').style.display = 'none';
+        }
+
+        async function submitAuth() {
+            const email = document.getElementById('auth-email').value.trim();
+            const password = document.getElementById('auth-password').value;
+            const errorEl = document.getElementById('auth-error');
+            errorEl.style.display = 'none';
+
+            if (!email || !password) {
+                errorEl.textContent = 'Please enter email and password.';
+                errorEl.style.display = 'block';
+                return;
             }
 
-            // Update UI based on language
-            updateLanguageUI(langSelect.value);
+            let result;
+            if (authMode === 'signup') {
+                const name = document.getElementById('auth-name').value.trim() || 'Learner';
+                result = await misiroAuth.signUp(email, password, name);
+            } else {
+                result = await misiroAuth.signIn(email, password);
+            }
 
-            // Save on change
-            langSelect.addEventListener('change', (e) => {
-                localStorage.setItem('misiro_language', e.target.value);
-                updateLanguageUI(e.target.value);
-            });
-        });
+            if (result.error) {
+                errorEl.textContent = result.error;
+                errorEl.style.display = 'block';
+            } else {
+                toggleAuthModal();
+                updateProfileUI();
+                // Sync data from cloud after login
+                if (window.MisiroData) {
+                    await MisiroData.syncOnLogin();
+                }
+            }
+        }
 
+        async function handleSignOut() {
+            await misiroAuth.signOut();
+            updateProfileUI();
+        }
+
+        async function updateProfileUI() {
+            const nameEl = document.getElementById('profile-name');
+            const authBtn = document.getElementById('auth-btn');
+            const isAuthed = await misiroAuth.isAuthenticated();
+
+            if (isAuthed) {
+                const displayName = await misiroAuth.getDisplayName();
+                nameEl.textContent = displayName;
+                authBtn.textContent = 'Sign Out';
+                authBtn.onclick = handleSignOut;
+            } else {
+                nameEl.textContent = 'Learner';
+                authBtn.textContent = 'Sign In';
+                authBtn.onclick = toggleAuthModal;
+            }
+        }
+
+        // --- Language UI ---
         function updateLanguageUI(lang) {
             const lessonsTitle = document.getElementById('lessons-title');
             const lessonsDesc = document.getElementById('lessons-desc');
@@ -376,6 +467,37 @@
                 basicsDesc.textContent = 'Learn essential building blocks: pronouns, articles, adverbs, numbers, colors, and days of the week. Master the fundamentals first!';
             }
         }
+
+        // --- Init ---
+        document.addEventListener('DOMContentLoaded', () => {
+            const langSelect = document.getElementById('language-select');
+
+            // Load saved language via data layer
+            const savedLang = MisiroData.getLanguage();
+            if (savedLang) {
+                langSelect.value = savedLang;
+            } else {
+                const browserLang = navigator.language || navigator.userLanguage || 'en';
+                langSelect.value = browserLang.startsWith('fa') ? 'fa' : 'en';
+            }
+
+            updateLanguageUI(langSelect.value);
+
+            langSelect.addEventListener('change', (e) => {
+                MisiroData.setLanguage(e.target.value);
+                updateLanguageUI(e.target.value);
+            });
+
+            // Update profile UI based on auth state
+            updateProfileUI();
+
+            // Listen for auth state changes
+            if (misiroAuth.isConfigured()) {
+                misiroAuth.onAuthStateChange((event) => {
+                    updateProfileUI();
+                });
+            }
+        });
     </script>
 </body>
 

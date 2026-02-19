@@ -3,7 +3,7 @@
 
 class AIContentGenerator {
     constructor() {
-        this.apiEndpoint = 'http://localhost:3000/chat'; // Local Proxy
+        this.apiEndpoint = (window.MISIRO_CONFIG?.apiUrl || 'http://localhost:3005') + '/chat';
         this.model = 'llama3.1:8b';
     }
 

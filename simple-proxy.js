@@ -1,19 +1,19 @@
 const http = require('http');
 const https = require('https');
-const fs = require('fs');
-const path = require('path');
 
-const API_KEY = 'ollama'; // Not needed for local
-const TARGET_URL = 'http://localhost:11434/v1/chat/completions';
-const PORT = 3005;
+// Configuration via environment variables
+const PORT = process.env.PORT || 3005;
+const TARGET_URL = process.env.OLLAMA_URL || 'http://localhost:11434/v1/chat/completions';
 
-// Allowed origins for CORS (localhost only)
-const ALLOWED_ORIGINS = [
-    `http://localhost:${PORT}`,
-    `http://127.0.0.1:${PORT}`,
-    'http://localhost:3000',
-    'http://127.0.0.1:3000'
-];
+// Allowed origins for CORS — set via env var (comma-separated) or defaults
+const ALLOWED_ORIGINS = process.env.ALLOWED_ORIGINS
+    ? process.env.ALLOWED_ORIGINS.split(',').map(s => s.trim())
+    : [
+        `http://localhost:${PORT}`,
+        `http://127.0.0.1:${PORT}`,
+        'http://localhost:3000',
+        'http://127.0.0.1:3000'
+    ];
 
 // Rate limiting: max requests per IP per window
 const RATE_LIMIT = {
@@ -82,13 +82,10 @@ const server = http.createServer((req, res) => {
     const reqMethod = (req.method || 'GET').toUpperCase();
     const clientIP = req.socket.remoteAddress || 'unknown';
 
-    // --- CORS (restricted to allowed origins) ---
+    // --- CORS ---
     const origin = req.headers.origin || '';
     if (ALLOWED_ORIGINS.includes(origin)) {
         res.setHeader('Access-Control-Allow-Origin', origin);
-    } else if (!origin) {
-        // Same-origin requests (no Origin header) — allow for static files
-        res.setHeader('Access-Control-Allow-Origin', `http://localhost:${PORT}`);
     }
     res.setHeader('Access-Control-Allow-Methods', 'POST, GET, OPTIONS');
     res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
@@ -97,6 +94,13 @@ const server = http.createServer((req, res) => {
     if (reqMethod === 'OPTIONS') {
         res.writeHead(204);
         res.end();
+        return;
+    }
+
+    // --- Health Check ---
+    if (reqMethod === 'GET' && rawUrl === '/health') {
+        res.writeHead(200, { 'Content-Type': 'application/json' });
+        res.end(JSON.stringify({ status: 'ok' }));
         return;
     }
 
@@ -171,7 +175,7 @@ const server = http.createServer((req, res) => {
             body += c.toString();
         });
         req.on('end', async () => {
-            if (bodySize > MAX_BODY_SIZE) return; // Already responded with 413
+            if (bodySize > MAX_BODY_SIZE) return;
 
             try {
                 const response = await fetch(TARGET_URL, {
@@ -191,47 +195,12 @@ const server = http.createServer((req, res) => {
         return;
     }
 
-    // --- 3. Static Files ---
-    // Resolve and sanitize file path to prevent directory traversal
-    const requestedPath = decodeURIComponent(rawUrl.split('?')[0]);
-    const safePath = path.normalize(requestedPath).replace(/^(\.\.(\/|\\|$))+/, '');
-    let filePath = path.join('.', safePath);
-    if (filePath === '.' || filePath === './') filePath = './index.html';
-
-    // Ensure the resolved path stays within the project directory
-    const resolvedPath = path.resolve(filePath);
-    const projectRoot = path.resolve('.');
-    if (!resolvedPath.startsWith(projectRoot)) {
-        res.writeHead(403);
-        res.end('Forbidden');
-        return;
-    }
-
-    const ext = path.extname(filePath);
-    const mimes = {
-        '.html': 'text/html',
-        '.js': 'text/javascript',
-        '.css': 'text/css',
-        '.json': 'application/json',
-        '.png': 'image/png',
-        '.jpg': 'image/jpeg',
-        '.svg': 'image/svg+xml',
-        '.ico': 'image/x-icon',
-        '.woff': 'font/woff',
-        '.woff2': 'font/woff2'
-    };
-
-    fs.readFile(filePath, (err, content) => {
-        if (err) {
-            res.writeHead(err.code === 'ENOENT' ? 404 : 500);
-            res.end(err.code === 'ENOENT' ? 'Not Found' : 'Internal Error');
-        } else {
-            res.writeHead(200, { 'Content-Type': mimes[ext] || 'text/html' });
-            res.end(content);
-        }
-    });
+    // --- 404 for all other routes ---
+    res.writeHead(404, { 'Content-Type': 'application/json' });
+    res.end(JSON.stringify({ error: 'Not found' }));
 });
 
 server.listen(PORT, () => {
-    console.log(`\n🚀 Misiro Server Running on Port ${PORT}\n`);
+    console.log(`Misiro API server running on port ${PORT}`);
+    console.log(`Allowed origins: ${ALLOWED_ORIGINS.join(', ')}`);
 });

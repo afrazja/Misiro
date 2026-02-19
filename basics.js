@@ -181,7 +181,7 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 function loadPreferences() {
-    const savedLang = localStorage.getItem('misiro_language');
+    const savedLang = window.MisiroData ? MisiroData.getLanguage() : localStorage.getItem('misiro_language');
     if (savedLang) {
         currentLang = savedLang;
     } else {
@@ -189,9 +189,9 @@ function loadPreferences() {
         currentLang = browserLang.startsWith('fa') ? 'fa' : 'en';
     }
 
-    const savedSpeed = localStorage.getItem('misiro_voice_speed');
-    if (savedSpeed) {
-        voiceSpeed = parseFloat(savedSpeed);
+    const savedSpeed = window.MisiroData ? MisiroData.getVoiceSpeed() : localStorage.getItem('misiro_voice_speed');
+    if (savedSpeed !== null) {
+        voiceSpeed = typeof savedSpeed === 'number' ? savedSpeed : parseFloat(savedSpeed);
     }
 }
 
@@ -204,14 +204,16 @@ function setupControls() {
 
     langSelect.addEventListener('change', (e) => {
         currentLang = e.target.value;
-        localStorage.setItem('misiro_language', currentLang);
+        if (window.MisiroData) MisiroData.setLanguage(currentLang);
+        else localStorage.setItem('misiro_language', currentLang);
         renderCategories();
         updatePageLanguage();
     });
 
     speedSelect.addEventListener('change', (e) => {
         voiceSpeed = parseFloat(e.target.value);
-        localStorage.setItem('misiro_voice_speed', voiceSpeed.toString());
+        if (window.MisiroData) MisiroData.setVoiceSpeed(voiceSpeed);
+        else localStorage.setItem('misiro_voice_speed', voiceSpeed.toString());
     });
 }
 

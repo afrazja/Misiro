@@ -85,16 +85,15 @@ if (SpeechRecognition) {
 // --- Load/Save State ---
 function loadConversationState() {
     // Load saved language preference
-    const savedLang = localStorage.getItem('misiro_language');
+    const savedLang = MisiroData.getLanguage();
     if (savedLang) {
         appData.language = savedLang;
     }
 
     // Load saved progress
-    const savedProgress = localStorage.getItem('misiro_progress');
-    if (savedProgress) {
+    const progress = MisiroData.getProgress();
+    if (progress) {
         try {
-            const progress = JSON.parse(savedProgress);
             if (progress.currentDay && dailyLessons[progress.currentDay]) {
                 appData.currentDay = progress.currentDay;
             }
@@ -110,52 +109,33 @@ function loadConversationState() {
     }
 
     // Load completed lessons
-    const savedCompleted = localStorage.getItem('misiro_completed_lessons');
-    if (savedCompleted) {
-        try {
-            appData.completedLessons = JSON.parse(savedCompleted);
-        } catch (e) {
-            appData.completedLessons = {};
-        }
-    } else {
-        appData.completedLessons = {};
-    }
+    appData.completedLessons = MisiroData.getCompletedLessons();
 
     if (DEBUG) console.log('Loaded state - language:', appData.language, 'day:', appData.currentDay, 'sentence:', appData.currentSentenceIndex);
 }
 
 function saveProgress() {
-    localStorage.setItem('misiro_progress', JSON.stringify({
-        currentDay: appData.currentDay,
-        currentSentenceIndex: appData.currentSentenceIndex,
-        lastSaved: Date.now()
-    }));
-    localStorage.setItem('misiro_completed_lessons', JSON.stringify(appData.completedLessons || {}));
+    MisiroData.saveProgress(appData.currentDay, appData.currentSentenceIndex);
+    MisiroData.saveCompletedLessons(appData.completedLessons || {});
 }
 
 function saveLanguagePreference() {
-    localStorage.setItem('misiro_language', appData.language);
+    MisiroData.setLanguage(appData.language);
 }
 
 // --- Spaced Repetition System ---
 // SM-2 inspired: each sentence gets ease, interval, and next review date.
 // Key format: "day:sentenceId" → { ease, interval, nextReview, attempts, successes }
 
-const SR_STORAGE_KEY = 'misiro_sr_data';
 const SR_MIN_EASE = 1.3;
 const SR_INITIAL_INTERVAL = 1;  // 1 day
 
 function loadSRData() {
-    try {
-        const data = localStorage.getItem(SR_STORAGE_KEY);
-        return data ? JSON.parse(data) : {};
-    } catch (e) {
-        return {};
-    }
+    return MisiroData.loadSRData();
 }
 
 function saveSRData(srData) {
-    localStorage.setItem(SR_STORAGE_KEY, JSON.stringify(srData));
+    MisiroData.saveSRData(srData);
 }
 
 function getSRKey(day, sentenceId) {
@@ -385,6 +365,19 @@ async function init() {
     setupSpeedSelection();
     setupDaySelection();
 
+    // Sync data from cloud if user is logged in
+    if (window.MisiroData && window.misiroAuth) {
+        misiroAuth.isAuthenticated().then(authed => {
+            if (authed) {
+                MisiroData.syncOnLogin().then(() => {
+                    // Reload state after sync in case cloud data was newer
+                    loadConversationState();
+                    populateDaySelect();
+                });
+            }
+        });
+    }
+
     // Load current lesson data + glossary before starting
     await Promise.all([
         loadLesson(appData.currentDay),
@@ -464,15 +457,15 @@ function setupSpeedSelection() {
     if (!dom.speedSelect) return;
 
     // Load saved speed preference
-    const savedSpeed = localStorage.getItem('misiro_voice_speed');
-    if (savedSpeed) {
-        appData.voiceSpeed = parseFloat(savedSpeed);
+    const savedSpeed = MisiroData.getVoiceSpeed();
+    if (savedSpeed !== null) {
+        appData.voiceSpeed = savedSpeed;
     }
     dom.speedSelect.value = appData.voiceSpeed.toString();
 
     dom.speedSelect.addEventListener('change', (e) => {
         appData.voiceSpeed = parseFloat(e.target.value);
-        localStorage.setItem('misiro_voice_speed', appData.voiceSpeed.toString());
+        MisiroData.setVoiceSpeed(appData.voiceSpeed);
         if (DEBUG) console.log('Voice speed changed to:', appData.voiceSpeed);
     });
 }
@@ -1089,15 +1082,15 @@ function finishExam() {
     if (fill) fill.style.width = '100%';
 
     // Save exam results
-    const examResults = JSON.parse(localStorage.getItem('misiro_exam_results') || '{}');
-    examResults[`week_${appData.examWeek}`] = {
+    const weekKey = `week_${appData.examWeek}`;
+    const examResultData = {
         score: appData.examScore,
         total: totalQ,
         percentage: percentage,
         date: Date.now(),
         wrongAnswers: appData.examWrongAnswers || []
     };
-    localStorage.setItem('misiro_exam_results', JSON.stringify(examResults));
+    MisiroData.saveExamResult(weekKey, examResultData);
 
     // Build wrong answers review
     let wrongReviewHTML = '';
@@ -1217,11 +1210,11 @@ function playTone(type) {
 
 function wait(ms) { return new Promise(resolve => setTimeout(resolve, ms)); }
 
-// Check if the TTS proxy is available (only on localhost dev server).
-// On production (Vercel, etc.) or file://, use browser SpeechSynthesis.
-const _hasLocalProxy = (window.location.hostname === 'localhost'
-    || window.location.hostname === '127.0.0.1')
+// TTS proxy: use Render backend API if configured, localhost if dev, else browser fallback
+const _MISIRO_API = window.MISIRO_CONFIG?.apiUrl || '';
+const _isLocalDev = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')
     && window.location.protocol !== 'file:';
+const _hasTTSProxy = !!_MISIRO_API || _isLocalDev;
 
 function _browserTTS(text, lang) {
     return new Promise((resolve) => {
@@ -1235,13 +1228,14 @@ function _browserTTS(text, lang) {
 }
 
 function playWebAudio(text, lang) {
-    // No local proxy — use browser SpeechSynthesis everywhere except localhost
-    if (!_hasLocalProxy) {
+    if (!_hasTTSProxy) {
         return _browserTTS(text, lang);
     }
 
     return new Promise((resolve) => {
-        const url = `/tts?q=${encodeURIComponent(text)}&tl=${lang}`;
+        // Use absolute URL to Render backend, or relative for localhost
+        const baseUrl = _MISIRO_API || '';
+        const url = `${baseUrl}/tts?q=${encodeURIComponent(text)}&tl=${lang}`;
 
         if (window.currentAudio) {
             window.currentAudio.pause();

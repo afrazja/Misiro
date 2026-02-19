@@ -225,6 +225,10 @@
         </div>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+    <script src="config.js"></script>
+    <script src="supabase-client.js"></script>
+    <script src="data-layer.js"></script>
     <script>
         // Category data with metadata
         const categories = [
@@ -256,7 +260,7 @@
         });
 
         function loadPreferences() {
-            const savedLang = localStorage.getItem('misiro_language');
+            const savedLang = MisiroData.getLanguage();
             if (savedLang) {
                 currentLang = savedLang;
             } else {
@@ -271,7 +275,7 @@
 
             langSelect.addEventListener('change', (e) => {
                 currentLang = e.target.value;
-                localStorage.setItem('misiro_language', currentLang);
+                MisiroData.setLanguage(currentLang);
                 renderCategories();
                 updatePageLanguage();
             });
