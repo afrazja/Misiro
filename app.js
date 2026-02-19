@@ -92,18 +92,21 @@ async function loadConversationState() {
     // Load completed lessons first (needed to determine which day to show)
     appData.completedLessons = await MisiroData.getCompletedLessons();
 
-    // Find the last completed day and show that lesson
+    // Find the first uncompleted lesson and go there
     try {
         const completedDays = Object.keys(appData.completedLessons || {}).map(Number).filter(d => dailyLessons[d]);
         if (completedDays.length > 0) {
             const lastCompletedDay = Math.max(...completedDays);
-            appData.currentDay = lastCompletedDay;
-            // If this day is completed, set index past end to show completion card
-            const lesson = dailyLessons[lastCompletedDay];
-            if (lesson && appData.completedLessons[lastCompletedDay]) {
-                appData.currentSentenceIndex = lesson.sentences.length;
-            } else {
+            const nextDay = lastCompletedDay + 1;
+            // If there's a next lesson, go to it (first uncompleted)
+            if (dailyLessons[nextDay]) {
+                appData.currentDay = nextDay;
                 appData.currentSentenceIndex = 0;
+            } else {
+                // All lessons completed — show the last one's completion card
+                appData.currentDay = lastCompletedDay;
+                const lesson = dailyLessons[lastCompletedDay];
+                appData.currentSentenceIndex = lesson ? lesson.sentences.length : 0;
             }
         } else {
             // No completed lessons — start at Day 1
