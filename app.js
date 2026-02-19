@@ -666,7 +666,6 @@ async function processNextStep() {
     const mySessionID = appData.sessionID; // Capture current session
     const lesson = getCurrentLesson();
     if (appData.currentSentenceIndex >= lesson.sentences.length) {
-        addSystemMessage("🎉 Completed!");
         const doneMsg = appData.language === 'fa' ? 'آفرین! درس تموم شد.' : 'Great job! You finished the lesson.';
         playAudio(doneMsg, 1.0, getTranslationLang());
 
@@ -678,6 +677,65 @@ async function processNextStep() {
         };
         await saveProgress();
         await updateDaySelectMarkers();
+
+        // Build completion card with optional "Next Day" button
+        const isFa = appData.language === 'fa';
+        const nextDay = appData.currentDay + 1;
+        const hasNextDay = !!dailyLessons[nextDay];
+        const nextLesson = hasNextDay ? dailyLessons[nextDay] : null;
+
+        let nextBtnHTML = '';
+        if (hasNextDay) {
+            const nextTitle = (isFa && nextLesson.titleFa) ? nextLesson.titleFa : nextLesson.title;
+            const btnLabel = isFa ? 'درس بعدی' : 'Next Lesson';
+            nextBtnHTML = `
+                <button id="btn-next-day" style="padding:12px 30px; border-radius:30px; border:none; background:linear-gradient(90deg,#2196F3,#42a5f5); color:white; cursor:pointer; font-size:1.05rem; font-weight:600; margin-top:15px; transition:all 0.3s ease;"
+                    onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 5px 20px rgba(33,150,243,0.4)'"
+                    onmouseout="this.style.transform='none'; this.style.boxShadow='none'">
+                    ${btnLabel} → <span style="font-weight:400; font-size:0.9em;">${nextTitle}</span>
+                </button>
+            `;
+        } else {
+            const allDoneMsg = isFa ? 'همه درس‌ها را تمام کردید! 🏆' : 'All lessons completed! 🏆';
+            nextBtnHTML = `<p style="color:#a0a0a0; margin-top:10px;">${allDoneMsg}</p>`;
+        }
+
+        const completionCard = document.createElement('div');
+        completionCard.className = 'message system';
+        completionCard.style.cssText = 'background:#e8f5e9; border-radius:15px; padding:25px; margin:10px;';
+        completionCard.innerHTML = `
+            <div class="text" style="text-align:center;">
+                <div style="font-size:2.5em; margin-bottom:10px;">🎉</div>
+                <h2 style="margin:0 0 5px; color:#2e7d32;">${isFa ? 'آفرین!' : 'Well Done!'}</h2>
+                <p style="color:#555; margin:0;">${isFa ? 'این درس را با موفقیت تمام کردید.' : 'You completed this lesson successfully.'}</p>
+                ${nextBtnHTML}
+            </div>
+        `;
+        dom.chatHistory.appendChild(completionCard);
+        scrollToBottom();
+
+        // Attach next day button handler
+        if (hasNextDay) {
+            const nextBtn = document.getElementById('btn-next-day');
+            if (nextBtn) {
+                nextBtn.addEventListener('click', async () => {
+                    appData.isExamMode = false;
+                    appData.currentDay = nextDay;
+                    appData.currentSentenceIndex = 0;
+                    appData.sessionID++;
+
+                    await saveProgress();
+                    await loadLesson(nextDay);
+
+                    dom.chatHistory.innerHTML = '<div class="date-divider">Today</div>';
+                    dom.answerLine.innerHTML = '';
+                    dom.daySelect.value = nextDay;
+                    updateScenarioTitle();
+                    renderScript();
+                    processNextStep();
+                });
+            }
+        }
         return;
     }
 

@@ -62,7 +62,8 @@
                     email,
                     password,
                     options: {
-                        data: { display_name: displayName || 'Learner' }
+                        data: { display_name: displayName || 'Learner' },
+                        emailRedirectTo: window.location.origin + '/home.html?confirmed=true'
                     }
                 });
                 if (error) return { user: null, error: error.message };

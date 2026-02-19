@@ -263,6 +263,30 @@
             color: #666;
         }
 
+        /* Confirmation Toast */
+        .confirm-toast {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%) translateY(-100px);
+            background: linear-gradient(135deg, #2ecc71, #27ae60);
+            color: #fff;
+            padding: 16px 32px;
+            border-radius: 14px;
+            font-size: 1rem;
+            font-weight: 600;
+            box-shadow: 0 10px 40px rgba(46, 204, 113, 0.4);
+            z-index: 2000;
+            transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .confirm-toast.show {
+            transform: translateX(-50%) translateY(0);
+        }
+
         /* Responsive */
         @media (max-width: 600px) {
             .home-header h1 {
@@ -285,6 +309,9 @@
 </head>
 
 <body>
+    <!-- Email Confirmation Toast -->
+    <div class="confirm-toast" id="confirm-toast">✅ Email confirmed! You can now sign in.</div>
+
     <div class="home-container">
         <!-- Top Bar with Profile -->
         <div class="top-bar">
@@ -508,6 +535,17 @@
 
         // --- Init ---
         document.addEventListener('DOMContentLoaded', async () => {
+            // Check for email confirmation redirect
+            const params = new URLSearchParams(window.location.search);
+            if (params.get('confirmed') === 'true') {
+                const toast = document.getElementById('confirm-toast');
+                if (toast) {
+                    setTimeout(() => toast.classList.add('show'), 100);
+                    setTimeout(() => toast.classList.remove('show'), 5000);
+                }
+                window.history.replaceState({}, '', window.location.pathname);
+            }
+
             const langSelect = document.getElementById('language-select');
 
             // Load saved language via data layer (async — server-first)
