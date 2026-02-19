@@ -608,6 +608,106 @@ const dailyLessons = {
             { id: 17, role: "sent", targetText: "Bitte schön, alles ausgefüllt.", translation: "Here you go, all filled out.", translationFa: "بفرمایید، همه چیز پر شد." },
             { id: 18, role: "received", audioText: "Perfekt. Hier ist Ihre Sendungsnummer. Sie können das Paket online verfolgen.", translation: "Perfect. Here is your tracking number. You can track the package online.", translationFa: "عالی. اینم شماره رهگیری شما. می‌تونید بسته رو آنلاین ردیابی کنید." }
         ]
+    },
+    37: {
+        title: "Day 37: At the Gym",
+        titleFa: "روز ۳۷: در باشگاه ورزشی",
+        _loaded: true,
+        sentences: [
+            { id: 1, role: "sent", targetText: "Hallo, ich möchte mich für eine Mitgliedschaft anmelden.", translation: "Hello, I'd like to sign up for a membership.", translationFa: "سلام، می‌خوام عضو باشگاه بشم." },
+            { id: 2, role: "received", audioText: "Willkommen! Haben Sie schon Erfahrung mit Fitnesstraining?", translation: "Welcome! Do you have experience with fitness training?", translationFa: "خوش اومدید! تجربه ورزش بدنسازی دارید؟" },
+            { id: 3, role: "sent", targetText: "Ein bisschen. Ich habe früher zu Hause trainiert.", translation: "A little. I used to work out at home.", translationFa: "یه کم. قبلاً خونه تمرین می‌کردم." },
+            { id: 4, role: "received", audioText: "Sehr gut. Wir bieten drei verschiedene Tarife an.", translation: "Very good. We offer three different plans.", translationFa: "خیلی خوب. ما سه تا پلن مختلف داریم." },
+            { id: 5, role: "sent", targetText: "Was ist im günstigsten Tarif enthalten?", translation: "What's included in the cheapest plan?", translationFa: "ارزون‌ترین پلن شامل چی میشه؟" },
+            { id: 6, role: "received", audioText: "Der Basistarif kostet dreißig Euro im Monat. Sie können alle Geräte nutzen.", translation: "The basic plan costs 30 euros per month. You can use all equipment.", translationFa: "پلن پایه ماهی سی یورو. می‌تونید از همه دستگاه‌ها استفاده کنید." },
+            { id: 7, role: "sent", targetText: "Gibt es auch Gruppenkurse wie Yoga oder Spinning?", translation: "Are there also group classes like yoga or spinning?", translationFa: "کلاس‌های گروهی مثل یوگا یا اسپینینگ هم هست؟" },
+            { id: 8, role: "received", audioText: "Ja, aber die sind im Premiumtarif für fünfundvierzig Euro enthalten.", translation: "Yes, but those are included in the premium plan for 45 euros.", translationFa: "بله، ولی اون‌ها تو پلن پرمیوم چهل و پنج یورویی هستن." },
+            { id: 9, role: "sent", targetText: "Kann ich das Fitnessstudio zuerst mal ausprobieren?", translation: "Can I try the gym first?", translationFa: "میتونم اول باشگاه رو امتحان کنم؟" },
+            { id: 10, role: "received", audioText: "Natürlich! Sie bekommen einen kostenlosen Probetag.", translation: "Of course! You get a free trial day.", translationFa: "البته! یه روز رایگان آزمایشی دارید." },
+            { id: 11, role: "sent", targetText: "Super. Welche Öffnungszeiten haben Sie?", translation: "Great. What are your opening hours?", translationFa: "عالی. ساعت کاریتون چطوره؟" },
+            { id: 12, role: "received", audioText: "Montag bis Freitag von sechs bis zweiundzwanzig Uhr, am Wochenende von acht bis zwanzig Uhr.", translation: "Monday to Friday from 6 to 10 PM, on weekends from 8 AM to 8 PM.", translationFa: "دوشنبه تا جمعه از شش تا بیست و دو، آخر هفته از هشت تا بیست." },
+            { id: 13, role: "sent", targetText: "Brauche ich eigene Sportkleidung oder kann ich hier etwas kaufen?", translation: "Do I need my own sportswear or can I buy something here?", translationFa: "لباس ورزشی خودم لازمه یا اینجا میتونم بخرم؟" },
+            { id: 14, role: "received", audioText: "Sie brauchen eigene Sportkleidung und Turnschuhe. Handtücher können Sie hier leihen.", translation: "You need your own sportswear and sneakers. You can borrow towels here.", translationFa: "لباس ورزشی و کفش خودتون لازمه. حوله رو میتونید اینجا قرض بگیرید." },
+            { id: 15, role: "sent", targetText: "Gibt es auch eine Sauna oder einen Pool?", translation: "Is there also a sauna or a pool?", translationFa: "سونا یا استخر هم دارید؟" },
+            { id: 16, role: "received", audioText: "Wir haben eine Sauna im Untergeschoss. Einen Pool leider nicht.", translation: "We have a sauna in the basement. Unfortunately no pool.", translationFa: "یه سونا تو زیرزمین داریم. متأسفانه استخر نداریم." },
+            { id: 17, role: "sent", targetText: "Gut, dann nehme ich den Basistarif. Kann ich bar bezahlen?", translation: "Good, then I'll take the basic plan. Can I pay cash?", translationFa: "خوب، پس پلن پایه رو می‌خوام. نقدی می‌تونم بدم؟" },
+            { id: 18, role: "received", audioText: "Ja, kein Problem. Hier ist Ihre Mitgliedskarte. Viel Spaß beim Training!", translation: "Yes, no problem. Here is your membership card. Have fun training!", translationFa: "بله، مشکلی نیست. اینم کارت عضویتتون. ورزش خوبی داشته باشید!" }
+        ]
+    },
+    38: {
+        title: "Day 38: Visiting a Museum",
+        titleFa: "روز ۳۸: بازدید از موزه",
+        _loaded: true,
+        sentences: [
+            { id: 1, role: "sent", targetText: "Zwei Eintrittskarten, bitte. Gibt es einen Studentenrabatt?", translation: "Two tickets, please. Is there a student discount?", translationFa: "دو تا بلیط لطفاً. تخفیف دانشجویی دارید؟" },
+            { id: 2, role: "received", audioText: "Ja, mit einem gültigen Studentenausweis zahlen Sie nur sechs Euro statt zehn.", translation: "Yes, with a valid student ID you pay only 6 euros instead of 10.", translationFa: "بله، با کارت دانشجویی معتبر فقط شش یورو به جای ده یورو." },
+            { id: 3, role: "sent", targetText: "Hier ist mein Ausweis. Wie lange dauert der Rundgang?", translation: "Here's my ID. How long does the tour take?", translationFa: "بفرمایید کارتم. تور چقدر طول میکشه؟" },
+            { id: 4, role: "received", audioText: "Ein normaler Rundgang dauert etwa anderthalb Stunden.", translation: "A normal tour takes about an hour and a half.", translationFa: "یه تور معمولی حدود یک ساعت و نیم طول میکشه." },
+            { id: 5, role: "sent", targetText: "Gibt es eine Führung auf Englisch?", translation: "Is there a guided tour in English?", translationFa: "تور با راهنمای انگلیسی‌زبان هم هست؟" },
+            { id: 6, role: "received", audioText: "Ja, die nächste englische Führung beginnt um vierzehn Uhr.", translation: "Yes, the next English guided tour starts at 2 PM.", translationFa: "بله، تور انگلیسی بعدی ساعت چهارده شروع میشه." },
+            { id: 7, role: "sent", targetText: "Darf man hier fotografieren?", translation: "Is photography allowed here?", translationFa: "عکاسی اینجا مجازه؟" },
+            { id: 8, role: "received", audioText: "Fotos ohne Blitz sind erlaubt. In einigen Sonderausstellungen ist es aber verboten.", translation: "Photos without flash are allowed. In some special exhibitions it's forbidden though.", translationFa: "عکس بدون فلش مجازه. ولی تو بعضی نمایشگاه‌های ویژه ممنوعه." },
+            { id: 9, role: "sent", targetText: "Was ist gerade die Hauptausstellung?", translation: "What's the main exhibition right now?", translationFa: "الان نمایشگاه اصلی چیه؟" },
+            { id: 10, role: "received", audioText: "Wir zeigen gerade moderne Kunst aus dem zwanzigsten Jahrhundert.", translation: "We're currently showing modern art from the 20th century.", translationFa: "الان هنر مدرن قرن بیستم رو نمایش میدیم." },
+            { id: 11, role: "sent", targetText: "Dieses Gemälde gefällt mir sehr. Wer hat es gemalt?", translation: "I really like this painting. Who painted it?", translationFa: "این نقاشی خیلی خوشم اومد. کی کشیده؟" },
+            { id: 12, role: "received", audioText: "Das ist ein Werk von Paul Klee aus dem Jahr neunzehnhundertzwanzig.", translation: "That's a work by Paul Klee from 1920.", translationFa: "اینیه اثر از پاول کله مربوط به سال هزار و نهصد و بیسته." },
+            { id: 13, role: "sent", targetText: "Gibt es einen Audioguide auf Deutsch?", translation: "Is there an audio guide in German?", translationFa: "راهنمای صوتی آلمانی دارید؟" },
+            { id: 14, role: "received", audioText: "Ja, auf Deutsch, Englisch und Französisch. Er kostet drei Euro extra.", translation: "Yes, in German, English, and French. It costs 3 euros extra.", translationFa: "بله، به آلمانی، انگلیسی و فرانسوی. سه یورو اضافه میشه." },
+            { id: 15, role: "sent", targetText: "Ich nehme den deutschen Audioguide. Das ist gut zum Üben.", translation: "I'll take the German audio guide. That's good for practice.", translationFa: "راهنمای آلمانی رو می‌خوام. برای تمرین خوبه." },
+            { id: 16, role: "received", audioText: "Gute Idee! Hier bitte. Geben Sie ihn am Ende am Empfang zurück.", translation: "Good idea! Here you go. Return it at the reception at the end.", translationFa: "ایده خوبیه! بفرمایید. آخرش به پذیرش برگردونید." },
+            { id: 17, role: "sent", targetText: "Wo ist die Garderobe? Ich möchte meine Jacke abgeben.", translation: "Where is the cloakroom? I'd like to leave my jacket.", translationFa: "رختکن کجاست؟ می‌خوام کاپشنم رو بذارم." },
+            { id: 18, role: "received", audioText: "Die Garderobe ist links neben dem Eingang. Sie ist kostenlos.", translation: "The cloakroom is to the left of the entrance. It's free.", translationFa: "رختکن سمت چپ ورودیه. رایگانه." }
+        ]
+    },
+    39: {
+        title: "Day 39: At the Immigration Office",
+        titleFa: "روز ۳۹: در اداره مهاجرت",
+        _loaded: true,
+        sentences: [
+            { id: 1, role: "sent", targetText: "Guten Tag, ich habe einen Termin um zehn Uhr.", translation: "Good day, I have an appointment at 10 o'clock.", translationFa: "روز بخیر، ساعت ده وقت ملاقات دارم." },
+            { id: 2, role: "received", audioText: "Ihren Reisepass und Ihre Meldebestätigung, bitte.", translation: "Your passport and registration confirmation, please.", translationFa: "پاسپورت و تأییدیه ثبت آدرستون، لطفاً." },
+            { id: 3, role: "sent", targetText: "Hier bitte. Ich möchte meine Aufenthaltserlaubnis verlängern.", translation: "Here you go. I'd like to extend my residence permit.", translationFa: "بفرمایید. می‌خوام اجازه اقامتم رو تمدید کنم." },
+            { id: 4, role: "received", audioText: "Haben Sie auch Ihre Krankenversicherung und den Arbeitsvertrag dabei?", translation: "Do you also have your health insurance and employment contract with you?", translationFa: "بیمه سلامت و قرارداد کارتون رو هم آوردید؟" },
+            { id: 5, role: "sent", targetText: "Ja, hier sind alle Unterlagen. Ich habe auch die Lohnabrechnung mitgebracht.", translation: "Yes, here are all the documents. I also brought the pay slip.", translationFa: "بله، همه مدارک اینجاست. فیش حقوقی رو هم آوردم." },
+            { id: 6, role: "received", audioText: "Sehr gut. Ihr aktueller Aufenthaltstitel läuft am fünfzehnten ab, richtig?", translation: "Very good. Your current residence permit expires on the 15th, correct?", translationFa: "خیلی خوب. اجازه اقامت فعلیتون پانزدهم تموم میشه، درسته؟" },
+            { id: 7, role: "sent", targetText: "Ja, genau. Deshalb möchte ich rechtzeitig verlängern.", translation: "Yes, exactly. That's why I want to extend it on time.", translationFa: "بله، دقیقاً. به همین خاطر می‌خوام به موقع تمدید کنم." },
+            { id: 8, role: "received", audioText: "Das ist sehr vernünftig. Wie lange arbeiten Sie schon bei Ihrer Firma?", translation: "That's very sensible. How long have you been working at your company?", translationFa: "خیلی عاقلانه‌ست. چند وقته تو شرکتتون کار می‌کنید؟" },
+            { id: 9, role: "sent", targetText: "Seit acht Monaten. Ich bin als Softwareentwickler angestellt.", translation: "For eight months. I'm employed as a software developer.", translationFa: "هشت ماهه. به عنوان برنامه‌نویس استخدام هستم." },
+            { id: 10, role: "received", audioText: "Gut. Haben Sie in der Zwischenzeit einen Integrationskurs besucht?", translation: "Good. Have you attended an integration course in the meantime?", translationFa: "خوب. تو این مدت کلاس ادغام رفتید؟" },
+            { id: 11, role: "sent", targetText: "Ja, ich habe den B1-Kurs abgeschlossen. Hier ist mein Zertifikat.", translation: "Yes, I completed the B1 course. Here's my certificate.", translationFa: "بله، دوره B1 رو تموم کردم. اینم گواهینامه‌ام." },
+            { id: 12, role: "received", audioText: "Ausgezeichnet! Das wird Ihren Antrag positiv beeinflussen.", translation: "Excellent! That will positively influence your application.", translationFa: "عالی! این تأثیر مثبتی روی درخواستتون میذاره." },
+            { id: 13, role: "sent", targetText: "Wie lange wird die Bearbeitung dauern?", translation: "How long will the processing take?", translationFa: "بررسی پرونده چقدر طول میکشه؟" },
+            { id: 14, role: "received", audioText: "In der Regel vier bis sechs Wochen. Sie bekommen eine Fiktionsbescheinigung.", translation: "Usually four to six weeks. You'll receive a fiction certificate.", translationFa: "معمولاً چهار تا شش هفته. یه گواهی فیکتیون دریافت می‌کنید." },
+            { id: 15, role: "sent", targetText: "Was bedeutet eine Fiktionsbescheinigung?", translation: "What does a fiction certificate mean?", translationFa: "گواهی فیکتیون یعنی چی؟" },
+            { id: 16, role: "received", audioText: "Sie dürfen damit in Deutschland bleiben und arbeiten, bis Ihr neuer Titel fertig ist.", translation: "It allows you to stay and work in Germany until your new permit is ready.", translationFa: "باهاش میتونید تو آلمان بمونید و کار کنید تا اقامت جدیدتون آماده بشه." },
+            { id: 17, role: "sent", targetText: "Muss ich noch etwas extra bezahlen?", translation: "Do I need to pay anything extra?", translationFa: "هزینه اضافی هم باید بدم؟" },
+            { id: 18, role: "received", audioText: "Die Gebühr beträgt hundert Euro. Sie können mit Karte oder bar bezahlen.", translation: "The fee is 100 euros. You can pay by card or cash.", translationFa: "هزینه صد یوروه. می‌تونید با کارت یا نقدی پرداخت کنید." }
+        ]
+    },
+    40: {
+        title: "Day 40: Cooking Together",
+        titleFa: "روز ۴۰: آشپزی با هم",
+        _loaded: true,
+        sentences: [
+            { id: 1, role: "sent", targetText: "Was kochen wir heute Abend? Ich habe Hunger.", translation: "What are we cooking tonight? I'm hungry.", translationFa: "امشب چی بپزیم؟ گشنمه." },
+            { id: 2, role: "received", audioText: "Wie wäre es mit Pasta? Ich habe ein tolles Rezept.", translation: "How about pasta? I have a great recipe.", translationFa: "پاستا چطوره؟ یه دستور غذای عالی دارم." },
+            { id: 3, role: "sent", targetText: "Gute Idee! Welche Zutaten brauchen wir?", translation: "Good idea! What ingredients do we need?", translationFa: "ایده خوبیه! چه مواد اولیه‌ای لازم داریم؟" },
+            { id: 4, role: "received", audioText: "Nudeln, Tomaten, Knoblauch, Zwiebeln, Olivenöl und frisches Basilikum.", translation: "Pasta, tomatoes, garlic, onions, olive oil, and fresh basil.", translationFa: "ماکارونی، گوجه، سیر، پیاز، روغن زیتون و ریحان تازه." },
+            { id: 5, role: "sent", targetText: "Ich glaube, wir haben keinen Knoblauch mehr. Ich gehe schnell einkaufen.", translation: "I think we're out of garlic. I'll quickly go shopping.", translationFa: "فکر کنم سیر نداریم. سریع میرم خرید." },
+            { id: 6, role: "received", audioText: "Bring bitte auch Parmesan mit! Den brauchen wir zum Bestreuen.", translation: "Please also bring Parmesan! We need it for sprinkling.", translationFa: "پنیر پارمزان هم بیار لطفاً! برای روش لازمه." },
+            { id: 7, role: "sent", targetText: "Ich bin zurück. Soll ich die Zwiebeln schneiden?", translation: "I'm back. Should I chop the onions?", translationFa: "برگشتم. پیازها رو خرد کنم؟" },
+            { id: 8, role: "received", audioText: "Ja bitte. Schneide sie in kleine Würfel. Ich koche schon das Wasser.", translation: "Yes please. Dice them into small cubes. I'm already boiling the water.", translationFa: "بله لطفاً. ریز خردشون کن. من آب رو جوش میذارم." },
+            { id: 9, role: "sent", targetText: "Wie viel Salz kommt ins Wasser?", translation: "How much salt goes into the water?", translationFa: "چقدر نمک بریزم تو آب؟" },
+            { id: 10, role: "received", audioText: "Etwa einen Teelöffel. Das Wasser soll leicht salzig schmecken.", translation: "About one teaspoon. The water should taste slightly salty.", translationFa: "حدود یه قاشق چایخوری. آب باید یه کم شور بشه." },
+            { id: 11, role: "sent", targetText: "Die Zwiebeln sind fertig. Was mache ich als Nächstes?", translation: "The onions are done. What do I do next?", translationFa: "پیازها آماده‌ن. بعدش چیکار کنم؟" },
+            { id: 12, role: "received", audioText: "Brate sie in Olivenöl bei mittlerer Hitze an, bis sie goldbraun sind.", translation: "Fry them in olive oil on medium heat until they're golden brown.", translationFa: "با روغن زیتون روی حرارت متوسط سرخشون کن تا طلایی بشن." },
+            { id: 13, role: "sent", targetText: "Es riecht schon fantastisch! Wann kommen die Tomaten dazu?", translation: "It smells fantastic already! When do the tomatoes go in?", translationFa: "بوش عالیه! کِی گوجه‌ها رو اضافه کنم؟" },
+            { id: 14, role: "received", audioText: "Jetzt! Gib die geschnittenen Tomaten dazu und lass alles zehn Minuten köcheln.", translation: "Now! Add the chopped tomatoes and let everything simmer for ten minutes.", translationFa: "الان! گوجه‌های خردشده رو اضافه کن و ده دقیقه بذار بجوشه." },
+            { id: 15, role: "sent", targetText: "Die Nudeln sind auch fertig. Soll ich sie abgießen?", translation: "The pasta is also done. Should I drain it?", translationFa: "ماکارونی هم آماده‌ست. آبش رو بریزم؟" },
+            { id: 16, role: "received", audioText: "Ja, aber heb eine Tasse Nudelwasser auf. Das macht die Soße cremig.", translation: "Yes, but save a cup of pasta water. That makes the sauce creamy.", translationFa: "بله، ولی یه لیوان از آب ماکارونی رو نگه‌دار. سُس رو خامه‌ای میکنه." },
+            { id: 17, role: "sent", targetText: "Das schmeckt unglaublich gut! Du bist ein toller Koch.", translation: "This tastes incredibly good! You're a great cook.", translationFa: "طعمش فوق‌العاده‌ست! تو آشپز خیلی خوبی هستی." },
+            { id: 18, role: "received", audioText: "Danke! Du hast auch super geholfen. Nächstes Mal kochen wir persisches Essen.", translation: "Thanks! You helped great too. Next time we'll cook Persian food.", translationFa: "ممنون! تو هم عالی کمک کردی. دفعه بعد غذای ایرانی می‌پزیم." }
+        ]
     }
 };
 
