@@ -439,16 +439,21 @@
             statusEl.textContent = 'Uploading...';
             statusEl.className = 'status-msg success';
 
-            const { url, error } = await misiroAuth.uploadAvatar(file);
-            if (error) {
-                statusEl.textContent = error;
+            const result = await misiroAuth.uploadAvatar(file);
+            if (result.error) {
+                statusEl.textContent = result.error;
                 statusEl.className = 'status-msg error';
             } else {
-                MisiroData.setAvatarUrl(url);
+                MisiroData.setAvatarUrl(result.url);
                 renderAvatar();
-                statusEl.textContent = 'Photo updated!';
-                statusEl.className = 'status-msg success';
-                setTimeout(() => { statusEl.style.display = 'none'; }, 3000);
+                if (result.warning) {
+                    statusEl.textContent = 'Photo set! Note: ' + result.warning;
+                    statusEl.className = 'status-msg success';
+                } else {
+                    statusEl.textContent = 'Photo updated!';
+                    statusEl.className = 'status-msg success';
+                    setTimeout(() => { statusEl.style.display = 'none'; }, 3000);
+                }
             }
 
             // Reset file input

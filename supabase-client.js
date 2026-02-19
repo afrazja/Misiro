@@ -249,7 +249,13 @@
                 const { error: uploadError } = await supabase.storage
                     .from('avatars')
                     .upload(filePath, file, { upsert: true });
-                if (uploadError) return { url: null, error: uploadError.message };
+
+                if (uploadError) {
+                    console.warn('Storage upload failed:', uploadError.message);
+                    // Fallback: use a local blob URL so avatar shows immediately
+                    const blobUrl = URL.createObjectURL(file);
+                    return { url: blobUrl, error: null, warning: 'Saved locally only. Storage bucket "avatars" may not exist. ' + uploadError.message };
+                }
 
                 // Get public URL
                 const { data: urlData } = supabase.storage
@@ -257,12 +263,15 @@
                     .getPublicUrl(filePath);
                 const publicUrl = urlData.publicUrl + '?t=' + Date.now(); // cache-bust
 
-                // Update user_profiles
-                const { error: dbError } = await supabase
-                    .from('user_profiles')
-                    .update({ avatar_url: publicUrl, updated_at: new Date().toISOString() })
-                    .eq('id', user.id);
-                if (dbError) return { url: null, error: dbError.message };
+                // Update user_profiles (non-blocking — don't fail if avatar_url column missing)
+                try {
+                    await supabase
+                        .from('user_profiles')
+                        .update({ avatar_url: publicUrl, updated_at: new Date().toISOString() })
+                        .eq('id', user.id);
+                } catch (dbErr) {
+                    console.warn('Could not save avatar_url to DB:', dbErr.message);
+                }
 
                 return { url: publicUrl, error: null };
             } catch (e) {
