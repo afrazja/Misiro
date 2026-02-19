@@ -36,7 +36,6 @@ const dom = {
     chatHistory: document.getElementById('chat-history'),
     answerLine: document.getElementById('answer-line'),
     btnSend: document.getElementById('btn-send'),
-    btnNext: document.getElementById('btn-next'),
     daySelect: document.getElementById('day-select'),
     blindModeToggle: document.getElementById('blind-mode-toggle'),
     voiceEvalToggle: document.getElementById('voice-eval-toggle'),
@@ -760,14 +759,19 @@ async function processNextStep() {
         visualContent = createInteractiveSentence(germanText);
     }
 
+    const isFaDir = appData.language === 'fa';
+    const nextLabel = isFaDir ? 'بعدی ←' : 'Next ➡';
+
     const teachBubble = document.createElement('div');
     teachBubble.className = 'message instruction';
     teachBubble.innerHTML = `
-        <div style="font-size:1.2em; color:#333; margin-bottom:5px; direction:${appData.language === 'fa' ? 'rtl' : 'ltr'};">${translationText}</div>
+        <div style="font-size:1.2em; color:#333; margin-bottom:5px; direction:${isFaDir ? 'rtl' : 'ltr'};">${translationText}</div>
         <div style="font-weight:bold; font-size:1.1em; color:#555; display:flex; align-items:center; gap:10px;">
             <span id="speaker-icon" style="cursor:pointer; font-size:1.2em;" title="Play Full Sentence">🔊</span>
             <span id="teach-text-container">${visualContent}</span>
-            <span id="inline-mic-icon" style="cursor:pointer; font-size:1.2em; margin-left:10px; border:1px solid #ccc; border-radius:50%; padding:5px; background:#fff;" title="Practice Speaking">🎙️</span>
+            <button id="btn-inline-next" style="padding:6px 16px; border-radius:20px; border:none; background:#4CAF50; color:white; cursor:pointer; font-weight:bold; font-size:0.95em; margin-left:10px; transition:all 0.3s ease;"
+                onmouseover="this.style.transform='translateY(-1px)'; this.style.boxShadow='0 3px 10px rgba(76,175,80,0.3)'"
+                onmouseout="this.style.transform='none'; this.style.boxShadow='none'">${nextLabel}</button>
         </div>
     `;
     dom.chatHistory.appendChild(teachBubble);
@@ -782,11 +786,11 @@ async function processNextStep() {
         };
     }
 
-    // Add Listener for Inline Mic (Practice)
-    const micIcon = teachBubble.querySelector('#inline-mic-icon');
-    if (micIcon) {
-        micIcon.onclick = () => {
-            prepareUserTurn(currentStep, germanText);
+    // Add Listener for Inline Next Button
+    const inlineNextBtn = teachBubble.querySelector('#btn-inline-next');
+    if (inlineNextBtn) {
+        inlineNextBtn.onclick = () => {
+            appData.manualNext();
         };
     }
 
