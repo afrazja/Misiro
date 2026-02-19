@@ -190,8 +190,9 @@ async function loadPreferences() {
     }
 
     const savedSpeed = window.MisiroData ? await MisiroData.getVoiceSpeed() : localStorage.getItem('misiro_voice_speed');
-    if (savedSpeed !== null) {
-        voiceSpeed = typeof savedSpeed === 'number' ? savedSpeed : parseFloat(savedSpeed);
+    if (savedSpeed !== null && savedSpeed !== undefined) {
+        const parsed = typeof savedSpeed === 'number' ? savedSpeed : parseFloat(savedSpeed);
+        if (!isNaN(parsed) && isFinite(parsed)) voiceSpeed = parsed;
     }
 }
 
@@ -347,7 +348,8 @@ function _browserTTS(text, lang, rate) {
     return new Promise((resolve) => {
         const u = new SpeechSynthesisUtterance(text);
         u.lang = lang;
-        u.rate = rate || voiceSpeed;
+        const r = rate || voiceSpeed || 1.0;
+        u.rate = (isFinite(r) && r > 0) ? r : 1.0;
         u.onend = resolve;
         u.onerror = () => resolve();
         window.speechSynthesis.speak(u);
