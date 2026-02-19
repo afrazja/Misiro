@@ -604,9 +604,7 @@ body {
     body.lesson-page {
         padding: 0;
         background: #e5ddd5;
-        min-height: 100vh;
         height: 100vh;
-        height: 100dvh;
         overflow: hidden;
     }
 
@@ -615,8 +613,7 @@ body {
         flex-direction: column;
         max-width: 100%;
         gap: 0;
-        height: 100vh;
-        height: 100dvh;
+        height: 100%;
         border-radius: 0;
         overflow: hidden;
     }

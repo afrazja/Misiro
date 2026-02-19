@@ -420,22 +420,47 @@ let _userClickedStart = false;
 function _startLessonIfClicked() {
     if (!_userClickedStart || !window._misiroReady) return;
     const overlay = document.getElementById('start-overlay');
+
+    // On mobile, lock the viewport height to current innerHeight BEFORE removing overlay
+    // This prevents the jump caused by browser chrome collapsing and dvh changing
+    if (window.innerWidth <= 600) {
+        const lockedH = window.innerHeight;
+        document.body.style.height = lockedH + 'px';
+        document.body.style.minHeight = lockedH + 'px';
+        const container = document.querySelector('.container');
+        if (container) {
+            container.style.height = lockedH + 'px';
+        }
+        const panel = document.getElementById('script-view');
+        if (panel) panel.style.height = Math.round(lockedH * 0.28) + 'px';
+
+        // After browser chrome finishes animating (~400ms), switch to stable vh
+        setTimeout(() => {
+            const newH = window.innerHeight;
+            document.body.style.height = newH + 'px';
+            document.body.style.minHeight = newH + 'px';
+            if (container) container.style.height = newH + 'px';
+            if (panel) panel.style.height = Math.round(newH * 0.28) + 'px';
+        }, 400);
+
+        // Also listen for resize to update locked height
+        let resizeTimer;
+        window.addEventListener('resize', function _onResize() {
+            clearTimeout(resizeTimer);
+            resizeTimer = setTimeout(() => {
+                const h = window.innerHeight;
+                document.body.style.height = h + 'px';
+                document.body.style.minHeight = h + 'px';
+                if (container) container.style.height = h + 'px';
+            }, 100);
+        });
+    }
+
     if (overlay) overlay.style.display = 'none';
+
     // Resume AudioContext
     const ctx = new (window.AudioContext || window.webkitAudioContext)();
     if (ctx.state === 'suspended') ctx.resume();
-
-    // Recalculate layout after overlay removal — mobile browser chrome may resize
-    // Do it immediately, after 1 frame, and after browser chrome animation (300ms)
-    function _recalcMobileLayout() {
-        if (window.innerWidth > 600) return;
-        const panel = document.getElementById('script-view');
-        if (panel) panel.style.height = (window.innerHeight * 0.28) + 'px';
-        const chatH = document.getElementById('chat-history');
-        if (chatH) chatH.scrollTop = 0;
-    }
-    requestAnimationFrame(_recalcMobileLayout);
-    setTimeout(_recalcMobileLayout, 350);
 
     // Start flow
     processNextStep();
