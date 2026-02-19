@@ -90,26 +90,34 @@ function loadConversationState() {
         appData.language = savedLang;
     }
 
-    // Load saved progress
-    const progress = MisiroData.getProgress();
-    if (progress) {
-        try {
-            if (progress.currentDay && dailyLessons[progress.currentDay]) {
-                appData.currentDay = progress.currentDay;
-            }
-            if (typeof progress.currentSentenceIndex === 'number' && progress.currentSentenceIndex >= 0) {
-                const lesson = dailyLessons[appData.currentDay];
-                if (lesson && progress.currentSentenceIndex < lesson.sentences.length) {
-                    appData.currentSentenceIndex = progress.currentSentenceIndex;
+    // Load completed lessons first (needed to determine which day to show)
+    appData.completedLessons = MisiroData.getCompletedLessons();
+
+    // Find the last completed day and show that lesson
+    try {
+        const completedDays = Object.keys(appData.completedLessons || {}).map(Number).filter(d => dailyLessons[d]);
+        if (completedDays.length > 0) {
+            const lastCompletedDay = Math.max(...completedDays);
+            appData.currentDay = lastCompletedDay;
+            appData.currentSentenceIndex = 0; // Start from beginning of completed lesson
+        } else {
+            // No completed lessons — fall back to saved progress (first-time user)
+            const progress = MisiroData.getProgress();
+            if (progress) {
+                if (progress.currentDay && dailyLessons[progress.currentDay]) {
+                    appData.currentDay = progress.currentDay;
+                }
+                if (typeof progress.currentSentenceIndex === 'number' && progress.currentSentenceIndex >= 0) {
+                    const lesson = dailyLessons[appData.currentDay];
+                    if (lesson && progress.currentSentenceIndex < lesson.sentences.length) {
+                        appData.currentSentenceIndex = progress.currentSentenceIndex;
+                    }
                 }
             }
-        } catch (e) {
-            console.error('Failed to load progress:', e);
         }
+    } catch (e) {
+        console.error('Failed to load progress:', e);
     }
-
-    // Load completed lessons
-    appData.completedLessons = MisiroData.getCompletedLessons();
 
     if (DEBUG) console.log('Loaded state - language:', appData.language, 'day:', appData.currentDay, 'sentence:', appData.currentSentenceIndex);
 }
