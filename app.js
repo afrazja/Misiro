@@ -1226,7 +1226,7 @@ const _hasTTSProxy = !!_MISIRO_API || _isLocalDev;
 
 // Stop ALL audio sources (browser TTS + proxy Audio element)
 function stopAllAudio() {
-    stopAllAudio();
+    window.speechSynthesis.cancel();
     if (window.currentAudio) {
         window.currentAudio.pause();
         window.currentAudio.currentTime = 0;
