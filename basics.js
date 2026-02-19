@@ -330,13 +330,11 @@ function toggleCategory(key) {
 }
 
 // =====================
-// AUDIO (Render TTS Proxy with browser fallback)
-// Mobile: skip proxy entirely — use speechSynthesis directly from click handler
+// AUDIO — 3-tier: Google TTS direct → Render proxy → browser speechSynthesis
+// Google TTS works on all devices (returns MP3), no proxy needed
 // =====================
 const _MISIRO_API = window.MISIRO_CONFIG?.apiUrl || '';
 const _isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-let _proxyAvailable = !!_MISIRO_API && !_isMobile; // Disable proxy on mobile
-let _speechUnlocked = false; // iOS requires first speak from user gesture
 
 function stopAllAudio() {
     window.speechSynthesis.cancel();
@@ -347,19 +345,8 @@ function stopAllAudio() {
     }
 }
 
-// Unlock speechSynthesis on iOS — must be called synchronously from a click/touch
-function _unlockSpeech() {
-    if (_speechUnlocked) return;
-    _speechUnlocked = true;
-    const u = new SpeechSynthesisUtterance('');
-    u.volume = 0;
-    u.lang = 'de-DE';
-    window.speechSynthesis.speak(u);
-}
-
 function _browserTTS(text, lang, rate) {
     return new Promise((resolve) => {
-        // iOS bug: speechSynthesis can get stuck. Cancel first.
         window.speechSynthesis.cancel();
         const u = new SpeechSynthesisUtterance(text);
         u.lang = lang;
@@ -367,14 +354,11 @@ function _browserTTS(text, lang, rate) {
         u.rate = (isFinite(r) && r > 0) ? r : 1.0;
         u.onend = resolve;
         u.onerror = () => resolve();
-        // iOS 15+ bug: speech can pause after ~15s. Workaround: resume periodically
-        let resumeTimer;
         if (_isMobile) {
-            resumeTimer = setInterval(() => {
-                if (window.speechSynthesis.speaking && !window.speechSynthesis.paused) return;
-                window.speechSynthesis.resume();
+            const timer = setInterval(() => {
+                if (!window.speechSynthesis.speaking || window.speechSynthesis.paused) window.speechSynthesis.resume();
             }, 5000);
-            const cleanup = () => clearInterval(resumeTimer);
+            const cleanup = () => clearInterval(timer);
             u.onend = () => { cleanup(); resolve(); };
             u.onerror = () => { cleanup(); resolve(); };
         }
@@ -382,13 +366,41 @@ function _browserTTS(text, lang, rate) {
     });
 }
 
-function playWebAudio(text, lang) {
-    // On mobile, always use browser TTS directly (proxy Audio gets blocked)
-    if (!_proxyAvailable) {
-        return _browserTTS(text, lang, voiceSpeed);
-    }
+// Play audio via Google Translate TTS (direct MP3 URL — works on all devices)
+function _playGoogleTTS(text, lang) {
+    const shortLang = lang.split('-')[0];
+    const url = `https://translate.google.com/translate_tts?ie=UTF-8&q=${encodeURIComponent(text)}&tl=${shortLang}&client=tw-ob`;
     return new Promise((resolve) => {
-        const url = `${_MISIRO_API}/tts?q=${encodeURIComponent(text)}&tl=${lang}`;
+        if (window.currentAudio) {
+            window.currentAudio.pause();
+            window.currentAudio = null;
+        }
+        const audio = new Audio(url);
+        window.currentAudio = audio;
+        audio.onended = () => resolve();
+        audio.onerror = () => resolve('error');
+        audio.play().catch(() => resolve('error'));
+    });
+}
+
+function playTTS(text, lang) {
+    // Tier 1: Google Translate TTS (direct, works everywhere)
+    return _playGoogleTTS(text, lang).then((result) => {
+        if (result === 'error') {
+            // Tier 2: Render proxy (if available)
+            if (_MISIRO_API) {
+                return _playProxy(text, lang);
+            }
+            // Tier 3: Browser speechSynthesis
+            return _browserTTS(text, lang, voiceSpeed);
+        }
+    });
+}
+
+function _playProxy(text, lang) {
+    const shortLang = lang.split('-')[0];
+    const url = `${_MISIRO_API}/tts?q=${encodeURIComponent(text)}&tl=${shortLang}`;
+    return new Promise((resolve) => {
         if (window.currentAudio) {
             window.currentAudio.pause();
             window.currentAudio = null;
@@ -397,13 +409,11 @@ function playWebAudio(text, lang) {
         const fallback = () => {
             if (fellBack) return;
             fellBack = true;
-            _proxyAvailable = false;
-            console.warn('TTS proxy unavailable, using browser speech');
             _browserTTS(text, lang, voiceSpeed).then(resolve);
         };
-        const audio = new Audio();
-        audio.src = url;
+        const audio = new Audio(url);
         window.currentAudio = audio;
+        audio.onended = () => { if (!fellBack) resolve(); };
         audio.onerror = fallback;
         const timeout = setTimeout(fallback, 3000);
         audio.onended = () => { clearTimeout(timeout); if (!fellBack) resolve(); };
@@ -412,16 +422,14 @@ function playWebAudio(text, lang) {
 }
 
 function playWord(text) {
-    _unlockSpeech();
     stopAllAudio();
-    playWebAudio(text, 'de-DE');
+    playTTS(text, 'de-DE');
 }
 
 function playExample(text) {
     if (!text) return;
-    _unlockSpeech();
     stopAllAudio();
-    playWebAudio(text, 'de-DE');
+    playTTS(text, 'de-DE');
 }
 
 // Make functions globally available

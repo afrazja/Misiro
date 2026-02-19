@@ -436,8 +436,6 @@ function _startLessonIfClicked() {
     if (startBtn) {
         startBtn.addEventListener('click', () => {
             _userClickedStart = true;
-            // Unlock audio on mobile (iOS requires first speak from user gesture)
-            _unlockSpeech();
             // Show loading state on button
             startBtn.textContent = '⏳ Loading...';
             startBtn.disabled = true;
@@ -844,7 +842,6 @@ async function processNextStep() {
     const speakerIcon = teachBubble.querySelector('#speaker-icon');
     if (speakerIcon) {
         speakerIcon.onclick = async () => {
-            _unlockSpeech();
             stopAllAudio();
             if (appData.isListening && recognition) recognition.stop();
             await playAudioPromise(germanText, 0.8, 'de-DE');
@@ -864,7 +861,6 @@ async function processNextStep() {
     if (isBlindMode && textContainer) {
         textContainer.style.cursor = 'pointer';
         textContainer.onclick = async () => {
-            _unlockSpeech();
             stopAllAudio();
             if (appData.isListening && recognition) recognition.stop();
             await playAudioPromise(germanText, 0.8, 'de-DE');
@@ -1361,14 +1357,14 @@ function playTone(type) {
 
 function wait(ms) { return new Promise(resolve => setTimeout(resolve, ms)); }
 
-// TTS proxy: use Render backend API if configured, localhost if dev, else browser fallback
-// Mobile: skip proxy entirely — Audio element playback gets blocked without direct gesture
+// =====================
+// AUDIO — 3-tier: Google TTS direct → Render proxy → browser speechSynthesis
+// Google TTS works on all devices (returns MP3), no proxy needed
+// =====================
 const _MISIRO_API = window.MISIRO_CONFIG?.apiUrl || '';
 const _isLocalDev = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')
     && window.location.protocol !== 'file:';
 const _isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-let _proxyAvailable = (!!_MISIRO_API || _isLocalDev) && !_isMobile; // Disabled on mobile + first failure
-let _speechUnlocked = false;
 
 // Stop ALL audio sources (browser TTS + proxy Audio element)
 function stopAllAudio() {
@@ -1380,33 +1376,20 @@ function stopAllAudio() {
     }
 }
 
-// Unlock speechSynthesis on iOS — must be called synchronously from a click/touch
-function _unlockSpeech() {
-    if (_speechUnlocked) return;
-    _speechUnlocked = true;
-    const u = new SpeechSynthesisUtterance('');
-    u.volume = 0;
-    u.lang = 'de-DE';
-    window.speechSynthesis.speak(u);
-}
-
-function _browserTTS(text, lang) {
+function _browserTTS(text, lang, rate) {
     return new Promise((resolve) => {
-        // iOS bug: speechSynthesis can get stuck. Cancel first.
         window.speechSynthesis.cancel();
         const u = new SpeechSynthesisUtterance(text);
         u.lang = lang === 'fa' ? 'fa-IR' : lang === 'en' ? 'en-US' : lang;
-        u.rate = 0.9;
+        const r = rate || 0.9;
+        u.rate = (isFinite(r) && r > 0) ? r : 1.0;
         u.onend = resolve;
         u.onerror = () => resolve();
-        // iOS 15+ bug: speech pauses after ~15s. Workaround: resume periodically
-        let resumeTimer;
         if (_isMobile) {
-            resumeTimer = setInterval(() => {
-                if (window.speechSynthesis.speaking && !window.speechSynthesis.paused) return;
-                window.speechSynthesis.resume();
+            const timer = setInterval(() => {
+                if (!window.speechSynthesis.speaking || window.speechSynthesis.paused) window.speechSynthesis.resume();
             }, 5000);
-            const cleanup = () => clearInterval(resumeTimer);
+            const cleanup = () => clearInterval(timer);
             u.onend = () => { cleanup(); resolve(); };
             u.onerror = () => { cleanup(); resolve(); };
         }
@@ -1414,38 +1397,56 @@ function _browserTTS(text, lang) {
     });
 }
 
-function playWebAudio(text, lang) {
-    // On mobile, always use browser TTS directly (proxy Audio gets blocked)
-    if (!_proxyAvailable) {
-        return _browserTTS(text, lang);
-    }
-
+// Play audio via Google Translate TTS (direct MP3 URL — works on all devices)
+function _playGoogleTTS(text, lang) {
+    const shortLang = lang.split('-')[0];
+    const url = `https://translate.google.com/translate_tts?ie=UTF-8&q=${encodeURIComponent(text)}&tl=${shortLang}&client=tw-ob`;
     return new Promise((resolve) => {
-        const baseUrl = _MISIRO_API || '';
-        const url = `${baseUrl}/tts?q=${encodeURIComponent(text)}&tl=${lang}`;
-
         if (window.currentAudio) {
             window.currentAudio.pause();
             window.currentAudio = null;
         }
+        const audio = new Audio(url);
+        window.currentAudio = audio;
+        audio.onended = () => resolve();
+        audio.onerror = () => resolve('error');
+        audio.play().catch(() => resolve('error'));
+    });
+}
 
+function _playProxy(text, lang) {
+    const baseUrl = _MISIRO_API || '';
+    const shortLang = lang.split('-')[0];
+    const url = `${baseUrl}/tts?q=${encodeURIComponent(text)}&tl=${shortLang}`;
+    return new Promise((resolve) => {
+        if (window.currentAudio) {
+            window.currentAudio.pause();
+            window.currentAudio = null;
+        }
         let fellBack = false;
-        const fallback = (e) => {
+        const fallback = () => {
             if (fellBack) return;
             fellBack = true;
-            _proxyAvailable = false;
-            if (DEBUG) console.warn("TTS proxy unavailable, using browser speech:", e);
             _browserTTS(text, lang).then(resolve);
         };
-
-        const audio = new Audio();
-        audio.src = url;
+        const audio = new Audio(url);
         window.currentAudio = audio;
-
         audio.onerror = fallback;
         const timeout = setTimeout(fallback, 3000);
         audio.onended = () => { clearTimeout(timeout); if (!fellBack) resolve(); };
         audio.play().catch(fallback);
+    });
+}
+
+// Unified TTS: Google direct → proxy → browser speech
+function playWebAudio(text, lang) {
+    return _playGoogleTTS(text, lang).then((result) => {
+        if (result === 'error') {
+            if (_MISIRO_API || _isLocalDev) {
+                return _playProxy(text, lang);
+            }
+            return _browserTTS(text, lang);
+        }
     });
 }
 
@@ -1456,27 +1457,30 @@ function playAudioPromise(text, rate, lang = 'de-DE') {
         // Apply user's voice speed setting
         const effectiveRate = rate * appData.voiceSpeed;
 
-        const isFarsi = lang.startsWith('fa');
+        // For German: use Google TTS direct (best quality, works everywhere)
+        if (lang.startsWith('de')) {
+            playWebAudio(text, lang).then(resolve);
+            return;
+        }
 
-        // FORCED FALLBACK: Always use Web TTS for Farsi
-        // because native browser support for it is extremely unreliable.
+        const isFarsi = lang.startsWith('fa');
+        // Farsi: use Google TTS (browser support unreliable)
         if (isFarsi) {
-            if (DEBUG) console.log("Using Web TTS for Farsi");
+            if (DEBUG) console.log("Using Google TTS for Farsi");
             playWebAudio(text, 'fa').then(resolve);
             return;
         }
 
+        // English / other: try browser speech first (good quality on most devices)
         const voices = window.speechSynthesis.getVoices();
         const hasNativeVoice = voices.some(v => v.lang === lang || v.lang.startsWith(lang.split('-')[0]));
 
-        // General fallback for English if missing (though rare)
-        if (!hasNativeVoice && lang.startsWith('en')) {
-            if (DEBUG) console.log(`Falling back to Web TTS for ${lang}`);
-            playWebAudio(text, 'en').then(resolve);
+        if (!hasNativeVoice) {
+            if (DEBUG) console.log(`No native voice for ${lang}, using Google TTS`);
+            playWebAudio(text, lang).then(resolve);
             return;
         }
 
-        // iOS bug: cancel before speaking to avoid stuck state
         window.speechSynthesis.cancel();
         const u = new SpeechSynthesisUtterance(text);
         u.lang = lang;
@@ -1488,16 +1492,14 @@ function playAudioPromise(text, rate, lang = 'de-DE') {
             resolve();
         };
 
-        // iOS 15+ bug: speech pauses after ~15s. Workaround: resume periodically
         if (_isMobile) {
-            const resumeTimer = setInterval(() => {
-                if (window.speechSynthesis.speaking && !window.speechSynthesis.paused) return;
-                window.speechSynthesis.resume();
+            const timer = setInterval(() => {
+                if (!window.speechSynthesis.speaking || window.speechSynthesis.paused) window.speechSynthesis.resume();
             }, 5000);
             const origOnend = u.onend;
             const origOnerror = u.onerror;
-            u.onend = () => { clearInterval(resumeTimer); origOnend(); };
-            u.onerror = (e) => { clearInterval(resumeTimer); origOnerror(e); };
+            u.onend = () => { clearInterval(timer); origOnend(); };
+            u.onerror = (e) => { clearInterval(timer); origOnerror(e); };
         }
 
         window.speechSynthesis.speak(u);
@@ -1522,7 +1524,6 @@ function createInteractiveSentence(text) {
 }
 
 window.playWord = function (word) {
-    _unlockSpeech(); // Ensure iOS audio is unlocked on user tap
     // Clean punctuation for TTS
     const clean = word.replace(/[.,!?]/g, '');
     stopAllAudio();
