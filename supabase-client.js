@@ -127,11 +127,12 @@
                 if (!user) return 'Learner';
 
                 // Try reading from user_profiles table first
+                // Use maybeSingle() to avoid 406 error when no row exists
                 const { data } = await supabase
                     .from('user_profiles')
                     .select('display_name')
                     .eq('id', user.id)
-                    .single();
+                    .maybeSingle();
 
                 if (data?.display_name) return data.display_name;
 
