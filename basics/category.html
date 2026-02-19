@@ -467,21 +467,83 @@
         // VOCABULARY DATA
         // =====================
         const categoryData = {
-            pronouns: {
+            pronounsAndSein: {
                 icon: "👤",
-                title: { en: "Personal Pronouns", fa: "ضمایر شخصی" },
-                description: { en: "Master the German personal pronouns", fa: "ضمایر شخصی آلمانی را یاد بگیرید" },
-                type: "table",
-                words: [
-                    { german: "ich", en: "I", fa: "من", example: "Ich bin hier.", exampleEn: "I am here.", exampleFa: "من اینجا هستم." },
-                    { german: "du", en: "you (informal)", fa: "تو", example: "Du bist nett.", exampleEn: "You are nice.", exampleFa: "تو مهربانی." },
-                    { german: "er", en: "he", fa: "او (مذکر)", example: "Er ist groß.", exampleEn: "He is tall.", exampleFa: "او قد بلند است." },
-                    { german: "sie", en: "she", fa: "او (مؤنث)", example: "Sie ist schön.", exampleEn: "She is beautiful.", exampleFa: "او زیباست." },
-                    { german: "es", en: "it", fa: "آن", example: "Es ist kalt.", exampleEn: "It is cold.", exampleFa: "هوا سرد است." },
-                    { german: "wir", en: "we", fa: "ما", example: "Wir sind Freunde.", exampleEn: "We are friends.", exampleFa: "ما دوست هستیم." },
-                    { german: "ihr", en: "you (plural)", fa: "شما (جمع)", example: "Ihr seid toll.", exampleEn: "You are great.", exampleFa: "شما عالی هستید." },
-                    { german: "sie", en: "they", fa: "آنها", example: "Sie sind hier.", exampleEn: "They are here.", exampleFa: "آنها اینجا هستند." },
-                    { german: "Sie", en: "you (formal)", fa: "شما (رسمی)", example: "Sind Sie Herr Müller?", exampleEn: "Are you Mr. Müller?", exampleFa: "شما آقای مولر هستید؟" }
+                title: { en: "Pronouns, Possessives & Verb: Sein", fa: "ضمایر، ملکی و فعل بودن" },
+                description: { en: "Personal/object pronouns, possessives & to be", fa: "ضمایر شخصی/مفعولی، ملکی و فعل بودن" },
+                type: "multi",
+                sections: [
+                    {
+                        heading: { en: "Personal Pronouns", fa: "ضمایر شخصی" },
+                        type: "table",
+                        words: [
+                            { german: "ich", en: "I", fa: "من", example: "Ich bin hier.", exampleEn: "I am here.", exampleFa: "من اینجا هستم." },
+                            { german: "du", en: "you (informal)", fa: "تو", example: "Du bist nett.", exampleEn: "You are nice.", exampleFa: "تو مهربانی." },
+                            { german: "er", en: "he", fa: "او (مذکر)", example: "Er ist groß.", exampleEn: "He is tall.", exampleFa: "او قد بلند است." },
+                            { german: "sie", en: "she", fa: "او (مؤنث)", example: "Sie ist schön.", exampleEn: "She is beautiful.", exampleFa: "او زیباست." },
+                            { german: "es", en: "it", fa: "آن", example: "Es ist kalt.", exampleEn: "It is cold.", exampleFa: "هوا سرد است." },
+                            { german: "wir", en: "we", fa: "ما", example: "Wir sind Freunde.", exampleEn: "We are friends.", exampleFa: "ما دوست هستیم." },
+                            { german: "ihr", en: "you (plural)", fa: "شما (جمع)", example: "Ihr seid toll.", exampleEn: "You are great.", exampleFa: "شما عالی هستید." },
+                            { german: "sie", en: "they", fa: "آنها", example: "Sie sind hier.", exampleEn: "They are here.", exampleFa: "آنها اینجا هستند." },
+                            { german: "Sie", en: "you (formal)", fa: "شما (رسمی)", example: "Sind Sie Herr Müller?", exampleEn: "Are you Mr. Müller?", exampleFa: "شما آقای مولر هستید؟" }
+                        ]
+                    },
+                    {
+                        heading: { en: "Object Pronouns & Possessives", fa: "ضمایر مفعولی و ملکی" },
+                        type: "table",
+                        words: [
+                            { german: "mich", en: "me (accusative)", fa: "مرا", example: "Das Geschenk ist für mich.", exampleEn: "The gift is for me.", exampleFa: "هدیه برای من است." },
+                            { german: "dich", en: "you (accusative)", fa: "تو را", example: "Der Brief ist für dich.", exampleEn: "The letter is for you.", exampleFa: "نامه برای توست." },
+                            { german: "ihn", en: "him", fa: "او را", example: "Ich nehme ihn ins Kino mit.", exampleEn: "I'm taking him to the cinema.", exampleFa: "او را به سینما می‌برم." },
+                            { german: "uns", en: "us", fa: "ما را", example: "Sie sahen uns aus der Ferne.", exampleEn: "They saw us from afar.", exampleFa: "آنها ما را از دور دیدند." },
+                            { german: "mir", en: "me (dative)", fa: "به من", example: "Es ist ein Geschenk von mir.", exampleEn: "It is a gift from me.", exampleFa: "این هدیه‌ای از طرف من است." },
+                            { german: "sich", en: "oneself/themselves", fa: "خود", example: "Meine Tochter zieht sich an.", exampleEn: "My daughter gets dressed.", exampleFa: "دخترم لباس می‌پوشد." },
+                            { german: "mein", en: "my (masc/neut)", fa: "مال من", example: "Es ist mein Hut.", exampleEn: "It is my hat.", exampleFa: "این کلاه من است." },
+                            { german: "meine", en: "my (fem/pl)", fa: "مال من", example: "Meine Familie ist toll.", exampleEn: "My family is great.", exampleFa: "خانواده من عالی است." },
+                            { german: "dein", en: "your (masc/neut)", fa: "مال تو", example: "Dein Hund ist sehr klug.", exampleEn: "Your dog is very smart.", exampleFa: "سگ تو خیلی باهوش است." },
+                            { german: "deine", en: "your (fem/pl)", fa: "مال تو", example: "Deine Schwester ist nett.", exampleEn: "Your sister is nice.", exampleFa: "خواهرت مهربان است." }
+                        ]
+                    },
+                    {
+                        heading: { en: "Verb: Sein (To Be)", fa: "فعل بودن" },
+                        type: "conjugation",
+                        infinitive: { german: "sein", en: "to be", fa: "بودن" },
+                        tenses: [
+                            {
+                                name: { en: "Present (Präsens)", fa: "حال (Präsens)" },
+                                forms: [
+                                    { pronoun: "ich", verb: "bin", en: "I am", fa: "من هستم", example: "Ich bin Deutschlehrer.", exampleEn: "I am a German teacher.", exampleFa: "من معلم آلمانی هستم." },
+                                    { pronoun: "du", verb: "bist", en: "you are", fa: "تو هستی", example: "Du bist eine ruhige Person.", exampleEn: "You are a quiet person.", exampleFa: "تو آدم آرامی هستی." },
+                                    { pronoun: "er/sie/es", verb: "ist", en: "he/she/it is", fa: "او/آن هست", example: "Er ist groß.", exampleEn: "He is tall.", exampleFa: "او قد بلند است." },
+                                    { pronoun: "wir", verb: "sind", en: "we are", fa: "ما هستیم", example: "Wir sind Brüder.", exampleEn: "We are brothers.", exampleFa: "ما برادر هستیم." },
+                                    { pronoun: "ihr", verb: "seid", en: "you are", fa: "شما هستید", example: "Ihr seid toll.", exampleEn: "You are great.", exampleFa: "شما عالی هستید." },
+                                    { pronoun: "sie/Sie", verb: "sind", en: "they/you are", fa: "آنها/شما هستند", example: "Sie sind hier.", exampleEn: "They are here.", exampleFa: "آنها اینجا هستند." }
+                                ]
+                            },
+                            {
+                                name: { en: "Simple Past (Präteritum)", fa: "گذشته ساده (Präteritum)" },
+                                forms: [
+                                    { pronoun: "ich", verb: "war", en: "I was", fa: "من بودم", example: "Ich war müde.", exampleEn: "I was tired.", exampleFa: "من خسته بودم." },
+                                    { pronoun: "du", verb: "warst", en: "you were", fa: "تو بودی", example: "Du warst sehr nett.", exampleEn: "You were very nice.", exampleFa: "تو خیلی مهربان بودی." },
+                                    { pronoun: "er/sie/es", verb: "war", en: "he/she/it was", fa: "او/آن بود", example: "Es war kalt.", exampleEn: "It was cold.", exampleFa: "هوا سرد بود." },
+                                    { pronoun: "wir", verb: "waren", en: "we were", fa: "ما بودیم", example: "Wir waren in Berlin.", exampleEn: "We were in Berlin.", exampleFa: "ما در برلین بودیم." },
+                                    { pronoun: "ihr", verb: "wart", en: "you were", fa: "شما بودید", example: "Ihr wart toll.", exampleEn: "You were great.", exampleFa: "شما عالی بودید." },
+                                    { pronoun: "sie/Sie", verb: "waren", en: "they/you were", fa: "آنها/شما بودند", example: "Sie waren Freunde.", exampleEn: "They were friends.", exampleFa: "آنها دوست بودند." }
+                                ]
+                            },
+                            {
+                                name: { en: "Present Perfect (Perfekt)", fa: "ماضی نقلی (Perfekt)" },
+                                forms: [
+                                    { pronoun: "ich", verb: "bin gewesen", en: "I have been", fa: "من بوده‌ام", example: "Ich bin in Paris gewesen.", exampleEn: "I have been to Paris.", exampleFa: "من در پاریس بوده‌ام." },
+                                    { pronoun: "du", verb: "bist gewesen", en: "you have been", fa: "تو بوده‌ای", example: "Du bist dort gewesen.", exampleEn: "You have been there.", exampleFa: "تو آنجا بوده‌ای." },
+                                    { pronoun: "er/sie/es", verb: "ist gewesen", en: "he/she/it has been", fa: "او بوده است", example: "Es ist schön gewesen.", exampleEn: "It has been nice.", exampleFa: "خوب بوده است." },
+                                    { pronoun: "wir", verb: "sind gewesen", en: "we have been", fa: "ما بوده‌ایم", example: "Wir sind dort gewesen.", exampleEn: "We have been there.", exampleFa: "ما آنجا بوده‌ایم." },
+                                    { pronoun: "ihr", verb: "seid gewesen", en: "you have been", fa: "شما بوده‌اید", example: "Ihr seid da gewesen.", exampleEn: "You have been there.", exampleFa: "شما آنجا بوده‌اید." },
+                                    { pronoun: "sie/Sie", verb: "sind gewesen", en: "they/you have been", fa: "آنها بوده‌اند", example: "Sie sind krank gewesen.", exampleEn: "They have been sick.", exampleFa: "آنها مریض بوده‌اند." }
+                                ]
+                            }
+                        ]
+                    }
                 ]
             },
             articles: {
@@ -599,48 +661,6 @@
                     { german: "Dezember", en: "December", fa: "دسامبر", example: "Im Dezember feiern wir Weihnachten.", exampleEn: "In December we celebrate Christmas.", exampleFa: "در دسامبر کریسمس را جشن می‌گیریم." }
                 ]
             },
-            sein: {
-                icon: "🔵",
-                title: { en: "Verb: Sein (To Be)", fa: "فعل بودن" },
-                description: { en: "The most essential German verb — conjugated in 3 tenses", fa: "مهم‌ترین فعل آلمانی — صرف شده در ۳ زمان" },
-                type: "conjugation",
-                infinitive: { german: "sein", en: "to be", fa: "بودن" },
-                tenses: [
-                    {
-                        name: { en: "Present (Präsens)", fa: "حال (Präsens)" },
-                        forms: [
-                            { pronoun: "ich", verb: "bin", en: "I am", fa: "من هستم", example: "Ich bin Deutschlehrer.", exampleEn: "I am a German teacher.", exampleFa: "من معلم آلمانی هستم." },
-                            { pronoun: "du", verb: "bist", en: "you are", fa: "تو هستی", example: "Du bist eine ruhige Person.", exampleEn: "You are a quiet person.", exampleFa: "تو آدم آرامی هستی." },
-                            { pronoun: "er/sie/es", verb: "ist", en: "he/she/it is", fa: "او/آن هست", example: "Er ist groß.", exampleEn: "He is tall.", exampleFa: "او قد بلند است." },
-                            { pronoun: "wir", verb: "sind", en: "we are", fa: "ما هستیم", example: "Wir sind Brüder.", exampleEn: "We are brothers.", exampleFa: "ما برادر هستیم." },
-                            { pronoun: "ihr", verb: "seid", en: "you are", fa: "شما هستید", example: "Ihr seid toll.", exampleEn: "You are great.", exampleFa: "شما عالی هستید." },
-                            { pronoun: "sie/Sie", verb: "sind", en: "they/you are", fa: "آنها/شما هستند", example: "Sie sind hier.", exampleEn: "They are here.", exampleFa: "آنها اینجا هستند." }
-                        ]
-                    },
-                    {
-                        name: { en: "Simple Past (Präteritum)", fa: "گذشته ساده (Präteritum)" },
-                        forms: [
-                            { pronoun: "ich", verb: "war", en: "I was", fa: "من بودم", example: "Ich war müde.", exampleEn: "I was tired.", exampleFa: "من خسته بودم." },
-                            { pronoun: "du", verb: "warst", en: "you were", fa: "تو بودی", example: "Du warst sehr nett.", exampleEn: "You were very nice.", exampleFa: "تو خیلی مهربان بودی." },
-                            { pronoun: "er/sie/es", verb: "war", en: "he/she/it was", fa: "او/آن بود", example: "Es war kalt.", exampleEn: "It was cold.", exampleFa: "هوا سرد بود." },
-                            { pronoun: "wir", verb: "waren", en: "we were", fa: "ما بودیم", example: "Wir waren in Berlin.", exampleEn: "We were in Berlin.", exampleFa: "ما در برلین بودیم." },
-                            { pronoun: "ihr", verb: "wart", en: "you were", fa: "شما بودید", example: "Ihr wart toll.", exampleEn: "You were great.", exampleFa: "شما عالی بودید." },
-                            { pronoun: "sie/Sie", verb: "waren", en: "they/you were", fa: "آنها/شما بودند", example: "Sie waren Freunde.", exampleEn: "They were friends.", exampleFa: "آنها دوست بودند." }
-                        ]
-                    },
-                    {
-                        name: { en: "Present Perfect (Perfekt)", fa: "ماضی نقلی (Perfekt)" },
-                        forms: [
-                            { pronoun: "ich", verb: "bin gewesen", en: "I have been", fa: "من بوده‌ام", example: "Ich bin in Paris gewesen.", exampleEn: "I have been to Paris.", exampleFa: "من در پاریس بوده‌ام." },
-                            { pronoun: "du", verb: "bist gewesen", en: "you have been", fa: "تو بوده‌ای", example: "Du bist dort gewesen.", exampleEn: "You have been there.", exampleFa: "تو آنجا بوده‌ای." },
-                            { pronoun: "er/sie/es", verb: "ist gewesen", en: "he/she/it has been", fa: "او بوده است", example: "Es ist schön gewesen.", exampleEn: "It has been nice.", exampleFa: "خوب بوده است." },
-                            { pronoun: "wir", verb: "sind gewesen", en: "we have been", fa: "ما بوده‌ایم", example: "Wir sind dort gewesen.", exampleEn: "We have been there.", exampleFa: "ما آنجا بوده‌ایم." },
-                            { pronoun: "ihr", verb: "seid gewesen", en: "you have been", fa: "شما بوده‌اید", example: "Ihr seid da gewesen.", exampleEn: "You have been there.", exampleFa: "شما آنجا بوده‌اید." },
-                            { pronoun: "sie/Sie", verb: "sind gewesen", en: "they/you have been", fa: "آنها بوده‌اند", example: "Sie sind krank gewesen.", exampleEn: "They have been sick.", exampleFa: "آنها مریض بوده‌اند." }
-                        ]
-                    }
-                ]
-            },
             prepositions: {
                 icon: "📍",
                 title: { en: "Prepositions", fa: "حروف اضافه" },
@@ -659,24 +679,6 @@
                     { german: "vielleicht", en: "maybe", fa: "شاید", example: "Vielleicht komme ich morgen.", exampleEn: "Maybe I'll come tomorrow.", exampleFa: "شاید فردا بیایم." },
                     { german: "auch", en: "also/too", fa: "همچنین", example: "Er hat auch viel Talent.", exampleEn: "He also has a lot of talent.", exampleFa: "او همچنین استعداد زیادی دارد." },
                     { german: "nicht", en: "not", fa: "نه/نیست", example: "Mein Name ist nicht Hendrik.", exampleEn: "My name is not Hendrik.", exampleFa: "اسم من هندریک نیست." }
-                ]
-            },
-            objectPronouns: {
-                icon: "🎯",
-                title: { en: "Object Pronouns & Possessives", fa: "ضمایر مفعولی و ملکی" },
-                description: { en: "Identify receivers of actions and show ownership", fa: "گیرندگان عمل و مالکیت را نشان می‌دهند" },
-                type: "table",
-                words: [
-                    { german: "mich", en: "me (accusative)", fa: "مرا", example: "Das Geschenk ist für mich.", exampleEn: "The gift is for me.", exampleFa: "هدیه برای من است." },
-                    { german: "dich", en: "you (accusative)", fa: "تو را", example: "Der Brief ist für dich.", exampleEn: "The letter is for you.", exampleFa: "نامه برای توست." },
-                    { german: "ihn", en: "him", fa: "او را", example: "Ich nehme ihn ins Kino mit.", exampleEn: "I'm taking him to the cinema.", exampleFa: "او را به سینما می‌برم." },
-                    { german: "uns", en: "us", fa: "ما را", example: "Sie sahen uns aus der Ferne.", exampleEn: "They saw us from afar.", exampleFa: "آنها ما را از دور دیدند." },
-                    { german: "mir", en: "me (dative)", fa: "به من", example: "Es ist ein Geschenk von mir.", exampleEn: "It is a gift from me.", exampleFa: "این هدیه‌ای از طرف من است." },
-                    { german: "sich", en: "oneself/themselves", fa: "خود", example: "Meine Tochter zieht sich an.", exampleEn: "My daughter gets dressed.", exampleFa: "دخترم لباس می‌پوشد." },
-                    { german: "mein", en: "my (masc/neut)", fa: "مال من", example: "Es ist mein Hut.", exampleEn: "It is my hat.", exampleFa: "این کلاه من است." },
-                    { german: "meine", en: "my (fem/pl)", fa: "مال من", example: "Meine Familie ist toll.", exampleEn: "My family is great.", exampleFa: "خانواده من عالی است." },
-                    { german: "dein", en: "your (masc/neut)", fa: "مال تو", example: "Dein Hund ist sehr klug.", exampleEn: "Your dog is very smart.", exampleFa: "سگ تو خیلی باهوش است." },
-                    { german: "deine", en: "your (fem/pl)", fa: "مال تو", example: "Deine Schwester ist nett.", exampleEn: "Your sister is nice.", exampleFa: "خواهرت مهربان است." }
                 ]
             },
         };
@@ -764,13 +766,35 @@
 
             // Render content
             const container = document.getElementById('content-container');
-            if (cat.type === 'conjugation') {
+            if (cat.type === 'multi') {
+                container.innerHTML = renderMultiSection(cat);
+            } else if (cat.type === 'conjugation') {
                 container.innerHTML = renderConjugation(cat);
             } else if (cat.type === 'table') {
                 container.innerHTML = renderPronounTable(cat.words);
             } else {
                 container.innerHTML = renderWordGrid(cat.words);
             }
+        }
+
+        function renderMultiSection(cat) {
+            return cat.sections.map(section => {
+                const heading = section.heading[currentLang] || section.heading.en;
+                let content = '';
+                if (section.type === 'conjugation') {
+                    content = renderConjugation(section);
+                } else if (section.type === 'table') {
+                    content = renderPronounTable(section.words);
+                } else {
+                    content = renderWordGrid(section.words);
+                }
+                return `
+                    <div style="margin-bottom: 30px;">
+                        <h3 style="color: #2ecc71; font-size: 1.2rem; margin-bottom: 15px; padding-bottom: 8px; border-bottom: 1px solid rgba(255,255,255,0.1);">${heading}</h3>
+                        ${content}
+                    </div>
+                `;
+            }).join('');
         }
 
         function renderWordGrid(words) {

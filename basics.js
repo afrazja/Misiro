@@ -5,10 +5,10 @@
 // =====================
 
 const basicsData = {
-    pronouns: {
+    pronounsAndSein: {
         icon: "👤",
-        title: { en: "Personal Pronouns", fa: "ضمایر شخصی" },
-        description: { en: "Master the German personal pronouns", fa: "ضمایر شخصی آلمانی را یاد بگیرید" },
+        title: { en: "Pronouns, Possessives & Verb: Sein", fa: "ضمایر، ملکی و فعل بودن" },
+        description: { en: "Personal/object pronouns, possessives & to be", fa: "ضمایر شخصی/مفعولی، ملکی و فعل بودن" },
         type: "table",
         words: [
             { german: "ich", en: "I", fa: "من", example: "Ich bin hier.", exampleEn: "I am here.", exampleFa: "من اینجا هستم." },
