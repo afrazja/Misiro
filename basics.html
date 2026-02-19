@@ -233,24 +233,15 @@
         // Category data with metadata
         const categories = [
             { key: 'pronouns', icon: '👤', title: { en: 'Personal Pronouns', fa: 'ضمایر شخصی' }, desc: { en: 'I, you, he, she, it, we, they', fa: 'من، تو، او، ما، شما، آنها' }, count: 9 },
+            { key: 'objectPronouns', icon: '🎯', title: { en: 'Object Pronouns & Possessives', fa: 'ضمایر مفعولی و ملکی' }, desc: { en: 'mich, dich, mir, mein, dein', fa: 'ضمایر مفعولی و صفات ملکی' }, count: 10 },
             { key: 'sein', icon: '🔵', title: { en: 'Verb: Sein (To Be)', fa: 'فعل بودن' }, desc: { en: 'Conjugated in 3 tenses: Präsens, Präteritum, Perfekt', fa: 'صرف شده در ۳ زمان: حال، گذشته، ماضی نقلی' }, count: 18 },
-            { key: 'haben', icon: '🟢', title: { en: 'Verb: Haben (To Have)', fa: 'فعل داشتن' }, desc: { en: 'Conjugated in 3 tenses: Präsens, Präteritum, Perfekt', fa: 'صرف شده در ۳ زمان: حال، گذشته، ماضی نقلی' }, count: 18 },
-            { key: 'werden', icon: '🔮', title: { en: 'Verb: Werden (To Become)', fa: 'فعل شدن' }, desc: { en: 'Also used for future tense & passive voice', fa: 'همچنین برای زمان آینده و مجهول' }, count: 18 },
-            { key: 'machen', icon: '🛠️', title: { en: 'Verb: Machen (To Do/Make)', fa: 'فعل انجام دادن' }, desc: { en: 'Regular verb — learn the pattern!', fa: 'فعل باقاعده — الگو را یاد بگیرید!' }, count: 18 },
-            { key: 'gehen', icon: '🚶', title: { en: 'Verb: Gehen (To Go)', fa: 'فعل رفتن' }, desc: { en: 'Irregular verb — one of the most used', fa: 'فعل بی‌قاعده — یکی از پرکاربردترین' }, count: 18 },
             { key: 'articles', icon: '📝', title: { en: 'Articles', fa: 'حروف تعریف' }, desc: { en: 'der, die, das - German has 3 genders!', fa: 'حروف تعریف - آلمانی ۳ جنسیت دارد!' }, count: 5 },
             { key: 'conjunctions', icon: '🔗', title: { en: 'Conjunctions', fa: 'حروف ربط' }, desc: { en: 'Connect words and sentences: und, oder, aber', fa: 'کلمات و جملات را به هم وصل می‌کنند' }, count: 12 },
-            { key: 'complementizers', icon: '💬', title: { en: 'Complementizers', fa: 'حروف تکمیل‌کننده' }, desc: { en: 'Introduce subordinate clauses: dass, weil, wenn', fa: 'جملات فرعی را معرفی می‌کنند' }, count: 10 },
             { key: 'prepositions', icon: '📍', title: { en: 'Prepositions', fa: 'حروف اضافه' }, desc: { en: 'für, mit, in, aus, nach, auf, über', fa: 'حروف اضافه مکان و زمان' }, count: 12 },
-            { key: 'objectPronouns', icon: '🎯', title: { en: 'Object Pronouns & Possessives', fa: 'ضمایر مفعولی و ملکی' }, desc: { en: 'mich, dich, mir, mein, dein', fa: 'ضمایر مفعولی و صفات ملکی' }, count: 10 },
-            { key: 'modalVerbs', icon: '💪', title: { en: 'Modal & Action Verbs', fa: 'افعال کمکی و عملی' }, desc: { en: 'wollen, können, müssen, gehen, machen', fa: 'افعال اصلی و کمکی' }, count: 10 },
-            { key: 'quantifiers', icon: '❓', title: { en: 'Quantifiers & Questions', fa: 'کمیت‌ها و سوالات' }, desc: { en: 'wer, was, alle, etwas, nichts, alles', fa: 'کلمات پرسشی و کمی' }, count: 10 },
-            { key: 'adverbs', icon: '⚡', title: { en: 'Common Adverbs', fa: 'قیدهای پرکاربرد' }, desc: { en: 'Words that describe how, when, where', fa: 'کلماتی که چگونگی، زمان و مکان را توصیف می‌کنند' }, count: 15 },
             { key: 'numbers', icon: '🔢', title: { en: 'Numbers 1-20', fa: 'اعداد ۱ تا ۲۰' }, desc: { en: 'Learn to count in German', fa: 'شمردن به آلمانی را یاد بگیرید' }, count: 20 },
             { key: 'colors', icon: '🎨', title: { en: 'Colors', fa: 'رنگ‌ها' }, desc: { en: 'Basic colors in German', fa: 'رنگ‌های پایه به آلمانی' }, count: 11 },
             { key: 'days', icon: '📅', title: { en: 'Days of the Week', fa: 'روزهای هفته' }, desc: { en: 'Monday to Sunday', fa: 'دوشنبه تا یکشنبه' }, count: 7 },
-            { key: 'months', icon: '🗓️', title: { en: 'Months', fa: 'ماه‌ها' }, desc: { en: 'January to December', fa: 'ژانویه تا دسامبر' }, count: 12 },
-            { key: 'greetings', icon: '👋', title: { en: 'Greetings & Phrases', fa: 'سلام و عبارات' }, desc: { en: 'Common greetings and expressions', fa: 'سلام‌ها و عبارات رایج' }, count: 12 }
+            { key: 'months', icon: '🗓️', title: { en: 'Months', fa: 'ماه‌ها' }, desc: { en: 'January to December', fa: 'ژانویه تا دسامبر' }, count: 12 }
         ];
 
         let currentLang = 'en';

@@ -35,29 +35,6 @@ const basicsData = {
             { german: "eine", en: "a/an (feminine)", fa: "یک (مؤنث)", example: "Das ist eine schöne Blume.", exampleEn: "That is a beautiful flower.", exampleFa: "آن یک گل زیباست." }
         ]
     },
-    adverbs: {
-        icon: "⚡",
-        title: { en: "Common Adverbs", fa: "قیدهای پرکاربرد" },
-        description: { en: "Words that describe how, when, where", fa: "کلماتی که چگونگی، زمان و مکان را توصیف می‌کنند" },
-        type: "grid",
-        words: [
-            { german: "sehr", en: "very", fa: "خیلی", example: "Das ist sehr gut.", exampleEn: "That is very good.", exampleFa: "این خیلی خوب است." },
-            { german: "gut", en: "well/good", fa: "خوب", example: "Er spielt gut Klavier.", exampleEn: "He plays piano well.", exampleFa: "او خوب پیانو می‌زند." },
-            { german: "schnell", en: "fast/quickly", fa: "سریع", example: "Er läuft schnell.", exampleEn: "He runs fast.", exampleFa: "او سریع می‌دود." },
-            { german: "langsam", en: "slow/slowly", fa: "آهسته", example: "Bitte sprechen Sie langsam.", exampleEn: "Please speak slowly.", exampleFa: "لطفاً آهسته صحبت کنید." },
-            { german: "gern(e)", en: "gladly/like to", fa: "با میل", example: "Ich esse gerne Pizza.", exampleEn: "I like to eat pizza.", exampleFa: "من دوست دارم پیتزا بخورم." },
-            { german: "oft", en: "often", fa: "اغلب", example: "Wir gehen oft spazieren.", exampleEn: "We often go for walks.", exampleFa: "ما اغلب پیاده‌روی می‌کنیم." },
-            { german: "immer", en: "always", fa: "همیشه", example: "Er kommt immer pünktlich.", exampleEn: "He always comes on time.", exampleFa: "او همیشه به موقع می‌آید." },
-            { german: "nie", en: "never", fa: "هرگز", example: "Ich trinke nie Kaffee.", exampleEn: "I never drink coffee.", exampleFa: "من هرگز قهوه نمی‌نوشم." },
-            { german: "manchmal", en: "sometimes", fa: "گاهی", example: "Manchmal regnet es.", exampleEn: "Sometimes it rains.", exampleFa: "گاهی باران می‌بارد." },
-            { german: "hier", en: "here", fa: "اینجا", example: "Komm bitte hier.", exampleEn: "Please come here.", exampleFa: "لطفاً بیا اینجا." },
-            { german: "dort", en: "there", fa: "آنجا", example: "Das Buch liegt dort.", exampleEn: "The book is over there.", exampleFa: "کتاب آنجاست." },
-            { german: "jetzt", en: "now", fa: "الان", example: "Ich muss jetzt gehen.", exampleEn: "I have to go now.", exampleFa: "من الان باید بروم." },
-            { german: "heute", en: "today", fa: "امروز", example: "Heute ist ein schöner Tag.", exampleEn: "Today is a beautiful day.", exampleFa: "امروز روز زیبایی است." },
-            { german: "morgen", en: "tomorrow", fa: "فردا", example: "Morgen habe ich frei.", exampleEn: "Tomorrow I have a day off.", exampleFa: "فردا تعطیلم." },
-            { german: "gestern", en: "yesterday", fa: "دیروز", example: "Gestern war es kalt.", exampleEn: "Yesterday it was cold.", exampleFa: "دیروز هوا سرد بود." }
-        ]
-    },
     numbers: {
         icon: "🔢",
         title: { en: "Numbers 1-20", fa: "اعداد ۱ تا ۲۰" },
@@ -140,26 +117,6 @@ const basicsData = {
             { german: "Dezember", en: "December", fa: "دسامبر", example: "Im Dezember feiern wir Weihnachten.", exampleEn: "In December we celebrate Christmas.", exampleFa: "در دسامبر کریسمس را جشن می‌گیریم." }
         ]
     },
-    greetings: {
-        icon: "👋",
-        title: { en: "Greetings & Phrases", fa: "سلام و عبارات" },
-        description: { en: "Common greetings and expressions", fa: "سلام‌ها و عبارات رایج" },
-        type: "grid",
-        words: [
-            { german: "Hallo", en: "Hello", fa: "سلام", example: "Hallo, wie geht es dir?", exampleEn: "Hello, how are you?", exampleFa: "سلام، حالت چطوره؟" },
-            { german: "Guten Morgen", en: "Good morning", fa: "صبح بخیر", example: "Guten Morgen, gut geschlafen?", exampleEn: "Good morning, did you sleep well?", exampleFa: "صبح بخیر، خوب خوابیدی؟" },
-            { german: "Guten Tag", en: "Good day", fa: "روز بخیر", example: "Guten Tag, kann ich Ihnen helfen?", exampleEn: "Good day, can I help you?", exampleFa: "روز بخیر، می‌توانم کمکتان کنم؟" },
-            { german: "Guten Abend", en: "Good evening", fa: "عصر بخیر", example: "Guten Abend, willkommen!", exampleEn: "Good evening, welcome!", exampleFa: "عصر بخیر، خوش آمدید!" },
-            { german: "Gute Nacht", en: "Good night", fa: "شب بخیر", example: "Gute Nacht, schlaf gut!", exampleEn: "Good night, sleep well!", exampleFa: "شب بخیر، خوب بخواب!" },
-            { german: "Auf Wiedersehen", en: "Goodbye", fa: "خداحافظ", example: "Auf Wiedersehen, bis morgen!", exampleEn: "Goodbye, see you tomorrow!", exampleFa: "خداحافظ، تا فردا!" },
-            { german: "Tschüss", en: "Bye (informal)", fa: "بای", example: "Tschüss, bis später!", exampleEn: "Bye, see you later!", exampleFa: "بای، بعداً می‌بینمت!" },
-            { german: "Danke", en: "Thank you", fa: "ممنون", example: "Danke für die Hilfe.", exampleEn: "Thanks for the help.", exampleFa: "ممنون از کمکت." },
-            { german: "Bitte", en: "Please / You're welcome", fa: "لطفاً / خواهش می‌کنم", example: "Bitte schön!", exampleEn: "You're welcome!", exampleFa: "خواهش می‌کنم!" },
-            { german: "Entschuldigung", en: "Excuse me / Sorry", fa: "ببخشید", example: "Entschuldigung, wo ist der Bahnhof?", exampleEn: "Excuse me, where is the train station?", exampleFa: "ببخشید، ایستگاه قطار کجاست؟" },
-            { german: "Ja", en: "Yes", fa: "بله", example: "Ja, ich komme gerne.", exampleEn: "Yes, I'd love to come.", exampleFa: "بله، با کمال میل می‌آیم." },
-            { german: "Nein", en: "No", fa: "نه", example: "Nein, danke.", exampleEn: "No, thank you.", exampleFa: "نه، ممنون." }
-        ]
-    }
 };
 
 // =====================
