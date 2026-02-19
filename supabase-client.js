@@ -177,6 +177,151 @@
             } catch (e) {
                 console.error('ensureProfile error:', e);
             }
+        },
+
+        /**
+         * Update the user's password
+         * @param {string} newPassword - must be at least 6 characters
+         * @returns {Promise<{error: string|null}>}
+         */
+        async updatePassword(newPassword) {
+            if (!supabase) return { error: 'Supabase not configured' };
+            try {
+                const { error } = await supabase.auth.updateUser({ password: newPassword });
+                if (error) return { error: error.message };
+                return { error: null };
+            } catch (e) {
+                return { error: e.message };
+            }
+        },
+
+        /**
+         * Update the user's display name in both auth metadata and user_profiles table
+         * @param {string} newName
+         * @returns {Promise<{error: string|null}>}
+         */
+        async updateDisplayName(newName) {
+            if (!supabase) return { error: 'Supabase not configured' };
+            try {
+                const user = await this.getUser();
+                if (!user) return { error: 'Not authenticated' };
+
+                // Update auth user metadata
+                const { error: authError } = await supabase.auth.updateUser({
+                    data: { display_name: newName }
+                });
+                if (authError) return { error: authError.message };
+
+                // Update user_profiles table
+                const { error: dbError } = await supabase
+                    .from('user_profiles')
+                    .update({ display_name: newName, updated_at: new Date().toISOString() })
+                    .eq('id', user.id);
+                if (dbError) return { error: dbError.message };
+
+                return { error: null };
+            } catch (e) {
+                return { error: e.message };
+            }
+        },
+
+        /**
+         * Upload an avatar image to Supabase Storage and update user_profiles
+         * @param {File} file - image file (max 1MB)
+         * @returns {Promise<{url: string|null, error: string|null}>}
+         */
+        async uploadAvatar(file) {
+            if (!supabase) return { url: null, error: 'Supabase not configured' };
+            try {
+                const user = await this.getUser();
+                if (!user) return { url: null, error: 'Not authenticated' };
+
+                // Validate file size (1MB max)
+                if (file.size > 1024 * 1024) {
+                    return { url: null, error: 'Image must be less than 1MB' };
+                }
+
+                // Get file extension
+                const ext = file.name.split('.').pop().toLowerCase() || 'png';
+                const filePath = `${user.id}/avatar.${ext}`;
+
+                // Upload to Supabase Storage (upsert to overwrite existing)
+                const { error: uploadError } = await supabase.storage
+                    .from('avatars')
+                    .upload(filePath, file, { upsert: true });
+                if (uploadError) return { url: null, error: uploadError.message };
+
+                // Get public URL
+                const { data: urlData } = supabase.storage
+                    .from('avatars')
+                    .getPublicUrl(filePath);
+                const publicUrl = urlData.publicUrl + '?t=' + Date.now(); // cache-bust
+
+                // Update user_profiles
+                const { error: dbError } = await supabase
+                    .from('user_profiles')
+                    .update({ avatar_url: publicUrl, updated_at: new Date().toISOString() })
+                    .eq('id', user.id);
+                if (dbError) return { url: null, error: dbError.message };
+
+                return { url: publicUrl, error: null };
+            } catch (e) {
+                return { url: null, error: e.message };
+            }
+        },
+
+        /**
+         * Remove the user's avatar from Storage and clear avatar_url
+         * @returns {Promise<{error: string|null}>}
+         */
+        async removeAvatar() {
+            if (!supabase) return { error: 'Supabase not configured' };
+            try {
+                const user = await this.getUser();
+                if (!user) return { error: 'Not authenticated' };
+
+                // List files in user's avatar folder and remove them
+                const { data: files } = await supabase.storage
+                    .from('avatars')
+                    .list(user.id);
+                if (files && files.length > 0) {
+                    const paths = files.map(f => `${user.id}/${f.name}`);
+                    await supabase.storage.from('avatars').remove(paths);
+                }
+
+                // Clear avatar_url in user_profiles
+                const { error: dbError } = await supabase
+                    .from('user_profiles')
+                    .update({ avatar_url: null, updated_at: new Date().toISOString() })
+                    .eq('id', user.id);
+                if (dbError) return { error: dbError.message };
+
+                return { error: null };
+            } catch (e) {
+                return { error: e.message };
+            }
+        },
+
+        /**
+         * Get the user's avatar URL from user_profiles
+         * @returns {Promise<string|null>}
+         */
+        async getAvatarUrl() {
+            if (!supabase) return null;
+            try {
+                const user = await this.getUser();
+                if (!user) return null;
+
+                const { data } = await supabase
+                    .from('user_profiles')
+                    .select('avatar_url')
+                    .eq('id', user.id)
+                    .maybeSingle();
+
+                return data?.avatar_url || null;
+            } catch (e) {
+                return null;
+            }
         }
     };
 })();

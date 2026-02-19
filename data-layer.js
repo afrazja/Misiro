@@ -157,6 +157,32 @@
             });
         },
 
+        // ========== DISPLAY NAME ==========
+        getDisplayName() {
+            return localStorage.getItem('misiro_display_name') || null;
+        },
+
+        setDisplayName(name) {
+            localStorage.setItem('misiro_display_name', name);
+            bgSync(async () => {
+                if (!window.misiroAuth) return;
+                await window.misiroAuth.updateDisplayName(name);
+            });
+        },
+
+        // ========== AVATAR ==========
+        getAvatarUrl() {
+            return localStorage.getItem('misiro_avatar_url') || null;
+        },
+
+        setAvatarUrl(url) {
+            if (url) {
+                localStorage.setItem('misiro_avatar_url', url);
+            } else {
+                localStorage.removeItem('misiro_avatar_url');
+            }
+        },
+
         // ========== EXAM RESULTS ==========
         getExamResults() {
             try {
@@ -204,12 +230,18 @@
 
         async _syncProfile(uid) {
             const { data: profile } = await sb().from('user_profiles')
-                .select('*').eq('id', uid).single();
+                .select('*').eq('id', uid).maybeSingle();
             if (!profile) return;
 
             // Cloud preferences win
             if (profile.language) localStorage.setItem('misiro_language', profile.language);
             if (profile.voice_speed) localStorage.setItem('misiro_voice_speed', profile.voice_speed.toString());
+            if (profile.display_name) localStorage.setItem('misiro_display_name', profile.display_name);
+            if (profile.avatar_url) {
+                localStorage.setItem('misiro_avatar_url', profile.avatar_url);
+            } else {
+                localStorage.removeItem('misiro_avatar_url');
+            }
         },
 
         async _syncProgress(uid) {
