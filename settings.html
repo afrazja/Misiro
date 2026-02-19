@@ -430,8 +430,8 @@
             statusEl.className = 'status-msg';
             statusEl.style.display = 'none';
 
-            if (file.size > 1024 * 1024) {
-                statusEl.textContent = 'Image must be less than 1MB.';
+            if (file.size > 5 * 1024 * 1024) {
+                statusEl.textContent = 'Image must be less than 5MB.';
                 statusEl.className = 'status-msg error';
                 return;
             }

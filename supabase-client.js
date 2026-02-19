@@ -236,9 +236,9 @@
                 const user = await this.getUser();
                 if (!user) return { url: null, error: 'Not authenticated' };
 
-                // Validate file size (1MB max)
-                if (file.size > 1024 * 1024) {
-                    return { url: null, error: 'Image must be less than 1MB' };
+                // Validate file size (5MB max)
+                if (file.size > 5 * 1024 * 1024) {
+                    return { url: null, error: 'Image must be less than 5MB' };
                 }
 
                 // Get file extension
