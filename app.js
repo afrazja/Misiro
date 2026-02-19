@@ -1341,7 +1341,7 @@ function wait(ms) { return new Promise(resolve => setTimeout(resolve, ms)); }
 const _MISIRO_API = window.MISIRO_CONFIG?.apiUrl || '';
 const _isLocalDev = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')
     && window.location.protocol !== 'file:';
-const _hasTTSProxy = !!_MISIRO_API || _isLocalDev;
+let _proxyAvailable = !!_MISIRO_API || _isLocalDev; // Disabled on first failure
 
 // Stop ALL audio sources (browser TTS + proxy Audio element)
 function stopAllAudio() {
@@ -1365,12 +1365,11 @@ function _browserTTS(text, lang) {
 }
 
 function playWebAudio(text, lang) {
-    if (!_hasTTSProxy) {
+    if (!_proxyAvailable) {
         return _browserTTS(text, lang);
     }
 
     return new Promise((resolve) => {
-        // Use absolute URL to Render backend, or relative for localhost
         const baseUrl = _MISIRO_API || '';
         const url = `${baseUrl}/tts?q=${encodeURIComponent(text)}&tl=${lang}`;
 
@@ -1379,20 +1378,23 @@ function playWebAudio(text, lang) {
             window.currentAudio = null;
         }
 
+        let fellBack = false;
+        const fallback = (e) => {
+            if (fellBack) return;
+            fellBack = true;
+            _proxyAvailable = false;
+            if (DEBUG) console.warn("TTS proxy unavailable, using browser speech:", e);
+            _browserTTS(text, lang).then(resolve);
+        };
+
         const audio = new Audio();
         audio.src = url;
         window.currentAudio = audio;
 
-        audio.onended = () => resolve();
-        audio.onerror = (e) => {
-            if (DEBUG) console.error("TTS audio error, falling back to browser:", e);
-            _browserTTS(text, lang).then(resolve);
-        };
-
-        audio.play().catch(e => {
-            if (DEBUG) console.error("TTS play failed, falling back to browser:", e.message);
-            _browserTTS(text, lang).then(resolve);
-        });
+        audio.onerror = fallback;
+        const timeout = setTimeout(fallback, 3000);
+        audio.onended = () => { clearTimeout(timeout); if (!fellBack) resolve(); };
+        audio.play().catch(fallback);
     });
 }
 

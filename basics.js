@@ -332,7 +332,7 @@ function toggleCategory(key) {
 // AUDIO (Render TTS Proxy with browser fallback)
 // =====================
 const _MISIRO_API = window.MISIRO_CONFIG?.apiUrl || '';
-const _hasTTSProxy = !!_MISIRO_API;
+let _proxyAvailable = !!_MISIRO_API; // Will be disabled if proxy fails
 
 function stopAllAudio() {
     window.speechSynthesis.cancel();
@@ -355,7 +355,7 @@ function _browserTTS(text, lang, rate) {
 }
 
 function playWebAudio(text, lang) {
-    if (!_hasTTSProxy) {
+    if (!_proxyAvailable) {
         return _browserTTS(text, lang, voiceSpeed);
     }
     return new Promise((resolve) => {
@@ -368,14 +368,16 @@ function playWebAudio(text, lang) {
         const fallback = () => {
             if (fellBack) return;
             fellBack = true;
+            _proxyAvailable = false;
+            console.warn('TTS proxy unavailable, using browser speech');
             _browserTTS(text, lang, voiceSpeed).then(resolve);
         };
         const audio = new Audio();
         audio.src = url;
         window.currentAudio = audio;
         audio.onerror = fallback;
-        // Timeout: if nothing plays in 4s, fall back
-        const timeout = setTimeout(fallback, 4000);
+        // Timeout: if nothing plays in 3s, fall back and disable proxy
+        const timeout = setTimeout(fallback, 3000);
         audio.onended = () => { clearTimeout(timeout); if (!fellBack) resolve(); };
         audio.play().catch(fallback);
     });
