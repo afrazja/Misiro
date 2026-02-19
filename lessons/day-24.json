@@ -1,0 +1,16 @@
+{
+  "title": "Day 24: At the Pharmacy",
+  "titleFa": "روز ۲۴: در داروخانه",
+  "sentences": [
+    { "id": 1, "role": "sent", "targetText": "Guten Tag, ich brauche etwas gegen Kopfschmerzen.", "translation": "Good day, I need something for a headache.", "translationFa": "روز بخیر، یه چیزی برای سردرد می‌خوام." },
+    { "id": 2, "role": "received", "audioText": "Haben Sie Allergien?", "translation": "Do you have allergies?", "translationFa": "آلرژی دارید؟" },
+    { "id": 3, "role": "sent", "targetText": "Nein, keine Allergien.", "translation": "No, no allergies.", "translationFa": "نه، آلرژی ندارم." },
+    { "id": 4, "role": "received", "audioText": "Ich empfehle Ihnen diese Tabletten.", "translation": "I recommend these tablets for you.", "translationFa": "این قرص‌ها رو بهتون پیشنهاد می‌کنم." },
+    { "id": 5, "role": "sent", "targetText": "Wie oft muss ich sie nehmen?", "translation": "How often do I need to take them?", "translationFa": "هر چند وقت باید بخورم؟" },
+    { "id": 6, "role": "received", "audioText": "Dreimal täglich nach dem Essen.", "translation": "Three times daily after meals.", "translationFa": "روزی سه بار بعد از غذا." },
+    { "id": 7, "role": "sent", "targetText": "Haben Sie auch Vitamine?", "translation": "Do you also have vitamins?", "translationFa": "ویتامین هم دارید؟" },
+    { "id": 8, "role": "received", "audioText": "Ja, in diesem Regal hier.", "translation": "Yes, on this shelf here.", "translationFa": "بله، تو این قفسه." },
+    { "id": 9, "role": "sent", "targetText": "Was kostet alles zusammen?", "translation": "How much is everything together?", "translationFa": "همه‌اش با هم چنده؟" },
+    { "id": 10, "role": "received", "audioText": "Das macht 15 Euro.", "translation": "That's 15 Euro.", "translationFa": "میشه ۱۵ یورو." }
+  ]
+}

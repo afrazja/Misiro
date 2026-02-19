@@ -1,0 +1,13 @@
+{
+  "title": "Day 9: Asking for Opinions",
+  "titleFa": "روز ۹: پرسیدن نظر",
+  "sentences": [
+    { "id": 1, "role": "sent", "targetText": "Was denken Sie?", "translation": "What do you think?", "translationFa": "نظرتون چیه؟" },
+    { "id": 2, "role": "sent", "targetText": "Ich mag es.", "translation": "I like it.", "translationFa": "دوستش دارم." },
+    { "id": 3, "role": "sent", "targetText": "Ich mag es nicht.", "translation": "I don't like it.", "translationFa": "دوستش ندارم." },
+    { "id": 4, "role": "received", "audioText": "Wie findest du das?", "translation": "How do you find that?", "translationFa": "نظرت راجع به این چیه؟" },
+    { "id": 5, "role": "sent", "targetText": "Das ist eine gute Idee.", "translation": "That is a good idea.", "translationFa": "ایده خوبیه." },
+    { "id": 6, "role": "sent", "targetText": "Ich bin mir nicht sicher.", "translation": "I am not sure.", "translationFa": "مطمئن نیستم." },
+    { "id": 7, "role": "received", "audioText": "Das denke ich auch.", "translation": "I think so too.", "translationFa": "من هم همین فکر رو می‌کنم." }
+  ]
+}

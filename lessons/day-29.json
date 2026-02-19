@@ -1,0 +1,13 @@
+{
+  "title": "Day 29: Review Day",
+  "titleFa": "روز ۲۹: روز مرور",
+  "sentences": [
+    { "id": 1, "role": "sent", "targetText": "Hallo! Guten Morgen.", "translation": "Hello! Good morning.", "translationFa": "سلام! صبح بخیر." },
+    { "id": 2, "role": "sent", "targetText": "Entschuldigung, können Sie mir helfen?", "translation": "Excuse me, can you help me?", "translationFa": "ببخشید، میتونید کمکم کنید؟" },
+    { "id": 3, "role": "sent", "targetText": "Wie viel kostet das?", "translation": "How much is that?", "translationFa": "قیمتش چنده؟" },
+    { "id": 4, "role": "sent", "targetText": "Wann fährt der nächste Bus?", "translation": "When does the next bus leave?", "translationFa": "اتوبوس بعدی کی حرکت می‌کنه؟" },
+    { "id": 5, "role": "sent", "targetText": "Ich verstehe nicht.", "translation": "I don't understand.", "translationFa": "من نمی‌فهمم." },
+    { "id": 6, "role": "sent", "targetText": "Vielen Dank für Ihre Hilfe.", "translation": "Thank you very much for your help.", "translationFa": "خیلی ممنون از کمکتون." },
+    { "id": 7, "role": "sent", "targetText": "Auf Wiedersehen.", "translation": "Goodbye.", "translationFa": "خداحافظ." }
+  ]
+}

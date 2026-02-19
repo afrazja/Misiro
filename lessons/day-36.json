@@ -1,0 +1,24 @@
+{
+  "title": "Day 36: At the Post Office",
+  "titleFa": "روز ۳۶: در اداره پست",
+  "sentences": [
+    { "id": 1, "role": "sent", "targetText": "Guten Tag, ich möchte dieses Paket in den Iran schicken.", "translation": "Good day, I'd like to send this package to Iran.", "translationFa": "روز بخیر، می‌خوام این بسته رو به ایران بفرستم." },
+    { "id": 2, "role": "received", "audioText": "Natürlich. Legen Sie es bitte auf die Waage.", "translation": "Of course. Please put it on the scale.", "translationFa": "البته. لطفاً روی ترازو بذارید." },
+    { "id": 3, "role": "sent", "targetText": "Wie viel wiegt es?", "translation": "How much does it weigh?", "translationFa": "چقدر وزن داره؟" },
+    { "id": 4, "role": "received", "audioText": "Einkommazwei Kilogramm. Wohin genau soll es geliefert werden?", "translation": "1.2 kilograms. Where exactly should it be delivered?", "translationFa": "یک و دو دهم کیلوگرم. دقیقاً کجا باید تحویل داده بشه؟" },
+    { "id": 5, "role": "sent", "targetText": "Nach Teheran. Es ist ein Geschenk für meine Familie.", "translation": "To Tehran. It's a gift for my family.", "translationFa": "به تهران. یه هدیه برای خانواده‌امه." },
+    { "id": 6, "role": "received", "audioText": "Möchten Sie Standardversand oder Express?", "translation": "Would you like standard or express shipping?", "translationFa": "ارسال معمولی می‌خواید یا اکسپرس؟" },
+    { "id": 7, "role": "sent", "targetText": "Was ist der Unterschied bei der Lieferzeit?", "translation": "What's the difference in delivery time?", "translationFa": "فرق زمان تحویل چقدره؟" },
+    { "id": 8, "role": "received", "audioText": "Standard dauert zehn bis vierzehn Tage, Express drei bis fünf Tage.", "translation": "Standard takes 10 to 14 days, express 3 to 5 days.", "translationFa": "معمولی ده تا چهارده روز، اکسپرس سه تا پنج روز." },
+    { "id": 9, "role": "sent", "targetText": "Ich nehme Express, bitte. Was kostet das?", "translation": "I'll take express, please. How much does it cost?", "translationFa": "اکسپرس رو می‌خوام، لطفاً. چقدر میشه؟" },
+    { "id": 10, "role": "received", "audioText": "Express in den Iran kostet achtundzwanzig Euro.", "translation": "Express to Iran costs 28 euros.", "translationFa": "اکسپرس به ایران بیست و هشت یورو میشه." },
+    { "id": 11, "role": "sent", "targetText": "In Ordnung. Kann ich das Paket versichern lassen?", "translation": "Fine. Can I insure the package?", "translationFa": "باشه. میتونم بسته رو بیمه کنم؟" },
+    { "id": 12, "role": "received", "audioText": "Ja, für fünf Euro zusätzlich bis zu einem Warenwert von hundert Euro.", "translation": "Yes, for an additional 5 euros up to 100 euros in value.", "translationFa": "بله، پنج یورو اضافه تا ارزش صد یورو." },
+    { "id": 13, "role": "sent", "targetText": "Ja bitte, ich versichere es. Der Inhalt ist etwa achtzig Euro wert.", "translation": "Yes please, I'll insure it. The contents are worth about 80 euros.", "translationFa": "بله لطفاً، بیمه‌اش می‌کنم. محتوا حدود هشتاد یورو ارزش داره." },
+    { "id": 14, "role": "received", "audioText": "Gut. Füllen Sie bitte diese Zollerklärung aus.", "translation": "Good. Please fill out this customs declaration.", "translationFa": "خوب. لطفاً این فرم گمرکی رو پر کنید." },
+    { "id": 15, "role": "sent", "targetText": "Schreibe ich den Inhalt auf Deutsch oder auf Englisch?", "translation": "Do I write the contents in German or English?", "translationFa": "محتوا رو به آلمانی بنویسم یا انگلیسی؟" },
+    { "id": 16, "role": "received", "audioText": "Deutsch oder Englisch, beides wird akzeptiert.", "translation": "German or English, both are accepted.", "translationFa": "آلمانی یا انگلیسی، هر دو قبوله." },
+    { "id": 17, "role": "sent", "targetText": "Bitte schön, alles ausgefüllt.", "translation": "Here you go, all filled out.", "translationFa": "بفرمایید، همه چیز پر شد." },
+    { "id": 18, "role": "received", "audioText": "Perfekt. Hier ist Ihre Sendungsnummer. Sie können das Paket online verfolgen.", "translation": "Perfect. Here is your tracking number. You can track the package online.", "translationFa": "عالی. اینم شماره رهگیری شما. می‌تونید بسته رو آنلاین ردیابی کنید." }
+  ]
+}

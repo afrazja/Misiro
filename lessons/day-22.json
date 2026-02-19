@@ -1,0 +1,11 @@
+{
+  "title": "Day 22: Travel Problems",
+  "titleFa": "روز ۲۲: مشکلات سفر",
+  "sentences": [
+    { "id": 1, "role": "sent", "targetText": "Ich habe meinen Zug verpasst.", "translation": "I missed my train.", "translationFa": "قطارم رو از دست دادم." },
+    { "id": 2, "role": "sent", "targetText": "Mein Flug hat Verspätung.", "translation": "My flight is delayed.", "translationFa": "پروازم تأخیر داره." },
+    { "id": 3, "role": "sent", "targetText": "Ich brauche Hilfe.", "translation": "I need help.", "translationFa": "کمک می‌خوام." },
+    { "id": 4, "role": "sent", "targetText": "Wo ist die Information?", "translation": "Where is the information desk?", "translationFa": "میز اطلاعات کجاست؟" },
+    { "id": 5, "role": "sent", "targetText": "Was soll ich tun?", "translation": "What should I do?", "translationFa": "باید چیکار کنم؟" }
+  ]
+}

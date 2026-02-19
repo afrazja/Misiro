@@ -1,0 +1,23 @@
+{
+  "title": "Day 32: Birthday Party",
+  "titleFa": "روز ۳۲: جشن تولد",
+  "sentences": [
+    { "id": 1, "role": "received", "audioText": "Hey, mein Geburtstag ist am Samstag. Kommst du zur Party?", "translation": "Hey, my birthday is on Saturday. Are you coming to the party?", "translationFa": "هی، تولدم شنبه‌ست. میای به پارتی؟" },
+    { "id": 2, "role": "sent", "targetText": "Natürlich! Das würde ich nicht verpassen. Wo findet sie statt?", "translation": "Of course! I wouldn't miss it. Where is it?", "translationFa": "البته! این رو از دست نمیدم. کجاست؟" },
+    { "id": 3, "role": "received", "audioText": "Bei mir zu Hause, ab sieben Uhr abends.", "translation": "At my place, starting at seven in the evening.", "translationFa": "خونه‌ام، از ساعت هفت شب." },
+    { "id": 4, "role": "sent", "targetText": "Soll ich etwas mitbringen?", "translation": "Should I bring something?", "translationFa": "چیزی بیارم؟" },
+    { "id": 5, "role": "received", "audioText": "Nur dich selbst! Aber Wein wäre willkommen.", "translation": "Just bring yourself! But wine would be welcome.", "translationFa": "فقط خودت بیا! ولی شراب هم خوشحال میشیم." },
+    { "id": 6, "role": "sent", "targetText": "Herzlichen Glückwunsch zum Geburtstag! Alles Gute für dich!", "translation": "Happy birthday! All the best for you!", "translationFa": "تولدت مبارک! همه چیز بهت خیر باشه!" },
+    { "id": 7, "role": "received", "audioText": "Vielen herzlichen Dank! Ich freue mich so, dass du da bist.", "translation": "Thank you so much! I'm so happy you're here.", "translationFa": "خیلی ممنون! خیلی خوشحالم که اینجایی." },
+    { "id": 8, "role": "sent", "targetText": "Hier, das ist für dich. Ich hoffe, es gefällt dir.", "translation": "Here, this is for you. I hope you like it.", "translationFa": "بفرما، این برای توئه. امیدوارم خوشت بیاد." },
+    { "id": 9, "role": "received", "audioText": "Oh, wie schön! Das wäre doch nicht nötig gewesen!", "translation": "Oh, how lovely! You shouldn't have!", "translationFa": "اوه، چه قشنگ! لازم نبود زحمت بکشی!" },
+    { "id": 10, "role": "sent", "targetText": "Wie alt wirst du heute?", "translation": "How old are you turning today?", "translationFa": "امروز چند سالت میشه؟" },
+    { "id": 11, "role": "received", "audioText": "Ich werde dreißig. Ich kann es kaum glauben!", "translation": "I'm turning thirty. I can't believe it!", "translationFa": "سی سالم میشه. باورم نمیشه!" },
+    { "id": 12, "role": "sent", "targetText": "Der Kuchen sieht toll aus. Hast du ihn selbst gebacken?", "translation": "The cake looks amazing. Did you bake it yourself?", "translationFa": "کیک خیلی قشنگه. خودت پختیش؟" },
+    { "id": 13, "role": "received", "audioText": "Nein, meine Mutter hat ihn gebacken. Er ist aus Schokolade.", "translation": "No, my mom baked it. It's chocolate.", "translationFa": "نه، مامانم پخته. شکلاتیه." },
+    { "id": 14, "role": "sent", "targetText": "Lass uns anstoßen! Auf deine Gesundheit!", "translation": "Let's make a toast! To your health!", "translationFa": "بیاید乾杯 کنیم! به سلامتیت!" },
+    { "id": 15, "role": "received", "audioText": "Prost! Ich freue mich so, dass alle hier sind.", "translation": "Cheers! I'm so glad everyone is here.", "translationFa": "به سلامتی! خیلی خوشحالم که همه اینجان." },
+    { "id": 16, "role": "sent", "targetText": "Es war ein wunderschöner Abend. Danke für die Einladung!", "translation": "It was a wonderful evening. Thank you for the invitation!", "translationFa": "شب فوق‌العاده‌ای بود. ممنون از دعوتت!" },
+    { "id": 17, "role": "received", "audioText": "Danke, dass du gekommen bist. Bis bald!", "translation": "Thank you for coming. See you soon!", "translationFa": "ممنون که اومدی. به زودی میبینمت!" }
+  ]
+}

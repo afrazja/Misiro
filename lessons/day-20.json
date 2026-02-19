@@ -1,0 +1,16 @@
+{
+  "title": "Day 20: At the Supermarket",
+  "titleFa": "روز ۲۰: در سوپرمارکت",
+  "sentences": [
+    { "id": 1, "role": "sent", "targetText": "Entschuldigung, wo finde ich die Milchprodukte?", "translation": "Excuse me, where can I find dairy products?", "translationFa": "ببخشید، لبنیات کجاست؟" },
+    { "id": 2, "role": "received", "audioText": "Im Gang drei, links.", "translation": "In aisle three, on the left.", "translationFa": "راهروی سه، سمت چپ." },
+    { "id": 3, "role": "sent", "targetText": "Danke. Haben Sie frisches Brot?", "translation": "Thanks. Do you have fresh bread?", "translationFa": "ممنون. نون تازه دارید؟" },
+    { "id": 4, "role": "received", "audioText": "Ja, bei der Bäckerei hinten.", "translation": "Yes, at the bakery in the back.", "translationFa": "بله، نونوایی ته فروشگاه." },
+    { "id": 5, "role": "sent", "targetText": "Brauche ich eine Tüte?", "translation": "Do I need a bag?", "translationFa": "کیسه لازم دارم؟" },
+    { "id": 6, "role": "received", "audioText": "Die Tüten kosten 20 Cent.", "translation": "The bags cost 20 cents.", "translationFa": "کیسه‌ها ۲۰ سنت هست." },
+    { "id": 7, "role": "sent", "targetText": "Ich nehme eine, bitte.", "translation": "I'll take one, please.", "translationFa": "یکی می‌خوام، لطفاً." },
+    { "id": 8, "role": "received", "audioText": "Zahlen Sie bar oder mit Karte?", "translation": "Are you paying cash or by card?", "translationFa": "نقد می‌دید یا کارت؟" },
+    { "id": 9, "role": "sent", "targetText": "Mit Karte, bitte.", "translation": "By card, please.", "translationFa": "با کارت، لطفاً." },
+    { "id": 10, "role": "received", "audioText": "Bitte geben Sie Ihre PIN ein.", "translation": "Please enter your PIN.", "translationFa": "لطفاً رمزتون رو وارد کنید." }
+  ]
+}

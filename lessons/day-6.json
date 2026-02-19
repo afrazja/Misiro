@@ -1,0 +1,14 @@
+{
+  "title": "Day 6: Understanding & Clarifying",
+  "titleFa": "روز ۶: فهمیدن و شفاف‌سازی",
+  "sentences": [
+    { "id": 1, "role": "sent", "targetText": "Was bedeutet das?", "translation": "What does this mean?", "translationFa": "این یعنی چی؟" },
+    { "id": 2, "role": "received", "audioText": "Das bedeutet 'Auto'.", "translation": "That means 'car'.", "translationFa": "این یعنی 'ماشین'." },
+    { "id": 3, "role": "sent", "targetText": "Können Sie bitte langsamer sprechen?", "translation": "Can you please speak more slowly?", "translationFa": "میتونید لطفاً آروم‌تر صحبت کنید؟" },
+    { "id": 4, "role": "received", "audioText": "Ja, ich spreche langsam.", "translation": "Yes, I'll speak slowly.", "translationFa": "بله، آروم صحبت می‌کنم." },
+    { "id": 5, "role": "sent", "targetText": "Ich verstehe.", "translation": "I understand.", "translationFa": "میتوجه میشم." },
+    { "id": 6, "role": "sent", "targetText": "Ich verstehe noch nicht.", "translation": "I don't understand yet.", "translationFa": "هنوز متوجه نمیشم." },
+    { "id": 7, "role": "received", "audioText": "Ist es jetzt klar?", "translation": "Is it clear now?", "translationFa": "الان روشنه؟" },
+    { "id": 8, "role": "sent", "targetText": "Ja, das ist jetzt klar.", "translation": "Yes, that is clear now.", "translationFa": "بله، الان کاملاً روشنه." }
+  ]
+}

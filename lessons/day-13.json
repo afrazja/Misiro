@@ -1,0 +1,11 @@
+{
+  "title": "Day 13: At Work (Casual)",
+  "titleFa": "روز ۱۳: سر کار",
+  "sentences": [
+    { "id": 1, "role": "sent", "targetText": "Ich arbeite heute.", "translation": "I am working today.", "translationFa": "امروز کار می‌کنم." },
+    { "id": 2, "role": "sent", "targetText": "Ich habe eine Besprechung.", "translation": "I have a meeting.", "translationFa": "من جلسه دارم." },
+    { "id": 3, "role": "sent", "targetText": "Bitte schicken Sie mir eine E-Mail.", "translation": "Please send me an email.", "translationFa": "لطفاً برام ایمیل بفرستید." },
+    { "id": 4, "role": "sent", "targetText": "Ich mache das heute.", "translation": "I'll do that today.", "translationFa": "امروز انجامش میدم." },
+    { "id": 5, "role": "sent", "targetText": "Ich melde mich bei Ihnen.", "translation": "I'll get back to you.", "translationFa": "بهتون خبر میدم." }
+  ]
+}

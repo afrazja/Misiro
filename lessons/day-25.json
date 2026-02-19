@@ -1,0 +1,16 @@
+{
+  "title": "Day 25: At the Bank",
+  "titleFa": "روز ۲۵: در بانک",
+  "sentences": [
+    { "id": 1, "role": "sent", "targetText": "Guten Tag, ich möchte ein Konto eröffnen.", "translation": "Good day, I'd like to open an account.", "translationFa": "روز بخیر، می‌خوام یه حساب باز کنم." },
+    { "id": 2, "role": "received", "audioText": "Natürlich. Haben Sie einen Ausweis dabei?", "translation": "Of course. Do you have an ID with you?", "translationFa": "البته. کارت شناسایی همراهتون هست؟" },
+    { "id": 3, "role": "sent", "targetText": "Ja, hier ist mein Reisepass.", "translation": "Yes, here is my passport.", "translationFa": "بله، این پاسپورتم." },
+    { "id": 4, "role": "received", "audioText": "Möchten Sie ein Girokonto oder ein Sparkonto?", "translation": "Would you like a checking account or a savings account?", "translationFa": "حساب جاری می‌خواید یا پس‌انداز؟" },
+    { "id": 5, "role": "sent", "targetText": "Ein Girokonto, bitte.", "translation": "A checking account, please.", "translationFa": "حساب جاری، لطفاً." },
+    { "id": 6, "role": "received", "audioText": "Das kostet 5 Euro pro Monat.", "translation": "That costs 5 Euro per month.", "translationFa": "ماهی ۵ یورو هزینه داره." },
+    { "id": 7, "role": "sent", "targetText": "Kann ich auch eine Kreditkarte bekommen?", "translation": "Can I also get a credit card?", "translationFa": "میتونم کارت اعتباری هم بگیرم؟" },
+    { "id": 8, "role": "received", "audioText": "Ja, das ist möglich.", "translation": "Yes, that's possible.", "translationFa": "بله، امکانش هست." },
+    { "id": 9, "role": "sent", "targetText": "Wie lange dauert das?", "translation": "How long does it take?", "translationFa": "چقدر طول می‌کشه؟" },
+    { "id": 10, "role": "received", "audioText": "Ungefähr eine Woche.", "translation": "About one week.", "translationFa": "تقریباً یه هفته." }
+  ]
+}

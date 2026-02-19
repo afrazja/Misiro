@@ -1,0 +1,16 @@
+{
+  "title": "Day 27: Making Plans",
+  "titleFa": "روز ۲۷: قرار گذاشتن",
+  "sentences": [
+    { "id": 1, "role": "received", "audioText": "Hast du morgen Zeit?", "translation": "Do you have time tomorrow?", "translationFa": "فردا وقت داری؟" },
+    { "id": 2, "role": "sent", "targetText": "Ja, ich bin frei.", "translation": "Yes, I'm free.", "translationFa": "آره، بیکارم." },
+    { "id": 3, "role": "received", "audioText": "Wollen wir ins Kino gehen?", "translation": "Do you want to go to the cinema?", "translationFa": "بریم سینما؟" },
+    { "id": 4, "role": "sent", "targetText": "Gute Idee! Welcher Film?", "translation": "Good idea! Which movie?", "translationFa": "ایده خوبیه! چه فیلمی؟" },
+    { "id": 5, "role": "received", "audioText": "Es gibt einen neuen Actionfilm.", "translation": "There's a new action movie.", "translationFa": "یه فیلم اکشن جدید هست." },
+    { "id": 6, "role": "sent", "targetText": "Wann beginnt er?", "translation": "When does it start?", "translationFa": "کی شروع میشه؟" },
+    { "id": 7, "role": "received", "audioText": "Um acht Uhr abends.", "translation": "At eight o'clock in the evening.", "translationFa": "ساعت هشت شب." },
+    { "id": 8, "role": "sent", "targetText": "Wo treffen wir uns?", "translation": "Where do we meet?", "translationFa": "کجا همدیگه رو ببینیم؟" },
+    { "id": 9, "role": "received", "audioText": "Vor dem Kino um halb acht.", "translation": "In front of the cinema at half past seven.", "translationFa": "جلوی سینما ساعت هفت و نیم." },
+    { "id": 10, "role": "sent", "targetText": "Super, bis morgen dann!", "translation": "Great, see you tomorrow then!", "translationFa": "عالی، پس تا فردا!" }
+  ]
+}

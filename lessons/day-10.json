@@ -1,0 +1,12 @@
+{
+  "title": "Day 10: Making Decisions",
+  "titleFa": "روز ۱۰: تصمیم‌گیری",
+  "sentences": [
+    { "id": 1, "role": "sent", "targetText": "Ich nehme das.", "translation": "I'll take that.", "translationFa": "من اینو برمیدارم." },
+    { "id": 2, "role": "sent", "targetText": "Ich brauche mehr Zeit.", "translation": "I need more time.", "translationFa": "زمان بیشتری لازم دارم." },
+    { "id": 3, "role": "sent", "targetText": "Lass mich nachdenken.", "translation": "Let me think.", "translationFa": "بذار فکر کنم." },
+    { "id": 4, "role": "sent", "targetText": "Ich habe mich entschieden.", "translation": "I have decided.", "translationFa": "من تصمیمم رو گرفتم." },
+    { "id": 5, "role": "received", "audioText": "Bist du sicher?", "translation": "Are you sure?", "translationFa": "مطمئنی؟" },
+    { "id": 6, "role": "sent", "targetText": "Das passt mir.", "translation": "That works for me.", "translationFa": "برام مناسبه." }
+  ]
+}

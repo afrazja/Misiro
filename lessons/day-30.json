@@ -1,0 +1,22 @@
+{
+  "title": "Day 30: Renting an Apartment",
+  "titleFa": "روز ۳۰: اجاره آپارتمان",
+  "sentences": [
+    { "id": 1, "role": "sent", "targetText": "Hallo, ich bin wegen der Wohnungsbesichtigung hier.", "translation": "Hello, I'm here for the apartment viewing.", "translationFa": "سلام، برای بازدید آپارتمان اومدم." },
+    { "id": 2, "role": "received", "audioText": "Willkommen! Kommen Sie rein, ich zeige Ihnen alles.", "translation": "Welcome! Come in, I'll show you everything.", "translationFa": "خوش اومدید! بفرمایید داخل، همه چیز رو نشونتون میدم." },
+    { "id": 3, "role": "sent", "targetText": "Wie viele Zimmer hat die Wohnung?", "translation": "How many rooms does the apartment have?", "translationFa": "آپارتمان چند تا اتاق داره؟" },
+    { "id": 4, "role": "received", "audioText": "Sie hat zwei Zimmer, eine Küche und ein Bad.", "translation": "It has two rooms, a kitchen and a bathroom.", "translationFa": "دو اتاق، یه آشپزخونه و یه حموم داره." },
+    { "id": 5, "role": "sent", "targetText": "Wie hoch ist die Miete pro Monat?", "translation": "How much is the rent per month?", "translationFa": "اجاره ماهانه چقدره؟" },
+    { "id": 6, "role": "received", "audioText": "Achthundert Euro pro Monat, warm.", "translation": "Eight hundred Euro per month, utilities included.", "translationFa": "هشتصد یورو در ماه، با هزینه‌های جانبی." },
+    { "id": 7, "role": "sent", "targetText": "Sind die Nebenkosten inklusive?", "translation": "Are the utilities included?", "translationFa": "هزینه‌های جانبی شامل میشه؟" },
+    { "id": 8, "role": "received", "audioText": "Heizung und Wasser schon. Strom zahlen Sie selbst.", "translation": "Heating and water yes. You pay electricity yourself.", "translationFa": "گرمایش و آب بله. برق رو خودتون میدید." },
+    { "id": 9, "role": "sent", "targetText": "Wie lange ist die Mindestlaufzeit?", "translation": "How long is the minimum lease?", "translationFa": "حداقل مدت قرارداد چقدره؟" },
+    { "id": 10, "role": "received", "audioText": "Ein Jahr Mindestlaufzeit, danach monatlich kündbar.", "translation": "One year minimum, then cancellable monthly.", "translationFa": "حداقل یه سال، بعدش ماه به ماه قابل فسخه." },
+    { "id": 11, "role": "sent", "targetText": "Gibt es eine Kaution?", "translation": "Is there a deposit?", "translationFa": "ودیعه هم هست؟" },
+    { "id": 12, "role": "received", "audioText": "Ja, drei Monatsmieten als Kaution.", "translation": "Yes, three months' rent as a deposit.", "translationFa": "بله، سه ماه اجاره به عنوان ودیعه." },
+    { "id": 13, "role": "sent", "targetText": "Ab wann wäre die Wohnung verfügbar?", "translation": "When would the apartment be available?", "translationFa": "آپارتمان از کی آزاده؟" },
+    { "id": 14, "role": "received", "audioText": "Ab dem ersten des nächsten Monats.", "translation": "From the first of next month.", "translationFa": "از اول ماه آینده." },
+    { "id": 15, "role": "sent", "targetText": "Sie gefällt mir sehr gut. Ich würde sie gerne nehmen.", "translation": "I really like it. I'd like to take it.", "translationFa": "خیلی دوستش دارم. می‌خوام بگیرمش." },
+    { "id": 16, "role": "received", "audioText": "Sehr gut! Ich schicke Ihnen den Mietvertrag zu.", "translation": "Great! I'll send you the rental contract.", "translationFa": "عالی! قرارداد اجاره رو برای شما می‌فرستم." }
+  ]
+}

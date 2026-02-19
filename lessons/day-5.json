@@ -1,0 +1,15 @@
+{
+  "title": "Day 5: Asking for Help",
+  "titleFa": "روز ۵: درخواست کمک",
+  "sentences": [
+    { "id": 1, "role": "sent", "targetText": "Entschuldigung, können Sie mir helfen?", "translation": "Excuse me, can you help me?", "translationFa": "ببخشید، میتونید کمکم کنید؟" },
+    { "id": 2, "role": "received", "audioText": "Ja, natürlich. Was ist los?", "translation": "Yes, of course. What's wrong?", "translationFa": "بله، البته. چی شده؟" },
+    { "id": 3, "role": "sent", "targetText": "Ich habe ein Problem.", "translation": "I have a problem.", "translationFa": "من یک مشکلی دارم." },
+    { "id": 4, "role": "sent", "targetText": "Ich verstehe das nicht.", "translation": "I don't understand this.", "translationFa": "من اینو نمی‌فهمم." },
+    { "id": 5, "role": "received", "audioText": "Soll ich es erklären?", "translation": "Should I explain it?", "translationFa": "می‌خواید توضیح بدم؟" },
+    { "id": 6, "role": "sent", "targetText": "Können Sie das bitte wiederholen?", "translation": "Can you please repeat that?", "translationFa": "میتونید لطفاً تکرار کنید؟" },
+    { "id": 7, "role": "received", "audioText": "Kein Problem. Ich sage es nochmal.", "translation": "No problem. I'll say it again.", "translationFa": "اشکالی نداره. دوباره میگم." },
+    { "id": 8, "role": "sent", "targetText": "Vielen Dank für Ihre Hilfe.", "translation": "Thank you very much for your help.", "translationFa": "خیلی ممنون از کمکتون." },
+    { "id": 9, "role": "received", "audioText": "Gern geschehen.", "translation": "You're welcome.", "translationFa": "خواهش می‌کنم." }
+  ]
+}

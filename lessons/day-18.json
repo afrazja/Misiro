@@ -1,0 +1,16 @@
+{
+  "title": "Day 18: At the Restaurant",
+  "titleFa": "روز ۱۸: رستوران",
+  "sentences": [
+    { "id": 1, "role": "sent", "targetText": "Einen Tisch für zwei, bitte.", "translation": "A table for two, please.", "translationFa": "یک میز برای دو نفر، لطفاً." },
+    { "id": 2, "role": "received", "audioText": "Hier ist die Speisekarte.", "translation": "Here is the menu.", "translationFa": "بفرمایید منو." },
+    { "id": 3, "role": "sent", "targetText": "Was empfehlen Sie?", "translation": "What do you recommend?", "translationFa": "چی پیشنهاد می‌کنید؟" },
+    { "id": 4, "role": "received", "audioText": "Die Schnitzel sind sehr gut.", "translation": "The schnitzels are very good.", "translationFa": "شنیتسل‌ها خیلی خوبن." },
+    { "id": 5, "role": "sent", "targetText": "Ich nehme das Schnitzel, bitte.", "translation": "I'll take the schnitzel, please.", "translationFa": "من شنیتسل میخورم، لطفاً." },
+    { "id": 6, "role": "received", "audioText": "Möchten Sie etwas zu trinken?", "translation": "Would you like something to drink?", "translationFa": "نوشیدنی هم میل دارید؟" },
+    { "id": 7, "role": "sent", "targetText": "Ein Glas Wasser, bitte.", "translation": "A glass of water, please.", "translationFa": "یک لیوان آب، لطفاً." },
+    { "id": 8, "role": "received", "audioText": "Guten Appetit!", "translation": "Enjoy your meal!", "translationFa": "نوش جان!" },
+    { "id": 9, "role": "sent", "targetText": "Die Rechnung, bitte.", "translation": "The bill, please.", "translationFa": "صورتحساب، لطفاً." },
+    { "id": 10, "role": "received", "audioText": "Das macht zusammen 25 Euro.", "translation": "That comes to 25 Euro total.", "translationFa": "جمعاً ۲۵ یورو میشه." }
+  ]
+}

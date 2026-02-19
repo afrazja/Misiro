@@ -1,0 +1,22 @@
+{
+  "title": "Day 33: Technology Problems",
+  "titleFa": "روز ۳۳: مشکلات فناوری",
+  "sentences": [
+    { "id": 1, "role": "sent", "targetText": "Hallo, ich habe ein Problem mit meinem Internet. Es funktioniert nicht.", "translation": "Hello, I have a problem with my internet. It's not working.", "translationFa": "سلام، با اینترنتم مشکل دارم. کار نمیکنه." },
+    { "id": 2, "role": "received", "audioText": "Guten Tag. Was genau ist das Problem?", "translation": "Good day. What exactly is the problem?", "translationFa": "روز بخیر. مشکل دقیقاً چیه؟" },
+    { "id": 3, "role": "sent", "targetText": "Die Verbindung bricht immer wieder ab. Der Router zeigt ein rotes Licht.", "translation": "The connection keeps dropping. The router shows a red light.", "translationFa": "اتصال قطع و وصل میشه. روتر چراغ قرمز نشون میده." },
+    { "id": 4, "role": "received", "audioText": "Haben Sie versucht, den Router neu zu starten?", "translation": "Have you tried restarting the router?", "translationFa": "روتر رو ریستارت کردید؟" },
+    { "id": 5, "role": "sent", "targetText": "Ja, ich habe ihn bereits zweimal neu gestartet.", "translation": "Yes, I've already restarted it twice.", "translationFa": "بله، دوبار ریستارتش کردم." },
+    { "id": 6, "role": "received", "audioText": "Seit wann besteht das Problem?", "translation": "How long has this problem been going on?", "translationFa": "از کی این مشکل رو دارید؟" },
+    { "id": 7, "role": "sent", "targetText": "Seit gestern Abend. Ich arbeite im Homeoffice und brauche dringend Internet.", "translation": "Since yesterday evening. I work from home and urgently need the internet.", "translationFa": "از دیشب. من دورکاری می‌کنم و فوری به اینترنت نیاز دارم." },
+    { "id": 8, "role": "received", "audioText": "Ich sehe eine Störung in Ihrer Region. Wir arbeiten daran.", "translation": "I can see an outage in your area. We're working on it.", "translationFa": "تو منطقه شما اختلال میبینم. داریم روش کار می‌کنیم." },
+    { "id": 9, "role": "sent", "targetText": "Wann wird das Problem behoben?", "translation": "When will it be fixed?", "translationFa": "کِی درست میشه؟" },
+    { "id": 10, "role": "received", "audioText": "Voraussichtlich innerhalb von zwei Stunden.", "translation": "Probably within two hours.", "translationFa": "احتمالاً ظرف دو ساعت." },
+    { "id": 11, "role": "sent", "targetText": "Außerdem entlädt sich mein Handy-Akku sehr schnell.", "translation": "Also, my phone battery drains very quickly.", "translationFa": "ضمناً باتری گوشیم خیلی سریع خالی میشه." },
+    { "id": 12, "role": "received", "audioText": "Das ist eine andere Abteilung. Soll ich Sie verbinden?", "translation": "That's a different department. Shall I connect you?", "translationFa": "اون بخش دیگه‌ایه. وصلتون کنم؟" },
+    { "id": 13, "role": "sent", "targetText": "Nein danke, ich rufe später zurück. Kann ich eine Ticketnummer bekommen?", "translation": "No thanks, I'll call back later. Can I get a ticket number?", "translationFa": "نه ممنون، بعداً زنگ میزنم. میتونم یه شماره تیکت بگیرم؟" },
+    { "id": 14, "role": "received", "audioText": "Natürlich. Ihre Ticketnummer ist 4872.", "translation": "Of course. Your ticket number is 4872.", "translationFa": "البته. شماره تیکت شما ۴۸۷۲ هست." },
+    { "id": 15, "role": "sent", "targetText": "Danke. Ich warte auf Ihre Rückmeldung.", "translation": "Thank you. I'll wait for your update.", "translationFa": "ممنون. منتظر خبرتون میمونم." },
+    { "id": 16, "role": "received", "audioText": "Wir schicken Ihnen eine SMS, sobald das Problem behoben ist.", "translation": "We'll send you an SMS as soon as it's fixed.", "translationFa": "به محض اینکه درست شد، براتون SMS میفرستیم." }
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "title": "Day 26: Phone Conversation",
+  "titleFa": "روز ۲۶: مکالمه تلفنی",
+  "sentences": [
+    { "id": 1, "role": "received", "audioText": "Hallo, hier ist Firma Schmidt. Wie kann ich helfen?", "translation": "Hello, this is Schmidt Company. How can I help?", "translationFa": "سلام، شرکت اشمیت. چطور کمکتون کنم؟" },
+    { "id": 2, "role": "sent", "targetText": "Guten Tag, ich möchte mit Herrn Müller sprechen.", "translation": "Good day, I'd like to speak with Mr. Müller.", "translationFa": "روز بخیر، می‌خوام با آقای مولر صحبت کنم." },
+    { "id": 3, "role": "received", "audioText": "Einen Moment bitte, ich verbinde Sie.", "translation": "One moment please, I'll connect you.", "translationFa": "یه لحظه، وصلتون می‌کنم." },
+    { "id": 4, "role": "sent", "targetText": "Danke schön.", "translation": "Thank you.", "translationFa": "ممنونم." },
+    { "id": 5, "role": "received", "audioText": "Es tut mir leid, er ist gerade nicht da.", "translation": "I'm sorry, he's not here right now.", "translationFa": "متأسفانه الان اینجا نیست." },
+    { "id": 6, "role": "sent", "targetText": "Kann ich eine Nachricht hinterlassen?", "translation": "Can I leave a message?", "translationFa": "میتونم پیغام بذارم؟" },
+    { "id": 7, "role": "received", "audioText": "Natürlich. Was soll ich ausrichten?", "translation": "Of course. What should I tell him?", "translationFa": "البته. چی بگم بهش؟" },
+    { "id": 8, "role": "sent", "targetText": "Bitte sagen Sie, dass ich angerufen habe.", "translation": "Please say that I called.", "translationFa": "لطفاً بگید من زنگ زدم." },
+    { "id": 9, "role": "received", "audioText": "Und Ihre Nummer?", "translation": "And your number?", "translationFa": "و شماره‌تون؟" },
+    { "id": 10, "role": "sent", "targetText": "Meine Nummer ist 0176 1234567.", "translation": "My number is 0176 1234567.", "translationFa": "شماره‌م ۰۱۷۶ ۱۲۳۴۵۶۷ هست." }
+  ]
+}

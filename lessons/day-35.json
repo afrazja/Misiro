@@ -1,0 +1,24 @@
+{
+  "title": "Day 35: Emergency Situations",
+  "titleFa": "روز ۳۵: موقعیت‌های اضطراری",
+  "sentences": [
+    { "id": 1, "role": "sent", "targetText": "Hilfe! Ich brauche die Polizei.", "translation": "Help! I need the police.", "translationFa": "کمک! به پلیس نیاز دارم." },
+    { "id": 2, "role": "received", "audioText": "Beruhigen Sie sich. Was ist passiert?", "translation": "Calm down. What happened?", "translationFa": "آروم باشید. چی شده؟" },
+    { "id": 3, "role": "sent", "targetText": "Mein Geldbeutel wurde gestohlen. In der U-Bahn.", "translation": "My wallet was stolen. On the subway.", "translationFa": "کیف پولم دزدیده شد. تو مترو." },
+    { "id": 4, "role": "received", "audioText": "Wann ist das passiert?", "translation": "When did that happen?", "translationFa": "کِی اتفاق افتاد؟" },
+    { "id": 5, "role": "sent", "targetText": "Vor ungefähr zwanzig Minuten, auf der Linie U3.", "translation": "About twenty minutes ago, on the U3 line.", "translationFa": "حدود بیست دقیقه پیش، تو خط U3." },
+    { "id": 6, "role": "received", "audioText": "Befanden sich Dokumente in dem Geldbeutel?", "translation": "Were there any documents in the wallet?", "translationFa": "مدرکی توی کیف پول بود؟" },
+    { "id": 7, "role": "sent", "targetText": "Ja, mein Reisepass und meine Kreditkarte waren drin.", "translation": "Yes, my passport and credit card were in it.", "translationFa": "بله، پاسپورتم و کارت اعتباریم توش بود." },
+    { "id": 8, "role": "received", "audioText": "Sie müssen sofort Ihre Kreditkarte sperren lassen.", "translation": "You must have your credit card blocked immediately.", "translationFa": "باید فوری کارت اعتباریتون رو مسدود کنید." },
+    { "id": 9, "role": "sent", "targetText": "Wie kann ich das tun? Ich bin Tourist und kenne die Nummer nicht.", "translation": "How can I do that? I'm a tourist and don't know the number.", "translationFa": "چطور میتونم این کارو بکنم؟ من توریستم و شماره رو نمیدونم." },
+    { "id": 10, "role": "received", "audioText": "Wir können Ihnen dabei helfen. Welche Bank war das?", "translation": "We can help you with that. Which bank was it?", "translationFa": "ما می‌تونیم کمکتون کنیم. کدوم بانک بود؟" },
+    { "id": 11, "role": "sent", "targetText": "Es war eine Visa-Karte von meiner deutschen Bank.", "translation": "It was a Visa card from my German bank.", "translationFa": "یه کارت ویزا از بانک آلمانیم بود." },
+    { "id": 12, "role": "received", "audioText": "Gut. Wir leiten Sie weiter. Und für den Pass müssen Sie zur Botschaft.", "translation": "Good. We'll transfer you. And for the passport you'll need to go to the embassy.", "translationFa": "خوب. شما رو وصل می‌کنیم. و برای پاسپورت باید برید سفارتخونه." },
+    { "id": 13, "role": "sent", "targetText": "Kann ich hier eine Verlustanzeige machen?", "translation": "Can I file a loss report here?", "translationFa": "میتونم اینجا گزارش گم‌شدن بدم؟" },
+    { "id": 14, "role": "received", "audioText": "Ja, natürlich. Ich nehme Ihre persönlichen Daten auf.", "translation": "Yes, of course. I'll take your personal details.", "translationFa": "بله، البته. مشخصات شخصیتون رو می‌گیرم." },
+    { "id": 15, "role": "sent", "targetText": "Mein Name ist Kamran Hosseini, geboren am dritten März neunzehnneunzig.", "translation": "My name is Kamran Hosseini, born on the third of March, 1999.", "translationFa": "اسمم کامران حسینی هست، متولد سوم مارس هزار و نهصد و نود و نه." },
+    { "id": 16, "role": "received", "audioText": "Danke. Haben Sie eine Adresse in Deutschland, unter der wir Sie erreichen können?", "translation": "Thank you. Do you have an address in Germany where we can reach you?", "translationFa": "ممنون. آدرسی در آلمان دارید که بتونیم باهاتون تماس بگیریم؟" },
+    { "id": 17, "role": "sent", "targetText": "Ja, ich wohne im Hotel Zentrum, Zimmer dreizehn.", "translation": "Yes, I'm staying at Hotel Zentrum, room thirteen.", "translationFa": "بله، در هتل تسنتروم اتاق سیزده اقامت دارم." },
+    { "id": 18, "role": "received", "audioText": "Alles klar. Hier ist Ihre Anzeigenummer: 2024-8831. Bitte bewahren Sie diese gut auf.", "translation": "All right. Here is your report number: 2024-8831. Please keep it safe.", "translationFa": "باشه. شماره گزارشتون اینه: ۲۰۲۴-۸۸۳۱. لطفاً خوب نگهش دارید." }
+  ]
+}

@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Misiro - Daily Lessons PDF</title>
+    <style>
+        body {
+            font-family: 'Times New Roman', Times, serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: white;
+        }
+
+        h1 {
+            text-align: center;
+            border-bottom: 2px solid #333;
+            padding-bottom: 10px;
+            margin-bottom: 30px;
+        }
+
+        .lesson-container {
+            margin-bottom: 40px;
+            page-break-inside: avoid;
+            border: 1px solid #ccc;
+            padding: 15px;
+            border-radius: 5px;
+        }
+
+        .lesson-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+            margin-bottom: 15px;
+            background-color: #f9f9f9;
+            padding: 10px;
+        }
+
+        .lesson-title {
+            font-size: 1.4em;
+            font-weight: bold;
+        }
+
+        .lesson-title-fa {
+            font-size: 1.4em;
+            font-weight: bold;
+            font-family: Tahoma, 'Segoe UI', Geneva, Verdana, sans-serif;
+            direction: rtl;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th,
+        td {
+            padding: 8px 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+        }
+
+        td.german {
+            font-weight: bold;
+            color: #000;
+        }
+
+        td.english {
+            color: #555;
+            font-style: italic;
+        }
+
+        td.persian {
+            font-family: Tahoma, sans-serif;
+            text-align: right;
+            direction: rtl;
+            color: #444;
+        }
+
+        .no-print {
+            text-align: center;
+            margin-bottom: 20px;
+            padding: 20px;
+            background: #eef;
+            border-radius: 8px;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        @media print {
+            .no-print {
+                display: none;
+            }
+
+            body {
+                padding: 0;
+            }
+
+            .lesson-container {
+                border: none;
+                padding: 0;
+                margin-bottom: 30px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="no-print">
+        <h2>🖨️ Ready to Print</h2>
+        <p>Click the button below to save as PDF or print.</p>
+        <button onclick="window.print()">Print / Save as PDF</button>
+    </div>
+
+    <h1>Misiro - Daily German Lessons</h1>
+
+    <div id="lessons-container">
+        <!-- Lessons will be inserted here -->
+    </div>
+
+    <!-- Load lesson data loader -->
+    <script src="lessons_data.js"></script>
+
+    <script>
+        const container = document.getElementById('lessons-container');
+
+        // Load all lessons then render
+        async function renderAllLessons() {
+            const days = [];
+            for (let day = 1; day <= 29; day++) days.push(day);
+            await loadLessons(days);
+
+            for (let day = 1; day <= 29; day++) {
+                const lesson = dailyLessons[day];
+                if (!lesson) continue;
+
+                const lessonDiv = document.createElement('div');
+                lessonDiv.className = 'lesson-container';
+
+                const header = `
+                    <div class="lesson-header">
+                        <span class="lesson-title">${lesson.title}</span>
+                        <span class="lesson-title-fa">${lesson.titleFa}</span>
+                    </div>
+                `;
+
+                let tableRows = '';
+
+                lesson.sentences.forEach(sent => {
+                    const german = sent.audioText || sent.targetText;
+
+                    tableRows += `
+                        <tr>
+                            <td class="german">${german}</td>
+                            <td class="english">${sent.translation}</td>
+                            <td class="persian">${sent.translationFa}</td>
+                        </tr>
+                    `;
+                });
+
+                const content = `
+                    ${header}
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>German</th>
+                                <th>English</th>
+                                <th style="text-align:right">Persian</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${tableRows}
+                        </tbody>
+                    </table>
+                `;
+
+                lessonDiv.innerHTML = content;
+                container.appendChild(lessonDiv);
+            }
+        }
+
+        renderAllLessons();
+    </script>
+</body>
+
+</html>

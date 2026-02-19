@@ -1,0 +1,16 @@
+{
+  "title": "Day 23: At the Doctor",
+  "titleFa": "روز ۲۳: پیش دکتر",
+  "sentences": [
+    { "id": 1, "role": "sent", "targetText": "Guten Tag, ich habe einen Termin.", "translation": "Good day, I have an appointment.", "translationFa": "روز بخیر، وقت ملاقات دارم." },
+    { "id": 2, "role": "received", "audioText": "Wie ist Ihr Name?", "translation": "What is your name?", "translationFa": "اسمتون چیه؟" },
+    { "id": 3, "role": "sent", "targetText": "Mein Name ist Schmidt.", "translation": "My name is Schmidt.", "translationFa": "اسم من اشمیت هست." },
+    { "id": 4, "role": "received", "audioText": "Bitte nehmen Sie Platz.", "translation": "Please take a seat.", "translationFa": "لطفاً بنشینید." },
+    { "id": 5, "role": "received", "audioText": "Was fehlt Ihnen?", "translation": "What's wrong with you?", "translationFa": "مشکلتون چیه؟" },
+    { "id": 6, "role": "sent", "targetText": "Ich habe Kopfschmerzen.", "translation": "I have a headache.", "translationFa": "سردرد دارم." },
+    { "id": 7, "role": "received", "audioText": "Seit wann haben Sie das?", "translation": "Since when do you have this?", "translationFa": "از کی این مشکل رو دارید؟" },
+    { "id": 8, "role": "sent", "targetText": "Seit gestern Abend.", "translation": "Since yesterday evening.", "translationFa": "از دیشب." },
+    { "id": 9, "role": "received", "audioText": "Ich schreibe Ihnen ein Rezept.", "translation": "I'll write you a prescription.", "translationFa": "براتون نسخه می‌نویسم." },
+    { "id": 10, "role": "sent", "targetText": "Vielen Dank, Herr Doktor.", "translation": "Thank you very much, Doctor.", "translationFa": "خیلی ممنون، آقای دکتر." }
+  ]
+}

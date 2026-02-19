@@ -1,0 +1,11 @@
+{
+  "title": "Day 12: At Home (Daily Life)",
+  "titleFa": "روز ۱۲: در خانه (روزمره)",
+  "sentences": [
+    { "id": 1, "role": "sent", "targetText": "Ich bin zu Hause.", "translation": "I am at home.", "translationFa": "من خونه‌م." },
+    { "id": 2, "role": "sent", "targetText": "Ich bin müde.", "translation": "I am tired.", "translationFa": "خسته‌م." },
+    { "id": 3, "role": "sent", "targetText": "Ich muss mich ausruhen.", "translation": "I need to rest.", "translationFa": "باید استراحت کنم." },
+    { "id": 4, "role": "sent", "targetText": "Lass uns essen.", "translation": "Let's eat.", "translationFa": "بیاید غذا بخوریم." },
+    { "id": 5, "role": "sent", "targetText": "Ich rufe dich später an.", "translation": "I'll call you later.", "translationFa": "بعداً بهت زنگ می‌زنم." }
+  ]
+}

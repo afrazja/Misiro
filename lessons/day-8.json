@@ -1,0 +1,14 @@
+{
+  "title": "Day 8: Social Small Talk",
+  "titleFa": "روز ۸: مکالمه کوتاه دوستانه",
+  "sentences": [
+    { "id": 1, "role": "sent", "targetText": "Woher kommen Sie?", "translation": "Where are you from?", "translationFa": "اهل کجا هستید؟" },
+    { "id": 2, "role": "received", "audioText": "Ich komme aus Deutschland.", "translation": "I come from Germany.", "translationFa": "من اهل آلمان هستم." },
+    { "id": 3, "role": "sent", "targetText": "Wie lange bleiben Sie?", "translation": "How long are you staying?", "translationFa": "چقدر می‌مونید؟" },
+    { "id": 4, "role": "received", "audioText": "Nur für zwei Wochen.", "translation": "Only for two weeks.", "translationFa": "فقط برای دو هفته." },
+    { "id": 5, "role": "sent", "targetText": "Gefällt es Ihnen hier?", "translation": "Do you like it here?", "translationFa": "اینجا رو دوست دارید؟" },
+    { "id": 6, "role": "received", "audioText": "Ja, es ist sehr schön.", "translation": "Yes, it is very beautiful.", "translationFa": "بله، خیلی زیباست." },
+    { "id": 7, "role": "sent", "targetText": "Nett, mit Ihnen zu sprechen.", "translation": "Nice talking to you.", "translationFa": "از صحبت با شما خوشحال شدم." },
+    { "id": 8, "role": "received", "audioText": "Bis bald.", "translation": "See you soon.", "translationFa": "به زودی می‌بینمتون." }
+  ]
+}

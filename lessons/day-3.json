@@ -1,0 +1,16 @@
+{
+  "title": "Day 3: Asking Directions",
+  "titleFa": "روز ۳: پرسیدن مسیر",
+  "sentences": [
+    { "id": 1, "role": "sent", "targetText": "Entschuldigung, darf ich fragen?", "translation": "Excuse me, may I ask?", "translationFa": "ببخشید، میتونم بپرسم؟" },
+    { "id": 2, "role": "received", "audioText": "Ja, natürlich. Bitte schön.", "translation": "Yes, of course. Go ahead.", "translationFa": "بله، البته. بفرمایید." },
+    { "id": 3, "role": "sent", "targetText": "Wo ist der Bahnhof?", "translation": "Where is the train station?", "translationFa": "ایستگاه قطار کجاست؟" },
+    { "id": 4, "role": "received", "audioText": "Gehen Sie hier geradeaus.", "translation": "Go straight ahead here.", "translationFa": "از اینجا مستقیم برید." },
+    { "id": 5, "role": "sent", "targetText": "Und dann an der Kreuzung?", "translation": "And then at the intersection?", "translationFa": "و بعد سر چهارراه؟" },
+    { "id": 6, "role": "received", "audioText": "Biegen Sie rechts ab.", "translation": "Turn right.", "translationFa": "بپیچید به راست." },
+    { "id": 7, "role": "sent", "targetText": "Ist es weit von hier?", "translation": "Is it far from here?", "translationFa": "از اینجا دوره؟" },
+    { "id": 8, "role": "received", "audioText": "Nein, nur fünf Minuten.", "translation": "No, only five minutes.", "translationFa": "نه، فقط پنج دقیقه." },
+    { "id": 9, "role": "sent", "targetText": "Vielen Dank für Ihre Hilfe.", "translation": "Many thanks for your help.", "translationFa": "خیلی ممنون از کمکتون." },
+    { "id": 10, "role": "received", "audioText": "Gern geschehen. Auf Wiedersehen.", "translation": "You're welcome. Goodbye.", "translationFa": "خواهش می‌کنم. خداحافظ." }
+  ]
+}

@@ -1,0 +1,765 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="page-title">German Basics - Misiro</title>
+    <link rel="stylesheet" href="../styles.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #fff;
+        }
+
+        .category-container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 30px 20px;
+        }
+
+        /* Header */
+        .category-header {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .back-btn {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 25px;
+            color: #fff;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .back-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateX(-5px);
+        }
+
+        .header-title {
+            flex: 1;
+        }
+
+        .header-title h1 {
+            font-size: 2rem;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .header-title h1 .icon {
+            font-size: 2.5rem;
+        }
+
+        .header-title p {
+            color: #a0a0a0;
+            margin-top: 5px;
+        }
+
+        /* Controls */
+        .controls {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .controls select {
+            padding: 8px 16px;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            font-size: 0.9rem;
+            cursor: pointer;
+        }
+
+        .controls select option {
+            background: #1a1a2e;
+        }
+
+        /* Word Grid */
+        .word-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .word-card {
+            background: linear-gradient(145deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
+            border-radius: 16px;
+            padding: 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .word-card:hover {
+            transform: translateY(-5px);
+            background: rgba(46, 204, 113, 0.2);
+            border-color: #2ecc71;
+            box-shadow: 0 10px 30px rgba(46, 204, 113, 0.25);
+        }
+
+        .word-card:active {
+            transform: scale(0.95);
+        }
+
+        .word-german {
+            font-size: clamp(1rem, 4vw, 1.6rem);
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: #2ecc71;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+            hyphens: auto;
+            line-height: 1.2;
+        }
+
+        .word-translation {
+            font-size: 1rem;
+            color: #ccc;
+            margin-bottom: 8px;
+        }
+
+        .word-example {
+            font-size: 0.85rem;
+            color: #888;
+            font-style: italic;
+            margin-top: 10px;
+            padding-top: 10px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .word-example:hover {
+            color: #2ecc71;
+        }
+
+        .example-speaker {
+            opacity: 0.6;
+            transition: opacity 0.3s;
+        }
+
+        .word-example:hover .example-speaker {
+            opacity: 1;
+        }
+
+        .play-icon {
+            font-size: 1.3rem;
+            opacity: 0.5;
+            margin-top: 10px;
+            transition: opacity 0.3s;
+        }
+
+        .word-card:hover .play-icon {
+            opacity: 1;
+        }
+
+        /* Pronoun Table (special layout) */
+        .pronoun-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-top: 20px;
+        }
+
+        .pronoun-row {
+            display: grid;
+            grid-template-columns: 100px 1fr 2fr;
+            gap: 15px;
+            padding: 18px 20px;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.05);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            align-items: center;
+        }
+
+        .pronoun-row:hover {
+            background: rgba(46, 204, 113, 0.15);
+            transform: translateX(5px);
+        }
+
+        .pronoun-german {
+            font-weight: 700;
+            color: #2ecc71;
+            font-size: 1.4rem;
+        }
+
+        .pronoun-meaning {
+            color: #3498db;
+            font-size: 1.1rem;
+        }
+
+        .pronoun-example {
+            color: #888;
+            font-size: 0.95rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 600px) {
+            .category-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .header-title h1 {
+                font-size: 1.5rem;
+            }
+
+            .word-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .pronoun-row {
+                grid-template-columns: 80px 1fr;
+            }
+
+            .pronoun-example {
+                grid-column: span 2;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="category-container">
+        <!-- Header -->
+        <header class="category-header">
+            <a href="../basics.html" class="back-btn">← <span id="back-text">Back</span></a>
+            <div class="header-title">
+                <h1>
+                    <span class="icon" id="cat-icon">📚</span>
+                    <span id="cat-title">Loading...</span>
+                </h1>
+                <p id="cat-description">Loading content...</p>
+            </div>
+            <div class="controls">
+                <select id="language-select">
+                    <option value="fa">🇮🇷 فارسی</option>
+                    <option value="en">🇬🇧 English</option>
+                </select>
+                <select id="speed-select">
+                    <option value="1">🔊 1x</option>
+                    <option value="0.75">🔉 0.75x</option>
+                    <option value="0.5">🐢 0.5x</option>
+                    <option value="0.25">🐌 0.25x</option>
+                </select>
+            </div>
+        </header>
+
+        <!-- Content Container -->
+        <div id="content-container">
+            <!-- Words will be rendered here -->
+        </div>
+    </div>
+
+    <script>
+        // =====================
+        // VOCABULARY DATA
+        // =====================
+        const categoryData = {
+            pronouns: {
+                icon: "👤",
+                title: { en: "Personal Pronouns", fa: "ضمایر شخصی" },
+                description: { en: "Master the German personal pronouns", fa: "ضمایر شخصی آلمانی را یاد بگیرید" },
+                type: "table",
+                words: [
+                    { german: "ich", en: "I", fa: "من", example: "Ich bin hier." },
+                    { german: "du", en: "you (informal)", fa: "تو", example: "Du bist nett." },
+                    { german: "er", en: "he", fa: "او (مذکر)", example: "Er ist groß." },
+                    { german: "sie", en: "she", fa: "او (مؤنث)", example: "Sie ist schön." },
+                    { german: "es", en: "it", fa: "آن", example: "Es ist kalt." },
+                    { german: "wir", en: "we", fa: "ما", example: "Wir sind Freunde." },
+                    { german: "ihr", en: "you (plural)", fa: "شما (جمع)", example: "Ihr seid toll." },
+                    { german: "sie", en: "they", fa: "آنها", example: "Sie sind hier." },
+                    { german: "Sie", en: "you (formal)", fa: "شما (رسمی)", example: "Sind Sie Herr Müller?" }
+                ]
+            },
+            articles: {
+                icon: "📝",
+                title: { en: "Articles", fa: "حروف تعریف" },
+                description: { en: "German has 3 genders - learn the articles!", fa: "آلمانی ۳ جنسیت دارد - حروف تعریف را یاد بگیرید!" },
+                type: "grid",
+                words: [
+                    { german: "der", en: "the (masculine)", fa: "این (مذکر)", example: "der Mann - the man" },
+                    { german: "die", en: "the (feminine)", fa: "این (مؤنث)", example: "die Frau - the woman" },
+                    { german: "das", en: "the (neuter)", fa: "این (خنثی)", example: "das Kind - the child" },
+                    { german: "ein", en: "a/an (masc/neut)", fa: "یک (مذکر/خنثی)", example: "ein Buch - a book" },
+                    { german: "eine", en: "a/an (feminine)", fa: "یک (مؤنث)", example: "eine Blume - a flower" }
+                ]
+            },
+            conjunctions: {
+                icon: "🔗",
+                title: { en: "Conjunctions", fa: "حروف ربط" },
+                description: { en: "Connect words, phrases, and clauses", fa: "کلمات، عبارات و جملات را به هم وصل می‌کنند" },
+                type: "grid",
+                words: [
+                    { german: "und", en: "and", fa: "و", example: "Ich und du - me and you" },
+                    { german: "oder", en: "or", fa: "یا", example: "Ja oder nein? - Yes or no?" },
+                    { german: "aber", en: "but", fa: "اما", example: "Klein, aber fein - Small but fine" },
+                    { german: "denn", en: "because/for", fa: "زیرا", example: "Ich bleibe, denn es regnet - I stay because it's raining" },
+                    { german: "sondern", en: "but rather", fa: "بلکه", example: "Nicht ich, sondern er - Not me, but him" },
+                    { german: "doch", en: "however/yet", fa: "با این حال", example: "Es ist teuer, doch gut - It's expensive, yet good" },
+                    { german: "also", en: "so/therefore", fa: "پس/بنابراین", example: "Also gut! - Alright then!" },
+                    { german: "sowohl...als auch", en: "both...and", fa: "هم...هم", example: "Sowohl Deutsch als auch Englisch - Both German and English" },
+                    { german: "entweder...oder", en: "either...or", fa: "یا...یا", example: "Entweder heute oder morgen - Either today or tomorrow" },
+                    { german: "weder...noch", en: "neither...nor", fa: "نه...نه", example: "Weder hier noch dort - Neither here nor there" },
+                    { german: "nicht nur...sondern auch", en: "not only...but also", fa: "نه تنها...بلکه", example: "Nicht nur schön, sondern auch klug - Not only beautiful but also smart" },
+                    { german: "deshalb", en: "therefore", fa: "به همین دلیل", example: "Deshalb bin ich hier - That's why I'm here" }
+                ]
+            },
+            complementizers: {
+                icon: "💬",
+                title: { en: "Complementizers", fa: "حروف تکمیل‌کننده" },
+                description: { en: "Introduce subordinate clauses - verb goes to end!", fa: "جملات فرعی را معرفی می‌کنند - فعل به آخر می‌رود!" },
+                type: "grid",
+                words: [
+                    { german: "dass", en: "that", fa: "که", example: "Ich weiß, dass du kommst - I know that you're coming" },
+                    { german: "weil", en: "because", fa: "چون", example: "Ich bleibe, weil ich müde bin - I stay because I'm tired" },
+                    { german: "wenn", en: "if/when", fa: "اگر/وقتی", example: "Wenn du kommst... - If you come..." },
+                    { german: "ob", en: "whether/if", fa: "آیا", example: "Ich frage, ob du kommst - I ask if you're coming" },
+                    { german: "obwohl", en: "although", fa: "اگرچه", example: "Obwohl es regnet... - Although it's raining..." },
+                    { german: "bevor", en: "before", fa: "قبل از اینکه", example: "Bevor du gehst... - Before you go..." },
+                    { german: "nachdem", en: "after", fa: "بعد از اینکه", example: "Nachdem ich gegessen habe... - After I ate..." },
+                    { german: "während", en: "while/during", fa: "در حالی که", example: "Während ich lese... - While I read..." },
+                    { german: "bis", en: "until", fa: "تا", example: "Bis du kommst... - Until you come..." },
+                    { german: "damit", en: "so that", fa: "تا اینکه", example: "Damit du lernst... - So that you learn..." }
+                ]
+            },
+            adverbs: {
+                icon: "⚡",
+                title: { en: "Common Adverbs", fa: "قیدهای پرکاربرد" },
+                description: { en: "Words that describe how, when, where", fa: "کلماتی که چگونگی، زمان و مکان را توصیف می‌کنند" },
+                type: "grid",
+                words: [
+                    { german: "sehr", en: "very", fa: "خیلی" },
+                    { german: "gut", en: "well/good", fa: "خوب" },
+                    { german: "schnell", en: "fast/quickly", fa: "سریع" },
+                    { german: "langsam", en: "slow/slowly", fa: "آهسته" },
+                    { german: "gern(e)", en: "gladly/like to", fa: "با میل" },
+                    { german: "oft", en: "often", fa: "اغلب" },
+                    { german: "immer", en: "always", fa: "همیشه" },
+                    { german: "nie", en: "never", fa: "هرگز" },
+                    { german: "manchmal", en: "sometimes", fa: "گاهی" },
+                    { german: "hier", en: "here", fa: "اینجا" },
+                    { german: "dort", en: "there", fa: "آنجا" },
+                    { german: "jetzt", en: "now", fa: "الان" },
+                    { german: "heute", en: "today", fa: "امروز" },
+                    { german: "morgen", en: "tomorrow", fa: "فردا" },
+                    { german: "gestern", en: "yesterday", fa: "دیروز" }
+                ]
+            },
+            numbers: {
+                icon: "🔢",
+                title: { en: "Numbers 1-20", fa: "اعداد ۱ تا ۲۰" },
+                description: { en: "Learn to count in German", fa: "شمردن به آلمانی را یاد بگیرید" },
+                type: "grid",
+                words: [
+                    { german: "eins", en: "1", fa: "۱" },
+                    { german: "zwei", en: "2", fa: "۲" },
+                    { german: "drei", en: "3", fa: "۳" },
+                    { german: "vier", en: "4", fa: "۴" },
+                    { german: "fünf", en: "5", fa: "۵" },
+                    { german: "sechs", en: "6", fa: "۶" },
+                    { german: "sieben", en: "7", fa: "۷" },
+                    { german: "acht", en: "8", fa: "۸" },
+                    { german: "neun", en: "9", fa: "۹" },
+                    { german: "zehn", en: "10", fa: "۱۰" },
+                    { german: "elf", en: "11", fa: "۱۱" },
+                    { german: "zwölf", en: "12", fa: "۱۲" },
+                    { german: "dreizehn", en: "13", fa: "۱۳" },
+                    { german: "vierzehn", en: "14", fa: "۱۴" },
+                    { german: "fünfzehn", en: "15", fa: "۱۵" },
+                    { german: "sechzehn", en: "16", fa: "۱۶" },
+                    { german: "siebzehn", en: "17", fa: "۱۷" },
+                    { german: "achtzehn", en: "18", fa: "۱۸" },
+                    { german: "neunzehn", en: "19", fa: "۱۹" },
+                    { german: "zwanzig", en: "20", fa: "۲۰" }
+                ]
+            },
+            colors: {
+                icon: "🎨",
+                title: { en: "Colors", fa: "رنگ‌ها" },
+                description: { en: "Basic colors in German", fa: "رنگ‌های پایه به آلمانی" },
+                type: "grid",
+                words: [
+                    { german: "rot", en: "red", fa: "قرمز" },
+                    { german: "blau", en: "blue", fa: "آبی" },
+                    { german: "grün", en: "green", fa: "سبز" },
+                    { german: "gelb", en: "yellow", fa: "زرد" },
+                    { german: "orange", en: "orange", fa: "نارنجی" },
+                    { german: "lila", en: "purple", fa: "بنفش" },
+                    { german: "rosa", en: "pink", fa: "صورتی" },
+                    { german: "schwarz", en: "black", fa: "سیاه" },
+                    { german: "weiß", en: "white", fa: "سفید" },
+                    { german: "grau", en: "gray", fa: "خاکستری" },
+                    { german: "braun", en: "brown", fa: "قهوه‌ای" }
+                ]
+            },
+            days: {
+                icon: "📅",
+                title: { en: "Days of the Week", fa: "روزهای هفته" },
+                description: { en: "Monday to Sunday", fa: "دوشنبه تا یکشنبه" },
+                type: "grid",
+                words: [
+                    { german: "Montag", en: "Monday", fa: "دوشنبه" },
+                    { german: "Dienstag", en: "Tuesday", fa: "سه‌شنبه" },
+                    { german: "Mittwoch", en: "Wednesday", fa: "چهارشنبه" },
+                    { german: "Donnerstag", en: "Thursday", fa: "پنج‌شنبه" },
+                    { german: "Freitag", en: "Friday", fa: "جمعه" },
+                    { german: "Samstag", en: "Saturday", fa: "شنبه" },
+                    { german: "Sonntag", en: "Sunday", fa: "یکشنبه" }
+                ]
+            },
+            months: {
+                icon: "🗓️",
+                title: { en: "Months", fa: "ماه‌ها" },
+                description: { en: "January to December", fa: "ژانویه تا دسامبر" },
+                type: "grid",
+                words: [
+                    { german: "Januar", en: "January", fa: "ژانویه" },
+                    { german: "Februar", en: "February", fa: "فوریه" },
+                    { german: "März", en: "March", fa: "مارس" },
+                    { german: "April", en: "April", fa: "آوریل" },
+                    { german: "Mai", en: "May", fa: "مه" },
+                    { german: "Juni", en: "June", fa: "ژوئن" },
+                    { german: "Juli", en: "July", fa: "ژوئیه" },
+                    { german: "August", en: "August", fa: "اوت" },
+                    { german: "September", en: "September", fa: "سپتامبر" },
+                    { german: "Oktober", en: "October", fa: "اکتبر" },
+                    { german: "November", en: "November", fa: "نوامبر" },
+                    { german: "Dezember", en: "December", fa: "دسامبر" }
+                ]
+            },
+            greetings: {
+                icon: "👋",
+                title: { en: "Greetings & Phrases", fa: "سلام و عبارات" },
+                description: { en: "Common greetings and expressions", fa: "سلام‌ها و عبارات رایج" },
+                type: "grid",
+                words: [
+                    { german: "Hallo", en: "Hello", fa: "سلام" },
+                    { german: "Guten Morgen", en: "Good morning", fa: "صبح بخیر" },
+                    { german: "Guten Tag", en: "Good day", fa: "روز بخیر" },
+                    { german: "Guten Abend", en: "Good evening", fa: "شب بخیر" },
+                    { german: "Gute Nacht", en: "Good night", fa: "شب بخیر (خداحافظی)" },
+                    { german: "Auf Wiedersehen", en: "Goodbye", fa: "خداحافظ" },
+                    { german: "Tschüss", en: "Bye (informal)", fa: "بای" },
+                    { german: "Danke", en: "Thank you", fa: "ممنون" },
+                    { german: "Bitte", en: "Please / You're welcome", fa: "لطفاً / خواهش می‌کنم" },
+                    { german: "Entschuldigung", en: "Excuse me / Sorry", fa: "ببخشید" },
+                    { german: "Ja", en: "Yes", fa: "بله" },
+                    { german: "Nein", en: "No", fa: "نه" }
+                ]
+            },
+            sein: {
+                icon: "🔵",
+                title: { en: "Verb: Sein (To Be)", fa: "فعل بودن" },
+                description: { en: "The essential verb 'to be' in all forms", fa: "فعل ضروری 'بودن' در تمام صورت‌ها" },
+                type: "table",
+                words: [
+                    { german: "sein", en: "to be", fa: "بودن", example: "Er liebt es Vater zu sein" },
+                    { german: "ich bin", en: "I am", fa: "من هستم", example: "Ich bin Deutschlehrer" },
+                    { german: "du bist", en: "you are", fa: "تو هستی", example: "Du bist eine ruhige Person" },
+                    { german: "er ist", en: "he is", fa: "او هست", example: "Er ist groß" },
+                    { german: "sie ist", en: "she is", fa: "او هست", example: "Sie ist mutig" },
+                    { german: "es ist", en: "it is", fa: "آن هست", example: "Es ist kalt" },
+                    { german: "wir sind", en: "we are", fa: "ما هستیم", example: "Wir sind Brüder" },
+                    { german: "ihr seid", en: "you are (pl)", fa: "شما هستید", example: "Ihr seid toll" },
+                    { german: "sie sind", en: "they are", fa: "آنها هستند", example: "Sie sind immer noch verliebt" },
+                    { german: "ich war", en: "I was", fa: "من بودم", example: "Ich spielte Gitarre als ich jung war" }
+                ]
+            },
+            haben: {
+                icon: "🟢",
+                title: { en: "Verb: Haben (To Have)", fa: "فعل داشتن" },
+                description: { en: "Express possession with 'to have'", fa: "بیان مالکیت با فعل 'داشتن'" },
+                type: "table",
+                words: [
+                    { german: "haben", en: "to have", fa: "داشتن", example: "Sie sind bereit ein neues Haus zu haben" },
+                    { german: "ich habe", en: "I have", fa: "من دارم", example: "Ich habe eine Menge Arbeit zu tun" },
+                    { german: "du hast", en: "you have", fa: "تو داری", example: "Du hast ein schönes Schlafzimmer" },
+                    { german: "er hat", en: "he has", fa: "او دارد", example: "Er hat ein neues Auto" },
+                    { german: "sie hat", en: "she has", fa: "او دارد", example: "Sie hat blaue Augen" },
+                    { german: "wir haben", en: "we have", fa: "ما داریم", example: "Wir haben Zeit" },
+                    { german: "ihr habt", en: "you have (pl)", fa: "شما دارید", example: "Ihr habt Glück" },
+                    { german: "sie haben", en: "they have", fa: "آنها دارند", example: "Sie haben Hunger" },
+                    { german: "ich hatte", en: "I had", fa: "من داشتم", example: "Ich hatte sehr langes Haar" }
+                ]
+            },
+            prepositions: {
+                icon: "📍",
+                title: { en: "Prepositions", fa: "حروف اضافه" },
+                description: { en: "Words describing relationships in space, time, and logic", fa: "کلماتی که رابطه مکان، زمان و منطق را توصیف می‌کنند" },
+                type: "grid",
+                words: [
+                    { german: "für", en: "for", fa: "برای", example: "Das ist für dich" },
+                    { german: "bis", en: "until", fa: "تا", example: "Ich arbeite bis 8 Uhr" },
+                    { german: "in", en: "in", fa: "در", example: "Ich komme in zwei Stunden zurück" },
+                    { german: "aus", en: "from/out of", fa: "از", example: "Ich komme aus Berlin" },
+                    { german: "mit", en: "with", fa: "با", example: "Sie spielen mit einem Hund" },
+                    { german: "nach", en: "to/after", fa: "به/بعد از", example: "Ich fahre nach Genf" },
+                    { german: "auf", en: "on", fa: "روی", example: "Der Hund setzt sich auf den Teppich" },
+                    { german: "über", en: "over/about", fa: "بالای/درباره", example: "Das Flugzeug fliegt über den Berg" },
+                    { german: "dann", en: "then", fa: "سپس", example: "Ich gehe dann mal los" },
+                    { german: "vielleicht", en: "maybe", fa: "شاید", example: "Vielleicht kann ich dein Auto reparieren" },
+                    { german: "auch", en: "also/too", fa: "همچنین", example: "Er hat auch sehr viel Talent" },
+                    { german: "nicht", en: "not", fa: "نه/نیست", example: "Mein Name ist nicht Hendrik" }
+                ]
+            },
+            objectPronouns: {
+                icon: "🎯",
+                title: { en: "Object Pronouns & Possessives", fa: "ضمایر مفعولی و ملکی" },
+                description: { en: "Identify receivers of actions and show ownership", fa: "گیرندگان عمل و مالکیت را نشان می‌دهند" },
+                type: "table",
+                words: [
+                    { german: "mich", en: "me (accusative)", fa: "مرا", example: "Das Geschenk ist für mich" },
+                    { german: "dich", en: "you (accusative)", fa: "تو را", example: "Der Brief ist für dich" },
+                    { german: "ihn", en: "him", fa: "او را", example: "Ich werde ihn ins Kino mitnehmen" },
+                    { german: "uns", en: "us", fa: "ما را", example: "Sie sahen uns aus der Ferne" },
+                    { german: "mir", en: "me (dative)", fa: "به من", example: "Es ist ein Geschenk von mir" },
+                    { german: "sich", en: "oneself/themselves", fa: "خود", example: "Meine Tochter zieht sich an" },
+                    { german: "mein", en: "my (masc/neut)", fa: "مال من", example: "Es ist mein Hut" },
+                    { german: "meine", en: "my (fem/pl)", fa: "مال من", example: "Meine Familie ist toll" },
+                    { german: "dein", en: "your (masc/neut)", fa: "مال تو", example: "Dein Hund ist sehr klug" },
+                    { german: "deine", en: "your (fem/pl)", fa: "مال تو", example: "Deine Schwester ist nett" }
+                ]
+            },
+            modalVerbs: {
+                icon: "💪",
+                title: { en: "Modal & Action Verbs", fa: "افعال کمکی و عملی" },
+                description: { en: "Express ability, desire, and common activities", fa: "بیان توانایی، خواسته و فعالیت‌های رایج" },
+                type: "grid",
+                words: [
+                    { german: "wollen", en: "to want", fa: "خواستن", example: "Manchmal ist es wichtig etwas anderes machen zu wollen" },
+                    { german: "können", en: "can/to be able", fa: "توانستن", example: "Ich kann zu dir kommen wenn du willst" },
+                    { german: "müssen", en: "must/have to", fa: "باید", example: "Ich muss früh aufstehen" },
+                    { german: "gehen", en: "to go", fa: "رفتن", example: "Er geht reiten" },
+                    { german: "machen", en: "to make/do", fa: "انجام دادن", example: "Wir wollen einen Kuchen für Oma machen" },
+                    { german: "sagen", en: "to say", fa: "گفتن", example: "Ich will die Wahrheit sagen" },
+                    { german: "leben", en: "to live", fa: "زندگی کردن", example: "Sie würden gerne in München leben" },
+                    { german: "lieben", en: "to love", fa: "دوست داشتن", example: "Ich liebe dich" },
+                    { german: "kommen", en: "to come", fa: "آمدن", example: "Ich komme morgen" },
+                    { german: "sehen", en: "to see", fa: "دیدن", example: "Ich sehe dich" }
+                ]
+            },
+            quantifiers: {
+                icon: "❓",
+                title: { en: "Quantifiers & Questions", fa: "کمیت‌ها و سوالات" },
+                description: { en: "Ask questions and express quantities", fa: "پرسیدن سوالات و بیان کمیت" },
+                type: "grid",
+                words: [
+                    { german: "wer", en: "who", fa: "چه کسی", example: "Wer sind Sie?" },
+                    { german: "was", en: "what", fa: "چه چیزی", example: "Ich weiß nicht was ich wählen soll" },
+                    { german: "wo", en: "where", fa: "کجا", example: "Wo ist das Bahnhof?" },
+                    { german: "wann", en: "when", fa: "کی", example: "Wann kommst du?" },
+                    { german: "warum", en: "why", fa: "چرا", example: "Warum bist du traurig?" },
+                    { german: "wie", en: "how", fa: "چگونه", example: "Wie geht es dir?" },
+                    { german: "alle", en: "all/everyone", fa: "همه", example: "Alle lieben den Sommer" },
+                    { german: "etwas", en: "something", fa: "چیزی", example: "Es ist etwas Schweres in diesem Karton" },
+                    { german: "nichts", en: "nothing", fa: "هیچ چیز", example: "Es gibt nichts im Raum" },
+                    { german: "alles", en: "everything", fa: "همه چیز", example: "Alles was wir besitzen ist in diesen Kartons" }
+                ]
+            }
+        };
+
+        // =====================
+        // STATE
+        // =====================
+        let currentLang = 'en';
+        let voiceSpeed = 1.0;
+        let currentCategory = null;
+
+        // =====================
+        // INITIALIZATION
+        // =====================
+        document.addEventListener('DOMContentLoaded', () => {
+            loadPreferences();
+            loadCategory();
+            setupControls();
+        });
+
+        function loadPreferences() {
+            const savedLang = localStorage.getItem('misiro_language');
+            if (savedLang) {
+                currentLang = savedLang;
+            } else {
+                const browserLang = navigator.language || navigator.userLanguage || 'en';
+                currentLang = browserLang.startsWith('fa') ? 'fa' : 'en';
+            }
+
+            const savedSpeed = localStorage.getItem('misiro_voice_speed');
+            if (savedSpeed) {
+                voiceSpeed = parseFloat(savedSpeed);
+            }
+        }
+
+        function loadCategory() {
+            // Get category from URL parameter
+            const urlParams = new URLSearchParams(window.location.search);
+            const cat = urlParams.get('cat') || 'pronouns';
+
+            currentCategory = categoryData[cat];
+            if (!currentCategory) {
+                currentCategory = categoryData.pronouns;
+            }
+
+            renderCategory();
+        }
+
+        function setupControls() {
+            const langSelect = document.getElementById('language-select');
+            const speedSelect = document.getElementById('speed-select');
+
+            langSelect.value = currentLang;
+            speedSelect.value = voiceSpeed.toString();
+
+            langSelect.addEventListener('change', (e) => {
+                currentLang = e.target.value;
+                localStorage.setItem('misiro_language', currentLang);
+                renderCategory();
+            });
+
+            speedSelect.addEventListener('change', (e) => {
+                voiceSpeed = parseFloat(e.target.value);
+                localStorage.setItem('misiro_voice_speed', voiceSpeed.toString());
+            });
+        }
+
+        // =====================
+        // RENDERING
+        // =====================
+        function renderCategory() {
+            const cat = currentCategory;
+            const title = cat.title[currentLang] || cat.title.en;
+            const desc = cat.description[currentLang] || cat.description.en;
+
+            // Update header
+            document.getElementById('cat-icon').textContent = cat.icon;
+            document.getElementById('cat-title').textContent = title;
+            document.getElementById('cat-description').textContent = desc;
+            document.getElementById('page-title').textContent = `${title} - Misiro`;
+            document.getElementById('back-text').textContent = currentLang === 'fa' ? 'بازگشت' : 'Back';
+
+            // Render content
+            const container = document.getElementById('content-container');
+            if (cat.type === 'table') {
+                container.innerHTML = renderPronounTable(cat.words);
+            } else {
+                container.innerHTML = renderWordGrid(cat.words);
+            }
+        }
+
+        function renderWordGrid(words) {
+            const items = words.map((word, index) => {
+                const translation = currentLang === 'fa' ? word.fa : word.en;
+                const escapedGerman = word.german.replace(/'/g, "\\'");
+                const escapedExample = word.example ? word.example.replace(/'/g, "\\'") : '';
+                const exampleHtml = word.example ? `
+                    <div class="word-example" onclick="event.stopPropagation(); playExample('${escapedExample}')">
+                        ${word.example} <span class="example-speaker">🔊</span>
+                    </div>` : '';
+                return `
+                    <div class="word-card" onclick="playWord('${escapedGerman}')">
+                        <div class="word-german">${word.german}</div>
+                        <div class="word-translation">${translation}</div>
+                        ${exampleHtml}
+                    </div>
+                `;
+            }).join('');
+
+            return `<div class="word-grid">${items}</div>`;
+        }
+
+        function renderPronounTable(words) {
+            const rows = words.map(word => {
+                const meaning = currentLang === 'fa' ? word.fa : word.en;
+                const escapedGerman = word.german.replace(/'/g, "\\'");
+                const escapedExample = word.example ? word.example.replace(/'/g, "\\'") : '';
+                return `
+                    <div class="pronoun-row" onclick="playWord('${escapedGerman}')">
+                        <div class="pronoun-german">${word.german}</div>
+                        <div class="pronoun-meaning">${meaning}</div>
+                        <div class="pronoun-example" onclick="event.stopPropagation(); playExample('${escapedExample}')">${word.example} 🔊</div>
+                    </div>
+                `;
+            }).join('');
+
+            return `<div class="pronoun-grid">${rows}</div>`;
+        }
+
+        // =====================
+        // AUDIO
+        // =====================
+        function playWord(text) {
+            window.speechSynthesis.cancel();
+
+            const utterance = new SpeechSynthesisUtterance(text);
+            utterance.lang = 'de-DE';
+            utterance.rate = voiceSpeed;
+
+            window.speechSynthesis.speak(utterance);
+        }
+
+        function playExample(text) {
+            if (!text) return;
+            window.speechSynthesis.cancel();
+
+            const utterance = new SpeechSynthesisUtterance(text);
+            utterance.lang = 'de-DE';
+            utterance.rate = voiceSpeed;
+
+            window.speechSynthesis.speak(utterance);
+        }
+
+        function playWordAndExample(word, example) {
+            window.speechSynthesis.cancel();
+
+            // Play word first
+            const wordUtterance = new SpeechSynthesisUtterance(word);
+            wordUtterance.lang = 'de-DE';
+            wordUtterance.rate = voiceSpeed;
+
+            // When word finishes, play example after a short pause
+            wordUtterance.onend = () => {
+                if (example) {
+                    setTimeout(() => {
+                        const exampleUtterance = new SpeechSynthesisUtterance(example);
+                        exampleUtterance.lang = 'de-DE';
+                        exampleUtterance.rate = voiceSpeed;
+                        window.speechSynthesis.speak(exampleUtterance);
+                    }, 300);
+                }
+            };
+
+            window.speechSynthesis.speak(wordUtterance);
+        }
+
+        window.playWord = playWord;
+        window.playExample = playExample;
+        window.playWordAndExample = playWordAndExample;
+    </script>
+</body>
+
+</html>

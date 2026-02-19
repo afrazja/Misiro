@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Misiro Curator Dashboard</title>
+    <link rel="stylesheet" href="curator.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="app-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="logo">
+                <h1>Misiro <span>Curator</span></h1>
+            </div>
+
+            <div class="controls-section">
+                <div class="level-controls">
+                    <select id="level-select" class="input-field">
+                        <option value="1">Level 1</option>
+                    </select>
+                    <button id="btn-add-level" class="btn btn-icon" title="Add Level">+</button>
+                </div>
+                <div class="file-controls">
+                    <button id="btn-export" class="btn btn-primary btn-sm">Export JSON</button>
+                    <button id="btn-import" class="btn btn-secondary btn-sm">Import JSON</button>
+                    <button id="btn-reset" class="btn btn-secondary btn-sm"
+                        style="color: var(--danger); border-color: var(--danger);">Reset Data</button>
+                    <input type="file" id="file-import" accept=".json" style="display: none;">
+                </div>
+            </div>
+
+            <div class="nav-section">
+                <div class="nav-header">
+                    <h3 id="level-title">Level 1 Scenarios</h3>
+                    <button id="btn-add-scenario" class="btn btn-icon" title="Add Scenario">+</button>
+                </div>
+                <ul id="scenario-list" class="scenario-list">
+                    <!-- Scenarios will be populated here -->
+                </ul>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <header class="top-bar">
+                <div class="current-info">
+                    <div class="title-row">
+                        <h2 id="current-scenario-title">Select a Scenario</h2>
+                        <button id="btn-edit-scenario" class="btn btn-icon btn-sm" title="Edit Scenario"
+                            style="display: none;">✏️</button>
+                    </div>
+                    <p id="current-scenario-desc">Choose a scenario from the sidebar to start curating.</p>
+                </div>
+                <!-- Prompt Editor -->
+                <div class="prompt-section" id="prompt-section" style="display: none;">
+                    <label for="prompt-input">AI Generation Prompt</label>
+                    <textarea id="prompt-input" class="prompt-input"
+                        placeholder="Enter custom prompt for AI generation..."></textarea>
+                </div>
+                <div class="actions">
+                    <button id="btn-delete-selected" class="btn btn-secondary"
+                        style="color: var(--danger); margin-right: 1rem; display: none;">
+                        🗑️ Delete Selected
+                    </button>
+                    <button id="btn-generate" class="btn btn-accent" disabled>
+                        <span class="icon">✨</span> Generate Draft
+                    </button>
+                </div>
+            </header>
+
+            <div id="sentences-container" class="sentences-grid">
+                <!-- Sentences will be populated here -->
+                <div class="empty-state">
+                    <p>No sentences yet. Click "Generate Draft" to use AI, or import an existing database.</p>
+                </div>
+            </div>
+
+            <div class="add-sentence-section">
+                <button id="btn-add-manual" class="btn btn-outline" disabled>+ Add Manual Sentence</button>
+            </div>
+        </main>
+    </div>
+
+    <!-- Scripts -->
+    <script src="ai-integration.js"></script>
+    <script src="curator.js"></script>
+</body>
+
+</html>

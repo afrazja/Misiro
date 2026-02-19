@@ -1,0 +1,24 @@
+{
+  "title": "Day 34: Enrolling in a Course",
+  "titleFa": "روز ۳۴: ثبت‌نام در یک دوره",
+  "sentences": [
+    { "id": 1, "role": "sent", "targetText": "Guten Tag, ich möchte mich für einen Deutschkurs anmelden.", "translation": "Good day, I'd like to enroll in a German course.", "translationFa": "روز بخیر، می‌خوام تو یه کلاس آلمانی ثبت‌نام کنم." },
+    { "id": 2, "role": "received", "audioText": "Willkommen! Was ist Ihr aktuelles Sprachniveau?", "translation": "Welcome! What is your current language level?", "translationFa": "خوش اومدید! سطح زبانیتون الان چیه؟" },
+    { "id": 3, "role": "sent", "targetText": "Ich bin Anfänger. Ich lerne seit etwa zwei Monaten.", "translation": "I'm a beginner. I've been learning for about two months.", "translationFa": "من مبتدی هستم. حدود دو ماهه دارم یاد می‌گیرم." },
+    { "id": 4, "role": "received", "audioText": "Dann wäre der A1-Kurs genau das Richtige für Sie.", "translation": "Then the A1 course would be just right for you.", "translationFa": "پس کلاس A1 دقیقاً مناسب شماست." },
+    { "id": 5, "role": "sent", "targetText": "Wie oft findet der Kurs statt?", "translation": "How often does the course take place?", "translationFa": "کلاس چند بار در هفته برگزار میشه؟" },
+    { "id": 6, "role": "received", "audioText": "Zweimal pro Woche, dienstags und donnerstags abends.", "translation": "Twice a week, Tuesday and Thursday evenings.", "translationFa": "دو بار در هفته، شب‌های سه‌شنبه و پنج‌شنبه." },
+    { "id": 7, "role": "sent", "targetText": "Wie lange dauert jede Unterrichtsstunde?", "translation": "How long does each lesson last?", "translationFa": "هر جلسه چقدر طول میکشه؟" },
+    { "id": 8, "role": "received", "audioText": "Neunzig Minuten pro Einheit.", "translation": "Ninety minutes per session.", "translationFa": "نود دقیقه هر جلسه." },
+    { "id": 9, "role": "sent", "targetText": "Wie viele Teilnehmer sind in der Gruppe?", "translation": "How many students are in the group?", "translationFa": "چند نفر تو هر گروه هستن؟" },
+    { "id": 10, "role": "received", "audioText": "Maximal zwölf Teilnehmer pro Gruppe.", "translation": "Maximum twelve participants per group.", "translationFa": "حداکثر دوازده نفر در هر گروه." },
+    { "id": 11, "role": "sent", "targetText": "Gibt es einen Einstufungstest?", "translation": "Is there a placement test?", "translationFa": "آزمون سطح‌بندی هم هست؟" },
+    { "id": 12, "role": "received", "audioText": "Ja, einen kurzen Online-Test vor der ersten Stunde.", "translation": "Yes, a short online test before the first lesson.", "translationFa": "بله، یه آزمون آنلاین کوتاه قبل از اولین جلسه." },
+    { "id": 13, "role": "sent", "targetText": "Was kostet der Kurs?", "translation": "What does the course cost?", "translationFa": "هزینه کلاس چقدره؟" },
+    { "id": 14, "role": "received", "audioText": "Einhundertachtzig Euro für das gesamte Semester, Unterrichtsmaterialien inklusive.", "translation": "180 Euro for the whole semester, materials included.", "translationFa": "صد و هشتاد یورو برای کل ترم، شامل جزوه‌ها." },
+    { "id": 15, "role": "sent", "targetText": "Wann beginnt der nächste Kurs?", "translation": "When does the next course start?", "translationFa": "دوره بعدی کِی شروع میشه؟" },
+    { "id": 16, "role": "received", "audioText": "Am fünften des nächsten Monats. Sie können sich online oder hier vor Ort anmelden.", "translation": "On the fifth of next month. You can register online or here on the spot.", "translationFa": "پنجم ماه آینده. می‌تونید آنلاین یا همینجا ثبت‌نام کنید." },
+    { "id": 17, "role": "sent", "targetText": "Ich melde mich gleich hier an. Wo muss ich unterschreiben?", "translation": "I'll register right here. Where do I sign?", "translationFa": "همینجا ثبت‌نام می‌کنم. کجا باید امضا کنم؟" },
+    { "id": 18, "role": "received", "audioText": "Hier bitte. Wir schicken Ihnen eine Bestätigung per E-Mail.", "translation": "Here please. We'll send you a confirmation by email.", "translationFa": "اینجا لطفاً. یه تأییدیه برای شما ایمیل می‌کنیم." }
+  ]
+}

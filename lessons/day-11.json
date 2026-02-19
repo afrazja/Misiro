@@ -1,0 +1,12 @@
+{
+  "title": "Day 11: Time & Schedule Changes",
+  "titleFa": "روز ۱۱: زمان و تغییر برنامه",
+  "sentences": [
+    { "id": 1, "role": "sent", "targetText": "Haben Sie heute Zeit?", "translation": "Do you have time today?", "translationFa": "امروز وقت دارید؟" },
+    { "id": 2, "role": "received", "audioText": "Ich bin gerade beschäftigt.", "translation": "I am busy right now.", "translationFa": "الان سرم شلوغه." },
+    { "id": 3, "role": "sent", "targetText": "Können wir das später machen?", "translation": "Can we do that later?", "translationFa": "میتونیم بعداً انجامش بدیم؟" },
+    { "id": 4, "role": "sent", "targetText": "Wann passt es Ihnen?", "translation": "When does it suit you?", "translationFa": "کی براتون مناسبه؟" },
+    { "id": 5, "role": "sent", "targetText": "Lass uns morgen treffen.", "translation": "Let's meet tomorrow.", "translationFa": "بیاید فردا همدیگه رو ببینیم." },
+    { "id": 6, "role": "received", "audioText": "Ja, das geht.", "translation": "Yes, that works.", "translationFa": "آره، میشه." }
+  ]
+}

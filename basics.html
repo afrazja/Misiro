@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>German Basics - Misiro</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #fff;
+        }
+
+        .basics-container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 30px 20px;
+        }
+
+        /* Header */
+        .basics-header {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+        }
+
+        .back-btn {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 25px;
+            color: #fff;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .back-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateX(-5px);
+        }
+
+        .header-title {
+            flex: 1;
+        }
+
+        .header-title h1 {
+            font-size: 2rem;
+            background: linear-gradient(90deg, #2ecc71, #27ae60);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .header-title p {
+            color: #a0a0a0;
+            margin-top: 5px;
+        }
+
+        /* Controls */
+        .controls {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .controls select {
+            padding: 8px 16px;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            font-size: 0.9rem;
+            cursor: pointer;
+        }
+
+        .controls select option {
+            background: #1a1a2e;
+        }
+
+        /* Category Cards Grid */
+        .categories-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .category-card {
+            background: linear-gradient(145deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.03));
+            border-radius: 20px;
+            padding: 25px;
+            text-decoration: none;
+            color: #fff;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .category-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(145deg, rgba(46, 204, 113, 0.1), transparent);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .category-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            border-color: #2ecc71;
+            box-shadow: 0 15px 40px rgba(46, 204, 113, 0.25);
+        }
+
+        .category-card:hover::before {
+            opacity: 1;
+        }
+
+        .category-icon {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.3));
+        }
+
+        .category-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .category-desc {
+            color: #888;
+            font-size: 0.9rem;
+            line-height: 1.5;
+            position: relative;
+            z-index: 1;
+            flex: 1;
+        }
+
+        .category-count {
+            margin-top: 15px;
+            padding-top: 12px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.85rem;
+            color: #2ecc71;
+            font-weight: 600;
+            position: relative;
+            z-index: 1;
+        }
+
+        .category-arrow {
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%) translateX(-10px);
+            font-size: 1.3rem;
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+
+        .category-card:hover .category-arrow {
+            opacity: 1;
+            transform: translateY(-50%) translateX(0);
+        }
+
+        /* Responsive */
+        @media (max-width: 600px) {
+            .basics-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .header-title h1 {
+                font-size: 1.5rem;
+            }
+
+            .categories-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="basics-container">
+        <!-- Header -->
+        <header class="basics-header">
+            <a href="home.html" class="back-btn">← <span id="back-text">Home</span></a>
+            <div class="header-title">
+                <h1 id="page-title">🔤 German Basics</h1>
+                <p id="page-subtitle">Choose a category to start learning</p>
+            </div>
+            <div class="controls">
+                <select id="language-select">
+                    <option value="fa">🇮🇷 فارسی</option>
+                    <option value="en">🇬🇧 English</option>
+                </select>
+            </div>
+        </header>
+
+        <!-- Categories Grid -->
+        <div class="categories-grid" id="categories-container">
+            <!-- Categories will be rendered by JavaScript -->
+        </div>
+    </div>
+
+    <script>
+        // Category data with metadata
+        const categories = [
+            { key: 'pronouns', icon: '👤', title: { en: 'Personal Pronouns', fa: 'ضمایر شخصی' }, desc: { en: 'I, you, he, she, it, we, they', fa: 'من، تو، او، ما، شما، آنها' }, count: 9 },
+            { key: 'sein', icon: '🔵', title: { en: 'Verb: Sein (To Be)', fa: 'فعل بودن' }, desc: { en: 'bin, bist, ist, sind, war', fa: 'صرف فعل بودن' }, count: 10 },
+            { key: 'haben', icon: '🟢', title: { en: 'Verb: Haben (To Have)', fa: 'فعل داشتن' }, desc: { en: 'habe, hast, hat, hatte', fa: 'صرف فعل داشتن' }, count: 9 },
+            { key: 'articles', icon: '📝', title: { en: 'Articles', fa: 'حروف تعریف' }, desc: { en: 'der, die, das - German has 3 genders!', fa: 'حروف تعریف - آلمانی ۳ جنسیت دارد!' }, count: 5 },
+            { key: 'conjunctions', icon: '🔗', title: { en: 'Conjunctions', fa: 'حروف ربط' }, desc: { en: 'Connect words and sentences: und, oder, aber', fa: 'کلمات و جملات را به هم وصل می‌کنند' }, count: 12 },
+            { key: 'complementizers', icon: '💬', title: { en: 'Complementizers', fa: 'حروف تکمیل‌کننده' }, desc: { en: 'Introduce subordinate clauses: dass, weil, wenn', fa: 'جملات فرعی را معرفی می‌کنند' }, count: 10 },
+            { key: 'prepositions', icon: '📍', title: { en: 'Prepositions', fa: 'حروف اضافه' }, desc: { en: 'für, mit, in, aus, nach, auf, über', fa: 'حروف اضافه مکان و زمان' }, count: 12 },
+            { key: 'objectPronouns', icon: '🎯', title: { en: 'Object Pronouns & Possessives', fa: 'ضمایر مفعولی و ملکی' }, desc: { en: 'mich, dich, mir, mein, dein', fa: 'ضمایر مفعولی و صفات ملکی' }, count: 10 },
+            { key: 'modalVerbs', icon: '💪', title: { en: 'Modal & Action Verbs', fa: 'افعال کمکی و عملی' }, desc: { en: 'wollen, können, müssen, gehen, machen', fa: 'افعال اصلی و کمکی' }, count: 10 },
+            { key: 'quantifiers', icon: '❓', title: { en: 'Quantifiers & Questions', fa: 'کمیت‌ها و سوالات' }, desc: { en: 'wer, was, alle, etwas, nichts, alles', fa: 'کلمات پرسشی و کمی' }, count: 10 },
+            { key: 'adverbs', icon: '⚡', title: { en: 'Common Adverbs', fa: 'قیدهای پرکاربرد' }, desc: { en: 'Words that describe how, when, where', fa: 'کلماتی که چگونگی، زمان و مکان را توصیف می‌کنند' }, count: 15 },
+            { key: 'numbers', icon: '🔢', title: { en: 'Numbers 1-20', fa: 'اعداد ۱ تا ۲۰' }, desc: { en: 'Learn to count in German', fa: 'شمردن به آلمانی را یاد بگیرید' }, count: 20 },
+            { key: 'colors', icon: '🎨', title: { en: 'Colors', fa: 'رنگ‌ها' }, desc: { en: 'Basic colors in German', fa: 'رنگ‌های پایه به آلمانی' }, count: 11 },
+            { key: 'days', icon: '📅', title: { en: 'Days of the Week', fa: 'روزهای هفته' }, desc: { en: 'Monday to Sunday', fa: 'دوشنبه تا یکشنبه' }, count: 7 },
+            { key: 'months', icon: '🗓️', title: { en: 'Months', fa: 'ماه‌ها' }, desc: { en: 'January to December', fa: 'ژانویه تا دسامبر' }, count: 12 },
+            { key: 'greetings', icon: '👋', title: { en: 'Greetings & Phrases', fa: 'سلام و عبارات' }, desc: { en: 'Common greetings and expressions', fa: 'سلام‌ها و عبارات رایج' }, count: 12 }
+        ];
+
+        let currentLang = 'en';
+
+        document.addEventListener('DOMContentLoaded', () => {
+            loadPreferences();
+            setupControls();
+            renderCategories();
+            updatePageLanguage();
+        });
+
+        function loadPreferences() {
+            const savedLang = localStorage.getItem('misiro_language');
+            if (savedLang) {
+                currentLang = savedLang;
+            } else {
+                const browserLang = navigator.language || navigator.userLanguage || 'en';
+                currentLang = browserLang.startsWith('fa') ? 'fa' : 'en';
+            }
+        }
+
+        function setupControls() {
+            const langSelect = document.getElementById('language-select');
+            langSelect.value = currentLang;
+
+            langSelect.addEventListener('change', (e) => {
+                currentLang = e.target.value;
+                localStorage.setItem('misiro_language', currentLang);
+                renderCategories();
+                updatePageLanguage();
+            });
+        }
+
+        function updatePageLanguage() {
+            const backText = document.getElementById('back-text');
+            const pageTitle = document.getElementById('page-title');
+            const pageSubtitle = document.getElementById('page-subtitle');
+
+            if (currentLang === 'fa') {
+                backText.textContent = 'خانه';
+                pageTitle.textContent = '🔤 مبانی آلمانی';
+                pageSubtitle.textContent = 'یک دسته‌بندی را برای شروع یادگیری انتخاب کنید';
+            } else {
+                backText.textContent = 'Home';
+                pageTitle.textContent = '🔤 German Basics';
+                pageSubtitle.textContent = 'Choose a category to start learning';
+            }
+        }
+
+        function renderCategories() {
+            const container = document.getElementById('categories-container');
+            const wordsLabel = currentLang === 'fa' ? 'کلمه' : 'words';
+
+            container.innerHTML = categories.map(cat => `
+                <a href="basics/category.html?cat=${cat.key}" class="category-card">
+                    <div class="category-icon">${cat.icon}</div>
+                    <div class="category-title">${cat.title[currentLang] || cat.title.en}</div>
+                    <div class="category-desc">${cat.desc[currentLang] || cat.desc.en}</div>
+                    <div class="category-count">${cat.count} ${wordsLabel}</div>
+                    <div class="category-arrow">→</div>
+                </a>
+            `).join('');
+        }
+    </script>
+</body>
+
+</html>

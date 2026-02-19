@@ -1,0 +1,16 @@
+{
+  "title": "Day 21: Public Transportation",
+  "titleFa": "روز ۲۱: حمل و نقل عمومی",
+  "sentences": [
+    { "id": 1, "role": "sent", "targetText": "Wann fährt der nächste Bus?", "translation": "When does the next bus leave?", "translationFa": "اتوبوس بعدی کی حرکت می‌کنه؟" },
+    { "id": 2, "role": "received", "audioText": "In zehn Minuten.", "translation": "In ten minutes.", "translationFa": "ده دقیقه دیگه." },
+    { "id": 3, "role": "sent", "targetText": "Fährt er zum Hauptbahnhof?", "translation": "Does it go to the main station?", "translationFa": "به ایستگاه اصلی میره؟" },
+    { "id": 4, "role": "received", "audioText": "Ja, Linie 5 fährt direkt.", "translation": "Yes, line 5 goes directly.", "translationFa": "بله، خط ۵ مستقیم میره." },
+    { "id": 5, "role": "sent", "targetText": "Wo kann ich eine Fahrkarte kaufen?", "translation": "Where can I buy a ticket?", "translationFa": "از کجا میتونم بلیط بخرم؟" },
+    { "id": 6, "role": "received", "audioText": "Am Automaten dort drüben.", "translation": "At the machine over there.", "translationFa": "از اون دستگاه اونجا." },
+    { "id": 7, "role": "sent", "targetText": "Was kostet eine Einzelfahrt?", "translation": "How much is a single trip?", "translationFa": "بلیط یک‌طرفه چنده؟" },
+    { "id": 8, "role": "received", "audioText": "Drei Euro fünfzig.", "translation": "Three Euro fifty.", "translationFa": "سه یورو و پنجاه سنت." },
+    { "id": 9, "role": "sent", "targetText": "Danke für die Auskunft.", "translation": "Thanks for the information.", "translationFa": "ممنون بابت اطلاعات." },
+    { "id": 10, "role": "received", "audioText": "Gute Fahrt!", "translation": "Have a good trip!", "translationFa": "سفر خوبی داشته باشید!" }
+  ]
+}

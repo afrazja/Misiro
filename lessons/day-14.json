@@ -1,0 +1,11 @@
+{
+  "title": "Day 14: Health & Feelings",
+  "titleFa": "روز ۱۴: سلامتی و احساسات",
+  "sentences": [
+    { "id": 1, "role": "sent", "targetText": "Ich fühle mich nicht gut.", "translation": "I don't feel well.", "translationFa": "حالم خوب نیست." },
+    { "id": 2, "role": "sent", "targetText": "Ich fühle mich jetzt besser.", "translation": "I feel better now.", "translationFa": "الان حالم بهتره." },
+    { "id": 3, "role": "sent", "targetText": "Ich bin gestresst.", "translation": "I am stressed.", "translationFa": "استرس دارم." },
+    { "id": 4, "role": "sent", "targetText": "Mir geht es gut.", "translation": "I am okay.", "translationFa": "حالم خوبه." },
+    { "id": 5, "role": "sent", "targetText": "Ich brauche eine Pause.", "translation": "I need a break.", "translationFa": "به استراحت نیاز دارم." }
+  ]
+}

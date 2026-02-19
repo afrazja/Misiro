@@ -1,0 +1,16 @@
+{
+  "title": "Day 28: Job Interview",
+  "titleFa": "روز ۲۸: مصاحبه کاری",
+  "sentences": [
+    { "id": 1, "role": "received", "audioText": "Guten Tag, bitte nehmen Sie Platz.", "translation": "Good day, please take a seat.", "translationFa": "روز بخیر، بفرمایید بنشینید." },
+    { "id": 2, "role": "sent", "targetText": "Danke, freut mich, Sie kennenzulernen.", "translation": "Thanks, nice to meet you.", "translationFa": "ممنون، از آشناییتون خوشحالم." },
+    { "id": 3, "role": "received", "audioText": "Erzählen Sie mir etwas über sich.", "translation": "Tell me something about yourself.", "translationFa": "درباره خودتون بگید." },
+    { "id": 4, "role": "sent", "targetText": "Ich habe drei Jahre Erfahrung in diesem Bereich.", "translation": "I have three years of experience in this field.", "translationFa": "من سه سال تجربه تو این زمینه دارم." },
+    { "id": 5, "role": "received", "audioText": "Warum möchten Sie bei uns arbeiten?", "translation": "Why do you want to work with us?", "translationFa": "چرا می‌خواید اینجا کار کنید؟" },
+    { "id": 6, "role": "sent", "targetText": "Ihre Firma hat einen guten Ruf.", "translation": "Your company has a good reputation.", "translationFa": "شرکت شما شهرت خوبی داره." },
+    { "id": 7, "role": "received", "audioText": "Was sind Ihre Stärken?", "translation": "What are your strengths?", "translationFa": "نقاط قوتتون چیه؟" },
+    { "id": 8, "role": "sent", "targetText": "Ich bin teamfähig und zuverlässig.", "translation": "I'm a team player and reliable.", "translationFa": "من تیمی کار می‌کنم و قابل اعتمادم." },
+    { "id": 9, "role": "received", "audioText": "Wann können Sie anfangen?", "translation": "When can you start?", "translationFa": "کی میتونید شروع کنید؟" },
+    { "id": 10, "role": "sent", "targetText": "Ich kann sofort anfangen.", "translation": "I can start immediately.", "translationFa": "من همین الان میتونم شروع کنم." }
+  ]
+}

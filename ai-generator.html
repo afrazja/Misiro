@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Content Generator - Misiro</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: #333;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+        }
+
+        h1 {
+            color: #4CAF50;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            color: #666;
+            margin-bottom: 30px;
+        }
+
+        .section {
+            margin-bottom: 30px;
+        }
+
+        label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #333;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 1em;
+            font-family: inherit;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: #4CAF50;
+        }
+
+        .btn {
+            background: #4CAF50;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 8px;
+            font-size: 1.1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            width: 100%;
+        }
+
+        .btn:hover {
+            background: #45a049;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(76, 175, 80, 0.3);
+        }
+
+        .btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .result {
+            margin-top: 30px;
+            padding: 20px;
+            background: #f5f5f5;
+            border-radius: 8px;
+            display: none;
+        }
+
+        .result.show {
+            display: block;
+        }
+
+        .result h3 {
+            color: #4CAF50;
+            margin-bottom: 15px;
+        }
+
+        .sentence-item {
+            background: white;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #4CAF50;
+        }
+
+        .sentence-text {
+            font-size: 1.2em;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        .word-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .word-tag {
+            background: #e8f5e9;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.9em;
+        }
+
+        .word-tag .word {
+            font-weight: 600;
+            color: #4CAF50;
+        }
+
+        .word-tag .meaning {
+            color: #666;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 20px;
+            display: none;
+        }
+
+        .loading.show {
+            display: block;
+        }
+
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #4CAF50;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 15px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .error {
+            background: #ffebee;
+            color: #c62828;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+            display: none;
+        }
+
+        .error.show {
+            display: block;
+        }
+
+        .info-box {
+            background: #e3f2fd;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border-left: 4px solid #2196F3;
+        }
+
+        .info-box strong {
+            color: #1976D2;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        @media (max-width: 768px) {
+            .grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🤖 AI Content Generator</h1>
+        <p class="subtitle">Generate learning content using Llama 3.2:1b</p>
+
+        <div class="info-box">
+            <strong>📋 Setup Required:</strong> Make sure Ollama is running locally with the llama3.2:1b model installed.
+            Run: <code>ollama run llama3.2:1b</code>
+        </div>
+
+        <form id="generator-form">
+            <div class="grid">
+                <div class="section">
+                    <label for="level">Level (1-100)</label>
+                    <input type="number" id="level" min="1" max="100" value="1" required>
+                </div>
+
+                <div class="section">
+                    <label for="sentence-count">Sentences per Scenario</label>
+                    <input type="number" id="sentence-count" min="3" max="10" value="5" required>
+                </div>
+            </div>
+
+            <div class="section">
+                <label for="scenario-name">Scenario Name</label>
+                <input type="text" id="scenario-name" placeholder="e.g., Greeting, Shopping, Travel" required>
+            </div>
+
+            <div class="section">
+                <label for="scenario-description">Scenario Description</label>
+                <textarea id="scenario-description" rows="3" placeholder="Describe what learners should be able to do in this scenario..." required></textarea>
+            </div>
+
+            <div class="section">
+                <label for="api-endpoint">API Endpoint</label>
+                <input type="text" id="api-endpoint" value="http://localhost:11434/api/generate">
+            </div>
+
+            <button type="submit" class="btn" id="generate-btn">Generate Sentences</button>
+        </form>
+
+        <div class="loading" id="loading">
+            <div class="spinner"></div>
+            <p>Generating sentences with AI...</p>
+        </div>
+
+        <div class="error" id="error"></div>
+
+        <div class="result" id="result">
+            <h3>Generated Sentences</h3>
+            <div id="sentences-container"></div>
+            <button class="btn" id="copy-json" style="margin-top: 20px;">Copy JSON</button>
+        </div>
+    </div>
+
+    <script src="ai-integration.js"></script>
+    <script>
+        const form = document.getElementById('generator-form');
+        const loading = document.getElementById('loading');
+        const error = document.getElementById('error');
+        const result = document.getElementById('result');
+        const sentencesContainer = document.getElementById('sentences-container');
+        const generateBtn = document.getElementById('generate-btn');
+        const copyJsonBtn = document.getElementById('copy-json');
+
+        let generatedData = null;
+        let aiGenerator = null;
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            // Get form values
+            const level = parseInt(document.getElementById('level').value);
+            const sentenceCount = parseInt(document.getElementById('sentence-count').value);
+            const scenarioName = document.getElementById('scenario-name').value.trim();
+            const scenarioDescription = document.getElementById('scenario-description').value.trim();
+            const apiEndpoint = document.getElementById('api-endpoint').value.trim();
+
+            // Initialize AI generator
+            aiGenerator = new AIContentGenerator(apiEndpoint);
+
+            // Show loading
+            loading.classList.add('show');
+            result.classList.remove('show');
+            error.classList.remove('show');
+            generateBtn.disabled = true;
+
+            try {
+                // Generate sentences
+                const sentences = await aiGenerator.generateScenarioSentences(
+                    level,
+                    scenarioName,
+                    scenarioDescription,
+                    sentenceCount
+                );
+
+                if (sentences.length === 0) {
+                    throw new Error('No sentences were generated');
+                }
+
+                if (sentences.isFallback) {
+                    error.textContent = 'Warning: AI generation failed. Showing fallback content. Check Ollama connection.';
+                    error.classList.add('show');
+                }
+
+                // Store generated data
+                generatedData = {
+                    level: level,
+                    scenario: {
+                        name: scenarioName,
+                        description: scenarioDescription,
+                        sentences: sentences
+                    }
+                };
+
+                // Display results
+                displayResults(sentences);
+                result.classList.add('show');
+                loading.classList.remove('show');
+
+            } catch (err) {
+                console.error('Generation error:', err);
+                error.textContent = `Error: ${err.message}. Make sure Ollama is running with llama3.2:1b model.`;
+                error.classList.add('show');
+                loading.classList.remove('show');
+            } finally {
+                generateBtn.disabled = false;
+            }
+        });
+
+        function displayResults(sentences) {
+            sentencesContainer.innerHTML = '';
+            
+            sentences.forEach((sentence, index) => {
+                const sentenceItem = document.createElement('div');
+                sentenceItem.className = 'sentence-item';
+                
+                const sentenceText = document.createElement('div');
+                sentenceText.className = 'sentence-text';
+                sentenceText.textContent = `${index + 1}. ${sentence.text}`;
+                
+                const wordList = document.createElement('div');
+                wordList.className = 'word-list';
+                
+                sentence.words.forEach(wordObj => {
+                    const wordTag = document.createElement('div');
+                    wordTag.className = 'word-tag';
+                    wordTag.innerHTML = `
+                        <span class="word">${wordObj.word}</span>: 
+                        <span class="meaning">${wordObj.meaning}</span>
+                    `;
+                    wordList.appendChild(wordTag);
+                });
+                
+                sentenceItem.appendChild(sentenceText);
+                sentenceItem.appendChild(wordList);
+                sentencesContainer.appendChild(sentenceItem);
+            });
+        }
+
+        copyJsonBtn.addEventListener('click', () => {
+            const json = JSON.stringify(generatedData, null, 2);
+            navigator.clipboard.writeText(json).then(() => {
+                copyJsonBtn.textContent = '✓ Copied!';
+                setTimeout(() => {
+                    copyJsonBtn.textContent = 'Copy JSON';
+                }, 2000);
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,14 @@
+{
+  "title": "Day 7: Problems & Apologies",
+  "titleFa": "روز ۷: مشکلات و عذرخواهی",
+  "sentences": [
+    { "id": 1, "role": "sent", "targetText": "Entschuldigung, ich bin zu spät.", "translation": "Sorry, I am late.", "translationFa": "ببخشید، من دیر کردم." },
+    { "id": 2, "role": "received", "audioText": "Das macht nichts.", "translation": "That doesn't matter.", "translationFa": "اشکالی نداره." },
+    { "id": 3, "role": "sent", "targetText": "Es gibt ein Problem.", "translation": "There is a problem.", "translationFa": "یک مشکلی هست." },
+    { "id": 4, "role": "sent", "targetText": "Etwas ist schiefgelaufen.", "translation": "Something went wrong.", "translationFa": "یک چیزی اشتباه پیش رفت." },
+    { "id": 5, "role": "sent", "targetText": "Es funktioniert nicht.", "translation": "It's not working.", "translationFa": "کار نمیکنه." },
+    { "id": 6, "role": "received", "audioText": "Wir können das reparieren.", "translation": "We can fix that.", "translationFa": "میتونیم درستش کنیم." },
+    { "id": 7, "role": "sent", "targetText": "Es tut mir leid.", "translation": "I am sorry.", "translationFa": "متأسفم." },
+    { "id": 8, "role": "received", "audioText": "Kein Problem.", "translation": "No problem.", "translationFa": "مشکلی نیست." }
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "title": "Day 1: The Café",
+  "titleFa": "روز ۱: کافه",
+  "sentences": [
+    { "id": 1, "role": "received", "audioText": "Hallo! Guten Morgen.", "translation": "Hello! Good morning.", "translationFa": "سلام! صبح بخیر." },
+    { "id": 2, "role": "sent", "targetText": "Guten Morgen.", "translation": "Good morning.", "translationFa": "صبح بخیر." },
+    { "id": 3, "role": "received", "audioText": "Möchten Sie einen Kaffee?", "translation": "Would you like a coffee?", "translationFa": "قهوه میل دارید؟" },
+    { "id": 4, "role": "sent", "targetText": "Ja, bitte.", "translation": "Yes, please.", "translationFa": "بله، لطفاً." },
+    { "id": 5, "role": "received", "audioText": "Mit Milch und Zucker?", "translation": "With milk and sugar?", "translationFa": "با شیر و شکر؟" },
+    { "id": 6, "role": "sent", "targetText": "Nur Milch, bitte.", "translation": "Only milk, please.", "translationFa": "فقط شیر، لطفاً." }
+  ]
+}

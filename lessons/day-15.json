@@ -1,0 +1,11 @@
+{
+  "title": "Day 15: Money & Payment Issues",
+  "titleFa": "روز ۱۵: پول و پرداخت",
+  "sentences": [
+    { "id": 1, "role": "sent", "targetText": "Wie viel kostet das?", "translation": "How much is that?", "translationFa": "قیمتش چنده؟" },
+    { "id": 2, "role": "sent", "targetText": "Das ist teuer.", "translation": "That is expensive.", "translationFa": "گرونه." },
+    { "id": 3, "role": "sent", "targetText": "Das ist billig.", "translation": "That is cheap.", "translationFa": "ارزونه." },
+    { "id": 4, "role": "sent", "targetText": "Kann ich später bezahlen?", "translation": "Can I pay later?", "translationFa": "میتونم بعداً پرداخت کنم؟" },
+    { "id": 5, "role": "sent", "targetText": "Ich habe kein Bargeld.", "translation": "I don't have cash.", "translationFa": "پول نقد ندارم." }
+  ]
+}

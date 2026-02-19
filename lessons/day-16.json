@@ -1,0 +1,12 @@
+{
+  "title": "Day 16: Directions (Advanced)",
+  "titleFa": "روز ۱۶: آدرس‌دهی (پیشرفته)",
+  "sentences": [
+    { "id": 1, "role": "sent", "targetText": "Biegen Sie links ab.", "translation": "Turn left.", "translationFa": "به چپ بپیچید." },
+    { "id": 2, "role": "sent", "targetText": "Biegen Sie rechts ab.", "translation": "Turn right.", "translationFa": "به راست بپیچید." },
+    { "id": 3, "role": "sent", "targetText": "Es ist nah.", "translation": "It is near.", "translationFa": "نزدیکه." },
+    { "id": 4, "role": "sent", "targetText": "Es ist weit.", "translation": "It is far.", "translationFa": "دوره." },
+    { "id": 5, "role": "sent", "targetText": "Es ist gegenüber von der Bank.", "translation": "It is across from the bank.", "translationFa": "ربروی بانکه." },
+    { "id": 6, "role": "sent", "targetText": "Es ist neben dem Hotel.", "translation": "It is next to the hotel.", "translationFa": "کنار هتله." }
+  ]
+}

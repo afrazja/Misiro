@@ -1,0 +1,16 @@
+{
+  "title": "Day 4: Self Introduction",
+  "titleFa": "روز ۴: معرفی خود",
+  "sentences": [
+    { "id": 1, "role": "sent", "targetText": "Hallo zusammen!", "translation": "Hello everyone!", "translationFa": "سلام به همه!" },
+    { "id": 2, "role": "sent", "targetText": "Ich möchte mich kurz vorstellen.", "translation": "I would like to introduce myself briefly.", "translationFa": "می‌خوام خودمو معرفی کنم." },
+    { "id": 3, "role": "sent", "targetText": "Mein Name ist Lukas.", "translation": "My name is Lukas.", "translationFa": "اسم من لوکاس هست." },
+    { "id": 4, "role": "sent", "targetText": "Ich bin fünfundzwanzig Jahre alt.", "translation": "I am twenty-five years old.", "translationFa": "من ۲۵ سالمه." },
+    { "id": 5, "role": "sent", "targetText": "Ich komme ursprünglich aus Spanien.", "translation": "I am originally from Spain.", "translationFa": "من اصالتاً اهل اسپانیا هستم." },
+    { "id": 6, "role": "sent", "targetText": "Aber jetzt wohne ich in Berlin.", "translation": "But now I live in Berlin.", "translationFa": "ولی الان در برلین زندگی می‌کنم." },
+    { "id": 7, "role": "sent", "targetText": "Ich arbeite als Softwareentwickler.", "translation": "I work as a software developer.", "translationFa": "من برنامه‌نویس هستم." },
+    { "id": 8, "role": "sent", "targetText": "In meiner Freizeit spiele ich gerne Fußball.", "translation": "In my free time, I like playing football.", "translationFa": "تو وقت آزادم فوتبال بازی می‌کنم." },
+    { "id": 9, "role": "sent", "targetText": "Ich reise auch sehr gerne.", "translation": "I also really like to travel.", "translationFa": "من همچنین سفر کردن رو دوست دارم." },
+    { "id": 10, "role": "sent", "targetText": "Freut mich, Sie kennenzulernen.", "translation": "Nice to meet you.", "translationFa": "از آشناییتون خوشحالم." }
+  ]
+}

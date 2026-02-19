@@ -1,0 +1,16 @@
+{
+  "title": "Day 17: Hotel Booking",
+  "titleFa": "روز ۱۷: رزرو هتل",
+  "sentences": [
+    { "id": 1, "role": "sent", "targetText": "Guten Tag, haben Sie ein Zimmer frei?", "translation": "Good day, do you have a room free?", "translationFa": "روز بخیر، اتاق خالی دارید؟" },
+    { "id": 2, "role": "received", "audioText": "Ja, für wie viele Nächte?", "translation": "Yes, for how many nights?", "translationFa": "بله، برای چند شب؟" },
+    { "id": 3, "role": "sent", "targetText": "Für drei Nächte, bitte.", "translation": "For three nights, please.", "translationFa": "برای سه شب، لطفاً." },
+    { "id": 4, "role": "received", "audioText": "Für eine Person oder zwei?", "translation": "For one person or two?", "translationFa": "برای یک نفر یا دو نفر؟" },
+    { "id": 5, "role": "sent", "targetText": "Für zwei Personen.", "translation": "For two people.", "translationFa": "برای دو نفر." },
+    { "id": 6, "role": "received", "audioText": "Das kostet 90 Euro pro Nacht.", "translation": "That costs 90 Euro per night.", "translationFa": "هر شب ۹۰ یورو هست." },
+    { "id": 7, "role": "sent", "targetText": "Ist das Frühstück inklusive?", "translation": "Is breakfast included?", "translationFa": "صبحانه شامل میشه؟" },
+    { "id": 8, "role": "received", "audioText": "Ja. Und wir haben kostenloses WLAN.", "translation": "Yes. And we have free Wifi.", "translationFa": "بله. و وای‌فای رایگان داریم." },
+    { "id": 9, "role": "sent", "targetText": "Super, ich nehme es.", "translation": "Great, I'll take it.", "translationFa": "عالی، میگیرمش." },
+    { "id": 10, "role": "received", "audioText": "Hier ist Ihr Schlüssel. Zimmer 20.", "translation": "Here is your key. Room 20.", "translationFa": "بفرمایید کلیدتون. اتاق ۲۰." }
+  ]
+}
