@@ -436,6 +436,8 @@ function _startLessonIfClicked() {
     if (startBtn) {
         startBtn.addEventListener('click', () => {
             _userClickedStart = true;
+            // Unlock audio on mobile (iOS requires first speak from user gesture)
+            _unlockSpeech();
             // Show loading state on button
             startBtn.textContent = '⏳ Loading...';
             startBtn.disabled = true;
@@ -842,6 +844,7 @@ async function processNextStep() {
     const speakerIcon = teachBubble.querySelector('#speaker-icon');
     if (speakerIcon) {
         speakerIcon.onclick = async () => {
+            _unlockSpeech();
             stopAllAudio();
             if (appData.isListening && recognition) recognition.stop();
             await playAudioPromise(germanText, 0.8, 'de-DE');
@@ -861,6 +864,7 @@ async function processNextStep() {
     if (isBlindMode && textContainer) {
         textContainer.style.cursor = 'pointer';
         textContainer.onclick = async () => {
+            _unlockSpeech();
             stopAllAudio();
             if (appData.isListening && recognition) recognition.stop();
             await playAudioPromise(germanText, 0.8, 'de-DE');
@@ -1358,10 +1362,13 @@ function playTone(type) {
 function wait(ms) { return new Promise(resolve => setTimeout(resolve, ms)); }
 
 // TTS proxy: use Render backend API if configured, localhost if dev, else browser fallback
+// Mobile: skip proxy entirely — Audio element playback gets blocked without direct gesture
 const _MISIRO_API = window.MISIRO_CONFIG?.apiUrl || '';
 const _isLocalDev = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')
     && window.location.protocol !== 'file:';
-let _proxyAvailable = !!_MISIRO_API || _isLocalDev; // Disabled on first failure
+const _isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+let _proxyAvailable = (!!_MISIRO_API || _isLocalDev) && !_isMobile; // Disabled on mobile + first failure
+let _speechUnlocked = false;
 
 // Stop ALL audio sources (browser TTS + proxy Audio element)
 function stopAllAudio() {
@@ -1373,18 +1380,42 @@ function stopAllAudio() {
     }
 }
 
+// Unlock speechSynthesis on iOS — must be called synchronously from a click/touch
+function _unlockSpeech() {
+    if (_speechUnlocked) return;
+    _speechUnlocked = true;
+    const u = new SpeechSynthesisUtterance('');
+    u.volume = 0;
+    u.lang = 'de-DE';
+    window.speechSynthesis.speak(u);
+}
+
 function _browserTTS(text, lang) {
     return new Promise((resolve) => {
+        // iOS bug: speechSynthesis can get stuck. Cancel first.
+        window.speechSynthesis.cancel();
         const u = new SpeechSynthesisUtterance(text);
         u.lang = lang === 'fa' ? 'fa-IR' : lang === 'en' ? 'en-US' : lang;
         u.rate = 0.9;
         u.onend = resolve;
         u.onerror = () => resolve();
+        // iOS 15+ bug: speech pauses after ~15s. Workaround: resume periodically
+        let resumeTimer;
+        if (_isMobile) {
+            resumeTimer = setInterval(() => {
+                if (window.speechSynthesis.speaking && !window.speechSynthesis.paused) return;
+                window.speechSynthesis.resume();
+            }, 5000);
+            const cleanup = () => clearInterval(resumeTimer);
+            u.onend = () => { cleanup(); resolve(); };
+            u.onerror = () => { cleanup(); resolve(); };
+        }
         window.speechSynthesis.speak(u);
     });
 }
 
 function playWebAudio(text, lang) {
+    // On mobile, always use browser TTS directly (proxy Audio gets blocked)
     if (!_proxyAvailable) {
         return _browserTTS(text, lang);
     }
@@ -1427,7 +1458,7 @@ function playAudioPromise(text, rate, lang = 'de-DE') {
 
         const isFarsi = lang.startsWith('fa');
 
-        // FORCED FALLBACK: Always use Web TTS for Farsi 
+        // FORCED FALLBACK: Always use Web TTS for Farsi
         // because native browser support for it is extremely unreliable.
         if (isFarsi) {
             if (DEBUG) console.log("Using Web TTS for Farsi");
@@ -1445,6 +1476,8 @@ function playAudioPromise(text, rate, lang = 'de-DE') {
             return;
         }
 
+        // iOS bug: cancel before speaking to avoid stuck state
+        window.speechSynthesis.cancel();
         const u = new SpeechSynthesisUtterance(text);
         u.lang = lang;
         u.rate = effectiveRate;
@@ -1454,6 +1487,18 @@ function playAudioPromise(text, rate, lang = 'de-DE') {
             console.error("Audio Error:", e);
             resolve();
         };
+
+        // iOS 15+ bug: speech pauses after ~15s. Workaround: resume periodically
+        if (_isMobile) {
+            const resumeTimer = setInterval(() => {
+                if (window.speechSynthesis.speaking && !window.speechSynthesis.paused) return;
+                window.speechSynthesis.resume();
+            }, 5000);
+            const origOnend = u.onend;
+            const origOnerror = u.onerror;
+            u.onend = () => { clearInterval(resumeTimer); origOnend(); };
+            u.onerror = (e) => { clearInterval(resumeTimer); origOnerror(e); };
+        }
 
         window.speechSynthesis.speak(u);
     });
@@ -1477,6 +1522,7 @@ function createInteractiveSentence(text) {
 }
 
 window.playWord = function (word) {
+    _unlockSpeech(); // Ensure iOS audio is unlocked on user tap
     // Clean punctuation for TTS
     const clean = word.replace(/[.,!?]/g, '');
     stopAllAudio();

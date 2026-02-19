@@ -331,9 +331,12 @@ function toggleCategory(key) {
 
 // =====================
 // AUDIO (Render TTS Proxy with browser fallback)
+// Mobile: skip proxy entirely — use speechSynthesis directly from click handler
 // =====================
 const _MISIRO_API = window.MISIRO_CONFIG?.apiUrl || '';
-let _proxyAvailable = !!_MISIRO_API; // Will be disabled if proxy fails
+const _isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+let _proxyAvailable = !!_MISIRO_API && !_isMobile; // Disable proxy on mobile
+let _speechUnlocked = false; // iOS requires first speak from user gesture
 
 function stopAllAudio() {
     window.speechSynthesis.cancel();
@@ -344,19 +347,43 @@ function stopAllAudio() {
     }
 }
 
+// Unlock speechSynthesis on iOS — must be called synchronously from a click/touch
+function _unlockSpeech() {
+    if (_speechUnlocked) return;
+    _speechUnlocked = true;
+    const u = new SpeechSynthesisUtterance('');
+    u.volume = 0;
+    u.lang = 'de-DE';
+    window.speechSynthesis.speak(u);
+}
+
 function _browserTTS(text, lang, rate) {
     return new Promise((resolve) => {
+        // iOS bug: speechSynthesis can get stuck. Cancel first.
+        window.speechSynthesis.cancel();
         const u = new SpeechSynthesisUtterance(text);
         u.lang = lang;
         const r = rate || voiceSpeed || 1.0;
         u.rate = (isFinite(r) && r > 0) ? r : 1.0;
         u.onend = resolve;
         u.onerror = () => resolve();
+        // iOS 15+ bug: speech can pause after ~15s. Workaround: resume periodically
+        let resumeTimer;
+        if (_isMobile) {
+            resumeTimer = setInterval(() => {
+                if (window.speechSynthesis.speaking && !window.speechSynthesis.paused) return;
+                window.speechSynthesis.resume();
+            }, 5000);
+            const cleanup = () => clearInterval(resumeTimer);
+            u.onend = () => { cleanup(); resolve(); };
+            u.onerror = () => { cleanup(); resolve(); };
+        }
         window.speechSynthesis.speak(u);
     });
 }
 
 function playWebAudio(text, lang) {
+    // On mobile, always use browser TTS directly (proxy Audio gets blocked)
     if (!_proxyAvailable) {
         return _browserTTS(text, lang, voiceSpeed);
     }
@@ -378,7 +405,6 @@ function playWebAudio(text, lang) {
         audio.src = url;
         window.currentAudio = audio;
         audio.onerror = fallback;
-        // Timeout: if nothing plays in 3s, fall back and disable proxy
         const timeout = setTimeout(fallback, 3000);
         audio.onended = () => { clearTimeout(timeout); if (!fellBack) resolve(); };
         audio.play().catch(fallback);
@@ -386,12 +412,14 @@ function playWebAudio(text, lang) {
 }
 
 function playWord(text) {
+    _unlockSpeech();
     stopAllAudio();
     playWebAudio(text, 'de-DE');
 }
 
 function playExample(text) {
     if (!text) return;
+    _unlockSpeech();
     stopAllAudio();
     playWebAudio(text, 'de-DE');
 }
