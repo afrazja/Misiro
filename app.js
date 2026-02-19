@@ -1358,9 +1358,9 @@ function playTone(type) {
 function wait(ms) { return new Promise(resolve => setTimeout(resolve, ms)); }
 
 // =====================
-// AUDIO — 3-tier: Google TTS direct → Render proxy → browser speechSynthesis
-// Vercel /api/tts proxy (same-origin, works on all devices)
-// Falls back to browser speechSynthesis if proxy fails
+// AUDIO — Vercel /api/tts proxy (same-origin, works on all devices)
+// Mobile: ALL languages route through proxy (speechSynthesis unreliable on phones)
+// Desktop: German/Farsi → proxy; English → speechSynthesis with proxy fallback
 // =====================
 const _isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
 
@@ -1424,13 +1424,21 @@ function playAudioPromise(text, rate, lang = 'de-DE') {
     return new Promise(resolve => {
         stopAllAudio();
 
-        // German, Farsi, or missing native voice → use Vercel TTS proxy
+        // On mobile: route ALL languages through Vercel TTS proxy
+        // (speechSynthesis is unreliable on mobile — often fails silently)
+        if (_isMobile) {
+            if (DEBUG) console.log(`Mobile: using TTS proxy for ${lang}`);
+            playWebAudio(text, lang).then(resolve);
+            return;
+        }
+
+        // On desktop: German & Farsi always use proxy (best quality)
         if (lang.startsWith('de') || lang.startsWith('fa')) {
             playWebAudio(text, lang).then(resolve);
             return;
         }
 
-        // English / other: try browser speech first (good quality on most devices)
+        // Desktop English / other: try browser speech first (good quality on desktop)
         const voices = window.speechSynthesis.getVoices();
         const hasNativeVoice = voices.some(v => v.lang === lang || v.lang.startsWith(lang.split('-')[0]));
 
@@ -1451,18 +1459,9 @@ function playAudioPromise(text, rate, lang = 'de-DE') {
         u.onend = resolve;
         u.onerror = (e) => {
             console.error("Audio Error:", e);
-            resolve();
+            // Fallback to proxy if speechSynthesis fails on desktop too
+            playWebAudio(text, lang).then(resolve);
         };
-
-        if (_isMobile) {
-            const timer = setInterval(() => {
-                if (!window.speechSynthesis.speaking || window.speechSynthesis.paused) window.speechSynthesis.resume();
-            }, 5000);
-            const origOnend = u.onend;
-            const origOnerror = u.onerror;
-            u.onend = () => { clearInterval(timer); origOnend(); };
-            u.onerror = (e) => { clearInterval(timer); origOnerror(e); };
-        }
 
         window.speechSynthesis.speak(u);
     });
