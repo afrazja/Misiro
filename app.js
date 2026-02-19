@@ -584,6 +584,7 @@ function toggleMic() {
     if (appData.isListening) {
         recognition.stop();
     } else {
+        stopAllAudio();
         recognition.start();
     }
 }
