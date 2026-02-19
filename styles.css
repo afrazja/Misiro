@@ -986,6 +986,13 @@ body {
     color: #1B5E20;
 }
 
+.interactive-word.active-word {
+    background: #e3f2fd;
+    border-color: #4CAF50;
+    color: #1B5E20;
+    z-index: 10;
+}
+
 .interactive-word.error {
     background-color: #FFCDD2;
     /* Red-100 */

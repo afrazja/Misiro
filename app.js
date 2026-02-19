@@ -1516,24 +1516,48 @@ function playAudio(text, rate = 1.0, lang = 'en-US') { // Default to EN for syst
 
 function createInteractiveSentence(text) {
     const words = text.split(' ');
-    // Safe HTML construction
     return words.map(word => {
-        // Simple sanitization
         const safeWord = word.replace(/</g, "&lt;").replace(/>/g, "&gt;");
         const cleanKey = safeWord.toLowerCase().replace(/[.,!?]/g, '');
         const meaning = getGlossaryMeaning(cleanKey) || "";
-        const tooltipAttr = meaning ? `data-tooltip="${meaning}"` : "";
+        const tooltipAttr = meaning ? `data-meaning="${meaning.replace(/"/g, '&quot;')}"` : "";
 
-        return `<span class="interactive-word" ${tooltipAttr} onclick="playWord('${safeWord.replace(/'/g, "\\'")}')">${safeWord}</span>`;
+        return `<span class="interactive-word" ${tooltipAttr} onclick="playWord(this, '${safeWord.replace(/'/g, "\\'")}')">${safeWord}</span>`;
     }).join(' ');
 }
 
-window.playWord = function (word) {
+// Remove any existing word tooltip
+function removeWordTooltip() {
+    const old = document.getElementById('word-tooltip');
+    if (old) old.remove();
+    document.querySelectorAll('.interactive-word.active-word').forEach(el => el.classList.remove('active-word'));
+}
+
+window.playWord = function (el, word) {
     // Clean punctuation for TTS
     const clean = word.replace(/[.,!?]/g, '');
     stopAllAudio();
     if (appData.isListening && recognition) recognition.stop();
-    // Use voice speed setting for word playback (base rate 0.8)
+
+    // Show meaning tooltip on tap
+    removeWordTooltip();
+    const meaning = el.getAttribute('data-meaning');
+    if (meaning) {
+        el.classList.add('active-word');
+        const tip = document.createElement('div');
+        tip.id = 'word-tooltip';
+        tip.textContent = meaning;
+        tip.style.cssText = 'position:absolute; bottom:calc(100% + 8px); left:50%; transform:translateX(-50%); background:rgba(0,0,0,0.85); color:#fff; padding:6px 12px; border-radius:8px; font-size:0.85em; white-space:nowrap; z-index:200; pointer-events:none; box-shadow:0 4px 12px rgba(0,0,0,0.3); animation:popIn 0.2s ease-out;';
+        el.style.position = 'relative';
+        el.appendChild(tip);
+
+        // Auto-hide after 3 seconds
+        setTimeout(() => {
+            removeWordTooltip();
+        }, 3000);
+    }
+
+    // Play pronunciation
     playAudioPromise(clean, 0.8, 'de-DE');
 };
 
