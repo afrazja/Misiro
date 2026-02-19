@@ -364,16 +364,20 @@ function playWebAudio(text, lang) {
             window.currentAudio.pause();
             window.currentAudio = null;
         }
+        let fellBack = false;
+        const fallback = () => {
+            if (fellBack) return;
+            fellBack = true;
+            _browserTTS(text, lang, voiceSpeed).then(resolve);
+        };
         const audio = new Audio();
         audio.src = url;
         window.currentAudio = audio;
-        audio.onended = () => resolve();
-        audio.onerror = () => {
-            _browserTTS(text, lang, voiceSpeed).then(resolve);
-        };
-        audio.play().catch(() => {
-            _browserTTS(text, lang, voiceSpeed).then(resolve);
-        });
+        audio.onerror = fallback;
+        // Timeout: if nothing plays in 4s, fall back
+        const timeout = setTimeout(fallback, 4000);
+        audio.onended = () => { clearTimeout(timeout); if (!fellBack) resolve(); };
+        audio.play().catch(fallback);
     });
 }
 
