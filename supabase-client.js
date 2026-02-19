@@ -117,6 +117,7 @@
 
         /**
          * Get the user's display name from their profile
+         * Falls back to auth metadata if profile row doesn't exist yet
          * @returns {Promise<string>}
          */
         async getDisplayName() {
@@ -124,14 +125,56 @@
             try {
                 const user = await this.getUser();
                 if (!user) return 'Learner';
+
+                // Try reading from user_profiles table first
                 const { data } = await supabase
                     .from('user_profiles')
                     .select('display_name')
                     .eq('id', user.id)
                     .single();
-                return data?.display_name || 'Learner';
+
+                if (data?.display_name) return data.display_name;
+
+                // Fallback: read from auth user metadata (set during signup)
+                const metaName = user.user_metadata?.display_name;
+                if (metaName) {
+                    // Profile row missing — create it now
+                    await this.ensureProfile(user);
+                    return metaName;
+                }
+
+                // Last fallback: use email prefix
+                return user.email?.split('@')[0] || 'Learner';
             } catch (e) {
-                return 'Learner';
+                // If table query failed, try auth metadata directly
+                try {
+                    const user = await this.getUser();
+                    return user?.user_metadata?.display_name
+                        || user?.email?.split('@')[0]
+                        || 'Learner';
+                } catch (e2) {
+                    return 'Learner';
+                }
+            }
+        },
+
+        /**
+         * Ensure the user has a profile and progress row
+         * Called as a safety net if the DB trigger didn't fire
+         */
+        async ensureProfile(user) {
+            if (!supabase || !user) return;
+            try {
+                const displayName = user.user_metadata?.display_name || 'Learner';
+                await supabase.from('user_profiles').upsert({
+                    id: user.id,
+                    display_name: displayName
+                }, { onConflict: 'id' });
+                await supabase.from('user_progress').upsert({
+                    user_id: user.id
+                }, { onConflict: 'user_id' });
+            } catch (e) {
+                console.error('ensureProfile error:', e);
             }
         }
     };

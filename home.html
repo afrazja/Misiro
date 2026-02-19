@@ -415,7 +415,10 @@
                 errorEl.style.display = 'block';
             } else {
                 toggleAuthModal();
-                updateProfileUI();
+                // Ensure profile row exists (safety net if trigger didn't fire)
+                const user = await misiroAuth.getUser();
+                if (user) await misiroAuth.ensureProfile(user);
+                await updateProfileUI();
                 // Sync data from cloud after login
                 if (window.MisiroData) {
                     await MisiroData.syncOnLogin();
