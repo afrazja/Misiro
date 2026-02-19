@@ -424,6 +424,19 @@ function _startLessonIfClicked() {
     // Resume AudioContext
     const ctx = new (window.AudioContext || window.webkitAudioContext)();
     if (ctx.state === 'suspended') ctx.resume();
+
+    // Recalculate layout after overlay removal — mobile browser chrome may resize
+    // Do it immediately, after 1 frame, and after browser chrome animation (300ms)
+    function _recalcMobileLayout() {
+        if (window.innerWidth > 600) return;
+        const panel = document.getElementById('script-view');
+        if (panel) panel.style.height = (window.innerHeight * 0.28) + 'px';
+        const chatH = document.getElementById('chat-history');
+        if (chatH) chatH.scrollTop = 0;
+    }
+    requestAnimationFrame(_recalcMobileLayout);
+    setTimeout(_recalcMobileLayout, 350);
+
     // Start flow
     processNextStep();
     const startMsg = appData.language === 'fa' ? 'شروع درس.' : 'Starting lesson.';
