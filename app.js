@@ -410,26 +410,43 @@ async function init() {
         loadGlossary()
     ]);
 
-    // WAIT for user interaction to unlock AudioContext/SpeechSynthesis
-    const overlay = document.getElementById('start-overlay');
-    const startBtn = document.getElementById('btn-start-lesson');
+    // Signal that init is complete — early click handler will use this
+    window._misiroReady = true;
+    _startLessonIfClicked();
+}
 
+// Early-registered start button handler — works even before init() finishes
+let _userClickedStart = false;
+function _startLessonIfClicked() {
+    if (!_userClickedStart || !window._misiroReady) return;
+    const overlay = document.getElementById('start-overlay');
+    if (overlay) overlay.style.display = 'none';
+    // Resume AudioContext
+    const ctx = new (window.AudioContext || window.webkitAudioContext)();
+    if (ctx.state === 'suspended') ctx.resume();
+    // Start flow
+    processNextStep();
+    const startMsg = appData.language === 'fa' ? 'شروع درس.' : 'Starting lesson.';
+    playAudio(startMsg, 1.0, appData.language === 'fa' ? 'fa-IR' : 'en-US');
+}
+
+// Register click handler immediately when script loads (before init)
+(function() {
+    const startBtn = document.getElementById('btn-start-lesson');
     if (startBtn) {
         startBtn.addEventListener('click', () => {
-            if (overlay) overlay.style.display = 'none';
-            // Resume AudioContext
-            const ctx = new (window.AudioContext || window.webkitAudioContext)();
-            if (ctx.state === 'suspended') ctx.resume();
-
-            // Start flow
-            processNextStep();
-            const startMsg = appData.language === 'fa' ? 'شروع درس.' : 'Starting lesson.';
-            playAudio(startMsg, 1.0, appData.language === 'fa' ? 'fa-IR' : 'en-US');
+            _userClickedStart = true;
+            // Show loading state on button
+            startBtn.textContent = '⏳ Loading...';
+            startBtn.disabled = true;
+            // If init already done, start immediately; otherwise init will call us
+            _startLessonIfClicked();
         });
     } else {
-        processNextStep();
+        // No overlay — auto-start when init completes
+        _userClickedStart = true;
     }
-}
+})();
 
 // --- Language Selection ---
 function setupLanguageSelection() {
