@@ -1420,16 +1420,20 @@ function _browserTTS(text, lang, rate) {
         u.lang = lang === 'fa' ? 'fa-IR' : lang === 'en' ? 'en-US' : lang;
         const r = rate || 0.9;
         u.rate = (isFinite(r) && r > 0) ? r : 1.0;
-        u.onend = resolve;
-        u.onerror = () => resolve();
+        let resolved = false;
+        const done = () => { if (!resolved) { resolved = true; resolve(); } };
+        u.onend = done;
+        u.onerror = done;
         if (_isMobile) {
             const timer = setInterval(() => {
                 if (!window.speechSynthesis.speaking || window.speechSynthesis.paused) window.speechSynthesis.resume();
             }, 5000);
             const cleanup = () => clearInterval(timer);
-            u.onend = () => { cleanup(); resolve(); };
-            u.onerror = () => { cleanup(); resolve(); };
+            u.onend = () => { cleanup(); done(); };
+            u.onerror = () => { cleanup(); done(); };
         }
+        // Safety timeout: never hang more than 10s
+        setTimeout(done, 10000);
         window.speechSynthesis.speak(u);
     });
 }
@@ -1443,18 +1447,19 @@ function playWebAudio(text, lang) {
             window.currentAudio.pause();
             window.currentAudio = null;
         }
-        let fellBack = false;
+        let done = false;
+        const finish = () => { if (!done) { done = true; resolve(); } };
         const fallback = () => {
-            if (fellBack) return;
-            fellBack = true;
-            if (DEBUG) console.warn('TTS proxy failed, using browser speech');
+            if (done) return;
+            if (DEBUG) console.warn('TTS proxy failed, falling back to browser speech');
+            done = true;
             _browserTTS(text, lang).then(resolve);
         };
         const audio = new Audio(url);
         window.currentAudio = audio;
         audio.onerror = fallback;
         const timeout = setTimeout(fallback, 4000);
-        audio.onended = () => { clearTimeout(timeout); if (!fellBack) resolve(); };
+        audio.onended = () => { clearTimeout(timeout); finish(); };
         audio.play().catch(fallback);
     });
 }
