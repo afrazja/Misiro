@@ -546,6 +546,15 @@ body {
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
+.script-item.done .german::before {
+    content: '✅ ';
+    font-size: 0.85em;
+}
+
+.script-item.done {
+    opacity: 0.75;
+}
+
 .script-item .german {
     font-weight: 600;
     color: #333;

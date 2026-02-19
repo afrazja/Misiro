@@ -638,9 +638,14 @@ function renderScript() {
     const lesson = getCurrentLesson();
     dom.scriptContainer.innerHTML = '';
 
+    const isLessonCompleted = !!(appData.completedLessons && appData.completedLessons[appData.currentDay]);
+
     lesson.sentences.forEach((step, index) => {
         const div = document.createElement('div');
         div.className = 'script-item';
+        if (isLessonCompleted || index < appData.currentSentenceIndex) {
+            div.classList.add('done');
+        }
         div.id = `script-item-${index}`;
 
         const german = step.role === 'received' ? step.audioText : step.targetText;
@@ -683,6 +688,11 @@ function highlightScriptItem(index) {
         current.classList.add('active');
         current.scrollIntoView({ behavior: 'smooth', block: 'center' });
     }
+}
+
+function markScriptItemDone(index) {
+    const item = document.getElementById(`script-item-${index}`);
+    if (item) item.classList.add('done');
 }
 
 // --- Logic ---
@@ -871,6 +881,7 @@ appData.manualNext = async function () {
     if (appData.isListening && recognition) recognition.stop();
     stopAllAudio();
 
+    markScriptItemDone(appData.currentSentenceIndex);
     appData.currentSentenceIndex++;
     await saveProgress();
     processNextStep();
@@ -969,6 +980,7 @@ async function handleVoiceInput(transcript) {
 
         // Feedback
         await playAudioPromise("Good.", 1.2, 'en-US');
+        markScriptItemDone(appData.currentSentenceIndex);
         appData.currentSentenceIndex++;
         await saveProgress();
         processNextStep();
