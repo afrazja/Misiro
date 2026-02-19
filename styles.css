@@ -668,6 +668,8 @@ body {
     body.lesson-page .day-selection-control select {
         padding: 5px 8px;
         font-size: 0.9em;
+        color: #333 !important;
+        background: #fff !important;
     }
 
     body.lesson-page .blind-mode-control {
@@ -694,6 +696,8 @@ body {
     body.lesson-page .speed-control select {
         padding: 4px 6px !important;
         font-size: 0.85em !important;
+        color: #333 !important;
+        background: #fff !important;
     }
 
     body.lesson-page .progress-info {
