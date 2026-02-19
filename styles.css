@@ -621,87 +621,68 @@ body {
         overflow: hidden;
     }
 
-    /* --- Single-row compact header --- */
+    /* --- Two-row mobile header --- */
     .header {
         border-radius: 0;
-        padding: 6px 8px;
-        gap: 0;
+        padding: 8px 10px;
+        gap: 8px;
         box-shadow: 0 1px 3px rgba(0,0,0,0.15);
-        flex-wrap: nowrap;
+        flex-wrap: wrap;
         z-index: 100;
         flex-shrink: 0;
-        justify-content: flex-start;
-        overflow-x: auto;
-        -webkit-overflow-scrolling: touch;
+        justify-content: space-between;
     }
 
-    /* Hide scrollbar on header */
-    .header::-webkit-scrollbar { display: none; }
-    .header { scrollbar-width: none; }
-
+    /* Row 1: Home button + title + Day selector (takes full width) */
     .header-left {
-        gap: 4px;
-        flex-shrink: 0;
+        gap: 8px;
     }
 
     .header-left a {
-        padding: 4px 8px !important;
-        font-size: 0.75em !important;
-        margin-right: 2px !important;
-        white-space: nowrap;
+        padding: 5px 10px !important;
+        font-size: 0.85em !important;
+        margin-right: 0 !important;
     }
 
-    /* Hide title on phone — saves ~80px */
     .header h1 {
-        display: none;
+        font-size: 1.15em;
     }
 
     .day-selection-control {
-        gap: 3px;
-        flex-shrink: 0;
-        margin-left: 4px;
+        gap: 5px;
     }
 
     .day-selection-control label {
-        font-size: 0.75em;
-        white-space: nowrap;
+        font-size: 0.85em;
     }
 
     .day-selection-control select {
-        padding: 3px 6px;
-        font-size: 0.8em;
+        padding: 4px 8px;
+        font-size: 0.9em;
     }
 
-    .progress-info {
-        display: none;
+    /* Row 2: Blind mode + Language + Speed (wraps to second line) */
+    .blind-mode-control {
+        gap: 4px !important;
     }
 
-    .language-control,
-    .speed-control {
-        flex-shrink: 0;
-        margin-left: 4px;
+    .blind-mode-control label {
+        font-size: 0.82em !important;
+    }
+
+    .blind-mode-control input {
+        width: 16px !important;
+        height: 16px !important;
     }
 
     .language-control select,
     .speed-control select {
-        padding: 3px 4px !important;
-        font-size: 0.75em !important;
+        padding: 4px 6px !important;
+        font-size: 0.85em !important;
     }
 
-    .blind-mode-control {
-        flex-shrink: 0;
-        margin-left: 4px;
-        gap: 2px !important;
-    }
-
-    .blind-mode-control label {
-        font-size: 0.7em !important;
-        white-space: nowrap;
-    }
-
-    .blind-mode-control input {
-        width: 14px !important;
-        height: 14px !important;
+    .progress-info {
+        display: none;
     }
 
     /* --- Chat fills all remaining space --- */
@@ -723,60 +704,60 @@ body {
     }
 
     .chat-header {
-        padding: 6px 10px;
-        gap: 8px;
+        padding: 8px 12px;
+        gap: 10px;
     }
 
     .chat-header .avatar-circle {
-        width: 28px;
-        height: 28px;
-        font-size: 16px;
+        width: 32px;
+        height: 32px;
+        font-size: 18px;
     }
 
     .chat-header .header-info h3 {
-        font-size: 0.9em;
+        font-size: 1em;
     }
 
     .chat-header .header-info .status {
-        font-size: 0.65em;
+        font-size: 0.75em;
     }
 
     .chat-history {
-        padding: 8px;
-        gap: 8px;
+        padding: 10px;
+        gap: 10px;
     }
 
     .message {
-        max-width: 92%;
-        padding: 8px 10px;
-        font-size: 0.9em;
+        max-width: 90%;
+        padding: 10px 12px;
+        font-size: 1em;
     }
 
     .message.instruction {
-        width: 96%;
-        padding: 8px 10px;
+        width: 95%;
+        padding: 10px 12px;
     }
 
     /* --- Interaction area --- */
     .chat-interaction-area {
-        padding: 5px 8px;
-        gap: 5px;
+        padding: 6px 10px;
+        gap: 6px;
         position: relative;
     }
 
     .message-composer {
-        padding: 8px 50px 8px 12px; /* right padding for send button */
-        min-height: 38px;
-        font-size: 0.88em;
+        padding: 10px 55px 10px 14px; /* right padding for send button */
+        min-height: 42px;
+        font-size: 0.95em;
     }
 
     .btn-send {
-        width: 36px;
-        height: 36px;
-        right: 14px;
+        width: 40px;
+        height: 40px;
+        right: 16px;
         bottom: auto;
         position: absolute;
-        top: 6px;
+        top: 7px;
         transform: none;
     }
 
@@ -785,33 +766,33 @@ body {
     }
 
     .btn-send svg {
-        width: 20px;
-        height: 20px;
+        width: 22px;
+        height: 22px;
     }
 
     .btn-next {
-        right: 14px;
+        right: 16px;
         bottom: auto;
         position: absolute;
-        top: 6px;
-        font-size: 0.85em;
-        padding: 7px 14px;
+        top: 7px;
+        font-size: 0.95em;
+        padding: 8px 16px;
     }
 
     .word-bank-scroll {
-        gap: 5px;
-        padding: 2px 0;
+        gap: 6px;
+        padding: 3px 0;
     }
 
     .word-chip {
-        padding: 5px 8px;
-        font-size: 0.8em;
-        min-width: 55px;
+        padding: 7px 12px;
+        font-size: 0.9em;
+        min-width: 60px;
     }
 
     .word-chip-composer {
-        padding: 3px 7px;
-        font-size: 0.8em;
+        padding: 4px 10px;
+        font-size: 0.9em;
     }
 
     /* --- Bottom script panel with drag handle --- */
@@ -832,13 +813,13 @@ body {
 
     .script-view h3 {
         margin-bottom: 6px;
-        padding-bottom: 4px;
-        font-size: 0.85em;
+        padding-bottom: 5px;
+        font-size: 0.95em;
         padding-top: 0;
     }
 
     #script-container {
-        padding-bottom: 8px;
+        padding-bottom: 10px;
     }
 
     /* Drag handle */
@@ -854,10 +835,10 @@ body {
     }
 
     .script-drag-handle .handle-bar {
-        width: 36px;
-        height: 4px;
+        width: 40px;
+        height: 5px;
         background: #bbb;
-        border-radius: 2px;
+        border-radius: 3px;
         transition: background 0.2s;
     }
 
@@ -866,29 +847,29 @@ body {
     }
 
     .script-item {
-        padding: 7px 8px;
-        margin-bottom: 5px;
-        font-size: 0.85em;
+        padding: 8px 10px;
+        margin-bottom: 6px;
+        font-size: 0.95em;
     }
 
     .script-item .german {
-        font-size: 0.85em;
+        font-size: 0.95em;
         margin-bottom: 2px;
     }
 
     .script-item .translation {
-        font-size: 0.75em;
+        font-size: 0.82em;
     }
 
     /* Interactive word touch sizing */
     .interactive-word {
-        padding: 5px 7px;
-        font-size: 0.92em;
+        padding: 6px 8px;
+        font-size: 1em;
     }
 
     /* Tooltip positioning for mobile */
     .interactive-word[data-tooltip]:hover::after {
-        font-size: 0.78em;
+        font-size: 0.82em;
     }
 
     /* Start overlay mobile */
