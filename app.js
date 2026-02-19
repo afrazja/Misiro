@@ -6,7 +6,7 @@ const browserLang = navigator.language || navigator.userLanguage || 'en';
 const defaultLang = browserLang.startsWith('fa') ? 'fa' : 'en';
 
 const appData = {
-    currentDay: 15,
+    currentDay: 1,
     currentSentenceIndex: 0,
     isListening: false,
     sessionID: 0,
@@ -101,25 +101,22 @@ function loadConversationState() {
             appData.currentDay = lastCompletedDay;
             appData.currentSentenceIndex = 0; // Start from beginning of completed lesson
         } else {
-            // No completed lessons — fall back to saved progress (first-time user)
-            const progress = MisiroData.getProgress();
-            if (progress) {
-                if (progress.currentDay && dailyLessons[progress.currentDay]) {
-                    appData.currentDay = progress.currentDay;
-                }
-                if (typeof progress.currentSentenceIndex === 'number' && progress.currentSentenceIndex >= 0) {
-                    const lesson = dailyLessons[appData.currentDay];
-                    if (lesson && progress.currentSentenceIndex < lesson.sentences.length) {
-                        appData.currentSentenceIndex = progress.currentSentenceIndex;
-                    }
-                }
-            }
+            // No completed lessons — start at Day 1
+            appData.currentDay = 1;
+            appData.currentSentenceIndex = 0;
         }
     } catch (e) {
         console.error('Failed to load progress:', e);
     }
 
     if (DEBUG) console.log('Loaded state - language:', appData.language, 'day:', appData.currentDay, 'sentence:', appData.currentSentenceIndex);
+}
+
+// Check if a lesson day is unlocked (Day 1 always open, Day N requires Day N-1 completed)
+function isDayUnlocked(day) {
+    const d = parseInt(day);
+    if (d === 1) return true;
+    return !!(appData.completedLessons && appData.completedLessons[d - 1]);
 }
 
 function saveProgress() {
@@ -338,16 +335,31 @@ function populateDaySelect() {
             const option = document.createElement('option');
             option.value = day;
             const isCompleted = appData.completedLessons && appData.completedLessons[day];
-            option.textContent = (isCompleted ? '✅ ' : '') + lesson.title;
+            const unlocked = isDayUnlocked(day);
+
+            if (isCompleted) {
+                option.textContent = '✅ ' + lesson.title;
+            } else if (!unlocked) {
+                option.textContent = '🔒 ' + lesson.title;
+                option.disabled = true;
+            } else {
+                option.textContent = lesson.title;
+            }
             if (parseInt(day) === appData.currentDay) option.selected = true;
             group.appendChild(option);
         });
 
-        // Add Exam for this week if full week
+        // Add Exam for this week if full week (locked until all days completed)
         if (weeks[weekNum].length === 7) {
+            const allWeekDone = weeks[weekNum].every(d =>
+                appData.completedLessons && appData.completedLessons[d]
+            );
             const examOpt = document.createElement('option');
             examOpt.value = `exam${weekNum}`;
-            examOpt.textContent = `Week ${weekNum} Exam`;
+            examOpt.textContent = allWeekDone
+                ? `Week ${weekNum} Exam`
+                : `🔒 Week ${weekNum} Exam`;
+            if (!allWeekDone) examOpt.disabled = true;
             group.appendChild(examOpt);
         }
 
@@ -570,6 +582,10 @@ function setupDaySelection() {
         }
 
         const newDay = parseInt(val);
+        if (!isDayUnlocked(newDay)) {
+            dom.daySelect.value = appData.currentDay; // revert to current day
+            return;
+        }
         if (newDay === appData.currentDay && !appData.isExamMode) return;
 
         appData.isExamMode = false;
