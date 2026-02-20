@@ -223,8 +223,8 @@ export async function processNextStep(skipAudio = false): Promise<void> {
 	// Prompt user
 	const promptMsg =
 		prefs.language === 'fa'
-			? '\u0628\u0631\u0627\u06CC \u062A\u0645\u0631\u06CC\u0646 \u{1F399}\uFE0F \u0631\u0627 \u0628\u0632\u0646\u06CC\u062F \u06CC\u0627 \u0628\u0639\u062F\u06CC.'
-			: 'Tap \u{1F399}\uFE0F to practice or Next to skip.';
+			? 'برای تمرین 🎙️ را بزنید یا بعدی.'
+			: 'Tap 🎙️ to practice or Next to skip.';
 	callbacks?.onAnswerPrompt(promptMsg);
 }
 
@@ -593,7 +593,7 @@ export async function startReviewMode(): Promise<void> {
 	});
 
 	callbacks?.onClearChat();
-	const title = isFa ? '\u{1F504} \u0645\u0631\u0648\u0631 \u0641\u0627\u0635\u0644\u0647\u200C\u062F\u0627\u0631' : '\u{1F504} Spaced Review';
+	const title = isFa ? '🔄 مرور فاصله‌دار' : '🔄 Spaced Review';
 	callbacks?.onSystemMessage(title);
 
 	processNextExamQuestion();
@@ -631,8 +631,8 @@ function processNextExamQuestion(): void {
 		playAudioPromise(q.audioText, 0.8, 'de-DE');
 	} else {
 		const isFa = prefs.language === 'fa';
-		const speakMsg = isFa ? '\u0622\u0644\u0645\u0627\u0646\u06CC \u0628\u06AF\u0648...' : 'Speak in German...';
-		callbacks?.onAnswerPrompt(`\u{1F399}\uFE0F ${speakMsg}`);
+		const speakMsg = isFa ? 'آلمانی بگو...' : 'Speak in German...';
+		callbacks?.onAnswerPrompt(`🎙️ ${speakMsg}`);
 	}
 }
 

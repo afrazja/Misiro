@@ -324,7 +324,7 @@
 		<h1>Ready to Learn?</h1>
 		<p>Tap start to enable audio & voice.</p>
 		<button class="start-btn" onclick={handleStart} disabled={!isReady}>
-			{isReady ? '\u25B6 Start Lesson' : '\u23F3 Loading...'}
+			{isReady ? '▶ Start Lesson' : '⏳ Loading...'}
 		</button>
 	</div>
 {/if}
@@ -357,13 +357,13 @@
 								disabled={!unlocked}
 								selected={meta.day === app.currentDay}
 							>
-								{isCompleted ? '\u2705 ' : !unlocked ? '\u{1F512} ' : ''}{meta.title}
+								{isCompleted ? '✅ ' : !unlocked ? '🔒 ' : ''}{meta.title}
 							</option>
 						{/each}
 						{#if days.length === 7}
 							{@const allWeekDone = days.every(d => app.completedLessons && app.completedLessons[d.day])}
 							<option value="exam{weekNum}" disabled={!allWeekDone}>
-								{allWeekDone ? '' : '\u{1F512} '}Week {weekNum} Exam
+								{allWeekDone ? '' : '🔒 '}Week {weekNum} Exam
 							</option>
 						{/if}
 					</optgroup>
@@ -402,7 +402,7 @@
 		<div class="chat-wrapper">
 			<!-- Chat Header -->
 			<div class="chat-header">
-				<div class="avatar-circle">\u2615\uFE0F</div>
+				<div class="avatar-circle">☕️</div>
 				<div class="header-info">
 					<h3>{scenarioTitle()}</h3>
 					<span class="status">Online</span>
@@ -448,13 +448,13 @@
 						<div class="content">
 							<div class="sub-text" style="font-size:0.75em; color:{examQuestionData.type === 'listen' ? '#FF9800' : '#2196F3'}; font-weight:bold; margin-bottom:4px;">
 								{examQuestionData.type === 'listen'
-									? (examQuestionData.language === 'fa' ? '\u{1F3A7} \u06AF\u0648\u0634 \u06A9\u0646 \u0648 \u062A\u06A9\u0631\u0627\u0631 \u06A9\u0646' : '\u{1F3A7} Listen & Repeat')
-									: (examQuestionData.language === 'fa' ? '\u{1F5E3}\uFE0F \u0628\u0647 \u0622\u0644\u0645\u0627\u0646\u06CC \u0628\u06AF\u0648' : '\u{1F5E3}\uFE0F Say in German')}
+									? (examQuestionData.language === 'fa' ? '🎧 گوش کن و تکرار کن' : '🎧 Listen & Repeat')
+									: (examQuestionData.language === 'fa' ? '🗣️ به آلمانی بگو' : '🗣️ Say in German')}
 							</div>
 							<div class="text" style="{examQuestionData.language === 'fa' ? 'direction:rtl;' : ''}">{examQuestionData.prompt}</div>
 							<div class="sub-text" style="font-size:0.8em; color:#666;">
 								{examQuestionData.language === 'fa'
-									? `\u0633\u0648\u0627\u0644 ${examQuestionData.questionNumber} \u0627\u0632 ${examQuestionData.totalQuestions}`
+									? `سوال ${examQuestionData.questionNumber} از ${examQuestionData.totalQuestions}`
 									: `Question ${examQuestionData.questionNumber}/${examQuestionData.totalQuestions}`}
 							</div>
 						</div>
@@ -481,7 +481,7 @@
 							<span class="teach-text">
 								{#if currentTeachStep.isBlindMode}
 									<span style="color:#ccc; font-weight:normal;">
-										{currentTeachStep.language === 'fa' ? '\u{1F648} [\u0645\u062E\u0641\u06CC] - \u06AF\u0648\u0634 \u06A9\u0646!' : '\u{1F648} [Hidden] - Listen!'}
+										{currentTeachStep.language === 'fa' ? '🙈 [مخفی] - گوش کن!' : '🙈 [Hidden] - Listen!'}
 									</span>
 								{:else}
 									{#each words as w, i}
@@ -501,7 +501,7 @@
 								{/if}
 							</span>
 							<button class="btn-inline-next" onclick={() => manualNext()}>
-								{currentTeachStep.language === 'fa' ? '\u0628\u0639\u062F\u06CC \u2190' : 'Next \u27A1'}
+								{currentTeachStep.language === 'fa' ? 'بعدی ←' : 'Next ➡'}
 							</button>
 						</div>
 					</div>
@@ -525,7 +525,7 @@
 								</button>
 							{:else}
 								<p style="color:#a0a0a0; margin-top:10px;">
-									{completionData.language === 'fa' ? '\u0647\u0645\u0647 \u062F\u0631\u0633\u200C\u0647\u0627 \u0631\u0627 \u062A\u0645\u0627\u0645 \u06A9\u0631\u062F\u06CC\u062F! \u{1F3C6}' : 'All lessons completed! \u{1F3C6}'}
+									{completionData.language === 'fa' ? 'همه درس‌ها را تمام کردید! 🏆' : 'All lessons completed! 🏆'}
 								</p>
 							{/if}
 						</div>
@@ -539,12 +539,12 @@
 							<h2 style="margin:0">
 								{#if examResultsData.percentage >= 80}
 									{examResultsData.wasReview
-										? (examResultsData.language === 'fa' ? '\u{1F389} \u0645\u0631\u0648\u0631 \u0639\u0627\u0644\u06CC \u0628\u0648\u062F!' : '\u{1F389} Great Review!')
-										: (examResultsData.language === 'fa' ? '\u{1F389} \u0622\u0641\u0631\u06CC\u0646!' : '\u{1F389} Well Done!')}
+										? (examResultsData.language === 'fa' ? '🎉 مرور عالی بود!' : '🎉 Great Review!')
+										: (examResultsData.language === 'fa' ? '🎉 آفرین!' : '🎉 Well Done!')}
 								{:else}
 									{examResultsData.wasReview
-										? (examResultsData.language === 'fa' ? '\u{1F504} \u0627\u062F\u0627\u0645\u0647 \u0628\u062F\u0647!' : '\u{1F504} Keep Going!')
-										: (examResultsData.language === 'fa' ? '\u{1F4DA} \u0628\u06CC\u0634\u062A\u0631 \u062A\u0645\u0631\u06CC\u0646 \u06A9\u0646' : '\u{1F4DA} Keep Practicing')}
+										? (examResultsData.language === 'fa' ? '🔄 ادامه بده!' : '🔄 Keep Going!')
+										: (examResultsData.language === 'fa' ? '📚 بیشتر تمرین کن' : '📚 Keep Practicing')}
 								{/if}
 							</h2>
 							<div style="font-size:2em; margin:10px 0;">{examResultsData.score} / {examResultsData.total}</div>
@@ -578,7 +578,7 @@
 					onclick={handleMicClick}
 					aria-label={app.isListening ? 'Stop recording' : 'Microphone - tap to record'}
 				>
-					{app.isListening ? '\u{1F6D1}' : '\u{1F399}\uFE0F'}
+					{app.isListening ? '🛑' : '🎙️'}
 				</button>
 			</div>
 		</div>

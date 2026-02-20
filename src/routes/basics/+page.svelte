@@ -16,7 +16,7 @@
 		}))
 	);
 
-	const pageTitle = $derived(currentLang === 'fa' ? '\u{1F524} \u0645\u0628\u0627\u0646\u06CC \u0622\u0644\u0645\u0627\u0646\u06CC' : '\u{1F524} German Basics');
+	const pageTitle = $derived(currentLang === 'fa' ? '🔤 مبانی آلمانی' : '🔤 German Basics');
 	const pageSubtitle = $derived(
 		currentLang === 'fa'
 			? '\u06CC\u06A9 \u062F\u0633\u062A\u0647\u200C\u0628\u0646\u062F\u06CC \u0631\u0627 \u0628\u0631\u0627\u06CC \u0634\u0631\u0648\u0639 \u06CC\u0627\u062F\u06AF\u06CC\u0631\u06CC \u0627\u0646\u062A\u062E\u0627\u0628 \u06A9\u0646\u06CC\u062F'
