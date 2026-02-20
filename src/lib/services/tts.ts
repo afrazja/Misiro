@@ -3,7 +3,7 @@
  * Ported from app.js audio functions.
  *
  * Strategy:
- * - Mobile: ALL languages → /api/tts proxy (speechSynthesis unreliable on phones)
+ * - Mobile: ALL languages → /proxy/tts proxy (speechSynthesis unreliable on phones)
  * - Desktop: German/Farsi → proxy; English → browser speechSynthesis with proxy fallback
  */
 
@@ -69,7 +69,7 @@ function _browserTTS(text: string, lang: string, rate?: number): Promise<void> {
 /** Play via same-origin Vercel serverless TTS proxy */
 function playWebAudio(text: string, lang: string): Promise<void> {
 	const shortLang = lang.split('-')[0];
-	const url = `/api/tts?q=${encodeURIComponent(text)}&tl=${shortLang}`;
+	const url = `/proxy/tts?q=${encodeURIComponent(text)}&tl=${shortLang}`;
 
 	return new Promise((resolve) => {
 		if (currentAudio) {

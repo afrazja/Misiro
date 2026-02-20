@@ -1,7 +1,7 @@
 /**
  * AI Chat Proxy — forwards requests to Ollama/DeepSeek backend.
  * Ported from simple-proxy.js /chat route.
- * Usage: POST /api/chat with JSON body
+ * Usage: POST /proxy/chat with JSON body
  */
 
 import type { RequestHandler } from './$types';
