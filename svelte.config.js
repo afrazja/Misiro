@@ -1,0 +1,17 @@
+import adapter from '@sveltejs/adapter-vercel';
+
+/** @type {import('@sveltejs/kit').Config} */
+const config = {
+	kit: {
+		adapter: adapter(),
+		alias: {
+			$components: 'src/lib/components',
+			$services: 'src/lib/services',
+			$stores: 'src/lib/stores',
+			$data: 'src/lib/data',
+			$utils: 'src/lib/utils'
+		}
+	}
+};
+
+export default config;
