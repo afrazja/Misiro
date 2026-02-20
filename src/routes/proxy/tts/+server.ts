@@ -1,7 +1,7 @@
 /**
  * TTS Proxy — proxies Google Translate TTS requests to avoid referer blocking.
  * Ported from api/tts.js (Vercel serverless function).
- * Usage: GET /api/tts?q=Hallo&tl=de
+ * Usage: GET /proxy/tts?q=Hallo&tl=de
  */
 
 import type { RequestHandler } from './$types';
