@@ -284,7 +284,8 @@ export async function manualNext(): Promise<void> {
 	const currentStep = lesson.sentences[app.currentSentenceIndex];
 	if (!currentStep) return;
 
-	// Stop everything
+	// Abort any in-flight audio from the previous step
+	incrementSession();
 	stopAllAudio();
 
 	// Add message bubble for skipped step
@@ -295,7 +296,7 @@ export async function manualNext(): Promise<void> {
 	const nextIndex = app.currentSentenceIndex + 1;
 	appStore.update((s) => ({ ...s, currentSentenceIndex: nextIndex }));
 	await saveProgress(app.currentDay, nextIndex);
-	processNextStep();
+	await processNextStep();
 }
 
 export async function goToNextDay(nextDay: number): Promise<void> {
@@ -436,12 +437,16 @@ async function handleLessonCorrect(step: Sentence, transcript: string): Promise<
 	// Feedback
 	await playAudioPromise('Good.', 1.2, 'en-US');
 
+	// Abort any lingering audio before advancing
+	incrementSession();
+	stopAllAudio();
+
 	// Advance
 	callbacks?.onScriptMarkDone(app.currentSentenceIndex);
 	const nextIndex = app.currentSentenceIndex + 1;
 	appStore.update((s) => ({ ...s, currentSentenceIndex: nextIndex }));
 	await saveProgress(app.currentDay, nextIndex);
-	processNextStep();
+	await processNextStep();
 }
 
 async function handleLessonIncorrect(step: Sentence, targetGerman: string, transcript: string): Promise<void> {
