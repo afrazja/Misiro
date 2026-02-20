@@ -1,23 +1,23 @@
 <script lang="ts">
 	import { onMount, onDestroy } from "svelte";
-	import { getLanguage, setLanguage, getVoiceSpeed, setVoiceSpeed } from "\/data-layer";
-	import { stopAllAudio, playAudioPromise } from "\/tts";
-	import type { Language } from "\/preferences";
-	import type { BasicWord, ConjugationTense } from "\/types/basics";
+	import { getLanguage, setLanguage, getVoiceSpeed, setVoiceSpeed } from "$services/data-layer";
+	import { stopAllAudio, playAudioPromise } from "$services/tts";
+	import type { Language } from "$stores/preferences";
+	import type { BasicWord, ConjugationTense } from "$lib/types/basics";
 
-	let { data } = \();
+	let { data } = $props();
 
-	let currentLang = \("en" as Language);
-	let voiceSpeed: number = \(1.0);
+	let currentLang = $state("en" as Language);
+	let voiceSpeed: number = $state(1.0);
 
-	const category = \(data.category);
-	const words = \(data.words ?? []);
-	const sections = \(data.sections ?? []);
+	const category = $derived(data.category);
+	const words = $derived(data.words ?? []);
+	const sections = $derived(data.sections ?? []);
 
-	const catTitle = \(category ? (currentLang === "fa" ? category.title_fa : category.title_en) : "Loading...");
-	const catDesc = \(category ? (currentLang === "fa" ? category.description_fa : category.description_en) : "");
-	const catIcon = \(category?.icon || "📚");
-	const backText = \(currentLang === "fa" ? "بازگشت" : "Back");
+	const catTitle = $derived(category ? (currentLang === "fa" ? category.title_fa : category.title_en) : "Loading...");
+	const catDesc = $derived(category ? (currentLang === "fa" ? category.description_fa : category.description_en) : "");
+	const catIcon = $derived(category?.icon || "📚");
+	const backText = $derived(currentLang === "fa" ? "بازگشت" : "Back");
 
 	function getWordTranslation(word: BasicWord): string {
 		return currentLang === 'fa' ? word.fa : word.en;
