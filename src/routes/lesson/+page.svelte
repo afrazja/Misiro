@@ -105,14 +105,13 @@
 		const clean = word.replace(/[.,!?]/g, '');
 		playAudioPromise(clean, 0.8, 'de-DE');
 
-		// Show tooltip
-		if (meaning) {
-			if (tooltipTimer) clearTimeout(tooltipTimer);
-			const target = event.currentTarget as HTMLElement;
-			const rect = target.getBoundingClientRect();
-			wordTooltip = { word, meaning, x: rect.left + rect.width / 2, y: rect.top };
-			tooltipTimer = setTimeout(() => { wordTooltip = null; }, 3000);
-		}
+		// Show tooltip — always show something
+		if (tooltipTimer) clearTimeout(tooltipTimer);
+		const target = event.currentTarget as HTMLElement;
+		const rect = target.getBoundingClientRect();
+		const tooltipText = meaning || clean;
+		wordTooltip = { word, meaning: tooltipText, x: rect.left + rect.width / 2, y: rect.top };
+		tooltipTimer = setTimeout(() => { wordTooltip = null; }, 3000);
 	}
 
 	// ============ SCRIPT PANEL ============
@@ -617,7 +616,7 @@
 <!-- Word Tooltip -->
 {#if wordTooltip}
 	<div class="word-tooltip" style="left: {wordTooltip.x}px; top: {wordTooltip.y - 10}px;">
-		{wordTooltip.meaning}
+		<span class="tooltip-meaning">{wordTooltip.meaning}</span>
 	</div>
 {/if}
 
