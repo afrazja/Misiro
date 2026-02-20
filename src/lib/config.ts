@@ -6,8 +6,5 @@ export const config = {
 	},
 	get supabaseAnonKey(): string {
 		return env.PUBLIC_SUPABASE_ANON_KEY || '';
-	},
-	get apiUrl(): string {
-		return env.PUBLIC_API_URL || 'https://misiro-api.onrender.com';
 	}
 };
