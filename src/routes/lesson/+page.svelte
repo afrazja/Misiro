@@ -25,7 +25,7 @@
 		type ExamResultsData,
 		type VoiceResultData
 	} from '$services/lesson-controller';
-	import { getLessonIndex, getGlossaryMeaning, hasLesson } from '$services/lesson-loader';
+	import { getLessonIndex, getGlossaryMeaning, hasLesson, type LessonMeta } from '$services/lesson-loader';
 	import { stopAllAudio, playAudioPromise } from '$services/tts';
 	import { unlockAudioContext } from '$services/audio-context';
 	import { initSpeechRecognition, setVoiceInputHandler, toggleMic, stopListening } from '$services/speech';
@@ -72,11 +72,11 @@
 		return parts.length > 1 ? parts[1] : l.title;
 	});
 
-	const lessonIndex = $derived(getLessonIndex());
+	let lessonIndex = $state<LessonMeta[]>([]);
 
 	// Group lessons into weeks for select
 	const weekGroups = $derived(() => {
-		const weeks: Record<number, typeof lessonIndex> = {};
+		const weeks: Record<number, LessonMeta[]> = {};
 		for (const meta of lessonIndex) {
 			const weekNum = Math.ceil(meta.day / 7);
 			if (!weeks[weekNum]) weeks[weekNum] = [];
@@ -290,6 +290,7 @@
 		setupCallbacks();
 		initSyncListeners();
 		initSpeechRecognition();
+		getLessonIndex().then((idx) => { lessonIndex = idx; });
 		setVoiceInputHandler((transcript: string) => {
 			controllerHandleVoice(transcript);
 		});

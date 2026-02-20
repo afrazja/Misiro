@@ -1,18 +1,18 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import { basicsData, basicsWordCount, type BasicCategory } from '$data/basics';
 	import { getLanguage, setLanguage } from '$services/data-layer';
 	import type { Language } from '$stores/preferences';
+
+	let { data } = $props();
 
 	let currentLang = $state('en' as Language);
 
 	const categories = $derived(
-		Object.entries(basicsData).map(([key, cat]) => ({
-			key,
+		(data.categories ?? []).map((cat: any) => ({
+			key: cat.key,
 			icon: cat.icon,
-			title: cat.title[currentLang] || cat.title.en,
-			description: cat.description[currentLang] || cat.description.en,
-			count: basicsWordCount(cat)
+			title: currentLang === 'fa' ? cat.title_fa : cat.title_en,
+			description: currentLang === 'fa' ? cat.description_fa : cat.description_en,
 		}))
 	);
 
@@ -73,7 +73,6 @@
 				<div class="category-icon">{cat.icon}</div>
 				<div class="category-title">{cat.title}</div>
 				<div class="category-desc">{cat.description}</div>
-				<div class="category-count">{cat.count} {wordsLabel}</div>
 				<div class="category-arrow">&rarr;</div>
 			</a>
 		{/each}
