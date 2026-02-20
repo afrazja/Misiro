@@ -151,16 +151,40 @@ export async function loadGlossary(): Promise<Record<string, { en: string; fa: s
 }
 
 /**
- * Get glossary meaning for a word based on current language
+ * Get glossary meaning for a word based on current language.
+ * Tries exact match first, then strips common German suffixes to find base form.
  */
 export function getGlossaryMeaning(word: string, language: Language): string | null {
 	if (!glossaryCache) return null;
 
-	const entry = glossaryCache[word.toLowerCase()];
-	if (!entry) return null;
+	const key = word.toLowerCase().replace(/[.,!?:;'"()]/g, '');
 
-	if (typeof entry === 'string') return entry;
-	return language === 'fa' ? entry.fa : entry.en;
+	function resolve(e: typeof glossaryCache extends Record<string, infer V> | null ? V : never): string {
+		if (typeof e === 'string') return e;
+		return language === 'fa' ? e.fa : e.en;
+	}
+
+	// 1. Exact match
+	if (glossaryCache[key]) return resolve(glossaryCache[key]);
+
+	// 2. Handle contractions like geht's → geht
+	if (key.includes("'")) {
+		const base = key.split("'")[0];
+		if (glossaryCache[base]) return resolve(glossaryCache[base]);
+	}
+
+	// 3. Strip common German suffixes to find base form
+	const suffixes = ['en', 'st', 'et', 'te', 'er', 'es', 'em', 'e', 'n', 't', 's'];
+	for (const suffix of suffixes) {
+		if (key.length > suffix.length + 2 && key.endsWith(suffix)) {
+			const stem = key.slice(0, -suffix.length);
+			if (glossaryCache[stem]) return resolve(glossaryCache[stem]);
+			if (glossaryCache[stem + 'en']) return resolve(glossaryCache[stem + 'en']);
+			if (glossaryCache[stem + 'e']) return resolve(glossaryCache[stem + 'e']);
+		}
+	}
+
+	return null;
 }
 
 /**
