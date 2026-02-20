@@ -1,28 +1,30 @@
 <script lang="ts">
-	import { page } from '$app/stores';
-	import { onMount, onDestroy } from 'svelte';
-	import { basicsData, type BasicWord, type BasicSection, type ConjugationTense, type BasicCategory } from '$data/basics';
-	import { getLanguage, setLanguage, getVoiceSpeed, setVoiceSpeed } from '$services/data-layer';
-	import { stopAllAudio, playAudioPromise } from '$services/tts';
-	import type { Language } from '$stores/preferences';
+	import { onMount, onDestroy } from "svelte";
+	import { getLanguage, setLanguage, getVoiceSpeed, setVoiceSpeed } from "\/data-layer";
+	import { stopAllAudio, playAudioPromise } from "\/tts";
+	import type { Language } from "\/preferences";
+	import type { BasicWord, ConjugationTense } from "\/types/basics";
 
-	let currentLang = $state('en' as Language);
-	let voiceSpeed: number = $state(1.0);
+	let { data } = \();
 
-	const categoryKey = $derived($page.params.category || '');
-	const category: BasicCategory | undefined = $derived(categoryKey ? basicsData[categoryKey] : undefined);
+	let currentLang = \("en" as Language);
+	let voiceSpeed: number = \(1.0);
 
-	const catTitle = $derived(category ? (category.title[currentLang] || category.title.en) : 'Loading...');
-	const catDesc = $derived(category ? (category.description[currentLang] || category.description.en) : '');
-	const catIcon = $derived(category?.icon || '📚');
-	const backText = $derived(currentLang === 'fa' ? '\u0628\u0627\u0632\u06AF\u0634\u062A' : 'Back');
+	const category = \(data.category);
+	const words = \(data.words ?? []);
+	const sections = \(data.sections ?? []);
+
+	const catTitle = \(category ? (currentLang === "fa" ? category.title_fa : category.title_en) : "Loading...");
+	const catDesc = \(category ? (currentLang === "fa" ? category.description_fa : category.description_en) : "");
+	const catIcon = \(category?.icon || "📚");
+	const backText = \(currentLang === "fa" ? "بازگشت" : "Back");
 
 	function getWordTranslation(word: BasicWord): string {
 		return currentLang === 'fa' ? word.fa : word.en;
 	}
 
 	function getExampleTranslation(word: BasicWord): string {
-		return currentLang === 'fa' ? (word.exampleFa || '') : (word.exampleEn || '');
+		return currentLang === 'fa' ? ((word.example_fa ?? word.exampleFa) || '') : ((word.example_en ?? word.exampleEn) || '');
 	}
 
 	function getFormMeaning(form: { en: string; fa: string }): string {
@@ -133,9 +135,9 @@
 	<div id="content-container">
 		{#if category}
 			{#if category.type === 'multi' && category.sections}
-				{#each category.sections as section}
+				{#each sections as section}
 					<div class="section-block">
-						<h3 class="section-heading">{section.heading[currentLang] || section.heading.en}</h3>
+						<h3 class="section-heading">{currentLang === "fa" ? section.heading_fa : section.heading_en}</h3>
 
 						{#if section.type === 'conjugation' && section.infinitive && section.tenses}
 							<!-- Verb Banner -->
