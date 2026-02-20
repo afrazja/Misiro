@@ -352,7 +352,7 @@
 					<optgroup label="Week {weekNum}">
 						{#each days as meta}
 							{@const isCompleted = !!(app.completedLessons && app.completedLessons[meta.day])}
-							{@const unlocked = isDayUnlocked(meta.day)}
+							{@const unlocked = meta.day === 1 || !!(app.completedLessons && app.completedLessons[meta.day - 1])}
 							<option
 								value={meta.day.toString()}
 								disabled={!unlocked}
