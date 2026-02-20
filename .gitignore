@@ -25,3 +25,8 @@ Thumbs.db
 
 # Claude
 .claude/
+
+# SvelteKit
+.svelte-kit/
+build/
+.vercel/

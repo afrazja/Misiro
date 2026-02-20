@@ -1,13 +1,31 @@
 {
   "name": "misiro",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "Learn German the natural way - interactive language learning app",
   "private": true,
   "license": "MIT",
+  "type": "module",
   "scripts": {
-    "start": "node simple-proxy.js"
+    "dev": "vite dev",
+    "build": "vite build",
+    "preview": "vite preview",
+    "check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
+    "proxy": "node simple-proxy.js"
   },
   "engines": {
     "node": ">=18.0.0"
+  },
+  "devDependencies": {
+    "@sveltejs/adapter-vercel": "^5.7.0",
+    "@sveltejs/kit": "^2.21.0",
+    "@sveltejs/vite-plugin-svelte": "^5.0.0",
+    "svelte": "^5.34.0",
+    "svelte-check": "^4.2.0",
+    "typescript": "^5.8.0",
+    "vite": "^6.3.0"
+  },
+  "dependencies": {
+    "@supabase/ssr": "^0.6.0",
+    "@supabase/supabase-js": "^2.49.0"
   }
 }
