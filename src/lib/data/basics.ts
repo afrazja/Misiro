@@ -53,7 +53,7 @@ export type BasicsDataMap = Record<string, BasicCategory>;
 
 export const basicsData: BasicsDataMap = {
 	pronounsAndSein: {
-		icon: '\u{1F464}',
+		icon: '👤',
 		title: { en: 'Pronouns, Possessives & Verb: Sein', fa: '\u0636\u0645\u0627\u06CC\u0631\u060C \u0645\u0644\u06A9\u06CC \u0648 \u0641\u0639\u0644 \u0628\u0648\u062F\u0646' },
 		description: {
 			en: 'Personal/object pronouns, possessives & to be',
@@ -135,7 +135,7 @@ export const basicsData: BasicsDataMap = {
 		]
 	},
 	articles: {
-		icon: '\u{1F4DD}',
+		icon: '📝',
 		title: { en: 'Articles', fa: '\u062D\u0631\u0648\u0641 \u062A\u0639\u0631\u06CC\u0641' },
 		description: { en: 'German has 3 genders - learn the articles!', fa: '\u0622\u0644\u0645\u0627\u0646\u06CC \u06F3 \u062C\u0646\u0633\u06CC\u062A \u062F\u0627\u0631\u062F - \u062D\u0631\u0648\u0641 \u062A\u0639\u0631\u06CC\u0641 \u0631\u0627 \u06CC\u0627\u062F \u0628\u06AF\u06CC\u0631\u06CC\u062F!' },
 		type: 'grid',
@@ -148,7 +148,7 @@ export const basicsData: BasicsDataMap = {
 		]
 	},
 	conjunctions: {
-		icon: '\u{1F517}',
+		icon: '🔗',
 		title: { en: 'Conjunctions', fa: '\u062D\u0631\u0648\u0641 \u0631\u0628\u0637' },
 		description: { en: 'Connect words, phrases, and clauses', fa: '\u06A9\u0644\u0645\u0627\u062A\u060C \u0639\u0628\u0627\u0631\u0627\u062A \u0648 \u062C\u0645\u0644\u0627\u062A \u0631\u0627 \u0628\u0647 \u0647\u0645 \u0648\u0635\u0644 \u0645\u06CC\u200C\u06A9\u0646\u0646\u062F' },
 		type: 'grid',
@@ -168,7 +168,7 @@ export const basicsData: BasicsDataMap = {
 		]
 	},
 	numbers: {
-		icon: '\u{1F522}',
+		icon: '🔢',
 		title: { en: 'Numbers 1-20', fa: '\u0627\u0639\u062F\u0627\u062F \u06F1 \u062A\u0627 \u06F2\u06F0' },
 		description: { en: 'Learn to count in German', fa: '\u0634\u0645\u0631\u062F\u0646 \u0628\u0647 \u0622\u0644\u0645\u0627\u0646\u06CC \u0631\u0627 \u06CC\u0627\u062F \u0628\u06AF\u06CC\u0631\u06CC\u062F' },
 		type: 'grid',
@@ -196,7 +196,7 @@ export const basicsData: BasicsDataMap = {
 		]
 	},
 	colors: {
-		icon: '\u{1F3A8}',
+		icon: '🎨',
 		title: { en: 'Colors', fa: '\u0631\u0646\u06AF\u200C\u0647\u0627' },
 		description: { en: 'Basic colors in German', fa: '\u0631\u0646\u06AF\u200C\u0647\u0627\u06CC \u067E\u0627\u06CC\u0647 \u0628\u0647 \u0622\u0644\u0645\u0627\u0646\u06CC' },
 		type: 'grid',
@@ -215,7 +215,7 @@ export const basicsData: BasicsDataMap = {
 		]
 	},
 	days: {
-		icon: '\u{1F4C5}',
+		icon: '📅',
 		title: { en: 'Days of the Week', fa: '\u0631\u0648\u0632\u0647\u0627\u06CC \u0647\u0641\u062A\u0647' },
 		description: { en: 'Monday to Sunday', fa: '\u062F\u0648\u0634\u0646\u0628\u0647 \u062A\u0627 \u06CC\u06A9\u0634\u0646\u0628\u0647' },
 		type: 'grid',
@@ -230,7 +230,7 @@ export const basicsData: BasicsDataMap = {
 		]
 	},
 	months: {
-		icon: '\u{1F5D3}\uFE0F',
+		icon: '🗓️',
 		title: { en: 'Months', fa: '\u0645\u0627\u0647\u200C\u0647\u0627' },
 		description: { en: 'January to December', fa: '\u0698\u0627\u0646\u0648\u06CC\u0647 \u062A\u0627 \u062F\u0633\u0627\u0645\u0628\u0631' },
 		type: 'grid',
@@ -250,7 +250,7 @@ export const basicsData: BasicsDataMap = {
 		]
 	},
 	prepositions: {
-		icon: '\u{1F4CD}',
+		icon: '📍',
 		title: { en: 'Prepositions', fa: '\u062D\u0631\u0648\u0641 \u0627\u0636\u0627\u0641\u0647' },
 		description: { en: 'Words describing relationships in space, time, and logic', fa: '\u06A9\u0644\u0645\u0627\u062A\u06CC \u06A9\u0647 \u0631\u0627\u0628\u0637\u0647 \u0645\u06A9\u0627\u0646\u060C \u0632\u0645\u0627\u0646 \u0648 \u0645\u0646\u0637\u0642 \u0631\u0627 \u062A\u0648\u0635\u06CC\u0641 \u0645\u06CC\u200C\u06A9\u0646\u0646\u062F' },
 		type: 'grid',
