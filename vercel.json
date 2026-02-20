@@ -1,5 +1,6 @@
 {
   "framework": "sveltekit",
+  "buildCommand": "rm -rf .vercel/output && vite build",
   "headers": [
     {
       "source": "/(.*)",
