@@ -12,11 +12,13 @@ import { get } from 'svelte/store';
 import { preferencesStore } from '$stores/preferences';
 
 let currentAudio: HTMLAudioElement | null = null;
+let ttsGeneration = 0; // incremented on stop — lets in-flight calls know they're stale
 
 /** Stop ALL audio sources (browser TTS + proxy Audio element) */
 export function stopAllAudio(): void {
 	if (typeof window === 'undefined') return;
 
+	ttsGeneration++; // invalidate any in-flight playback
 	window.speechSynthesis?.cancel();
 	if (currentAudio) {
 		currentAudio.pause();
@@ -70,12 +72,16 @@ function _browserTTS(text: string, lang: string, rate?: number): Promise<void> {
 function playWebAudio(text: string, lang: string): Promise<void> {
 	const shortLang = lang.split('-')[0];
 	const url = `/proxy/tts?q=${encodeURIComponent(text)}&tl=${shortLang}`;
+	const myGen = ttsGeneration; // snapshot — if it changes, we were cancelled
 
 	return new Promise((resolve) => {
 		if (currentAudio) {
 			currentAudio.pause();
 			currentAudio = null;
 		}
+
+		// Already stale? resolve immediately without playing
+		if (myGen !== ttsGeneration) { resolve(); return; }
 
 		let done = false;
 		const finish = () => {
@@ -86,6 +92,8 @@ function playWebAudio(text: string, lang: string): Promise<void> {
 		};
 		const fallback = () => {
 			if (done) return;
+			// If cancelled while waiting, don't start browser TTS
+			if (myGen !== ttsGeneration) { done = true; resolve(); return; }
 			done = true;
 			_browserTTS(text, lang).then(resolve);
 		};
@@ -112,7 +120,8 @@ function playWebAudio(text: string, lang: string): Promise<void> {
  */
 export function playAudioPromise(text: string, rate: number = 1.0, lang: string = 'de-DE'): Promise<void> {
 	return new Promise((resolve) => {
-		stopAllAudio();
+		// Don't call stopAllAudio here — callers manage stop/cancel themselves
+		const myGen = ttsGeneration;
 
 		// On mobile: ALL languages → proxy
 		if (isMobile()) {
@@ -148,6 +157,8 @@ export function playAudioPromise(text: string, rate: number = 1.0, lang: string 
 
 		u.onend = () => resolve();
 		u.onerror = () => {
+			// If cancelled, don't fallback — just resolve
+			if (myGen !== ttsGeneration) { resolve(); return; }
 			// Fallback to proxy
 			playWebAudio(text, lang).then(resolve);
 		};
