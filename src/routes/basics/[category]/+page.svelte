@@ -134,7 +134,7 @@
 
 	<div id="content-container">
 		{#if category}
-			{#if category.type === 'multi' && category.sections}
+			{#if category.type === 'multi' && sections.length > 0}
 				{#each sections as section}
 					<div class="section-block">
 						<h3 class="section-heading">{currentLang === "fa" ? section.heading_fa : section.heading_en}</h3>
@@ -280,10 +280,10 @@
 					</div>
 				{/each}
 
-			{:else if category.words}
+			{:else if words.length > 0}
 				<!-- Simple Word Grid -->
 				<div class="word-grid">
-					{#each category.words as word}
+					{#each words as word}
 						<!-- svelte-ignore a11y_interactive_supports_focus -->
 						<div
 							class="word-card"
