@@ -33,6 +33,13 @@ export const load: PageServerLoad = async ({ locals, params }) => {
 			// For each section, load its words (skip conjugation — uses tenses JSONB)
 			const sectionsWithWords = await Promise.all(
 				(sectionRows ?? []).map(async (sec) => {
+					// Parse JSONB fields if stored as strings
+					if (typeof sec.infinitive === 'string') {
+						try { sec.infinitive = JSON.parse(sec.infinitive); } catch { /* leave as-is */ }
+					}
+					if (typeof sec.tenses === 'string') {
+						try { sec.tenses = JSON.parse(sec.tenses); } catch { /* leave as-is */ }
+					}
 					if (sec.type === 'conjugation') {
 						return { ...sec, words: [] };
 					}
