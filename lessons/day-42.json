@@ -1,0 +1,76 @@
+{
+  "title": "Day 42: Sports & Exercise",
+  "titleFa": "روز ۴۲: ورزش و تمرین",
+  "sentences": [
+    {
+      "id": 1,
+      "role": "received",
+      "audioText": "Treibst du regelmäßig Sport?",
+      "translation": "Do you exercise regularly?",
+      "translationFa": "منظم ورزش می‌کنی؟"
+    },
+    {
+      "id": 2,
+      "role": "sent",
+      "targetText": "Ja, ich gehe dreimal pro Woche laufen.",
+      "translation": "Yes, I go running three times a week.",
+      "translationFa": "آره، هفته‌ای سه بار می‌رم دویدن."
+    },
+    {
+      "id": 3,
+      "role": "received",
+      "audioText": "Wie weit läufst du normalerweise?",
+      "translation": "How far do you usually run?",
+      "translationFa": "معمولاً چقدر می‌دوی؟"
+    },
+    {
+      "id": 4,
+      "role": "sent",
+      "targetText": "Ungefähr fünf bis acht Kilometer.",
+      "translation": "About five to eight kilometres.",
+      "translationFa": "حدوداً پنج تا هشت کیلومتر."
+    },
+    {
+      "id": 5,
+      "role": "received",
+      "audioText": "Machst du auch Fitness im Studio?",
+      "translation": "Do you also do fitness at a gym?",
+      "translationFa": "باشگاه هم می‌ری؟"
+    },
+    {
+      "id": 6,
+      "role": "sent",
+      "targetText": "Ja, ich trainiere Kraftsport. Ich habe letzte Woche eine Verletzung gehabt.",
+      "translation": "Yes, I do strength training. I had an injury last week.",
+      "translationFa": "آره، تمرین قدرتی می‌کنم. هفته گذشته زخمی شدم."
+    },
+    {
+      "id": 7,
+      "role": "received",
+      "audioText": "Oh, was ist passiert?",
+      "translation": "Oh, what happened?",
+      "translationFa": "اوه، چی شد؟"
+    },
+    {
+      "id": 8,
+      "role": "sent",
+      "targetText": "Ich habe mir die Schulter verletzt. Jetzt mache ich eine Pause.",
+      "translation": "I injured my shoulder. Now I'm taking a break.",
+      "translationFa": "شانه‌ام رو زخمی کردم. الان استراحت می‌کنم."
+    },
+    {
+      "id": 9,
+      "role": "received",
+      "audioText": "Gute Besserung! Sport ist wichtig, aber Gesundheit kommt zuerst.",
+      "translation": "Get well soon! Sport is important, but health comes first.",
+      "translationFa": "زود خوب بشی! ورزش مهمه، ولی سلامتی اول."
+    },
+    {
+      "id": 10,
+      "role": "sent",
+      "targetText": "Da hast du recht. Ich werde langsam wieder anfangen.",
+      "translation": "You're right. I'll start slowly again.",
+      "translationFa": "حق با توئه. آروم آروم دوباره شروع می‌کنم."
+    }
+  ]
+}

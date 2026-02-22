@@ -1,16 +1,76 @@
 {
-  "title": "Day 28: Job Interview",
-  "titleFa": "روز ۲۸: مصاحبه کاری",
+  "title": "Day 28: At the Bakery",
+  "titleFa": "روز ۲۸: در نانوایی",
   "sentences": [
-    { "id": 1, "role": "received", "audioText": "Guten Tag, bitte nehmen Sie Platz.", "translation": "Good day, please take a seat.", "translationFa": "روز بخیر، بفرمایید بنشینید." },
-    { "id": 2, "role": "sent", "targetText": "Danke, freut mich, Sie kennenzulernen.", "translation": "Thanks, nice to meet you.", "translationFa": "ممنون، از آشناییتون خوشحالم." },
-    { "id": 3, "role": "received", "audioText": "Erzählen Sie mir etwas über sich.", "translation": "Tell me something about yourself.", "translationFa": "درباره خودتون بگید." },
-    { "id": 4, "role": "sent", "targetText": "Ich habe drei Jahre Erfahrung in diesem Bereich.", "translation": "I have three years of experience in this field.", "translationFa": "من سه سال تجربه تو این زمینه دارم." },
-    { "id": 5, "role": "received", "audioText": "Warum möchten Sie bei uns arbeiten?", "translation": "Why do you want to work with us?", "translationFa": "چرا می‌خواید اینجا کار کنید؟" },
-    { "id": 6, "role": "sent", "targetText": "Ihre Firma hat einen guten Ruf.", "translation": "Your company has a good reputation.", "translationFa": "شرکت شما شهرت خوبی داره." },
-    { "id": 7, "role": "received", "audioText": "Was sind Ihre Stärken?", "translation": "What are your strengths?", "translationFa": "نقاط قوتتون چیه؟" },
-    { "id": 8, "role": "sent", "targetText": "Ich bin teamfähig und zuverlässig.", "translation": "I'm a team player and reliable.", "translationFa": "من تیمی کار می‌کنم و قابل اعتمادم." },
-    { "id": 9, "role": "received", "audioText": "Wann können Sie anfangen?", "translation": "When can you start?", "translationFa": "کی میتونید شروع کنید؟" },
-    { "id": 10, "role": "sent", "targetText": "Ich kann sofort anfangen.", "translation": "I can start immediately.", "translationFa": "من همین الان میتونم شروع کنم." }
+    {
+      "id": 1,
+      "role": "received",
+      "audioText": "Guten Morgen! Was darf es sein?",
+      "translation": "Good morning! What would you like?",
+      "translationFa": "صبح بخیر! چی می‌خواید؟"
+    },
+    {
+      "id": 2,
+      "role": "sent",
+      "targetText": "Ich hätte gerne zwei Brötchen und ein Stück Käsekuchen.",
+      "translation": "I'd like two rolls and a piece of cheesecake.",
+      "translationFa": "دو تا نان کوچیک و یه تیکه کیک پنیری می‌خوام."
+    },
+    {
+      "id": 3,
+      "role": "received",
+      "audioText": "Gerne. Möchten Sie das Brot frisch oder von gestern?",
+      "translation": "Of course. Would you like fresh bread or from yesterday?",
+      "translationFa": "البته. نون تازه می‌خواید یا دیروزی؟"
+    },
+    {
+      "id": 4,
+      "role": "sent",
+      "targetText": "Frisch, bitte. Und haben Sie auch Vollkornbrot?",
+      "translation": "Fresh, please. And do you also have wholegrain bread?",
+      "translationFa": "تازه، لطفاً. نون سبوس‌دار هم دارید؟"
+    },
+    {
+      "id": 5,
+      "role": "received",
+      "audioText": "Ja, hier. Ein Laib kostet zwei Euro fünfzig.",
+      "translation": "Yes, here. A loaf costs two euros fifty.",
+      "translationFa": "بله، اینجاست. یه قرص نون دو یورو و پنجاه سنت."
+    },
+    {
+      "id": 6,
+      "role": "sent",
+      "targetText": "Dann nehme ich noch einen Laib Vollkornbrot.",
+      "translation": "Then I'll take one more loaf of wholegrain bread.",
+      "translationFa": "پس یه قرص نون سبوس‌دار هم می‌گیرم."
+    },
+    {
+      "id": 7,
+      "role": "received",
+      "audioText": "Noch etwas?",
+      "translation": "Anything else?",
+      "translationFa": "چیز دیگه‌ای هم می‌خواید؟"
+    },
+    {
+      "id": 8,
+      "role": "sent",
+      "targetText": "Nein, das war's. Was macht das?",
+      "translation": "No, that's it. How much does that come to?",
+      "translationFa": "نه، همینه. جمعاً چقدر می‌شه؟"
+    },
+    {
+      "id": 9,
+      "role": "received",
+      "audioText": "Das macht zusammen fünf Euro zwanzig.",
+      "translation": "That comes to five euros twenty in total.",
+      "translationFa": "جمعاً پنج یورو و بیست سنت می‌شه."
+    },
+    {
+      "id": 10,
+      "role": "sent",
+      "targetText": "Bitte sehr. Und danke, das Gebäck riecht wunderbar!",
+      "translation": "Here you go. And thanks, the pastries smell wonderful!",
+      "translationFa": "بفرمایید. و ممنون، شیرینی‌ها عطر فوق‌العاده‌ای دارن!"
+    }
   ]
 }

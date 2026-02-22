@@ -1,16 +1,76 @@
 {
-  "title": "Day 19: Shopping for Clothes",
-  "titleFa": "روز ۱۹: خرید لباس",
+  "title": "Day 19: Morning Routine",
+  "titleFa": "روز ۱۹: روتین صبحگاهی",
   "sentences": [
-    { "id": 1, "role": "received", "audioText": "Kann ich Ihnen helfen?", "translation": "Can I help you?", "translationFa": "کمکتون کنم؟" },
-    { "id": 2, "role": "sent", "targetText": "Ich suche eine Jacke.", "translation": "I'm looking for a jacket.", "translationFa": "دنبال یک کاپشن می‌گردم." },
-    { "id": 3, "role": "received", "audioText": "Welche Größe brauchen Sie?", "translation": "What size do you need?", "translationFa": "چه سایزی لازم دارید؟" },
-    { "id": 4, "role": "sent", "targetText": "Größe Medium, bitte.", "translation": "Size medium, please.", "translationFa": "سایز مدیوم، لطفاً." },
-    { "id": 5, "role": "received", "audioText": "Diese Jacke ist sehr beliebt.", "translation": "This jacket is very popular.", "translationFa": "این کاپشن خیلی محبوبه." },
-    { "id": 6, "role": "sent", "targetText": "Kann ich sie anprobieren?", "translation": "Can I try it on?", "translationFa": "میتونم امتحانش کنم؟" },
-    { "id": 7, "role": "received", "audioText": "Ja, die Umkleidekabine ist dort.", "translation": "Yes, the fitting room is there.", "translationFa": "بله، اتاق پرو اونجاست." },
-    { "id": 8, "role": "sent", "targetText": "Sie passt perfekt!", "translation": "It fits perfectly!", "translationFa": "عالی اندازه‌ست!" },
-    { "id": 9, "role": "sent", "targetText": "Was kostet sie?", "translation": "How much does it cost?", "translationFa": "قیمتش چنده؟" },
-    { "id": 10, "role": "received", "audioText": "Sie kostet 80 Euro.", "translation": "It costs 80 Euro.", "translationFa": "۸۰ یورو هست." }
+    {
+      "id": 1,
+      "role": "received",
+      "audioText": "Wann stehst du normalerweise auf?",
+      "translation": "When do you usually get up?",
+      "translationFa": "معمولاً کی بیدار می‌شی؟"
+    },
+    {
+      "id": 2,
+      "role": "sent",
+      "targetText": "Ich stehe um sieben Uhr auf.",
+      "translation": "I get up at seven o'clock.",
+      "translationFa": "ساعت هفت بیدار می‌شم."
+    },
+    {
+      "id": 3,
+      "role": "received",
+      "audioText": "Was machst du als erstes?",
+      "translation": "What do you do first?",
+      "translationFa": "اول از همه چیکار می‌کنی؟"
+    },
+    {
+      "id": 4,
+      "role": "sent",
+      "targetText": "Zuerst dusche ich, dann frühstücke ich.",
+      "translation": "First I shower, then I have breakfast.",
+      "translationFa": "اول دوش می‌گیرم، بعد صبحانه می‌خورم."
+    },
+    {
+      "id": 5,
+      "role": "received",
+      "audioText": "Was isst du zum Frühstück?",
+      "translation": "What do you eat for breakfast?",
+      "translationFa": "صبحانه چی می‌خوری؟"
+    },
+    {
+      "id": 6,
+      "role": "sent",
+      "targetText": "Ich esse meistens Toast mit Butter und trinke Kaffee.",
+      "translation": "I usually eat toast with butter and drink coffee.",
+      "translationFa": "معمولاً تست با کره می‌خورم و قهوه می‌نوشم."
+    },
+    {
+      "id": 7,
+      "role": "received",
+      "audioText": "Wann fährst du zur Arbeit?",
+      "translation": "When do you leave for work?",
+      "translationFa": "کی برای کار می‌ری؟"
+    },
+    {
+      "id": 8,
+      "role": "sent",
+      "targetText": "Ich fahre um acht Uhr dreißig los.",
+      "translation": "I leave at eight thirty.",
+      "translationFa": "ساعت هشت و نیم راه می‌افتم."
+    },
+    {
+      "id": 9,
+      "role": "received",
+      "audioText": "Wie kommst du zur Arbeit?",
+      "translation": "How do you get to work?",
+      "translationFa": "چطور سر کار می‌ری؟"
+    },
+    {
+      "id": 10,
+      "role": "sent",
+      "targetText": "Ich nehme die U-Bahn. Das dauert zwanzig Minuten.",
+      "translation": "I take the metro. It takes twenty minutes.",
+      "translationFa": "مترو می‌گیرم. بیست دقیقه طول می‌کشه."
+    }
   ]
 }

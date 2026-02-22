@@ -1,0 +1,76 @@
+{
+  "title": "Day 38: Health & Feelings",
+  "titleFa": "روز ۳۸: سلامت و احساسات",
+  "sentences": [
+    {
+      "id": 1,
+      "role": "received",
+      "audioText": "Wie geht es dir? Du siehst nicht gut aus.",
+      "translation": "How are you? You don't look well.",
+      "translationFa": "حالت چطوره؟ به نظر خوب نمیای."
+    },
+    {
+      "id": 2,
+      "role": "sent",
+      "targetText": "Ich fühle mich nicht gut.",
+      "translation": "I don't feel well.",
+      "translationFa": "حالم خوب نیست."
+    },
+    {
+      "id": 3,
+      "role": "received",
+      "audioText": "Hast du Fieber?",
+      "translation": "Do you have a fever?",
+      "translationFa": "تب داری؟"
+    },
+    {
+      "id": 4,
+      "role": "sent",
+      "targetText": "Ich fühle mich jetzt besser.",
+      "translation": "I feel better now.",
+      "translationFa": "الان حالم بهتره."
+    },
+    {
+      "id": 5,
+      "role": "received",
+      "audioText": "Du solltest nach Hause gehen und dich ausruhen.",
+      "translation": "You should go home and rest.",
+      "translationFa": "باید بری خونه و استراحت کنی."
+    },
+    {
+      "id": 6,
+      "role": "sent",
+      "targetText": "Ich bin gestresst.",
+      "translation": "I am stressed.",
+      "translationFa": "استرس دارم."
+    },
+    {
+      "id": 7,
+      "role": "received",
+      "audioText": "Soll ich dir etwas holen?",
+      "translation": "Shall I get you something?",
+      "translationFa": "چیزی برات بیارم؟"
+    },
+    {
+      "id": 8,
+      "role": "sent",
+      "targetText": "Mir geht es gut.",
+      "translation": "I am okay.",
+      "translationFa": "حالم خوبه."
+    },
+    {
+      "id": 9,
+      "role": "received",
+      "audioText": "Ruh dich aus. Ich erledige das für dich.",
+      "translation": "Take a rest. I'll handle it for you.",
+      "translationFa": "استراحت کن. من انجامش می‌دم."
+    },
+    {
+      "id": 10,
+      "role": "sent",
+      "targetText": "Ich brauche eine Pause.",
+      "translation": "I need a break.",
+      "translationFa": "به استراحت نیاز دارم."
+    }
+  ]
+}

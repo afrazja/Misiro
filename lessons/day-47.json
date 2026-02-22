@@ -1,0 +1,90 @@
+{
+  "title": "Day 47: Cultural Events & Cinema",
+  "titleFa": "روز ۴۷: رویدادهای فرهنگی و سینما",
+  "sentences": [
+    {
+      "id": 1,
+      "role": "received",
+      "audioText": "Möchtest du heute Abend ins Kino gehen?",
+      "translation": "Would you like to go to the cinema tonight?",
+      "translationFa": "امشب دوست داری بریم سینما؟"
+    },
+    {
+      "id": 2,
+      "role": "sent",
+      "targetText": "Ja, gerne! Was läuft gerade?",
+      "translation": "Yes, I'd love to! What's on?",
+      "translationFa": "آره، خوشحال می‌شم! چی داره نشون می‌ده؟"
+    },
+    {
+      "id": 3,
+      "role": "received",
+      "audioText": "Ein neuer Thriller läuft um neunzehn Uhr und um einundzwanzig Uhr.",
+      "translation": "A new thriller is showing at seven and at nine.",
+      "translationFa": "یه هیجانی جدید ساعت هفت و ساعت نه نشون می‌ده."
+    },
+    {
+      "id": 4,
+      "role": "sent",
+      "targetText": "Ich bevorzuge den frühen. Kann ich zwei Karten online kaufen?",
+      "translation": "I prefer the early showing. Can I buy two tickets online?",
+      "translationFa": "نمایش زودتر رو ترجیح می‌دم. می‌تونم دو تا بلیت آنلاین بخرم؟"
+    },
+    {
+      "id": 5,
+      "role": "received",
+      "audioText": "Ja, auf der Website des Kinos.",
+      "translation": "Yes, on the cinema's website.",
+      "translationFa": "آره، از سایت سینما."
+    },
+    {
+      "id": 6,
+      "role": "sent",
+      "targetText": "Sollen wir Sitzplätze reservieren oder kommt man ohne rein?",
+      "translation": "Should we reserve seats or can you get in without?",
+      "translationFa": "جا رزرو کنیم یا بدون رزرو هم می‌شه رفت؟"
+    },
+    {
+      "id": 7,
+      "role": "received",
+      "audioText": "Am Wochenende ist es voll — besser reservieren.",
+      "translation": "On the weekend it's crowded — better to reserve.",
+      "translationFa": "آخر هفته شلوغه — بهتره رزرو کنی."
+    },
+    {
+      "id": 8,
+      "role": "sent",
+      "targetText": "Ok, ich reserviere Plätze in der Mitte.",
+      "translation": "Ok, I'll reserve seats in the middle.",
+      "translationFa": "باشه، وسط جا رزرو می‌کنم."
+    },
+    {
+      "id": 9,
+      "role": "received",
+      "audioText": "Wollen wir vorher noch etwas essen?",
+      "translation": "Do we want to eat something beforehand?",
+      "translationFa": "قبلش یه چیزی بخوریم؟"
+    },
+    {
+      "id": 10,
+      "role": "sent",
+      "targetText": "Ja! Treffen wir uns um achtzehn Uhr beim Restaurant nebenan.",
+      "translation": "Yes! Let's meet at six at the restaurant next door.",
+      "translationFa": "آره! ساعت شش جلوی رستوران کناری همدیگه رو ببینیم."
+    },
+    {
+      "id": 11,
+      "role": "received",
+      "audioText": "Perfekt. Ich freue mich!",
+      "translation": "Perfect. I'm looking forward to it!",
+      "translationFa": "عالی. منتظرشم!"
+    },
+    {
+      "id": 12,
+      "role": "sent",
+      "targetText": "Ich auch! Bis heute Abend.",
+      "translation": "Me too! See you tonight.",
+      "translationFa": "منم! تا امشب."
+    }
+  ]
+}

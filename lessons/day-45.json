@@ -1,0 +1,90 @@
+{
+  "title": "Day 45: At the Café (Extended)",
+  "titleFa": "روز ۴۵: در کافه (گسترده)",
+  "sentences": [
+    {
+      "id": 1,
+      "role": "received",
+      "audioText": "Guten Tag! Nehmen Sie Platz. Was darf es sein?",
+      "translation": "Good day! Please have a seat. What would you like?",
+      "translationFa": "روز بخیر! بفرمایید بشینید. چی می‌خواید؟"
+    },
+    {
+      "id": 2,
+      "role": "sent",
+      "targetText": "Ich hätte gerne einen großen Latte macchiato und ein Stück Sachertorte.",
+      "translation": "I'd like a large latte macchiato and a slice of Sachertorte.",
+      "translationFa": "یه لاته ماکیاتو بزرگ و یه تیکه زاخرتورته می‌خوام."
+    },
+    {
+      "id": 3,
+      "role": "received",
+      "audioText": "Kommt sofort. Haben Sie das WLAN-Passwort?",
+      "translation": "Right away. Do you have the Wi-Fi password?",
+      "translationFa": "همین الان. رمز وای‌فای رو دارید؟"
+    },
+    {
+      "id": 4,
+      "role": "sent",
+      "targetText": "Nein, wie ist das Passwort?",
+      "translation": "No, what is the password?",
+      "translationFa": "نه، رمزش چیه؟"
+    },
+    {
+      "id": 5,
+      "role": "received",
+      "audioText": "Es steht auf dem Tischaufsteller: Kaffee2024.",
+      "translation": "It's on the table card: Kaffee2024.",
+      "translationFa": "روی تابلوی روی میز نوشته: Kaffee2024."
+    },
+    {
+      "id": 6,
+      "role": "sent",
+      "targetText": "Danke! Kann ich hier auch meinen Laptop aufladen?",
+      "translation": "Thanks! Can I also charge my laptop here?",
+      "translationFa": "ممنون! می‌تونم لپ‌تاپم رو هم اینجا شارژ کنم؟"
+    },
+    {
+      "id": 7,
+      "role": "received",
+      "audioText": "Natürlich, unter dem Tisch sind Steckdosen.",
+      "translation": "Of course, there are sockets under the table.",
+      "translationFa": "البته، زیر میز پریز هست."
+    },
+    {
+      "id": 8,
+      "role": "sent",
+      "targetText": "Super! Ich möchte noch eine Stunde arbeiten, wenn das erlaubt ist.",
+      "translation": "Great! I'd like to work for another hour, if that's allowed.",
+      "translationFa": "عالی! می‌خوام یه ساعت دیگه کار کنم، اگه اشکالی نداره."
+    },
+    {
+      "id": 9,
+      "role": "received",
+      "audioText": "Kein Problem, solange Sie etwas bestellen.",
+      "translation": "No problem, as long as you order something.",
+      "translationFa": "مشکلی نی��ت، تا وقتی چیزی سفارش بدید."
+    },
+    {
+      "id": 10,
+      "role": "sent",
+      "targetText": "Gerne. Bringen Sie mir dann noch ein Wasser.",
+      "translation": "Gladly. Then bring me a water too.",
+      "translationFa": "خواهش می‌کنم. پس یه آب هم برام بیارید."
+    },
+    {
+      "id": 11,
+      "role": "received",
+      "audioText": "Und möchten Sie ein Trinkgeld geben?",
+      "translation": "And would you like to leave a tip?",
+      "translationFa": "انعام هم می‌خواید بدید؟"
+    },
+    {
+      "id": 12,
+      "role": "sent",
+      "targetText": "Ja, stimmt so. Der Kaffee war ausgezeichnet!",
+      "translation": "Yes, keep the change. The coffee was excellent!",
+      "translationFa": "آره، بقیه مال شما. قهوه‌ش عالی بود!"
+    }
+  ]
+}

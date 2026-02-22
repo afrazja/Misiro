@@ -1,0 +1,90 @@
+{
+  "title": "Day 48: Complimenting & Small Talk",
+  "titleFa": "روز ۴۸: تعریف کردن و صحبت‌های سبک",
+  "sentences": [
+    {
+      "id": 1,
+      "role": "received",
+      "audioText": "Deine neue Jacke sieht toll aus!",
+      "translation": "Your new jacket looks great!",
+      "translationFa": "ژاکت جدیدت خیلی قشنگه!"
+    },
+    {
+      "id": 2,
+      "role": "sent",
+      "targetText": "Danke schön! Ich habe sie letzte Woche gekauft.",
+      "translation": "Thank you! I bought it last week.",
+      "translationFa": "خیلی ممنون! هفته پیش خریدمش."
+    },
+    {
+      "id": 3,
+      "role": "received",
+      "audioText": "Wie lange wohnst du schon in Berlin?",
+      "translation": "How long have you been living in Berlin?",
+      "translationFa": "چقدره داری تو برلین زندگی می‌کنی؟"
+    },
+    {
+      "id": 4,
+      "role": "sent",
+      "targetText": "Seit zwei Jahren. Ich liebe diese Stadt.",
+      "translation": "For two years. I love this city.",
+      "translationFa": "دو ساله. عاشق این شهرم."
+    },
+    {
+      "id": 5,
+      "role": "received",
+      "audioText": "Hast du Familie hier?",
+      "translation": "Do you have family here?",
+      "translationFa": "اینجا خانواده داری؟"
+    },
+    {
+      "id": 6,
+      "role": "sent",
+      "targetText": "Nein, meine Familie lebt noch in Spanien. Ich besuche sie zweimal im Jahr.",
+      "translation": "No, my family still lives in Spain. I visit them twice a year.",
+      "translationFa": "نه، خانواده‌ام هنوز اسپانیاست. سالی دوبار می‌رم پیششون."
+    },
+    {
+      "id": 7,
+      "role": "received",
+      "audioText": "Das klingt schön. Was vermisst du am meisten?",
+      "translation": "That sounds nice. What do you miss most?",
+      "translationFa": "قشنگه. چی رو بیشتر از همه دلت می‌خواد؟"
+    },
+    {
+      "id": 8,
+      "role": "sent",
+      "targetText": "Das Essen und das Wetter! In Spanien ist es viel wärmer.",
+      "translation": "The food and the weather! In Spain it's much warmer.",
+      "translationFa": "غذا و آب‌وهوا! اسپانیا خیلی گرمتره."
+    },
+    {
+      "id": 9,
+      "role": "received",
+      "audioText": "Das verstehe ich! Aber Berlin hat auch seinen Charme.",
+      "translation": "I understand that! But Berlin also has its charm.",
+      "translationFa": "می‌فهمم! ولی برلین هم جذابیت خودشو داره."
+    },
+    {
+      "id": 10,
+      "role": "sent",
+      "targetText": "Absolut! Die Menschen hier sind sehr freundlich.",
+      "translation": "Absolutely! The people here are very friendly.",
+      "translationFa": "کاملاً! مردم اینجا خیلی مهربانن."
+    },
+    {
+      "id": 11,
+      "role": "received",
+      "audioText": "Das ist das Schönste an dieser Stadt, finde ich.",
+      "translation": "That's the most beautiful thing about this city, I think.",
+      "translationFa": "به نظرم این قشنگ‌ترین چیز این شهره."
+    },
+    {
+      "id": 12,
+      "role": "sent",
+      "targetText": "Da stimme ich dir völlig zu.",
+      "translation": "I completely agree with you.",
+      "translationFa": "کاملاً باهات موافقم."
+    }
+  ]
+}

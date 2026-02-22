@@ -1,0 +1,90 @@
+{
+  "title": "Day 41: At the Dentist",
+  "titleFa": "روز ۴۱: پیش دندانپزشک",
+  "sentences": [
+    {
+      "id": 1,
+      "role": "received",
+      "audioText": "Guten Tag! Haben Sie einen Termin?",
+      "translation": "Good day! Do you have an appointment?",
+      "translationFa": "روز بخیر! وقت قبلی دارید؟"
+    },
+    {
+      "id": 2,
+      "role": "sent",
+      "targetText": "Ja, ich bin Lukas Müller. Mein Termin ist um zehn Uhr.",
+      "translation": "Yes, I am Lukas Müller. My appointment is at ten o'clock.",
+      "translationFa": "بله، من لوکاس مولر هستم. وقتم ساعت ده‌ست."
+    },
+    {
+      "id": 3,
+      "role": "received",
+      "audioText": "Was haben Sie für Beschwerden?",
+      "translation": "What complaints do you have?",
+      "translationFa": "چه شکایتی دارید؟"
+    },
+    {
+      "id": 4,
+      "role": "sent",
+      "targetText": "Mein Zahn tut sehr weh, seit gestern Abend.",
+      "translation": "My tooth hurts a lot, since yesterday evening.",
+      "translationFa": "از دیشب دندونم خیلی درد می‌کنه."
+    },
+    {
+      "id": 5,
+      "role": "received",
+      "audioText": "Welcher Zahn ist es?",
+      "translation": "Which tooth is it?",
+      "translationFa": "کدوم دندونه؟"
+    },
+    {
+      "id": 6,
+      "role": "sent",
+      "targetText": "Dieser hier, hinten links.",
+      "translation": "This one here, back left.",
+      "translationFa": "اینجا، پشت سمت چپ."
+    },
+    {
+      "id": 7,
+      "role": "received",
+      "audioText": "Ich mache ein Röntgenbild. Bitte still halten.",
+      "translation": "I'll take an x-ray. Please stay still.",
+      "translationFa": "یه عکس رنتگن می‌گیرم. لطفاً تکون نخورید."
+    },
+    {
+      "id": 8,
+      "role": "sent",
+      "targetText": "Muss der Zahn gezogen werden?",
+      "translation": "Does the tooth need to be extracted?",
+      "translationFa": "دندون باید کشیده بشه؟"
+    },
+    {
+      "id": 9,
+      "role": "received",
+      "audioText": "Nein, eine Füllung reicht. Das dauert zwanzig Minuten.",
+      "translation": "No, a filling is enough. That will take twenty minutes.",
+      "translationFa": "نه، پر کردن کافیه. بیست دقیقه طول می‌کشه."
+    },
+    {
+      "id": 10,
+      "role": "sent",
+      "targetText": "Gut. Brauche ich danach ein Schmerzmittel?",
+      "translation": "Good. Will I need pain medication afterwards?",
+      "translationFa": "خوبه. بعدش مسکّن لازم دارم؟"
+    },
+    {
+      "id": 11,
+      "role": "received",
+      "audioText": "Nein, aber spülen Sie mit Salzwasser, wenn es wehtut.",
+      "translation": "No, but rinse with salt water if it hurts.",
+      "translationFa": "نه، ولی اگه درد کرد با آب نمک غرغره کنید."
+    },
+    {
+      "id": 12,
+      "role": "sent",
+      "targetText": "Vielen Dank, Herr Doktor.",
+      "translation": "Thank you very much, Doctor.",
+      "translationFa": "خیلی ممنون، آقای دکتر."
+    }
+  ]
+}

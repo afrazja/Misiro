@@ -1,0 +1,76 @@
+{
+  "title": "Day 43: Food & Dietary Preferences",
+  "titleFa": "روز ۴۳: غذا و ترجیحات رژیمی",
+  "sentences": [
+    {
+      "id": 1,
+      "role": "received",
+      "audioText": "Isst du alles oder hast du besondere Ernährungswünsche?",
+      "translation": "Do you eat everything or do you have special dietary wishes?",
+      "translationFa": "همه چیز می‌خوری یا رژیم خاصی داری؟"
+    },
+    {
+      "id": 2,
+      "role": "sent",
+      "targetText": "Ich esse kein Fleisch. Ich bin Vegetarier.",
+      "translation": "I don't eat meat. I am a vegetarian.",
+      "translationFa": "گوشت نمی‌خورم. من گیاه‌خوارم."
+    },
+    {
+      "id": 3,
+      "role": "received",
+      "audioText": "Haben Sie auch Allergien?",
+      "translation": "Do you also have allergies?",
+      "translationFa": "آلرژی هم دارید؟"
+    },
+    {
+      "id": 4,
+      "role": "sent",
+      "targetText": "Ja, ich bin allergisch auf Nüsse. Bitte kein Haselnuss oder Mandel.",
+      "translation": "Yes, I am allergic to nuts. Please no hazelnuts or almonds.",
+      "translationFa": "بله، به آجیل حساسیت دارم. لطفاً فندق یا بادام نه."
+    },
+    {
+      "id": 5,
+      "role": "received",
+      "audioText": "Natürlich. Was darf ich Ihnen empfehlen?",
+      "translation": "Of course. What may I recommend?",
+      "translationFa": "البته. چی می‌تونم پیشنهاد بدم؟"
+    },
+    {
+      "id": 6,
+      "role": "sent",
+      "targetText": "Was ist Ihr veganes Gericht heute?",
+      "translation": "What is your vegan dish today?",
+      "translationFa": "غذای وگانتون امروز چیه؟"
+    },
+    {
+      "id": 7,
+      "role": "received",
+      "audioText": "Wir haben ein leckeres Gemüsecurry mit Reis.",
+      "translation": "We have a delicious vegetable curry with rice.",
+      "translationFa": "یه خورش سبزیجات خوشمزه با برنج داریم."
+    },
+    {
+      "id": 8,
+      "role": "sent",
+      "targetText": "Das klingt perfekt. Ich nehme das bitte.",
+      "translation": "That sounds perfect. I'll have that please.",
+      "translationFa": "عالی به نظر می‌رسه. اونو می‌خوام."
+    },
+    {
+      "id": 9,
+      "role": "received",
+      "audioText": "Möchten Sie auch etwas zu trinken?",
+      "translation": "Would you also like something to drink?",
+      "translationFa": "نوشیدنی هم می‌خواید؟"
+    },
+    {
+      "id": 10,
+      "role": "sent",
+      "targetText": "Ein Mineralwasser ohne Kohlensäure, bitte.",
+      "translation": "A still mineral water, please.",
+      "translationFa": "یه آب معدنی بدون گاز، لطفاً."
+    }
+  ]
+}

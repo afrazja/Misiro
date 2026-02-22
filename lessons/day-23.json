@@ -1,16 +1,62 @@
 {
-  "title": "Day 23: At the Doctor",
-  "titleFa": "روز ۲۳: پیش دکتر",
+  "title": "Day 23: Social Small Talk",
+  "titleFa": "روز ۲۳: صحبت‌های اجتماعی",
   "sentences": [
-    { "id": 1, "role": "sent", "targetText": "Guten Tag, ich habe einen Termin.", "translation": "Good day, I have an appointment.", "translationFa": "روز بخیر، وقت ملاقات دارم." },
-    { "id": 2, "role": "received", "audioText": "Wie ist Ihr Name?", "translation": "What is your name?", "translationFa": "اسمتون چیه؟" },
-    { "id": 3, "role": "sent", "targetText": "Mein Name ist Schmidt.", "translation": "My name is Schmidt.", "translationFa": "اسم من اشمیت هست." },
-    { "id": 4, "role": "received", "audioText": "Bitte nehmen Sie Platz.", "translation": "Please take a seat.", "translationFa": "لطفاً بنشینید." },
-    { "id": 5, "role": "received", "audioText": "Was fehlt Ihnen?", "translation": "What's wrong with you?", "translationFa": "مشکلتون چیه؟" },
-    { "id": 6, "role": "sent", "targetText": "Ich habe Kopfschmerzen.", "translation": "I have a headache.", "translationFa": "سردرد دارم." },
-    { "id": 7, "role": "received", "audioText": "Seit wann haben Sie das?", "translation": "Since when do you have this?", "translationFa": "از کی این مشکل رو دارید؟" },
-    { "id": 8, "role": "sent", "targetText": "Seit gestern Abend.", "translation": "Since yesterday evening.", "translationFa": "از دیشب." },
-    { "id": 9, "role": "received", "audioText": "Ich schreibe Ihnen ein Rezept.", "translation": "I'll write you a prescription.", "translationFa": "براتون نسخه می‌نویسم." },
-    { "id": 10, "role": "sent", "targetText": "Vielen Dank, Herr Doktor.", "translation": "Thank you very much, Doctor.", "translationFa": "خیلی ممنون، آقای دکتر." }
+    {
+      "id": 1,
+      "role": "sent",
+      "targetText": "Woher kommen Sie?",
+      "translation": "Where are you from?",
+      "translationFa": "اهل کجا هستید؟"
+    },
+    {
+      "id": 2,
+      "role": "received",
+      "audioText": "Ich komme aus Deutschland.",
+      "translation": "I come from Germany.",
+      "translationFa": "من اهل آلمان هستم."
+    },
+    {
+      "id": 3,
+      "role": "sent",
+      "targetText": "Wie lange bleiben Sie?",
+      "translation": "How long are you staying?",
+      "translationFa": "چقدر می‌مونید؟"
+    },
+    {
+      "id": 4,
+      "role": "received",
+      "audioText": "Nur für zwei Wochen.",
+      "translation": "Only for two weeks.",
+      "translationFa": "فقط برای دو هفته."
+    },
+    {
+      "id": 5,
+      "role": "sent",
+      "targetText": "Gefällt es Ihnen hier?",
+      "translation": "Do you like it here?",
+      "translationFa": "اینجا رو دوست دارید؟"
+    },
+    {
+      "id": 6,
+      "role": "received",
+      "audioText": "Ja, es ist sehr schön.",
+      "translation": "Yes, it is very beautiful.",
+      "translationFa": "بله، خیلی زیباست."
+    },
+    {
+      "id": 7,
+      "role": "sent",
+      "targetText": "Nett, mit Ihnen zu sprechen.",
+      "translation": "Nice talking to you.",
+      "translationFa": "از صحبت با شما خوشحال شدم."
+    },
+    {
+      "id": 8,
+      "role": "received",
+      "audioText": "Bis bald.",
+      "translation": "See you soon.",
+      "translationFa": "به زودی می‌بینمتون."
+    }
   ]
 }

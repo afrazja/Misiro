@@ -1,23 +1,76 @@
 {
-  "title": "Day 31: Renting a Car",
-  "titleFa": "روز ۳۱: اجاره ماشین",
+  "title": "Day 31: Making Decisions",
+  "titleFa": "روز ۳۱: تصمیم‌گیری",
   "sentences": [
-    { "id": 1, "role": "sent", "targetText": "Guten Tag, ich möchte einen Mietwagen.", "translation": "Good day, I'd like to rent a car.", "translationFa": "روز بخیر، می‌خوام یه ماشین اجاره کنم." },
-    { "id": 2, "role": "received", "audioText": "Natürlich. Für wie viele Tage brauchen Sie ihn?", "translation": "Of course. How many days do you need it?", "translationFa": "البته. چند روز بهش نیاز دارید؟" },
-    { "id": 3, "role": "sent", "targetText": "Für fünf Tage, bitte.", "translation": "For five days, please.", "translationFa": "برای پنج روز، لطفاً." },
-    { "id": 4, "role": "received", "audioText": "Welche Fahrzeugklasse möchten Sie? Klein, mittel oder groß?", "translation": "What type of car would you like? Small, medium or large?", "translationFa": "چه کلاس خودرویی می‌خواید؟ کوچیک، متوسط یا بزرگ؟" },
-    { "id": 5, "role": "sent", "targetText": "Ein mittelgroßes Auto wäre gut.", "translation": "A medium-sized car would be good.", "translationFa": "یه ماشین متوسط خوبه." },
-    { "id": 6, "role": "received", "audioText": "Wir haben einen VW Golf verfügbar. Er kostet 45 Euro pro Tag.", "translation": "We have a VW Golf available. It costs 45 Euro per day.", "translationFa": "یه VW Golf داریم. روزی ۴۵ یورو هست." },
-    { "id": 7, "role": "sent", "targetText": "Ist eine Versicherung inklusive?", "translation": "Is insurance included?", "translationFa": "بیمه هم شامل میشه؟" },
-    { "id": 8, "role": "received", "audioText": "Eine Basisversicherung ist dabei. Vollkasko kostet 10 Euro extra pro Tag.", "translation": "Basic insurance is included. Full coverage costs 10 Euro extra per day.", "translationFa": "بیمه پایه شامله. بیمه کامل روزی ۱۰ یورو اضافه‌ست." },
-    { "id": 9, "role": "sent", "targetText": "Ich nehme die Vollkaskoversicherung, bitte.", "translation": "I'll take the full coverage, please.", "translationFa": "بیمه کامل رو می‌خوام، لطفاً." },
-    { "id": 10, "role": "received", "audioText": "Haben Sie einen gültigen Führerschein?", "translation": "Do you have a valid driver's license?", "translationFa": "گواهینامه معتبر دارید؟" },
-    { "id": 11, "role": "sent", "targetText": "Ja, hier ist mein Führerschein.", "translation": "Yes, here is my driver's license.", "translationFa": "بله، اینم گواهینامه‌ام." },
-    { "id": 12, "role": "received", "audioText": "Und eine Kreditkarte für die Kaution?", "translation": "And a credit card for the deposit?", "translationFa": "و یه کارت اعتباری برای ودیعه؟" },
-    { "id": 13, "role": "sent", "targetText": "Selbstverständlich, hier bitte.", "translation": "Of course, here you go.", "translationFa": "البته، بفرمایید." },
-    { "id": 14, "role": "received", "audioText": "Der Tank ist voll. Bitte geben Sie das Auto auch voll zurück.", "translation": "The tank is full. Please return the car full as well.", "translationFa": "باک پره. لطفاً ماشین رو هم با باک پر برگردونید." },
-    { "id": 15, "role": "sent", "targetText": "Verstanden. Wo steht das Auto?", "translation": "Understood. Where is the car parked?", "translationFa": "فهمیدم. ماشین کجاست؟" },
-    { "id": 16, "role": "received", "audioText": "Parkplatz B12, direkt draußen. Hier sind Ihre Schlüssel.", "translation": "Parking spot B12, right outside. Here are your keys.", "translationFa": "پارکینگ B12، همین بیرون. اینم کلیدتون." },
-    { "id": 17, "role": "sent", "targetText": "Danke schön. Bis Freitag dann!", "translation": "Thank you. Until Friday then!", "translationFa": "ممنون. پس تا جمعه!" }
+    {
+      "id": 1,
+      "role": "received",
+      "audioText": "Haben Sie schon etwas ausgesucht?",
+      "translation": "Have you already picked something?",
+      "translationFa": "چیزی انتخاب کردید؟"
+    },
+    {
+      "id": 2,
+      "role": "sent",
+      "targetText": "Ich nehme das.",
+      "translation": "I'll take that.",
+      "translationFa": "من اینو برمیدارم."
+    },
+    {
+      "id": 3,
+      "role": "received",
+      "audioText": "Natürlich, kein Problem.",
+      "translation": "Of course, no problem.",
+      "translationFa": "البته، مشکلی نیست."
+    },
+    {
+      "id": 4,
+      "role": "sent",
+      "targetText": "Ich brauche mehr Zeit.",
+      "translation": "I need more time.",
+      "translationFa": "زمان بیشتری لازم دارم."
+    },
+    {
+      "id": 5,
+      "role": "received",
+      "audioText": "Haben Sie sich entschieden?",
+      "translation": "Have you made up your mind?",
+      "translationFa": "تصمیم گرفتید؟"
+    },
+    {
+      "id": 6,
+      "role": "sent",
+      "targetText": "Lass mich nachdenken.",
+      "translation": "Let me think.",
+      "translationFa": "بذار فکر کنم."
+    },
+    {
+      "id": 7,
+      "role": "received",
+      "audioText": "Sehr gut. Kann ich noch etwas für Sie tun?",
+      "translation": "Very good. Can I do anything else for you?",
+      "translationFa": "خیلی خوب. کار دیگه‌ای می‌تونم انجام بدم؟"
+    },
+    {
+      "id": 8,
+      "role": "sent",
+      "targetText": "Ich habe mich entschieden.",
+      "translation": "I have decided.",
+      "translationFa": "من تصمیمم رو گرفتم."
+    },
+    {
+      "id": 9,
+      "role": "received",
+      "audioText": "Gerne. Bis dann!",
+      "translation": "With pleasure. See you then!",
+      "translationFa": "خواهش می‌کنم. تا اون موقع!"
+    },
+    {
+      "id": 10,
+      "role": "sent",
+      "targetText": "Das passt mir.",
+      "translation": "That works for me.",
+      "translationFa": "برام مناسبه."
+    }
   ]
 }

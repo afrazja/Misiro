@@ -1,16 +1,76 @@
 {
-  "title": "Day 24: At the Pharmacy",
-  "titleFa": "روز ۲۴: در داروخانه",
+  "title": "Day 24: Hobbies & Free Time",
+  "titleFa": "روز ۲۴: سرگرمی‌ها و وقت آزاد",
   "sentences": [
-    { "id": 1, "role": "sent", "targetText": "Guten Tag, ich brauche etwas gegen Kopfschmerzen.", "translation": "Good day, I need something for a headache.", "translationFa": "روز بخیر، یه چیزی برای سردرد می‌خوام." },
-    { "id": 2, "role": "received", "audioText": "Haben Sie Allergien?", "translation": "Do you have allergies?", "translationFa": "آلرژی دارید؟" },
-    { "id": 3, "role": "sent", "targetText": "Nein, keine Allergien.", "translation": "No, no allergies.", "translationFa": "نه، آلرژی ندارم." },
-    { "id": 4, "role": "received", "audioText": "Ich empfehle Ihnen diese Tabletten.", "translation": "I recommend these tablets for you.", "translationFa": "این قرص‌ها رو بهتون پیشنهاد می‌کنم." },
-    { "id": 5, "role": "sent", "targetText": "Wie oft muss ich sie nehmen?", "translation": "How often do I need to take them?", "translationFa": "هر چند وقت باید بخورم؟" },
-    { "id": 6, "role": "received", "audioText": "Dreimal täglich nach dem Essen.", "translation": "Three times daily after meals.", "translationFa": "روزی سه بار بعد از غذا." },
-    { "id": 7, "role": "sent", "targetText": "Haben Sie auch Vitamine?", "translation": "Do you also have vitamins?", "translationFa": "ویتامین هم دارید؟" },
-    { "id": 8, "role": "received", "audioText": "Ja, in diesem Regal hier.", "translation": "Yes, on this shelf here.", "translationFa": "بله، تو این قفسه." },
-    { "id": 9, "role": "sent", "targetText": "Was kostet alles zusammen?", "translation": "How much is everything together?", "translationFa": "همه‌اش با هم چنده؟" },
-    { "id": 10, "role": "received", "audioText": "Das macht 15 Euro.", "translation": "That's 15 Euro.", "translationFa": "میشه ۱۵ یورو." }
+    {
+      "id": 1,
+      "role": "received",
+      "audioText": "Was machst du am liebsten in deiner Freizeit?",
+      "translation": "What do you like doing most in your free time?",
+      "translationFa": "توی وقت آزادت بیشتر از همه چیکار می‌کنی؟"
+    },
+    {
+      "id": 2,
+      "role": "sent",
+      "targetText": "Ich spiele gerne Gitarre und lese Bücher.",
+      "translation": "I like playing guitar and reading books.",
+      "translationFa": "گیتار می‌زنم و کتاب می‌خونم."
+    },
+    {
+      "id": 3,
+      "role": "received",
+      "audioText": "Seit wann spielst du Gitarre?",
+      "translation": "Since when have you been playing guitar?",
+      "translationFa": "از کی گیتار می‌زنی؟"
+    },
+    {
+      "id": 4,
+      "role": "sent",
+      "targetText": "Seit fünf Jahren. Ich habe in der Schule angefangen.",
+      "translation": "For five years. I started in school.",
+      "translationFa": "پنج ساله. تو مدرسه شروع کردم."
+    },
+    {
+      "id": 5,
+      "role": "received",
+      "audioText": "Treibst du auch Sport?",
+      "translation": "Do you also do sports?",
+      "translationFa": "ورزش هم می‌کنی؟"
+    },
+    {
+      "id": 6,
+      "role": "sent",
+      "targetText": "Ja, ich gehe zweimal pro Woche ins Fitnessstudio.",
+      "translation": "Yes, I go to the gym twice a week.",
+      "translationFa": "آره، هفته‌ای دوبار باشگاه می‌رم."
+    },
+    {
+      "id": 7,
+      "role": "received",
+      "audioText": "Schaust du gerne Filme?",
+      "translation": "Do you like watching movies?",
+      "translationFa": "دوست داری فیلم ببینی؟"
+    },
+    {
+      "id": 8,
+      "role": "sent",
+      "targetText": "Ja, besonders Komödien und Dokumentationen.",
+      "translation": "Yes, especially comedies and documentaries.",
+      "translationFa": "آره، مخصوصاً کمدی و مستند."
+    },
+    {
+      "id": 9,
+      "role": "received",
+      "audioText": "Was hast du letztes Wochenende gemacht?",
+      "translation": "What did you do last weekend?",
+      "translationFa": "آخر هفته گذشته چیکار کردی؟"
+    },
+    {
+      "id": 10,
+      "role": "sent",
+      "targetText": "Ich war mit Freunden wandern. Das hat viel Spaß gemacht.",
+      "translation": "I went hiking with friends. It was a lot of fun.",
+      "translationFa": "با دوستام رفتیم کوه‌پیمایی. خیلی باحال بود."
+    }
   ]
 }

@@ -1,11 +1,62 @@
 {
-  "title": "Day 12: At Home (Daily Life)",
-  "titleFa": "روز ۱۲: در خانه (روزمره)",
+  "title": "Day 12: Colors & Adjectives",
+  "titleFa": "روز ۱۲: رنگ‌ها و صفت‌ها",
   "sentences": [
-    { "id": 1, "role": "sent", "targetText": "Ich bin zu Hause.", "translation": "I am at home.", "translationFa": "من خونه‌م." },
-    { "id": 2, "role": "sent", "targetText": "Ich bin müde.", "translation": "I am tired.", "translationFa": "خسته‌م." },
-    { "id": 3, "role": "sent", "targetText": "Ich muss mich ausruhen.", "translation": "I need to rest.", "translationFa": "باید استراحت کنم." },
-    { "id": 4, "role": "sent", "targetText": "Lass uns essen.", "translation": "Let's eat.", "translationFa": "بیاید غذا بخوریم." },
-    { "id": 5, "role": "sent", "targetText": "Ich rufe dich später an.", "translation": "I'll call you later.", "translationFa": "بعداً بهت زنگ می‌زنم." }
+    {
+      "id": 1,
+      "role": "received",
+      "audioText": "Welche Farbe hat dein Auto?",
+      "translation": "What color is your car?",
+      "translationFa": "رنگ ماشینت چیه؟"
+    },
+    {
+      "id": 2,
+      "role": "sent",
+      "targetText": "Mein Auto ist blau.",
+      "translation": "My car is blue.",
+      "translationFa": "ماشینم آبیه."
+    },
+    {
+      "id": 3,
+      "role": "received",
+      "audioText": "Wie findest du diese rote Jacke?",
+      "translation": "What do you think of this red jacket?",
+      "translationFa": "این ژاکت قرمز رو چطور می‌بینی؟"
+    },
+    {
+      "id": 4,
+      "role": "sent",
+      "targetText": "Sie ist schön, aber zu groß für mich.",
+      "translation": "It's beautiful, but too big for me.",
+      "translationFa": "قشنگه، ولی برام خیلی بزرگه."
+    },
+    {
+      "id": 5,
+      "role": "received",
+      "audioText": "Wie war das Essen im Restaurant?",
+      "translation": "How was the food at the restaurant?",
+      "translationFa": "غذای رستوران چطور بود؟"
+    },
+    {
+      "id": 6,
+      "role": "sent",
+      "targetText": "Das Essen war sehr gut, aber ein bisschen teuer.",
+      "translation": "The food was very good, but a bit expensive.",
+      "translationFa": "غذا خیلی خوب بود، ولی یه کم گرون."
+    },
+    {
+      "id": 7,
+      "role": "received",
+      "audioText": "Magst du alte oder neue Gebäude?",
+      "translation": "Do you prefer old or new buildings?",
+      "translationFa": "ساختمون‌های قدیمی رو دوست داری یا جدید؟"
+    },
+    {
+      "id": 8,
+      "role": "sent",
+      "targetText": "Ich mag alte Gebäude. Sie sind interessanter.",
+      "translation": "I like old buildings. They are more interesting.",
+      "translationFa": "ساختمون‌های قدیمی رو دوست دارم. جالب‌ترن."
+    }
   ]
 }

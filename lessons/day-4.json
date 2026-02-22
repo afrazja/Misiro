@@ -1,16 +1,62 @@
 {
-  "title": "Day 4: Self Introduction",
-  "titleFa": "روز ۴: معرفی خود",
+  "title": "Day 4: Numbers & Age",
+  "titleFa": "روز ۴: اعداد و سن",
   "sentences": [
-    { "id": 1, "role": "sent", "targetText": "Hallo zusammen!", "translation": "Hello everyone!", "translationFa": "سلام به همه!" },
-    { "id": 2, "role": "sent", "targetText": "Ich möchte mich kurz vorstellen.", "translation": "I would like to introduce myself briefly.", "translationFa": "می‌خوام خودمو معرفی کنم." },
-    { "id": 3, "role": "sent", "targetText": "Mein Name ist Lukas.", "translation": "My name is Lukas.", "translationFa": "اسم من لوکاس هست." },
-    { "id": 4, "role": "sent", "targetText": "Ich bin fünfundzwanzig Jahre alt.", "translation": "I am twenty-five years old.", "translationFa": "من ۲۵ سالمه." },
-    { "id": 5, "role": "sent", "targetText": "Ich komme ursprünglich aus Spanien.", "translation": "I am originally from Spain.", "translationFa": "من اصالتاً اهل اسپانیا هستم." },
-    { "id": 6, "role": "sent", "targetText": "Aber jetzt wohne ich in Berlin.", "translation": "But now I live in Berlin.", "translationFa": "ولی الان در برلین زندگی می‌کنم." },
-    { "id": 7, "role": "sent", "targetText": "Ich arbeite als Softwareentwickler.", "translation": "I work as a software developer.", "translationFa": "من برنامه‌نویس هستم." },
-    { "id": 8, "role": "sent", "targetText": "In meiner Freizeit spiele ich gerne Fußball.", "translation": "In my free time, I like playing football.", "translationFa": "تو وقت آزادم فوتبال بازی می‌کنم." },
-    { "id": 9, "role": "sent", "targetText": "Ich reise auch sehr gerne.", "translation": "I also really like to travel.", "translationFa": "من همچنین سفر کردن رو دوست دارم." },
-    { "id": 10, "role": "sent", "targetText": "Freut mich, Sie kennenzulernen.", "translation": "Nice to meet you.", "translationFa": "از آشناییتون خوشحالم." }
+    {
+      "id": 1,
+      "role": "received",
+      "audioText": "Wie alt bist du?",
+      "translation": "How old are you?",
+      "translationFa": "چند سالته؟"
+    },
+    {
+      "id": 2,
+      "role": "sent",
+      "targetText": "Ich bin achtundzwanzig Jahre alt.",
+      "translation": "I am twenty-eight years old.",
+      "translationFa": "من ۲۸ سالمه."
+    },
+    {
+      "id": 3,
+      "role": "received",
+      "audioText": "Und wie ist deine Handynummer?",
+      "translation": "And what is your phone number?",
+      "translationFa": "شماره موبایلت چنده؟"
+    },
+    {
+      "id": 4,
+      "role": "sent",
+      "targetText": "Meine Nummer ist null-eins-sieben-drei, vier-fünf-sechs-sieben-acht-neun.",
+      "translation": "My number is 0173, 456789.",
+      "translationFa": "شماره‌ام اینه: ۰۱۷۳، ۴۵۶۷۸۹."
+    },
+    {
+      "id": 5,
+      "role": "received",
+      "audioText": "In welchem Jahr bist du geboren?",
+      "translation": "In what year were you born?",
+      "translationFa": "چه سالی به دنیا اومدی؟"
+    },
+    {
+      "id": 6,
+      "role": "sent",
+      "targetText": "Ich bin neunzehnhundertneunundneunzig geboren.",
+      "translation": "I was born in nineteen ninety-nine.",
+      "translationFa": "سال ۱۹۹۹ به دنیا اومدم."
+    },
+    {
+      "id": 7,
+      "role": "received",
+      "audioText": "Wie viele Geschwister hast du?",
+      "translation": "How many siblings do you have?",
+      "translationFa": "چند تا خواهر و برادر داری؟"
+    },
+    {
+      "id": 8,
+      "role": "sent",
+      "targetText": "Ich habe zwei Geschwister — einen Bruder und eine Schwester.",
+      "translation": "I have two siblings — one brother and one sister.",
+      "translationFa": "دو تا خواهر برادر دارم — یه برادر و یه خواهر."
+    }
   ]
 }

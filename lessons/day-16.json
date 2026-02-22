@@ -1,12 +1,62 @@
 {
-  "title": "Day 16: Directions (Advanced)",
-  "titleFa": "روز ۱۶: آدرس‌دهی (پیشرفته)",
+  "title": "Day 16: By Taxi or Rideshare",
+  "titleFa": "روز ۱۶: با تاکسی یا اشتراک سواری",
   "sentences": [
-    { "id": 1, "role": "sent", "targetText": "Biegen Sie links ab.", "translation": "Turn left.", "translationFa": "به چپ بپیچید." },
-    { "id": 2, "role": "sent", "targetText": "Biegen Sie rechts ab.", "translation": "Turn right.", "translationFa": "به راست بپیچید." },
-    { "id": 3, "role": "sent", "targetText": "Es ist nah.", "translation": "It is near.", "translationFa": "نزدیکه." },
-    { "id": 4, "role": "sent", "targetText": "Es ist weit.", "translation": "It is far.", "translationFa": "دوره." },
-    { "id": 5, "role": "sent", "targetText": "Es ist gegenüber von der Bank.", "translation": "It is across from the bank.", "translationFa": "ربروی بانکه." },
-    { "id": 6, "role": "sent", "targetText": "Es ist neben dem Hotel.", "translation": "It is next to the hotel.", "translationFa": "کنار هتله." }
+    {
+      "id": 1,
+      "role": "received",
+      "audioText": "Wohin möchten Sie?",
+      "translation": "Where would you like to go?",
+      "translationFa": "کجا می‌خواید برید؟"
+    },
+    {
+      "id": 2,
+      "role": "sent",
+      "targetText": "Zum Hauptbahnhof, bitte.",
+      "translation": "To the main station, please.",
+      "translationFa": "به ایستگاه مرکزی، لطفاً."
+    },
+    {
+      "id": 3,
+      "role": "received",
+      "audioText": "Wann brauchen Sie den Termin?",
+      "translation": "When do you need to be there?",
+      "translationFa": "کی باید اونجا باشید؟"
+    },
+    {
+      "id": 4,
+      "role": "sent",
+      "targetText": "In dreißig Minuten. Schaffen wir das?",
+      "translation": "In thirty minutes. Can we make it?",
+      "translationFa": "تا سی دقیقه دیگه. می‌رسیم؟"
+    },
+    {
+      "id": 5,
+      "role": "received",
+      "audioText": "Ja, kein Problem. Die Route ist klar.",
+      "translation": "Yes, no problem. The route is clear.",
+      "translationFa": "بله، مشکلی نیست. مسیر باز هست."
+    },
+    {
+      "id": 6,
+      "role": "sent",
+      "targetText": "Was kostet die Fahrt ungefähr?",
+      "translation": "How much is the ride approximately?",
+      "translationFa": "کرایه تقریباً چقدر می‌شه؟"
+    },
+    {
+      "id": 7,
+      "role": "received",
+      "audioText": "Ungefähr zwölf Euro.",
+      "translation": "About twelve euros.",
+      "translationFa": "حدوداً دوازده یورو."
+    },
+    {
+      "id": 8,
+      "role": "sent",
+      "targetText": "In Ordnung. Können Sie hier anhalten, bitte?",
+      "translation": "Alright. Can you stop here, please?",
+      "translationFa": "باشه. می‌تونید اینجا نگه دارید، لطفاً؟"
+    }
   ]
 }

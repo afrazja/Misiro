@@ -1,12 +1,62 @@
 {
-  "title": "Day 1: The Café",
-  "titleFa": "روز ۱: کافه",
+  "title": "Day 1: Self Introduction",
+  "titleFa": "روز ۱: معرفی خود",
   "sentences": [
-    { "id": 1, "role": "received", "audioText": "Hallo! Guten Morgen.", "translation": "Hello! Good morning.", "translationFa": "سلام! صبح بخیر." },
-    { "id": 2, "role": "sent", "targetText": "Guten Morgen.", "translation": "Good morning.", "translationFa": "صبح بخیر." },
-    { "id": 3, "role": "received", "audioText": "Möchten Sie einen Kaffee?", "translation": "Would you like a coffee?", "translationFa": "قهوه میل دارید؟" },
-    { "id": 4, "role": "sent", "targetText": "Ja, bitte.", "translation": "Yes, please.", "translationFa": "بله، لطفاً." },
-    { "id": 5, "role": "received", "audioText": "Mit Milch und Zucker?", "translation": "With milk and sugar?", "translationFa": "با شیر و شکر؟" },
-    { "id": 6, "role": "sent", "targetText": "Nur Milch, bitte.", "translation": "Only milk, please.", "translationFa": "فقط شیر، لطفاً." }
+    {
+      "id": 1,
+      "role": "received",
+      "audioText": "Hallo! Darf ich fragen, wie du heißt?",
+      "translation": "Hello! May I ask what your name is?",
+      "translationFa": "سلام! می‌تونم بپرسم اسمت چیه؟"
+    },
+    {
+      "id": 2,
+      "role": "sent",
+      "targetText": "Hallo! Mein Name ist Lukas.",
+      "translation": "Hello! My name is Lukas.",
+      "translationFa": "سلام! اسم من لوکاس هست."
+    },
+    {
+      "id": 3,
+      "role": "received",
+      "audioText": "Woher kommst du?",
+      "translation": "Where are you from?",
+      "translationFa": "اهل کجایی؟"
+    },
+    {
+      "id": 4,
+      "role": "sent",
+      "targetText": "Ich komme ursprünglich aus Spanien, aber jetzt wohne ich in Berlin.",
+      "translation": "I am originally from Spain, but now I live in Berlin.",
+      "translationFa": "من اصالتاً اهل اسپانیا هستم، ولی الان در برلین زندگی می‌کنم."
+    },
+    {
+      "id": 5,
+      "role": "received",
+      "audioText": "Interessant! Was machst du beruflich?",
+      "translation": "Interesting! What do you do for work?",
+      "translationFa": "جالبه! شغلت چیه؟"
+    },
+    {
+      "id": 6,
+      "role": "sent",
+      "targetText": "Ich arbeite als Softwareentwickler.",
+      "translation": "I work as a software developer.",
+      "translationFa": "من برنامه‌نویس هستم."
+    },
+    {
+      "id": 7,
+      "role": "received",
+      "audioText": "Und was machst du in deiner Freizeit?",
+      "translation": "And what do you do in your free time?",
+      "translationFa": "و تو وقت آزادت چیکار می‌کنی؟"
+    },
+    {
+      "id": 8,
+      "role": "sent",
+      "targetText": "Ich spiele gerne Fußball und reise sehr gerne.",
+      "translation": "I like playing football and love travelling.",
+      "translationFa": "فوتبال بازی می‌کنم و سفر کردن رو دوست دارم."
+    }
   ]
 }

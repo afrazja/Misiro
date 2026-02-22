@@ -1,0 +1,76 @@
+{
+  "title": "Day 37: Rescheduling & Availability",
+  "titleFa": "روز ۳۷: تغییر برنامه و موجود بودن",
+  "sentences": [
+    {
+      "id": 1,
+      "role": "received",
+      "audioText": "Unser Termin morgen — können wir ihn verschieben?",
+      "translation": "Our appointment tomorrow — can we reschedule it?",
+      "translationFa": "قرار فردامون — می‌تونیم تغییرش بدیم؟"
+    },
+    {
+      "id": 2,
+      "role": "sent",
+      "targetText": "Ja, kein Problem. Wann passt es dir besser?",
+      "translation": "Yes, no problem. When suits you better?",
+      "translationFa": "آره، مشکلی نیست. کی برات بهتره؟"
+    },
+    {
+      "id": 3,
+      "role": "received",
+      "audioText": "Ich hätte Mittwoch oder Donnerstag Zeit.",
+      "translation": "I would have time on Wednesday or Thursday.",
+      "translationFa": "چهارشنبه یا پنجشنبه وقت دارم."
+    },
+    {
+      "id": 4,
+      "role": "sent",
+      "targetText": "Mittwoch passt mir leider nicht. Donnerstag wäre perfekt.",
+      "translation": "Wednesday doesn't work for me unfortunately. Thursday would be perfect.",
+      "translationFa": "متأسفانه چهارشنبه نمی‌تونم. پنجشنبه عالیه."
+    },
+    {
+      "id": 5,
+      "role": "received",
+      "audioText": "Gut. Morgens oder nachmittags?",
+      "translation": "Good. Morning or afternoon?",
+      "translationFa": "خوبه. صبح یا بعدازظهر؟"
+    },
+    {
+      "id": 6,
+      "role": "sent",
+      "targetText": "Nachmittags, um vierzehn Uhr, wenn das geht.",
+      "translation": "Afternoon, at two o'clock, if that works.",
+      "translationFa": "بعدازظهر، ساعت دو، اگه جور باشه."
+    },
+    {
+      "id": 7,
+      "role": "received",
+      "audioText": "Perfekt. Ich bestätige den Termin per E-Mail.",
+      "translation": "Perfect. I'll confirm the appointment by email.",
+      "translationFa": "عالی. از طریق ایمیل تأیید می‌کنم."
+    },
+    {
+      "id": 8,
+      "role": "sent",
+      "targetText": "Danke! Bis Donnerstag dann.",
+      "translation": "Thanks! See you Thursday then.",
+      "translationFa": "ممنون! تا پنجشنبه."
+    },
+    {
+      "id": 9,
+      "role": "received",
+      "audioText": "Einen schönen Tag noch!",
+      "translation": "Have a nice day!",
+      "translationFa": "روز خوبی داشته باشی!"
+    },
+    {
+      "id": 10,
+      "role": "sent",
+      "targetText": "Dir auch! Bis dann.",
+      "translation": "You too! See you then.",
+      "translationFa": "تو هم! تا اون موقع."
+    }
+  ]
+}

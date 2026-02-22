@@ -1,13 +1,76 @@
 {
-  "title": "Day 29: Review Day",
-  "titleFa": "روز ۲۹: روز مرور",
+  "title": "Day 29: Shopping for Clothes",
+  "titleFa": "روز ۲۹: خرید لباس",
   "sentences": [
-    { "id": 1, "role": "sent", "targetText": "Hallo! Guten Morgen.", "translation": "Hello! Good morning.", "translationFa": "سلام! صبح بخیر." },
-    { "id": 2, "role": "sent", "targetText": "Entschuldigung, können Sie mir helfen?", "translation": "Excuse me, can you help me?", "translationFa": "ببخشید، میتونید کمکم کنید؟" },
-    { "id": 3, "role": "sent", "targetText": "Wie viel kostet das?", "translation": "How much is that?", "translationFa": "قیمتش چنده؟" },
-    { "id": 4, "role": "sent", "targetText": "Wann fährt der nächste Bus?", "translation": "When does the next bus leave?", "translationFa": "اتوبوس بعدی کی حرکت می‌کنه؟" },
-    { "id": 5, "role": "sent", "targetText": "Ich verstehe nicht.", "translation": "I don't understand.", "translationFa": "من نمی‌فهمم." },
-    { "id": 6, "role": "sent", "targetText": "Vielen Dank für Ihre Hilfe.", "translation": "Thank you very much for your help.", "translationFa": "خیلی ممنون از کمکتون." },
-    { "id": 7, "role": "sent", "targetText": "Auf Wiedersehen.", "translation": "Goodbye.", "translationFa": "خداحافظ." }
+    {
+      "id": 1,
+      "role": "received",
+      "audioText": "Kann ich Ihnen helfen?",
+      "translation": "Can I help you?",
+      "translationFa": "کمکتون کنم؟"
+    },
+    {
+      "id": 2,
+      "role": "sent",
+      "targetText": "Ich suche eine Jacke.",
+      "translation": "I'm looking for a jacket.",
+      "translationFa": "دنبال یک کاپشن می‌گردم."
+    },
+    {
+      "id": 3,
+      "role": "received",
+      "audioText": "Welche Größe brauchen Sie?",
+      "translation": "What size do you need?",
+      "translationFa": "چه سایزی لازم دارید؟"
+    },
+    {
+      "id": 4,
+      "role": "sent",
+      "targetText": "Größe Medium, bitte.",
+      "translation": "Size medium, please.",
+      "translationFa": "سایز مدیوم، لطفاً."
+    },
+    {
+      "id": 5,
+      "role": "received",
+      "audioText": "Diese Jacke ist sehr beliebt.",
+      "translation": "This jacket is very popular.",
+      "translationFa": "این کاپشن خیلی محبوبه."
+    },
+    {
+      "id": 6,
+      "role": "sent",
+      "targetText": "Kann ich sie anprobieren?",
+      "translation": "Can I try it on?",
+      "translationFa": "میتونم امتحانش کنم؟"
+    },
+    {
+      "id": 7,
+      "role": "received",
+      "audioText": "Ja, die Umkleidekabine ist dort.",
+      "translation": "Yes, the fitting room is there.",
+      "translationFa": "بله، اتاق پرو اونجاست."
+    },
+    {
+      "id": 8,
+      "role": "sent",
+      "targetText": "Sie passt perfekt!",
+      "translation": "It fits perfectly!",
+      "translationFa": "عالی اندازه‌ست!"
+    },
+    {
+      "id": 9,
+      "role": "sent",
+      "targetText": "Was kostet sie?",
+      "translation": "How much does it cost?",
+      "translationFa": "قیمتش چنده؟"
+    },
+    {
+      "id": 10,
+      "role": "received",
+      "audioText": "Sie kostet 80 Euro.",
+      "translation": "It costs 80 Euro.",
+      "translationFa": "۸۰ یورو هست."
+    }
   ]
 }

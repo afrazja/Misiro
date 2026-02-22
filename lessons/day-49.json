@@ -1,0 +1,90 @@
+{
+  "title": "Day 49: Weekend Plans",
+  "titleFa": "روز ۴۹: برنامه‌های آخر هفته",
+  "sentences": [
+    {
+      "id": 1,
+      "role": "received",
+      "audioText": "Was hast du dieses Wochenende vor?",
+      "translation": "What are your plans for this weekend?",
+      "translationFa": "آخر هفته چه برنامه‌ای داری؟"
+    },
+    {
+      "id": 2,
+      "role": "sent",
+      "targetText": "Ich weiß noch nicht genau. Vielleicht machen wir einen Ausflug.",
+      "translation": "I don't know exactly yet. Maybe we'll go on a trip.",
+      "translationFa": "هنوز دقیقاً نمی‌دونم. شاید یه گردش کوتاه بریم."
+    },
+    {
+      "id": 3,
+      "role": "received",
+      "audioText": "Wohin möchtest du fahren?",
+      "translation": "Where would you like to go?",
+      "translationFa": "کجا می‌خوای بری؟"
+    },
+    {
+      "id": 4,
+      "role": "sent",
+      "targetText": "Ich dachte an den Wannsee. Ein schöner Tag am See wäre super.",
+      "translation": "I thought of Wannsee. A nice day at the lake would be great.",
+      "translationFa": "به وانزه فکر کردم. یه روز قشنگ کنار دریاچه عالی می‌شه."
+    },
+    {
+      "id": 5,
+      "role": "received",
+      "audioText": "Gute Idee! Sollen wir wandern gehen?",
+      "translation": "Good idea! Shall we go hiking?",
+      "translationFa": "ایده خوبیه! کوه‌پیمایی بریم؟"
+    },
+    {
+      "id": 6,
+      "role": "sent",
+      "targetText": "Ja, oder wir faulenzen einfach. Das Wetter soll schön werden.",
+      "translation": "Yes, or we simply relax. The weather is supposed to be nice.",
+      "translationFa": "آره، یا فقط ولو بشیم. قراره هوا خوب بشه."
+    },
+    {
+      "id": 7,
+      "role": "received",
+      "audioText": "Super! Wann fahren wir los?",
+      "translation": "Great! When do we leave?",
+      "translationFa": "عالی! کی راه می‌افتیم؟"
+    },
+    {
+      "id": 8,
+      "role": "sent",
+      "targetText": "So gegen zehn Uhr. Ich packe Sandwiches ein.",
+      "translation": "Around ten o'clock. I'll pack sandwiches.",
+      "translationFa": "حدود ساعت ده. ساندویچ آماده می‌کنم."
+    },
+    {
+      "id": 9,
+      "role": "received",
+      "audioText": "Toll! Ich bringe Getränke mit.",
+      "translation": "Great! I'll bring drinks.",
+      "translationFa": "عالی! نوشیدنی می‌آرم."
+    },
+    {
+      "id": 10,
+      "role": "sent",
+      "targetText": "Perfekt. Es wird ein schöner Tag!",
+      "translation": "Perfect. It's going to be a lovely day!",
+      "translationFa": "عالی. یه روز قشنگ می‌شه!"
+    },
+    {
+      "id": 11,
+      "role": "received",
+      "audioText": "Ich freue mich schon. Bis Samstag!",
+      "translation": "I'm already looking forward to it. Until Saturday!",
+      "translationFa": "منتظرشم. تا شنبه!"
+    },
+    {
+      "id": 12,
+      "role": "sent",
+      "targetText": "Bis dann! Schönen Abend noch.",
+      "translation": "See you then! Have a nice evening.",
+      "translationFa": "تا اون موقع! شب خوشی داشته باشی."
+    }
+  ]
+}

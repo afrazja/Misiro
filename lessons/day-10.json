@@ -1,12 +1,62 @@
 {
-  "title": "Day 10: Making Decisions",
-  "titleFa": "روز ۱۰: تصمیم‌گیری",
+  "title": "Day 10: Problems & Apologies",
+  "titleFa": "روز ۱۰: مشکلات و عذرخواهی",
   "sentences": [
-    { "id": 1, "role": "sent", "targetText": "Ich nehme das.", "translation": "I'll take that.", "translationFa": "من اینو برمیدارم." },
-    { "id": 2, "role": "sent", "targetText": "Ich brauche mehr Zeit.", "translation": "I need more time.", "translationFa": "زمان بیشتری لازم دارم." },
-    { "id": 3, "role": "sent", "targetText": "Lass mich nachdenken.", "translation": "Let me think.", "translationFa": "بذار فکر کنم." },
-    { "id": 4, "role": "sent", "targetText": "Ich habe mich entschieden.", "translation": "I have decided.", "translationFa": "من تصمیمم رو گرفتم." },
-    { "id": 5, "role": "received", "audioText": "Bist du sicher?", "translation": "Are you sure?", "translationFa": "مطمئنی؟" },
-    { "id": 6, "role": "sent", "targetText": "Das passt mir.", "translation": "That works for me.", "translationFa": "برام مناسبه." }
+    {
+      "id": 1,
+      "role": "sent",
+      "targetText": "Entschuldigung, ich bin zu spät.",
+      "translation": "Sorry, I am late.",
+      "translationFa": "ببخشید، من دیر کردم."
+    },
+    {
+      "id": 2,
+      "role": "received",
+      "audioText": "Das macht nichts.",
+      "translation": "That doesn't matter.",
+      "translationFa": "اشکالی نداره."
+    },
+    {
+      "id": 3,
+      "role": "sent",
+      "targetText": "Es gibt ein Problem.",
+      "translation": "There is a problem.",
+      "translationFa": "یک مشکلی هست."
+    },
+    {
+      "id": 4,
+      "role": "sent",
+      "targetText": "Etwas ist schiefgelaufen.",
+      "translation": "Something went wrong.",
+      "translationFa": "یک چیزی اشتباه پیش رفت."
+    },
+    {
+      "id": 5,
+      "role": "sent",
+      "targetText": "Es funktioniert nicht.",
+      "translation": "It's not working.",
+      "translationFa": "کار نمیکنه."
+    },
+    {
+      "id": 6,
+      "role": "received",
+      "audioText": "Wir können das reparieren.",
+      "translation": "We can fix that.",
+      "translationFa": "میتونیم درستش کنیم."
+    },
+    {
+      "id": 7,
+      "role": "sent",
+      "targetText": "Es tut mir leid.",
+      "translation": "I am sorry.",
+      "translationFa": "متأسفم."
+    },
+    {
+      "id": 8,
+      "role": "received",
+      "audioText": "Kein Problem.",
+      "translation": "No problem.",
+      "translationFa": "مشکلی نیست."
+    }
   ]
 }

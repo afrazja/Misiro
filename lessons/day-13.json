@@ -1,11 +1,76 @@
 {
-  "title": "Day 13: At Work (Casual)",
-  "titleFa": "روز ۱۳: سر کار",
+  "title": "Day 13: Asking Directions (Basic)",
+  "titleFa": "روز ۱۳: پرسیدن مسیر (پایه)",
   "sentences": [
-    { "id": 1, "role": "sent", "targetText": "Ich arbeite heute.", "translation": "I am working today.", "translationFa": "امروز کار می‌کنم." },
-    { "id": 2, "role": "sent", "targetText": "Ich habe eine Besprechung.", "translation": "I have a meeting.", "translationFa": "من جلسه دارم." },
-    { "id": 3, "role": "sent", "targetText": "Bitte schicken Sie mir eine E-Mail.", "translation": "Please send me an email.", "translationFa": "لطفاً برام ایمیل بفرستید." },
-    { "id": 4, "role": "sent", "targetText": "Ich mache das heute.", "translation": "I'll do that today.", "translationFa": "امروز انجامش میدم." },
-    { "id": 5, "role": "sent", "targetText": "Ich melde mich bei Ihnen.", "translation": "I'll get back to you.", "translationFa": "بهتون خبر میدم." }
+    {
+      "id": 1,
+      "role": "sent",
+      "targetText": "Entschuldigung, darf ich fragen?",
+      "translation": "Excuse me, may I ask?",
+      "translationFa": "ببخشید، میتونم بپرسم؟"
+    },
+    {
+      "id": 2,
+      "role": "received",
+      "audioText": "Ja, natürlich. Bitte schön.",
+      "translation": "Yes, of course. Go ahead.",
+      "translationFa": "بله، البته. بفرمایید."
+    },
+    {
+      "id": 3,
+      "role": "sent",
+      "targetText": "Wo ist der Bahnhof?",
+      "translation": "Where is the train station?",
+      "translationFa": "ایستگاه قطار کجاست؟"
+    },
+    {
+      "id": 4,
+      "role": "received",
+      "audioText": "Gehen Sie hier geradeaus.",
+      "translation": "Go straight ahead here.",
+      "translationFa": "از اینجا مستقیم برید."
+    },
+    {
+      "id": 5,
+      "role": "sent",
+      "targetText": "Und dann an der Kreuzung?",
+      "translation": "And then at the intersection?",
+      "translationFa": "و بعد سر چهارراه؟"
+    },
+    {
+      "id": 6,
+      "role": "received",
+      "audioText": "Biegen Sie rechts ab.",
+      "translation": "Turn right.",
+      "translationFa": "بپیچید به راست."
+    },
+    {
+      "id": 7,
+      "role": "sent",
+      "targetText": "Ist es weit von hier?",
+      "translation": "Is it far from here?",
+      "translationFa": "از اینجا دوره؟"
+    },
+    {
+      "id": 8,
+      "role": "received",
+      "audioText": "Nein, nur fünf Minuten.",
+      "translation": "No, only five minutes.",
+      "translationFa": "نه، فقط پنج دقیقه."
+    },
+    {
+      "id": 9,
+      "role": "sent",
+      "targetText": "Vielen Dank für Ihre Hilfe.",
+      "translation": "Many thanks for your help.",
+      "translationFa": "خیلی ممنون از کمکتون."
+    },
+    {
+      "id": 10,
+      "role": "received",
+      "audioText": "Gern geschehen. Auf Wiedersehen.",
+      "translation": "You're welcome. Goodbye.",
+      "translationFa": "خواهش می‌کنم. خداحافظ."
+    }
   ]
 }

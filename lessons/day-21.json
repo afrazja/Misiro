@@ -1,16 +1,76 @@
 {
-  "title": "Day 21: Public Transportation",
-  "titleFa": "روز ۲۱: حمل و نقل عمومی",
+  "title": "Day 21: Meals & Cooking",
+  "titleFa": "روز ۲۱: وعده‌های غذایی و آشپزی",
   "sentences": [
-    { "id": 1, "role": "sent", "targetText": "Wann fährt der nächste Bus?", "translation": "When does the next bus leave?", "translationFa": "اتوبوس بعدی کی حرکت می‌کنه؟" },
-    { "id": 2, "role": "received", "audioText": "In zehn Minuten.", "translation": "In ten minutes.", "translationFa": "ده دقیقه دیگه." },
-    { "id": 3, "role": "sent", "targetText": "Fährt er zum Hauptbahnhof?", "translation": "Does it go to the main station?", "translationFa": "به ایستگاه اصلی میره؟" },
-    { "id": 4, "role": "received", "audioText": "Ja, Linie 5 fährt direkt.", "translation": "Yes, line 5 goes directly.", "translationFa": "بله، خط ۵ مستقیم میره." },
-    { "id": 5, "role": "sent", "targetText": "Wo kann ich eine Fahrkarte kaufen?", "translation": "Where can I buy a ticket?", "translationFa": "از کجا میتونم بلیط بخرم؟" },
-    { "id": 6, "role": "received", "audioText": "Am Automaten dort drüben.", "translation": "At the machine over there.", "translationFa": "از اون دستگاه اونجا." },
-    { "id": 7, "role": "sent", "targetText": "Was kostet eine Einzelfahrt?", "translation": "How much is a single trip?", "translationFa": "بلیط یک‌طرفه چنده؟" },
-    { "id": 8, "role": "received", "audioText": "Drei Euro fünfzig.", "translation": "Three Euro fifty.", "translationFa": "سه یورو و پنجاه سنت." },
-    { "id": 9, "role": "sent", "targetText": "Danke für die Auskunft.", "translation": "Thanks for the information.", "translationFa": "ممنون بابت اطلاعات." },
-    { "id": 10, "role": "received", "audioText": "Gute Fahrt!", "translation": "Have a good trip!", "translationFa": "سفر خوبی داشته باشید!" }
+    {
+      "id": 1,
+      "role": "received",
+      "audioText": "Hast du heute Abend schon Pläne?",
+      "translation": "Do you have plans for tonight already?",
+      "translationFa": "برای امشب برنامه داری؟"
+    },
+    {
+      "id": 2,
+      "role": "sent",
+      "targetText": "Nein, ich wollte eigentlich zu Hause kochen.",
+      "translation": "No, I was actually planning to cook at home.",
+      "translationFa": "نه، داشتم فکر می‌کردم خونه آشپزی کنم."
+    },
+    {
+      "id": 3,
+      "role": "received",
+      "audioText": "Was kochst du denn?",
+      "translation": "What are you going to cook?",
+      "translationFa": "چی می‌پزی؟"
+    },
+    {
+      "id": 4,
+      "role": "sent",
+      "targetText": "Ich mache Pasta mit Tomatensoße. Das ist schnell und lecker.",
+      "translation": "I'm making pasta with tomato sauce. It's quick and delicious.",
+      "translationFa": "پاستا با سس گوجه درست می‌کنم. سریعه و خوشمزه‌ست."
+    },
+    {
+      "id": 5,
+      "role": "received",
+      "audioText": "Hast du Hunger? Ich habe noch frisches Brot.",
+      "translation": "Are you hungry? I still have fresh bread.",
+      "translationFa": "گرسنه‌ای؟ هنوز نون تازه دارم."
+    },
+    {
+      "id": 6,
+      "role": "sent",
+      "targetText": "Ja, tatsächlich! Schmeckt das Brot gut?",
+      "translation": "Yes, actually! Does the bread taste good?",
+      "translationFa": "آره، درسته! نون خوشمزه‌ست؟"
+    },
+    {
+      "id": 7,
+      "role": "received",
+      "audioText": "Sehr gut! Es ist vom Bäcker um die Ecke.",
+      "translation": "Very good! It's from the bakery around the corner.",
+      "translationFa": "خیلی! از نانوایی سر کوچه‌ست."
+    },
+    {
+      "id": 8,
+      "role": "sent",
+      "targetText": "Darf ich das Rezept für die Soße haben?",
+      "translation": "May I have the recipe for the sauce?",
+      "translationFa": "می‌تونم دستور پخت سس رو داشته باشم؟"
+    },
+    {
+      "id": 9,
+      "role": "received",
+      "audioText": "Natürlich! Ich schicke es dir per WhatsApp.",
+      "translation": "Of course! I'll send it to you via WhatsApp.",
+      "translationFa": "البته! برات از طریق واتساپ می‌فرستم."
+    },
+    {
+      "id": 10,
+      "role": "sent",
+      "targetText": "Super, danke! Guten Appetit schon mal.",
+      "translation": "Great, thanks! Enjoy your meal already.",
+      "translationFa": "عالی، ممنون! نوش جان."
+    }
   ]
 }

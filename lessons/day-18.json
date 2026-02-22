@@ -1,16 +1,62 @@
 {
-  "title": "Day 18: At the Restaurant",
-  "titleFa": "روز ۱۸: رستوران",
+  "title": "Day 18: Weather & Small Talk",
+  "titleFa": "روز ۱۸: آب‌وهوا و صحبت‌های روزمره",
   "sentences": [
-    { "id": 1, "role": "sent", "targetText": "Einen Tisch für zwei, bitte.", "translation": "A table for two, please.", "translationFa": "یک میز برای دو نفر، لطفاً." },
-    { "id": 2, "role": "received", "audioText": "Hier ist die Speisekarte.", "translation": "Here is the menu.", "translationFa": "بفرمایید منو." },
-    { "id": 3, "role": "sent", "targetText": "Was empfehlen Sie?", "translation": "What do you recommend?", "translationFa": "چی پیشنهاد می‌کنید؟" },
-    { "id": 4, "role": "received", "audioText": "Die Schnitzel sind sehr gut.", "translation": "The schnitzels are very good.", "translationFa": "شنیتسل‌ها خیلی خوبن." },
-    { "id": 5, "role": "sent", "targetText": "Ich nehme das Schnitzel, bitte.", "translation": "I'll take the schnitzel, please.", "translationFa": "من شنیتسل میخورم، لطفاً." },
-    { "id": 6, "role": "received", "audioText": "Möchten Sie etwas zu trinken?", "translation": "Would you like something to drink?", "translationFa": "نوشیدنی هم میل دارید؟" },
-    { "id": 7, "role": "sent", "targetText": "Ein Glas Wasser, bitte.", "translation": "A glass of water, please.", "translationFa": "یک لیوان آب، لطفاً." },
-    { "id": 8, "role": "received", "audioText": "Guten Appetit!", "translation": "Enjoy your meal!", "translationFa": "نوش جان!" },
-    { "id": 9, "role": "sent", "targetText": "Die Rechnung, bitte.", "translation": "The bill, please.", "translationFa": "صورتحساب، لطفاً." },
-    { "id": 10, "role": "received", "audioText": "Das macht zusammen 25 Euro.", "translation": "That comes to 25 Euro total.", "translationFa": "جمعاً ۲۵ یورو میشه." }
+    {
+      "id": 1,
+      "role": "received",
+      "audioText": "Hallo! Wie geht es Ihnen?",
+      "translation": "Hello! How are you?",
+      "translationFa": "سلام! حال شما چطوره؟"
+    },
+    {
+      "id": 2,
+      "role": "sent",
+      "targetText": "Mir geht es gut, danke.",
+      "translation": "I am doing well, thanks.",
+      "translationFa": "حالم خوبه، ممنون."
+    },
+    {
+      "id": 3,
+      "role": "received",
+      "audioText": "Schönes Wetter heute, oder?",
+      "translation": "Nice weather today, right?",
+      "translationFa": "هوا امروز خوبه، نه؟"
+    },
+    {
+      "id": 4,
+      "role": "sent",
+      "targetText": "Ja, die Sonne scheint.",
+      "translation": "Yes, the sun is shining.",
+      "translationFa": "بله، آفتاب می‌تابه."
+    },
+    {
+      "id": 5,
+      "role": "received",
+      "audioText": "Aber es ist kalt.",
+      "translation": "But it is cold.",
+      "translationFa": "ولی هوا سرده."
+    },
+    {
+      "id": 6,
+      "role": "sent",
+      "targetText": "Stimmt, es ist windig.",
+      "translation": "True, it is windy.",
+      "translationFa": "درسته، باد میاد."
+    },
+    {
+      "id": 7,
+      "role": "received",
+      "audioText": "Haben Sie einen Regenschirm?",
+      "translation": "Do you have an umbrella?",
+      "translationFa": "چتر دارید؟"
+    },
+    {
+      "id": 8,
+      "role": "sent",
+      "targetText": "Nein, ich habe keinen.",
+      "translation": "No, I don't have one.",
+      "translationFa": "نه، ندارم."
+    }
   ]
 }

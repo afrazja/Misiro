@@ -1,12 +1,76 @@
 {
-  "title": "Day 11: Time & Schedule Changes",
-  "titleFa": "روز ۱۱: زمان و تغییر برنامه",
+  "title": "Day 11: Basic Questions",
+  "titleFa": "روز ۱۱: سوالات پایه",
   "sentences": [
-    { "id": 1, "role": "sent", "targetText": "Haben Sie heute Zeit?", "translation": "Do you have time today?", "translationFa": "امروز وقت دارید؟" },
-    { "id": 2, "role": "received", "audioText": "Ich bin gerade beschäftigt.", "translation": "I am busy right now.", "translationFa": "الان سرم شلوغه." },
-    { "id": 3, "role": "sent", "targetText": "Können wir das später machen?", "translation": "Can we do that later?", "translationFa": "میتونیم بعداً انجامش بدیم؟" },
-    { "id": 4, "role": "sent", "targetText": "Wann passt es Ihnen?", "translation": "When does it suit you?", "translationFa": "کی براتون مناسبه؟" },
-    { "id": 5, "role": "sent", "targetText": "Lass uns morgen treffen.", "translation": "Let's meet tomorrow.", "translationFa": "بیاید فردا همدیگه رو ببینیم." },
-    { "id": 6, "role": "received", "audioText": "Ja, das geht.", "translation": "Yes, that works.", "translationFa": "آره، میشه." }
+    {
+      "id": 1,
+      "role": "received",
+      "audioText": "Wer bist du?",
+      "translation": "Who are you?",
+      "translationFa": "تو کی هستی؟"
+    },
+    {
+      "id": 2,
+      "role": "sent",
+      "targetText": "Ich bin Lukas, ein neuer Mitarbeiter.",
+      "translation": "I am Lukas, a new employee.",
+      "translationFa": "من لوکاس هستم، یه کارمند جدید."
+    },
+    {
+      "id": 3,
+      "role": "received",
+      "audioText": "Was machst du gerade?",
+      "translation": "What are you doing right now?",
+      "translationFa": "الان داری چیکار می‌کنی؟"
+    },
+    {
+      "id": 4,
+      "role": "sent",
+      "targetText": "Ich lerne Deutsch.",
+      "translation": "I am learning German.",
+      "translationFa": "دارم آلمانی یاد می‌گیرم."
+    },
+    {
+      "id": 5,
+      "role": "received",
+      "audioText": "Wo wohnst du?",
+      "translation": "Where do you live?",
+      "translationFa": "کجا زندگی می‌کنی؟"
+    },
+    {
+      "id": 6,
+      "role": "sent",
+      "targetText": "Ich wohne in der Berliner Straße, Nummer zwanzig.",
+      "translation": "I live at Berliner Strasse, number twenty.",
+      "translationFa": "در خیابان برلین، شماره بیست زندگی می‌کنم."
+    },
+    {
+      "id": 7,
+      "role": "received",
+      "audioText": "Wann kommst du morgen?",
+      "translation": "When are you coming tomorrow?",
+      "translationFa": "فردا کی میای؟"
+    },
+    {
+      "id": 8,
+      "role": "sent",
+      "targetText": "Ich komme um neun Uhr.",
+      "translation": "I am coming at nine o'clock.",
+      "translationFa": "ساعت نه میام."
+    },
+    {
+      "id": 9,
+      "role": "received",
+      "audioText": "Warum lernst du Deutsch?",
+      "translation": "Why are you learning German?",
+      "translationFa": "چرا آلمانی یاد می‌گیری؟"
+    },
+    {
+      "id": 10,
+      "role": "sent",
+      "targetText": "Weil ich in Deutschland arbeiten möchte.",
+      "translation": "Because I want to work in Germany.",
+      "translationFa": "چون می‌خوام در آلمان کار کنم."
+    }
   ]
 }

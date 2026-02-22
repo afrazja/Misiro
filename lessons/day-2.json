@@ -1,14 +1,48 @@
 {
-  "title": "Day 2: The Weather",
-  "titleFa": "روز ۲: آب و هوا",
+  "title": "Day 2: Greetings & Farewells",
+  "titleFa": "روز ۲: سلام و خداحافظی",
   "sentences": [
-    { "id": 1, "role": "received", "audioText": "Hallo! Wie geht es Ihnen?", "translation": "Hello! How are you?", "translationFa": "سلام! حال شما چطوره؟" },
-    { "id": 2, "role": "sent", "targetText": "Mir geht es gut, danke.", "translation": "I am doing well, thanks.", "translationFa": "حالم خوبه، ممنون." },
-    { "id": 3, "role": "received", "audioText": "Schönes Wetter heute, oder?", "translation": "Nice weather today, right?", "translationFa": "هوا امروز خوبه، نه؟" },
-    { "id": 4, "role": "sent", "targetText": "Ja, die Sonne scheint.", "translation": "Yes, the sun is shining.", "translationFa": "بله، آفتاب می‌تابه." },
-    { "id": 5, "role": "received", "audioText": "Aber es ist kalt.", "translation": "But it is cold.", "translationFa": "ولی هوا سرده." },
-    { "id": 6, "role": "sent", "targetText": "Stimmt, es ist windig.", "translation": "True, it is windy.", "translationFa": "درسته، باد میاد." },
-    { "id": 7, "role": "received", "audioText": "Haben Sie einen Regenschirm?", "translation": "Do you have an umbrella?", "translationFa": "چتر دارید؟" },
-    { "id": 8, "role": "sent", "targetText": "Nein, ich habe keinen.", "translation": "No, I don't have one.", "translationFa": "نه، ندارم." }
+    {
+      "id": 1,
+      "role": "received",
+      "audioText": "Hallo! Guten Morgen!",
+      "translation": "Hello! Good morning!",
+      "translationFa": "سلام! صبح بخیر!"
+    },
+    {
+      "id": 2,
+      "role": "sent",
+      "targetText": "Guten Morgen! Wie geht es Ihnen?",
+      "translation": "Good morning! How are you?",
+      "translationFa": "صبح بخیر! حالتون چطوره؟"
+    },
+    {
+      "id": 3,
+      "role": "received",
+      "audioText": "Danke, mir geht es gut. Und Ihnen?",
+      "translation": "Thanks, I'm fine. And you?",
+      "translationFa": "ممنون، حالم خوبه. و شما؟"
+    },
+    {
+      "id": 4,
+      "role": "sent",
+      "targetText": "Auch gut, danke.",
+      "translation": "Also good, thanks.",
+      "translationFa": "منم خوبم، ممنون."
+    },
+    {
+      "id": 5,
+      "role": "received",
+      "audioText": "Schön, Sie zu treffen. Auf Wiedersehen!",
+      "translation": "Nice to meet you. Goodbye!",
+      "translationFa": "خوشحال شدم. خداحافظ!"
+    },
+    {
+      "id": 6,
+      "role": "sent",
+      "targetText": "Auf Wiedersehen! Tschüss!",
+      "translation": "Goodbye! Bye!",
+      "translationFa": "خداحافظ! بای!"
+    }
   ]
 }

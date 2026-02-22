@@ -1,16 +1,76 @@
 {
-  "title": "Day 17: Hotel Booking",
-  "titleFa": "روز ۱۷: رزرو هتل",
+  "title": "Day 17: At the Airport",
+  "titleFa": "روز ۱۷: در فرودگاه",
   "sentences": [
-    { "id": 1, "role": "sent", "targetText": "Guten Tag, haben Sie ein Zimmer frei?", "translation": "Good day, do you have a room free?", "translationFa": "روز بخیر، اتاق خالی دارید؟" },
-    { "id": 2, "role": "received", "audioText": "Ja, für wie viele Nächte?", "translation": "Yes, for how many nights?", "translationFa": "بله، برای چند شب؟" },
-    { "id": 3, "role": "sent", "targetText": "Für drei Nächte, bitte.", "translation": "For three nights, please.", "translationFa": "برای سه شب، لطفاً." },
-    { "id": 4, "role": "received", "audioText": "Für eine Person oder zwei?", "translation": "For one person or two?", "translationFa": "برای یک نفر یا دو نفر؟" },
-    { "id": 5, "role": "sent", "targetText": "Für zwei Personen.", "translation": "For two people.", "translationFa": "برای دو نفر." },
-    { "id": 6, "role": "received", "audioText": "Das kostet 90 Euro pro Nacht.", "translation": "That costs 90 Euro per night.", "translationFa": "هر شب ۹۰ یورو هست." },
-    { "id": 7, "role": "sent", "targetText": "Ist das Frühstück inklusive?", "translation": "Is breakfast included?", "translationFa": "صبحانه شامل میشه؟" },
-    { "id": 8, "role": "received", "audioText": "Ja. Und wir haben kostenloses WLAN.", "translation": "Yes. And we have free Wifi.", "translationFa": "بله. و وای‌فای رایگان داریم." },
-    { "id": 9, "role": "sent", "targetText": "Super, ich nehme es.", "translation": "Great, I'll take it.", "translationFa": "عالی، میگیرمش." },
-    { "id": 10, "role": "received", "audioText": "Hier ist Ihr Schlüssel. Zimmer 20.", "translation": "Here is your key. Room 20.", "translationFa": "بفرمایید کلیدتون. اتاق ۲۰." }
+    {
+      "id": 1,
+      "role": "received",
+      "audioText": "Guten Morgen! Ihre Bordkarte und den Reisepass, bitte.",
+      "translation": "Good morning! Your boarding pass and passport, please.",
+      "translationFa": "صبح بخیر! کارت پرواز و پاسپورتتون رو لطفاً."
+    },
+    {
+      "id": 2,
+      "role": "sent",
+      "targetText": "Hier, bitte. Ich fliege nach Frankfurt.",
+      "translation": "Here you go. I am flying to Frankfurt.",
+      "translationFa": "بفرمایید. دارم به فرانکفورت پرواز می‌کنم."
+    },
+    {
+      "id": 3,
+      "role": "received",
+      "audioText": "Haben Sie Gepäck aufzugeben?",
+      "translation": "Do you have luggage to check in?",
+      "translationFa": "چمدان برای تحویل دارید؟"
+    },
+    {
+      "id": 4,
+      "role": "sent",
+      "targetText": "Ja, einen Koffer. Er wiegt zwanzig Kilo.",
+      "translation": "Yes, one suitcase. It weighs twenty kilos.",
+      "translationFa": "بله، یه چمدون. وزنش بیست کیلوئه."
+    },
+    {
+      "id": 5,
+      "role": "received",
+      "audioText": "Ihr Flug hat eine kleine Verspätung von zwanzig Minuten.",
+      "translation": "Your flight has a small delay of twenty minutes.",
+      "translationFa": "پرواز شما بیست دقیقه تأخیر داره."
+    },
+    {
+      "id": 6,
+      "role": "sent",
+      "targetText": "Welches Gate ist mein Flug?",
+      "translation": "Which gate is my flight?",
+      "translationFa": "گیت پرواز من کدومه؟"
+    },
+    {
+      "id": 7,
+      "role": "received",
+      "audioText": "Gate B siebenundzwanzig.",
+      "translation": "Gate B twenty-seven.",
+      "translationFa": "گیت B بیست و هفت."
+    },
+    {
+      "id": 8,
+      "role": "sent",
+      "targetText": "Vielen Dank! Wo ist die Sicherheitskontrolle?",
+      "translation": "Thank you! Where is the security check?",
+      "translationFa": "خیلی ممنون! کنترل امنیتی کجاست؟"
+    },
+    {
+      "id": 9,
+      "role": "received",
+      "audioText": "Geradeaus, dann links um die Ecke.",
+      "translation": "Straight ahead, then left around the corner.",
+      "translationFa": "مستقیم، بعد دور گوشه به سمت چپ."
+    },
+    {
+      "id": 10,
+      "role": "sent",
+      "targetText": "Danke schön!",
+      "translation": "Thank you very much!",
+      "translationFa": "خیلی ممنون!"
+    }
   ]
 }
