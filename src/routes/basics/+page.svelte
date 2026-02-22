@@ -50,7 +50,7 @@
 
 <div class="basics-container">
 	<header class="basics-header">
-		<a href="/" class="back-btn">&larr; {backText}</a>
+		<a href="/home" class="back-btn">&larr; {backText}</a>
 		<div class="header-title">
 			<h1>{pageTitle}</h1>
 			<p>{pageSubtitle}</p>

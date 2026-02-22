@@ -350,7 +350,7 @@
 	<!-- Header -->
 	<header class="header">
 		<div class="header-left">
-			<a href="/" class="home-btn">&larr; Home</a>
+			<a href="/home" class="home-btn">&larr; Home</a>
 			<h1>{'🌍'} Misiro</h1>
 		</div>
 

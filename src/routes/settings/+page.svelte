@@ -205,7 +205,7 @@
 
 {#if !isLoading}
 	<div class="settings-container">
-		<a href="/" class="back-link">&larr; Back to Home</a>
+		<a href="/home" class="back-link">&larr; Back to Home</a>
 		<h1 class="settings-title">Settings</h1>
 
 		<!-- Profile Section -->
