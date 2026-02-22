@@ -120,7 +120,7 @@
 		</div>
 		<div class="controls">
 			<select aria-label="Select language" value={currentLang} onchange={handleLanguageChange}>
-				<option value="fa">\u0641\u0627\u0631\u0633\u06CC</option>
+				<option value="fa">فارسی</option>
 				<option value="en">English</option>
 			</select>
 			<select aria-label="Select voice speed" value={voiceSpeed.toString()} onchange={handleSpeedChange}>
