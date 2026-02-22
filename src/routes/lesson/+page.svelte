@@ -387,8 +387,6 @@
 			<select id="speed-select" aria-label="Select voice speed" value={prefs.voiceSpeed.toString()} onchange={handleSpeedSelectChange}>
 				<option value="1">{'🔊 1x'}</option>
 				<option value="0.75">{'🔉 0.75x'}</option>
-				<option value="0.5">{'🐢 0.5x'}</option>
-				<option value="0.25">{'🐌 0.25x'}</option>
 			</select>
 		</div>
 
