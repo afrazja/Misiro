@@ -284,8 +284,7 @@ export async function manualNext(): Promise<void> {
 	const currentStep = lesson.sentences[app.currentSentenceIndex];
 	if (!currentStep) return;
 
-	// Abort any in-flight audio from the previous step
-	incrementSession();
+	// Stop everything
 	stopAllAudio();
 
 	// Add message bubble for skipped step
@@ -296,7 +295,7 @@ export async function manualNext(): Promise<void> {
 	const nextIndex = app.currentSentenceIndex + 1;
 	appStore.update((s) => ({ ...s, currentSentenceIndex: nextIndex }));
 	await saveProgress(app.currentDay, nextIndex);
-	await processNextStep();
+	processNextStep();
 }
 
 export async function goToNextDay(nextDay: number): Promise<void> {
@@ -345,18 +344,13 @@ export async function changeDay(day: number): Promise<void> {
 	const completedLessons = app.completedLessons;
 	const selectedLesson = getLesson(day) || (await loadLesson(day));
 
-	let sentenceIndex = 0;
-	if (completedLessons && completedLessons[day] && selectedLesson) {
-		sentenceIndex = selectedLesson.sentences.length; // Show completion card
-	}
-
 	appStore.update((s) => ({
 		...s,
 		currentDay: day,
-		currentSentenceIndex: sentenceIndex
+		currentSentenceIndex: 0
 	}));
 
-	await saveProgress(day, sentenceIndex);
+	await saveProgress(day, 0);
 	lessonStore.update((s) => ({ ...s, currentLesson: selectedLesson, isLoading: false }));
 
 	callbacks?.onClearChat();
@@ -437,16 +431,12 @@ async function handleLessonCorrect(step: Sentence, transcript: string): Promise<
 	// Feedback
 	await playAudioPromise('Good.', 1.2, 'en-US');
 
-	// Abort any lingering audio before advancing
-	incrementSession();
-	stopAllAudio();
-
 	// Advance
 	callbacks?.onScriptMarkDone(app.currentSentenceIndex);
 	const nextIndex = app.currentSentenceIndex + 1;
 	appStore.update((s) => ({ ...s, currentSentenceIndex: nextIndex }));
 	await saveProgress(app.currentDay, nextIndex);
-	await processNextStep();
+	processNextStep();
 }
 
 async function handleLessonIncorrect(step: Sentence, targetGerman: string, transcript: string): Promise<void> {
