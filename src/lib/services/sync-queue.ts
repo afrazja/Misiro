@@ -7,6 +7,7 @@ import { getSupabaseBrowserClient } from '$lib/supabase/client';
 import { syncStore } from '$stores/sync';
 import type { SyncStatus } from '$stores/sync';
 import { getUser } from './auth';
+import { logError, logWarn } from '$utils/error';
 
 const QUEUE_KEY = 'misiro_sync_queue';
 const MAX_RETRIES = 5;
@@ -113,7 +114,7 @@ async function executeCloudWrite(uid: string, op: SyncOperation): Promise<void> 
 			break;
 
 		default:
-			console.warn('Unknown sync operation type:', op.type);
+			logWarn('sync-queue:executeCloudWrite', `Unknown sync operation type: ${op.type}`);
 	}
 }
 
@@ -148,7 +149,7 @@ export async function flushQueue(): Promise<void> {
 			if (op.retries < MAX_RETRIES) {
 				remaining.push(op);
 			} else {
-				console.error(`Dropping failed sync after ${MAX_RETRIES} retries:`, op.type, op.key);
+				logError('sync-queue:flushQueue', `Dropping op "${op.type}:${op.key}" after ${MAX_RETRIES} retries`);
 			}
 		}
 	}
@@ -176,7 +177,7 @@ export async function cloudWrite(
 	try {
 		await executeCloudWrite(uid, { type, key, data, retries: 0, createdAt: Date.now() });
 	} catch (e: any) {
-		console.warn(`Cloud write failed (${type}), queuing for retry:`, e.message);
+		logWarn('sync-queue:cloudWrite', `Cloud write failed (${type}), queuing for retry: ${e.message}`);
 		enqueue({ type, key, data });
 	}
 }

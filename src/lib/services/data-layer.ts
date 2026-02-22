@@ -8,6 +8,17 @@
 import { getSupabaseBrowserClient } from '$lib/supabase/client';
 import { isAuthenticated, getUser, updateDisplayName as authUpdateDisplayName } from './auth';
 import { cloudWrite, flushQueue } from './sync-queue';
+import { logError, logWarn } from '$utils/error';
+import {
+	UserProfileLanguageRowSchema,
+	UserProfileVoiceSpeedRowSchema,
+	UserProfileRowSchema,
+	UserProgressRowSchema,
+	UserProgressFullRowSchema,
+	CompletedLessonsRowSchema,
+	SRCardRowSchema,
+	ExamResultRowSchema
+} from '$lib/schemas';
 
 // ========== LANGUAGE ==========
 
@@ -22,12 +33,17 @@ export async function getLanguage(): Promise<string | null> {
 				.select('language')
 				.eq('id', user.id)
 				.maybeSingle();
-			if (data?.language) {
-				localStorage.setItem('misiro_language', data.language);
-				return data.language;
+			if (data) {
+				const parsed = UserProfileLanguageRowSchema.safeParse(data);
+				if (parsed.success && parsed.data.language) {
+					localStorage.setItem('misiro_language', parsed.data.language);
+					return parsed.data.language;
+				} else if (!parsed.success) {
+					logWarn('data-layer:getLanguage', `Profile language row failed validation: ${parsed.error.message}`);
+				}
 			}
-		} catch {
-			/* fall through */
+		} catch (e) {
+			logError('data-layer:getLanguage', e);
 		}
 	}
 	return localStorage.getItem('misiro_language') || null;
@@ -51,12 +67,17 @@ export async function getVoiceSpeed(): Promise<number | null> {
 				.select('voice_speed')
 				.eq('id', user.id)
 				.maybeSingle();
-			if (data?.voice_speed != null) {
-				localStorage.setItem('misiro_voice_speed', data.voice_speed.toString());
-				return data.voice_speed;
+			if (data) {
+				const parsed = UserProfileVoiceSpeedRowSchema.safeParse(data);
+				if (parsed.success && parsed.data.voice_speed != null) {
+					localStorage.setItem('misiro_voice_speed', parsed.data.voice_speed.toString());
+					return parsed.data.voice_speed;
+				} else if (!parsed.success) {
+					logWarn('data-layer:getVoiceSpeed', `Profile voice_speed row failed validation: ${parsed.error.message}`);
+				}
 			}
-		} catch {
-			/* fall through */
+		} catch (e) {
+			logError('data-layer:getVoiceSpeed', e);
 		}
 	}
 	const v = localStorage.getItem('misiro_voice_speed');
@@ -88,23 +109,29 @@ export async function getProgress(): Promise<Progress | null> {
 				.eq('user_id', user.id)
 				.maybeSingle();
 			if (data) {
-				const progress: Progress = {
-					currentDay: data.current_day,
-					currentSentenceIndex: data.current_sentence_index,
-					lastSaved: data.last_saved
-				};
-				localStorage.setItem('misiro_progress', JSON.stringify(progress));
-				return progress;
+				const parsed = UserProgressRowSchema.safeParse(data);
+				if (parsed.success) {
+					const progress: Progress = {
+						currentDay: parsed.data.current_day,
+						currentSentenceIndex: parsed.data.current_sentence_index,
+						lastSaved: parsed.data.last_saved
+					};
+					localStorage.setItem('misiro_progress', JSON.stringify(progress));
+					return progress;
+				} else {
+					logWarn('data-layer:getProgress', `Progress row failed validation: ${parsed.error.message}`);
+				}
 			}
-		} catch {
-			/* fall through */
+		} catch (e) {
+			logError('data-layer:getProgress', e);
 		}
 	}
 	const raw = localStorage.getItem('misiro_progress');
 	if (!raw) return null;
 	try {
 		return JSON.parse(raw);
-	} catch {
+	} catch (e) {
+		logWarn('data-layer:getProgress', 'Corrupted progress data in localStorage — clearing');
 		return null;
 	}
 }
@@ -136,19 +163,25 @@ export async function getCompletedLessons(): Promise<Record<number, any>> {
 				.select('completed_lessons')
 				.eq('user_id', user.id)
 				.maybeSingle();
-			if (data?.completed_lessons) {
-				localStorage.setItem('misiro_completed_lessons', JSON.stringify(data.completed_lessons));
-				return data.completed_lessons;
+			if (data) {
+				const parsed = CompletedLessonsRowSchema.safeParse(data);
+				if (parsed.success && parsed.data.completed_lessons) {
+					localStorage.setItem('misiro_completed_lessons', JSON.stringify(parsed.data.completed_lessons));
+					return parsed.data.completed_lessons;
+				} else if (!parsed.success) {
+					logWarn('data-layer:getCompletedLessons', `Completed lessons row failed validation: ${parsed.error.message}`);
+				}
 			}
-		} catch {
-			/* fall through */
+		} catch (e) {
+			logError('data-layer:getCompletedLessons', e);
 		}
 	}
 	const raw = localStorage.getItem('misiro_completed_lessons');
 	if (!raw) return {};
 	try {
 		return JSON.parse(raw);
-	} catch {
+	} catch (e) {
+		logWarn('data-layer:getCompletedLessons', 'Corrupted completed lessons in localStorage — clearing');
 		return {};
 	}
 }
@@ -184,26 +217,32 @@ export async function loadSRData(): Promise<Record<string, SRCard>> {
 			if (cloudCards && cloudCards.length > 0) {
 				const srMap: Record<string, SRCard> = {};
 				for (const c of cloudCards) {
-					srMap[`${c.day}:${c.sentence_id}`] = {
-						ease: c.ease,
-						interval: c.interval_days,
-						nextReview: c.next_review,
-						attempts: c.attempts,
-						successes: c.successes,
-						lastReview: c.last_review
+					const parsed = SRCardRowSchema.safeParse(c);
+					if (!parsed.success) {
+						logWarn('data-layer:loadSRData', `SR card failed validation: ${parsed.error.message}`);
+						continue;
+					}
+					srMap[`${parsed.data.day}:${parsed.data.sentence_id}`] = {
+						ease: parsed.data.ease,
+						interval: parsed.data.interval_days,
+						nextReview: parsed.data.next_review,
+						attempts: parsed.data.attempts,
+						successes: parsed.data.successes,
+						lastReview: parsed.data.last_review
 					};
 				}
 				localStorage.setItem('misiro_sr_data', JSON.stringify(srMap));
 				return srMap;
 			}
-		} catch {
-			/* fall through */
+		} catch (e) {
+			logError('data-layer:loadSRData', e);
 		}
 	}
 	try {
 		const data = localStorage.getItem('misiro_sr_data');
 		return data ? JSON.parse(data) : {};
-	} catch {
+	} catch (e) {
+		logWarn('data-layer:loadSRData', 'Corrupted SR data in localStorage — clearing');
 		return {};
 	}
 }
@@ -256,7 +295,7 @@ export async function setDisplayName(name: string): Promise<void> {
 	try {
 		await authUpdateDisplayName(name);
 	} catch (e) {
-		console.error('setDisplayName sync error:', e);
+		logError('data-layer:setDisplayName', e);
 	}
 }
 
@@ -297,25 +336,31 @@ export async function getExamResults(): Promise<Record<string, ExamResultData>> 
 			if (cloudExams && cloudExams.length > 0) {
 				const examsMap: Record<string, ExamResultData> = {};
 				for (const c of cloudExams) {
-					examsMap[`week_${c.week_number}`] = {
-						score: c.score,
-						total: c.total,
-						percentage: c.percentage,
-						date: c.taken_at,
-						wrongAnswers: c.wrong_answers || []
+					const parsed = ExamResultRowSchema.safeParse(c);
+					if (!parsed.success) {
+						logWarn('data-layer:getExamResults', `Exam result row failed validation: ${parsed.error.message}`);
+						continue;
+					}
+					examsMap[`week_${parsed.data.week_number}`] = {
+						score: parsed.data.score,
+						total: parsed.data.total,
+						percentage: parsed.data.percentage,
+						date: parsed.data.taken_at,
+						wrongAnswers: parsed.data.wrong_answers ?? []
 					};
 				}
 				localStorage.setItem('misiro_exam_results', JSON.stringify(examsMap));
 				return examsMap;
 			}
-		} catch {
-			/* fall through */
+		} catch (e) {
+			logError('data-layer:getExamResults', e);
 		}
 	}
 	try {
 		const data = localStorage.getItem('misiro_exam_results');
 		return data ? JSON.parse(data) : {};
-	} catch {
+	} catch (e) {
+		logWarn('data-layer:getExamResults', 'Corrupted exam results in localStorage — clearing');
 		return {};
 	}
 }
@@ -325,7 +370,8 @@ export async function saveExamResult(weekKey: string, resultData: ExamResultData
 	try {
 		const raw = localStorage.getItem('misiro_exam_results');
 		all = raw ? JSON.parse(raw) : {};
-	} catch {
+	} catch (e) {
+		logWarn('data-layer:saveExamResult', 'Corrupted exam results in localStorage — resetting before save');
 		all = {};
 	}
 	all[weekKey] = resultData;
@@ -373,15 +419,21 @@ export async function syncOnLogin(): Promise<void> {
 			.eq('id', uid)
 			.maybeSingle();
 		if (profile) {
-			if (profile.language) localStorage.setItem('misiro_language', profile.language);
-			if (profile.voice_speed)
-				localStorage.setItem('misiro_voice_speed', profile.voice_speed.toString());
-			if (profile.display_name)
-				localStorage.setItem('misiro_display_name', profile.display_name);
-			if (profile.avatar_url) {
-				localStorage.setItem('misiro_avatar_url', profile.avatar_url);
+			const profileParsed = UserProfileRowSchema.safeParse(profile);
+			if (!profileParsed.success) {
+				logWarn('data-layer:syncOnLogin', `User profile row failed validation: ${profileParsed.error.message}`);
 			} else {
-				localStorage.removeItem('misiro_avatar_url');
+				const p = profileParsed.data;
+				if (p.language) localStorage.setItem('misiro_language', p.language);
+				if (p.voice_speed)
+					localStorage.setItem('misiro_voice_speed', p.voice_speed.toString());
+				if (p.display_name)
+					localStorage.setItem('misiro_display_name', p.display_name);
+				if (p.avatar_url) {
+					localStorage.setItem('misiro_avatar_url', p.avatar_url);
+				} else {
+					localStorage.removeItem('misiro_avatar_url');
+				}
 			}
 		}
 
@@ -392,19 +444,25 @@ export async function syncOnLogin(): Promise<void> {
 			.eq('user_id', uid)
 			.maybeSingle();
 		if (progress) {
-			localStorage.setItem(
-				'misiro_progress',
-				JSON.stringify({
-					currentDay: progress.current_day,
-					currentSentenceIndex: progress.current_sentence_index,
-					lastSaved: progress.last_saved
-				})
-			);
-			if (progress.completed_lessons) {
+			const progressParsed = UserProgressFullRowSchema.safeParse(progress);
+			if (!progressParsed.success) {
+				logWarn('data-layer:syncOnLogin', `User progress row failed validation: ${progressParsed.error.message}`);
+			} else {
+				const p = progressParsed.data;
 				localStorage.setItem(
-					'misiro_completed_lessons',
-					JSON.stringify(progress.completed_lessons)
+					'misiro_progress',
+					JSON.stringify({
+						currentDay: p.current_day,
+						currentSentenceIndex: p.current_sentence_index,
+						lastSaved: p.last_saved
+					})
 				);
+				if (p.completed_lessons) {
+					localStorage.setItem(
+						'misiro_completed_lessons',
+						JSON.stringify(p.completed_lessons)
+					);
+				}
 			}
 		}
 
@@ -416,13 +474,18 @@ export async function syncOnLogin(): Promise<void> {
 		if (srCards && srCards.length > 0) {
 			const srMap: Record<string, SRCard> = {};
 			for (const c of srCards) {
-				srMap[`${c.day}:${c.sentence_id}`] = {
-					ease: c.ease,
-					interval: c.interval_days,
-					nextReview: c.next_review,
-					attempts: c.attempts,
-					successes: c.successes,
-					lastReview: c.last_review
+				const parsed = SRCardRowSchema.safeParse(c);
+				if (!parsed.success) {
+					logWarn('data-layer:syncOnLogin', `SR card row failed validation: ${parsed.error.message}`);
+					continue;
+				}
+				srMap[`${parsed.data.day}:${parsed.data.sentence_id}`] = {
+					ease: parsed.data.ease,
+					interval: parsed.data.interval_days,
+					nextReview: parsed.data.next_review,
+					attempts: parsed.data.attempts,
+					successes: parsed.data.successes,
+					lastReview: parsed.data.last_review
 				};
 			}
 			localStorage.setItem('misiro_sr_data', JSON.stringify(srMap));
@@ -436,12 +499,17 @@ export async function syncOnLogin(): Promise<void> {
 		if (exams && exams.length > 0) {
 			const examsMap: Record<string, ExamResultData> = {};
 			for (const c of exams) {
-				examsMap[`week_${c.week_number}`] = {
-					score: c.score,
-					total: c.total,
-					percentage: c.percentage,
-					date: c.taken_at,
-					wrongAnswers: c.wrong_answers || []
+				const parsed = ExamResultRowSchema.safeParse(c);
+				if (!parsed.success) {
+					logWarn('data-layer:syncOnLogin', `Exam result row failed validation: ${parsed.error.message}`);
+					continue;
+				}
+				examsMap[`week_${parsed.data.week_number}`] = {
+					score: parsed.data.score,
+					total: parsed.data.total,
+					percentage: parsed.data.percentage,
+					date: parsed.data.taken_at,
+					wrongAnswers: parsed.data.wrong_answers ?? []
 				};
 			}
 			localStorage.setItem('misiro_exam_results', JSON.stringify(examsMap));
@@ -450,6 +518,6 @@ export async function syncOnLogin(): Promise<void> {
 		// Flush pending writes
 		await flushQueue();
 	} catch (e) {
-		console.error('Sync on login failed:', e);
+		logError('data-layer:syncOnLogin', e);
 	}
 }
