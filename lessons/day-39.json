@@ -1,0 +1,24 @@
+{
+  "title": "Day 39: At the Hairdresser",
+  "titleFa": "روز ۳۹: در آرایشگاه",
+  "sentences": [
+    { "id": 1, "role": "received", "audioText": "Guten Tag! Haben Sie einen Termin?", "translation": "Good day! Do you have an appointment?", "translationFa": "روز بخیر! وقت قبلی دارید؟" },
+    { "id": 2, "role": "sent", "targetText": "Nein, leider nicht. Kann ich trotzdem drankommen?", "translation": "No, unfortunately not. Can I still get in?", "translationFa": "نه متأسفانه. بازم میشه نوبت بگیرم؟" },
+    { "id": 3, "role": "received", "audioText": "Sie haben Glück, in zehn Minuten wird ein Platz frei.", "translation": "You're in luck, a spot opens up in ten minutes.", "translationFa": "شانس آوردید، ده دقیقه دیگه یه جا خالی میشه." },
+    { "id": 4, "role": "sent", "targetText": "Wunderbar, ich warte gerne.", "translation": "Wonderful, I'm happy to wait.", "translationFa": "عالی، با کمال میل صبر می‌کنم." },
+    { "id": 5, "role": "received", "audioText": "So, was darf es heute sein?", "translation": "So, what would you like today?", "translationFa": "خب، امروز چیکار کنم براتون؟" },
+    { "id": 6, "role": "sent", "targetText": "Ich möchte die Haare schneiden lassen, bitte.", "translation": "I'd like to get a haircut, please.", "translationFa": "می‌خوام موهامو کوتاه کنم، لطفاً." },
+    { "id": 7, "role": "received", "audioText": "Wie kurz soll es werden? Haben Sie ein Bild?", "translation": "How short should it be? Do you have a picture?", "translationFa": "چقدر کوتاه بشه؟ عکسی دارید؟" },
+    { "id": 8, "role": "sent", "targetText": "Ja, hier auf meinem Handy. Ungefähr so.", "translation": "Yes, here on my phone. Something like this.", "translationFa": "بله، اینجا رو گوشیم. تقریباً اینجوری." },
+    { "id": 9, "role": "received", "audioText": "Das sieht gut aus. Oben etwas länger und an den Seiten kurz?", "translation": "That looks good. A bit longer on top and short on the sides?", "translationFa": "خوب به نظر میاد. بالا یکم بلندتر و بغل‌ها کوتاه؟" },
+    { "id": 10, "role": "sent", "targetText": "Genau, und bitte nicht zu kurz an den Seiten.", "translation": "Exactly, and please not too short on the sides.", "translationFa": "دقیقاً، و لطفاً بغل‌ها خیلی کوتاه نشه." },
+    { "id": 11, "role": "received", "audioText": "Soll ich auch die Augenbrauen machen?", "translation": "Should I do the eyebrows too?", "translationFa": "ابروها رو هم بزنم؟" },
+    { "id": 12, "role": "sent", "targetText": "Ja, bitte, nur ein bisschen in Form bringen.", "translation": "Yes, please, just shape them a little.", "translationFa": "بله لطفاً، فقط یکم مرتبشون کنید." },
+    { "id": 13, "role": "received", "audioText": "Möchten Sie die Haare auch waschen?", "translation": "Would you like your hair washed too?", "translationFa": "موهاتونو هم بشورم؟" },
+    { "id": 14, "role": "sent", "targetText": "Ja, bitte mit Shampoo und Spülung.", "translation": "Yes, please, with shampoo and conditioner.", "translationFa": "بله لطفاً، با شامپو و نرم‌کننده." },
+    { "id": 15, "role": "received", "audioText": "So, wir sind fertig. Gefällt es Ihnen?", "translation": "There, we're done. Do you like it?", "translationFa": "خب، تموم شد. خوشتون اومد؟" },
+    { "id": 16, "role": "sent", "targetText": "Ja, das sieht super aus! Was macht das?", "translation": "Yes, that looks great! How much is it?", "translationFa": "بله، عالی شده! چقدر میشه؟" },
+    { "id": 17, "role": "received", "audioText": "Haarschnitt und Waschen zusammen dreißig Euro.", "translation": "Haircut and wash together thirty euros.", "translationFa": "کوتاهی و شستن روی هم سی یورو." },
+    { "id": 18, "role": "sent", "targetText": "Hier, bitte. Stimmt so. Vielen Dank!", "translation": "Here you go. Keep the change. Thank you!", "translationFa": "بفرمایید. بقیه‌اش مال شما. خیلی ممنون!" }
+  ]
+}

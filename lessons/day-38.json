@@ -1,0 +1,24 @@
+{
+  "title": "Day 38: Meeting the Neighbors",
+  "titleFa": "روز ۳۸: آشنایی با همسایه‌ها",
+  "sentences": [
+    { "id": 1, "role": "received", "audioText": "Hallo! Sie sind wohl neu hier im Haus?", "translation": "Hello! You must be new here in the building?", "translationFa": "سلام! شما تازه اومدید تو این ساختمون؟" },
+    { "id": 2, "role": "sent", "targetText": "Ja, ich bin gestern eingezogen. Mein Name ist Sara.", "translation": "Yes, I moved in yesterday. My name is Sara.", "translationFa": "بله، دیروز اسباب‌کشی کردم. اسمم ساراست." },
+    { "id": 3, "role": "received", "audioText": "Willkommen! Ich bin Frau Weber, Ihre Nachbarin von gegenüber.", "translation": "Welcome! I'm Mrs. Weber, your neighbor from across the hall.", "translationFa": "خوش اومدید! من خانم وبر هستم، همسایه روبروتون." },
+    { "id": 4, "role": "sent", "targetText": "Freut mich, Sie kennenzulernen. Wohnen Sie schon lange hier?", "translation": "Nice to meet you. Have you lived here long?", "translationFa": "از آشناییتون خوشحالم. خیلی وقته اینجا زندگی می‌کنید؟" },
+    { "id": 5, "role": "received", "audioText": "Seit zwölf Jahren. Es ist ein ruhiges Haus, meistens.", "translation": "For twelve years. It's a quiet building, mostly.", "translationFa": "دوازده ساله. ساختمون آرومیه، بیشتر وقت‌ها." },
+    { "id": 6, "role": "sent", "targetText": "Das ist gut zu wissen. Gibt es bestimmte Hausregeln?", "translation": "That's good to know. Are there specific building rules?", "translationFa": "خوبه بدونم. قانون خاصی تو ساختمون هست؟" },
+    { "id": 7, "role": "received", "audioText": "Ja, Ruhezeiten sind ab zweiundzwanzig Uhr und den ganzen Sonntag.", "translation": "Yes, quiet hours start at 10 PM and all day Sunday.", "translationFa": "بله، ساعت ده شب به بعد و کل یکشنبه ساعت سکوته." },
+    { "id": 8, "role": "sent", "targetText": "Verstanden. Wo stelle ich meinen Müll hin?", "translation": "Understood. Where do I put my trash?", "translationFa": "فهمیدم. زباله‌ها رو کجا بذارم؟" },
+    { "id": 9, "role": "received", "audioText": "Im Hinterhof stehen vier Tonnen: schwarz, gelb, blau und braun.", "translation": "In the backyard there are four bins: black, yellow, blue, and brown.", "translationFa": "تو حیاط پشتی چهار تا سطل هست: مشکی، زرد، آبی و قهوه‌ای." },
+    { "id": 10, "role": "sent", "targetText": "Was kommt in welche Tonne?", "translation": "What goes in which bin?", "translationFa": "چی باید تو کدوم سطل بره؟" },
+    { "id": 11, "role": "received", "audioText": "Schwarz ist Restmüll, gelb für Verpackungen, blau für Papier und braun für Biomüll.", "translation": "Black is general waste, yellow for packaging, blue for paper, and brown for organic waste.", "translationFa": "مشکی زباله عمومی، زرد بسته‌بندی، آبی کاغذ و قهوه‌ای زباله ارگانیک." },
+    { "id": 12, "role": "sent", "targetText": "Danke für die Erklärung. Und wie funktioniert die Heizung?", "translation": "Thanks for the explanation. And how does the heating work?", "translationFa": "ممنون بابت توضیح. شوفاژ چطوری کار میکنه؟" },
+    { "id": 13, "role": "received", "audioText": "Es ist Zentralheizung. Sie regeln die Temperatur mit dem Thermostat an der Wand.", "translation": "It's central heating. You control the temperature with the thermostat on the wall.", "translationFa": "شوفاژ مرکزیه. دما رو با ترموستات روی دیوار تنظیم می‌کنید." },
+    { "id": 14, "role": "sent", "targetText": "Gibt es im Keller einen Abstellraum für mich?", "translation": "Is there a storage room in the basement for me?", "translationFa": "تو زیرزمین انباری برای من هست؟" },
+    { "id": 15, "role": "received", "audioText": "Ja, Keller Nummer vier gehört zu Ihrer Wohnung. Der Schlüssel ist am Bund.", "translation": "Yes, basement number four belongs to your apartment. The key is on the ring.", "translationFa": "بله، زیرزمین شماره چهار مال آپارتمان شماست. کلیدش تو دسته کلیده." },
+    { "id": 16, "role": "sent", "targetText": "Wunderbar. Kann ich hier auch Fahrräder abstellen?", "translation": "Wonderful. Can I park bicycles here too?", "translationFa": "عالی. دوچرخه هم میتونم اینجا بذارم؟" },
+    { "id": 17, "role": "received", "audioText": "Ja, im Fahrradraum neben dem Eingang. Benutzen Sie bitte ein Schloss.", "translation": "Yes, in the bike room next to the entrance. Please use a lock.", "translationFa": "بله، تو اتاق دوچرخه کنار ورودی. لطفاً قفل بزنید." },
+    { "id": 18, "role": "sent", "targetText": "Vielen Dank, Frau Weber. Sie sind sehr hilfsbereit!", "translation": "Thank you very much, Mrs. Weber. You're very helpful!", "translationFa": "خیلی ممنون خانم وبر. خیلی لطف کردید!" }
+  ]
+}
