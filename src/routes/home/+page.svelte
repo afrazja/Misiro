@@ -370,11 +370,14 @@
 				<span class="stat-value">{streakCount}</span>
 				<span class="stat-label">Day Streak</span>
 			</div>
-			<div class="stat-card">
+			<a href="/lesson" class="stat-card stat-card-link" class:has-due={dueReviews > 0} title="Go to lesson for reviews">
 				<span class="stat-icon">🔄</span>
 				<span class="stat-value">{dueReviews}</span>
 				<span class="stat-label">Due Reviews</span>
-			</div>
+				{#if dueReviews > 0}
+					<span class="stat-cta">Review now →</span>
+				{/if}
+			</a>
 		</div>
 
 		<!-- ── Learning Path Progress ──────────────────── -->
@@ -432,8 +435,14 @@
 			<div class="icon">📚</div>
 			<h2>{content.lessonsTitle}</h2>
 			<p>{content.lessonsDesc}</p>
-			{#if isAuthenticated && daysCompleted > 0}
-				<div class="card-meta">Day {Math.min(currentDay, 60)} of 60</div>
+			{#if isAuthenticated}
+				{#if daysCompleted >= 60}
+					<div class="card-meta done">🎉 All 60 days complete!</div>
+				{:else if daysCompleted > 0}
+					<div class="card-meta">Next: Day {daysCompleted + 1} of 60</div>
+				{:else}
+					<div class="card-meta">Start Day 1 →</div>
+				{/if}
 			{/if}
 			<div class="arrow">→</div>
 		</a>
@@ -443,6 +452,7 @@
 			<div class="icon">🔤</div>
 			<h2>{content.basicsTitle}</h2>
 			<p>{content.basicsDesc}</p>
+			<div class="card-meta basics-meta">8 topics · Pronouns, Articles &amp; more</div>
 			<div class="arrow">→</div>
 		</a>
 	</div>
@@ -899,6 +909,39 @@
 		font-weight: 700;
 		color: #7fc8f8;
 		z-index: 1;
+	}
+
+	.card-meta.done {
+		background: rgba(46, 204, 113, 0.2);
+		color: #2ecc71;
+	}
+
+	.card-meta.basics-meta {
+		background: rgba(46, 204, 113, 0.2);
+		color: #7fe8b0;
+	}
+
+	/* Clickable stat card for due reviews */
+	.stat-card-link {
+		text-decoration: none;
+		cursor: pointer;
+	}
+
+	.stat-card-link.has-due {
+		border-color: rgba(46, 204, 113, 0.3);
+		background: rgba(46, 204, 113, 0.07);
+	}
+
+	.stat-card-link.has-due:hover {
+		border-color: rgba(46, 204, 113, 0.6);
+		box-shadow: 0 8px 24px rgba(46, 204, 113, 0.2);
+	}
+
+	.stat-cta {
+		font-size: 0.72rem;
+		color: #2ecc71;
+		font-weight: 700;
+		margin-top: 2px;
 	}
 
 	.nav-card .arrow {
