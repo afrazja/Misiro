@@ -69,10 +69,11 @@ function _browserTTS(text: string, lang: string, rate?: number): Promise<void> {
 }
 
 /** Play via same-origin Vercel serverless TTS proxy */
-function playWebAudio(text: string, lang: string): Promise<void> {
+function playWebAudio(text: string, lang: string, rate: number = 1.0): Promise<void> {
 	const shortLang = lang.split('-')[0];
 	const url = `/proxy/tts?q=${encodeURIComponent(text)}&tl=${shortLang}`;
 	const myGen = ttsGeneration; // snapshot — if it changes, we were cancelled
+	const safeRate = isFinite(rate) && rate > 0 ? rate : 1.0;
 
 	return new Promise((resolve) => {
 		if (currentAudio) {
@@ -95,10 +96,11 @@ function playWebAudio(text: string, lang: string): Promise<void> {
 			// If cancelled while waiting, don't start browser TTS
 			if (myGen !== ttsGeneration) { done = true; resolve(); return; }
 			done = true;
-			_browserTTS(text, lang).then(resolve);
+			_browserTTS(text, lang, safeRate).then(resolve);
 		};
 
 		const audio = new Audio(url);
+		audio.playbackRate = safeRate;
 		currentAudio = audio;
 		audio.onerror = fallback;
 		const timeout = setTimeout(fallback, 4000);
@@ -123,15 +125,19 @@ export function playAudioPromise(text: string, rate: number = 1.0, lang: string 
 		// Don't call stopAllAudio here — callers manage stop/cancel themselves
 		const myGen = ttsGeneration;
 
+		// Apply user's voice speed preference to all paths
+		const prefs = get(preferencesStore);
+		const effectiveRate = rate * prefs.voiceSpeed;
+
 		// On mobile: ALL languages → proxy
 		if (isMobile()) {
-			playWebAudio(text, lang).then(resolve);
+			playWebAudio(text, lang, effectiveRate).then(resolve);
 			return;
 		}
 
 		// Desktop: German & Farsi → proxy
 		if (lang.startsWith('de') || lang.startsWith('fa')) {
-			playWebAudio(text, lang).then(resolve);
+			playWebAudio(text, lang, effectiveRate).then(resolve);
 			return;
 		}
 
@@ -142,13 +148,9 @@ export function playAudioPromise(text: string, rate: number = 1.0, lang: string 
 		);
 
 		if (!hasNativeVoice) {
-			playWebAudio(text, lang).then(resolve);
+			playWebAudio(text, lang, effectiveRate).then(resolve);
 			return;
 		}
-
-		// Apply user's voice speed preference
-		const prefs = get(preferencesStore);
-		const effectiveRate = rate * prefs.voiceSpeed;
 
 		window.speechSynthesis.cancel();
 		const u = new SpeechSynthesisUtterance(text);
@@ -160,7 +162,7 @@ export function playAudioPromise(text: string, rate: number = 1.0, lang: string 
 			// If cancelled, don't fallback — just resolve
 			if (myGen !== ttsGeneration) { resolve(); return; }
 			// Fallback to proxy
-			playWebAudio(text, lang).then(resolve);
+			playWebAudio(text, lang, effectiveRate).then(resolve);
 		};
 
 		window.speechSynthesis.speak(u);
