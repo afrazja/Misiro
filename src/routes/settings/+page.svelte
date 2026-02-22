@@ -291,7 +291,7 @@
 			<div class="pref-row">
 				<label for="pref-language">Language</label>
 				<select id="pref-language" value={currentLang} onchange={handleLanguageChange}>
-					<option value="fa">فارسی</option>
+					<option value="fa">{'\u0641\u0627\u0631\u0633\u06CC'}</option>
 					<option value="en">English</option>
 				</select>
 			</div>

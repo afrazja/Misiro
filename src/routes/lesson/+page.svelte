@@ -105,13 +105,14 @@
 		const clean = word.replace(/[.,!?]/g, '');
 		playAudioPromise(clean, 0.8, 'de-DE');
 
-		// Show tooltip — always show something
-		if (tooltipTimer) clearTimeout(tooltipTimer);
-		const target = event.currentTarget as HTMLElement;
-		const rect = target.getBoundingClientRect();
-		const tooltipText = meaning || clean;
-		wordTooltip = { word, meaning: tooltipText, x: rect.left + rect.width / 2, y: rect.top };
-		tooltipTimer = setTimeout(() => { wordTooltip = null; }, 3000);
+		// Show tooltip
+		if (meaning) {
+			if (tooltipTimer) clearTimeout(tooltipTimer);
+			const target = event.currentTarget as HTMLElement;
+			const rect = target.getBoundingClientRect();
+			wordTooltip = { word, meaning, x: rect.left + rect.width / 2, y: rect.top };
+			tooltipTimer = setTimeout(() => { wordTooltip = null; }, 3000);
+		}
 	}
 
 	// ============ SCRIPT PANEL ============
@@ -351,7 +352,7 @@
 					<optgroup label="Week {weekNum}">
 						{#each days as meta}
 							{@const isCompleted = !!(app.completedLessons && app.completedLessons[meta.day])}
-							{@const unlocked = meta.day === 1 || !!(app.completedLessons && app.completedLessons[meta.day - 1])}
+							{@const unlocked = isDayUnlocked(meta.day)}
 							<option
 								value={meta.day.toString()}
 								disabled={!unlocked}
@@ -378,7 +379,7 @@
 
 		<div class="language-control">
 			<select id="language-select" aria-label="Select language" value={prefs.language} onchange={handleLanguageSelectChange}>
-				<option value="fa">فارسی</option>
+				<option value="fa">\u0641\u0627\u0631\u0633\u06CC</option>
 				<option value="en">English</option>
 			</select>
 		</div>
@@ -614,7 +615,7 @@
 <!-- Word Tooltip -->
 {#if wordTooltip}
 	<div class="word-tooltip" style="left: {wordTooltip.x}px; top: {wordTooltip.y - 10}px;">
-		<span class="tooltip-meaning">{wordTooltip.meaning}</span>
+		{wordTooltip.meaning}
 	</div>
 {/if}
 

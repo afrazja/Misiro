@@ -125,7 +125,7 @@ function playWebAudio(text: string, lang: string, rate: number = 1.0): Promise<v
  * Returns a promise that resolves when playback finishes.
  *
  * @param text - Text to speak
- * @param rate - Playback rate multiplier (voice speed preference applied only for German)
+ * @param rate - Playback rate multiplier (before voice speed preference)
  * @param lang - BCP-47 language code (e.g. 'de-DE', 'en-US', 'fa-IR')
  */
 export function playAudioPromise(text: string, rate: number = 1.0, lang: string = 'de-DE'): Promise<void> {
@@ -133,10 +133,9 @@ export function playAudioPromise(text: string, rate: number = 1.0, lang: string 
 		// Don't call stopAllAudio here — callers manage stop/cancel themselves
 		const myGen = ttsGeneration;
 
-		// Apply user's voice speed preference only to the target language (German)
+		// Apply user's voice speed preference to all paths
 		const prefs = get(preferencesStore);
-		const isTargetLanguage = lang.startsWith('de');
-		const effectiveRate = isTargetLanguage ? rate * prefs.voiceSpeed : rate;
+		const effectiveRate = rate * prefs.voiceSpeed;
 
 		// On mobile: ALL languages → proxy
 		if (isMobile()) {

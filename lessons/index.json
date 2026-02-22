@@ -35,11 +35,7 @@
     { "day": 33, "file": "day-33.json", "title": "Day 33: Technology Problems", "titleFa": "روز ۳۳: مشکلات فناوری", "group": "advanced" },
     { "day": 34, "file": "day-34.json", "title": "Day 34: Enrolling in a Course", "titleFa": "روز ۳۴: ثبت‌نام در یک دوره", "group": "advanced" },
     { "day": 35, "file": "day-35.json", "title": "Day 35: Emergency Situations", "titleFa": "روز ۳۵: موقعیت‌های اضطراری", "group": "advanced" },
-    { "day": 36, "file": "day-36.json", "title": "Day 36: At the Post Office", "titleFa": "روز ۳۶: در اداره پست", "group": "advanced" },
-    { "day": 37, "file": "day-37.json", "title": "Day 37: Joining a Gym", "titleFa": "روز ۳۷: عضویت در باشگاه ورزشی", "group": "advanced" },
-    { "day": 38, "file": "day-38.json", "title": "Day 38: Meeting the Neighbors", "titleFa": "روز ۳۸: آشنایی با همسایه‌ها", "group": "advanced" },
-    { "day": 39, "file": "day-39.json", "title": "Day 39: At the Hairdresser", "titleFa": "روز ۳۹: در آرایشگاه", "group": "advanced" },
-    { "day": 40, "file": "day-40.json", "title": "Day 40: Visiting a Museum", "titleFa": "روز ۴۰: بازدید از موزه", "group": "advanced" }
+    { "day": 36, "file": "day-36.json", "title": "Day 36: At the Post Office", "titleFa": "روز ۳۶: در اداره پست", "group": "advanced" }
   ],
   "glossaryFile": "glossary.json"
 }

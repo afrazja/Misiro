@@ -70,7 +70,7 @@ CREATE POLICY "Users can view own profile"
 CREATE POLICY "Users can insert own profile"
     ON public.user_profiles FOR INSERT WITH CHECK (auth.uid() = id);
 CREATE POLICY "Users can update own profile"
-    ON public.user_profiles FOR UPDATE USING (auth.uid() = id) WITH CHECK (auth.uid() = id);
+    ON public.user_profiles FOR UPDATE USING (auth.uid() = id);
 
 -- user_progress
 CREATE POLICY "Users can view own progress"
@@ -78,7 +78,7 @@ CREATE POLICY "Users can view own progress"
 CREATE POLICY "Users can insert own progress"
     ON public.user_progress FOR INSERT WITH CHECK (auth.uid() = user_id);
 CREATE POLICY "Users can update own progress"
-    ON public.user_progress FOR UPDATE USING (auth.uid() = user_id) WITH CHECK (auth.uid() = user_id);
+    ON public.user_progress FOR UPDATE USING (auth.uid() = user_id);
 
 -- spaced_repetition
 CREATE POLICY "Users can view own SR data"
@@ -86,7 +86,7 @@ CREATE POLICY "Users can view own SR data"
 CREATE POLICY "Users can insert own SR data"
     ON public.spaced_repetition FOR INSERT WITH CHECK (auth.uid() = user_id);
 CREATE POLICY "Users can update own SR data"
-    ON public.spaced_repetition FOR UPDATE USING (auth.uid() = user_id) WITH CHECK (auth.uid() = user_id);
+    ON public.spaced_repetition FOR UPDATE USING (auth.uid() = user_id);
 
 -- exam_results
 CREATE POLICY "Users can view own exam results"
@@ -94,7 +94,7 @@ CREATE POLICY "Users can view own exam results"
 CREATE POLICY "Users can insert own exam results"
     ON public.exam_results FOR INSERT WITH CHECK (auth.uid() = user_id);
 CREATE POLICY "Users can update own exam results"
-    ON public.exam_results FOR UPDATE USING (auth.uid() = user_id) WITH CHECK (auth.uid() = user_id);
+    ON public.exam_results FOR UPDATE USING (auth.uid() = user_id);
 
 -- 3. AUTO-CREATE PROFILE ON SIGNUP
 -- --------------------------------
