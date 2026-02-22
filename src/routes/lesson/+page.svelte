@@ -486,6 +486,23 @@
 									<span style="color:#ccc; font-weight:normal;">
 										{currentTeachStep.language === 'fa' ? '🙈 [مخفی] - گوش کن!' : '🙈 [Hidden] - Listen!'}
 									</span>
+								{:else}
+									{#each words as w, i}
+										<!-- svelte-ignore a11y_interactive_supports_focus -->
+										<span
+											class="interactive-word"
+											class:success={voiceResult && voiceResult.matchedWordIndices?.[i] === true}
+											class:error={voiceResult && voiceResult.isCorrect === false && voiceResult.matchedWordIndices?.[i] === false}
+											role="button"
+											tabindex="0"
+											aria-label="{w.word}{w.meaning ? `, meaning: ${w.meaning}` : ''}"
+											data-meaning={w.meaning || undefined}
+											onclick={(e) => handleWordClick(w.word, w.meaning, e)}
+											onkeydown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); handleWordClick(w.word, w.meaning, e as any); } }}
+										>{w.word}</span>{' '}
+									{/each}
+								{/if}
+							</span>
 						</div>
 						<div class="teach-actions">
 							<button class="btn-replay" onclick={handleSpeakerClick} aria-label="Replay audio">
