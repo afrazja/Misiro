@@ -128,5 +128,10 @@
       "translation": "Here please. We'll send you a confirmation by email.",
       "translationFa": "اینجا لطفاً. یه تأییدیه برای شما ایمیل می‌کنیم."
     }
-  ]
+  ],
+  "difficulty": "B1",
+  "grammarFocus": "Level assessment + Anmelden: Welches Niveau haben Sie? / Ich möchte mich anmelden",
+  "grammarFocusFa": "ارزیابی سطح + Anmelden: Welches Niveau haben Sie? / Ich möchte mich anmelden",
+  "description": "You want to join a language school. Ask about the placement test, class sizes, timetable, and fees.",
+  "descriptionFa": "می‌خواید به یه آموزشگاه زبان بپیوندید. درباره آزمون تعیین سطح، اندازه کلاس، برنامه و هزینه بپرسید."
 }

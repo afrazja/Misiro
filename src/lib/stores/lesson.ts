@@ -7,12 +7,19 @@ export interface Sentence {
 	targetText?: string;
 	translation: string;
 	translationFa?: string;
+	hint?: string;
+	hintFa?: string;
 }
 
 export interface Lesson {
 	title: string;
 	titleFa?: string;
 	sentences: Sentence[];
+	description?: string;
+	descriptionFa?: string;
+	grammarFocus?: string;
+	grammarFocusFa?: string;
+	difficulty?: string;
 }
 
 export interface LessonState {

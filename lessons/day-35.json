@@ -2,15 +2,80 @@
   "title": "Day 35: Asking for Opinions",
   "titleFa": "روز ۳۵: نظرخواهی",
   "sentences": [
-    { "id": 1, "role": "sent", "targetText": "Was denken Sie?", "translation": "What do you think?", "translationFa": "نظرتون چیه؟" },
-    { "id": 2, "role": "sent", "targetText": "Ich mag es.", "translation": "I like it.", "translationFa": "دوستش دارم." },
-    { "id": 3, "role": "sent", "targetText": "Ich mag es nicht.", "translation": "I don't like it.", "translationFa": "دوستش ندارم." },
-    { "id": 4, "role": "received", "audioText": "Wie findest du das?", "translation": "How do you find that?", "translationFa": "نظرت راجع به این چیه؟" },
-    { "id": 5, "role": "sent", "targetText": "Das ist eine gute Idee.", "translation": "That is a good idea.", "translationFa": "ایده خوبیه." },
-    { "id": 6, "role": "sent", "targetText": "Ich bin mir nicht sicher.", "translation": "I am not sure.", "translationFa": "مطمئن نیستم." },
-    { "id": 7, "role": "received", "audioText": "Das denke ich auch.", "translation": "I think so too.", "translationFa": "من هم همین فکر رو می‌کنم." },
-    { "id": 8, "role": "sent", "targetText": "Was denken Sie über dieses Restaurant?", "translation": "What do you think about this restaurant?", "translationFa": "نظرتون درباره این رستوران چیه؟" },
-    { "id": 9, "role": "received", "audioText": "Ich finde es ausgezeichnet. Das Essen ist köstlich.", "translation": "I find it excellent. The food is delicious.", "translationFa": "عالی به نظر می‌رسه. غذا خوشمزه‌ست." },
-    { "id": 10, "role": "sent", "targetText": "Da stimme ich Ihnen zu.", "translation": "I agree with you.", "translationFa": "باهاتون موافقم." }
-  ]
+    {
+      "id": 1,
+      "role": "sent",
+      "targetText": "Was denken Sie?",
+      "translation": "What do you think?",
+      "translationFa": "نظرتون چیه؟"
+    },
+    {
+      "id": 2,
+      "role": "sent",
+      "targetText": "Ich mag es.",
+      "translation": "I like it.",
+      "translationFa": "دوستش دارم."
+    },
+    {
+      "id": 3,
+      "role": "sent",
+      "targetText": "Ich mag es nicht.",
+      "translation": "I don't like it.",
+      "translationFa": "دوستش ندارم."
+    },
+    {
+      "id": 4,
+      "role": "received",
+      "audioText": "Wie findest du das?",
+      "translation": "How do you find that?",
+      "translationFa": "نظرت راجع به این چیه؟"
+    },
+    {
+      "id": 5,
+      "role": "sent",
+      "targetText": "Das ist eine gute Idee.",
+      "translation": "That is a good idea.",
+      "translationFa": "ایده خوبیه."
+    },
+    {
+      "id": 6,
+      "role": "sent",
+      "targetText": "Ich bin mir nicht sicher.",
+      "translation": "I am not sure.",
+      "translationFa": "مطمئن نیستم."
+    },
+    {
+      "id": 7,
+      "role": "received",
+      "audioText": "Das denke ich auch.",
+      "translation": "I think so too.",
+      "translationFa": "من هم همین فکر رو می‌کنم."
+    },
+    {
+      "id": 8,
+      "role": "sent",
+      "targetText": "Was denken Sie über dieses Restaurant?",
+      "translation": "What do you think about this restaurant?",
+      "translationFa": "نظرتون درباره این رستوران چیه؟"
+    },
+    {
+      "id": 9,
+      "role": "received",
+      "audioText": "Ich finde es ausgezeichnet. Das Essen ist köstlich.",
+      "translation": "I find it excellent. The food is delicious.",
+      "translationFa": "عالی به نظر می‌رسه. غذا خوشمزه‌ست."
+    },
+    {
+      "id": 10,
+      "role": "sent",
+      "targetText": "Da stimme ich Ihnen zu.",
+      "translation": "I agree with you.",
+      "translationFa": "باهاتون موافقم."
+    }
+  ],
+  "difficulty": "A2+",
+  "grammarFocus": "Opinion verbs: denken, finden, meinen + Ich stimme zu",
+  "grammarFocusFa": "فعل‌های نظر: denken، finden، meinen + Ich stimme zu",
+  "description": "You're at a new restaurant with a friend. Share opinions about the food and atmosphere.",
+  "descriptionFa": "با یه دوست تو یه رستوران جدید هستید. نظرتون درباره غذا و فضا رو بگید."
 }

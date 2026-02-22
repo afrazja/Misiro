@@ -13,14 +13,19 @@ ALTER TABLE public.user_profiles
 -- 2. LESSONS TABLE (replaces lessons/index.json)
 -- ============================================================
 CREATE TABLE public.lessons (
-  id         UUID DEFAULT gen_random_uuid() PRIMARY KEY,
-  day        INTEGER NOT NULL UNIQUE,
-  title      TEXT NOT NULL,
-  title_fa   TEXT,
-  "group"    TEXT NOT NULL CHECK ("group" IN ('basics','survival','scenarios','advanced')),
-  sort_order INTEGER NOT NULL DEFAULT 0,
-  created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
-  updated_at TIMESTAMPTZ NOT NULL DEFAULT now()
+  id               UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+  day              INTEGER NOT NULL UNIQUE,
+  title            TEXT NOT NULL,
+  title_fa         TEXT,
+  "group"          TEXT NOT NULL CHECK ("group" IN ('basics','survival','scenarios','advanced')),
+  sort_order       INTEGER NOT NULL DEFAULT 0,
+  description      TEXT,
+  description_fa   TEXT,
+  grammar_focus    TEXT,
+  grammar_focus_fa TEXT,
+  difficulty       TEXT CHECK (difficulty IN ('A1','A1+','A2','A2+','B1','B1+')),
+  created_at       TIMESTAMPTZ NOT NULL DEFAULT now(),
+  updated_at       TIMESTAMPTZ NOT NULL DEFAULT now()
 );
 
 CREATE INDEX idx_lessons_day ON public.lessons(day);
@@ -38,6 +43,8 @@ CREATE TABLE public.sentences (
   target_text    TEXT,
   translation    TEXT NOT NULL,
   translation_fa TEXT,
+  hint           TEXT,
+  hint_fa        TEXT,
   created_at     TIMESTAMPTZ NOT NULL DEFAULT now(),
   updated_at     TIMESTAMPTZ NOT NULL DEFAULT now()
 );

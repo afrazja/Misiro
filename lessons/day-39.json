@@ -72,5 +72,10 @@
       "translation": "Thank you very much, Doctor.",
       "translationFa": "خیلی ممنون، آقای دکتر."
     }
-  ]
+  ],
+  "difficulty": "A2+",
+  "grammarFocus": "Seit + dative: Seit wann haben Sie die Schmerzen?",
+  "grammarFocusFa": "seit + حالت مفعولی غیرمستقیم: Seit wann haben Sie die Schmerzen?",
+  "description": "You have an appointment with your GP. Describe your symptoms and receive medical advice.",
+  "descriptionFa": "نوبت پزشک عمومی دارید. علائمتون رو توصیف کنید و توصیه پزشکی بگیرید."
 }

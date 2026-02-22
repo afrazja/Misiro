@@ -2,15 +2,80 @@
   "title": "Day 23: Social Small Talk",
   "titleFa": "روز ۲۳: صحبت‌های اجتماعی",
   "sentences": [
-    { "id": 1, "role": "sent", "targetText": "Woher kommen Sie?", "translation": "Where are you from?", "translationFa": "اهل کجا هستید؟" },
-    { "id": 2, "role": "received", "audioText": "Ich komme aus Deutschland.", "translation": "I come from Germany.", "translationFa": "من اهل آلمان هستم." },
-    { "id": 3, "role": "sent", "targetText": "Wie lange bleiben Sie?", "translation": "How long are you staying?", "translationFa": "چقدر می‌مونید؟" },
-    { "id": 4, "role": "received", "audioText": "Nur für zwei Wochen.", "translation": "Only for two weeks.", "translationFa": "فقط برای دو هفته." },
-    { "id": 5, "role": "sent", "targetText": "Gefällt es Ihnen hier?", "translation": "Do you like it here?", "translationFa": "اینجا رو دوست دارید؟" },
-    { "id": 6, "role": "received", "audioText": "Ja, es ist sehr schön.", "translation": "Yes, it is very beautiful.", "translationFa": "بله، خیلی زیباست." },
-    { "id": 7, "role": "sent", "targetText": "Nett, mit Ihnen zu sprechen.", "translation": "Nice talking to you.", "translationFa": "از صحبت با شما خوشحال شدم." },
-    { "id": 8, "role": "received", "audioText": "Bis bald.", "translation": "See you soon.", "translationFa": "به زودی می‌بینمتون." },
-    { "id": 9, "role": "sent", "targetText": "Was haben Sie hier in der Stadt gemacht?", "translation": "What have you been doing here in the city?", "translationFa": "تو شهر چیکار کردید؟" },
-    { "id": 10, "role": "received", "audioText": "Ich war auf einer Konferenz. Es war sehr interessant.", "translation": "I was at a conference. It was very interesting.", "translationFa": "در یک کنفرانس بودم. خیلی جالب بود." }
-  ]
+    {
+      "id": 1,
+      "role": "sent",
+      "targetText": "Woher kommen Sie?",
+      "translation": "Where are you from?",
+      "translationFa": "اهل کجا هستید؟"
+    },
+    {
+      "id": 2,
+      "role": "received",
+      "audioText": "Ich komme aus Deutschland.",
+      "translation": "I come from Germany.",
+      "translationFa": "من اهل آلمان هستم."
+    },
+    {
+      "id": 3,
+      "role": "sent",
+      "targetText": "Wie lange bleiben Sie?",
+      "translation": "How long are you staying?",
+      "translationFa": "چقدر می‌مونید؟"
+    },
+    {
+      "id": 4,
+      "role": "received",
+      "audioText": "Nur für zwei Wochen.",
+      "translation": "Only for two weeks.",
+      "translationFa": "فقط برای دو هفته."
+    },
+    {
+      "id": 5,
+      "role": "sent",
+      "targetText": "Gefällt es Ihnen hier?",
+      "translation": "Do you like it here?",
+      "translationFa": "اینجا رو دوست دارید؟"
+    },
+    {
+      "id": 6,
+      "role": "received",
+      "audioText": "Ja, es ist sehr schön.",
+      "translation": "Yes, it is very beautiful.",
+      "translationFa": "بله، خیلی زیباست."
+    },
+    {
+      "id": 7,
+      "role": "sent",
+      "targetText": "Nett, mit Ihnen zu sprechen.",
+      "translation": "Nice talking to you.",
+      "translationFa": "از صحبت با شما خوشحال شدم."
+    },
+    {
+      "id": 8,
+      "role": "received",
+      "audioText": "Bis bald.",
+      "translation": "See you soon.",
+      "translationFa": "به زودی می‌بینمتون."
+    },
+    {
+      "id": 9,
+      "role": "sent",
+      "targetText": "Was haben Sie hier in der Stadt gemacht?",
+      "translation": "What have you been doing here in the city?",
+      "translationFa": "تو شهر چیکار کردید؟"
+    },
+    {
+      "id": 10,
+      "role": "received",
+      "audioText": "Ich war auf einer Konferenz. Es war sehr interessant.",
+      "translation": "I was at a conference. It was very interesting.",
+      "translationFa": "در یک کنفرانس بودم. خیلی جالب بود."
+    }
+  ],
+  "difficulty": "A2",
+  "grammarFocus": "Perfekt tense: Wie lange bist du schon hier? / Ich war…",
+  "grammarFocusFa": "زمان گذشته (Perfekt): Wie lange bist du schon hier? / Ich war…",
+  "description": "You're at a party and start chatting with someone you've just met. Make some small talk.",
+  "descriptionFa": "تو یه مهمانی هستید و با یه نفر که تازه باهاش آشنا شدید صحبت می‌کنید."
 }

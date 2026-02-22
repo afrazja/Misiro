@@ -2,15 +2,80 @@
   "title": "Day 55: Review Day",
   "titleFa": "روز ۵۵: روز مرور",
   "sentences": [
-    { "id": 1, "role": "sent", "targetText": "Hallo! Guten Morgen.", "translation": "Hello! Good morning.", "translationFa": "سلام! صبح بخیر." },
-    { "id": 2, "role": "sent", "targetText": "Entschuldigung, können Sie mir helfen?", "translation": "Excuse me, can you help me?", "translationFa": "ببخشید، میتونید کمکم کنید؟" },
-    { "id": 3, "role": "sent", "targetText": "Wie viel kostet das?", "translation": "How much is that?", "translationFa": "قیمتش چنده؟" },
-    { "id": 4, "role": "sent", "targetText": "Wann fährt der nächste Bus?", "translation": "When does the next bus leave?", "translationFa": "اتوبوس بعدی کی حرکت می‌کنه؟" },
-    { "id": 5, "role": "sent", "targetText": "Ich verstehe nicht.", "translation": "I don't understand.", "translationFa": "من نمی‌فهمم." },
-    { "id": 6, "role": "sent", "targetText": "Vielen Dank für Ihre Hilfe.", "translation": "Thank you very much for your help.", "translationFa": "خیلی ممنون از کمکتون." },
-    { "id": 7, "role": "sent", "targetText": "Auf Wiedersehen.", "translation": "Goodbye.", "translationFa": "خداحافظ." },
-    { "id": 8, "role": "received", "audioText": "Darf ich Ihnen helfen?", "translation": "May I help you?", "translationFa": "می‌تونم کمکتون کنم؟" },
-    { "id": 9, "role": "sent", "targetText": "Ich hätte gerne ein Zimmer für eine Nacht.", "translation": "I would like a room for one night.", "translationFa": "یه اتاق برای یه شب می‌خوام." },
-    { "id": 10, "role": "sent", "targetText": "Wo ist der nächste Arzt, bitte?", "translation": "Where is the nearest doctor, please?", "translationFa": "نزدیک‌ترین دکتر کجاست، لطفاً؟" }
-  ]
+    {
+      "id": 1,
+      "role": "sent",
+      "targetText": "Hallo! Guten Morgen.",
+      "translation": "Hello! Good morning.",
+      "translationFa": "سلام! صبح بخیر."
+    },
+    {
+      "id": 2,
+      "role": "sent",
+      "targetText": "Entschuldigung, können Sie mir helfen?",
+      "translation": "Excuse me, can you help me?",
+      "translationFa": "ببخشید، میتونید کمکم کنید؟"
+    },
+    {
+      "id": 3,
+      "role": "sent",
+      "targetText": "Wie viel kostet das?",
+      "translation": "How much is that?",
+      "translationFa": "قیمتش چنده؟"
+    },
+    {
+      "id": 4,
+      "role": "sent",
+      "targetText": "Wann fährt der nächste Bus?",
+      "translation": "When does the next bus leave?",
+      "translationFa": "اتوبوس بعدی کی حرکت می‌کنه؟"
+    },
+    {
+      "id": 5,
+      "role": "sent",
+      "targetText": "Ich verstehe nicht.",
+      "translation": "I don't understand.",
+      "translationFa": "من نمی‌فهمم."
+    },
+    {
+      "id": 6,
+      "role": "sent",
+      "targetText": "Vielen Dank für Ihre Hilfe.",
+      "translation": "Thank you very much for your help.",
+      "translationFa": "خیلی ممنون از کمکتون."
+    },
+    {
+      "id": 7,
+      "role": "sent",
+      "targetText": "Auf Wiedersehen.",
+      "translation": "Goodbye.",
+      "translationFa": "خداحافظ."
+    },
+    {
+      "id": 8,
+      "role": "received",
+      "audioText": "Darf ich Ihnen helfen?",
+      "translation": "May I help you?",
+      "translationFa": "می‌تونم کمکتون کنم؟"
+    },
+    {
+      "id": 9,
+      "role": "sent",
+      "targetText": "Ich hätte gerne ein Zimmer für eine Nacht.",
+      "translation": "I would like a room for one night.",
+      "translationFa": "یه اتاق برای یه شب می‌خوام."
+    },
+    {
+      "id": 10,
+      "role": "sent",
+      "targetText": "Wo ist der nächste Arzt, bitte?",
+      "translation": "Where is the nearest doctor, please?",
+      "translationFa": "نزدیک‌ترین دکتر کجاست، لطفاً؟"
+    }
+  ],
+  "difficulty": "B1",
+  "grammarFocus": "Mixed review: key structures from Days 1–54",
+  "grammarFocusFa": "مرور ترکیبی: ساختارهای کلیدی از روز ۱ تا ۵۴",
+  "description": "A busy day of mixed situations. You'll revisit key phrases and structures from the first 54 lessons.",
+  "descriptionFa": "یه روز پر از موقعیت‌های مختلف. عبارات و ساختارهای کلیدی از ۵۴ درس اول رو مرور می‌کنید."
 }

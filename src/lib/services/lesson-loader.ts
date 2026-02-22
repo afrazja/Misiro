@@ -7,6 +7,13 @@
 import { getSupabaseBrowserClient } from '$lib/supabase/client';
 import type { Lesson, Sentence } from '$stores/lesson';
 import type { Language } from '$stores/preferences';
+import { logError, logWarn } from '$utils/error';
+import {
+	LessonRowSchema,
+	LessonDetailRowSchema,
+	SentenceRowSchema,
+	GlossaryRowSchema
+} from '$lib/schemas';
 
 export interface LessonMeta {
 	day: number;
@@ -35,12 +42,26 @@ export async function getLessonIndex(): Promise<LessonMeta[]> {
 		.order('day', { ascending: true });
 
 	if (error || !data) {
-		console.error('Failed to fetch lesson index:', error?.message);
+		logError('lesson-loader:getLessonIndex', error?.message ?? 'No data returned');
 		indexCache = [];
 		return [];
 	}
 
-	indexCache = data.map((r) => ({
+	const validated = data
+		.map((r, i) => {
+			const result = LessonRowSchema.safeParse(r);
+			if (!result.success) {
+				logWarn(
+					'lesson-loader:getLessonIndex',
+					`Row ${i} failed validation: ${result.error.message}`
+				);
+				return null;
+			}
+			return result.data;
+		})
+		.filter((r): r is NonNullable<typeof r> => r !== null);
+
+	indexCache = validated.map((r) => ({
 		day: r.day,
 		file: `day-${r.day}.json`, // backward-compat shim
 		title: r.title,
@@ -69,37 +90,68 @@ export async function loadLesson(day: number): Promise<Lesson | null> {
 	// Fetch lesson metadata
 	const { data: lessonRow, error: lessonErr } = await sb
 		.from('lessons')
-		.select('id, title, title_fa')
+		.select('id, title, title_fa, description, description_fa, grammar_focus, grammar_focus_fa, difficulty')
 		.eq('day', day)
 		.maybeSingle();
 
 	if (lessonErr || !lessonRow) {
-		console.warn(`No lesson found for day ${day}`);
+		logWarn('lesson-loader:loadLesson', `No lesson found for day ${day}`);
 		return null;
 	}
+
+	const lessonValidation = LessonDetailRowSchema.safeParse(lessonRow);
+	if (!lessonValidation.success) {
+		logError(
+			'lesson-loader:loadLesson',
+			`Lesson row for day ${day} failed validation: ${lessonValidation.error.message}`
+		);
+		return null;
+	}
+	const validatedLesson = lessonValidation.data;
 
 	// Fetch sentences ordered by sentence_order
 	const { data: sentenceRows, error: sentErr } = await sb
 		.from('sentences')
-		.select('sentence_order, role, audio_text, target_text, translation, translation_fa')
+		.select('sentence_order, role, audio_text, target_text, translation, translation_fa, hint, hint_fa')
 		.eq('lesson_id', lessonRow.id)
 		.order('sentence_order', { ascending: true });
 
 	if (sentErr) {
-		console.error(`Failed to fetch sentences for day ${day}:`, sentErr.message);
+		logError('lesson-loader:loadLesson', `Failed to fetch sentences for day ${day}: ${sentErr.message}`);
 		return null;
 	}
 
+	const validatedSentences = (sentenceRows ?? [])
+		.map((s, i) => {
+			const result = SentenceRowSchema.safeParse(s);
+			if (!result.success) {
+				logWarn(
+					'lesson-loader:loadLesson',
+					`Sentence ${i} for day ${day} failed validation: ${result.error.message}`
+				);
+				return null;
+			}
+			return result.data;
+		})
+		.filter((s): s is NonNullable<typeof s> => s !== null);
+
 	const lesson: Lesson = {
-		title: lessonRow.title,
-		titleFa: lessonRow.title_fa ?? undefined,
-		sentences: (sentenceRows ?? []).map((s) => ({
+		title: validatedLesson.title,
+		titleFa: validatedLesson.title_fa ?? undefined,
+		description: validatedLesson.description ?? undefined,
+		descriptionFa: validatedLesson.description_fa ?? undefined,
+		grammarFocus: validatedLesson.grammar_focus ?? undefined,
+		grammarFocusFa: validatedLesson.grammar_focus_fa ?? undefined,
+		difficulty: validatedLesson.difficulty ?? undefined,
+		sentences: validatedSentences.map((s) => ({
 			id: s.sentence_order + 1, // 1-based to match original JSON format
-			role: s.role as 'received' | 'sent',
+			role: s.role,
 			audioText: s.audio_text ?? undefined,
 			targetText: s.target_text ?? undefined,
 			translation: s.translation,
-			translationFa: s.translation_fa ?? undefined
+			translationFa: s.translation_fa ?? undefined,
+			hint: s.hint ?? undefined,
+			hintFa: s.hint_fa ?? undefined
 		}))
 	};
 
@@ -138,13 +190,21 @@ export async function loadGlossary(): Promise<Record<string, { en: string; fa: s
 	const { data, error } = await sb.from('glossary').select('word, en, fa');
 
 	if (error) {
-		console.error('Failed to load glossary:', error.message);
+		logError('lesson-loader:loadGlossary', error.message);
 		return {};
 	}
 
 	glossaryCache = {};
 	for (const row of data ?? []) {
-		glossaryCache[row.word] = { en: row.en, fa: row.fa };
+		const result = GlossaryRowSchema.safeParse(row);
+		if (!result.success) {
+			logWarn(
+				'lesson-loader:loadGlossary',
+				`Glossary row for word "${(row as { word?: unknown }).word}" failed validation: ${result.error.message}`
+			);
+			continue;
+		}
+		glossaryCache[result.data.word] = { en: result.data.en, fa: result.data.fa };
 	}
 
 	return glossaryCache;

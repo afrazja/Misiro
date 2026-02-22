@@ -72,5 +72,10 @@
       "translation": "Thank you very much!",
       "translationFa": "خیلی ممنون!"
     }
-  ]
+  ],
+  "difficulty": "A1+",
+  "grammarFocus": "Compound nouns: Gepäckaufgabe, Sicherheitskontrolle, Abfluggate",
+  "grammarFocusFa": "اسم‌های مرکب: Gepäckaufgabe، Sicherheitskontrolle، Abfluggate",
+  "description": "You're checking in for your flight. Navigate check-in, baggage drop-off, and finding your gate.",
+  "descriptionFa": "دارید برای پروازتون چک‌این می‌کنید. چک‌این، تحویل بار و پیدا کردن گیت رو مدیریت کنید."
 }

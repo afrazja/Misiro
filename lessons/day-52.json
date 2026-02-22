@@ -128,5 +128,10 @@
       "translation": "Perfect. Here is your tracking number. You can track the package online.",
       "translationFa": "عالی. اینم شماره رهگیری شما. می‌تونید بسته رو آنلاین ردیابی کنید."
     }
-  ]
+  ],
+  "difficulty": "B1",
+  "grammarFocus": "Weight and dimensions + Customs vocabulary: Zollformular, versichern",
+  "grammarFocusFa": "وزن و ابعاد + واژگان گمرک: Zollformular، versichern",
+  "description": "You need to send a parcel to Iran. Weigh it, fill in the customs form, and choose a delivery option.",
+  "descriptionFa": "باید یه بسته به ایران بفرستید. وزن کنید، فرم گمرک پر کنید و گزینه ارسال رو انتخاب کنید."
 }

@@ -72,5 +72,10 @@
       "translation": "A still mineral water, please.",
       "translationFa": "یه آب معدنی بدون گاز، لطفاً."
     }
-  ]
+  ],
+  "difficulty": "A2+",
+  "grammarFocus": "Negation with kein: Ich esse kein Fleisch / keine Milch",
+  "grammarFocusFa": "نفی با kein: Ich esse kein Fleisch / keine Milch",
+  "description": "You're at a restaurant with dietary restrictions. Make sure the waiter fully understands your needs.",
+  "descriptionFa": "تو رستوران هستید و محدودیت غذایی دارید. مطمئن بشید که گارسون کاملاً نیازهاتون رو می‌فهمه."
 }

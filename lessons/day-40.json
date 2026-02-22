@@ -72,5 +72,10 @@
       "translation": "That's 15 Euro.",
       "translationFa": "میشه ۱۵ یورو."
     }
-  ]
+  ],
+  "difficulty": "A2+",
+  "grammarFocus": "Haben Sie etwas gegen…? + Dosierung/Einnahme instructions",
+  "grammarFocusFa": "Haben Sie etwas gegen…? + دستورالعمل دوز/مصرف",
+  "description": "You have a cold and need something from the pharmacy. Describe symptoms and ask for a remedy.",
+  "descriptionFa": "سرما خوردید و از داروخانه چیزی نیاز دارید. علائم رو بگید و داروی مناسب بخواید."
 }

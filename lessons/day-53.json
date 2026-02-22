@@ -121,5 +121,10 @@
       "translation": "Thank you. Until Friday then!",
       "translationFa": "ممنون. پس تا جمعه!"
     }
-  ]
+  ],
+  "difficulty": "B1",
+  "grammarFocus": "Vehicle class + Insurance: Vollkasko, Teilkasko + Rückgabe",
+  "grammarFocusFa": "کلاس خودرو + بیمه: Vollkasko، Teilkasko + Rückgabe",
+  "description": "You're at a car rental counter at the airport. Choose a vehicle class and sort out insurance.",
+  "descriptionFa": "تو باجه اجاره خودرو در فرودگاه هستید. کلاس خودرو رو انتخاب کنید و بیمه رو مرتب کنید."
 }

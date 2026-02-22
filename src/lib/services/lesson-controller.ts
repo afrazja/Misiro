@@ -21,10 +21,9 @@ import {
 	loadGlossary,
 	getLesson,
 	getLessonIndex,
-	getAllLoadedLessons,
 	hasLesson
 } from '$services/lesson-loader';
-import { getLanguage, getVoiceSpeed, getCompletedLessons, saveProgress, saveCompletedLessons } from '$services/data-layer';
+import { getLanguage, getVoiceSpeed, getCompletedLessons, getProgress, saveProgress, saveCompletedLessons } from '$services/data-layer';
 import { recordSRAttempt, getDueReviewItems } from '$services/spaced-repetition';
 import { playAudioPromise, stopAllAudio } from '$services/tts';
 import { playTone } from '$services/audio-context';
@@ -32,6 +31,7 @@ import { matchVoiceInput } from '$utils/text-matching';
 import { getTranslation, getTranslationLang } from '$utils/i18n';
 import { wait } from '$utils/wait';
 import { saveExamResult } from '$services/data-layer';
+import { logError } from '$utils/error';
 
 // ============ EVENT CALLBACKS ============
 // The controller emits events via callbacks that the Svelte page listens to.
@@ -56,6 +56,9 @@ export interface TeachStepData {
 	translationText: string;
 	language: Language;
 	isBlindMode: boolean;
+	role: 'received' | 'sent';
+	hint?: string;
+	hintFa?: string;
 }
 
 export interface CompletionCardData {
@@ -121,6 +124,7 @@ export function isDayUnlocked(day: number): boolean {
 // ============ INITIALIZATION ============
 
 export async function initLesson(): Promise<void> {
+	try {
 	// Load saved language preference
 	const savedLang = await getLanguage();
 	if (savedLang === 'fa' || savedLang === 'en') {
@@ -133,28 +137,40 @@ export async function initLesson(): Promise<void> {
 		preferencesStore.update((s) => ({ ...s, voiceSpeed: savedSpeed }));
 	}
 
-	// Load completed lessons
-	const completedLessons = await getCompletedLessons();
-	const loadedLessons = getAllLoadedLessons();
+	// Load index, saved progress, and completed lessons in parallel.
+	// getLessonIndex() must run before hasLesson() — it populates the index cache.
+	const [, savedProgress, completedLessons] = await Promise.all([
+		getLessonIndex(),
+		getProgress(),
+		getCompletedLessons()
+	]);
 
-	// Determine current day
+	// Determine current day and sentence index.
 	let currentDay = 1;
 	let currentSentenceIndex = 0;
-	const completedDays = Object.keys(completedLessons || {})
-		.map(Number)
-		.filter((d) => hasLesson(d));
 
-	if (completedDays.length > 0) {
-		const lastCompletedDay = Math.max(...completedDays);
-		const nextDay = lastCompletedDay + 1;
-		if (hasLesson(nextDay)) {
-			currentDay = nextDay;
-			currentSentenceIndex = 0;
-		} else {
-			currentDay = lastCompletedDay;
-			// Will show completion card
-			const lesson = getLesson(lastCompletedDay);
-			currentSentenceIndex = lesson ? lesson.sentences.length : 0;
+	if (savedProgress && hasLesson(savedProgress.currentDay)) {
+		// Primary: restore exactly where the user left off mid-lesson.
+		currentDay = savedProgress.currentDay;
+		currentSentenceIndex = savedProgress.currentSentenceIndex;
+	} else {
+		// Fallback: infer position from completed lessons (new user or missing progress).
+		const completedDays = Object.keys(completedLessons || {})
+			.map(Number)
+			.filter((d) => hasLesson(d));
+
+		if (completedDays.length > 0) {
+			const lastCompletedDay = Math.max(...completedDays);
+			const nextDay = lastCompletedDay + 1;
+			if (hasLesson(nextDay)) {
+				currentDay = nextDay;
+				currentSentenceIndex = 0;
+			} else {
+				currentDay = lastCompletedDay;
+				// Will show completion card
+				const lesson = getLesson(lastCompletedDay);
+				currentSentenceIndex = lesson ? lesson.sentences.length : 0;
+			}
 		}
 	}
 
@@ -175,6 +191,13 @@ export async function initLesson(): Promise<void> {
 		glossary: glossary || {},
 		isLoading: false
 	}));
+	} catch (e) {
+		logError('lesson-controller:initLesson', e);
+		lessonStore.update((s) => ({ ...s, isLoading: false }));
+		callbacks?.onSystemMessage(
+			'Failed to load lesson data. Please check your connection and refresh.'
+		);
+	}
 }
 
 // ============ LESSON FLOW ============
@@ -206,7 +229,10 @@ export async function processNextStep(skipAudio = false): Promise<void> {
 		germanText,
 		translationText,
 		language: prefs.language,
-		isBlindMode: prefs.blindMode
+		isBlindMode: prefs.blindMode,
+		role: currentStep.role,
+		hint: currentStep.hint,
+		hintFa: currentStep.hintFa
 	});
 
 	if (!skipAudio) {

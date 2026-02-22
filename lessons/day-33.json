@@ -72,5 +72,10 @@
       "translation": "My number is 0176 1234567.",
       "translationFa": "شماره‌م ۰۱۷۶ ۱۲۳۴۵۶۷ هست."
     }
-  ]
+  ],
+  "difficulty": "A2+",
+  "grammarFocus": "Phone phrases: Hier spricht… / Kann ich… sprechen? / Ich rufe zurück",
+  "grammarFocusFa": "عبارات تلفنی: Hier spricht… / Kann ich… sprechen? / Ich rufe zurück",
+  "description": "You need to speak to someone at a company. Call them, navigate the receptionist, and leave a message.",
+  "descriptionFa": "باید با یه نفر توی یه شرکت صحبت کنید. زنگ بزنید، از پذیرش عبور کنید و پیام بذارید."
 }

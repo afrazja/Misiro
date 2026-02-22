@@ -2,12 +2,59 @@
   "title": "Day 14: Asking Directions (Advanced)",
   "titleFa": "روز ۱۴: پرسیدن مسیر (پیشرفته)",
   "sentences": [
-    { "id": 1, "role": "received", "audioText": "Können Sie mir sagen, wie ich zur Post komme?", "translation": "Can you tell me how to get to the post office?", "translationFa": "می‌تونید بگید چطور به پست برم؟" },
-    { "id": 2, "role": "sent", "targetText": "Biegen Sie links ab.", "translation": "Turn left.", "translationFa": "به چپ بپیچید." },
-    { "id": 3, "role": "sent", "targetText": "Biegen Sie rechts ab.", "translation": "Turn right.", "translationFa": "به راست بپیچید." },
-    { "id": 4, "role": "sent", "targetText": "Es ist nah.", "translation": "It is near.", "translationFa": "نزدیکه." },
-    { "id": 5, "role": "sent", "targetText": "Es ist weit.", "translation": "It is far.", "translationFa": "دوره." },
-    { "id": 6, "role": "sent", "targetText": "Es ist gegenüber von der Bank.", "translation": "It is across from the bank.", "translationFa": "روبروی بانکه." },
-    { "id": 7, "role": "sent", "targetText": "Es ist neben dem Hotel.", "translation": "It is next to the hotel.", "translationFa": "کنار هتله." }
-  ]
+    {
+      "id": 1,
+      "role": "received",
+      "audioText": "Können Sie mir sagen, wie ich zur Post komme?",
+      "translation": "Can you tell me how to get to the post office?",
+      "translationFa": "می‌تونید بگید چطور به پست برم؟"
+    },
+    {
+      "id": 2,
+      "role": "sent",
+      "targetText": "Biegen Sie links ab.",
+      "translation": "Turn left.",
+      "translationFa": "به چپ بپیچید."
+    },
+    {
+      "id": 3,
+      "role": "sent",
+      "targetText": "Biegen Sie rechts ab.",
+      "translation": "Turn right.",
+      "translationFa": "به راست بپیچید."
+    },
+    {
+      "id": 4,
+      "role": "sent",
+      "targetText": "Es ist nah.",
+      "translation": "It is near.",
+      "translationFa": "نزدیکه."
+    },
+    {
+      "id": 5,
+      "role": "sent",
+      "targetText": "Es ist weit.",
+      "translation": "It is far.",
+      "translationFa": "دوره."
+    },
+    {
+      "id": 6,
+      "role": "sent",
+      "targetText": "Es ist gegenüber von der Bank.",
+      "translation": "It is across from the bank.",
+      "translationFa": "روبروی بانکه."
+    },
+    {
+      "id": 7,
+      "role": "sent",
+      "targetText": "Es ist neben dem Hotel.",
+      "translation": "It is next to the hotel.",
+      "translationFa": "کنار هتله."
+    }
+  ],
+  "difficulty": "A1+",
+  "grammarFocus": "Location prepositions: neben, gegenüber, an der, in der Nähe von",
+  "grammarFocusFa": "حروف اضافه مکان: neben، gegenüber، an der، in der Nähe von",
+  "description": "You're looking for the post office in a complex area. Get more detailed directions using landmarks.",
+  "descriptionFa": "دارید دنبال اداره پست تو یه منطقه پیچیده می‌گردید. مسیر دقیق‌تر با نشانه‌های محلی بگیرید."
 }

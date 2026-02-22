@@ -72,5 +72,10 @@
       "translation": "Please enter your PIN.",
       "translationFa": "لطفاً رمزتون رو وارد کنید."
     }
-  ]
+  ],
+  "difficulty": "A2",
+  "grammarFocus": "Accusative with finden: Wo finde ich den/die/das…?",
+  "grammarFocusFa": "حالت مفعولی مستقیم با finden: Wo finde ich den/die/das…?",
+  "description": "You're at the supermarket but can't find what you need. Ask a staff member for help.",
+  "descriptionFa": "تو سوپرمارکت هستید ولی چیزی که نیاز دارید رو پیدا نمی‌کنید. از یه کارمند کمک بخواید."
 }

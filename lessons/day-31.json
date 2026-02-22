@@ -72,5 +72,10 @@
       "translation": "That works for me.",
       "translationFa": "برام مناسبه."
     }
-  ]
+  ],
+  "difficulty": "A2",
+  "grammarFocus": "Decision making: Ich nehme das / Ich muss noch überlegen",
+  "grammarFocusFa": "تصمیم‌گیری: Ich nehme das / Ich muss noch überlegen",
+  "description": "You're in a shop and can't quite decide between two items. Think out loud and finally choose.",
+  "descriptionFa": "تو یه مغازه هستید و بین دو چیز نمی‌تونید تصمیم بگیرید. با خودتون فکر کنید و انتخاب کنید."
 }

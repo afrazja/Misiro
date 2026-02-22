@@ -72,5 +72,10 @@
       "translation": "You're welcome. Goodbye.",
       "translationFa": "خواهش می‌کنم. خداحافظ."
     }
-  ]
+  ],
+  "difficulty": "A1+",
+  "grammarFocus": "Imperative directions: Gehen Sie geradeaus / links / rechts",
+  "grammarFocusFa": "جملات امری مسیر: Gehen Sie geradeaus / links / rechts",
+  "description": "You need to find a pharmacy in an unfamiliar neighborhood. Ask a passerby for simple directions.",
+  "descriptionFa": "باید یه داروخانه تو محله ناآشنا پیدا کنید. از یه رهگذر مسیر ساده بخواید."
 }

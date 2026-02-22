@@ -72,5 +72,10 @@
       "translation": "I don't have cash.",
       "translationFa": "پول نقد ندارم."
     }
-  ]
+  ],
+  "difficulty": "A2",
+  "grammarFocus": "Interrogative: Wie viel kostet…? + Ich zahle bar/mit Karte",
+  "grammarFocusFa": "پرسشی: Wie viel kostet…? + Ich zahle bar/mit Karte",
+  "description": "You're shopping at a weekend market. Ask about prices and pay for your items.",
+  "descriptionFa": "دارید تو یه بازار آخر هفته خرید می‌کنید. درباره قیمت‌ها بپرسید و پول بدید."
 }

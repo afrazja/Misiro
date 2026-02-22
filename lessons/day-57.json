@@ -114,5 +114,10 @@
       "translation": "We'll send you an SMS as soon as it's fixed.",
       "translationFa": "به محض اینکه درست شد، براتون SMS میفرستیم."
     }
-  ]
+  ],
+  "difficulty": "B1+",
+  "grammarFocus": "Troubleshooting: Können Sie…neustarten? + Seit wann? / Störungsbereich",
+  "grammarFocusFa": "عیب‌یابی: Können Sie…neustarten? + Seit wann? / Störungsbereich",
+  "description": "Your internet has gone down and you've been without connection for hours. Call the provider for help.",
+  "descriptionFa": "اینترنتتون قطع شده و چند ساعته بدون اتصال هستید. با ارائه‌دهنده تماس بگیرید."
 }

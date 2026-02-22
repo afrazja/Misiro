@@ -58,5 +58,10 @@
       "translation": "Yes, that is clear now.",
       "translationFa": "بله، الان کاملاً روشنه."
     }
-  ]
+  ],
+  "difficulty": "A1+",
+  "grammarFocus": "Imperative: Bitte langsamer! / Wiederholen Sie!",
+  "grammarFocusFa": "امری: Bitte langsamer! / Wiederholen Sie!",
+  "description": "Someone is speaking too fast for you to understand. Ask them to slow down and repeat.",
+  "descriptionFa": "یه نفر خیلی سریع صحبت می‌کنه. ازشون بخواید کندتر بگن و تکرار کنن."
 }

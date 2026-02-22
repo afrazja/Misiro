@@ -38,6 +38,7 @@
 	let chatMessages: ChatMessage[] = $state([]);
 	let answerLineHtml = $state('<span class="placeholder-text">Tap words to reply...</span>');
 	let currentTeachStep: TeachStepData | null = $state(null);
+	let showHint = $state(false);
 	let completionData: CompletionCardData | null = $state(null);
 	let examQuestionData: ExamQuestionData | null = $state(null);
 	let examResultsData: ExamResultsData | null = $state(null);
@@ -69,6 +70,21 @@
 		}
 		const parts = l.title.split(': ');
 		return parts.length > 1 ? parts[1] : l.title;
+	});
+
+	const scenarioDescription = $derived(() => {
+		if (!lesson.currentLesson) return null;
+		const l = lesson.currentLesson;
+		if (prefs.language === 'fa' && l.descriptionFa) return l.descriptionFa;
+		return l.description ?? null;
+	});
+
+	const lessonDifficulty = $derived(() => lesson.currentLesson?.difficulty ?? null);
+	const lessonGrammarFocus = $derived(() => {
+		if (!lesson.currentLesson) return null;
+		const l = lesson.currentLesson;
+		if (prefs.language === 'fa' && l.grammarFocusFa) return l.grammarFocusFa;
+		return l.grammarFocus ?? null;
 	});
 
 	let lessonIndex = $state<LessonMeta[]>([]);
@@ -138,6 +154,7 @@
 		setCallbacks({
 			onTeachStep(data) {
 				currentTeachStep = data;
+				showHint = false;
 				completionData = null;
 				examQuestionData = null;
 				examResultsData = null;
@@ -400,7 +417,14 @@
 				<div class="avatar-circle">☕️</div>
 				<div class="header-info">
 					<h3>{scenarioTitle()}</h3>
-					<span class="status">Online</span>
+					<div class="lesson-meta-tags">
+						{#if lessonDifficulty()}
+							<span class="difficulty-badge difficulty-{lessonDifficulty()?.replace('+', 'plus')}">{lessonDifficulty()}</span>
+						{/if}
+						{#if lessonGrammarFocus()}
+							<span class="grammar-tag">📝 {lessonGrammarFocus()}</span>
+						{/if}
+					</div>
 				</div>
 			</div>
 
@@ -417,6 +441,13 @@
 			<!-- Message History -->
 			<div class="chat-history" bind:this={chatHistoryEl} role="log" aria-live="polite" aria-label="Chat history">
 				<div class="date-divider">Today</div>
+
+				<!-- Scenario Description -->
+				{#if scenarioDescription() && !exam.isExamMode}
+					<div class="scenario-description" dir={prefs.language === 'fa' ? 'rtl' : 'ltr'}>
+						🎬 {scenarioDescription()}
+					</div>
+				{/if}
 
 				{#each systemMessages as msg}
 					<div class="message system">
@@ -508,10 +539,22 @@
 							<button class="btn-replay" onclick={handleSpeakerClick} aria-label="Replay audio">
 								🔊 {currentTeachStep.language === 'fa' ? 'دوباره' : 'Replay'}
 							</button>
+							{#if currentTeachStep.role === 'sent' && (currentTeachStep.hint || currentTeachStep.hintFa)}
+								<button class="btn-hint" onclick={() => showHint = !showHint} aria-label="Toggle hint">
+									💡 {currentTeachStep.language === 'fa' ? 'راهنما' : 'Hint'}
+								</button>
+							{/if}
 							<button class="btn-inline-next" onclick={() => manualNext()}>
 								{currentTeachStep.language === 'fa' ? 'بعدی ←' : 'Next ➡'}
 							</button>
 						</div>
+						{#if showHint && currentTeachStep.role === 'sent'}
+							<div class="hint-text" dir={currentTeachStep.language === 'fa' ? 'rtl' : 'ltr'}>
+								{currentTeachStep.language === 'fa' && currentTeachStep.hintFa
+									? currentTeachStep.hintFa
+									: currentTeachStep.hint ?? ''}
+							</div>
+						{/if}
 					</div>
 				{/if}
 
@@ -1088,6 +1131,86 @@
 	.btn-replay:hover {
 		background: #075e54;
 		color: white;
+	}
+
+	/* Hint button */
+	.btn-hint {
+		padding: 6px 16px;
+		border-radius: 20px;
+		border: 2px solid #f57c00;
+		background: transparent;
+		color: #f57c00;
+		font-size: 0.85rem;
+		cursor: pointer;
+		transition: all 0.2s ease;
+		white-space: nowrap;
+	}
+
+	.btn-hint:hover {
+		background: #f57c00;
+		color: white;
+	}
+
+	.hint-text {
+		margin-top: 8px;
+		padding: 8px 12px;
+		background: rgba(245, 124, 0, 0.12);
+		border-left: 3px solid #f57c00;
+		border-radius: 6px;
+		font-size: 0.85rem;
+		color: #7f4400;
+		line-height: 1.5;
+	}
+
+	/* Scenario description */
+	.scenario-description {
+		background: rgba(7, 94, 84, 0.08);
+		border-left: 3px solid #075e54;
+		border-radius: 8px;
+		padding: 10px 14px;
+		margin: 8px 0 12px;
+		font-size: 0.85rem;
+		color: #333;
+		line-height: 1.5;
+	}
+
+	/* Lesson meta tags (difficulty + grammar focus) */
+	.lesson-meta-tags {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 6px;
+		margin-top: 4px;
+	}
+
+	.difficulty-badge {
+		display: inline-block;
+		padding: 2px 8px;
+		border-radius: 10px;
+		font-size: 0.7rem;
+		font-weight: bold;
+		letter-spacing: 0.5px;
+		color: white;
+	}
+
+	/* CEFR level colours */
+	.difficulty-A1    { background: #43a047; }
+	.difficulty-A1plus { background: #2e7d32; }
+	.difficulty-A2    { background: #1976d2; }
+	.difficulty-A2plus { background: #1565c0; }
+	.difficulty-B1    { background: #7b1fa2; }
+	.difficulty-B1plus { background: #4a148c; }
+
+	.grammar-tag {
+		display: inline-block;
+		padding: 2px 10px;
+		border-radius: 10px;
+		font-size: 0.7rem;
+		background: rgba(255,255,255,0.2);
+		color: white;
+		max-width: 220px;
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
 	}
 
 	/* Script Panel */
