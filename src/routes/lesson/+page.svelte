@@ -404,6 +404,16 @@
 				</div>
 			</div>
 
+			<!-- Lesson Progress Bar -->
+			{#if lesson.currentLesson && !exam.isExamMode}
+				{@const total = lesson.currentLesson.sentences.length}
+				{@const current = Math.min(app.currentSentenceIndex, total)}
+				<div class="lesson-progress">
+					<div class="lesson-progress-fill" style="width: {total > 0 ? Math.round((current / total) * 100) : 0}%"></div>
+					<span class="lesson-progress-text">{current} / {total}</span>
+				</div>
+			{/if}
+
 			<!-- Message History -->
 			<div class="chat-history" bind:this={chatHistoryEl} role="log" aria-live="polite" aria-label="Chat history">
 				<div class="date-divider">Today</div>
@@ -456,6 +466,13 @@
 					</div>
 				{/if}
 
+				<!-- Correct Feedback Banner -->
+				{#if voiceResult?.isCorrect}
+					<div class="correct-banner">
+						{prefs.language === 'fa' ? '✅ آفرین!' : '✅ Correct!'}
+					</div>
+				{/if}
+
 				<!-- Teach Bubble -->
 				{#if currentTeachStep}
 					{@const words = createInteractiveWords(currentTeachStep.germanText)}
@@ -464,37 +481,16 @@
 							{currentTeachStep.translationText}
 						</div>
 						<div class="german-line">
-							<!-- svelte-ignore a11y_interactive_supports_focus -->
-							<span
-								class="speaker-icon"
-								role="button"
-								aria-label="Play full sentence audio"
-								onclick={handleSpeakerClick}
-								onkeydown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); handleSpeakerClick(); } }}
-								tabindex="0"
-							>🔊</span>
 							<span class="teach-text">
 								{#if currentTeachStep.isBlindMode}
 									<span style="color:#ccc; font-weight:normal;">
 										{currentTeachStep.language === 'fa' ? '🙈 [مخفی] - گوش کن!' : '🙈 [Hidden] - Listen!'}
 									</span>
-								{:else}
-									{#each words as w, i}
-										<!-- svelte-ignore a11y_interactive_supports_focus -->
-										<span
-											class="interactive-word"
-											class:success={voiceResult && voiceResult.matchedWordIndices?.[i] === true}
-											class:error={voiceResult && voiceResult.isCorrect === false && voiceResult.matchedWordIndices?.[i] === false}
-											role="button"
-											tabindex="0"
-											aria-label="{w.word}{w.meaning ? `, meaning: ${w.meaning}` : ''}"
-											data-meaning={w.meaning || undefined}
-											onclick={(e) => handleWordClick(w.word, w.meaning, e)}
-											onkeydown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); handleWordClick(w.word, w.meaning, e as any); } }}
-										>{w.word}</span>{' '}
-									{/each}
-								{/if}
-							</span>
+						</div>
+						<div class="teach-actions">
+							<button class="btn-replay" onclick={handleSpeakerClick} aria-label="Replay audio">
+								🔊 {currentTeachStep.language === 'fa' ? 'دوباره' : 'Replay'}
+							</button>
 							<button class="btn-inline-next" onclick={() => manualNext()}>
 								{currentTeachStep.language === 'fa' ? 'بعدی ←' : 'Next ➡'}
 							</button>
@@ -1009,6 +1005,72 @@
 		50% {
 			transform: scale(1.1);
 		}
+	}
+
+	/* Lesson Progress Bar */
+	.lesson-progress {
+		position: relative;
+		height: 4px;
+		background: rgba(255,255,255,0.2);
+		overflow: visible;
+		display: flex;
+		align-items: center;
+	}
+
+	.lesson-progress-fill {
+		height: 100%;
+		background: #25d366;
+		transition: width 0.4s ease;
+		border-radius: 0 2px 2px 0;
+	}
+
+	.lesson-progress-text {
+		position: absolute;
+		right: 10px;
+		font-size: 0.7rem;
+		color: rgba(255,255,255,0.8);
+		font-weight: 600;
+		white-space: nowrap;
+	}
+
+	/* Correct Feedback Banner */
+	.correct-banner {
+		text-align: center;
+		padding: 8px 16px;
+		background: #e8f5e9;
+		color: #2e7d32;
+		font-weight: 700;
+		font-size: 1rem;
+		border-radius: 20px;
+		margin: 4px auto;
+		width: fit-content;
+		animation: popIn 0.2s ease-out;
+	}
+
+	/* Teach Actions Row */
+	.teach-actions {
+		display: flex;
+		gap: 8px;
+		margin-top: 8px;
+		flex-wrap: wrap;
+	}
+
+	.btn-replay {
+		padding: 6px 16px;
+		border-radius: 20px;
+		border: 2px solid #075e54;
+		background: transparent;
+		color: #075e54;
+		cursor: pointer;
+		font-weight: bold;
+		font-size: 0.95em;
+		transition: all 0.2s ease;
+		white-space: nowrap;
+	}
+
+	.btn-replay:hover {
+		background: #075e54;
+		color: white;
 	}
 
 	/* Script Panel */
