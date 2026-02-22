@@ -2,9 +2,6 @@
 	import { onMount } from 'svelte';
 	import { page } from '$app/stores';
 	import { goto } from '$app/navigation';
-	import { authStore } from '$stores/auth';
-	import { preferencesStore } from '$stores/preferences';
-	import type { Language } from '$stores/preferences';
 	import * as auth from '$services/auth';
 	import * as dataLayer from '$services/data-layer';
 	import { initSyncListeners } from '$services/sync-queue';
@@ -21,9 +18,6 @@
 	// Confirmation toast
 	let showConfirmToast = $state(false);
 
-	// Language
-	let language = $state<Language>('en');
-
 	// Profile
 	let displayName = $state('Learner');
 	let avatarUrl = $state<string | null>(null);
@@ -36,20 +30,7 @@
 	let modalEl: HTMLDivElement | undefined = $state();
 	let emailInput: HTMLInputElement | undefined = $state();
 
-	// i18n content for the app-section cards
-	const content = $derived({
-		langLabel: language === 'fa' ? 'زبان اول شما چیست؟' : 'What is your first language?',
-		lessonsTitle: language === 'fa' ? 'درس‌های روزانه' : 'Daily Lessons',
-		lessonsDesc:
-			language === 'fa'
-				? 'مکالمات واقعی آلمانی را تمرین کنید. هر روز سناریوهای جدید مثل سفارش در کافه، پرسیدن مسیر و موارد دیگر.'
-				: 'Practice real-world conversations in German. Each day brings new scenarios like ordering at a café, asking for directions, and more.',
-		basicsTitle: language === 'fa' ? 'مبانی آلمانی' : 'German Basics',
-		basicsDesc:
-			language === 'fa'
-				? 'یادگیری اصول اولیه: ضمایر، حروف تعریف، قیدها، اعداد، رنگ‌ها و روزهای هفته. ابتدا پایه‌ها را محکم کنید!'
-				: 'Learn essential building blocks: pronouns, articles, adverbs, numbers, colors, and days of the week. Master the fundamentals first!'
-	});
+	// No i18n needed on landing page — content is English only
 
 	function openSignUp() {
 		authMode = 'signup';
@@ -101,6 +82,8 @@
 				if (user) await auth.ensureProfile(user);
 				await updateProfileUI();
 				await dataLayer.syncOnLogin();
+				// After auth, send user to the app home page
+				goto('/home');
 			}
 		} catch (e: any) {
 			authError = e.message || 'An error occurred.';
@@ -178,14 +161,6 @@
 			setTimeout(() => (showConfirmToast = false), 5000);
 			goto('/', { replaceState: true });
 		}
-		const savedLang = await dataLayer.getLanguage();
-		if (savedLang) {
-			language = savedLang as Language;
-		} else {
-			const browserLang = navigator.language || 'en';
-			language = browserLang.startsWith('fa') ? 'fa' : 'en';
-		}
-		preferencesStore.update((s) => ({ ...s, language }));
 		await updateProfileUI();
 	});
 </script>
@@ -297,7 +272,7 @@
 	<div class="navbar-right">
 		{#if isAuthenticated}
 			<span class="nav-greeting">Hi, {displayName.split(' ')[0]} 👋</span>
-			<a href="/lesson" class="btn btn-primary">Continue Learning</a>
+			<a href="/home" class="btn btn-primary">Go to App</a>
 			<button class="btn btn-ghost" onclick={handleSignOut}>Sign Out</button>
 			<a href="/settings" class="nav-avatar-link" title="Settings">
 				<div class="nav-avatar">
@@ -336,8 +311,7 @@
 		</p>
 		<div class="hero-actions">
 			{#if isAuthenticated}
-				<a href="/lesson" class="cta-btn primary">Continue Your Journey →</a>
-				<a href="/basics" class="cta-btn ghost">Review Basics</a>
+				<a href="/home" class="cta-btn primary">Go to My Lessons →</a>
 			{:else}
 				<button class="cta-btn primary" onclick={openSignUp}>Start Learning Free</button>
 				<button class="cta-btn ghost" onclick={openSignIn}>I Have an Account</button>
@@ -575,7 +549,7 @@
 				</ul>
 
 				{#if isAuthenticated}
-					<a href="/lesson" class="cta-btn primary inline">Jump Into Today's Lesson →</a>
+					<a href="/home" class="cta-btn primary inline">Go to My Lessons →</a>
 				{:else}
 					<button class="cta-btn primary inline" onclick={openSignUp}
 						>Begin Day 1 — It's Free</button
@@ -607,42 +581,6 @@
 					</div>
 				</div>
 			</div>
-		</div>
-	</div>
-</section>
-
-<!-- ════════════════════════════════════════════════════════ -->
-<!--  APP SECTION  (jump into the app)                        -->
-<!-- ════════════════════════════════════════════════════════ -->
-<section class="lp-section app-section">
-	<div class="lp-inner">
-		<p class="eyebrow">Start Now</p>
-		<h2 class="section-h2">
-			Where Do You Want to <span class="grad-text">Begin?</span>
-		</h2>
-
-		<!-- Language selector -->
-		<div class="lang-row">
-			<span class="lang-lbl">{content.langLabel}</span>
-			<select aria-label="Select your first language" value={language} onchange={onLanguageChange}>
-				<option value="fa">فارسی</option>
-				<option value="en">English</option>
-			</select>
-		</div>
-
-		<div class="nav-cards">
-			<a href="/lesson" class="nav-card lessons">
-				<div class="nc-icon">📚</div>
-				<h3>{content.lessonsTitle}</h3>
-				<p>{content.lessonsDesc}</p>
-				<div class="nc-arrow">→</div>
-			</a>
-			<a href="/basics" class="nav-card basics">
-				<div class="nc-icon">🔤</div>
-				<h3>{content.basicsTitle}</h3>
-				<p>{content.basicsDesc}</p>
-				<div class="nc-arrow">→</div>
-			</a>
 		</div>
 	</div>
 </section>
