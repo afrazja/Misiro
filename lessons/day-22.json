@@ -2,61 +2,15 @@
   "title": "Day 22: Time & Appointments",
   "titleFa": "روز ۲۲: زمان و قرارملاقات‌ها",
   "sentences": [
-    {
-      "id": 1,
-      "role": "received",
-      "audioText": "Wann können wir uns treffen?",
-      "translation": "When can we meet?",
-      "translationFa": "کی می‌تونیم همدیگه رو ببینیم؟"
-    },
-    {
-      "id": 2,
-      "role": "sent",
-      "targetText": "Haben Sie heute Zeit?",
-      "translation": "Do you have time today?",
-      "translationFa": "امروز وقت دارید؟"
-    },
-    {
-      "id": 3,
-      "role": "received",
-      "audioText": "Schade. Wie wäre es mit Dienstag?",
-      "translation": "That's a shame. How about Tuesday?",
-      "translationFa": "حیف. سه‌شنبه چطوره؟"
-    },
-    {
-      "id": 4,
-      "role": "sent",
-      "targetText": "Können wir das später machen?",
-      "translation": "Can we do that later?",
-      "translationFa": "میتونیم بعداً انجامش بدیم؟"
-    },
-    {
-      "id": 5,
-      "role": "received",
-      "audioText": "Um wie viel Uhr?",
-      "translation": "At what time?",
-      "translationFa": "چه ساعتی؟"
-    },
-    {
-      "id": 6,
-      "role": "sent",
-      "targetText": "Wann passt es Ihnen?",
-      "translation": "When does it suit you?",
-      "translationFa": "کی براتون مناسبه؟"
-    },
-    {
-      "id": 7,
-      "role": "received",
-      "audioText": "Wo sollen wir uns treffen?",
-      "translation": "Where should we meet?",
-      "translationFa": "کجا همدیگه رو ببینیم؟"
-    },
-    {
-      "id": 8,
-      "role": "sent",
-      "targetText": "Lass uns morgen treffen.",
-      "translation": "Let's meet tomorrow.",
-      "translationFa": "بیاید فردا همدیگه رو ببینیم."
-    }
+    { "id": 1, "role": "received", "audioText": "Wann können wir uns treffen?", "translation": "When can we meet?", "translationFa": "کی می‌تونیم همدیگه رو ببینیم؟" },
+    { "id": 2, "role": "sent", "targetText": "Haben Sie heute Zeit?", "translation": "Do you have time today?", "translationFa": "امروز وقت دارید؟" },
+    { "id": 3, "role": "received", "audioText": "Schade. Wie wäre es mit Dienstag?", "translation": "That's a shame. How about Tuesday?", "translationFa": "حیف. سه‌شنبه چطوره؟" },
+    { "id": 4, "role": "sent", "targetText": "Können wir das später machen?", "translation": "Can we do that later?", "translationFa": "میتونیم بعداً انجامش بدیم؟" },
+    { "id": 5, "role": "received", "audioText": "Um wie viel Uhr?", "translation": "At what time?", "translationFa": "چه ساعتی؟" },
+    { "id": 6, "role": "sent", "targetText": "Wann passt es Ihnen?", "translation": "When does it suit you?", "translationFa": "کی براتون مناسبه؟" },
+    { "id": 7, "role": "received", "audioText": "Wo sollen wir uns treffen?", "translation": "Where should we meet?", "translationFa": "کجا همدیگه رو ببینیم؟" },
+    { "id": 8, "role": "sent", "targetText": "Lass uns morgen treffen.", "translation": "Let's meet tomorrow.", "translationFa": "بیاید فردا همدیگه رو ببینیم." },
+    { "id": 9, "role": "received", "audioText": "Abgemacht! Ich freue mich auf unser Treffen.", "translation": "Deal! I'm looking forward to our meeting.", "translationFa": "قراره! منتظر دیدارمون هستم." },
+    { "id": 10, "role": "sent", "targetText": "Bis dann!", "translation": "See you then!", "translationFa": "تا اون موقع!" }
   ]
 }

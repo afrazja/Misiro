@@ -2,61 +2,15 @@
   "title": "Day 18: Weather & Small Talk",
   "titleFa": "روز ۱۸: آب‌وهوا و صحبت‌های روزمره",
   "sentences": [
-    {
-      "id": 1,
-      "role": "received",
-      "audioText": "Hallo! Wie geht es Ihnen?",
-      "translation": "Hello! How are you?",
-      "translationFa": "سلام! حال شما چطوره؟"
-    },
-    {
-      "id": 2,
-      "role": "sent",
-      "targetText": "Mir geht es gut, danke.",
-      "translation": "I am doing well, thanks.",
-      "translationFa": "حالم خوبه، ممنون."
-    },
-    {
-      "id": 3,
-      "role": "received",
-      "audioText": "Schönes Wetter heute, oder?",
-      "translation": "Nice weather today, right?",
-      "translationFa": "هوا امروز خوبه، نه؟"
-    },
-    {
-      "id": 4,
-      "role": "sent",
-      "targetText": "Ja, die Sonne scheint.",
-      "translation": "Yes, the sun is shining.",
-      "translationFa": "بله، آفتاب می‌تابه."
-    },
-    {
-      "id": 5,
-      "role": "received",
-      "audioText": "Aber es ist kalt.",
-      "translation": "But it is cold.",
-      "translationFa": "ولی هوا سرده."
-    },
-    {
-      "id": 6,
-      "role": "sent",
-      "targetText": "Stimmt, es ist windig.",
-      "translation": "True, it is windy.",
-      "translationFa": "درسته، باد میاد."
-    },
-    {
-      "id": 7,
-      "role": "received",
-      "audioText": "Haben Sie einen Regenschirm?",
-      "translation": "Do you have an umbrella?",
-      "translationFa": "چتر دارید؟"
-    },
-    {
-      "id": 8,
-      "role": "sent",
-      "targetText": "Nein, ich habe keinen.",
-      "translation": "No, I don't have one.",
-      "translationFa": "نه، ندارم."
-    }
+    { "id": 1, "role": "received", "audioText": "Hallo! Wie geht es Ihnen?", "translation": "Hello! How are you?", "translationFa": "سلام! حال شما چطوره؟" },
+    { "id": 2, "role": "sent", "targetText": "Mir geht es gut, danke.", "translation": "I am doing well, thanks.", "translationFa": "حالم خوبه، ممنون." },
+    { "id": 3, "role": "received", "audioText": "Schönes Wetter heute, oder?", "translation": "Nice weather today, right?", "translationFa": "هوا امروز خوبه، نه؟" },
+    { "id": 4, "role": "sent", "targetText": "Ja, die Sonne scheint.", "translation": "Yes, the sun is shining.", "translationFa": "بله، آفتاب می‌تابه." },
+    { "id": 5, "role": "received", "audioText": "Aber es ist kalt.", "translation": "But it is cold.", "translationFa": "ولی هوا سرده." },
+    { "id": 6, "role": "sent", "targetText": "Stimmt, es ist windig.", "translation": "True, it is windy.", "translationFa": "درسته، باد میاد." },
+    { "id": 7, "role": "received", "audioText": "Haben Sie einen Regenschirm?", "translation": "Do you have an umbrella?", "translationFa": "چتر دارید؟" },
+    { "id": 8, "role": "sent", "targetText": "Nein, ich habe keinen.", "translation": "No, I don't have one.", "translationFa": "نه، ندارم." },
+    { "id": 9, "role": "sent", "targetText": "Soll es morgen regnen?", "translation": "Is it supposed to rain tomorrow?", "translationFa": "قراره فردا بارون بیاد؟" },
+    { "id": 10, "role": "received", "audioText": "Ja, laut der Wettervorhersage schon.", "translation": "Yes, according to the weather forecast.", "translationFa": "بله، طبق پیش‌بینی هوا." }
   ]
 }

@@ -2,40 +2,15 @@
   "title": "Day 58: Travel Problems",
   "titleFa": "روز ۵۸: مشکلات سفر",
   "sentences": [
-    {
-      "id": 1,
-      "role": "sent",
-      "targetText": "Ich habe meinen Zug verpasst.",
-      "translation": "I missed my train.",
-      "translationFa": "قطارم رو از دست دادم."
-    },
-    {
-      "id": 2,
-      "role": "sent",
-      "targetText": "Mein Flug hat Verspätung.",
-      "translation": "My flight is delayed.",
-      "translationFa": "پروازم تأخیر داره."
-    },
-    {
-      "id": 3,
-      "role": "sent",
-      "targetText": "Ich brauche Hilfe.",
-      "translation": "I need help.",
-      "translationFa": "کمک می‌خوام."
-    },
-    {
-      "id": 4,
-      "role": "sent",
-      "targetText": "Wo ist die Information?",
-      "translation": "Where is the information desk?",
-      "translationFa": "میز اطلاعات کجاست؟"
-    },
-    {
-      "id": 5,
-      "role": "sent",
-      "targetText": "Was soll ich tun?",
-      "translation": "What should I do?",
-      "translationFa": "باید چیکار کنم؟"
-    }
+    { "id": 1, "role": "sent", "targetText": "Ich habe meinen Zug verpasst.", "translation": "I missed my train.", "translationFa": "قطارم رو از دست دادم." },
+    { "id": 2, "role": "received", "audioText": "Das tut mir leid. Wann war Ihr Zug?", "translation": "I'm sorry. When was your train?", "translationFa": "متأسفم. قطارتون چه ساعتی بود؟" },
+    { "id": 3, "role": "sent", "targetText": "Mein Flug hat Verspätung.", "translation": "My flight is delayed.", "translationFa": "پروازم تأخیر داره." },
+    { "id": 4, "role": "received", "audioText": "Wie lange ist die Verspätung?", "translation": "How long is the delay?", "translationFa": "تأخیر چقدره؟" },
+    { "id": 5, "role": "sent", "targetText": "Ich brauche Hilfe.", "translation": "I need help.", "translationFa": "کمک می‌خوام." },
+    { "id": 6, "role": "received", "audioText": "Natürlich. Was ist passiert?", "translation": "Of course. What happened?", "translationFa": "البته. چی شده؟" },
+    { "id": 7, "role": "sent", "targetText": "Wo ist die Information?", "translation": "Where is the information desk?", "translationFa": "میز اطلاعات کجاست؟" },
+    { "id": 8, "role": "received", "audioText": "Geradeaus, am Ende des Ganges.", "translation": "Straight ahead, at the end of the corridor.", "translationFa": "مستقیم، آخر راهرو." },
+    { "id": 9, "role": "sent", "targetText": "Was soll ich tun?", "translation": "What should I do?", "translationFa": "باید چیکار کنم؟" },
+    { "id": 10, "role": "received", "audioText": "Gehen Sie zum Schalter und buchen Sie um.", "translation": "Go to the counter and rebook.", "translationFa": "برید به باجه و دوباره رزرو کنید." }
   ]
 }

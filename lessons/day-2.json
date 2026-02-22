@@ -2,47 +2,12 @@
   "title": "Day 2: Greetings & Farewells",
   "titleFa": "روز ۲: سلام و خداحافظی",
   "sentences": [
-    {
-      "id": 1,
-      "role": "received",
-      "audioText": "Hallo! Guten Morgen!",
-      "translation": "Hello! Good morning!",
-      "translationFa": "سلام! صبح بخیر!"
-    },
-    {
-      "id": 2,
-      "role": "sent",
-      "targetText": "Guten Morgen! Wie geht es Ihnen?",
-      "translation": "Good morning! How are you?",
-      "translationFa": "صبح بخیر! حالتون چطوره؟"
-    },
-    {
-      "id": 3,
-      "role": "received",
-      "audioText": "Danke, mir geht es gut. Und Ihnen?",
-      "translation": "Thanks, I'm fine. And you?",
-      "translationFa": "ممنون، حالم خوبه. و شما؟"
-    },
-    {
-      "id": 4,
-      "role": "sent",
-      "targetText": "Auch gut, danke.",
-      "translation": "Also good, thanks.",
-      "translationFa": "منم خوبم، ممنون."
-    },
-    {
-      "id": 5,
-      "role": "received",
-      "audioText": "Schön, Sie zu treffen. Auf Wiedersehen!",
-      "translation": "Nice to meet you. Goodbye!",
-      "translationFa": "خوشحال شدم. خداحافظ!"
-    },
-    {
-      "id": 6,
-      "role": "sent",
-      "targetText": "Auf Wiedersehen! Tschüss!",
-      "translation": "Goodbye! Bye!",
-      "translationFa": "خداحافظ! بای!"
-    }
+    { "id": 1, "role": "received", "audioText": "Hallo! Guten Morgen!", "translation": "Hello! Good morning!", "translationFa": "سلام! صبح بخیر!" },
+    { "id": 2, "role": "sent", "targetText": "Guten Morgen! Wie geht es Ihnen?", "translation": "Good morning! How are you?", "translationFa": "صبح بخیر! حالتون چطوره؟" },
+    { "id": 3, "role": "received", "audioText": "Danke, mir geht es gut. Und Ihnen?", "translation": "Thanks, I'm fine. And you?", "translationFa": "ممنون، حالم خوبه. و شما؟" },
+    { "id": 4, "role": "sent", "targetText": "Auch gut, danke.", "translation": "Also good, thanks.", "translationFa": "منم خوبم، ممنون." },
+    { "id": 5, "role": "received", "audioText": "Schön, Sie zu treffen. Auf Wiedersehen!", "translation": "Nice to meet you. Goodbye!", "translationFa": "خوشحال شدم. خداحافظ!" },
+    { "id": 6, "role": "sent", "targetText": "Auf Wiedersehen! Tschüss!", "translation": "Goodbye! Bye!", "translationFa": "خداحافظ! بای!" },
+    { "id": 7, "role": "received", "audioText": "Es war schön, Sie kennenzulernen!", "translation": "It was lovely meeting you!", "translationFa": "از آشنایی با شما خوشحال شدم!" }
   ]
 }
