@@ -96,6 +96,11 @@ function playWebAudio(text: string, lang: string, rate: number = 1.0): Promise<v
 			// If cancelled while waiting, don't start browser TTS
 			if (myGen !== ttsGeneration) { done = true; resolve(); return; }
 			done = true;
+			// Stop proxy audio before starting browser TTS to prevent double playback
+			if (currentAudio) {
+				currentAudio.pause();
+				currentAudio = null;
+			}
 			_browserTTS(text, lang, safeRate).then(resolve);
 		};
 
@@ -103,7 +108,10 @@ function playWebAudio(text: string, lang: string, rate: number = 1.0): Promise<v
 		audio.playbackRate = safeRate;
 		currentAudio = audio;
 		audio.onerror = fallback;
+		// Timeout is for load failures only — clear it once audio starts playing
+		// so slow playback (low playbackRate) doesn't trigger a false fallback
 		const timeout = setTimeout(fallback, 4000);
+		audio.onplay = () => clearTimeout(timeout);
 		audio.onended = () => {
 			clearTimeout(timeout);
 			finish();
