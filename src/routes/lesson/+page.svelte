@@ -16,7 +16,6 @@
 		handleVoiceInput as controllerHandleVoice,
 		startExam,
 		startReviewMode,
-		isDayUnlocked,
 		incrementSession,
 		getDueCount,
 		type TeachStepData,
@@ -352,19 +351,16 @@
 					<optgroup label="Week {weekNum}">
 						{#each days as meta}
 							{@const isCompleted = !!(app.completedLessons && app.completedLessons[meta.day])}
-							{@const unlocked = isDayUnlocked(meta.day)}
 							<option
 								value={meta.day.toString()}
-								disabled={!unlocked}
 								selected={meta.day === app.currentDay}
 							>
-								{isCompleted ? '✅ ' : !unlocked ? '🔒 ' : ''}{meta.title}
+								{isCompleted ? '✅ ' : ''}{meta.title}
 							</option>
 						{/each}
 						{#if days.length === 7}
-							{@const allWeekDone = days.every(d => app.completedLessons && app.completedLessons[d.day])}
-							<option value="exam{weekNum}" disabled={!allWeekDone}>
-								{allWeekDone ? '' : '🔒 '}Week {weekNum} Exam
+							<option value="exam{weekNum}">
+								Week {weekNum} Exam
 							</option>
 						{/if}
 					</optgroup>

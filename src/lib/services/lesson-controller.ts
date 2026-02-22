@@ -331,7 +331,6 @@ export async function jumpToSentence(index: number): Promise<void> {
 }
 
 export async function changeDay(day: number): Promise<void> {
-	if (!isDayUnlocked(day)) return;
 	const app = get(appStore);
 	if (day === app.currentDay && !get(examStore).isExamMode) return;
 
