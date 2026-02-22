@@ -21,14 +21,14 @@
       "role": "sent",
       "targetText": "Es gibt ein Problem.",
       "translation": "There is a problem.",
-      "translationFa": "یک مشکلی هست."
+      "translationFa": "یه مشکلی هست."
     },
     {
       "id": 4,
       "role": "sent",
       "targetText": "Etwas ist schiefgelaufen.",
       "translation": "Something went wrong.",
-      "translationFa": "یک چیزی اشتباه پیش رفت."
+      "translationFa": "یه چیزی اشتباه پیش رفت."
     },
     {
       "id": 5,
