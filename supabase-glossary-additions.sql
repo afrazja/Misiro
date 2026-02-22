@@ -27,7 +27,6 @@ INSERT INTO public.glossary (word, en, fa) VALUES
 ('ich', 'I', 'من'),
 ('sie', 'you (formal) / she / they', 'شما (رسمی) / او / آنها'),
 ('heißen', 'to be called', 'نام داشتن'),
-('kommen', 'to come', 'آمدن'),
 ('arbeiten', 'to work', 'کار کردن'),
 ('wohnen', 'to live / to reside', 'زندگی کردن / ساکن بودن'),
 ('lernen', 'to learn', 'یاد گرفتن'),
