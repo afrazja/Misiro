@@ -409,22 +409,6 @@
 	<!-- Main Learning Area -->
 	<main class="learning-area">
 		<div class="chat-wrapper">
-			<!-- Chat Header -->
-			<div class="chat-header">
-				<div class="avatar-circle">☕️</div>
-				<div class="header-info">
-					<h3>{scenarioTitle()}</h3>
-					<div class="lesson-meta-tags">
-						{#if lessonDifficulty()}
-							<span class="difficulty-badge difficulty-{lessonDifficulty()?.replace('+', 'plus')}">{lessonDifficulty()}</span>
-						{/if}
-						{#if lessonGrammarFocus()}
-							<span class="grammar-tag">📝 {lessonGrammarFocus()}</span>
-						{/if}
-					</div>
-				</div>
-			</div>
-
 			<!-- Lesson Progress Bar -->
 			{#if lesson.currentLesson && !exam.isExamMode}
 				{@const total = lesson.currentLesson.sentences.length}
