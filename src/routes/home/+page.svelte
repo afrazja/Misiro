@@ -160,7 +160,7 @@
 
 	async function handleSignOut() {
 		await auth.signOut();
-		goto('/');
+		window.location.href = '/';
 	}
 
 	async function updateProfileUI() {

@@ -170,7 +170,7 @@
 	// ============ SIGN OUT ============
 	async function handleSignOut() {
 		await signOut();
-		goto('/');
+		window.location.href = '/';
 	}
 
 	// ============ LIFECYCLE ============
