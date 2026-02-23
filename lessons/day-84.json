@@ -1,0 +1,200 @@
+{
+  "title": "Day 84: Slang & Idioms",
+  "titleFa": "روز ۸۴: اصطلاحات عامیانه و محاوره‌ای",
+  "sentences": [
+    {
+      "id": 1,
+      "role": "sent",
+      "targetText": "Ich verstehe nur Bahnhof.",
+      "translation": "I don't understand anything at all.",
+      "translationFa": "من اصلاً هیچی نمی‌فهمم."
+    },
+    {
+      "id": 2,
+      "role": "sent",
+      "targetText": "Das ist mir völlig Wurst.",
+      "translation": "I don't care about that at all.",
+      "translationFa": "این موضوع اصلاً برای من مهم نیست."
+    },
+    {
+      "id": 3,
+      "role": "sent",
+      "targetText": "Ich drücke dir die Daumen.",
+      "translation": "I am crossing my fingers for you.",
+      "translationFa": "من برایت آرزوی موفقیت می‌کنم."
+    },
+    {
+      "id": 4,
+      "role": "received",
+      "audioText": "Hast du Bock darauf?",
+      "translation": "Do you feel like doing that?",
+      "translationFa": "آیا حوصله انجام آن را داری؟"
+    },
+    {
+      "id": 5,
+      "role": "sent",
+      "targetText": "Ich habe die Nase voll davon.",
+      "translation": "I am sick and tired of this.",
+      "translationFa": "من از این وضعیت خسته و کلافه شده‌ام."
+    },
+    {
+      "id": 6,
+      "role": "sent",
+      "targetText": "Er ist ins Fettnäpfchen getreten.",
+      "translation": "He put his foot in his mouth.",
+      "translationFa": "او گاف داد."
+    },
+    {
+      "id": 7,
+      "role": "sent",
+      "targetText": "Ich habe zu viel getrunken und habe einen Kater.",
+      "translation": "I drank too much and have a hangover.",
+      "translationFa": "من خیلی نوشیدم و خمار هستم."
+    },
+    {
+      "id": 8,
+      "role": "sent",
+      "targetText": "Das ist nicht mein Bier.",
+      "translation": "That is not my problem.",
+      "translationFa": "این مشکل من نیست."
+    },
+    {
+      "id": 9,
+      "role": "sent",
+      "targetText": "Wir haben Schwein gehabt.",
+      "translation": "We had a stroke of luck.",
+      "translationFa": "ما شانس آوردیم."
+    },
+    {
+      "id": 10,
+      "role": "received",
+      "audioText": "Hast du Tomaten auf den Augen?",
+      "translation": "Are you blind to what is happening?",
+      "translationFa": "آیا کوری که نمی‌بینی چه اتفاقی می‌افتد؟"
+    },
+    {
+      "id": 11,
+      "role": "received",
+      "audioText": "Hör auf, um den heißen Brei herumzureden.",
+      "translation": "Stop beating around the bush.",
+      "translationFa": "حاشیه نرو."
+    },
+    {
+      "id": 12,
+      "role": "sent",
+      "targetText": "Ich stehe gerade total auf dem Schlauch.",
+      "translation": "I am completely drawing a blank right now.",
+      "translationFa": "الان اصلاً ذهنم یاری نمی‌کند."
+    },
+    {
+      "id": 13,
+      "role": "sent",
+      "targetText": "Wir können zwei Fliegen mit einer Klappe schlagen.",
+      "translation": "We can kill two birds with one stone.",
+      "translationFa": "می‌توانیم با یک تیر دو نشان بزنیم."
+    },
+    {
+      "id": 14,
+      "role": "sent",
+      "targetText": "Mach's gut und bis bald!",
+      "translation": "Take care and see you soon!",
+      "translationFa": "مراقب خودت باش و به زودی می‌بینمت!"
+    },
+    {
+      "id": 15,
+      "role": "received",
+      "audioText": "Na, wie läuft's?",
+      "translation": "Well, how are things going?",
+      "translationFa": "خب، اوضاع چطوره؟"
+    },
+    {
+      "id": 16,
+      "role": "sent",
+      "targetText": "Ich habe gerade viel um die Ohren.",
+      "translation": "I have a lot on my plate right now.",
+      "translationFa": "الان سرم خیلی شلوغ است."
+    },
+    {
+      "id": 17,
+      "role": "sent",
+      "targetText": "Ich werde diesmal ein Auge zudrücken.",
+      "translation": "I will turn a blind eye this time.",
+      "translationFa": "این بار نادیده می‌گیرم."
+    },
+    {
+      "id": 18,
+      "role": "sent",
+      "targetText": "Du gehst mir tierisch auf den Keks.",
+      "translation": "You are really getting on my nerves.",
+      "translationFa": "تو واقعاً روی اعصاب من می‌روی."
+    },
+    {
+      "id": 19,
+      "role": "sent",
+      "targetText": "Nach der Arbeit war ich fix und fertig.",
+      "translation": "After work, I was completely exhausted.",
+      "translationFa": "بعد از کار، کاملاً خسته و کوفته بودم."
+    },
+    {
+      "id": 20,
+      "role": "sent",
+      "targetText": "Er macht heute blau.",
+      "translation": "He is skipping school today.",
+      "translationFa": "او امروز از مدرسه جیم می‌زند."
+    },
+    {
+      "id": 21,
+      "role": "sent",
+      "targetText": "Leider habe ich keine Kohle mehr.",
+      "translation": "Unfortunately, I don't have any money left.",
+      "translationFa": "متأسفانه، من دیگر پولی ندارم."
+    },
+    {
+      "id": 22,
+      "role": "sent",
+      "targetText": "Der Film war absolut krass!",
+      "translation": "That movie was absolutely awesome!",
+      "translationFa": "آن فیلم کاملاً معرکه بود!"
+    },
+    {
+      "id": 23,
+      "role": "received",
+      "audioText": "Das ist eine echt geile Idee.",
+      "translation": "This is a really cool idea.",
+      "translationFa": "این یک ایده واقعاً باحال است."
+    },
+    {
+      "id": 24,
+      "role": "sent",
+      "targetText": "Das ist totaler Quatsch!",
+      "translation": "That is total nonsense!",
+      "translationFa": "این کاملاً مزخرف است!"
+    },
+    {
+      "id": 25,
+      "role": "received",
+      "audioText": "Keine Sorge, alles in Butter.",
+      "translation": "Don't worry, everything is fine.",
+      "translationFa": "نگران نباش، همه چیز رو به راه است."
+    },
+    {
+      "id": 26,
+      "role": "received",
+      "audioText": "Hast du einen Vogel?",
+      "translation": "Are you crazy?",
+      "translationFa": "دیوانه شده‌ای؟"
+    },
+    {
+      "id": 27,
+      "role": "received",
+      "audioText": "Hals- und Beinbruch bei deiner Prüfung!",
+      "translation": "Break a leg on your exam!",
+      "translationFa": "در امتحانت موفق باشی!"
+    }
+  ],
+  "difficulty": "B2",
+  "grammarFocus": "Idiomatische Ausdrücke: nur Bahnhof verstehen / Schwein haben / die Nase voll haben / ins Fettnäpfchen treten + Umgangssprache: Kohle / Kater / krass / Bock haben",
+  "grammarFocusFa": "اصطلاحات اسمی: nur Bahnhof verstehen / Schwein haben / die Nase voll haben + زبان محاوره‌ای: Kohle / Kater / krass / Bock haben",
+  "description": "Learn authentic German slang and idioms used in everyday conversation. Understand colorful expressions that native speakers use and practice using them naturally.",
+  "descriptionFa": "اصطلاحات عامیانه و محاوره‌ای واقعی آلمانی که در مکالمه روزمره استفاده می‌شوند را یاد بگیرید. عبارات رنگارنگی که گویشوران بومی استفاده می‌کنند را درک کنید و تمرین کنید که آنها را به طور طبیعی استفاده کنید."
+}
