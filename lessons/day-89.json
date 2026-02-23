@@ -1,0 +1,186 @@
+{
+  "title": "Day 89: Talking to a Friend About a Business Idea",
+  "titleFa": "روز ۸۹: صحبت با یک دوست درباره یک ایده کسب و کار",
+  "sentences": [
+    {
+      "id": 1,
+      "role": "sent",
+      "targetText": "Ich habe eine großartige Idee für ein neues Geschäft.",
+      "translation": "I have a great idea for a new business.",
+      "translationFa": "من یک ایده عالی برای یک کسب و کار جدید دارم."
+    },
+    {
+      "id": 2,
+      "role": "sent",
+      "targetText": "Darf ich dir meine Startup-Idee vorstellen?",
+      "translation": "Can I pitch you my startup idea?",
+      "translationFa": "آیا می‌توانم ایده استارتاپم را به تو ارائه دهم (پیچ کنم)؟"
+    },
+    {
+      "id": 3,
+      "role": "sent",
+      "targetText": "Es ist eine mobile Anwendung zum Sprachenlernen.",
+      "translation": "It is a mobile application for learning languages.",
+      "translationFa": "این یک اپلیکیشن موبایل برای یادگیری زبان است."
+    },
+    {
+      "id": 4,
+      "role": "sent",
+      "targetText": "Ich möchte etwas aufbauen, das den Menschen hilft.",
+      "translation": "I want to build something that helps people.",
+      "translationFa": "من می‌خواهم چیزی بسازم که به مردم کمک کند."
+    },
+    {
+      "id": 5,
+      "role": "sent",
+      "targetText": "Was hältst du von diesem Konzept?",
+      "translation": "What do you think of this concept?",
+      "translationFa": "نظرت درباره این مفهوم (کانسپت) چیست؟"
+    },
+    {
+      "id": 6,
+      "role": "sent",
+      "targetText": "Es gibt einen riesigen Markt für dieses Produkt.",
+      "translation": "There is a huge market for this product.",
+      "translationFa": "یک بازار بزرگ برای این محصول وجود دارد."
+    },
+    {
+      "id": 7,
+      "role": "sent",
+      "targetText": "Das Hauptproblem ist, dass die Leute nicht genug Zeit haben.",
+      "translation": "The main problem is that people don't have enough time.",
+      "translationFa": "مشکل اصلی این است که مردم وقت کافی ندارند."
+    },
+    {
+      "id": 8,
+      "role": "sent",
+      "targetText": "Unsere Lösung ist einfach und benutzerfreundlich.",
+      "translation": "Our solution is simple and user-friendly.",
+      "translationFa": "راه حل ما ساده و کاربرپسند است."
+    },
+    {
+      "id": 9,
+      "role": "sent",
+      "targetText": "Die Zielgruppe sind hauptsächlich Studenten und junge Berufstätige.",
+      "translation": "The target audience is mostly students and young professionals.",
+      "translationFa": "مخاطبان هدف عمدتاً دانشجویان و متخصصان جوان هستند."
+    },
+    {
+      "id": 10,
+      "role": "sent",
+      "targetText": "Ich habe das Logo und die Benutzeroberfläche bereits entworfen.",
+      "translation": "I have already designed the logo and the interface.",
+      "translationFa": "من از قبل لوگو و رابط کاربری را طراحی کرده‌ام."
+    },
+    {
+      "id": 11,
+      "role": "sent",
+      "targetText": "Jetzt suche ich nach einem technischen Mitgründer.",
+      "translation": "Now I am looking for a technical co-founder.",
+      "translationFa": "اکنون من به دنبال یک هم‌بنیان‌گذار فنی هستم."
+    },
+    {
+      "id": 12,
+      "role": "received",
+      "audioText": "Wie planst du, damit Geld zu verdienen?",
+      "translation": "How do you plan to make money with it?",
+      "translationFa": "چگونه برنامه‌ریزی می‌کنی که با آن پول در بیاوری؟"
+    },
+    {
+      "id": 13,
+      "role": "sent",
+      "targetText": "Wir werden ein Premium-Abonnement ohne Werbung anbieten.",
+      "translation": "We will offer a premium subscription without ads.",
+      "translationFa": "ما یک اشتراک ویژه (پرمیوم) بدون تبلیغات ارائه خواهیم داد."
+    },
+    {
+      "id": 14,
+      "role": "sent",
+      "targetText": "Die Basisversion wird komplett kostenlos sein.",
+      "translation": "The basic version will be completely free.",
+      "translationFa": "نسخه پایه کاملاً رایگان خواهد بود."
+    },
+    {
+      "id": 15,
+      "role": "sent",
+      "targetText": "Ich denke, die größte Herausforderung ist das Marketing.",
+      "translation": "I think the biggest challenge is marketing.",
+      "translationFa": "من فکر می‌کنم بزرگترین چالش بازاریابی است."
+    },
+    {
+      "id": 16,
+      "role": "sent",
+      "targetText": "Wir müssen frühe Anwender finden, um den Prototyp zu testen.",
+      "translation": "We need to find early adopters to test the prototype.",
+      "translationFa": "ما باید کاربران اولیه را برای آزمایش نمونه اولیه پیدا کنیم."
+    },
+    {
+      "id": 17,
+      "role": "sent",
+      "targetText": "Ich entwickle die Seite gerade selbst.",
+      "translation": "I am developing the site myself right now.",
+      "translationFa": "من در حال حاضر خودم سایت را توسعه می‌دهم."
+    },
+    {
+      "id": 18,
+      "role": "sent",
+      "targetText": "Es ist viel Arbeit, aber ich bin mit großer Leidenschaft dabei.",
+      "translation": "It is a lot of work, but I am very passionate about it.",
+      "translationFa": "این کار زیادی می‌برد، اما من اشتیاق زیادی به آن دارم."
+    },
+    {
+      "id": 19,
+      "role": "sent",
+      "targetText": "Kennst du Investoren, die interessiert sein könnten?",
+      "translation": "Do you know any investors who might be interested?",
+      "translationFa": "آیا سرمایه‌گذارانی را می‌شناسی که ممکن است علاقه‌مند باشند؟"
+    },
+    {
+      "id": 20,
+      "role": "sent",
+      "targetText": "Ich brauche ehrliches Feedback, bevor ich es auf den Markt bringe.",
+      "translation": "I need some honest feedback before I launch it.",
+      "translationFa": "قبل از راه‌اندازی، به بازخورد صادقانه نیاز دارم."
+    },
+    {
+      "id": 21,
+      "role": "received",
+      "audioText": "Ich denke, deine Idee hat viel Potenzial.",
+      "translation": "I think your idea has a lot of potential.",
+      "translationFa": "من فکر می‌کنم ایده تو پتانسیل زیادی دارد."
+    },
+    {
+      "id": 22,
+      "role": "received",
+      "audioText": "Aber du musst die Konkurrenz genau analysieren.",
+      "translation": "But you have to analyze the competition carefully.",
+      "translationFa": "اما تو باید رقبا را به دقت تجزیه و تحلیل کنی."
+    },
+    {
+      "id": 23,
+      "role": "received",
+      "audioText": "Es gibt bereits ähnliche Apps auf dem Markt.",
+      "translation": "There are already similar apps on the market.",
+      "translationFa": "از قبل اپلیکیشن‌های مشابهی در بازار وجود دارد."
+    },
+    {
+      "id": 24,
+      "role": "received",
+      "audioText": "Was macht dein Produkt einzigartig?",
+      "translation": "What makes your product unique?",
+      "translationFa": "چه چیزی محصول تو را منحصر به فرد می‌کند؟"
+    },
+    {
+      "id": 25,
+      "role": "sent",
+      "targetText": "Lass uns einen Kaffee trinken gehen und die Details besprechen.",
+      "translation": "Let's grab a coffee and discuss the details.",
+      "translationFa": "بیا یک قهوه بگیریم و درباره جزئیات صحبت کنیم."
+    }
+  ],
+  "difficulty": "B2",
+  "grammarFocus": "Relativsatz: etwas aufbauen, das den Menschen hilft / Investoren, die interessiert sein könnten + Infinitivsatz mit um…zu: um den Prototyp zu testen + Futur I: wird anbieten / wird sein + bevor + Nebensatz: bevor ich es auf den Markt bringe + Konjunktiv II: könnten",
+  "grammarFocusFa": "جمله موصولی: etwas aufbauen, das den Menschen hilft / Investoren, die interessiert sein könnten + جمله هدف با um…zu: um den Prototyp zu testen + آینده I: wird anbieten / wird sein + bevor + جمله فرعی: bevor ich es auf den Markt bringe + وجه التزامی II: könnten",
+  "description": "Practice pitching a business idea to a friend in German. Learn vocabulary for startups, target audiences, monetization, and asking for honest feedback.",
+  "descriptionFa": "تمرین کنید که ایده کسب و کاری را به یک دوست به زبان آلمانی ارائه دهید. واژگان مربوط به استارتاپ‌ها، مخاطبان هدف، کسب درآمد و درخواست بازخورد صادقانه را یاد بگیرید."
+}
