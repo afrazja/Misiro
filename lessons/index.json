@@ -83,7 +83,8 @@
     { "day": 81, "file": "day-81.json", "title": "Day 81: Education & Learning", "titleFa": "روز ۸۱: آموزش و یادگیری", "group": "advanced" },
     { "day": 82, "file": "day-82.json", "title": "Day 82: Relationships & Dating", "titleFa": "روز ۸۲: روابط و قرار ملاقات", "group": "advanced" },
     { "day": 83, "file": "day-83.json", "title": "Day 83: Expressing Sympathy & Condolences", "titleFa": "روز ۸۳: ابراز همدردی و تسلیت", "group": "advanced" },
-    { "day": 84, "file": "day-84.json", "title": "Day 84: Slang & Idioms", "titleFa": "روز ۸۴: اصطلاحات عامیانه و محاوره‌ای", "group": "advanced" }
+    { "day": 84, "file": "day-84.json", "title": "Day 84: Slang & Idioms", "titleFa": "روز ۸۴: اصطلاحات عامیانه و محاوره‌ای", "group": "advanced" },
+    { "day": 85, "file": "day-85.json", "title": "Day 85: Tech, Startups & Digital Life", "titleFa": "روز ۸۵: فناوری، استارتاپ‌ها و زندگی دیجیتال", "group": "advanced" }
   ],
   "glossaryFile": "glossary.json"
 }

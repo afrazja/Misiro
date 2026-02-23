@@ -1,0 +1,207 @@
+{
+  "title": "Day 85: Tech, Startups & Digital Life",
+  "titleFa": "روز ۸۵: فناوری، استارتاپ‌ها و زندگی دیجیتال",
+  "sentences": [
+    {
+      "id": 1,
+      "role": "sent",
+      "targetText": "Ich gründe dieses Jahr ein Tech-Startup.",
+      "translation": "I am founding a tech startup this year.",
+      "translationFa": "من امسال یک استارتاپ فناوری تأسیس می‌کنم."
+    },
+    {
+      "id": 2,
+      "role": "sent",
+      "targetText": "Wir entwickeln eine neue mobile Anwendung.",
+      "translation": "We are developing a new mobile application.",
+      "translationFa": "ما در حال توسعه یک اپلیکیشن موبایل جدید هستیم."
+    },
+    {
+      "id": 3,
+      "role": "sent",
+      "targetText": "Die App hilft Menschen, Fremdsprachen zu lernen.",
+      "translation": "The app helps people learn foreign languages.",
+      "translationFa": "این اپلیکیشن به افراد کمک می‌کند تا زبان‌های خارجی یاد بگیرند."
+    },
+    {
+      "id": 4,
+      "role": "sent",
+      "targetText": "Ich arbeite als Softwareentwickler.",
+      "translation": "I work as a software developer.",
+      "translationFa": "من به عنوان توسعه‌دهنده نرم‌افزار کار می‌کنم."
+    },
+    {
+      "id": 5,
+      "role": "sent",
+      "targetText": "Wir verwenden ein modernes Frontend-Framework für die Benutzeroberfläche.",
+      "translation": "We use a modern frontend framework for the interface.",
+      "translationFa": "ما از یک فریم‌ورک فرانت‌اند مدرن برای رابط کاربری استفاده می‌کنیم."
+    },
+    {
+      "id": 6,
+      "role": "received",
+      "audioText": "Die Benutzeroberfläche muss intuitiv und übersichtlich sein.",
+      "translation": "The user interface must be intuitive and clean.",
+      "translationFa": "رابط کاربری باید بصری و تمیز باشد."
+    },
+    {
+      "id": 7,
+      "role": "received",
+      "audioText": "Hast du das Datenbankschema schon entworfen?",
+      "translation": "Have you designed the database schema yet?",
+      "translationFa": "آیا طرح پایگاه داده را از قبل طراحی کرده‌ای؟"
+    },
+    {
+      "id": 8,
+      "role": "sent",
+      "targetText": "Wir integrieren künstliche Intelligenz in unser Produkt.",
+      "translation": "We are integrating artificial intelligence into our product.",
+      "translationFa": "ما در حال ادغام هوش مصنوعی در محصول خود هستیم."
+    },
+    {
+      "id": 9,
+      "role": "sent",
+      "targetText": "Das KI-Modell generiert den Inhalt automatisch.",
+      "translation": "The AI model generates the content automatically.",
+      "translationFa": "مدل هوش مصنوعی محتوا را به صورت خودکار تولید می‌کند."
+    },
+    {
+      "id": 10,
+      "role": "sent",
+      "targetText": "Wir müssen den Code vor der Markteinführung testen.",
+      "translation": "We need to test the code before the launch.",
+      "translationFa": "ما باید کد را قبل از راه‌اندازی آزمایش کنیم."
+    },
+    {
+      "id": 11,
+      "role": "sent",
+      "targetText": "Ich verbringe viel Zeit damit, Code zu schreiben und Fehler zu beheben.",
+      "translation": "I spend a lot of time writing and debugging code.",
+      "translationFa": "من زمان زیادی را صرف نوشتن و رفع خطای کد می‌کنم."
+    },
+    {
+      "id": 12,
+      "role": "sent",
+      "targetText": "Unser Team arbeitet remote aus verschiedenen Ländern.",
+      "translation": "Our team works remotely from different countries.",
+      "translationFa": "تیم ما از راه دور از کشورهای مختلف کار می‌کند."
+    },
+    {
+      "id": 13,
+      "role": "sent",
+      "targetText": "Ist die Website gerade offline oder liegt es an meiner Internetverbindung?",
+      "translation": "Is the website currently offline or is it my internet connection?",
+      "translationFa": "آیا وب‌سایت در حال حاضر آفلاین است یا مشکل از اتصال اینترنت من است؟"
+    },
+    {
+      "id": 14,
+      "role": "received",
+      "audioText": "Du musst den Router neu starten, um die Verbindung zu reparieren.",
+      "translation": "You have to restart the router to fix the connection.",
+      "translationFa": "برای رفع مشکل اتصال باید روتر را ری‌استارت کنی."
+    },
+    {
+      "id": 15,
+      "role": "sent",
+      "targetText": "Ich brauche ein sichereres Passwort für mein Konto.",
+      "translation": "I need a stronger password for my account.",
+      "translationFa": "من به یک رمز عبور قوی‌تر برای حساب کاربری‌ام نیاز دارم."
+    },
+    {
+      "id": 16,
+      "role": "received",
+      "audioText": "Verwendest du die Zwei-Faktor-Authentifizierung?",
+      "translation": "Do you use two-factor authentication?",
+      "translationFa": "آیا از احراز هویت دو مرحله‌ای استفاده می‌کنی؟"
+    },
+    {
+      "id": 17,
+      "role": "sent",
+      "targetText": "Der Server ist wegen des hohen Datenverkehrs abgestürzt.",
+      "translation": "The server crashed due to high traffic.",
+      "translationFa": "سرور به دلیل ترافیک بالا از کار افتاد."
+    },
+    {
+      "id": 18,
+      "role": "sent",
+      "targetText": "Wir suchen nach Beta-Testern für unsere Anwendung.",
+      "translation": "We are looking for beta testers for our application.",
+      "translationFa": "ما به دنبال آزمایش‌کنندگان نسخه بتا برای اپلیکیشن خود هستیم."
+    },
+    {
+      "id": 19,
+      "role": "sent",
+      "targetText": "Das Startup hat gerade eine neue Finanzierungsrunde erhalten.",
+      "translation": "The startup just received a new round of funding.",
+      "translationFa": "استارتاپ به تازگی یک دور جدید جذب سرمایه داشته است."
+    },
+    {
+      "id": 20,
+      "role": "sent",
+      "targetText": "Ich verbringe jeden Tag zu viel Zeit in den sozialen Medien.",
+      "translation": "I spend too much time on social media every day.",
+      "translationFa": "من هر روز زمان زیادی را در شبکه‌های اجتماعی می‌گذرانم."
+    },
+    {
+      "id": 21,
+      "role": "sent",
+      "targetText": "Digitale Privatsphäre ist momentan ein sehr wichtiges Thema.",
+      "translation": "Digital privacy is a very important topic right now.",
+      "translationFa": "حریم خصوصی دیجیتال در حال حاضر موضوع بسیار مهمی است."
+    },
+    {
+      "id": 22,
+      "role": "received",
+      "audioText": "Bitte lade das neueste Update für die App herunter.",
+      "translation": "Please download the latest update for the app.",
+      "translationFa": "لطفاً جدیدترین به‌روزرسانی اپلیکیشن را دانلود کن."
+    },
+    {
+      "id": 23,
+      "role": "sent",
+      "targetText": "Wir bilden die User Journey ab, um das Erlebnis zu verbessern.",
+      "translation": "We map out the user journey to improve the experience.",
+      "translationFa": "ما مسیر کاربر را ترسیم می‌کنیم تا تجربه را بهبود ببخشیم."
+    },
+    {
+      "id": 24,
+      "role": "sent",
+      "targetText": "Der Algorithmus schlägt den Benutzern relevante Inhalte vor.",
+      "translation": "The algorithm suggests relevant content to the users.",
+      "translationFa": "الگوریتم محتوای مرتبط را به کاربران پیشنهاد می‌دهد."
+    },
+    {
+      "id": 25,
+      "role": "sent",
+      "targetText": "Ich bevorzuge ein dunkles Design für meinen Code-Editor.",
+      "translation": "I prefer a dark mode theme for my code editor.",
+      "translationFa": "من یک تم حالت تاریک را برای ویرایشگر کد خود ترجیح می‌دهم."
+    },
+    {
+      "id": 26,
+      "role": "received",
+      "audioText": "Open-Source-Software ist unerlässlich für die moderne Entwicklung.",
+      "translation": "Open source software is essential for modern development.",
+      "translationFa": "نرم‌افزار متن‌باز برای توسعه مدرن ضروری است."
+    },
+    {
+      "id": 27,
+      "role": "sent",
+      "targetText": "Lass uns einen Videoanruf mit den Investoren vereinbaren.",
+      "translation": "Let's schedule a video call with the investors.",
+      "translationFa": "بیا یک تماس ویدیویی با سرمایه‌گذاران تنظیم کنیم."
+    },
+    {
+      "id": 28,
+      "role": "sent",
+      "targetText": "Diese Technologie wird den Markt komplett verändern.",
+      "translation": "This technology will completely change the market.",
+      "translationFa": "این تکنولوژی بازار را کاملاً تغییر خواهد داد."
+    }
+  ],
+  "difficulty": "B2",
+  "grammarFocus": "Infinitivsatz mit um…zu: um das Erlebnis zu verbessern / um die Verbindung zu reparieren + damit + Infinitiv: damit, Code zu schreiben + Futur I: wird verändern + Komparativ: sichereres",
+  "grammarFocusFa": "جمله هدف با um…zu: um das Erlebnis zu verbessern + damit + مصدر: damit, Code zu schreiben + آینده I: wird verändern + مقایسه‌ای: sichereres",
+  "description": "Discuss technology, startups, and digital life in German. Talk about software development, AI, online security, and the challenges of building a product in the digital age.",
+  "descriptionFa": "درباره فناوری، استارتاپ‌ها و زندگی دیجیتال به زبان آلمانی بحث کنید. درباره توسعه نرم‌افزار، هوش مصنوعی، امنیت آنلاین و چالش‌های ساخت یک محصول در عصر دیجیتال صحبت کنید."
+}
