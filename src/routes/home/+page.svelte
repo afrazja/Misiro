@@ -502,53 +502,7 @@
 			</a>
 		</div>
 
-		<!-- ── Learning Path Progress ──────────────────── -->
-		<div class="path-card">
-			<div class="path-header">
-				<span class="path-title">Your 60-Day Journey</span>
-				<span class="path-pct">{progressPercent}% complete</span>
-			</div>
-			<div class="path-track">
-				<div class="path-segment">
-					<div class="seg-bar">
-						<div
-							class="seg-fill a1"
-							style="width: {Math.min(100, (Math.min(daysCompleted, 20) / 20) * 100)}%"
-						></div>
-					</div>
-					<span class="seg-label a1-lbl">A1 <small>Days 1–20</small></span>
-				</div>
-				<div class="path-divider">→</div>
-				<div class="path-segment">
-					<div class="seg-bar">
-						<div
-							class="seg-fill a2"
-							style="width: {Math.min(100, (Math.max(0, Math.min(daysCompleted, 40) - 20) / 20) * 100)}%"
-						></div>
-					</div>
-					<span class="seg-label a2-lbl">A2 <small>Days 21–40</small></span>
-				</div>
-				<div class="path-divider">→</div>
-				<div class="path-segment">
-					<div class="seg-bar">
-						<div
-							class="seg-fill b1"
-							style="width: {Math.min(100, (Math.max(0, Math.min(daysCompleted, 60) - 40) / 20) * 100)}%"
-						></div>
-					</div>
-					<span class="seg-label b1-lbl">B1+ <small>Days 41–60</small></span>
-				</div>
-			</div>
-			<div class="path-day-hint">
-				{#if daysCompleted < 60}
-					Next up: Day {daysCompleted + 1}
-					{daysCompleted + 1 <= 20 ? '· A1' : daysCompleted + 1 <= 40 ? '· A2' : '· B1+'}
-				{:else}
-					🎉 All 60 days complete!
-				{/if}
-			</div>
-		</div>
-	{/if}
+		{/if}
 
 	<!-- ── Nav Cards ───────────────────────────────────── -->
 	<div class="nav-cards" id="categories-grid">
@@ -827,91 +781,6 @@
 		font-size: 0.78rem;
 		color: #777;
 		font-weight: 500;
-	}
-
-	/* ── Learning Path Card ───────────────────────────── */
-	.path-card {
-		background: rgba(255, 255, 255, 0.04);
-		border: 1px solid rgba(255, 255, 255, 0.08);
-		border-radius: 20px;
-		padding: 24px 28px;
-	}
-
-	.path-header {
-		display: flex;
-		justify-content: space-between;
-		align-items: center;
-		margin-bottom: 18px;
-	}
-
-	.path-title {
-		font-size: 0.95rem;
-		font-weight: 700;
-		color: #ccc;
-	}
-
-	.path-pct {
-		font-size: 0.85rem;
-		color: #e94560;
-		font-weight: 700;
-	}
-
-	.path-track {
-		display: flex;
-		align-items: center;
-		gap: 10px;
-	}
-
-	.path-segment {
-		flex: 1;
-		display: flex;
-		flex-direction: column;
-		gap: 8px;
-	}
-
-	.seg-bar {
-		height: 10px;
-		background: rgba(255, 255, 255, 0.08);
-		border-radius: 5px;
-		overflow: hidden;
-	}
-
-	.seg-fill {
-		height: 100%;
-		border-radius: 5px;
-		transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-	}
-
-	.seg-fill.a1 { background: linear-gradient(90deg, #2ecc71, #27ae60); }
-	.seg-fill.a2 { background: linear-gradient(90deg, #3498db, #2980b9); }
-	.seg-fill.b1 { background: linear-gradient(90deg, #9b59b6, #8e44ad); }
-
-	.seg-label {
-		font-size: 0.82rem;
-		font-weight: 700;
-	}
-
-	.seg-label small {
-		font-weight: 400;
-		color: #666;
-		margin-left: 4px;
-	}
-
-	.a1-lbl { color: #2ecc71; }
-	.a2-lbl { color: #3498db; }
-	.b1-lbl { color: #9b59b6; }
-
-	.path-divider {
-		color: rgba(255, 255, 255, 0.2);
-		font-size: 1.2rem;
-		flex-shrink: 0;
-		padding-bottom: 20px;
-	}
-
-	.path-day-hint {
-		margin-top: 14px;
-		font-size: 0.85rem;
-		color: #888;
 	}
 
 	/* ── Nav Cards ────────────────────────────────────── */
@@ -1441,11 +1310,7 @@
 
 		.welcome-banner { flex-direction: column; align-items: flex-start; gap: 14px; }
 
-		.path-track { flex-direction: column; gap: 16px; }
-
-		.path-divider { transform: rotate(90deg); padding: 0; }
-
-		.nav-card { padding: 28px 24px; }
+.nav-card { padding: 28px 24px; }
 
 		.lang-compact { display: none; }
 
