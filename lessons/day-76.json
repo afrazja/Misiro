@@ -1,0 +1,186 @@
+{
+  "title": "Day 76: Giving a Presentation/Speech",
+  "titleFa": "روز ۷۶: ارائه یک سخنرانی / ارائه",
+  "sentences": [
+    {
+      "id": 1,
+      "role": "sent",
+      "targetText": "Herzlich willkommen zu meiner Präsentation.",
+      "translation": "Welcome to my presentation.",
+      "translationFa": "به ارائه من خوش آمدید."
+    },
+    {
+      "id": 2,
+      "role": "sent",
+      "targetText": "Heute möchte ich über unsere neue Strategie sprechen.",
+      "translation": "Today I would like to talk about our new strategy.",
+      "translationFa": "امروز می‌خواهم درباره استراتژی جدیدمان صحبت کنم."
+    },
+    {
+      "id": 3,
+      "role": "sent",
+      "targetText": "Lassen Sie mich beginnen, indem ich mich vorstelle.",
+      "translation": "Let me start by introducing myself.",
+      "translationFa": "اجازه دهید با معرفی خودم شروع کنم."
+    },
+    {
+      "id": 4,
+      "role": "sent",
+      "targetText": "Das Thema meines Vortrags ist die Zukunft der Technologie.",
+      "translation": "The topic of my speech is the future of technology.",
+      "translationFa": "موضوع سخنرانی من آینده تکنولوژی است."
+    },
+    {
+      "id": 5,
+      "role": "sent",
+      "targetText": "Meine Präsentation ist in drei Hauptteile gegliedert.",
+      "translation": "My presentation is divided into three main parts.",
+      "translationFa": "ارائه من به سه بخش اصلی تقسیم شده است."
+    },
+    {
+      "id": 6,
+      "role": "sent",
+      "targetText": "Zuerst werde ich die aktuelle Marktsituation besprechen.",
+      "translation": "First, I will discuss the current market situation.",
+      "translationFa": "ابتدا درباره وضعیت فعلی بازار بحث خواهم کرد."
+    },
+    {
+      "id": 7,
+      "role": "sent",
+      "targetText": "Zweitens werden wir uns die bevorstehenden Herausforderungen ansehen.",
+      "translation": "Second, we will look at the challenges ahead.",
+      "translationFa": "دوم، ما به چالش‌های پیش رو نگاه خواهیم کرد."
+    },
+    {
+      "id": 8,
+      "role": "sent",
+      "targetText": "Schließlich werde ich mit einigen Empfehlungen abschließen.",
+      "translation": "Finally, I will conclude with some recommendations.",
+      "translationFa": "در نهایت، من با چند پیشنهاد نتیجه‌گیری خواهم کرد."
+    },
+    {
+      "id": 9,
+      "role": "received",
+      "audioText": "Bitte heben Sie sich Ihre Fragen bis zum Ende auf.",
+      "translation": "Please hold your questions until the end.",
+      "translationFa": "لطفاً سوالات خود را برای پایان نگه دارید."
+    },
+    {
+      "id": 10,
+      "role": "sent",
+      "targetText": "Wie Sie auf dieser Folie sehen können, sind die Verkäufe gestiegen.",
+      "translation": "As you can see on this slide, sales have increased.",
+      "translationFa": "همانطور که در این اسلاید می‌بینید، فروش افزایش یافته است."
+    },
+    {
+      "id": 11,
+      "role": "received",
+      "audioText": "Diese Grafik zeigt deutlich den positiven Trend.",
+      "translation": "This graph clearly shows the positive trend.",
+      "translationFa": "این نمودار به وضوح روند مثبت را نشان می‌دهد."
+    },
+    {
+      "id": 12,
+      "role": "sent",
+      "targetText": "Lassen Sie uns zum nächsten Punkt übergehen.",
+      "translation": "Let's move on to the next point.",
+      "translationFa": "بیایید به نکته بعدی برویم."
+    },
+    {
+      "id": 13,
+      "role": "received",
+      "audioText": "Was bedeutet das für unser Team?",
+      "translation": "What does this mean for our team?",
+      "translationFa": "این برای تیم ما چه معنایی دارد؟"
+    },
+    {
+      "id": 14,
+      "role": "sent",
+      "targetText": "Ich möchte dieses wichtige Detail hervorheben.",
+      "translation": "I would like to highlight this important detail.",
+      "translationFa": "من می‌خواهم این جزئیات مهم را برجسته کنم."
+    },
+    {
+      "id": 15,
+      "role": "sent",
+      "targetText": "Um Ihnen ein praktisches Beispiel zu geben...",
+      "translation": "To give you a practical example...",
+      "translationFa": "برای اینکه یک مثال عملی به شما بزنم..."
+    },
+    {
+      "id": 16,
+      "role": "sent",
+      "targetText": "Das bringt mich zu meinem nächsten Thema.",
+      "translation": "This brings me to my next topic.",
+      "translationFa": "این مرا به موضوع بعدی‌ام می‌رساند."
+    },
+    {
+      "id": 17,
+      "role": "received",
+      "audioText": "Mit anderen Worten, wir müssen schnell handeln.",
+      "translation": "In other words, we need to act fast.",
+      "translationFa": "به عبارت دیگر، ما باید سریع عمل کنیم."
+    },
+    {
+      "id": 18,
+      "role": "sent",
+      "targetText": "Lassen Sie uns kurz die wichtigsten Punkte zusammenfassen.",
+      "translation": "Let's briefly summarize the main points.",
+      "translationFa": "بیایید به طور خلاصه نکات اصلی را مرور کنیم."
+    },
+    {
+      "id": 19,
+      "role": "sent",
+      "targetText": "Zusammenfassend möchte ich sagen, dass wir auf dem richtigen Weg sind.",
+      "translation": "In conclusion, I would like to say that we are on the right track.",
+      "translationFa": "در نتیجه‌گیری، می‌خواهم بگویم که ما در مسیر درستی هستیم."
+    },
+    {
+      "id": 20,
+      "role": "sent",
+      "targetText": "Vielen Dank für Ihre Aufmerksamkeit.",
+      "translation": "Thank you very much for your attention.",
+      "translationFa": "از توجه شما بسیار سپاسگزارم."
+    },
+    {
+      "id": 21,
+      "role": "sent",
+      "targetText": "Gibt es irgendwelche Fragen?",
+      "translation": "Are there any questions?",
+      "translationFa": "آیا سوالی هست؟"
+    },
+    {
+      "id": 22,
+      "role": "sent",
+      "targetText": "Ich beantworte jetzt gerne Ihre Fragen.",
+      "translation": "I am happy to answer your questions now.",
+      "translationFa": "من اکنون با کمال میل به سوالات شما پاسخ می‌دهم."
+    },
+    {
+      "id": 23,
+      "role": "sent",
+      "targetText": "Das ist eine sehr interessante Frage.",
+      "translation": "That is a very interesting question.",
+      "translationFa": "این یک سوال بسیار جالب است."
+    },
+    {
+      "id": 24,
+      "role": "sent",
+      "targetText": "Leider habe ich die genauen Zahlen gerade nicht.",
+      "translation": "Unfortunately, I don't have the exact numbers right now.",
+      "translationFa": "متأسفانه، من الان اعداد دقیق را ندارم."
+    },
+    {
+      "id": 25,
+      "role": "sent",
+      "targetText": "Ich werde das prüfen und morgen auf Sie zurückkommen.",
+      "translation": "I will look into that and get back to you tomorrow.",
+      "translationFa": "من آن را بررسی خواهم کرد و فردا به شما اطلاع خواهم داد."
+    }
+  ],
+  "difficulty": "B2",
+  "grammarFocus": "Presentation language: Lassen Sie uns + Infinitiv / Zuerst…Zweitens…Schließlich + Futur I: werde besprechen + Infinitivsatz: indem ich mich vorstelle",
+  "grammarFocusFa": "زبان ارائه: Lassen Sie uns + مصدر / Zuerst…Zweitens…Schließlich + آینده I: werde besprechen + جمله مصدری: indem ich mich vorstelle",
+  "description": "Deliver a professional presentation or speech in German. Structure your talk clearly, guide your audience through key points, and handle questions confidently.",
+  "descriptionFa": "یک ارائه یا سخنرانی حرفه‌ای به زبان آلمانی ارائه دهید. صحبت خود را به وضوح ساختار بندی کنید، مخاطبان را از میان نکات کلیدی هدایت کنید و با اطمینان به سوالات پاسخ دهید."
+}
