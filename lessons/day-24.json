@@ -71,6 +71,41 @@
       "targetText": "Ich war mit Freunden wandern. Das hat viel Spaß gemacht.",
       "translation": "I went hiking with friends. It was a lot of fun.",
       "translationFa": "با دوستام رفتیم کوه‌پیمایی. خیلی باحال بود."
+    },
+    {
+      "id": 11,
+      "role": "received",
+      "audioText": "Wie oft gehst du wandern?",
+      "translation": "How often do you go hiking?",
+      "translationFa": "چند وقت یه بار می‌ری کوهنوردی؟"
+    },
+    {
+      "id": 12,
+      "role": "sent",
+      "targetText": "Ungefaehr einmal im Monat, wenn das Wetter schoen ist.",
+      "translation": "About once a month when the weather is nice.",
+      "translationFa": "تقریباً یه بار در ماه، وقتی هوا خوبه."
+    },
+    {
+      "id": 13,
+      "role": "received",
+      "audioText": "Hast du noch andere Hobbys?",
+      "translation": "Do you have any other hobbies?",
+      "translationFa": "سرگرمی دیگه‌ای هم داری؟"
+    },
+    {
+      "id": 14,
+      "role": "sent",
+      "targetText": "Ja, ich male gerne. Es hilft mir beim Entspannen.",
+      "translation": "Yes, I like painting. It helps me to relax.",
+      "translationFa": "بله، نقاشی دوست دارم. کمکم می‌کنه آروم بشم."
+    },
+    {
+      "id": 15,
+      "role": "received",
+      "audioText": "Das ist toll! Kreative Hobbys sind sehr wichtig fuer die Seele.",
+      "translation": "That is great! Creative hobbies are very important for the soul.",
+      "translationFa": "عالیه! سرگرمی‌های خلاقانه خیلی مهمن برای روح."
     }
   ],
   "difficulty": "A2",

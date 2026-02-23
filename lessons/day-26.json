@@ -71,6 +71,41 @@
       "targetText": "Ich habe kein Bargeld.",
       "translation": "I don't have cash.",
       "translationFa": "پول نقد ندارم."
+    },
+    {
+      "id": 11,
+      "role": "received",
+      "audioText": "Kein Problem, wir akzeptieren alle gaengigen Karten.",
+      "translation": "No problem, we accept all common cards.",
+      "translationFa": "مشکلی نیست، همه کارت‌های رایج رو قبول می‌کنیم."
+    },
+    {
+      "id": 12,
+      "role": "sent",
+      "targetText": "Gibt es hier in der Naehe einen Geldautomaten?",
+      "translation": "Is there a cash machine nearby?",
+      "translationFa": "نزدیک اینجا خودپرداز هست؟"
+    },
+    {
+      "id": 13,
+      "role": "received",
+      "audioText": "Ja, gleich um die Ecke, neben der Apotheke.",
+      "translation": "Yes, right around the corner, next to the pharmacy.",
+      "translationFa": "بله، همین دور، کنار داروخانه."
+    },
+    {
+      "id": 14,
+      "role": "sent",
+      "targetText": "Danke. Kann ich bitte die Quittung haben?",
+      "translation": "Thank you. Can I please have the receipt?",
+      "translationFa": "ممنون. می‌تونم رسید داشته باشم لطفاً؟"
+    },
+    {
+      "id": 15,
+      "role": "received",
+      "audioText": "Natuerlich, hier ist Ihre Quittung. Auf Wiedersehen!",
+      "translation": "Of course, here is your receipt. Goodbye!",
+      "translationFa": "البته، رسیدتون اینجاست. خداحافظ!"
     }
   ],
   "difficulty": "A2",

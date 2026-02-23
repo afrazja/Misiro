@@ -71,6 +71,34 @@
       "audioText": "Bitte geben Sie Ihre PIN ein.",
       "translation": "Please enter your PIN.",
       "translationFa": "لطفاً رمزتون رو وارد کنید."
+    },
+    {
+      "id": 11,
+      "role": "sent",
+      "targetText": "Fertig. Kann ich bitte die Quittung haben?",
+      "translation": "Done. Can I please have the receipt?",
+      "translationFa": "شد. می‌تونم رسید داشته باشم لطفاً؟"
+    },
+    {
+      "id": 12,
+      "role": "received",
+      "audioText": "Hier ist Ihre Quittung. Haben Sie eine Kundenkarte?",
+      "translation": "Here is your receipt. Do you have a loyalty card?",
+      "translationFa": "رسیدتون اینجاست. کارت مشتری دارید؟"
+    },
+    {
+      "id": 13,
+      "role": "sent",
+      "targetText": "Nein, ich habe noch keine Kundenkarte.",
+      "translation": "No, I do not have a loyalty card yet.",
+      "translationFa": "نه، هنوز کارت مشتری ندارم."
+    },
+    {
+      "id": 14,
+      "role": "received",
+      "audioText": "Kein Problem. Auf Wiedersehen und guten Einkauf!",
+      "translation": "No problem. Goodbye and happy shopping!",
+      "translationFa": "مشکلی نیست. خداحافظ و خرید خوبی داشته باشید!"
     }
   ],
   "difficulty": "A2",

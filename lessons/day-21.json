@@ -71,6 +71,34 @@
       "targetText": "Super, danke! Guten Appetit schon mal.",
       "translation": "Great, thanks! Enjoy your meal already.",
       "translationFa": "عالی، ممنون! نوش جان."
+    },
+    {
+      "id": 11,
+      "role": "received",
+      "audioText": "Kochst du oft zu Hause oder gehst du lieber essen?",
+      "translation": "Do you often cook at home or do you prefer going out to eat?",
+      "translationFa": "اغلب خونه آشپزی می‌کنی یا ترجیح می‌دی بری بیرون بخوری؟"
+    },
+    {
+      "id": 12,
+      "role": "sent",
+      "targetText": "Ich koche meistens selbst. Es ist guenstiger und gesuender.",
+      "translation": "I mostly cook myself. It is cheaper and healthier.",
+      "translationFa": "بیشتر اوقات خودم آشپزی می‌کنم. ارزون‌تره و سالم‌تره."
+    },
+    {
+      "id": 13,
+      "role": "received",
+      "audioText": "Hast du ein Lieblingsrezept?",
+      "translation": "Do you have a favourite recipe?",
+      "translationFa": "یه دستور پخت مورد علاقه داری؟"
+    },
+    {
+      "id": 14,
+      "role": "sent",
+      "targetText": "Ja, ich mache sehr gerne spanische Tortilla. Das Rezept ist von meiner Mutter.",
+      "translation": "Yes, I really like making Spanish tortilla. The recipe is from my mother.",
+      "translationFa": "بله، خیلی دوست دارم تورتیلای اسپانیایی درست کنم. دستورش از مادرمه."
     }
   ],
   "difficulty": "A2",

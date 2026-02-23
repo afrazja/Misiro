@@ -71,6 +71,34 @@
       "targetText": "Super, bis morgen dann!",
       "translation": "Great, see you tomorrow then!",
       "translationFa": "عالی، پس تا فردا!"
+    },
+    {
+      "id": 11,
+      "role": "received",
+      "audioText": "Ach, und soll ich Snacks mitbringen?",
+      "translation": "Oh, and should I bring snacks?",
+      "translationFa": "آها، اسنک هم بیارم؟"
+    },
+    {
+      "id": 12,
+      "role": "sent",
+      "targetText": "Ja, das waere toll! Ich besorge die Getraenke.",
+      "translation": "Yes, that would be great! I will get the drinks.",
+      "translationFa": "بله، عالی می‌شه! من نوشیدنی‌ها رو می‌گیرم."
+    },
+    {
+      "id": 13,
+      "role": "received",
+      "audioText": "Abgemacht! Wie viele Personen kommen?",
+      "translation": "Deal! How many people are coming?",
+      "translationFa": "قراره! چند نفر میان؟"
+    },
+    {
+      "id": 14,
+      "role": "sent",
+      "targetText": "Wir sind zu fuenft. Es wird ein lustiger Abend!",
+      "translation": "There will be five of us. It will be a fun evening!",
+      "translationFa": "پنج نفریم. یه شب باحال می‌شه!"
     }
   ],
   "difficulty": "A2",

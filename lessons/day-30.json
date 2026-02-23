@@ -71,6 +71,41 @@
       "targetText": "Perfekt. Ich nehme dieses Modell.",
       "translation": "Perfect. I'll take this model.",
       "translationFa": "عالی. این مدل رو می‌گیرم."
+    },
+    {
+      "id": 11,
+      "role": "received",
+      "audioText": "Sehr gut! Moechten Sie auch eine Schutzhuelle dazu?",
+      "translation": "Very good! Would you also like a protective case?",
+      "translationFa": "خیلی خوب! آیا یه کاور محافظ هم می‌خواید؟"
+    },
+    {
+      "id": 12,
+      "role": "sent",
+      "targetText": "Ja, gerne. Was kostet eine gute Huelle?",
+      "translation": "Yes please. What does a good case cost?",
+      "translationFa": "بله، با کمال میل. یه کاور خوب چقدره؟"
+    },
+    {
+      "id": 13,
+      "role": "received",
+      "audioText": "Wir haben welche ab fuenfzehn Euro.",
+      "translation": "We have them from fifteen euros.",
+      "translationFa": "از پانزده یورو داریم."
+    },
+    {
+      "id": 14,
+      "role": "sent",
+      "targetText": "Gut, ich nehme diese hier fuer zwanzig Euro.",
+      "translation": "Good, I will take this one here for twenty euros.",
+      "translationFa": "خوب، این رو برای بیست یورو می‌گیرم."
+    },
+    {
+      "id": 15,
+      "role": "received",
+      "audioText": "Perfekt! Das macht zusammen achthundertzwanzig Euro. Bar oder Karte?",
+      "translation": "Perfect! That comes to eight hundred and twenty euros. Cash or card?",
+      "translationFa": "عالی! در کل می‌شه هشتصد و بیست یورو. نقد یا کارت؟"
     }
   ],
   "difficulty": "A2",

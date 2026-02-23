@@ -71,6 +71,34 @@
       "audioText": "Ich war auf einer Konferenz. Es war sehr interessant.",
       "translation": "I was at a conference. It was very interesting.",
       "translationFa": "در یک کنفرانس بودم. خیلی جالب بود."
+    },
+    {
+      "id": 11,
+      "role": "sent",
+      "targetText": "Worueber war die Konferenz?",
+      "translation": "What was the conference about?",
+      "translationFa": "موضوع کنفرانس چی بود؟"
+    },
+    {
+      "id": 12,
+      "role": "received",
+      "audioText": "Es ging um nachhaltige Energie. Ein sehr wichtiges Thema.",
+      "translation": "It was about sustainable energy. A very important topic.",
+      "translationFa": "درباره انرژی پایدار بود. یه موضوع خیلی مهم."
+    },
+    {
+      "id": 13,
+      "role": "sent",
+      "targetText": "Das stimmt. Haben Sie interessante Leute kennengelernt?",
+      "translation": "That is true. Did you meet any interesting people?",
+      "translationFa": "درسته. آدم‌های جالبی آشنا شدید؟"
+    },
+    {
+      "id": 14,
+      "role": "received",
+      "audioText": "Ja, viele! Die Netzwerkmoeglichkeiten waren fantastisch.",
+      "translation": "Yes, many! The networking opportunities were fantastic.",
+      "translationFa": "بله، خیلی! فرصت‌های شبکه‌سازی فوق‌العاده بود."
     }
   ],
   "difficulty": "A2",

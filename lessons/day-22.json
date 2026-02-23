@@ -71,6 +71,41 @@
       "targetText": "Bis dann!",
       "translation": "See you then!",
       "translationFa": "تا اون موقع!"
+    },
+    {
+      "id": 11,
+      "role": "received",
+      "audioText": "Uebrigens, wie lange dauert das Meeting?",
+      "translation": "By the way, how long does the meeting take?",
+      "translationFa": "راستی، جلسه چقدر طول می‌کشه؟"
+    },
+    {
+      "id": 12,
+      "role": "sent",
+      "targetText": "Ungefaehr eine Stunde, vielleicht anderthalb.",
+      "translation": "About an hour, maybe an hour and a half.",
+      "translationFa": "حدود یه ساعت، شاید یه ساعت و نیم."
+    },
+    {
+      "id": 13,
+      "role": "received",
+      "audioText": "Sollen wir danach zusammen Mittagessen?",
+      "translation": "Shall we have lunch together afterwards?",
+      "translationFa": "بعدش با هم ناهار بخوریم؟"
+    },
+    {
+      "id": 14,
+      "role": "sent",
+      "targetText": "Sehr gerne! Ich kenne ein gutes Restaurant in der Naehe.",
+      "translation": "I would love to! I know a good restaurant nearby.",
+      "translationFa": "با کمال میل! یه رستوران خوب نزدیک اینجا می‌شناسم."
+    },
+    {
+      "id": 15,
+      "role": "received",
+      "audioText": "Perfekt. Dann bis Dienstag!",
+      "translation": "Perfect. See you Tuesday then!",
+      "translationFa": "عالی. پس تا سه‌شنبه!"
     }
   ],
   "difficulty": "A2",

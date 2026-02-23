@@ -71,6 +71,34 @@
       "audioText": "Sie kostet 80 Euro.",
       "translation": "It costs 80 Euro.",
       "translationFa": "۸۰ یورو هست."
+    },
+    {
+      "id": 11,
+      "role": "sent",
+      "targetText": "Das ist etwas teuer. Gibt es einen Rabatt?",
+      "translation": "That is a bit expensive. Is there a discount?",
+      "translationFa": "یکم گرونه. تخفیف هست؟"
+    },
+    {
+      "id": 12,
+      "role": "received",
+      "audioText": "Ja, diese Woche haben wir zwanzig Prozent auf alles.",
+      "translation": "Yes, this week we have twenty percent off everything.",
+      "translationFa": "بله، این هفته بیست درصد تخفیف روی همه چیز داریم."
+    },
+    {
+      "id": 13,
+      "role": "sent",
+      "targetText": "Dann nehme ich sie! Kann ich mit Karte bezahlen?",
+      "translation": "Then I will take it! Can I pay by card?",
+      "translationFa": "پس می‌گیرمش! می‌تونم با کارت پرداخت کنم؟"
+    },
+    {
+      "id": 14,
+      "role": "received",
+      "audioText": "Natuerlich. Bitte kommen Sie zur Kasse.",
+      "translation": "Of course. Please come to the checkout.",
+      "translationFa": "البته. لطفاً بیاید به صندوق."
     }
   ],
   "difficulty": "A2",

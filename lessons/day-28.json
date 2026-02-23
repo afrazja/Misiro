@@ -71,6 +71,41 @@
       "targetText": "Bitte sehr. Und danke, das Gebäck riecht wunderbar!",
       "translation": "Here you go. And thanks, the pastries smell wonderful!",
       "translationFa": "بفرمایید. و ممنون، شیرینی‌ها عطر فوق‌العاده‌ای دارن!"
+    },
+    {
+      "id": 11,
+      "role": "received",
+      "audioText": "Danke schoen! Moechten Sie eine Tuete dazu?",
+      "translation": "Thank you very much! Would you like a bag?",
+      "translationFa": "ممنون! کیسه هم می‌خواید؟"
+    },
+    {
+      "id": 12,
+      "role": "sent",
+      "targetText": "Ja, bitte. Haben Sie auch selbstgemachte Marmelade?",
+      "translation": "Yes please. Do you also have homemade jam?",
+      "translationFa": "بله لطفاً. مربای دست‌پز هم دارید؟"
+    },
+    {
+      "id": 13,
+      "role": "received",
+      "audioText": "Ja, direkt da drueben. Wir haben Erdbeer und Aprikose.",
+      "translation": "Yes, right over there. We have strawberry and apricot.",
+      "translationFa": "بله، همین اونطرف. توت‌فرنگی و زردآلو داریم."
+    },
+    {
+      "id": 14,
+      "role": "sent",
+      "targetText": "Dann nehme ich noch ein Glas Erdbeermarmelade.",
+      "translation": "Then I will take a jar of strawberry jam as well.",
+      "translationFa": "پس یه شیشه مربای توت‌فرنگی هم می‌گیرم."
+    },
+    {
+      "id": 15,
+      "role": "received",
+      "audioText": "Sehr gerne! Das macht dann sechs Euro siebzig insgesamt.",
+      "translation": "With pleasure! That comes to six euros seventy in total.",
+      "translationFa": "با کمال میل! در کل می‌شه شش یورو و هفتاد سنت."
     }
   ],
   "difficulty": "A2",
