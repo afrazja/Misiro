@@ -1,0 +1,221 @@
+{
+  "title": "Day 88: Deep Gratitude & Appreciation",
+  "titleFa": "روز ۸۸: سپاسگزاری عمیق و قدردانی",
+  "sentences": [
+    {
+      "id": 1,
+      "role": "sent",
+      "targetText": "Ich möchte dir von ganzem Herzen danken.",
+      "translation": "I want to thank you from the bottom of my heart.",
+      "translationFa": "من می‌خواهم از صمیم قلب از تو تشکر کنم."
+    },
+    {
+      "id": 2,
+      "role": "sent",
+      "targetText": "Vielen Dank für deine Unterstützung.",
+      "translation": "Thank you so much for your support.",
+      "translationFa": "خیلی ممنون بابت حمایتت."
+    },
+    {
+      "id": 3,
+      "role": "sent",
+      "targetText": "Ich bin unglaublich dankbar für deine Hilfe.",
+      "translation": "I am incredibly grateful for your help.",
+      "translationFa": "من فوق‌العاده سپاسگزار کمک تو هستم."
+    },
+    {
+      "id": 4,
+      "role": "sent",
+      "targetText": "Ich schätze deine Zeit und Mühe.",
+      "translation": "I appreciate your time and effort.",
+      "translationFa": "من از وقت و تلاش تو قدردانی می‌کنم."
+    },
+    {
+      "id": 5,
+      "role": "sent",
+      "targetText": "Ich weiß nicht, was ich ohne dich getan hätte.",
+      "translation": "I don't know what I would have done without you.",
+      "translationFa": "نمی‌دانم بدون تو چه کار می‌کردم."
+    },
+    {
+      "id": 6,
+      "role": "sent",
+      "targetText": "Das ist sehr freundlich von dir.",
+      "translation": "That is very kind of you.",
+      "translationFa": "این لطف شماست."
+    },
+    {
+      "id": 7,
+      "role": "sent",
+      "targetText": "Du hast mir sehr geholfen.",
+      "translation": "You have helped me a lot.",
+      "translationFa": "تو کمک زیادی به من کردی."
+    },
+    {
+      "id": 8,
+      "role": "sent",
+      "targetText": "Ich schulde dir einen großen Gefallen.",
+      "translation": "I owe you a big favor.",
+      "translationFa": "من یک لطف بزرگ به تو بدهکارم."
+    },
+    {
+      "id": 9,
+      "role": "sent",
+      "targetText": "Danke, dass du immer für mich da bist.",
+      "translation": "Thank you for always being there for me.",
+      "translationFa": "ممنون که همیشه برای من اینجا هستی."
+    },
+    {
+      "id": 10,
+      "role": "sent",
+      "targetText": "Ich bin tief berührt von deiner Großzügigkeit.",
+      "translation": "I am deeply touched by your generosity.",
+      "translationFa": "من عمیقاً تحت تأثیر سخاوت تو قرار گرفته‌ام."
+    },
+    {
+      "id": 11,
+      "role": "sent",
+      "targetText": "Worte können meine Dankbarkeit nicht ausdrücken.",
+      "translation": "Words cannot express my gratitude.",
+      "translationFa": "کلمات نمی‌توانند سپاسگزاری مرا بیان کنند."
+    },
+    {
+      "id": 12,
+      "role": "sent",
+      "targetText": "Es bedeutet mir die Welt.",
+      "translation": "It means the world to me.",
+      "translationFa": "این برای من یک دنیا ارزش دارد."
+    },
+    {
+      "id": 13,
+      "role": "sent",
+      "targetText": "Ich möchte meinen aufrichtigen Dank aussprechen.",
+      "translation": "I would like to express my sincere thanks.",
+      "translationFa": "می‌خواهم تشکر صمیمانه خود را ابراز کنم."
+    },
+    {
+      "id": 14,
+      "role": "sent",
+      "targetText": "Danke für den wunderbaren Abend.",
+      "translation": "Thank you for the wonderful evening.",
+      "translationFa": "ممنون بابت عصر فوق‌العاده."
+    },
+    {
+      "id": 15,
+      "role": "received",
+      "audioText": "Du warst ein großartiger Mentor für mich.",
+      "translation": "You have been a great mentor to me.",
+      "translationFa": "تو یک مربی (منتور) عالی برای من بوده‌ای."
+    },
+    {
+      "id": 16,
+      "role": "sent",
+      "targetText": "Ich schätze dein ehrliches Feedback sehr.",
+      "translation": "I really appreciate your honest feedback.",
+      "translationFa": "من واقعاً از بازخورد صادقانه شما قدردانی می‌کنم."
+    },
+    {
+      "id": 17,
+      "role": "sent",
+      "targetText": "Dank deines Rates habe ich die Prüfung bestanden.",
+      "translation": "Thanks to your advice, I passed the exam.",
+      "translationFa": "به لطف راهنمایی تو، در امتحان قبول شدم."
+    },
+    {
+      "id": 18,
+      "role": "sent",
+      "targetText": "Danke, dass du uns zum Abendessen eingeladen hast.",
+      "translation": "Thank you for inviting us to dinner.",
+      "translationFa": "ممنون که ما را به شام دعوت کردی."
+    },
+    {
+      "id": 19,
+      "role": "sent",
+      "targetText": "Das Essen war absolut köstlich.",
+      "translation": "The meal was absolutely delicious.",
+      "translationFa": "غذا کاملاً خوشمزه بود."
+    },
+    {
+      "id": 20,
+      "role": "sent",
+      "targetText": "Ich bin sehr dankbar für diese Gelegenheit.",
+      "translation": "I am very thankful for this opportunity.",
+      "translationFa": "من بابت این فرصت بسیار سپاسگزارم."
+    },
+    {
+      "id": 21,
+      "role": "received",
+      "audioText": "Deine ermutigenden Worte haben mich motiviert.",
+      "translation": "Your encouraging words motivated me.",
+      "translationFa": "کلمات دلگرم‌کننده تو به من انگیزه داد."
+    },
+    {
+      "id": 22,
+      "role": "sent",
+      "targetText": "Ich werde nie vergessen, was du für mich getan hast.",
+      "translation": "I will never forget what you did for me.",
+      "translationFa": "من هرگز فراموش نخواهم کرد که چه کاری برای من انجام دادی."
+    },
+    {
+      "id": 23,
+      "role": "sent",
+      "targetText": "Danke, dass du dich um meine Katze gekümmert hast.",
+      "translation": "Thank you for taking care of my cat.",
+      "translationFa": "ممنون که مراقب گربه من بودی."
+    },
+    {
+      "id": 24,
+      "role": "received",
+      "audioText": "Wir sind sehr dankbar für das schöne Geschenk.",
+      "translation": "We are very grateful for the beautiful gift.",
+      "translationFa": "ما بابت هدیه زیبا بسیار سپاسگزاریم."
+    },
+    {
+      "id": 25,
+      "role": "sent",
+      "targetText": "Bitte richte deiner Familie meinen Dank aus.",
+      "translation": "Please convey my thanks to your family.",
+      "translationFa": "لطفاً تشکر من را به خانواده‌ات برسان."
+    },
+    {
+      "id": 26,
+      "role": "received",
+      "audioText": "Es ist ein Privileg, mit Ihnen zu arbeiten.",
+      "translation": "It is a privilege to work with you.",
+      "translationFa": "کار کردن با شما یک افتخار است."
+    },
+    {
+      "id": 27,
+      "role": "sent",
+      "targetText": "Danke für deine Geduld und dein Verständnis.",
+      "translation": "Thank you for your patience and understanding.",
+      "translationFa": "ممنون از صبر و درک تو."
+    },
+    {
+      "id": 28,
+      "role": "received",
+      "audioText": "Ich habe Glück, einen Freund wie dich zu haben.",
+      "translation": "I am lucky to have a friend like you.",
+      "translationFa": "من خوش‌شانس هستم که دوستی مثل تو دارم."
+    },
+    {
+      "id": 29,
+      "role": "received",
+      "audioText": "Deine Freundlichkeit wird immer in Erinnerung bleiben.",
+      "translation": "Your kindness will always be remembered.",
+      "translationFa": "مهربانی شما همیشه در یادها خواهد ماند."
+    },
+    {
+      "id": 30,
+      "role": "sent",
+      "targetText": "Danke für alles.",
+      "translation": "Thank you for everything.",
+      "translationFa": "ممنون بابت همه چیز."
+    }
+  ],
+  "difficulty": "B1",
+  "grammarFocus": "Konjunktiv II Vergangenheit: ich hätte getan + dass-Satz: Danke, dass du…/ Ich bin dankbar, dass… + Relativsatz: was du für mich getan hast + Futur I: wird bleiben / werde vergessen + Infinitivsatz: Es ist ein Privileg, mit Ihnen zu arbeiten",
+  "grammarFocusFa": "وجه التزامی II گذشته: ich hätte getan + جمله dass: Danke, dass du… + جمله موصولی: was du für mich getan hast + آینده I: wird bleiben / werde vergessen + جمله مصدری: Es ist ein Privileg, mit Ihnen zu arbeiten",
+  "description": "Express deep gratitude and appreciation in German. Learn heartfelt phrases for thanking people, acknowledging their help, and conveying sincere appreciation in both casual and formal contexts.",
+  "descriptionFa": "سپاسگزاری عمیق و قدردانی را به زبان آلمانی بیان کنید. عبارات صمیمانه برای تشکر از مردم، اعتراف به کمک آنها و انتقال قدردانی صادقانه در موقعیت‌های غیررسمی و رسمی را بیاموزید."
+}
