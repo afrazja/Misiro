@@ -1284,14 +1284,14 @@
 	}
 
 	.btn-replay.speaking {
-		border-bottom-color: #25D366;
-		border-bottom-width: 3px;
-		animation: replay-wave 1s linear infinite;
+		border-color: #25D366;
+		color: #25D366;
+		animation: replay-breathe 1.2s ease-in-out infinite;
 	}
 
-	@keyframes replay-wave {
-		0%, 100% { border-bottom-color: #25D366; }
-		50%      { border-bottom-color: #075e54; }
+	@keyframes replay-breathe {
+		0%, 100% { opacity: 1;   }
+		50%      { opacity: 0.4; }
 	}
 
 	/* Hint button */
