@@ -1,0 +1,200 @@
+{
+  "title": "Day 79: Hypothetical Situations",
+  "titleFa": "روز ۷۹: موقعیت‌های فرضی",
+  "sentences": [
+    {
+      "id": 1,
+      "role": "received",
+      "audioText": "Was würdest du tun, wenn du im Lotto gewinnen würdest?",
+      "translation": "What would you do if you won the lottery?",
+      "translationFa": "اگر در لاتاری برنده می‌شدی چه کار می‌کردی؟"
+    },
+    {
+      "id": 2,
+      "role": "sent",
+      "targetText": "Wenn ich mehr Zeit hätte, würde ich eine andere Sprache lernen.",
+      "translation": "If I had more time, I would learn another language.",
+      "translationFa": "اگر وقت بیشتری داشتم، یک زبان دیگر یاد می‌گرفتم."
+    },
+    {
+      "id": 3,
+      "role": "sent",
+      "targetText": "Ich würde ein Haus kaufen, wenn ich genug Geld hätte.",
+      "translation": "I would buy a house if I had enough money.",
+      "translationFa": "اگر پول کافی داشتم، یک خانه می‌خریدم."
+    },
+    {
+      "id": 4,
+      "role": "sent",
+      "targetText": "Was würde passieren, wenn wir den Zug verpassen würden?",
+      "translation": "What would happen if we missed the train?",
+      "translationFa": "اگر قطار را از دست می‌دادیم چه اتفاقی می‌افتاد؟"
+    },
+    {
+      "id": 5,
+      "role": "sent",
+      "targetText": "Wenn ich du wäre, würde ich dieses Jobangebot annehmen.",
+      "translation": "If I were you, I would accept that job offer.",
+      "translationFa": "اگر من جای تو بودم، آن پیشنهاد شغلی را قبول می‌کردم."
+    },
+    {
+      "id": 6,
+      "role": "sent",
+      "targetText": "Er könnte uns helfen, wenn er hier wäre.",
+      "translation": "He could help us if he were here.",
+      "translationFa": "اگر او اینجا بود می‌توانست به ما کمک کند."
+    },
+    {
+      "id": 7,
+      "role": "sent",
+      "targetText": "Wir würden nach Japan reisen, wenn wir einen längeren Urlaub hätten.",
+      "translation": "We would travel to Japan if we had a longer vacation.",
+      "translationFa": "اگر تعطیلات طولانی‌تری داشتیم، به ژاپن سفر می‌کردیم."
+    },
+    {
+      "id": 8,
+      "role": "sent",
+      "targetText": "Ich wünschte, ich könnte perfekt Deutsch sprechen.",
+      "translation": "I wish I could speak German perfectly.",
+      "translationFa": "ای کاش می‌توانستم آلمانی را عالی صحبت کنم."
+    },
+    {
+      "id": 9,
+      "role": "sent",
+      "targetText": "Wenn es morgen regnen würde, würden wir zu Hause bleiben.",
+      "translation": "If it rained tomorrow, we would stay at home.",
+      "translationFa": "اگر فردا باران می‌بارید، ما در خانه می‌ماندیم."
+    },
+    {
+      "id": 10,
+      "role": "received",
+      "audioText": "Was würdest du sagen, wenn ich dich um einen Gefallen bitten würde?",
+      "translation": "What would you say if I asked you for a favor?",
+      "translationFa": "اگر از تو یک لطفی می‌خواستم چه می‌گفتی؟"
+    },
+    {
+      "id": 11,
+      "role": "sent",
+      "targetText": "Wenn sie die Wahrheit wüsste, wäre sie sehr wütend.",
+      "translation": "If she knew the truth, she would be very angry.",
+      "translationFa": "اگر او حقیقت را می‌دانست، بسیار عصبانی می‌شد."
+    },
+    {
+      "id": 12,
+      "role": "sent",
+      "targetText": "Ohne deine Hilfe würde ich dieses Projekt niemals beenden.",
+      "translation": "Without your help, I would never finish this project.",
+      "translationFa": "بدون کمک تو، من هرگز این پروژه را تمام نمی‌کردم."
+    },
+    {
+      "id": 13,
+      "role": "received",
+      "audioText": "Stell dir vor, du könntest überall auf der Welt leben.",
+      "translation": "Imagine you could live anywhere in the world.",
+      "translationFa": "تصور کن می‌توانستی در هر جای دنیا زندگی کنی."
+    },
+    {
+      "id": 14,
+      "role": "received",
+      "audioText": "Wo würdest du am liebsten leben?",
+      "translation": "Where would you prefer to live?",
+      "translationFa": "ترجیح می‌دادی کجا زندگی کنی؟"
+    },
+    {
+      "id": 15,
+      "role": "sent",
+      "targetText": "Ich würde jetzt sehr gerne eine Tasse Kaffee trinken.",
+      "translation": "I would love to drink a cup of coffee right now.",
+      "translationFa": "من الان خیلی دوست داشتم یک فنجان قهوه بنوشم."
+    },
+    {
+      "id": 16,
+      "role": "sent",
+      "targetText": "Wenn ich ein Tier wäre, wäre ich ein Vogel.",
+      "translation": "If I were an animal, I would be a bird.",
+      "translationFa": "اگر یک حیوان بودم، یک پرنده می‌شدم."
+    },
+    {
+      "id": 17,
+      "role": "received",
+      "audioText": "Welche Superkraft würdest du wählen, wenn du könntest?",
+      "translation": "What superpower would you choose if you could?",
+      "translationFa": "اگر می‌توانستی، چه قدرت ماورایی را انتخاب می‌کردی؟"
+    },
+    {
+      "id": 18,
+      "role": "sent",
+      "targetText": "Ich würde das unter keinen Umständen tun.",
+      "translation": "I would not do that under any circumstances.",
+      "translationFa": "من تحت هیچ شرایطی آن کار را نمی‌کردم."
+    },
+    {
+      "id": 19,
+      "role": "received",
+      "audioText": "Wärst du so freundlich, das Fenster zu öffnen?",
+      "translation": "Would you be so kind as to open the window?",
+      "translationFa": "ممکن است لطف کنی و پنجره را باز کنی؟"
+    },
+    {
+      "id": 20,
+      "role": "sent",
+      "targetText": "Wenn wir früher losgefahren wären, würden wir nicht im Stau stehen.",
+      "translation": "If we had left earlier, we would not be stuck in traffic.",
+      "translationFa": "اگر زودتر حرکت کرده بودیم، در ترافیک گیر نمی‌کردیم."
+    },
+    {
+      "id": 21,
+      "role": "sent",
+      "targetText": "Sie tut so, als ob sie alles wüsste.",
+      "translation": "She acts as if she knew everything.",
+      "translationFa": "او طوری رفتار می‌کند که انگار همه چیز را می‌داند."
+    },
+    {
+      "id": 22,
+      "role": "sent",
+      "targetText": "Ich würde heute Abend lieber zu Hause bleiben.",
+      "translation": "I would rather stay at home tonight.",
+      "translationFa": "من ترجیح می‌دهم امشب در خانه بمانم."
+    },
+    {
+      "id": 23,
+      "role": "sent",
+      "targetText": "Wenn ich der Chef wäre, würde ich die Regeln ändern.",
+      "translation": "If I were the boss, I would change the rules.",
+      "translationFa": "اگر من رئیس بودم، قوانین را تغییر می‌دادم."
+    },
+    {
+      "id": 24,
+      "role": "received",
+      "audioText": "Was würdest du anders machen, wenn du in der Zeit zurückreisen könntest?",
+      "translation": "What would you do differently if you could go back in time?",
+      "translationFa": "اگر می‌توانستی در زمان به عقب برگردی، چه کاری را متفاوت انجام می‌دادی؟"
+    },
+    {
+      "id": 25,
+      "role": "sent",
+      "targetText": "Er wäre viel glücklicher, wenn er seinen Job wechseln würde.",
+      "translation": "He would be much happier if he changed his job.",
+      "translationFa": "اگر شغلش را عوض می‌کرد خیلی خوشحال‌تر می‌شد."
+    },
+    {
+      "id": 26,
+      "role": "sent",
+      "targetText": "Ich würde es schätzen, wenn Sie bis morgen antworten könnten.",
+      "translation": "I would appreciate it if you could reply by tomorrow.",
+      "translationFa": "ممنون می‌شوم اگر بتوانید تا فردا پاسخ دهید."
+    },
+    {
+      "id": 27,
+      "role": "sent",
+      "targetText": "Selbst wenn ich die Zeit hätte, würde ich es nicht tun.",
+      "translation": "Even if I had the time, I wouldn't do it.",
+      "translationFa": "حتی اگر وقت هم داشتم، این کار را نمی‌کردم."
+    }
+  ],
+  "difficulty": "B2",
+  "grammarFocus": "Konjunktiv II: würde + Infinitiv / wäre / hätte / könnte + Wenn-Satz + Konjunktiv II Vergangenheit: wenn wir losgefahren wären + als ob + Konjunktiv II",
+  "grammarFocusFa": "وجه التزامی II: würde + مصدر / wäre / hätte / könnte + جمله wenn + وجه التزامی II گذشته: wenn wir losgefahren wären + als ob + وجه التزامی II",
+  "description": "Express hypothetical situations, wishes, and polite requests in German using Konjunktiv II. Imagine different scenarios, give advice, and reflect on what could have been.",
+  "descriptionFa": "موقعیت‌های فرضی، آرزوها و درخواست‌های مؤدبانه را به زبان آلمانی با استفاده از وجه التزامی II بیان کنید. سناریوهای مختلف را تصور کنید، مشاوره دهید و به آنچه می‌توانست باشد فکر کنید."
+}
