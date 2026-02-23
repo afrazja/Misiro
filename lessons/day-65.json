@@ -1,0 +1,165 @@
+{
+  "title": "Day 65: Discussing the News & Current Events",
+  "titleFa": "روز ۶۵: بحث درباره اخبار و رویدادهای جاری",
+  "sentences": [
+    {
+      "id": 1,
+      "role": "received",
+      "audioText": "Hast du heute die Nachrichten gelesen?",
+      "translation": "Have you read the news today?",
+      "translationFa": "آیا امروز اخبار را خوانده‌ای؟"
+    },
+    {
+      "id": 2,
+      "role": "sent",
+      "targetText": "Hast du gestern Abend die Nachrichten gesehen?",
+      "translation": "Did you see the news last night?",
+      "translationFa": "آیا دیشب اخبار را دیدی؟"
+    },
+    {
+      "id": 3,
+      "role": "received",
+      "audioText": "Was passiert gerade in der Welt?",
+      "translation": "What is happening in the world right now?",
+      "translationFa": "در حال حاضر در دنیا چه خبر است؟"
+    },
+    {
+      "id": 4,
+      "role": "sent",
+      "targetText": "Ich habe heute Morgen einen interessanten Artikel gelesen.",
+      "translation": "I read an interesting article this morning.",
+      "translationFa": "من امروز صبح یک مقاله جالب خواندم."
+    },
+    {
+      "id": 5,
+      "role": "received",
+      "audioText": "Hast du von der Wahl gehört?",
+      "translation": "Did you hear about the election?",
+      "translationFa": "آیا درباره انتخابات شنیدی؟"
+    },
+    {
+      "id": 6,
+      "role": "sent",
+      "targetText": "Die politische Situation ist sehr kompliziert.",
+      "translation": "The political situation is very complicated.",
+      "translationFa": "وضعیت سیاسی بسیار پیچیده است."
+    },
+    {
+      "id": 7,
+      "role": "received",
+      "audioText": "Laut der Zeitung wächst die Wirtschaft.",
+      "translation": "According to the newspaper, the economy is growing.",
+      "translationFa": "طبق گفته روزنامه، اقتصاد در حال رشد است."
+    },
+    {
+      "id": 8,
+      "role": "sent",
+      "targetText": "Ich sehe jeden Abend die Nachrichten im Fernsehen.",
+      "translation": "I watch the news on television every evening.",
+      "translationFa": "من هر روز عصر اخبار را در تلویزیون تماشا می‌کنم."
+    },
+    {
+      "id": 9,
+      "role": "received",
+      "audioText": "Viele Menschen informieren sich im Internet.",
+      "translation": "Many people get their information from the internet.",
+      "translationFa": "بسیاری از مردم اطلاعات خود را از اینترنت دریافت می‌کنند."
+    },
+    {
+      "id": 10,
+      "role": "sent",
+      "targetText": "Es ist heutzutage schwer zu wissen, was wahr ist.",
+      "translation": "It is hard to know what is true nowadays.",
+      "translationFa": "این روزها سخت است که بدانیم چه چیزی حقیقت دارد."
+    },
+    {
+      "id": 11,
+      "role": "sent",
+      "targetText": "Ich vertraue nicht allem, was ich online lese.",
+      "translation": "I don't trust everything I read online.",
+      "translationFa": "من به هر چیزی که آنلاین می‌خوانم اعتماد ندارم."
+    },
+    {
+      "id": 12,
+      "role": "received",
+      "audioText": "Der Präsident hat gestern eine Rede gehalten.",
+      "translation": "The president gave a speech yesterday.",
+      "translationFa": "رئیس‌جمهور دیروز سخنرانی کرد."
+    },
+    {
+      "id": 13,
+      "role": "sent",
+      "targetText": "Es gibt neue Gesetze zum Umweltschutz.",
+      "translation": "There are new laws regarding environmental protection.",
+      "translationFa": "قوانین جدیدی در مورد حفاظت از محیط زیست وجود دارد."
+    },
+    {
+      "id": 14,
+      "role": "received",
+      "audioText": "Dieses Thema wird derzeit stark diskutiert.",
+      "translation": "This topic is currently heavily debated.",
+      "translationFa": "این موضوع در حال حاضر به شدت مورد بحث است."
+    },
+    {
+      "id": 15,
+      "role": "sent",
+      "targetText": "Die Wahlergebnisse werden heute Abend bekannt gegeben.",
+      "translation": "The election results will be announced tonight.",
+      "translationFa": "نتایج انتخابات امشب اعلام خواهد شد."
+    },
+    {
+      "id": 16,
+      "role": "received",
+      "audioText": "Es ist eine Tragödie für die lokale Gemeinde.",
+      "translation": "It is a tragedy for the local community.",
+      "translationFa": "این یک تراژدی برای جامعه محلی است."
+    },
+    {
+      "id": 17,
+      "role": "sent",
+      "targetText": "Die Regierung plant, die Steuern zu erhöhen.",
+      "translation": "The government plans to increase taxes.",
+      "translationFa": "دولت برنامه‌ریزی کرده است که مالیات‌ها را افزایش دهد."
+    },
+    {
+      "id": 18,
+      "role": "received",
+      "audioText": "Die Menschen protestieren auf den Straßen.",
+      "translation": "People are protesting on the streets.",
+      "translationFa": "مردم در خیابان‌ها اعتراض می‌کنند."
+    },
+    {
+      "id": 19,
+      "role": "sent",
+      "targetText": "Was ist deine Meinung zu diesem politischen Thema?",
+      "translation": "What is your opinion on this political issue?",
+      "translationFa": "نظر تو درباره این مسئله سیاسی چیست؟"
+    },
+    {
+      "id": 20,
+      "role": "received",
+      "audioText": "Die Journalisten berichten live vom Ort des Geschehens.",
+      "translation": "The journalists are reporting live from the scene.",
+      "translationFa": "خبرنگاران به صورت زنده از محل حادثه گزارش می‌دهند."
+    },
+    {
+      "id": 21,
+      "role": "sent",
+      "targetText": "Hoffen wir auf eine friedliche Lösung.",
+      "translation": "Let's hope for a peaceful resolution.",
+      "translationFa": "بیایید به یک راه‌حل مسالمت‌آمیز امیدوار باشیم."
+    },
+    {
+      "id": 22,
+      "role": "sent",
+      "targetText": "Das ist die wichtigste Schlagzeile des Tages.",
+      "translation": "That is the most important headline of the day.",
+      "translationFa": "این مهم‌ترین تیتر امروز است."
+    }
+  ],
+  "difficulty": "B2",
+  "grammarFocus": "News vocabulary: Nachrichten, Schlagzeile, Wahl + laut + Dativ / Passiv: bekannt gegeben wird",
+  "grammarFocusFa": "واژگان اخبار: Nachrichten، Schlagzeile، Wahl + laut + حالت سوم / مجهول: bekannt gegeben wird",
+  "description": "Discuss current events and the news with a German speaker. Share your sources, opinions, and reactions to what's happening in the world.",
+  "descriptionFa": "رویدادهای جاری و اخبار را با یک آلمانی‌زبان بحث کنید. منابع، نظرات و واکنش‌های خود را نسبت به اتفاقاتی که در دنیا می‌افتد به اشتراک بگذارید."
+}
