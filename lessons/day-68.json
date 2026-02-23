@@ -1,0 +1,172 @@
+{
+  "title": "Day 68: Apologizing Professionally",
+  "titleFa": "روز ۶۸: عذرخواهی حرفه‌ای",
+  "sentences": [
+    {
+      "id": 1,
+      "role": "sent",
+      "targetText": "Ich entschuldige mich aufrichtig für den Fehler.",
+      "translation": "I sincerely apologize for the mistake.",
+      "translationFa": "من صمیمانه بابت اشتباه عذرخواهی می‌کنم."
+    },
+    {
+      "id": 2,
+      "role": "sent",
+      "targetText": "Ich übernehme die volle Verantwortung für diesen Fehler.",
+      "translation": "I take full responsibility for this error.",
+      "translationFa": "من مسئولیت کامل این خطا را بر عهده می‌گیرم."
+    },
+    {
+      "id": 3,
+      "role": "sent",
+      "targetText": "Bitte verzeihen Sie die Verzögerung meiner Antwort.",
+      "translation": "Please forgive the delay in my response.",
+      "translationFa": "لطفاً تأخیر در پاسخ من را ببخشید."
+    },
+    {
+      "id": 4,
+      "role": "sent",
+      "targetText": "Es war mein Versehen und es wird nicht wieder vorkommen.",
+      "translation": "It was my oversight and it won't happen again.",
+      "translationFa": "این کوتاهی من بود و دیگر تکرار نخواهد شد."
+    },
+    {
+      "id": 5,
+      "role": "received",
+      "audioText": "Es tut mir leid für die Unannehmlichkeiten, die dadurch entstanden sind.",
+      "translation": "I am sorry for any inconvenience this has caused.",
+      "translationFa": "من بابت هرگونه مشکل ایجاد شده متأسفم."
+    },
+    {
+      "id": 6,
+      "role": "sent",
+      "targetText": "Wir arbeiten hart daran, das Problem umgehend zu lösen.",
+      "translation": "We are working hard to resolve the issue immediately.",
+      "translationFa": "ما سخت در تلاشیم تا مشکل را فوراً حل کنیم."
+    },
+    {
+      "id": 7,
+      "role": "sent",
+      "targetText": "Ich entschuldige mich für das Missverständnis während der Besprechung.",
+      "translation": "I apologize for the misunderstanding during the meeting.",
+      "translationFa": "من بابت سوءتفاهم پیش آمده در طول جلسه عذرخواهی می‌کنم."
+    },
+    {
+      "id": 8,
+      "role": "received",
+      "audioText": "Danke, dass Sie mich darauf aufmerksam gemacht haben.",
+      "translation": "Thank you for bringing this to my attention.",
+      "translationFa": "از اینکه این موضوع را به اطلاع من رساندید متشکرم."
+    },
+    {
+      "id": 9,
+      "role": "sent",
+      "targetText": "Ich bedaure die negativen Auswirkungen auf das Projekt zutiefst.",
+      "translation": "I deeply regret the negative impact on the project.",
+      "translationFa": "من عمیقاً از تأثیر منفی روی پروژه متأسفم."
+    },
+    {
+      "id": 10,
+      "role": "sent",
+      "targetText": "Lassen Sie es mich in Ordnung bringen und das Dokument korrigieren.",
+      "translation": "Let me make it right and correct the document.",
+      "translationFa": "اجازه دهید آن را جبران کنم و سند را اصلاح کنم."
+    },
+    {
+      "id": 11,
+      "role": "sent",
+      "targetText": "Ich versichere Ihnen, dass wir unsere Prozesse aktualisiert haben.",
+      "translation": "I assure you that we have updated our processes.",
+      "translationFa": "به شما اطمینان می‌دهم که ما فرآیندهای خود را به‌روز کرده‌ایم."
+    },
+    {
+      "id": 12,
+      "role": "sent",
+      "targetText": "Ich hätte dies klarer kommunizieren sollen.",
+      "translation": "I should have communicated this more clearly.",
+      "translationFa": "من باید این موضوع را واضح‌تر بیان می‌کردم."
+    },
+    {
+      "id": 13,
+      "role": "received",
+      "audioText": "Wir entschuldigen uns für die technischen Schwierigkeiten auf unserer Website.",
+      "translation": "We apologize for the technical difficulties on our website.",
+      "translationFa": "ما بابت مشکلات فنی در وب‌سایت خود عذرخواهی می‌کنیم."
+    },
+    {
+      "id": 14,
+      "role": "sent",
+      "targetText": "Bitte akzeptieren Sie meine formelle Entschuldigung im Namen des Teams.",
+      "translation": "Please accept my formal apology on behalf of the team.",
+      "translationFa": "لطفاً عذرخواهی رسمی من را از طرف تیم بپذیرید."
+    },
+    {
+      "id": 15,
+      "role": "received",
+      "audioText": "Ich verstehe Ihre Frustration und stimme Ihrem Feedback zu.",
+      "translation": "I understand your frustration and agree with your feedback.",
+      "translationFa": "من ناامیدی شما را درک می‌کنم و با بازخورد شما موافقم."
+    },
+    {
+      "id": 16,
+      "role": "sent",
+      "targetText": "Wir haben die Frist verpasst und es tut mir wirklich leid.",
+      "translation": "We missed the deadline and I am truly sorry.",
+      "translationFa": "ما مهلت را از دست دادیم و من واقعاً متأسفم."
+    },
+    {
+      "id": 17,
+      "role": "received",
+      "audioText": "Was können Sie tun, um diese Situation zu beheben?",
+      "translation": "What can you do to fix this situation?",
+      "translationFa": "برای رفع این وضعیت چه کاری می‌توانید انجام دهید؟"
+    },
+    {
+      "id": 18,
+      "role": "sent",
+      "targetText": "Ich werde Ihnen die überarbeitete Version bis Ende des Tages zusenden.",
+      "translation": "I will send you the revised version by the end of the day.",
+      "translationFa": "من نسخه اصلاح شده را تا پایان امروز برای شما ارسال خواهم کرد."
+    },
+    {
+      "id": 19,
+      "role": "received",
+      "audioText": "Danke für Ihre Geduld und Ihr Verständnis.",
+      "translation": "Thank you for your patience and understanding.",
+      "translationFa": "از صبر و درک شما سپاسگزارم."
+    },
+    {
+      "id": 20,
+      "role": "sent",
+      "targetText": "Ich habe diese E-Mail komplett übersehen, meine Entschuldigung.",
+      "translation": "I completely missed that email, my apologies.",
+      "translationFa": "من آن ایمیل را کاملاً نادیده گرفتم، عذرخواهی می‌کنم."
+    },
+    {
+      "id": 21,
+      "role": "sent",
+      "targetText": "Es gab eine Terminüberschneidung in meinem Kalender.",
+      "translation": "There was a scheduling conflict on my calendar.",
+      "translationFa": "یک تداخل برنامه‌ریزی در تقویم من وجود داشت."
+    },
+    {
+      "id": 22,
+      "role": "sent",
+      "targetText": "Wir schätzen Ihr Geschäft und hoffen, Ihr Vertrauen zurückzugewinnen.",
+      "translation": "We value your business and hope to regain your trust.",
+      "translationFa": "ما برای تجارت شما ارزش قائلیم و امیدواریم اعتماد شما را دوباره جلب کنیم."
+    },
+    {
+      "id": 23,
+      "role": "sent",
+      "targetText": "Ich verspreche, dies von nun an persönlich zu erledigen.",
+      "translation": "I promise to handle this personally from now on.",
+      "translationFa": "من قول می‌دهم از این به بعد شخصاً به این موضوع رسیدگی کنم."
+    }
+  ],
+  "difficulty": "B2",
+  "grammarFocus": "Formal register: Konjunktiv II for regret (hätte sollen) + versichern / bedauern + Akkusativ",
+  "grammarFocusFa": "سبک رسمی: وجه التزامی II برای پشیمانی (hätte sollen) + versichern / bedauern + حالت چهارم",
+  "description": "Handle professional apologies in German — take responsibility for mistakes, address client complaints, and promise corrective action.",
+  "descriptionFa": "در آلمان به صورت حرفه‌ای عذرخواهی کنید — مسئولیت اشتباهات را بپذیرید، به شکایات مشتریان رسیدگی کنید و اقدام اصلاحی قول دهید."
+}
