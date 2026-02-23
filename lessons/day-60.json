@@ -127,6 +127,27 @@
       "audioText": "Alles klar. Hier ist Ihre Anzeigenummer: 2024-8831. Bitte bewahren Sie diese gut auf.",
       "translation": "All right. Here is your report number: 2024-8831. Please keep it safe.",
       "translationFa": "باشه. شماره گزارشتون اینه: ۲۰۲۴-۸۸۳۱. لطفاً خوب نگهش دارید."
+    },
+    {
+      "id": 19,
+      "role": "sent",
+      "targetText": "Danke. Muss ich noch etwas anderes tun?",
+      "translation": "Thank you. Is there anything else I need to do?",
+      "translationFa": "ممنون. کار دیگه‌ای هم باید انجام بدم؟"
+    },
+    {
+      "id": 20,
+      "role": "received",
+      "audioText": "Bitte informieren Sie so schnell wie möglich Ihre Botschaft.",
+      "translation": "Please inform your embassy as soon as possible.",
+      "translationFa": "لطفاً هرچه زودتر به سفارتخونه‌تون اطلاع بدید."
+    },
+    {
+      "id": 21,
+      "role": "sent",
+      "targetText": "Verstanden. Vielen Dank für Ihre Hilfe und Ihre Geduld!",
+      "translation": "Understood. Thank you very much for your help and patience!",
+      "translationFa": "فهمیدم. خیلی ممنون از کمک و صبر شما!"
     }
   ],
   "difficulty": "B1+",

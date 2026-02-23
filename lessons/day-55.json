@@ -71,6 +71,76 @@
       "targetText": "Wo ist der nächste Arzt, bitte?",
       "translation": "Where is the nearest doctor, please?",
       "translationFa": "نزدیک‌ترین دکتر کجاست، لطفاً؟"
+    },
+    {
+      "id": 11,
+      "role": "sent",
+      "targetText": "Ich möchte bitte bezahlen.",
+      "translation": "I'd like to pay, please.",
+      "translationFa": "می‌خوام حساب کنم، لطفاً."
+    },
+    {
+      "id": 12,
+      "role": "received",
+      "audioText": "Möchten Sie mit Karte oder bar zahlen?",
+      "translation": "Would you like to pay by card or cash?",
+      "translationFa": "با کارت می‌خواید بدید یا نقد؟"
+    },
+    {
+      "id": 13,
+      "role": "sent",
+      "targetText": "Mit Karte, bitte.",
+      "translation": "By card, please.",
+      "translationFa": "با کارت، لطفاً."
+    },
+    {
+      "id": 14,
+      "role": "received",
+      "audioText": "Bitte geben Sie Ihre PIN ein.",
+      "translation": "Please enter your PIN.",
+      "translationFa": "لطفاً پین رو وارد کنید."
+    },
+    {
+      "id": 15,
+      "role": "sent",
+      "targetText": "Könnten Sie das bitte wiederholen? Ich habe es nicht verstanden.",
+      "translation": "Could you please repeat that? I didn't understand.",
+      "translationFa": "می‌تونید تکرار کنید لطفاً؟ نفهمیدم."
+    },
+    {
+      "id": 16,
+      "role": "received",
+      "audioText": "Natürlich, kein Problem.",
+      "translation": "Of course, no problem.",
+      "translationFa": "البته، مشکلی نیست."
+    },
+    {
+      "id": 17,
+      "role": "sent",
+      "targetText": "Ich bin seit zwei Jahren in Deutschland und lerne noch Deutsch.",
+      "translation": "I've been in Germany for two years and am still learning German.",
+      "translationFa": "دو ساله اینجام و هنوز دارم آلمانی یاد می‌گیرم."
+    },
+    {
+      "id": 18,
+      "role": "received",
+      "audioText": "Das klingt gut! Ihr Deutsch ist schon sehr ordentlich.",
+      "translation": "That sounds good! Your German is already quite decent.",
+      "translationFa": "جالبه! آلمانیتون خیلی خوبه."
+    },
+    {
+      "id": 19,
+      "role": "sent",
+      "targetText": "Danke, das ist sehr nett. Ich übe jeden Tag.",
+      "translation": "Thanks, that's very kind. I practice every day.",
+      "translationFa": "ممنون، خیلی مهربونید. هر روز تمرین می‌کنم."
+    },
+    {
+      "id": 20,
+      "role": "received",
+      "audioText": "Das merkt man! Weiter so!",
+      "translation": "It shows! Keep it up!",
+      "translationFa": "معلومه! ادامه بده!"
     }
   ],
   "difficulty": "B1",

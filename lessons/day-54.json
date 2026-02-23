@@ -127,6 +127,27 @@
       "audioText": "Hier bitte. Wir schicken Ihnen eine Bestätigung per E-Mail.",
       "translation": "Here please. We'll send you a confirmation by email.",
       "translationFa": "اینجا لطفاً. یه تأییدیه برای شما ایمیل می‌کنیم."
+    },
+    {
+      "id": 19,
+      "role": "sent",
+      "targetText": "Kann ich auch per Banküberweisung zahlen?",
+      "translation": "Can I also pay by bank transfer?",
+      "translationFa": "می‌تونم با حواله بانکی هم پرداخت کنم؟"
+    },
+    {
+      "id": 20,
+      "role": "received",
+      "audioText": "Ja, die Bankdaten stehen in der Bestätigungs-E-Mail.",
+      "translation": "Yes, the bank details are in the confirmation email.",
+      "translationFa": "بله، مشخصات بانکی توی ایمیل تأییدیه هست."
+    },
+    {
+      "id": 21,
+      "role": "sent",
+      "targetText": "Wunderbar. Ich freue mich schon sehr auf den Kurs!",
+      "translation": "Wonderful. I'm really looking forward to the course!",
+      "translationFa": "عالیه. خیلی منتظر کلاسم!"
     }
   ],
   "difficulty": "B1",

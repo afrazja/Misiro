@@ -113,6 +113,41 @@
       "audioText": "Sehr gut! Ich schicke Ihnen den Mietvertrag zu.",
       "translation": "Great! I'll send you the rental contract.",
       "translationFa": "عالی! قرارداد اجاره رو برای شما می‌فرستم."
+    },
+    {
+      "id": 17,
+      "role": "sent",
+      "targetText": "Wann bekomme ich dann die Schlüssel?",
+      "translation": "When will I get the keys then?",
+      "translationFa": "پس کِی کلیدها رو می‌گیرم؟"
+    },
+    {
+      "id": 18,
+      "role": "received",
+      "audioText": "Nach Unterzeichnung des Mietvertrags und Zahlung der Kaution sofort.",
+      "translation": "Immediately after signing the rental contract and paying the deposit.",
+      "translationFa": "بلافاصله بعد از امضای قرارداد و پرداخت ودیعه."
+    },
+    {
+      "id": 19,
+      "role": "sent",
+      "targetText": "Gibt es auch einen Keller oder Abstellraum?",
+      "translation": "Is there also a cellar or storage room?",
+      "translationFa": "زیرزمین یا انباری هم هست؟"
+    },
+    {
+      "id": 20,
+      "role": "received",
+      "audioText": "Ja, jede Wohnung hat einen eigenen Kellerraum.",
+      "translation": "Yes, each apartment has its own cellar storage room.",
+      "translationFa": "بله، هر آپارتمان زیرزمین اختصاصی داره."
+    },
+    {
+      "id": 21,
+      "role": "sent",
+      "targetText": "Wunderbar. Ich bin sehr gespannt auf den Einzug!",
+      "translation": "Wonderful. I'm really excited about moving in!",
+      "translationFa": "عالیه. خیلی هیجان دارم برای اسباب‌کشی!"
     }
   ],
   "difficulty": "B1+",

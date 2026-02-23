@@ -71,6 +71,76 @@
       "audioText": "Ungefähr eine Woche.",
       "translation": "About one week.",
       "translationFa": "تقریباً یه هفته."
+    },
+    {
+      "id": 11,
+      "role": "received",
+      "audioText": "Haben Sie schon ein deutsches Bankkonto?",
+      "translation": "Do you already have a German bank account?",
+      "translationFa": "قبلاً حساب بانکی آلمانی داشتید؟"
+    },
+    {
+      "id": 12,
+      "role": "sent",
+      "targetText": "Nein, das ist mein erstes Konto hier.",
+      "translation": "No, this is my first account here.",
+      "translationFa": "نه، این اولین حساب من اینجاست."
+    },
+    {
+      "id": 13,
+      "role": "received",
+      "audioText": "Gibt es Online-Banking dazu?",
+      "translation": "Is there online banking included?",
+      "translationFa": "آنلاین بانکینگ هم شامل میشه؟"
+    },
+    {
+      "id": 14,
+      "role": "sent",
+      "targetText": "Ja, bitte. Das wäre sehr praktisch.",
+      "translation": "Yes, please. That would be very practical.",
+      "translationFa": "بله، لطفاً. خیلی کاربردی می‌شه."
+    },
+    {
+      "id": 15,
+      "role": "received",
+      "audioText": "Natürlich. Sie erhalten per Post eine PIN für das Online-Banking.",
+      "translation": "Of course. You will receive a PIN for online banking by post.",
+      "translationFa": "البته. پین آنلاین بانکینگ رو پستی دریافت می‌کنید."
+    },
+    {
+      "id": 16,
+      "role": "sent",
+      "targetText": "Welche Unterlagen brauche ich noch?",
+      "translation": "What other documents do I need?",
+      "translationFa": "چه مدارک دیگه‌ای لازم دارم؟"
+    },
+    {
+      "id": 17,
+      "role": "received",
+      "audioText": "Nur den Ausweis und Ihre Meldeadresse in Deutschland.",
+      "translation": "Just your ID and your registered address in Germany.",
+      "translationFa": "فقط کارت شناسایی و آدرس ثبت‌شده‌تون در آلمان."
+    },
+    {
+      "id": 18,
+      "role": "sent",
+      "targetText": "Ich habe noch keine feste Adresse. Ist das ein Problem?",
+      "translation": "I don't have a fixed address yet. Is that a problem?",
+      "translationFa": "هنوز آدرس ثابتی ندارم. مشکلی داره؟"
+    },
+    {
+      "id": 19,
+      "role": "received",
+      "audioText": "Sie können vorerst eine Briefadresse verwenden.",
+      "translation": "You can use a postal address for now.",
+      "translationFa": "فعلاً می‌تونید از یه آدرس پستی استفاده کنید."
+    },
+    {
+      "id": 20,
+      "role": "sent",
+      "targetText": "Sehr gut. Dann machen wir das so. Vielen Dank!",
+      "translation": "Very good. Then let's do it that way. Thank you very much!",
+      "translationFa": "خیلی خوب. پس این‌طوری انجامش میدیم. خیلی ممنون!"
     }
   ],
   "difficulty": "B1",

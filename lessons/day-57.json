@@ -113,6 +113,34 @@
       "audioText": "Wir schicken Ihnen eine SMS, sobald das Problem behoben ist.",
       "translation": "We'll send you an SMS as soon as it's fixed.",
       "translationFa": "به محض اینکه درست شد، براتون SMS میفرستیم."
+    },
+    {
+      "id": 17,
+      "role": "sent",
+      "targetText": "Noch eine Frage: Was kostet ein Technikerbesuch, falls nötig?",
+      "translation": "One more question: What does a technician visit cost if needed?",
+      "translationFa": "یه سوال دیگه: اگه لازم بشه، هزینه ویزیت تکنسین چقدره؟"
+    },
+    {
+      "id": 18,
+      "role": "received",
+      "audioText": "Ein Technikerbesuch zu Hause kostet achtzig Euro.",
+      "translation": "A home technician visit costs eighty euros.",
+      "translationFa": "ویزیت تکنسین در منزل هشتاد یورو هست."
+    },
+    {
+      "id": 19,
+      "role": "sent",
+      "targetText": "Ich hoffe, es wird nicht nötig sein. Vielen Dank für Ihre Hilfe!",
+      "translation": "I hope it won't be necessary. Thank you very much for your help!",
+      "translationFa": "امیدوارم لازم نشه. خیلی ممنون از کمکتون!"
+    },
+    {
+      "id": 20,
+      "role": "received",
+      "audioText": "Gern geschehen. Wir melden uns, sobald alles behoben ist.",
+      "translation": "You're welcome. We'll be in touch as soon as everything is fixed.",
+      "translationFa": "خواهش می‌کنم. به محض رفع مشکل خبرتون می‌کنیم."
     }
   ],
   "difficulty": "B1+",

@@ -71,6 +71,83 @@
       "audioText": "Gehen Sie zum Schalter und buchen Sie um.",
       "translation": "Go to the counter and rebook.",
       "translationFa": "برید به باجه و دوباره رزرو کنید."
+    },
+    {
+      "id": 11,
+      "role": "sent",
+      "targetText": "Kann ich meinen Zug kostenlos umbuchen?",
+      "translation": "Can I rebook my train for free?",
+      "translationFa": "می‌تونم قطارم رو رایگان تغییر بدم؟"
+    },
+    {
+      "id": 12,
+      "role": "received",
+      "audioText": "Ja, bei Verspätung über zwanzig Minuten ist das möglich.",
+      "translation": "Yes, that's possible when there's a delay of more than twenty minutes.",
+      "translationFa": "بله، در صورت تأخیر بیش از بیست دقیقه امکانپذیره."
+    },
+    {
+      "id": 13,
+      "role": "sent",
+      "targetText": "Der nächste Zug fährt in einer Stunde?",
+      "translation": "The next train leaves in an hour?",
+      "translationFa": "قطار بعدی یه ساعت دیگه حرکت می‌کنه؟"
+    },
+    {
+      "id": 14,
+      "role": "received",
+      "audioText": "Ja, um achtzehn Uhr dreißig. Soll ich Ihnen ein neues Ticket ausstellen?",
+      "translation": "Yes, at 18:30. Shall I issue you a new ticket?",
+      "translationFa": "بله، ساعت هجده و سی. بلیط جدید صادر کنم؟"
+    },
+    {
+      "id": 15,
+      "role": "sent",
+      "targetText": "Ja, bitte. Und was passiert mit meinem Gepäck?",
+      "translation": "Yes, please. And what happens to my luggage?",
+      "translationFa": "بله، لطفاً. چمدونم چی میشه؟"
+    },
+    {
+      "id": 16,
+      "role": "received",
+      "audioText": "Ihr Gepäck können Sie in der Gepäckaufbewahrung lassen.",
+      "translation": "You can leave your luggage in the left luggage office.",
+      "translationFa": "می‌تونید چمدونتون رو در اتاق امانات بذارید."
+    },
+    {
+      "id": 17,
+      "role": "sent",
+      "targetText": "Wo ist die Gepäckaufbewahrung?",
+      "translation": "Where is the left luggage office?",
+      "translationFa": "اتاق امانات کجاست؟"
+    },
+    {
+      "id": 18,
+      "role": "received",
+      "audioText": "Gleis drei, links neben dem Eingang.",
+      "translation": "Platform three, to the left of the entrance.",
+      "translationFa": "سکوی سه، سمت چپ ورودی."
+    },
+    {
+      "id": 19,
+      "role": "sent",
+      "targetText": "Gibt es im Wartebereich etwas zu essen?",
+      "translation": "Is there anything to eat in the waiting area?",
+      "translationFa": "تو سالن انتظار چیزی برای خوردن هست؟"
+    },
+    {
+      "id": 20,
+      "role": "received",
+      "audioText": "Ja, am Ende des Bahnsteigs gibt es einen Kiosk.",
+      "translation": "Yes, there is a kiosk at the end of the platform.",
+      "translationFa": "بله، آخر سکو یه کیوسک هست."
+    },
+    {
+      "id": 21,
+      "role": "sent",
+      "targetText": "Perfekt. Vielen Dank für Ihre Hilfe!",
+      "translation": "Perfect. Thank you very much for your help!",
+      "translationFa": "عالی. خیلی ممنون از کمکتون!"
     }
   ],
   "difficulty": "B1+",

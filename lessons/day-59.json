@@ -71,6 +71,76 @@
       "targetText": "Ich kann sofort anfangen.",
       "translation": "I can start immediately.",
       "translationFa": "من همین الان میتونم شروع کنم."
+    },
+    {
+      "id": 11,
+      "role": "received",
+      "audioText": "Welche Gehaltsvorstellungen haben Sie?",
+      "translation": "What are your salary expectations?",
+      "translationFa": "انتظارات حقوقیتون چیه؟"
+    },
+    {
+      "id": 12,
+      "role": "sent",
+      "targetText": "Ich stelle mir ein Gehalt zwischen dreitausend und dreitausendfünfhundert Euro vor.",
+      "translation": "I'm thinking of a salary between three thousand and three thousand five hundred euros.",
+      "translationFa": "حقوقی بین سه تا سه‌هزار و پانصد یورو در نظر دارم."
+    },
+    {
+      "id": 13,
+      "role": "received",
+      "audioText": "Das liegt in unserem Rahmen. Haben Sie noch Fragen an uns?",
+      "translation": "That's within our range. Do you have any questions for us?",
+      "translationFa": "این در محدوده ماست. سوالی از ما دارید؟"
+    },
+    {
+      "id": 14,
+      "role": "sent",
+      "targetText": "Ja, wie sind die genauen Arbeitszeiten?",
+      "translation": "Yes, what are the exact working hours?",
+      "translationFa": "بله، ساعات دقیق کار چطوره؟"
+    },
+    {
+      "id": 15,
+      "role": "received",
+      "audioText": "Neun bis siebzehn Uhr, mit Gleitzeit möglich.",
+      "translation": "Nine to five, with flexible hours possible.",
+      "translationFa": "نه تا پنج، با امکان ساعت شناور."
+    },
+    {
+      "id": 16,
+      "role": "sent",
+      "targetText": "Gibt es auch Homeoffice-Möglichkeiten?",
+      "translation": "Are there also home office options?",
+      "translationFa": "امکان دورکاری هم هست؟"
+    },
+    {
+      "id": 17,
+      "role": "received",
+      "audioText": "Ja, bis zu zwei Tage pro Woche nach der Einarbeitung.",
+      "translation": "Yes, up to two days per week after the induction period.",
+      "translationFa": "بله، تا دو روز در هفته بعد از دوره آموزشی."
+    },
+    {
+      "id": 18,
+      "role": "sent",
+      "targetText": "Das klingt sehr gut. Die Stelle interessiert mich wirklich sehr.",
+      "translation": "That sounds very good. I'm really very interested in this position.",
+      "translationFa": "خیلی خوبه. واقعاً به این موقعیت خیلی علاقه دارم."
+    },
+    {
+      "id": 19,
+      "role": "received",
+      "audioText": "Sehr schön. Wir melden uns innerhalb einer Woche bei Ihnen.",
+      "translation": "Very good. We'll be in touch within a week.",
+      "translationFa": "خیلی خوب. ظرف یه هفته باهاتون تماس می‌گیریم."
+    },
+    {
+      "id": 20,
+      "role": "sent",
+      "targetText": "Vielen Dank für das angenehme Gespräch. Auf Wiedersehen!",
+      "translation": "Thank you very much for the pleasant conversation. Goodbye!",
+      "translationFa": "خیلی ممنون از گفتگوی خوب. خداحافظ!"
     }
   ],
   "difficulty": "B1+",

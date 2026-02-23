@@ -120,6 +120,27 @@
       "targetText": "Danke schön. Bis Freitag dann!",
       "translation": "Thank you. Until Friday then!",
       "translationFa": "ممنون. پس تا جمعه!"
+    },
+    {
+      "id": 18,
+      "role": "received",
+      "audioText": "Gute Fahrt! Denken Sie bitte an die Rückgabe bis achtzehn Uhr.",
+      "translation": "Have a good trip! Please remember the return time is by six o'clock.",
+      "translationFa": "سفر خوبی داشته باشید! لطفاً یادتون باشه تحویل تا ساعت شش."
+    },
+    {
+      "id": 19,
+      "role": "sent",
+      "targetText": "Kein Problem. Und wo kann ich das Auto waschen?",
+      "translation": "No problem. And where can I wash the car?",
+      "translationFa": "مشکلی نیست. ماشین رو کجا می‌تونم بشورم؟"
+    },
+    {
+      "id": 20,
+      "role": "received",
+      "audioText": "Es gibt eine Waschanlage direkt am Ausgang des Parkplatzes.",
+      "translation": "There is a car wash right at the exit of the car park.",
+      "translationFa": "یه کارواش دقیقاً در خروجی پارکینگ هست."
     }
   ],
   "difficulty": "B1",

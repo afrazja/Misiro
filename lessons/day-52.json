@@ -127,6 +127,27 @@
       "audioText": "Perfekt. Hier ist Ihre Sendungsnummer. Sie können das Paket online verfolgen.",
       "translation": "Perfect. Here is your tracking number. You can track the package online.",
       "translationFa": "عالی. اینم شماره رهگیری شما. می‌تونید بسته رو آنلاین ردیابی کنید."
+    },
+    {
+      "id": 19,
+      "role": "sent",
+      "targetText": "Kann ich die Sendungsverfolgung auch per SMS bekommen?",
+      "translation": "Can I also get the tracking updates by SMS?",
+      "translationFa": "می‌تونم رهگیری رو از طریق SMS هم دریافت کنم؟"
+    },
+    {
+      "id": 20,
+      "role": "received",
+      "audioText": "Ja, geben Sie einfach Ihre Handynummer an.",
+      "translation": "Yes, just provide your mobile number.",
+      "translationFa": "بله، فقط شماره موبایلتون رو بدید."
+    },
+    {
+      "id": 21,
+      "role": "sent",
+      "targetText": "Perfekt. Vielen Dank für Ihre Hilfe. Auf Wiedersehen!",
+      "translation": "Perfect. Thank you very much for your help. Goodbye!",
+      "translationFa": "عالی. خیلی ممنون از کمکتون. خداحافظ!"
     }
   ],
   "difficulty": "B1",
