@@ -404,9 +404,6 @@
 			</select>
 		</div>
 
-		<div class="progress-info">
-			<span>Scenario <span class="current-scenario">{app.currentDay}</span></span>
-		</div>
 	</header>
 
 	<!-- Main Learning Area -->
@@ -440,6 +437,7 @@
 
 			<!-- Message History -->
 			<div class="chat-history" bind:this={chatHistoryEl} role="log" aria-live="polite" aria-label="Chat history">
+				<div class="chat-spacer"></div>
 				<div class="date-divider">Today</div>
 
 				<!-- Scenario Description -->
@@ -637,8 +635,10 @@
 		<!-- Script Panel -->
 		<aside class="script-view" id="script-view">
 			<div class="script-header">
-				<div class="drag-handle" id="script-drag-handle"></div>
 				<h3>{prefs.language === 'fa' ? '\u0645\u062A\u0646 \u062F\u0631\u0633' : 'Lesson Script'}</h3>
+				{#if lesson.currentLesson}
+					<span class="script-count">{scriptItems.filter(s => s.done).length}/{scriptItems.length}</span>
+				{/if}
 			</div>
 			<div class="script-container">
 				{#each scriptItems as item, i}
@@ -653,9 +653,12 @@
 						onclick={() => handleScriptItemClick(i)}
 						onkeydown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); handleScriptItemClick(i); } }}
 					>
-						<div class="german">{item.german}</div>
-						<div class="translation" style="direction: {prefs.language === 'fa' ? 'rtl' : 'ltr'};">
-							{item.translation}
+						<div class="script-num">{i + 1}</div>
+						<div class="script-text">
+							<div class="german">{item.german}</div>
+							<div class="translation" style="direction: {prefs.language === 'fa' ? 'rtl' : 'ltr'};">
+								{item.translation}
+							</div>
 						</div>
 					</div>
 				{/each}
@@ -792,6 +795,11 @@
 		cursor: pointer;
 	}
 
+	/* Cap widths so the header stays on one row */
+	.language-control select { max-width: 120px; }
+	.speed-control select    { max-width: 90px; }
+	.day-selection-control select { max-width: 220px; }
+
 	.header label {
 		font-weight: 600;
 		cursor: pointer;
@@ -855,6 +863,13 @@
 		padding: 15px;
 		background: #e5ddd5;
 		background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23d4cfc5' fill-opacity='0.4'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+		display: flex;
+		flex-direction: column;
+	}
+
+	/* Pushes messages toward the bottom when the chat is sparse */
+	.chat-spacer {
+		flex: 1;
 	}
 
 	.date-divider {
@@ -873,37 +888,41 @@
 		font-size: 0.95rem;
 		line-height: 1.4;
 		word-wrap: break-word;
+		align-self: flex-start; /* default: left-align in flex column */
 	}
 
 	.message.received {
 		background: #fff;
 		color: #333;
 		border-top-left-radius: 0;
-		margin-right: auto;
 	}
 
 	.message.sent {
 		background: #dcf8c6;
 		color: #333;
 		border-top-right-radius: 0;
-		margin-left: auto;
+		align-self: flex-end;
 	}
 
 	.message.system {
 		background: #fff3e0;
 		max-width: 95%;
-		margin: 10px auto;
+		width: 95%;
+		align-self: center;
 		text-align: center;
 		border-radius: 10px;
 		padding: 15px;
+		margin: 4px 0;
 	}
 
 	.message.instruction {
 		background: #fff;
 		max-width: 95%;
-		margin: 8px auto;
+		width: 95%;
+		align-self: center;
 		border-radius: 12px;
 		padding: 12px 16px;
+		margin: 4px 0;
 	}
 
 	.translation-line {
@@ -933,10 +952,10 @@
 
 	.interactive-word {
 		cursor: pointer;
-		padding: 2px 4px;
+		padding: 2px 3px;
 		border-radius: 4px;
-		transition: all 0.2s;
-		display: inline-block;
+		transition: background 0.2s, color 0.2s;
+		display: inline;        /* inline keeps natural word spacing */
 	}
 
 	.interactive-word:hover {
@@ -1224,65 +1243,106 @@
 	}
 
 	.script-header {
-		padding: 8px 15px;
+		padding: 10px 15px;
 		display: flex;
 		align-items: center;
-		gap: 10px;
-		background: rgba(0, 0, 0, 0.2);
-	}
-
-	.drag-handle {
-		width: 40px;
-		height: 5px;
-		background: rgba(255, 255, 255, 0.3);
-		border-radius: 3px;
-		cursor: row-resize;
+		justify-content: space-between;
+		background: rgba(0, 0, 0, 0.25);
+		border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+		flex-shrink: 0;
 	}
 
 	.script-header h3 {
 		margin: 0;
-		font-size: 0.9rem;
+		font-size: 0.88rem;
 		color: #2ecc71;
+		font-weight: 700;
+		letter-spacing: 0.03em;
+	}
+
+	.script-count {
+		font-size: 0.75rem;
+		color: #555;
+		font-weight: 600;
 	}
 
 	.script-container {
 		flex: 1;
 		overflow-y: auto;
-		padding: 10px 15px;
+		padding: 8px 12px;
 	}
 
 	.script-item {
-		padding: 8px 12px;
+		padding: 8px 10px;
 		border-radius: 8px;
-		margin-bottom: 6px;
+		margin-bottom: 4px;
 		cursor: pointer;
-		transition: all 0.2s;
+		transition: background 0.2s, border-color 0.2s;
 		border-left: 3px solid transparent;
+		display: flex;
+		gap: 8px;
+		align-items: flex-start;
 	}
 
 	.script-item:hover {
-		background: rgba(255, 255, 255, 0.05);
+		background: rgba(255, 255, 255, 0.06);
 	}
 
 	.script-item.active {
-		background: rgba(46, 204, 113, 0.15);
+		background: rgba(46, 204, 113, 0.2);
 		border-left-color: #2ecc71;
+		border-left-width: 4px;
 	}
 
 	.script-item.done {
-		opacity: 0.5;
+		opacity: 0.45;
+	}
+
+	.script-num {
+		font-size: 0.65rem;
+		font-weight: 700;
+		color: #444;
+		min-width: 18px;
+		height: 18px;
+		background: rgba(255, 255, 255, 0.07);
+		border-radius: 50%;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		flex-shrink: 0;
+		margin-top: 2px;
+	}
+
+	.script-item.active .script-num {
+		background: rgba(46, 204, 113, 0.35);
+		color: #2ecc71;
+	}
+
+	.script-item.done .script-num {
+		background: rgba(255, 255, 255, 0.04);
+	}
+
+	.script-text {
+		flex: 1;
+		min-width: 0;
 	}
 
 	.script-item .german {
 		font-weight: 600;
 		color: #2ecc71;
-		font-size: 0.95rem;
+		font-size: 0.9rem;
+		line-height: 1.35;
 	}
 
 	.script-item .translation {
-		color: #888;
-		font-size: 0.8rem;
+		color: #666;
+		font-size: 0.77rem;
 		margin-top: 2px;
+		line-height: 1.3;
+	}
+
+	.script-item.active .translation {
+		color: #888;
 	}
 
 	/* Word Tooltip */
@@ -1326,16 +1386,9 @@
 		.script-view {
 			width: 300px;
 			flex-shrink: 0;
-			height: auto;           /* fill full height instead of 28vh */
+			height: auto;
 			border-top: none;
 			border-left: 2px solid rgba(46, 204, 113, 0.3);
-		}
-
-		/* Turn the drag handle into a vertical bar */
-		.drag-handle {
-			width: 5px;
-			height: 40px;
-			cursor: col-resize;
 		}
 	}
 
