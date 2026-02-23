@@ -1312,6 +1312,33 @@
 		}
 	}
 
+	/* ── Desktop: right sidebar layout ───────────────── */
+	@media (min-width: 768px) {
+		.learning-area {
+			flex-direction: row;
+		}
+
+		.chat-wrapper {
+			flex: 1;
+			min-width: 0;
+		}
+
+		.script-view {
+			width: 300px;
+			flex-shrink: 0;
+			height: auto;           /* fill full height instead of 28vh */
+			border-top: none;
+			border-left: 2px solid rgba(46, 204, 113, 0.3);
+		}
+
+		/* Turn the drag handle into a vertical bar */
+		.drag-handle {
+			width: 5px;
+			height: 40px;
+			cursor: col-resize;
+		}
+	}
+
 	/* Responsive */
 	@media (max-width: 600px) {
 		.header {
