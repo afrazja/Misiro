@@ -1,0 +1,165 @@
+{
+  "title": "Day 69: Talking About Goals & the Future",
+  "titleFa": "روز ۶۹: صحبت درباره اهداف و آینده",
+  "sentences": [
+    {
+      "id": 1,
+      "role": "received",
+      "audioText": "Was sind deine Pläne für die Zukunft?",
+      "translation": "What are your plans for the future?",
+      "translationFa": "برنامه‌های تو برای آینده چیست؟"
+    },
+    {
+      "id": 2,
+      "role": "sent",
+      "targetText": "Ich möchte dieses Jahr mein Deutsch verbessern.",
+      "translation": "I want to improve my German this year.",
+      "translationFa": "من می‌خواهم امسال آلمانی‌ام را بهتر کنم."
+    },
+    {
+      "id": 3,
+      "role": "sent",
+      "targetText": "In fünf Jahren sehe ich mich in einer Führungsposition.",
+      "translation": "In five years, I see myself in a management position.",
+      "translationFa": "در پنج سال آینده، من خودم را در یک موقعیت مدیریتی می‌بینم."
+    },
+    {
+      "id": 4,
+      "role": "sent",
+      "targetText": "Mein größter Traum ist es, mein eigenes Geschäft zu gründen.",
+      "translation": "My biggest dream is to start my own business.",
+      "translationFa": "بزرگترین رویای من راه‌اندازی کسب و کار خودم است."
+    },
+    {
+      "id": 5,
+      "role": "received",
+      "audioText": "Sparst du Geld für ein Haus?",
+      "translation": "Are you saving money for a house?",
+      "translationFa": "آیا برای خرید یک خانه پول پس‌انداز می‌کنی؟"
+    },
+    {
+      "id": 6,
+      "role": "sent",
+      "targetText": "Wir planen, nächstes Jahr um die Welt zu reisen.",
+      "translation": "We plan to travel the world next year.",
+      "translationFa": "ما برنامه‌ریزی می‌کنیم که سال آینده به دور دنیا سفر کنیم."
+    },
+    {
+      "id": 7,
+      "role": "sent",
+      "targetText": "Ich hoffe, bald einen Job in meinem Bereich zu finden.",
+      "translation": "I hope to find a job in my field soon.",
+      "translationFa": "امیدوارم به زودی شغلی در زمینه کاری خودم پیدا کنم."
+    },
+    {
+      "id": 8,
+      "role": "received",
+      "audioText": "Bildung ist der Schlüssel zu einer besseren Zukunft.",
+      "translation": "Education is the key to a better future.",
+      "translationFa": "آموزش کلید یک آینده بهتر است."
+    },
+    {
+      "id": 9,
+      "role": "received",
+      "audioText": "Was sind deine guten Vorsätze für das neue Jahr?",
+      "translation": "What are your New Year's resolutions?",
+      "translationFa": "تصمیمات تو برای سال جدید چیست؟"
+    },
+    {
+      "id": 10,
+      "role": "sent",
+      "targetText": "Ich habe vor, mehr Sport zu treiben und mich gesünder zu ernähren.",
+      "translation": "I intend to exercise more and eat healthier.",
+      "translationFa": "قصد دارم بیشتر ورزش کنم و سالم‌تر غذا بخورم."
+    },
+    {
+      "id": 11,
+      "role": "received",
+      "audioText": "Er möchte sein Studium im nächsten Semester abschließen.",
+      "translation": "He wants to finish his studies next semester.",
+      "translationFa": "او می‌خواهد تحصیلاتش را در ترم آینده تمام کند."
+    },
+    {
+      "id": 12,
+      "role": "sent",
+      "targetText": "Ich bin fest entschlossen, meine Ziele zu erreichen.",
+      "translation": "I am determined to achieve my goals.",
+      "translationFa": "من مصمم هستم که به اهدافم برسم."
+    },
+    {
+      "id": 13,
+      "role": "received",
+      "audioText": "Sie planen, in eine andere Stadt zu ziehen.",
+      "translation": "They are planning to move to another city.",
+      "translationFa": "آن‌ها برنامه‌ریزی می‌کنند که به یک شهر دیگر نقل مکان کنند."
+    },
+    {
+      "id": 14,
+      "role": "sent",
+      "targetText": "Die Zukunft ist ungewiss, aber ich bin optimistisch.",
+      "translation": "The future is uncertain, but I am optimistic.",
+      "translationFa": "آینده نامشخص است، اما من خوش‌بین هستم."
+    },
+    {
+      "id": 15,
+      "role": "received",
+      "audioText": "Sich realistische Ziele zu setzen, ist sehr wichtig.",
+      "translation": "Setting realistic goals is very important.",
+      "translationFa": "تعیین اهداف واقع‌بینانه بسیار مهم است."
+    },
+    {
+      "id": 16,
+      "role": "sent",
+      "targetText": "Ich arbeite hart daran, meine finanzielle Zukunft abzusichern.",
+      "translation": "I am working hard to secure my financial future.",
+      "translationFa": "من سخت کار می‌کنم تا آینده مالی‌ام را تضمین کنم."
+    },
+    {
+      "id": 17,
+      "role": "received",
+      "audioText": "Hast du über deinen Ruhestand nachgedacht?",
+      "translation": "Have you thought about your retirement?",
+      "translationFa": "آیا به بازنشستگی‌ات فکر کرده‌ای؟"
+    },
+    {
+      "id": 18,
+      "role": "sent",
+      "targetText": "Ich freue mich auf die neuen Herausforderungen.",
+      "translation": "I look forward to the new challenges.",
+      "translationFa": "من مشتاقانه منتظر چالش‌های جدید هستم."
+    },
+    {
+      "id": 19,
+      "role": "sent",
+      "targetText": "Mein Ziel ist es, zwei Fremdsprachen fließend zu sprechen.",
+      "translation": "My goal is to become fluent in two foreign languages.",
+      "translationFa": "هدف من این است که به دو زبان خارجی مسلط شوم."
+    },
+    {
+      "id": 20,
+      "role": "sent",
+      "targetText": "Ich möchte eine App entwickeln, die vielen Menschen hilft.",
+      "translation": "I want to build an app that helps many people.",
+      "translationFa": "من می‌خواهم اپلیکیشنی بسازم که به افراد زیادی کمک کند."
+    },
+    {
+      "id": 21,
+      "role": "received",
+      "audioText": "Wir werden sehen, was die Zukunft bringt.",
+      "translation": "We will see what the future brings.",
+      "translationFa": "خواهیم دید که آینده چه چیزی به همراه می‌آورد."
+    },
+    {
+      "id": 22,
+      "role": "received",
+      "audioText": "Gib deine Träume niemals auf.",
+      "translation": "Never give up on your dreams.",
+      "translationFa": "هرگز از رویاهایت دست نکش."
+    }
+  ],
+  "difficulty": "B2",
+  "grammarFocus": "Future plans: vorhaben + Infinitiv / In fünf Jahren + Präsens / Ich hoffe / Ich plane",
+  "grammarFocusFa": "برنامه‌های آینده: vorhaben + مصدر / In fünf Jahren + حال / Ich hoffe / Ich plane",
+  "description": "Discuss your future goals and ambitions with a German friend. Talk about career plans, personal dreams, and New Year's resolutions.",
+  "descriptionFa": "اهداف و بلندپروازی‌های آینده‌تان را با یک دوست آلمانی بحث کنید. درباره برنامه‌های شغلی، رویاهای شخصی و تصمیمات سال جدید صحبت کنید."
+}
