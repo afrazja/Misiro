@@ -616,7 +616,7 @@
 				<h3>{prefs.language === 'fa' ? '\u0645\u062A\u0646 \u062F\u0631\u0633' : 'Lesson Script'}</h3>
 				<div class="script-header-right">
 					{#if lesson.currentLesson}
-						<span class="script-count">{scriptItems.filter(s => s.done).length}/{scriptItems.length}</span>
+						<span class="script-count">{Math.min(app.currentSentenceIndex + 1, scriptItems.length)}/{scriptItems.length}</span>
 					{/if}
 					<button class="script-close-btn" onclick={() => showScript = false} aria-label="Close script">✕</button>
 				</div>
