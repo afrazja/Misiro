@@ -1260,11 +1260,11 @@
 	/* Script Panel */
 	.script-view {
 		height: 28vh;
-		background: #ffffff;
-		color: #333;
+		background: #1a1a2e;
+		color: #fff;
 		display: flex;
 		flex-direction: column;
-		border-top: 2px solid rgba(46, 204, 113, 0.4);
+		border-top: 2px solid rgba(46, 204, 113, 0.3);
 	}
 
 	.script-header {
@@ -1272,22 +1272,22 @@
 		display: flex;
 		align-items: center;
 		justify-content: space-between;
-		background: #f5f5f5;
-		border-bottom: 1px solid #e0e0e0;
+		background: rgba(0, 0, 0, 0.25);
+		border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 		flex-shrink: 0;
 	}
 
 	.script-header h3 {
 		margin: 0;
 		font-size: 0.88rem;
-		color: #1a7a4a;
+		color: #2ecc71;
 		font-weight: 700;
 		letter-spacing: 0.03em;
 	}
 
 	.script-count {
 		font-size: 0.75rem;
-		color: #1a7a4a;
+		color: #a0e0b8;
 		font-weight: 600;
 	}
 
@@ -1310,14 +1310,14 @@
 	}
 
 	.script-item:hover {
-		background: rgba(0, 0, 0, 0.04);
+		background: rgba(255, 255, 255, 0.06);
 	}
 
 	.script-item.active {
-		background: rgba(46, 204, 113, 0.15);
+		background: rgba(46, 204, 113, 0.18);
 		border-left-color: #2ecc71;
 		border-left-width: 4px;
-		box-shadow: 0 0 0 1px rgba(46, 204, 113, 0.3);
+		box-shadow: 0 0 0 1px rgba(46, 204, 113, 0.35);
 	}
 
 	.script-item.done {
@@ -1327,7 +1327,7 @@
 	.script-num {
 		font-size: 0.65rem;
 		font-weight: 700;
-		color: #1a7a4a;
+		color: #a0e0b8;
 		min-width: 18px;
 		height: 18px;
 		background: rgba(46, 204, 113, 0.15);
@@ -1346,8 +1346,8 @@
 	}
 
 	.script-item.done .script-num {
-		background: rgba(0, 0, 0, 0.06);
-		color: #999;
+		background: rgba(255, 255, 255, 0.05);
+		color: #777;
 	}
 
 	.script-text {
@@ -1357,20 +1357,20 @@
 
 	.script-item .german {
 		font-weight: 600;
-		color: #1a7a4a;
+		color: #2ecc71;
 		font-size: 0.9rem;
 		line-height: 1.35;
 	}
 
 	.script-item .translation {
-		color: #666;
+		color: #c8e6c9;
 		font-size: 0.77rem;
 		margin-top: 2px;
 		line-height: 1.3;
 	}
 
 	.script-item.active .translation {
-		color: #333;
+		color: #ffffff;
 	}
 
 	/* Word Tooltip */
@@ -1418,7 +1418,7 @@
 			height: auto;
 			overflow: hidden;
 			border-top: none;
-			border-left: 2px solid #e0e0e0;
+			border-left: 2px solid rgba(46, 204, 113, 0.3);
 		}
 	}
 
