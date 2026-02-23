@@ -1362,14 +1362,14 @@
 	}
 
 	.script-item .translation {
-		color: rgba(46, 204, 113, 0.6);
+		color: rgba(255, 255, 255, 0.6);
 		font-size: 0.77rem;
 		margin-top: 2px;
 		line-height: 1.3;
 	}
 
 	.script-item.active .translation {
-		color: rgba(46, 204, 113, 0.95);
+		color: rgba(255, 255, 255, 0.92);
 	}
 
 	/* Word Tooltip */
