@@ -34,6 +34,10 @@
 	let currentDay = $state(1);
 	let streakCount = $state(0);
 	let dueReviews = $state(0);
+	let completedLessons = $state<Record<number, { completedAt: number; sentenceCount: number }>>({});
+
+	// Calendar flashcard
+	let showCalendar = $state(false);
 
 	// Refs for focus trap
 	let modalEl: HTMLDivElement | undefined = $state();
@@ -95,11 +99,12 @@
 
 	async function loadProgress() {
 		const completed = await dataLayer.getCompletedLessons();
+		completedLessons = completed;
 		daysCompleted = Object.keys(completed).length;
 		streakCount = computeStreak(completed);
 
 		const progress = await dataLayer.getProgress();
-		currentDay = progress?.current_day ?? 1;
+		currentDay = progress?.currentDay ?? 1;
 
 		try {
 			dueReviews = await getDueCount();
@@ -180,6 +185,7 @@
 	}
 
 	function handleKeydown(e: KeyboardEvent) {
+		if (e.key === 'Escape' && showCalendar) showCalendar = false;
 		if (e.key === 'Escape' && showAuthModal) toggleAuthModal();
 		if (e.key === 'Tab' && showAuthModal && modalEl) {
 			const focusable = modalEl.querySelectorAll<HTMLElement>(
@@ -290,6 +296,69 @@
 	</div>
 {/if}
 
+<!-- ── 60-Day Calendar Flashcard ───────────────────── -->
+{#if showCalendar}
+	<!-- svelte-ignore a11y_click_events_have_key_events -->
+	<!-- svelte-ignore a11y_interactive_supports_focus -->
+	<div
+		class="cal-overlay"
+		role="dialog"
+		aria-modal="true"
+		aria-label="60-Day Journey Calendar"
+		onclick={(e) => { if (e.target === e.currentTarget) showCalendar = false; }}
+	>
+		<div class="cal-modal">
+			<button class="cal-close" onclick={() => showCalendar = false} aria-label="Close calendar">×</button>
+
+			<div class="cal-header">
+				<h2>🗓️ Your 60-Day Journey</h2>
+				<p>
+					{daysCompleted} of 60 days completed
+					{#if streakCount > 0} · {streakCount}-day streak 🔥{/if}
+				</p>
+			</div>
+
+			<div class="cal-level-badges">
+				<span class="cal-lvl-badge a1">A1 · Days 1–20</span>
+				<span class="cal-lvl-badge a2">A2 · Days 21–40</span>
+				<span class="cal-lvl-badge b1">B1+ · Days 41–60</span>
+			</div>
+
+			<div class="cal-grid">
+				{#each Array.from({ length: 60 }, (_, i) => i + 1) as day}
+					{@const done = !!completedLessons[day]}
+					{@const isCurrent = day === currentDay && !done}
+					{@const level = day <= 20 ? 'a1' : day <= 40 ? 'a2' : 'b1'}
+					{@const completedDate = done && completedLessons[day]?.completedAt
+						? new Date(completedLessons[day].completedAt).toLocaleDateString('en', { month: 'short', day: 'numeric' })
+						: null}
+					<div
+						class="cal-day {level}"
+						class:done
+						class:is-current={isCurrent}
+						title={done && completedDate
+							? `Day ${day} · Done on ${completedDate}`
+							: isCurrent
+							? `Day ${day} · Up next!`
+							: `Day ${day}`}
+					>
+						<span class="cal-day-icon">{done ? '✓' : isCurrent ? '▶' : ''}</span>
+						<span class="cal-day-num">{day}</span>
+					</div>
+				{/each}
+			</div>
+
+			<div class="cal-legend">
+				<span class="leg-item"><span class="leg-sw a1-sw"></span>A1 done</span>
+				<span class="leg-item"><span class="leg-sw a2-sw"></span>A2 done</span>
+				<span class="leg-item"><span class="leg-sw b1-sw"></span>B1+ done</span>
+				<span class="leg-item"><span class="leg-sw cur-sw"></span>Up next</span>
+				<span class="leg-item"><span class="leg-sw empty-sw"></span>Upcoming</span>
+			</div>
+		</div>
+	</div>
+{/if}
+
 <div class="home-container">
 
 	<!-- ── Top Nav ─────────────────────────────────────── -->
@@ -355,21 +424,23 @@
 	<!-- ── Progress Stats ──────────────────────────────── -->
 	{#if isAuthenticated}
 		<div class="stats-row">
-			<div class="stat-card">
+			<button class="stat-card stat-card-clickable" onclick={() => showCalendar = true} title="View your 60-day calendar">
 				<span class="stat-icon">📅</span>
 				<span class="stat-value">{daysCompleted}<span class="stat-total">/60</span></span>
 				<span class="stat-label">Days Done</span>
-			</div>
+				<span class="stat-cta-hint">view calendar →</span>
+			</button>
 			<div class="stat-card">
 				<span class="stat-icon">🎯</span>
 				<span class="stat-value">{currentLevel}</span>
 				<span class="stat-label">Current Level</span>
 			</div>
-			<div class="stat-card">
+			<button class="stat-card stat-card-clickable" onclick={() => showCalendar = true} title="View your 60-day calendar">
 				<span class="stat-icon">🔥</span>
 				<span class="stat-value">{streakCount}</span>
 				<span class="stat-label">Day Streak</span>
-			</div>
+				<span class="stat-cta-hint">view calendar →</span>
+			</button>
 			<a href="/lesson" class="stat-card stat-card-link" class:has-due={dueReviews > 0} title="Go to lesson for reviews">
 				<span class="stat-icon">🔄</span>
 				<span class="stat-value">{dueReviews}</span>
@@ -1082,9 +1153,227 @@
 
 	.auth-toggle a { color: #e94560; text-decoration: none; font-weight: 600; }
 
+	/* ── Clickable stat card ──────────────────────────── */
+	.stat-card-clickable {
+		cursor: pointer;
+		font-family: inherit;
+		background: rgba(255, 255, 255, 0.05);
+		border: 1px solid rgba(255, 255, 255, 0.08);
+	}
+
+	.stat-card-clickable:hover {
+		border-color: rgba(233, 69, 96, 0.45);
+		background: rgba(233, 69, 96, 0.07);
+		transform: translateY(-4px);
+	}
+
+	.stat-cta-hint {
+		font-size: 0.68rem;
+		color: #e94560;
+		font-weight: 600;
+		opacity: 0;
+		transition: opacity 0.2s;
+		margin-top: 2px;
+	}
+
+	.stat-card-clickable:hover .stat-cta-hint {
+		opacity: 1;
+	}
+
+	/* ── Calendar flashcard overlay ───────────────────── */
+	.cal-overlay {
+		position: fixed;
+		inset: 0;
+		background: rgba(0, 0, 0, 0.82);
+		backdrop-filter: blur(6px);
+		z-index: 1000;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		padding: 20px;
+	}
+
+	.cal-modal {
+		background: linear-gradient(145deg, #1a1a2e, #16213e);
+		border-radius: 24px;
+		padding: 32px;
+		max-width: 560px;
+		width: 100%;
+		border: 1px solid rgba(255, 255, 255, 0.1);
+		position: relative;
+		box-shadow: 0 40px 80px rgba(0, 0, 0, 0.6);
+		max-height: 90vh;
+		overflow-y: auto;
+	}
+
+	.cal-close {
+		position: absolute;
+		top: 16px;
+		right: 20px;
+		background: none;
+		border: none;
+		color: #888;
+		font-size: 1.6rem;
+		cursor: pointer;
+		line-height: 1;
+		padding: 4px 8px;
+		transition: color 0.2s;
+		font-family: inherit;
+	}
+
+	.cal-close:hover { color: #fff; }
+
+	.cal-header {
+		margin-bottom: 18px;
+		padding-right: 36px;
+	}
+
+	.cal-header h2 {
+		font-size: 1.25rem;
+		font-weight: 800;
+		color: #fff;
+		margin: 0 0 6px;
+	}
+
+	.cal-header p {
+		font-size: 0.88rem;
+		color: #888;
+		margin: 0;
+	}
+
+	.cal-level-badges {
+		display: flex;
+		gap: 8px;
+		margin-bottom: 18px;
+		flex-wrap: wrap;
+	}
+
+	.cal-lvl-badge {
+		padding: 4px 12px;
+		border-radius: 20px;
+		font-size: 0.74rem;
+		font-weight: 700;
+	}
+
+	.cal-lvl-badge.a1 { background: rgba(46, 204, 113, 0.18); color: #2ecc71; }
+	.cal-lvl-badge.a2 { background: rgba(52, 152, 219, 0.18); color: #3498db; }
+	.cal-lvl-badge.b1 { background: rgba(155, 89, 182, 0.18); color: #9b59b6; }
+
+	/* ── Day grid ─────────────────────────────────────── */
+	.cal-grid {
+		display: grid;
+		grid-template-columns: repeat(10, 1fr);
+		gap: 5px;
+		margin-bottom: 20px;
+	}
+
+	.cal-day {
+		aspect-ratio: 1;
+		border-radius: 8px;
+		background: rgba(255, 255, 255, 0.04);
+		border: 1px solid rgba(255, 255, 255, 0.07);
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		gap: 1px;
+		cursor: default;
+		transition: transform 0.15s, box-shadow 0.15s;
+		position: relative;
+		overflow: hidden;
+	}
+
+	.cal-day:hover {
+		transform: scale(1.18);
+		z-index: 2;
+		box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+	}
+
+	/* Level border tints for upcoming days */
+	.cal-day.a1 { border-color: rgba(46, 204, 113, 0.14); }
+	.cal-day.a2 { border-color: rgba(52, 152, 219, 0.14); }
+	.cal-day.b1 { border-color: rgba(155, 89, 182, 0.14); }
+
+	/* Completed days */
+	.cal-day.done.a1 {
+		background: rgba(46, 204, 113, 0.22);
+		border-color: rgba(46, 204, 113, 0.45);
+	}
+	.cal-day.done.a2 {
+		background: rgba(52, 152, 219, 0.22);
+		border-color: rgba(52, 152, 219, 0.45);
+	}
+	.cal-day.done.b1 {
+		background: rgba(155, 89, 182, 0.22);
+		border-color: rgba(155, 89, 182, 0.45);
+	}
+
+	/* Current / up-next day */
+	.cal-day.is-current {
+		background: linear-gradient(135deg, #e94560, #ff6b6b) !important;
+		border-color: transparent !important;
+		animation: calPulse 2s ease-in-out infinite;
+	}
+
+	@keyframes calPulse {
+		0%, 100% { box-shadow: 0 0 0 0 rgba(233, 69, 96, 0.5); }
+		50%       { box-shadow: 0 0 0 5px rgba(233, 69, 96, 0); }
+	}
+
+	.cal-day-icon {
+		font-size: 0.7rem;
+		line-height: 1;
+		color: #fff;
+		font-weight: 700;
+	}
+
+	.cal-day-num {
+		font-size: 0.55rem;
+		color: #555;
+		font-weight: 600;
+		line-height: 1;
+	}
+
+	.cal-day.done .cal-day-num  { color: rgba(255, 255, 255, 0.7); }
+	.cal-day.is-current .cal-day-num { color: rgba(255, 255, 255, 0.85); }
+
+	/* ── Legend ───────────────────────────────────────── */
+	.cal-legend {
+		display: flex;
+		gap: 14px;
+		justify-content: center;
+		flex-wrap: wrap;
+		padding-top: 14px;
+		border-top: 1px solid rgba(255, 255, 255, 0.07);
+	}
+
+	.leg-item {
+		display: flex;
+		align-items: center;
+		gap: 5px;
+		font-size: 0.75rem;
+		color: #777;
+	}
+
+	.leg-sw {
+		width: 12px;
+		height: 12px;
+		border-radius: 3px;
+		flex-shrink: 0;
+	}
+
+	.a1-sw   { background: rgba(46, 204, 113, 0.5); border: 1px solid rgba(46, 204, 113, 0.7); }
+	.a2-sw   { background: rgba(52, 152, 219, 0.5); border: 1px solid rgba(52, 152, 219, 0.7); }
+	.b1-sw   { background: rgba(155, 89, 182, 0.5); border: 1px solid rgba(155, 89, 182, 0.7); }
+	.cur-sw  { background: linear-gradient(135deg, #e94560, #ff6b6b); }
+	.empty-sw { background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 255, 255, 0.1); }
+
 	/* ── Responsive ───────────────────────────────────── */
 	@media (max-width: 700px) {
 		.home-container { padding: 20px 16px; gap: 20px; }
+
+		.cal-modal { padding: 24px 18px; }
+		.cal-grid { grid-template-columns: repeat(6, 1fr); gap: 6px; }
 
 		.stats-row { grid-template-columns: repeat(2, 1fr); }
 
