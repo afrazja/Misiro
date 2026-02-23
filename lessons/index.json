@@ -78,7 +78,8 @@
     { "day": 76, "file": "day-76.json", "title": "Day 76: Giving a Presentation/Speech", "titleFa": "روز ۷۶: ارائه یک سخنرانی / ارائه", "group": "advanced" },
     { "day": 77, "file": "day-77.json", "title": "Day 77: Explaining a Complex Problem", "titleFa": "روز ۷۷: توضیح یک مشکل پیچیده", "group": "advanced" },
     { "day": 78, "file": "day-78.json", "title": "Day 78: Talking About Environmental Issues", "titleFa": "روز ۷۸: صحبت درباره مسائل محیط زیستی", "group": "advanced" },
-    { "day": 79, "file": "day-79.json", "title": "Day 79: Hypothetical Situations", "titleFa": "روز ۷۹: موقعیت‌های فرضی", "group": "advanced" }
+    { "day": 79, "file": "day-79.json", "title": "Day 79: Hypothetical Situations", "titleFa": "روز ۷۹: موقعیت‌های فرضی", "group": "advanced" },
+    { "day": 80, "file": "day-80.json", "title": "Day 80: Bargaining & Negotiating", "titleFa": "روز ۸۰: چانه‌زنی و مذاکره", "group": "advanced" }
   ],
   "glossaryFile": "glossary.json"
 }

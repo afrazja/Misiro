@@ -1,0 +1,200 @@
+{
+  "title": "Day 80: Bargaining & Negotiating",
+  "titleFa": "روز ۸۰: چانه‌زنی و مذاکره",
+  "sentences": [
+    {
+      "id": 1,
+      "role": "sent",
+      "targetText": "Wie viel kostet das?",
+      "translation": "How much does this cost?",
+      "translationFa": "این چقدر قیمت دارد؟"
+    },
+    {
+      "id": 2,
+      "role": "sent",
+      "targetText": "Das ist mir etwas zu teuer.",
+      "translation": "That is a bit too expensive for me.",
+      "translationFa": "این برای من کمی بیش از حد گران است."
+    },
+    {
+      "id": 3,
+      "role": "sent",
+      "targetText": "Können Sie mir einen Rabatt geben?",
+      "translation": "Can you give me a discount?",
+      "translationFa": "آیا می‌توانید به من تخفیف بدهید؟"
+    },
+    {
+      "id": 4,
+      "role": "sent",
+      "targetText": "Was ist Ihr bester Preis?",
+      "translation": "What is your best price?",
+      "translationFa": "بهترین قیمت شما چیست؟"
+    },
+    {
+      "id": 5,
+      "role": "sent",
+      "targetText": "Ich kann Ihnen fünfzig Euro anbieten.",
+      "translation": "I can offer you fifty euros.",
+      "translationFa": "من می‌توانم پنجاه یورو به شما پیشنهاد دهم."
+    },
+    {
+      "id": 6,
+      "role": "sent",
+      "targetText": "Das ist mein letztes Angebot.",
+      "translation": "That is my final offer.",
+      "translationFa": "این آخرین پیشنهاد من است."
+    },
+    {
+      "id": 7,
+      "role": "sent",
+      "targetText": "Ist der Preis verhandelbar?",
+      "translation": "Is the price negotiable?",
+      "translationFa": "آیا قیمت قابل مذاکره است؟"
+    },
+    {
+      "id": 8,
+      "role": "sent",
+      "targetText": "Ich habe es in einem anderen Geschäft billiger gesehen.",
+      "translation": "I saw it cheaper in another store.",
+      "translationFa": "من این را در یک مغازه دیگر ارزان‌تر دیدم."
+    },
+    {
+      "id": 9,
+      "role": "sent",
+      "targetText": "Wenn ich zwei kaufe, bekomme ich dann einen besseren Preis?",
+      "translation": "If I buy two, do I get a better price?",
+      "translationFa": "اگر دو تا بخرم، قیمت بهتری می‌گیرم؟"
+    },
+    {
+      "id": 10,
+      "role": "sent",
+      "targetText": "Treffen wir uns in der Mitte.",
+      "translation": "Let's meet in the middle.",
+      "translationFa": "بیایید روی یک قیمت میانی توافق کنیم."
+    },
+    {
+      "id": 11,
+      "role": "sent",
+      "targetText": "Ich bin Student, gibt es einen Studentenrabatt?",
+      "translation": "I am a student, is there a student discount?",
+      "translationFa": "من دانشجو هستم، آیا تخفیف دانشجویی وجود دارد؟"
+    },
+    {
+      "id": 12,
+      "role": "received",
+      "audioText": "Leider kann ich nicht weiter runtergehen.",
+      "translation": "Unfortunately, I cannot go any lower.",
+      "translationFa": "متأسفانه نمی‌توانم قیمت را پایین‌تر بیاورم."
+    },
+    {
+      "id": 13,
+      "role": "received",
+      "audioText": "Das ist ein Festpreis.",
+      "translation": "This is a fixed price.",
+      "translationFa": "این یک قیمت مقطوع است."
+    },
+    {
+      "id": 14,
+      "role": "received",
+      "audioText": "Die Qualität dieses Produkts ist sehr hoch.",
+      "translation": "The quality of this product is very high.",
+      "translationFa": "کیفیت این محصول بسیار بالا است."
+    },
+    {
+      "id": 15,
+      "role": "sent",
+      "targetText": "Es gefällt mir sehr gut, aber es sprengt mein Budget.",
+      "translation": "I really like it, but it's out of my budget.",
+      "translationFa": "من واقعاً آن را دوست دارم، اما خارج از بودجه من است."
+    },
+    {
+      "id": 16,
+      "role": "sent",
+      "targetText": "Können wir die Vertragsbedingungen verhandeln?",
+      "translation": "Can we negotiate the terms of the contract?",
+      "translationFa": "آیا می‌توانیم درباره شرایط قرارداد مذاکره کنیم؟"
+    },
+    {
+      "id": 17,
+      "role": "received",
+      "audioText": "Wir müssen eine Win-Win-Situation finden.",
+      "translation": "We need to find a win-win situation.",
+      "translationFa": "ما باید یک وضعیت برد-برد پیدا کنیم."
+    },
+    {
+      "id": 18,
+      "role": "sent",
+      "targetText": "Was genau ist in diesem Preis inbegriffen?",
+      "translation": "What exactly is included in this price?",
+      "translationFa": "دقیقاً چه چیزی در این قیمت گنجانده شده است؟"
+    },
+    {
+      "id": 19,
+      "role": "sent",
+      "targetText": "Ich muss darüber nachdenken.",
+      "translation": "I need to think about it.",
+      "translationFa": "من باید درباره آن فکر کنم."
+    },
+    {
+      "id": 20,
+      "role": "sent",
+      "targetText": "Ich komme später wieder.",
+      "translation": "I will come back later.",
+      "translationFa": "من بعداً برمی‌گردم."
+    },
+    {
+      "id": 21,
+      "role": "sent",
+      "targetText": "Okay, abgemacht!",
+      "translation": "Okay, it's a deal!",
+      "translationFa": "باشه، معامله قبوله!"
+    },
+    {
+      "id": 22,
+      "role": "sent",
+      "targetText": "Könnten Sie kostenlosen Versand dazugeben?",
+      "translation": "Could you throw in free shipping?",
+      "translationFa": "آیا می‌توانید ارسال رایگان هم روی آن بدهید؟"
+    },
+    {
+      "id": 23,
+      "role": "received",
+      "audioText": "Das ist ein Sonderangebot nur für heute.",
+      "translation": "This is a special offer just for today.",
+      "translationFa": "این یک پیشنهاد ویژه فقط برای امروز است."
+    },
+    {
+      "id": 24,
+      "role": "sent",
+      "targetText": "Wie wäre es, wenn wir den Preis abrunden?",
+      "translation": "How about we round the price down?",
+      "translationFa": "نظرتان چیست که قیمت را رند کنیم؟"
+    },
+    {
+      "id": 25,
+      "role": "sent",
+      "targetText": "Ich kann diesen Bedingungen nicht zustimmen.",
+      "translation": "I cannot agree to these terms.",
+      "translationFa": "من نمی‌توانم با این شرایط موافقت کنم."
+    },
+    {
+      "id": 26,
+      "role": "sent",
+      "targetText": "Danke für Ihre Flexibilität.",
+      "translation": "Thank you for your flexibility.",
+      "translationFa": "از انعطاف‌پذیری شما متشکرم."
+    },
+    {
+      "id": 27,
+      "role": "received",
+      "audioText": "Wir haben eine Einigung erzielt.",
+      "translation": "We have reached an agreement.",
+      "translationFa": "ما به یک توافق رسیده‌ایم."
+    }
+  ],
+  "difficulty": "B1+",
+  "grammarFocus": "Konjunktiv II für Bitten: Könnten Sie / Wie wäre es + Bedingungssatz: Wenn ich zwei kaufe, bekomme ich + Komparativ: billiger / besser + Perfekt: habe gesehen",
+  "grammarFocusFa": "وجه التزامی II برای درخواست: Könnten Sie / Wie wäre es + جمله شرطی: Wenn ich zwei kaufe, bekomme ich + مقایسه‌ای: billiger / besser + ماضی نقلی: habe gesehen",
+  "description": "Bargain and negotiate in German. Ask for discounts, make counter-offers, respond to a seller's pitch, and work toward a deal that works for both sides.",
+  "descriptionFa": "به زبان آلمانی چانه‌زنی و مذاکره کنید. تخفیف بخواهید، پیشنهادهای متقابل بدهید، به پیشنهاد فروشنده پاسخ دهید و به سمت یک توافق مناسب برای هر دو طرف پیش بروید."
+}
