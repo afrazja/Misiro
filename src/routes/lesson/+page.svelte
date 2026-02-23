@@ -25,7 +25,7 @@
 		type VoiceResultData
 	} from '$services/lesson-controller';
 	import { getLessonIndex, getGlossaryMeaning, hasLesson, type LessonMeta } from '$services/lesson-loader';
-	import { stopAllAudio, playAudioPromise, ttsIsPlaying } from '$services/tts';
+	import { stopAllAudio, playAudioPromise } from '$services/tts';
 	import { unlockAudioContext } from '$services/audio-context';
 	import { initSpeechRecognition, setVoiceInputHandler, toggleMic, stopListening } from '$services/speech';
 	import { getLanguage, setLanguage, getVoiceSpeed, setVoiceSpeed } from '$services/data-layer';
@@ -63,7 +63,6 @@
 	const lesson = $derived($lessonStore);
 	const exam = $derived($examStore);
 	let isSpeaking = $state(false);
-	$effect(() => ttsIsPlaying.subscribe(v => { isSpeaking = v; }));
 
 	const scenarioTitle = $derived(() => {
 		if (!lesson.currentLesson) return 'Loading...';
@@ -166,6 +165,7 @@
 				examResultsData = null;
 				voiceResult = null;
 				_listenerSeq++; // invalidate any pending listener timers
+				isSpeaking = true; // audio is about to play
 				updateScript();
 			},
 			onCompletionCard(data) {
@@ -175,6 +175,7 @@
 			},
 			async onAnswerPrompt(message) {
 				answerLineHtml = message;
+				isSpeaking = false; // audio just finished
 				if (!listenerMode || !currentTeachStep || exam.isExamMode) return;
 				const mySeq = _listenerSeq;
 				const germanText = currentTeachStep.germanText;
