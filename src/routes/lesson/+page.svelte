@@ -47,6 +47,8 @@
 	let systemMessages: string[] = $state([]);
 	let voiceResult: VoiceResultData | null = $state(null);
 	let dueReviewCount = $state(0);
+	let listenerMode = $state(false);
+	let _listenerSeq = 0;
 
 	interface ChatMessage {
 		id: number;
@@ -161,6 +163,7 @@
 				examQuestionData = null;
 				examResultsData = null;
 				voiceResult = null;
+				_listenerSeq++; // invalidate any pending listener timers
 				updateScript();
 			},
 			onCompletionCard(data) {
@@ -168,8 +171,20 @@
 				completionData = data;
 				updateScript();
 			},
-			onAnswerPrompt(message) {
+			async onAnswerPrompt(message) {
 				answerLineHtml = message;
+				if (!listenerMode || !currentTeachStep || exam.isExamMode) return;
+				const mySeq = _listenerSeq;
+				const germanText = currentTeachStep.germanText;
+				// Brief pause after the normal-speed audio that just finished
+				await new Promise<void>((r) => setTimeout(r, 800));
+				if (_listenerSeq !== mySeq || !listenerMode) return;
+				// Play German a second time at 0.75x speed (rate 0.6 = 0.8 x 0.75)
+				stopAllAudio();
+				await playAudioPromise(germanText, 0.6, 'de-DE');
+				await new Promise<void>((r) => setTimeout(r, 600));
+				if (_listenerSeq !== mySeq || !listenerMode) return;
+				manualNext();
 			},
 			onMessageBubble(step) {
 				currentTeachStep = null;
@@ -406,6 +421,15 @@
 				<option value="0.75">{'🔉 0.75x'}</option>
 			</select>
 		</div>
+
+		<button
+			class="listener-mode-btn"
+			class:active={listenerMode}
+			onclick={() => { listenerMode = !listenerMode; }}
+			title={listenerMode ? "Listener Mode ON — click to disable" : "Enable Listener Mode"}
+		>
+			🎧 {listenerMode ? "Listener ON" : "Listener"}
+		</button>
 
 	</header>
 
@@ -789,6 +813,27 @@
 	.language-control select { max-width: 120px; }
 	.speed-control select    { max-width: 90px; }
 	.day-selection-control select { max-width: 220px; }
+
+	.listener-mode-btn {
+		padding: 6px 12px;
+		border-radius: 20px;
+		border: 2px solid rgba(255,255,255,0.4);
+		background: rgba(255,255,255,0.15);
+		color: #fff;
+		font-size: 0.82rem;
+		font-weight: 600;
+		cursor: pointer;
+		white-space: nowrap;
+		transition: background 0.2s, border-color 0.2s;
+	}
+	.listener-mode-btn:hover {
+		background: rgba(255,255,255,0.28);
+	}
+	.listener-mode-btn.active {
+		background: #22c55e;
+		border-color: #16a34a;
+		color: #fff;
+	}
 
 	.header label {
 		font-weight: 600;
