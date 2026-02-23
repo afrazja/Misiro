@@ -290,7 +290,7 @@
 
 	function handleSpeakerClick() {
 		if (!currentTeachStep) return;
-		if (isSpeaking) { stopAllAudio(); isSpeaking = false; return; }
+		if (isSpeaking) { _listenerSeq++; stopAllAudio(); isSpeaking = false; return; }
 		if ($appStore.isListening) stopListening();
 		stopAllAudio();
 		isSpeaking = true;
@@ -543,7 +543,13 @@
 						</div>
 						<div class="teach-actions">
 							<button class="btn-replay" class:speaking={isSpeaking} onclick={handleSpeakerClick} aria-label="Replay audio">
-								{isSpeaking ? '⏹ Stop' : (currentTeachStep.language === 'fa' ? '🔊 دوباره' : '🔊 Replay')}
+								{#if isSpeaking}
+									<span class="audio-wave">
+										<span></span><span></span><span></span><span></span><span></span>
+									</span>
+								{:else}
+									{currentTeachStep.language === 'fa' ? '🔊 دوباره' : '🔊 Replay'}
+								{/if}
 							</button>
 							{#if currentTeachStep.role === 'sent' && (currentTeachStep.hint || currentTeachStep.hintFa)}
 								<button class="btn-hint" onclick={() => showHint = !showHint} aria-label="Toggle hint">
@@ -1284,8 +1290,35 @@
 	}
 
 	.btn-replay.speaking {
-		border-color: #e53935;
-		color: #e53935;
+		border-color: #075e54;
+	}
+
+	.audio-wave {
+		display: inline-flex;
+		align-items: center;
+		gap: 2px;
+		height: 16px;
+	}
+
+	.audio-wave span {
+		display: block;
+		width: 3px;
+		height: 100%;
+		background: #075e54;
+		border-radius: 2px;
+		transform-origin: center;
+		animation: wave-bar 0.7s ease-in-out infinite;
+	}
+
+	.audio-wave span:nth-child(1) { animation-delay: 0s;    }
+	.audio-wave span:nth-child(2) { animation-delay: 0.14s; }
+	.audio-wave span:nth-child(3) { animation-delay: 0.28s; }
+	.audio-wave span:nth-child(4) { animation-delay: 0.14s; }
+	.audio-wave span:nth-child(5) { animation-delay: 0s;    }
+
+	@keyframes wave-bar {
+		0%, 100% { transform: scaleY(0.25); }
+		50%      { transform: scaleY(1);    }
 	}
 
 	/* Hint button */
