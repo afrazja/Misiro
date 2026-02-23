@@ -8,15 +8,18 @@
  */
 
 import { isMobile } from '$utils/device';
-import { get } from 'svelte/store';
+import { get, writable } from 'svelte/store';
 import { preferencesStore } from '$stores/preferences';
 
 let currentAudio: HTMLAudioElement | null = null;
 let ttsGeneration = 0; // incremented on stop — lets in-flight calls know they're stale
+/** Reactive flag — true while any TTS audio is playing */
+export const ttsIsPlaying = writable(false);
 
 /** Stop ALL audio sources (browser TTS + proxy Audio element) */
 export function stopAllAudio(): void {
 	if (typeof window === 'undefined') return;
+	ttsIsPlaying.set(false);
 
 	ttsGeneration++; // invalidate any in-flight playback
 	window.speechSynthesis?.cancel();
@@ -129,7 +132,8 @@ function playWebAudio(text: string, lang: string, rate: number = 1.0): Promise<v
  * @param lang - BCP-47 language code (e.g. 'de-DE', 'en-US', 'fa-IR')
  */
 export function playAudioPromise(text: string, rate: number = 1.0, lang: string = 'de-DE'): Promise<void> {
-	return new Promise((resolve) => {
+	ttsIsPlaying.set(true);
+	const _p = new Promise<void>((resolve) => {
 		// Don't call stopAllAudio here — callers manage stop/cancel themselves
 		const myGen = ttsGeneration;
 
@@ -175,6 +179,8 @@ export function playAudioPromise(text: string, rate: number = 1.0, lang: string 
 
 		window.speechSynthesis.speak(u);
 	});
+	_p.finally(() => ttsIsPlaying.set(false));
+	return _p;
 }
 
 /**

@@ -25,7 +25,7 @@
 		type VoiceResultData
 	} from '$services/lesson-controller';
 	import { getLessonIndex, getGlossaryMeaning, hasLesson, type LessonMeta } from '$services/lesson-loader';
-	import { stopAllAudio, playAudioPromise } from '$services/tts';
+	import { stopAllAudio, playAudioPromise, ttsIsPlaying } from '$services/tts';
 	import { unlockAudioContext } from '$services/audio-context';
 	import { initSpeechRecognition, setVoiceInputHandler, toggleMic, stopListening } from '$services/speech';
 	import { getLanguage, setLanguage, getVoiceSpeed, setVoiceSpeed } from '$services/data-layer';
@@ -62,6 +62,7 @@
 	const prefs = $derived($preferencesStore);
 	const lesson = $derived($lessonStore);
 	const exam = $derived($examStore);
+	const isSpeaking = $derived($ttsIsPlaying);
 
 	const scenarioTitle = $derived(() => {
 		if (!lesson.currentLesson) return 'Loading...';
@@ -251,6 +252,7 @@
 	}
 
 	function handleMicClick() {
+		if (isSpeaking) { stopAllAudio(); return; }
 		toggleMic();
 	}
 
@@ -624,6 +626,7 @@
 				<button
 					class="btn-send"
 					class:pulse={app.isListening}
+					class:speaking={isSpeaking && !app.isListening}
 					style="background: {app.isListening ? '#f44336' : '#075E54'};"
 					onclick={handleMicClick}
 					aria-label={app.isListening ? 'Stop recording' : 'Microphone - tap to record'}
@@ -1198,6 +1201,16 @@
 
 	.btn-send.pulse {
 		animation: pulse 1s infinite;
+	}
+
+	.btn-send.speaking {
+		animation: speaking-ring 1.4s ease-out infinite;
+	}
+
+	@keyframes speaking-ring {
+		0%   { box-shadow: 0 0 0 0   rgba(7, 94, 84, 0.55); }
+		70%  { box-shadow: 0 0 0 10px rgba(7, 94, 84, 0);   }
+		100% { box-shadow: 0 0 0 0   rgba(7, 94, 84, 0);    }
 	}
 
 	@keyframes pulse {
