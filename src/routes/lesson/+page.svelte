@@ -411,38 +411,38 @@
 
 	<!-- Main Learning Area -->
 	<main class="learning-area">
-		<div class="chat-wrapper">
-			<!-- Scenario info dropdown bar -->
-			{#if lesson.currentLesson}
-				<!-- svelte-ignore a11y_interactive_supports_focus -->
-				<div
-					class="scenario-bar"
-					role="button"
-					tabindex="0"
-					onclick={() => showScenarioInfo = !showScenarioInfo}
-					onkeydown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); showScenarioInfo = !showScenarioInfo; } }}
-					aria-expanded={showScenarioInfo}
-				>
-					<span class="scenario-bar-title">
-						{#if lessonDifficulty()}
-							<span class="difficulty-badge difficulty-{lessonDifficulty()?.replace('+', 'plus')}">{lessonDifficulty()}</span>
-						{/if}
-						{scenarioTitle()}
-					</span>
-					<span class="scenario-bar-chevron" class:open={showScenarioInfo}>▾</span>
+		<!-- Scenario info dropdown bar — sits at very top below nav -->
+		{#if lesson.currentLesson}
+			<!-- svelte-ignore a11y_interactive_supports_focus -->
+			<div
+				class="scenario-bar"
+				role="button"
+				tabindex="0"
+				onclick={() => showScenarioInfo = !showScenarioInfo}
+				onkeydown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); showScenarioInfo = !showScenarioInfo; } }}
+				aria-expanded={showScenarioInfo}
+			>
+				<span class="scenario-bar-title">
+					{#if lessonDifficulty()}
+						<span class="difficulty-badge difficulty-{lessonDifficulty()?.replace('+', 'plus')}">{lessonDifficulty()}</span>
+					{/if}
+					{scenarioTitle()}
+				</span>
+				<span class="scenario-bar-chevron" class:open={showScenarioInfo}>▾</span>
+			</div>
+			{#if showScenarioInfo}
+				<div class="scenario-dropdown">
+					{#if scenarioDescription() && !exam.isExamMode}
+						<p class="scenario-drop-desc">🎬 {scenarioDescription()}</p>
+					{/if}
+					{#if lessonGrammarFocus()}
+						<p class="scenario-drop-grammar">📝 {lessonGrammarFocus()}</p>
+					{/if}
 				</div>
-				{#if showScenarioInfo}
-					<div class="scenario-dropdown">
-						{#if scenarioDescription() && !exam.isExamMode}
-							<p class="scenario-drop-desc">🎬 {scenarioDescription()}</p>
-						{/if}
-						{#if lessonGrammarFocus()}
-							<p class="scenario-drop-grammar">📝 {lessonGrammarFocus()}</p>
-						{/if}
-					</div>
-				{/if}
 			{/if}
+		{/if}
 
+		<div class="chat-wrapper">
 			<!-- Lesson Progress Bar -->
 			{#if lesson.currentLesson && !exam.isExamMode}
 				{@const total = lesson.currentLesson.sentences.length}
