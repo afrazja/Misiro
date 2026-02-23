@@ -133,6 +133,7 @@
 	// ============ SCRIPT PANEL ============
 	let scriptItems: Array<{ german: string; translation: string; done: boolean; active: boolean }> = $state([]);
 	let showScript = $state(false);
+	let showScenarioInfo = $state(false);
 
 	function updateScript() {
 		if (!lesson.currentLesson) return;
@@ -277,6 +278,7 @@
 
 	function handleScriptItemClick(index: number) {
 		jumpToSentence(index);
+		showScript = false; // close mobile drawer after selecting a sentence
 	}
 
 	function handleMessageBubbleClick(text: string) {
@@ -410,6 +412,37 @@
 	<!-- Main Learning Area -->
 	<main class="learning-area">
 		<div class="chat-wrapper">
+			<!-- Scenario info dropdown bar -->
+			{#if lesson.currentLesson}
+				<!-- svelte-ignore a11y_interactive_supports_focus -->
+				<div
+					class="scenario-bar"
+					role="button"
+					tabindex="0"
+					onclick={() => showScenarioInfo = !showScenarioInfo}
+					onkeydown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); showScenarioInfo = !showScenarioInfo; } }}
+					aria-expanded={showScenarioInfo}
+				>
+					<span class="scenario-bar-title">
+						{#if lessonDifficulty()}
+							<span class="difficulty-badge difficulty-{lessonDifficulty()?.replace('+', 'plus')}">{lessonDifficulty()}</span>
+						{/if}
+						{scenarioTitle()}
+					</span>
+					<span class="scenario-bar-chevron" class:open={showScenarioInfo}>▾</span>
+				</div>
+				{#if showScenarioInfo}
+					<div class="scenario-dropdown">
+						{#if scenarioDescription() && !exam.isExamMode}
+							<p class="scenario-drop-desc">🎬 {scenarioDescription()}</p>
+						{/if}
+						{#if lessonGrammarFocus()}
+							<p class="scenario-drop-grammar">📝 {lessonGrammarFocus()}</p>
+						{/if}
+					</div>
+				{/if}
+			{/if}
+
 			<!-- Lesson Progress Bar -->
 			{#if lesson.currentLesson && !exam.isExamMode}
 				{@const total = lesson.currentLesson.sentences.length}
@@ -862,6 +895,73 @@
 		padding: 12px 16px;
 		background: #075e54;
 		color: white;
+	}
+
+	/* Scenario dropdown bar */
+	.scenario-bar {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		padding: 8px 14px;
+		background: #075e54;
+		color: white;
+		cursor: pointer;
+		user-select: none;
+		border-bottom: 1px solid rgba(255,255,255,0.1);
+		gap: 8px;
+	}
+
+	.scenario-bar:hover {
+		background: #086b60;
+	}
+
+	.scenario-bar-title {
+		font-size: 0.9rem;
+		font-weight: 600;
+		display: flex;
+		align-items: center;
+		gap: 7px;
+		flex: 1;
+		min-width: 0;
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
+	}
+
+	.scenario-bar-chevron {
+		font-size: 1.1rem;
+		transition: transform 0.25s;
+		flex-shrink: 0;
+		opacity: 0.8;
+	}
+
+	.scenario-bar-chevron.open {
+		transform: rotate(180deg);
+	}
+
+	.scenario-dropdown {
+		background: #064d45;
+		padding: 10px 14px;
+		border-bottom: 1px solid rgba(255,255,255,0.08);
+		animation: dropIn 0.18s ease-out;
+	}
+
+	@keyframes dropIn {
+		from { opacity: 0; transform: translateY(-6px); }
+		to   { opacity: 1; transform: translateY(0); }
+	}
+
+	.scenario-drop-desc {
+		margin: 0 0 6px;
+		font-size: 0.82rem;
+		color: rgba(255,255,255,0.85);
+		line-height: 1.5;
+	}
+
+	.scenario-drop-grammar {
+		margin: 0;
+		font-size: 0.78rem;
+		color: #a0e0b8;
 	}
 
 	.avatar-circle {
