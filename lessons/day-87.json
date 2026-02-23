@@ -1,0 +1,186 @@
+{
+  "title": "Day 87: Traditions & Customs",
+  "titleFa": "روز ۸۷: سنت‌ها و آداب و رسوم",
+  "sentences": [
+    {
+      "id": 1,
+      "role": "received",
+      "audioText": "Jedes Land hat seine eigenen einzigartigen Traditionen.",
+      "translation": "Every country has its own unique traditions.",
+      "translationFa": "هر کشوری سنت‌های منحصر به فرد خود را دارد."
+    },
+    {
+      "id": 2,
+      "role": "sent",
+      "targetText": "In Deutschland feiert man Weihnachten am vierundzwanzigsten Dezember.",
+      "translation": "In Germany, people celebrate Christmas on the twenty-fourth of December.",
+      "translationFa": "در آلمان، مردم کریسمس را در بیست و چهارم دسامبر جشن می‌گیرند."
+    },
+    {
+      "id": 3,
+      "role": "sent",
+      "targetText": "Wir schmücken den Weihnachtsbaum immer zusammen.",
+      "translation": "We always decorate the Christmas tree together.",
+      "translationFa": "ما همیشه درخت کریسمس را با هم تزئین می‌کنیم."
+    },
+    {
+      "id": 4,
+      "role": "received",
+      "audioText": "Hast du schon einmal einen deutschen Weihnachtsmarkt besucht?",
+      "translation": "Have you ever visited a German Christmas market?",
+      "translationFa": "آیا تا به حال از یک بازار کریسمس آلمانی دیدن کرده‌ای؟"
+    },
+    {
+      "id": 5,
+      "role": "sent",
+      "targetText": "Glühwein zu trinken ist im Winter sehr beliebt.",
+      "translation": "Drinking mulled wine is very popular in the winter.",
+      "translationFa": "نوشیدن شراب گرم در زمستان بسیار محبوب است."
+    },
+    {
+      "id": 6,
+      "role": "sent",
+      "targetText": "Ostern ist ein weiterer wichtiger Feiertag im Frühling.",
+      "translation": "Easter is another important holiday in the spring.",
+      "translationFa": "عید پاک یک تعطیلات مهم دیگر در بهار است."
+    },
+    {
+      "id": 7,
+      "role": "sent",
+      "targetText": "Kinder suchen im Garten nach versteckten Ostereiern.",
+      "translation": "Children search for hidden Easter eggs in the garden.",
+      "translationFa": "بچه‌ها در باغ به دنبال تخم‌مرغ‌های عید پاک پنهان شده می‌گردند."
+    },
+    {
+      "id": 8,
+      "role": "sent",
+      "targetText": "Das Oktoberfest in München ist das größte Volksfest der Welt.",
+      "translation": "The Oktoberfest in Munich is the largest folk festival in the world.",
+      "translationFa": "جشنواره اکتبرفست در مونیخ بزرگترین جشنواره مردمی در جهان است."
+    },
+    {
+      "id": 9,
+      "role": "sent",
+      "targetText": "Viele Menschen tragen traditionelle Kleidung wie Lederhosen und Dirndl.",
+      "translation": "Many people wear traditional clothing like Lederhosen and Dirndl.",
+      "translationFa": "بسیاری از مردم لباس‌های سنتی مانند لدرهوزن و درندل می‌پوشند."
+    },
+    {
+      "id": 10,
+      "role": "received",
+      "audioText": "Es ist höflich, die Schuhe auszuziehen, wenn man ein Haus betritt.",
+      "translation": "It is polite to take off your shoes when entering a house.",
+      "translationFa": "درآوردن کفش‌ها هنگام ورود به خانه مؤدبانه است."
+    },
+    {
+      "id": 11,
+      "role": "sent",
+      "targetText": "Sonntags sind die Geschäfte geschlossen und es ist ein Ruhetag.",
+      "translation": "On Sundays, shops are closed and it is a day of rest.",
+      "translationFa": "یکشنبه‌ها مغازه‌ها تعطیل هستند و روز استراحت است."
+    },
+    {
+      "id": 12,
+      "role": "received",
+      "audioText": "Man sollte an einem Sonntag nicht den Rasen mähen.",
+      "translation": "You should not mow the lawn on a Sunday.",
+      "translationFa": "شما نباید در روز یکشنبه چمن‌ها را کوتاه کنید."
+    },
+    {
+      "id": 13,
+      "role": "sent",
+      "targetText": "Deutsche sind dafür bekannt, sehr pünktlich zu sein.",
+      "translation": "Germans are known for being very punctual.",
+      "translationFa": "آلمانی‌ها به وقت‌شناسی بسیار معروف هستند."
+    },
+    {
+      "id": 14,
+      "role": "received",
+      "audioText": "Wenn du zum Abendessen eingeladen bist, bring ein kleines Geschenk mit.",
+      "translation": "If you are invited to dinner, bring a small gift.",
+      "translationFa": "اگر برای شام دعوت شده‌اید، یک هدیه کوچک بیاورید."
+    },
+    {
+      "id": 15,
+      "role": "sent",
+      "targetText": "Eine Flasche Wein oder Blumen sind immer eine gute Idee.",
+      "translation": "A bottle of wine or flowers are always a good idea.",
+      "translationFa": "یک بطری شراب یا گل همیشه ایده خوبی است."
+    },
+    {
+      "id": 16,
+      "role": "received",
+      "audioText": "Beim Anstoßen muss man der anderen Person in die Augen schauen.",
+      "translation": "When clinking glasses, you must look the other person in the eye.",
+      "translationFa": "هنگام زدن لیوان‌ها به هم، باید به چشم طرف مقابل نگاه کنید."
+    },
+    {
+      "id": 17,
+      "role": "sent",
+      "targetText": "Andernfalls bringt es laut Aberglauben sieben Jahre Pech.",
+      "translation": "Otherwise, it brings seven years of bad luck, according to superstition.",
+      "translationFa": "در غیر این صورت، طبق خرافات، هفت سال بدشانسی می‌آورد."
+    },
+    {
+      "id": 18,
+      "role": "sent",
+      "targetText": "Wir wünschen uns mit einem Feuerwerk ein frohes neues Jahr.",
+      "translation": "We wish each other a happy new year with fireworks.",
+      "translationFa": "ما با آتش‌بازی سال نوی خوبی را برای یکدیگر آرزو می‌کنیم."
+    },
+    {
+      "id": 19,
+      "role": "sent",
+      "targetText": "Karneval wird mit bunten Kostümen und Umzügen gefeiert.",
+      "translation": "Carnival is celebrated with colorful costumes and parades.",
+      "translationFa": "کارناوال با لباس‌های رنگارنگ و رژه‌ها جشن گرفته می‌شود."
+    },
+    {
+      "id": 20,
+      "role": "sent",
+      "targetText": "Viele Regionen haben ihre eigenen speziellen Dialekte und Bräuche.",
+      "translation": "Many regions have their own special dialects and customs.",
+      "translationFa": "بسیاری از مناطق گویش‌ها و رسوم خاص خود را دارند."
+    },
+    {
+      "id": 21,
+      "role": "received",
+      "audioText": "Die Brotkultur in Deutschland ist als Kulturerbe anerkannt.",
+      "translation": "Bread culture in Germany is recognized as a cultural heritage.",
+      "translationFa": "فرهنگ نان در آلمان به عنوان یک میراث فرهنگی شناخته می‌شود."
+    },
+    {
+      "id": 22,
+      "role": "sent",
+      "targetText": "In der Bäckerei findet man Hunderte von verschiedenen Brotsorten.",
+      "translation": "You can find hundreds of different types of bread at the bakery.",
+      "translationFa": "در نانوایی می‌توانید صدها نوع مختلف نان پیدا کنید."
+    },
+    {
+      "id": 23,
+      "role": "sent",
+      "targetText": "Hochzeiten werden oft mit Spielen und alten Traditionen gefeiert.",
+      "translation": "Weddings are often celebrated with games and old traditions.",
+      "translationFa": "عروسی‌ها اغلب با بازی‌ها و سنت‌های قدیمی جشن گرفته می‌شوند."
+    },
+    {
+      "id": 24,
+      "role": "sent",
+      "targetText": "Ich finde es faszinierend, etwas über andere Kulturen zu lernen.",
+      "translation": "I find it fascinating to learn about other cultures.",
+      "translationFa": "یادگیری درباره فرهنگ‌های دیگر برای من جذاب است."
+    },
+    {
+      "id": 25,
+      "role": "sent",
+      "targetText": "Bräuche helfen, die Geschichte eines Landes lebendig zu halten.",
+      "translation": "Customs help to keep the history of a country alive.",
+      "translationFa": "سنت‌ها به زنده نگه داشتن تاریخ یک کشور کمک می‌کنند."
+    }
+  ],
+  "difficulty": "B1+",
+  "grammarFocus": "Passiv: wird gefeiert / ist anerkannt / werden gefeiert + man-Konstruktion: feiert man / findet man + Infinitivsatz: Es ist höflich, die Schuhe auszuziehen + Superlativ: das größte Volksfest",
+  "grammarFocusFa": "مجهول: wird gefeiert / ist anerkannt + ساختار man: feiert man / findet man + جمله مصدری: Es ist höflich, die Schuhe auszuziehen + صفت عالی: das größte Volksfest",
+  "description": "Learn about German traditions, holidays, and cultural customs. Discuss Christmas markets, Oktoberfest, social etiquette, and the unique cultural heritage of Germany.",
+  "descriptionFa": "درباره سنت‌ها، تعطیلات و آداب فرهنگی آلمانی بیاموزید. درباره بازارهای کریسمس، اکتبرفست، آداب اجتماعی و میراث فرهنگی منحصر به فرد آلمان بحث کنید."
+}
