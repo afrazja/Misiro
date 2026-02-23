@@ -290,9 +290,12 @@
 
 	function handleSpeakerClick() {
 		if (!currentTeachStep) return;
-		stopAllAudio();
+		if (isSpeaking) { stopAllAudio(); isSpeaking = false; return; }
 		if ($appStore.isListening) stopListening();
-		playAudioPromise(currentTeachStep.germanText, 0.8, 'de-DE');
+		stopAllAudio();
+		isSpeaking = true;
+		playAudioPromise(currentTeachStep.germanText, 0.8, 'de-DE')
+			.then(() => { isSpeaking = false; });
 	}
 
 	function handleScriptItemClick(index: number) {
@@ -539,7 +542,7 @@
 							</span>
 						</div>
 						<div class="teach-actions">
-							<button class="btn-replay" onclick={handleSpeakerClick} aria-label="Replay audio">
+							<button class="btn-replay" class:speaking={isSpeaking} onclick={handleSpeakerClick} aria-label="Replay audio">
 								🔊 {currentTeachStep.language === 'fa' ? 'دوباره' : 'Replay'}
 							</button>
 							{#if currentTeachStep.role === 'sent' && (currentTeachStep.hint || currentTeachStep.hintFa)}
@@ -628,7 +631,7 @@
 				<button
 					class="btn-send"
 					class:pulse={app.isListening}
-					style="background: {app.isListening ? '#f44336' : isSpeaking ? '#25D366' : '#075E54'};"
+					style="background: {app.isListening ? '#f44336' : '#075E54'};"
 					onclick={handleMicClick}
 					aria-label={app.isListening ? 'Stop recording' : 'Microphone - tap to record'}
 				>
@@ -1277,6 +1280,12 @@
 
 	.btn-replay:hover {
 		background: #075e54;
+		color: white;
+	}
+
+	.btn-replay.speaking {
+		background: #25D366;
+		border-color: #25D366;
 		color: white;
 	}
 
