@@ -411,6 +411,15 @@
 
 	<!-- Main Learning Area -->
 	<main class="learning-area">
+		<!-- Mobile script toggle bar — top of content area on mobile -->
+		<button class="script-toggle-btn" onclick={() => showScript = !showScript} aria-label="Toggle lesson script">
+			📋 {prefs.language === 'fa' ? 'متن درس' : 'Script'}
+			{#if scriptItems.length > 0}
+				<span class="script-toggle-count">{scriptItems.filter(s => s.done).length}/{scriptItems.length}</span>
+			{/if}
+			<span class="script-toggle-arrow" class:open={showScript}>▲</span>
+		</button>
+
 		<!-- Scenario info dropdown bar — sits at very top below nav -->
 		{#if lesson.currentLesson}
 			<!-- svelte-ignore a11y_interactive_supports_focus -->
@@ -699,15 +708,6 @@
 		{/if}
 		</div><!-- end chat-body -->
 	</div><!-- end chat-wrapper -->
-
-	<!-- Mobile script toggle pill (hidden on desktop) -->
-	<button class="script-toggle-btn" onclick={() => showScript = !showScript} aria-label="Toggle lesson script">
-		📋 {prefs.language === 'fa' ? 'متن درس' : 'Script'}
-		{#if scriptItems.length > 0}
-			<span class="script-toggle-count">{scriptItems.filter(s => s.done).length}/{scriptItems.length}</span>
-		{/if}
-		<span class="script-toggle-arrow" class:open={showScript}>▲</span>
-	</button>
 	</main>
 </div>
 
@@ -1522,7 +1522,7 @@
 		line-height: 1;
 	}
 
-	/* ── Mobile toggle pill ─────────────────────────── */
+	/* ── Mobile script toggle bar ─────────────────────────── */
 	.script-toggle-btn {
 		display: none; /* hidden on desktop */
 	}
@@ -1605,24 +1605,23 @@
 			display: flex;
 		}
 
-		/* Toggle pill fixed above the mic bar */
+		/* Script toggle as full-width bar at the top of content */
 		.script-toggle-btn {
 			display: flex;
 			align-items: center;
-			gap: 6px;
-			position: fixed;
-			bottom: 70px;
-			right: 16px;
-			z-index: 300;
+			justify-content: center;
+			gap: 8px;
+			width: 100%;
 			background: #1a1a2e;
 			color: #2ecc71;
-			border: 1.5px solid rgba(46, 204, 113, 0.5);
-			border-radius: 20px;
-			padding: 7px 14px;
+			border: none;
+			border-bottom: 1.5px solid rgba(46, 204, 113, 0.35);
+			border-radius: 0;
+			padding: 9px 16px;
 			font-size: 0.85rem;
 			font-weight: 600;
 			cursor: pointer;
-			box-shadow: 0 3px 12px rgba(0, 0, 0, 0.35);
+			flex-shrink: 0;
 		}
 
 		.script-toggle-count {
