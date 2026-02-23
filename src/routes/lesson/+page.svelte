@@ -414,42 +414,13 @@
 		<!-- Mobile script toggle bar — top of content area on mobile -->
 		<button class="script-toggle-btn" onclick={() => showScript = !showScript} aria-label="Toggle lesson script">
 			📋 {prefs.language === 'fa' ? 'متن درس' : 'Script'}
-			{#if scriptItems.length > 0}
-				<span class="script-toggle-count">{scriptItems.filter(s => s.done).length}/{scriptItems.length}</span>
-			{/if}
-			<span class="script-toggle-arrow" class:open={showScript}>▲</span>
-		</button>
-
-		<!-- Scenario info dropdown bar — sits at very top below nav -->
-		{#if lesson.currentLesson}
-			<!-- svelte-ignore a11y_interactive_supports_focus -->
-			<div
-				class="scenario-bar"
-				role="button"
-				tabindex="0"
-				onclick={() => showScenarioInfo = !showScenarioInfo}
-				onkeydown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); showScenarioInfo = !showScenarioInfo; } }}
-				aria-expanded={showScenarioInfo}
-			>
-				<span class="scenario-bar-title">
-					{#if lessonDifficulty()}
-						<span class="difficulty-badge difficulty-{lessonDifficulty()?.replace('+', 'plus')}">{lessonDifficulty()}</span>
-					{/if}
-					{scenarioTitle()}
+			{#if lesson.currentLesson}
+				<span class="script-toggle-count">
+					{Math.min(app.currentSentenceIndex + 1, lesson.currentLesson.sentences.length)} / {lesson.currentLesson.sentences.length}
 				</span>
-				<span class="scenario-bar-chevron" class:open={showScenarioInfo}>▾</span>
-			</div>
-			{#if showScenarioInfo}
-				<div class="scenario-dropdown">
-					{#if scenarioDescription() && !exam.isExamMode}
-						<p class="scenario-drop-desc">🎬 {scenarioDescription()}</p>
-					{/if}
-					{#if lessonGrammarFocus()}
-						<p class="scenario-drop-grammar">📝 {lessonGrammarFocus()}</p>
-					{/if}
-				</div>
 			{/if}
-		{/if}
+			<span class="script-toggle-arrow" class:open={showScript}>▼</span>
+		</button>
 
 		<div class="chat-wrapper">
 			<!-- Lesson Progress Bar -->
@@ -1553,36 +1524,30 @@
 		}
 	}
 
-	/* ── Mobile: bottom drawer ──────────────────────── */
+	/* ── Mobile: top-down dropdown drawer ──────────────────────── */
 	@media (max-width: 767px) {
-		/* Hide the static sidebar panel; become a slide-up drawer */
+		/* Hide the static sidebar panel; become a slide-down drawer */
 		.script-view {
 			position: fixed;
-			bottom: 0;
+			top: 0;
 			left: 0;
 			right: 0;
 			height: 65vh;
 			z-index: 400;
-			transform: translateY(100%);
+			transform: translateY(-105%);
 			transition: transform 0.32s cubic-bezier(0.4, 0, 0.2, 1);
 			border-top: none;
-			border-radius: 18px 18px 0 0;
-			box-shadow: 0 -4px 24px rgba(0, 0, 0, 0.4);
+			border-radius: 0 0 18px 18px;
+			box-shadow: 0 4px 24px rgba(0, 0, 0, 0.4);
 		}
 
 		.script-view.open {
 			transform: translateY(0);
 		}
 
-		/* Drag handle at top of drawer */
+		/* Drag handle at bottom of drawer (now slides down) */
 		.script-header::before {
-			content: '';
-			display: block;
-			width: 40px;
-			height: 4px;
-			background: rgba(255, 255, 255, 0.25);
-			border-radius: 2px;
-			margin: 0 auto 10px;
+			content: none;
 		}
 
 		.script-header {
