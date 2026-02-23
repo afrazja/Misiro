@@ -440,14 +440,7 @@
 			<!-- Current Sentence Area (one sentence at a time, centered) -->
 			<div class="chat-history" bind:this={chatHistoryEl} role="log" aria-live="polite" aria-label="Current sentence">
 
-				<!-- Scenario Description -->
-				{#if scenarioDescription() && !exam.isExamMode}
-					<div class="scenario-description" dir={prefs.language === 'fa' ? 'rtl' : 'ltr'}>
-						🎬 {scenarioDescription()}
-					</div>
-				{/if}
-
-				{#each systemMessages as msg}
+	{#each systemMessages as msg}
 					<div class="message system">
 						<div class="text">{msg}</div>
 					</div>
