@@ -290,7 +290,7 @@
 
 	function handleSpeakerClick() {
 		if (!currentTeachStep) return;
-		if (isSpeaking) { _listenerSeq++; stopAllAudio(); isSpeaking = false; return; }
+		if (isSpeaking) { _listenerSeq++; incrementSession(); stopAllAudio(); isSpeaking = false; return; }
 		if ($appStore.isListening) stopListening();
 		stopAllAudio();
 		isSpeaking = true;
