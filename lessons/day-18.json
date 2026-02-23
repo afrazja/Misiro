@@ -71,6 +71,20 @@
       "audioText": "Ja, laut der Wettervorhersage schon.",
       "translation": "Yes, according to the weather forecast.",
       "translationFa": "بله، طبق پیش‌بینی هوا."
+    },
+    {
+      "id": 11,
+      "role": "sent",
+      "targetText": "Dann nehme ich heute Abend lieber einen Regenschirm mit.",
+      "translation": "Then I had better take an umbrella with me this evening.",
+      "translationFa": "پس امشب بهتره یه چتر با خودم ببرم."
+    },
+    {
+      "id": 12,
+      "role": "received",
+      "audioText": "Gute Idee! Bleiben Sie trocken. Bis dann!",
+      "translation": "Good idea! Stay dry. See you then!",
+      "translationFa": "ایده خوبیه! خیس نشید. تا بعد!"
     }
   ],
   "difficulty": "A1+",

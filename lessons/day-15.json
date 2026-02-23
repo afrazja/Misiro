@@ -71,6 +71,27 @@
       "audioText": "Gute Fahrt!",
       "translation": "Have a good trip!",
       "translationFa": "سفر خوبی داشته باشید!"
+    },
+    {
+      "id": 11,
+      "role": "sent",
+      "targetText": "Danke! Muss ich irgendwo umsteigen?",
+      "translation": "Thanks! Do I need to change anywhere?",
+      "translationFa": "ممنون! باید جایی عوض کنم؟"
+    },
+    {
+      "id": 12,
+      "role": "received",
+      "audioText": "Ja, einmal am Hauptbahnhof, Gleis vier.",
+      "translation": "Yes, once at the main station, platform four.",
+      "translationFa": "بله، یه بار در ایستگاه مرکزی، سکوی چهار."
+    },
+    {
+      "id": 13,
+      "role": "sent",
+      "targetText": "Verstanden. Ich passe auf die Ansagen auf.",
+      "translation": "Understood. I will pay attention to the announcements.",
+      "translationFa": "فهمیدم. به اعلامیه‌ها توجه می‌کنم."
     }
   ],
   "difficulty": "A1+",

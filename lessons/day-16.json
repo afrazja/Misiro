@@ -71,6 +71,20 @@
       "targetText": "Mit Kreditkarte, bitte.",
       "translation": "By credit card, please.",
       "translationFa": "با کارت اعتباری، لطفاً."
+    },
+    {
+      "id": 11,
+      "role": "received",
+      "audioText": "Kein Problem. Bitte bestaetigen Sie die Zahlung auf dem Terminal.",
+      "translation": "No problem. Please confirm the payment on the terminal.",
+      "translationFa": "مشکلی نیست. لطفاً پرداخت رو روی دستگاه تأیید کنید."
+    },
+    {
+      "id": 12,
+      "role": "sent",
+      "targetText": "Fertig. Vielen Dank und einen schoenen Tag!",
+      "translation": "Done. Thank you very much and have a nice day!",
+      "translationFa": "شد. خیلی ممنون و روز خوبی داشته باشید!"
     }
   ],
   "difficulty": "A1+",

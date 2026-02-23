@@ -57,6 +57,41 @@
       "targetText": "Ich mag alte Gebäude. Sie sind interessanter.",
       "translation": "I like old buildings. They are more interesting.",
       "translationFa": "ساختمون‌های قدیمی رو دوست دارم. جالب‌ترن."
+    },
+    {
+      "id": 9,
+      "role": "received",
+      "audioText": "Welche Farbe magst du am liebsten?",
+      "translation": "What is your favourite colour?",
+      "translationFa": "کدوم رنگ رو بیشتر دوست داری؟"
+    },
+    {
+      "id": 10,
+      "role": "sent",
+      "targetText": "Ich mag Blau am liebsten. Es ist eine ruhige Farbe.",
+      "translation": "I like blue the most. It is a calming colour.",
+      "translationFa": "بیشتر از همه آبی دوست دارم. یه رنگ آرومه."
+    },
+    {
+      "id": 11,
+      "role": "received",
+      "audioText": "Wie findest du dieses gelbe Hemd hier?",
+      "translation": "What do you think of this yellow shirt here?",
+      "translationFa": "این پیراهن زرد رو چطور می‌بینی؟"
+    },
+    {
+      "id": 12,
+      "role": "sent",
+      "targetText": "Es ist zu hell fuer mich. Ich bevorzuge dunklere Farben.",
+      "translation": "It is too bright for me. I prefer darker colours.",
+      "translationFa": "برام خیلی روشنه. رنگ‌های تیره‌تر رو ترجیح می‌دم."
+    },
+    {
+      "id": 13,
+      "role": "received",
+      "audioText": "Das verstehe ich. Dunkel wirkt eleganter.",
+      "translation": "I understand that. Dark looks more elegant.",
+      "translationFa": "می‌فهمم. تیره شیک‌تر به نظر می‌رسه."
     }
   ],
   "difficulty": "A1+",

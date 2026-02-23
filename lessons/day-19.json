@@ -71,6 +71,27 @@
       "targetText": "Ich nehme die U-Bahn. Das dauert zwanzig Minuten.",
       "translation": "I take the metro. It takes twenty minutes.",
       "translationFa": "مترو می‌گیرم. بیست دقیقه طول می‌کشه."
+    },
+    {
+      "id": 11,
+      "role": "received",
+      "audioText": "Hoerst du morgens auch Musik oder Podcasts?",
+      "translation": "Do you also listen to music or podcasts in the morning?",
+      "translationFa": "صبح‌ها موزیک یا پادکست هم گوش می‌دی؟"
+    },
+    {
+      "id": 12,
+      "role": "sent",
+      "targetText": "Ja, ich hoere auf dem Weg zur Arbeit immer Nachrichten.",
+      "translation": "Yes, I always listen to the news on my way to work.",
+      "translationFa": "بله، همیشه در راه سر کار اخبار گوش می‌دم."
+    },
+    {
+      "id": 13,
+      "role": "received",
+      "audioText": "Das ist eine sehr gute Gewohnheit!",
+      "translation": "That is a very good habit!",
+      "translationFa": "عادت خیلی خوبیه!"
     }
   ],
   "difficulty": "A2",

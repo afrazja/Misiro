@@ -71,6 +71,20 @@
       "targetText": "Ich rufe dich später an.",
       "translation": "I'll call you later.",
       "translationFa": "بعداً بهت زنگ می‌زنم."
+    },
+    {
+      "id": 11,
+      "role": "received",
+      "audioText": "Super. Ich mache uns dann etwas zu essen.",
+      "translation": "Great. I will make us something to eat then.",
+      "translationFa": "عالی. یه چیزی برامون درست می‌کنم."
+    },
+    {
+      "id": 12,
+      "role": "sent",
+      "targetText": "Wunderbar! Ich freue mich darauf.",
+      "translation": "Wonderful! I am looking forward to it.",
+      "translationFa": "عالیه! خیلی منتظرشم."
     }
   ],
   "difficulty": "A2",

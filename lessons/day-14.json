@@ -50,6 +50,48 @@
       "targetText": "Es ist neben dem Hotel.",
       "translation": "It is next to the hotel.",
       "translationFa": "کنار هتله."
+    },
+    {
+      "id": 8,
+      "role": "received",
+      "audioText": "Kennen Sie die Gegend gut?",
+      "translation": "Do you know the area well?",
+      "translationFa": "این منطقه رو خوب می‌شناسید؟"
+    },
+    {
+      "id": 9,
+      "role": "sent",
+      "targetText": "Ja, ich wohne seit zwei Jahren hier.",
+      "translation": "Yes, I have been living here for two years.",
+      "translationFa": "بله، دو ساله اینجا زندگی می‌کنم."
+    },
+    {
+      "id": 10,
+      "role": "received",
+      "audioText": "Gibt es hier in der Naehe einen Geldautomaten?",
+      "translation": "Is there a cash machine nearby?",
+      "translationFa": "اینجا نزدیک خودپرداز هست؟"
+    },
+    {
+      "id": 11,
+      "role": "sent",
+      "targetText": "Ja, er ist gegenueber von der Post.",
+      "translation": "Yes, it is opposite the post office.",
+      "translationFa": "بله، روبروی اداره پست هست."
+    },
+    {
+      "id": 12,
+      "role": "received",
+      "audioText": "Wie lange geht man bis zur Post?",
+      "translation": "How long does it take to walk to the post office?",
+      "translationFa": "تا اداره پست چقدر راهه؟"
+    },
+    {
+      "id": 13,
+      "role": "sent",
+      "targetText": "Ungefaehr zehn Minuten zu Fuss.",
+      "translation": "About ten minutes on foot.",
+      "translationFa": "حدود ده دقیقه پیاده."
     }
   ],
   "difficulty": "A1+",

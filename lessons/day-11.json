@@ -71,6 +71,20 @@
       "targetText": "Weil ich in Deutschland arbeiten möchte.",
       "translation": "Because I want to work in Germany.",
       "translationFa": "چون می‌خوام در آلمان کار کنم."
+    },
+    {
+      "id": 11,
+      "role": "received",
+      "audioText": "Wie lange lernst du schon Deutsch?",
+      "translation": "How long have you been learning German?",
+      "translationFa": "چقدر وقته داری آلمانی یاد می‌گیری؟"
+    },
+    {
+      "id": 12,
+      "role": "sent",
+      "targetText": "Erst seit drei Monaten, aber ich mache gute Fortschritte.",
+      "translation": "Only for three months, but I am making good progress.",
+      "translationFa": "فقط سه ماهه، ولی خوب پیش می‌رم."
     }
   ],
   "difficulty": "A1+",

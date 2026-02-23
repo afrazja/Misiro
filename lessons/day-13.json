@@ -71,6 +71,20 @@
       "audioText": "Gern geschehen. Auf Wiedersehen.",
       "translation": "You're welcome. Goodbye.",
       "translationFa": "خواهش می‌کنم. خداحافظ."
+    },
+    {
+      "id": 11,
+      "role": "sent",
+      "targetText": "Warten Sie, ist das wirklich die richtige Strasse?",
+      "translation": "Wait, is this really the right street?",
+      "translationFa": "صبر کنید، این واقعاً خیابون درسته؟"
+    },
+    {
+      "id": 12,
+      "role": "received",
+      "audioText": "Ja, genau. Sie koennen es nicht verpassen.",
+      "translation": "Yes, exactly. You cannot miss it.",
+      "translationFa": "بله، درسته. نمی‌تونید اشتباه برید."
     }
   ],
   "difficulty": "A1+",

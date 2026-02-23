@@ -71,6 +71,27 @@
       "targetText": "Danke schön!",
       "translation": "Thank you very much!",
       "translationFa": "خیلی ممنون!"
+    },
+    {
+      "id": 11,
+      "role": "received",
+      "audioText": "Ihr Gate oeffnet in einer Stunde. Guten Flug!",
+      "translation": "Your gate opens in one hour. Have a good flight!",
+      "translationFa": "گیت شما یه ساعت دیگه باز می‌شه. پرواز خوبی داشته باشید!"
+    },
+    {
+      "id": 12,
+      "role": "sent",
+      "targetText": "Danke! Wo kann ich noch etwas essen, bevor ich einsteige?",
+      "translation": "Thanks! Where can I get something to eat before boarding?",
+      "translationFa": "ممنون! قبل از سوار شدن کجا می‌تونم چیزی بخورم؟"
+    },
+    {
+      "id": 13,
+      "role": "received",
+      "audioText": "Im Terminal B gibt es mehrere Restaurants und Cafes.",
+      "translation": "In Terminal B there are several restaurants and cafes.",
+      "translationFa": "در ترمینال B چند تا رستوران و کافه هست."
     }
   ],
   "difficulty": "A1+",
