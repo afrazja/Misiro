@@ -627,8 +627,7 @@
 				<button
 					class="btn-send"
 					class:pulse={app.isListening}
-					class:speaking={isSpeaking && !app.isListening}
-					style="background: {app.isListening ? '#f44336' : '#075E54'};"
+					style="background: {app.isListening ? '#f44336' : isSpeaking ? '#25D366' : '#075E54'};"
 					onclick={handleMicClick}
 					aria-label={app.isListening ? 'Stop recording' : 'Microphone - tap to record'}
 				>
@@ -1204,18 +1203,7 @@
 		animation: pulse 1s infinite;
 	}
 
-	.btn-send.speaking {
-		outline: 3px solid rgba(255,255,255,0.7);
-		outline-offset: 3px;
-		animation: speaking-ring 1.3s ease-in-out infinite;
-	}
-
-	@keyframes speaking-ring {
-		0%, 100% { outline-color: rgba(255,255,255,0.75); outline-offset: 2px; }
-		50%      { outline-color: rgba(255,255,255,0.15); outline-offset: 5px; }
-	}
-
-	@keyframes pulse {
+@keyframes pulse {
 		0%,
 		100% {
 			transform: scale(1);
