@@ -476,12 +476,7 @@
 				{/if}
 			</div>
 		</div>
-		{#if isAuthenticated && dueReviews > 0}
-			<a href="/lesson" class="review-chip">
-				🔄 {dueReviews} review{dueReviews === 1 ? '' : 's'} due
-			</a>
-		{/if}
-	</div>
+		</div>
 
 	<!-- ── Progress Stats ──────────────────────────────── -->
 	{#if isAuthenticated}
@@ -785,27 +780,6 @@
 		font-size: 0.95rem;
 	}
 
-	.review-chip {
-		display: inline-flex;
-		align-items: center;
-		gap: 6px;
-		padding: 10px 20px;
-		background: rgba(46, 204, 113, 0.15);
-		border: 1px solid rgba(46, 204, 113, 0.35);
-		border-radius: 50px;
-		color: #2ecc71;
-		font-size: 0.9rem;
-		font-weight: 700;
-		text-decoration: none;
-		white-space: nowrap;
-		transition: all 0.25s ease;
-	}
-
-	.review-chip:hover {
-		background: rgba(46, 204, 113, 0.25);
-		transform: translateY(-2px);
-		box-shadow: 0 6px 20px rgba(46, 204, 113, 0.3);
-	}
 
 	/* ── Stats Row ────────────────────────────────────── */
 	.stats-row {
