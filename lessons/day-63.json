@@ -1,0 +1,158 @@
+{
+  "title": "Day 63: Giving & Receiving Advice",
+  "titleFa": "روز ۶۳: دادن و گرفتن مشورت",
+  "sentences": [
+    {
+      "id": 1,
+      "role": "sent",
+      "targetText": "Kannst du mir einen Rat geben?",
+      "translation": "Can you give me some advice?",
+      "translationFa": "می‌توانی به من کمی مشورت بدهی؟"
+    },
+    {
+      "id": 2,
+      "role": "sent",
+      "targetText": "Was soll ich tun?",
+      "translation": "What should I do?",
+      "translationFa": "باید چه کار کنم؟"
+    },
+    {
+      "id": 3,
+      "role": "sent",
+      "targetText": "Ich habe ein Problem und brauche deine Hilfe.",
+      "translation": "I have a problem and need your help.",
+      "translationFa": "من یک مشکل دارم و به کمک تو نیاز دارم."
+    },
+    {
+      "id": 4,
+      "role": "sent",
+      "targetText": "Was ist deiner Meinung nach die beste Lösung?",
+      "translation": "In your opinion, what is the best solution?",
+      "translationFa": "به نظر تو بهترین راه حل چیست؟"
+    },
+    {
+      "id": 5,
+      "role": "received",
+      "audioText": "Wenn ich du wäre, würde ich mit ihm sprechen.",
+      "translation": "If I were you, I would talk to him.",
+      "translationFa": "اگر من جای تو بودم، با او صحبت می‌کردم."
+    },
+    {
+      "id": 6,
+      "role": "received",
+      "audioText": "Du solltest wahrscheinlich zu einem Arzt gehen.",
+      "translation": "You should probably see a doctor.",
+      "translationFa": "تو احتمالاً باید به یک دکتر مراجعه کنی."
+    },
+    {
+      "id": 7,
+      "role": "received",
+      "audioText": "Es wäre besser, wenn du ein paar Tage warten würdest.",
+      "translation": "It would be better if you waited a few days.",
+      "translationFa": "بهتر است اگر چند روز صبر کنی."
+    },
+    {
+      "id": 8,
+      "role": "received",
+      "audioText": "Ich empfehle dir, dieses Buch zu lesen.",
+      "translation": "I recommend that you read this book.",
+      "translationFa": "من به تو توصیه می‌کنم این کتاب را بخوانی."
+    },
+    {
+      "id": 9,
+      "role": "received",
+      "audioText": "Hast du darüber nachgedacht, eine Pause zu machen?",
+      "translation": "Have you thought about taking a break?",
+      "translationFa": "آیا به استراحت کردن فکر کرده‌ای؟"
+    },
+    {
+      "id": 10,
+      "role": "received",
+      "audioText": "Mach dir nicht zu viele Sorgen darüber.",
+      "translation": "Don't worry too much about it.",
+      "translationFa": "خیلی نگران آن نباش."
+    },
+    {
+      "id": 11,
+      "role": "received",
+      "audioText": "Vielleicht könntest du einen anderen Ansatz versuchen.",
+      "translation": "Maybe you could try a different approach.",
+      "translationFa": "شاید بتوانی یک روش متفاوت را امتحان کنی."
+    },
+    {
+      "id": 12,
+      "role": "received",
+      "audioText": "Das würde ich nicht tun, wenn ich du wäre.",
+      "translation": "I wouldn't do that if I were you.",
+      "translationFa": "اگر جای تو بودم آن کار را نمی‌کردم."
+    },
+    {
+      "id": 13,
+      "role": "sent",
+      "targetText": "Danke für den guten Rat.",
+      "translation": "Thank you for the good advice.",
+      "translationFa": "ممنون بابت نصیحت خوبت."
+    },
+    {
+      "id": 14,
+      "role": "sent",
+      "targetText": "Das ist ein toller Vorschlag.",
+      "translation": "That is a great suggestion.",
+      "translationFa": "این یک پیشنهاد عالی است."
+    },
+    {
+      "id": 15,
+      "role": "sent",
+      "targetText": "Ich werde das auf jeden Fall im Hinterkopf behalten.",
+      "translation": "I will definitely keep that in mind.",
+      "translationFa": "من قطعاً آن را در ذهن خواهم داشت."
+    },
+    {
+      "id": 16,
+      "role": "sent",
+      "targetText": "Was würdest du in meiner Situation tun?",
+      "translation": "What would you do in my situation?",
+      "translationFa": "تو در موقعیت من چه کار می‌کردی؟"
+    },
+    {
+      "id": 17,
+      "role": "received",
+      "audioText": "Du solltest unbedingt mehr Vokabeln lernen.",
+      "translation": "You should definitely learn more vocabulary.",
+      "translationFa": "تو حتماً باید دایره لغات بیشتری یاد بگیری."
+    },
+    {
+      "id": 18,
+      "role": "received",
+      "audioText": "Es ist wichtig, jeden Tag das Sprechen zu üben.",
+      "translation": "It is important to practice speaking every day.",
+      "translationFa": "مهم است که هر روز صحبت کردن را تمرین کنی."
+    },
+    {
+      "id": 19,
+      "role": "received",
+      "audioText": "Mein Rat ist, ruhig und geduldig zu bleiben.",
+      "translation": "My advice is to stay calm and patient.",
+      "translationFa": "نصیحت من این است که آرام و صبور بمانی."
+    },
+    {
+      "id": 20,
+      "role": "received",
+      "audioText": "Du solltest nicht so spät in die Nacht arbeiten.",
+      "translation": "You shouldn't work so late into the night.",
+      "translationFa": "تو نباید تا دیروقت در شب کار کنی."
+    },
+    {
+      "id": 21,
+      "role": "sent",
+      "targetText": "Lass uns versuchen, dieses Problem gemeinsam zu lösen.",
+      "translation": "Let's try to solve this problem together.",
+      "translationFa": "بیا سعی کنیم این مشکل را با هم حل کنیم."
+    }
+  ],
+  "difficulty": "B1+",
+  "grammarFocus": "Konjunktiv II for advice: Wenn ich du wäre… / Du solltest… / Ich würde…",
+  "grammarFocusFa": "وجه التزامی II برای مشورت: Wenn ich du wäre… / Du solltest… / Ich würde…",
+  "description": "Ask a friend for advice on a personal problem. Learn to give and receive suggestions using polite conditional forms.",
+  "descriptionFa": "از یک دوست درباره یک مشکل شخصی مشورت بخواهید. یاد بگیرید با استفاده از اشکال شرطی مودبانه پیشنهاد بدید و دریافت کنید."
+}

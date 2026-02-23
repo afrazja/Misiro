@@ -61,7 +61,8 @@
     { "day": 59, "file": "day-59.json", "title": "Day 59: Job Interview", "titleFa": "روز ۵۹: مصاحبه شغلی", "group": "advanced" },
     { "day": 60, "file": "day-60.json", "title": "Day 60: Emergency Situations", "titleFa": "روز ۶۰: موقعیت‌های اضطراری", "group": "advanced" },
     { "day": 61, "file": "day-61.json", "title": "Day 61: Hobbies & Personal Interests", "titleFa": "روز ۶۱: سرگرمی‌ها و علایق شخصی", "group": "advanced" },
-    { "day": 62, "file": "day-62.json", "title": "Day 62: Comparing Things (Past vs. Present)", "titleFa": "روز ۶۲: مقایسه چیزها (گذشته در برابر حال)", "group": "advanced" }
+    { "day": 62, "file": "day-62.json", "title": "Day 62: Comparing Things (Past vs. Present)", "titleFa": "روز ۶۲: مقایسه چیزها (گذشته در برابر حال)", "group": "advanced" },
+    { "day": 63, "file": "day-63.json", "title": "Day 63: Giving & Receiving Advice", "titleFa": "روز ۶۳: دادن و گرفتن مشورت", "group": "advanced" }
   ],
   "glossaryFile": "glossary.json"
 }
