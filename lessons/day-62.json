@@ -1,0 +1,165 @@
+{
+  "title": "Day 62: Comparing Things (Past vs. Present)",
+  "titleFa": "روز ۶۲: مقایسه چیزها (گذشته در برابر حال)",
+  "sentences": [
+    {
+      "id": 1,
+      "role": "received",
+      "audioText": "Früher war alles anders.",
+      "translation": "In the past, everything was different.",
+      "translationFa": "در گذشته، همه چیز متفاوت بود."
+    },
+    {
+      "id": 2,
+      "role": "sent",
+      "targetText": "Heute benutzen wir Smartphones für alles.",
+      "translation": "Today, we use smartphones for everything.",
+      "translationFa": "امروز، ما برای همه چیز از گوشی‌های هوشمند استفاده می‌کنیم."
+    },
+    {
+      "id": 3,
+      "role": "sent",
+      "targetText": "Vor zehn Jahren hatte ich keinen Computer.",
+      "translation": "Ten years ago, I didn't have a computer.",
+      "translationFa": "ده سال پیش، من کامپیوتر نداشتم."
+    },
+    {
+      "id": 4,
+      "role": "received",
+      "audioText": "Das Leben ist jetzt viel schneller als früher.",
+      "translation": "Life is much faster now than it used to be.",
+      "translationFa": "زندگی الان خیلی سریع‌تر از گذشته است."
+    },
+    {
+      "id": 5,
+      "role": "received",
+      "audioText": "Die Leute haben früher mehr Briefe geschrieben.",
+      "translation": "People used to write more letters.",
+      "translationFa": "مردم در گذشته بیشتر نامه می‌نوشتند."
+    },
+    {
+      "id": 6,
+      "role": "sent",
+      "targetText": "Jetzt schickt fast jeder Textnachrichten.",
+      "translation": "Now, almost everyone sends text messages.",
+      "translationFa": "الان، تقریباً همه پیام متنی می‌فرستند."
+    },
+    {
+      "id": 7,
+      "role": "received",
+      "audioText": "Reisen war früher viel teurer.",
+      "translation": "Traveling used to be much more expensive.",
+      "translationFa": "سفر کردن در گذشته خیلی گران‌تر بود."
+    },
+    {
+      "id": 8,
+      "role": "sent",
+      "targetText": "Heute kann man problemlos um die Welt fliegen.",
+      "translation": "Today, you can easily fly around the world.",
+      "translationFa": "امروز، شما به راحتی می‌توانید به دور دنیا پرواز کنید."
+    },
+    {
+      "id": 9,
+      "role": "sent",
+      "targetText": "Als ich ein Kind war, habe ich den ganzen Tag draußen gespielt.",
+      "translation": "When I was a child, I played outside all day.",
+      "translationFa": "وقتی بچه بودم، تمام روز را بیرون بازی می‌کردم."
+    },
+    {
+      "id": 10,
+      "role": "received",
+      "audioText": "Kinder spielen heute mehr Videospiele.",
+      "translation": "Children today play more video games.",
+      "translationFa": "بچه‌ها امروز بیشتر بازی‌های ویدیویی انجام می‌دهند."
+    },
+    {
+      "id": 11,
+      "role": "received",
+      "audioText": "Die Luftqualität war vor fünfzig Jahren besser.",
+      "translation": "The air quality was better fifty years ago.",
+      "translationFa": "کیفیت هوا پنجاه سال پیش بهتر بود."
+    },
+    {
+      "id": 12,
+      "role": "sent",
+      "targetText": "Ich habe früher in einem kleinen Dorf gelebt, aber jetzt lebe ich in der Stadt.",
+      "translation": "I used to live in a small village, but now I live in the city.",
+      "translationFa": "من قبلاً در یک روستای کوچک زندگی می‌کردم، اما الان در شهر زندگی می‌کنم."
+    },
+    {
+      "id": 13,
+      "role": "received",
+      "audioText": "Informationen zu finden ist heutzutage viel einfacher.",
+      "translation": "Finding information is much easier nowadays.",
+      "translationFa": "پیدا کردن اطلاعات این روزها خیلی آسان‌تر است."
+    },
+    {
+      "id": 14,
+      "role": "sent",
+      "targetText": "Wir sind früher in die Bibliothek gegangen, um zu lernen.",
+      "translation": "We used to go to the library to study.",
+      "translationFa": "ما قبلاً برای مطالعه به کتابخانه می‌رفتیم."
+    },
+    {
+      "id": 15,
+      "role": "received",
+      "audioText": "Jetzt sucht man einfach im Internet danach.",
+      "translation": "Now you just search for it on the internet.",
+      "translationFa": "الان شما فقط آن را در اینترنت جستجو می‌کنید."
+    },
+    {
+      "id": 16,
+      "role": "received",
+      "audioText": "Der Verkehr ist heute viel schlimmer als in der Vergangenheit.",
+      "translation": "Traffic is much worse today than in the past.",
+      "translationFa": "ترافیک امروز خیلی بدتر از گذشته است."
+    },
+    {
+      "id": 17,
+      "role": "sent",
+      "targetText": "Meine Großeltern hatten keinen Fernseher.",
+      "translation": "My grandparents didn't have a television.",
+      "translationFa": "پدربزرگ و مادربزرگ من تلویزیون نداشتند."
+    },
+    {
+      "id": 18,
+      "role": "received",
+      "audioText": "Die Technologie hat unser Leben komplett verändert.",
+      "translation": "Technology has changed our lives completely.",
+      "translationFa": "تکنولوژی زندگی ما را کاملاً تغییر داده است."
+    },
+    {
+      "id": 19,
+      "role": "sent",
+      "targetText": "Die Leute haben früher öfter zu Hause gekocht.",
+      "translation": "People used to cook more often at home.",
+      "translationFa": "مردم قبلاً بیشتر در خانه آشپزی می‌کردند."
+    },
+    {
+      "id": 20,
+      "role": "received",
+      "audioText": "Heute bestellen viele Menschen Essen online.",
+      "translation": "Today, many people order food online.",
+      "translationFa": "امروز، بسیاری از مردم غذا را آنلاین سفارش می‌دهند."
+    },
+    {
+      "id": 21,
+      "role": "sent",
+      "targetText": "Ich glaube, das Leben war damals einfacher.",
+      "translation": "I think life was simpler back then.",
+      "translationFa": "من فکر می‌کنم زندگی در آن زمان ساده‌تر بود."
+    },
+    {
+      "id": 22,
+      "role": "sent",
+      "targetText": "Aber ich bevorzuge die Annehmlichkeiten der modernen Welt.",
+      "translation": "But I prefer the conveniences of the modern world.",
+      "translationFa": "اما من امکانات رفاهی دنیای مدرن را ترجیح می‌دهم."
+    }
+  ],
+  "difficulty": "B1+",
+  "grammarFocus": "Temporal comparison: früher / heute / damals + Perfekt vs. Präsens",
+  "grammarFocusFa": "مقایسه زمانی: früher / heute / damals + زمان ماضی نقلی در برابر حال",
+  "description": "Compare life today with the past. Talk about how technology, travel, and daily habits have changed over the decades.",
+  "descriptionFa": "زندگی امروز رو با گذشته مقایسه کنید. درباره اینکه چطور فناوری، سفر و عادات روزانه در طول دهه‌ها تغییر کرده صحبت کنید."
+}
