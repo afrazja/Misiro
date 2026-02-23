@@ -429,7 +429,6 @@
 				{@const current = Math.min(app.currentSentenceIndex, total)}
 				<div class="lesson-progress">
 					<div class="lesson-progress-fill" style="width: {total > 0 ? Math.round((current / total) * 100) : 0}%"></div>
-					<span class="lesson-progress-text">{current} / {total}</span>
 				</div>
 			{/if}
 
