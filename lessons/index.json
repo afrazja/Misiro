@@ -88,7 +88,8 @@
     { "day": 86, "file": "day-86.json", "title": "Day 86: Expressing Uncertainty & Guessing", "titleFa": "روز ۸۶: بیان عدم اطمینان و حدس زدن", "group": "advanced" },
     { "day": 87, "file": "day-87.json", "title": "Day 87: Traditions & Customs", "titleFa": "روز ۸۷: سنت‌ها و آداب و رسوم", "group": "advanced" },
     { "day": 88, "file": "day-88.json", "title": "Day 88: Deep Gratitude & Appreciation", "titleFa": "روز ۸۸: سپاسگزاری عمیق و قدردانی", "group": "advanced" },
-    { "day": 89, "file": "day-89.json", "title": "Day 89: Talking to a Friend About a Business Idea", "titleFa": "روز ۸۹: صحبت با یک دوست درباره یک ایده کسب و کار", "group": "advanced" }
+    { "day": 89, "file": "day-89.json", "title": "Day 89: Talking to a Friend About a Business Idea", "titleFa": "روز ۸۹: صحبت با یک دوست درباره یک ایده کسب و کار", "group": "advanced" },
+    { "day": 90, "file": "day-90.json", "title": "Day 90: Negotiating Large Purchases (Real Estate & Vehicles)", "titleFa": "روز ۹۰: مذاکره برای خریدهای بزرگ (مسکن و خودرو)", "group": "advanced" }
   ],
   "glossaryFile": "glossary.json"
 }

@@ -1,0 +1,186 @@
+{
+  "title": "Day 90: Negotiating Large Purchases (Real Estate & Vehicles)",
+  "titleFa": "روز ۹۰: مذاکره برای خریدهای بزرگ (مسکن و خودرو)",
+  "sentences": [
+    {
+      "id": 1,
+      "role": "sent",
+      "targetText": "Wir sind sehr daran interessiert, diese Immobilie zu kaufen.",
+      "translation": "We are very interested in buying this property.",
+      "translationFa": "ما بسیار علاقه‌مند به خرید این ملک هستیم."
+    },
+    {
+      "id": 2,
+      "role": "sent",
+      "targetText": "Wir möchten ein Angebot für das Haus abgeben.",
+      "translation": "We would like to make an offer on the house.",
+      "translationFa": "ما می‌خواهیم برای این خانه پیشنهادی بدهیم."
+    },
+    {
+      "id": 3,
+      "role": "sent",
+      "targetText": "Der geforderte Preis ist etwas höher als unser Budget.",
+      "translation": "The asking price is a bit higher than our budget.",
+      "translationFa": "قیمت درخواستی کمی بالاتر از بودجه ما است."
+    },
+    {
+      "id": 4,
+      "role": "sent",
+      "targetText": "Sind die Verkäufer verhandlungsbereit?",
+      "translation": "Are the sellers willing to negotiate?",
+      "translationFa": "آیا فروشندگان مایل به مذاکره هستند؟"
+    },
+    {
+      "id": 5,
+      "role": "sent",
+      "targetText": "Wir müssen zuerst eine Hypothekenzusage einholen.",
+      "translation": "We need to get a mortgage approval first.",
+      "translationFa": "ما ابتدا باید تأییدیه وام مسکن بگیریم."
+    },
+    {
+      "id": 6,
+      "role": "received",
+      "audioText": "Ist der Parkplatz im Preis inbegriffen?",
+      "translation": "Does the price include the parking space?",
+      "translationFa": "آیا قیمت شامل فضای پارکینگ می‌شود؟"
+    },
+    {
+      "id": 7,
+      "role": "sent",
+      "targetText": "Mir ist aufgefallen, dass einige Reparaturen nötig sind.",
+      "translation": "I noticed that some repairs are needed.",
+      "translationFa": "متوجه شدم که به تعمیراتی نیاز است."
+    },
+    {
+      "id": 8,
+      "role": "sent",
+      "targetText": "Würden Sie in Betracht ziehen, den Preis wegen des Daches zu senken?",
+      "translation": "Would you consider lowering the price because of the roof?",
+      "translationFa": "آیا به دلیل وضعیت سقف، کاهش قیمت را در نظر می‌گیرید؟"
+    },
+    {
+      "id": 9,
+      "role": "received",
+      "audioText": "Die Lage ist großartig, aber die Grundsteuern sind hoch.",
+      "translation": "The location is great, but the property taxes are high.",
+      "translationFa": "موقعیت مکانی عالی است، اما مالیات بر املاک بالا است."
+    },
+    {
+      "id": 10,
+      "role": "sent",
+      "targetText": "Wir sind bereit, den vollen Betrag in bar zu zahlen.",
+      "translation": "We are prepared to pay the full amount in cash.",
+      "translationFa": "ما آماده‌ایم کل مبلغ را نقداً پرداخت کنیم."
+    },
+    {
+      "id": 11,
+      "role": "sent",
+      "targetText": "Kann ich die vergleichbaren Verkäufe in dieser Nachbarschaft sehen?",
+      "translation": "Can I see the comparable sales in this neighborhood?",
+      "translationFa": "آیا می‌توانم فروش‌های مشابه در این محله را ببینم؟"
+    },
+    {
+      "id": 12,
+      "role": "sent",
+      "targetText": "Ich möchte dieses Auto probefahren.",
+      "translation": "I would like to take this car for a test drive.",
+      "translationFa": "می‌خواهم این ماشین را برای تست رانندگی (تست درایو) ببرم."
+    },
+    {
+      "id": 13,
+      "role": "sent",
+      "targetText": "Hat das Fahrzeug ein lückenloses Scheckheft?",
+      "translation": "Does the vehicle have a full service history?",
+      "translationFa": "آیا این وسیله نقلیه تاریخچه سرویس کامل دارد؟"
+    },
+    {
+      "id": 14,
+      "role": "sent",
+      "targetText": "Der Kilometerstand dieses Autos ist für sein Alter ziemlich hoch.",
+      "translation": "The mileage on this car is quite high for its age.",
+      "translationFa": "کارکرد (کیلومترشمار) این ماشین نسبت به سنش نسبتاً بالا است."
+    },
+    {
+      "id": 15,
+      "role": "sent",
+      "targetText": "Was ist der absolut niedrigste Preis, den Sie akzeptieren können?",
+      "translation": "What is the absolute lowest price you can accept?",
+      "translationFa": "کمترین قیمتی که می‌توانید بپذیرید چقدر است؟"
+    },
+    {
+      "id": 16,
+      "role": "sent",
+      "targetText": "Ich kann Ihnen sofort dreißigtausend anbieten.",
+      "translation": "I can offer you thirty thousand right now.",
+      "translationFa": "من می‌توانم همین الان سی هزار تا به شما پیشنهاد دهم."
+    },
+    {
+      "id": 17,
+      "role": "sent",
+      "targetText": "Können wir den Zinssatz für die Finanzierung verhandeln?",
+      "translation": "Can we negotiate the interest rate for the financing?",
+      "translationFa": "آیا می‌توانیم درباره نرخ بهره برای تأمین مالی مذاکره کنیم؟"
+    },
+    {
+      "id": 18,
+      "role": "sent",
+      "targetText": "Wenn Sie einen Satz Winterreifen dazugeben, sind wir im Geschäft.",
+      "translation": "If you include a set of winter tires, we have a deal.",
+      "translationFa": "اگر یک دست لاستیک زمستانی هم روی آن بگذارید، معامله قبول است."
+    },
+    {
+      "id": 19,
+      "role": "sent",
+      "targetText": "Es gibt ähnliche Autos im Internet für deutlich weniger Geld.",
+      "translation": "There are similar cars online for significantly less money.",
+      "translationFa": "ماشین‌های مشابهی در اینترنت با پول به مراتب کمتری وجود دارند."
+    },
+    {
+      "id": 20,
+      "role": "sent",
+      "targetText": "Könnten wir uns auf einen Endpreis inklusive aller Gebühren einigen?",
+      "translation": "Could we agree on a final price out the door?",
+      "translationFa": "آیا می‌توانیم روی یک قیمت نهایی تمام‌شده توافق کنیم؟"
+    },
+    {
+      "id": 21,
+      "role": "received",
+      "audioText": "Ich bin bereit, den Vertrag heute zu unterschreiben, wenn wir uns auf den Preis einigen.",
+      "translation": "I am willing to sign the contract today if we agree on the price.",
+      "translationFa": "اگر روی قیمت توافق کنیم، من مایل هستم همین امروز قرارداد را امضا کنم."
+    },
+    {
+      "id": 22,
+      "role": "sent",
+      "targetText": "Ich muss eine Nacht darüber schlafen und mit meinem Partner sprechen.",
+      "translation": "I need to sleep on it and talk to my partner.",
+      "translationFa": "من باید روی این موضوع فکر کنم و با شریکم صحبت کنم."
+    },
+    {
+      "id": 23,
+      "role": "sent",
+      "targetText": "Danke für Ihre Zeit, aber wir werden uns weiter umsehen.",
+      "translation": "Thank you for your time, but we will keep looking.",
+      "translationFa": "از وقت شما متشکرم، اما ما به گشتن ادامه خواهیم داد."
+    },
+    {
+      "id": 24,
+      "role": "received",
+      "audioText": "Lassen Sie uns die Verkaufsbedingungen noch einmal durchgehen.",
+      "translation": "Let's review the conditions of the sale one more time.",
+      "translationFa": "بیایید شرایط فروش را یک بار دیگر بررسی کنیم."
+    },
+    {
+      "id": 25,
+      "role": "received",
+      "audioText": "Herzlichen Glückwunsch, wir haben eine Einigung erzielt!",
+      "translation": "Congratulations, we have reached an agreement!",
+      "translationFa": "تبریک می‌گویم، ما به توافق رسیدیم!"
+    }
+  ],
+  "difficulty": "B2",
+  "grammarFocus": "Konjunktiv II: Würden Sie in Betracht ziehen / Könnten wir uns einigen + Infinitivsatz: bereit zu zahlen / bereit den Vertrag zu unterschreiben + wenn-Satz: wenn Sie Winterreifen dazugeben / wenn wir uns einigen + Relativsatz: den absolut niedrigsten Preis, den Sie akzeptieren können",
+  "grammarFocusFa": "وجه التزامی II: Würden Sie in Betracht ziehen / Könnten wir uns einigen + جمله مصدری: bereit zu zahlen / bereit den Vertrag zu unterschreiben + جمله wenn: wenn Sie Winterreifen dazugeben / wenn wir uns einigen + جمله موصولی: den absolut niedrigsten Preis, den Sie akzeptieren können",
+  "description": "Practice negotiating large purchases in German. Learn the vocabulary and phrases needed to make offers, discuss financing, point out defects, and close a deal on real estate or a vehicle.",
+  "descriptionFa": "مذاکره برای خریدهای بزرگ را به زبان آلمانی تمرین کنید. واژگان و عباراتی را که برای ارائه پیشنهاد، بحث درباره تأمین مالی، اشاره به نقص‌ها و بستن یک معامله بر روی ملک یا خودرو نیاز دارید، یاد بگیرید."
+}
