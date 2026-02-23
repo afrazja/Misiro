@@ -1389,6 +1389,7 @@
 		.script-view {
 			width: 300px;
 			flex-shrink: 0;
+			height: auto;   /* override the base 28vh so flex can stretch it */
 			overflow: hidden;
 			border-top: none;
 			border-left: 2px solid rgba(46, 204, 113, 0.3);
