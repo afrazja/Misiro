@@ -437,10 +437,8 @@
 		<div class="chat-body">
 			<div class="chat-main">
 
-			<!-- Message History -->
-			<div class="chat-history" bind:this={chatHistoryEl} role="log" aria-live="polite" aria-label="Chat history">
-				<div class="chat-spacer"></div>
-				<div class="date-divider">Today</div>
+			<!-- Current Sentence Area (one sentence at a time, centered) -->
+			<div class="chat-history" bind:this={chatHistoryEl} role="log" aria-live="polite" aria-label="Current sentence">
 
 				<!-- Scenario Description -->
 				{#if scenarioDescription() && !exam.isExamMode}
@@ -461,21 +459,6 @@
 						<div class="exam-progress-fill" style="width: {examProgressTotal > 0 ? Math.round((examProgressCurrent / examProgressTotal) * 100) : 0}%"></div>
 					</div>
 				{/if}
-
-				{#each chatMessages as msg (msg.id)}
-					<!-- svelte-ignore a11y_interactive_supports_focus -->
-					<!-- svelte-ignore a11y_click_events_have_key_events -->
-					<div
-						class="message {msg.type}"
-						role="button"
-						onclick={() => handleMessageBubbleClick(msg.text)}
-						onkeydown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); handleMessageBubbleClick(msg.text); } }}
-						tabindex="0"
-						style="cursor: pointer;"
-					>
-						{msg.text}
-					</div>
-				{/each}
 
 				<!-- Exam Question -->
 				{#if examQuestionData}
@@ -956,15 +939,18 @@
 		opacity: 0.7;
 	}
 
-	/* Chat History */
+	/* Current Sentence Area — one at a time, vertically centered */
 	.chat-history {
 		flex: 1;
 		overflow-y: auto;
-		padding: 15px;
+		padding: 24px 20px;
 		background: #e5ddd5;
 		background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23d4cfc5' fill-opacity='0.4'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
 		display: flex;
 		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		gap: 16px;
 	}
 
 	/* Pushes messages toward the bottom when the chat is sparse */
@@ -1017,12 +1003,13 @@
 
 	.message.instruction {
 		background: #fff;
-		max-width: 95%;
-		width: 95%;
+		max-width: 540px;
+		width: 100%;
 		align-self: center;
-		border-radius: 12px;
-		padding: 12px 16px;
-		margin: 4px 0;
+		border-radius: 16px;
+		padding: 24px 28px;
+		margin: 0;
+		box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
 	}
 
 	.translation-line {
@@ -1287,10 +1274,14 @@
 		border-left: 3px solid #075e54;
 		border-radius: 8px;
 		padding: 10px 14px;
-		margin: 8px 0 12px;
+		margin: 0 0 8px;
 		font-size: 0.85rem;
 		color: #333;
 		line-height: 1.5;
+		max-width: 540px;
+		width: 100%;
+		align-self: center;
+		box-sizing: border-box;
 	}
 
 	/* Lesson meta tags (difficulty + grammar focus) */
