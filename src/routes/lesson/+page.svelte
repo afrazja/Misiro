@@ -1284,9 +1284,12 @@
 	}
 
 	.btn-replay.speaking {
-		background: #25D366;
-		border-color: #25D366;
-		color: white;
+		animation: replay-throb 1s ease-in-out infinite;
+	}
+
+	@keyframes replay-throb {
+		0%, 100% { transform: scale(1); }
+		50%       { transform: scale(1.08); }
 	}
 
 	/* Hint button */
