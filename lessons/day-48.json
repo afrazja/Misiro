@@ -85,6 +85,55 @@
       "targetText": "Da stimme ich dir völlig zu.",
       "translation": "I completely agree with you.",
       "translationFa": "کاملاً باهات موافقم."
+    },
+    {
+      "id": 13,
+      "role": "received",
+      "audioText": "Hast du eigentlich Plaene fuer dieses Wochenende?",
+      "translation": "Do you actually have plans for this weekend?",
+      "translationFa": "این آخر هفته برنامه داری؟"
+    },
+    {
+      "id": 14,
+      "role": "sent",
+      "targetText": "Ja, ich besuche ein Kunstmuseum. Interessierst du dich fuer Kunst?",
+      "translation": "Yes, I am visiting an art museum. Are you interested in art?",
+      "translationFa": "بله، یه موزه هنری می‌رم. به هنر علاقه داری؟"
+    },
+    {
+      "id": 15,
+      "role": "received",
+      "audioText": "Ja, sehr! Welches Museum?",
+      "translation": "Yes, very much! Which museum?",
+      "translationFa": "بله، خیلی! کدوم موزه؟"
+    },
+    {
+      "id": 16,
+      "role": "sent",
+      "targetText": "Das Alte Museum. Sie haben gerade eine Ausstellung ueber impressionistische Kunst.",
+      "translation": "The Old Museum. They currently have an exhibition about impressionist art.",
+      "translationFa": "موزه قدیم. الان یه نمایشگاه درباره هنر امپرسیونیسم دارن."
+    },
+    {
+      "id": 17,
+      "role": "received",
+      "audioText": "Das klingt wunderbar! Darf ich vielleicht mitkommen?",
+      "translation": "That sounds wonderful! May I perhaps come along?",
+      "translationFa": "خیلی باحال به نظر می‌رسه! شاید بتونم بیام؟"
+    },
+    {
+      "id": 18,
+      "role": "sent",
+      "targetText": "Natuerlich! Je mehr, desto besser. Treffen wir uns um elf?",
+      "translation": "Of course! The more the merrier. Shall we meet at eleven?",
+      "translationFa": "البته! هر چی بیشتر بهتر. ساعت یازده قرار بذاریم؟"
+    },
+    {
+      "id": 19,
+      "role": "received",
+      "audioText": "Perfekt! Ich freue mich schon sehr darauf.",
+      "translation": "Perfect! I am really looking forward to it.",
+      "translationFa": "عالی! خیلی منتظرشم."
     }
   ],
   "difficulty": "B1",

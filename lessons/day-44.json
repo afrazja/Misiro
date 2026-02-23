@@ -71,6 +71,69 @@
       "audioText": "Das macht zusammen 25 Euro.",
       "translation": "That comes to 25 Euro total.",
       "translationFa": "جمعاً ۲۵ یورو میشه."
+    },
+    {
+      "id": 11,
+      "role": "sent",
+      "targetText": "Ist das Trinkgeld im Preis inbegriffen?",
+      "translation": "Is the tip included in the price?",
+      "translationFa": "انعام در قیمت شاملِه؟"
+    },
+    {
+      "id": 12,
+      "role": "received",
+      "audioText": "Nein, Trinkgeld ist freiwillig.",
+      "translation": "No, a tip is voluntary.",
+      "translationFa": "نه، انعام اختیاریه."
+    },
+    {
+      "id": 13,
+      "role": "sent",
+      "targetText": "Ich gebe fuenf Euro Trinkgeld. Das Essen war wirklich ausgezeichnet.",
+      "translation": "I will give five euros tip. The food was really excellent.",
+      "translationFa": "پنج یورو انعام می‌دم. غذا واقعاً عالی بود."
+    },
+    {
+      "id": 14,
+      "role": "received",
+      "audioText": "Vielen herzlichen Dank!",
+      "translation": "Many heartfelt thanks!",
+      "translationFa": "خیلی ممنون از صمیم قلب!"
+    },
+    {
+      "id": 15,
+      "role": "sent",
+      "targetText": "Koennte ich auch eine Quittung bekommen?",
+      "translation": "Could I also get a receipt?",
+      "translationFa": "می‌تونم رسید هم بگیرم؟"
+    },
+    {
+      "id": 16,
+      "role": "received",
+      "audioText": "Natuerlich, einen Moment bitte.",
+      "translation": "Of course, one moment please.",
+      "translationFa": "البته، یه لحظه لطفاً."
+    },
+    {
+      "id": 17,
+      "role": "sent",
+      "targetText": "Haben Sie auch eine Speisekarte zum Mitnehmen?",
+      "translation": "Do you also have a menu to take away?",
+      "translationFa": "منو برای بردن هم دارید؟"
+    },
+    {
+      "id": 18,
+      "role": "received",
+      "audioText": "Ja, hier ist eine fuer Sie.",
+      "translation": "Yes, here is one for you.",
+      "translationFa": "بله، اینجا یکی برای شما."
+    },
+    {
+      "id": 19,
+      "role": "sent",
+      "targetText": "Danke! Wir kommen sicher wieder.",
+      "translation": "Thank you! We will definitely come back.",
+      "translationFa": "ممنون! حتماً دوباره میایم."
     }
   ],
   "difficulty": "B1",

@@ -120,6 +120,20 @@
       "audioText": "Danke, dass du gekommen bist. Bis bald!",
       "translation": "Thank you for coming. See you soon!",
       "translationFa": "ممنون که اومدی. به زودی میبینمت!"
+    },
+    {
+      "id": 18,
+      "role": "sent",
+      "targetText": "Es war wirklich unvergesslich. Pass auf dich auf!",
+      "translation": "It was truly unforgettable. Take care of yourself!",
+      "translationFa": "واقعاً فراموش‌نشدنی بود. مراقب خودت باش!"
+    },
+    {
+      "id": 19,
+      "role": "received",
+      "audioText": "Du auch! Schreib mir, wenn du zu Hause bist.",
+      "translation": "You too! Write to me when you get home.",
+      "translationFa": "تو هم! وقتی رسیدی خونه بنویس."
     }
   ],
   "difficulty": "B1",

@@ -71,6 +71,69 @@
       "targetText": "Da hast du recht. Ich werde langsam wieder anfangen.",
       "translation": "You're right. I'll start slowly again.",
       "translationFa": "حق با توئه. آروم آروم دوباره شروع می‌کنم."
+    },
+    {
+      "id": 11,
+      "role": "received",
+      "audioText": "Wie lange wirst du pausieren muessen?",
+      "translation": "How long will you have to rest?",
+      "translationFa": "چقدر باید استراحت کنی؟"
+    },
+    {
+      "id": 12,
+      "role": "sent",
+      "targetText": "Der Arzt hat zwei Wochen empfohlen.",
+      "translation": "The doctor recommended two weeks.",
+      "translationFa": "دکتر دو هفته توصیه کرده."
+    },
+    {
+      "id": 13,
+      "role": "received",
+      "audioText": "In der Zeit kannst du Dehnuebungen machen.",
+      "translation": "During that time you can do stretching exercises.",
+      "translationFa": "در این مدت می‌تونی کشش انجام بدی."
+    },
+    {
+      "id": 14,
+      "role": "sent",
+      "targetText": "Gute Idee. Hast du Uebungen zu empfehlen?",
+      "translation": "Good idea. Do you have exercises to recommend?",
+      "translationFa": "ایده خوبیه. تمرینی پیشنهاد داری؟"
+    },
+    {
+      "id": 15,
+      "role": "received",
+      "audioText": "Ja, ich schicke dir eine Liste per WhatsApp.",
+      "translation": "Yes, I will send you a list via WhatsApp.",
+      "translationFa": "بله، یه لیست برات واتساپ می‌کنم."
+    },
+    {
+      "id": 16,
+      "role": "sent",
+      "targetText": "Super, danke! Hast du eigentlich auch einen Trainer?",
+      "translation": "Great, thanks! Do you actually have a personal trainer?",
+      "translationFa": "عالی، ممنون! تو هم مربی داری؟"
+    },
+    {
+      "id": 17,
+      "role": "received",
+      "audioText": "Ja, ich gehe einmal pro Woche zu ihm. Es hilft sehr.",
+      "translation": "Yes, I go to him once a week. It helps a lot.",
+      "translationFa": "بله، هفته‌ای یه بار پیشش می‌رم. خیلی کمک می‌کنه."
+    },
+    {
+      "id": 18,
+      "role": "sent",
+      "targetText": "Vielleicht sollte ich auch einen Trainer nehmen.",
+      "translation": "Maybe I should get a trainer too.",
+      "translationFa": "شاید منم باید یه مربی بگیرم."
+    },
+    {
+      "id": 19,
+      "role": "received",
+      "audioText": "Ich kann dir seinen Kontakt geben, wenn du moechtest.",
+      "translation": "I can give you his contact details if you like.",
+      "translationFa": "اگه بخوای می‌تونم شماره‌ش رو بدم."
     }
   ],
   "difficulty": "A2+",

@@ -85,6 +85,48 @@
       "targetText": "Ich auch! Bis heute Abend.",
       "translation": "Me too! See you tonight.",
       "translationFa": "منم! تا امشب."
+    },
+    {
+      "id": 13,
+      "role": "received",
+      "audioText": "Kaufst du schon die Karten online?",
+      "translation": "Are you already buying the tickets online?",
+      "translationFa": "الان داری کارت‌ها رو آنلاین می‌خری؟"
+    },
+    {
+      "id": 14,
+      "role": "sent",
+      "targetText": "Ja, ich habe gerade die Website geoeffnet. Mitte oder vorne?",
+      "translation": "Yes, I have just opened the website. Middle or front?",
+      "translationFa": "بله، همین الان سایت رو باز کردم. وسط یا جلو؟"
+    },
+    {
+      "id": 15,
+      "role": "received",
+      "audioText": "Mitte ist besser fuer die Sicht.",
+      "translation": "Middle is better for the view.",
+      "translationFa": "وسط برای دید بهتره."
+    },
+    {
+      "id": 16,
+      "role": "sent",
+      "targetText": "Okay, ich nehme zwei Plaetze in Reihe acht.",
+      "translation": "Okay, I will take two seats in row eight.",
+      "translationFa": "باشه، دو صندلی در ردیف هشت می‌گیرم."
+    },
+    {
+      "id": 17,
+      "role": "received",
+      "audioText": "Perfekt! Soll ich uns etwas zu essen mitbringen?",
+      "translation": "Perfect! Shall I bring us something to eat?",
+      "translationFa": "عالی! چیزی برای خوردن بیارم؟"
+    },
+    {
+      "id": 18,
+      "role": "sent",
+      "targetText": "Ja, Popcorn waere super!",
+      "translation": "Yes, popcorn would be great!",
+      "translationFa": "بله، پاپ‌کورن عالی می‌شه!"
     }
   ],
   "difficulty": "B1",

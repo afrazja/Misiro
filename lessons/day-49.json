@@ -85,6 +85,48 @@
       "targetText": "Bis dann! Schönen Abend noch.",
       "translation": "See you then! Have a nice evening.",
       "translationFa": "تا اون موقع! شب خوشی داشته باشی."
+    },
+    {
+      "id": 13,
+      "role": "received",
+      "audioText": "Ach, und vergiss nicht Sonnencreme mitzunehmen!",
+      "translation": "Oh, and do not forget to bring sunscreen!",
+      "translationFa": "آها، و یادت نره ضدآفتاب بیاری!"
+    },
+    {
+      "id": 14,
+      "role": "sent",
+      "targetText": "Guter Hinweis! Ich packe auch eine Decke ein.",
+      "translation": "Good tip! I will also pack a blanket.",
+      "translationFa": "نکته خوبیه! یه پتو هم می‌ذارم."
+    },
+    {
+      "id": 15,
+      "role": "received",
+      "audioText": "Und ich bringe meinen Bluetooth-Lautsprecher mit.",
+      "translation": "And I will bring my Bluetooth speaker.",
+      "translationFa": "و من بلندگو بلوتوث می‌ارم."
+    },
+    {
+      "id": 16,
+      "role": "sent",
+      "targetText": "Super Idee! Dann haben wir auch Musik.",
+      "translation": "Super idea! Then we will have music too.",
+      "translationFa": "ایده عالیه! پس موزیک هم داریم."
+    },
+    {
+      "id": 17,
+      "role": "received",
+      "audioText": "Es wird der perfekte Sommertag!",
+      "translation": "It will be the perfect summer day!",
+      "translationFa": "یه روز تابستانی کامل می‌شه!"
+    },
+    {
+      "id": 18,
+      "role": "sent",
+      "targetText": "Da bin ich ganz deiner Meinung!",
+      "translation": "I completely agree with you!",
+      "translationFa": "کاملاً باهات موافقم!"
     }
   ],
   "difficulty": "B1",

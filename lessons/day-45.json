@@ -85,6 +85,48 @@
       "targetText": "Ja, stimmt so. Der Kaffee war ausgezeichnet!",
       "translation": "Yes, keep the change. The coffee was excellent!",
       "translationFa": "آره، بقیه مال شما. قهوه‌ش عالی بود!"
+    },
+    {
+      "id": 13,
+      "role": "received",
+      "audioText": "Dankeschoen! Moechten Sie noch etwas?",
+      "translation": "Thank you! Would you like anything else?",
+      "translationFa": "ممنون! چیز دیگه‌ای می‌خواید؟"
+    },
+    {
+      "id": 14,
+      "role": "sent",
+      "targetText": "Nein danke, ich muss jetzt wirklich arbeiten.",
+      "translation": "No thank you, I really need to work now.",
+      "translationFa": "نه ممنون، باید الان واقعاً کار کنم."
+    },
+    {
+      "id": 15,
+      "role": "received",
+      "audioText": "Natuerlich. Kommen Sie gerne wieder!",
+      "translation": "Of course. Please come again!",
+      "translationFa": "البته. حتماً دوباره بیاید!"
+    },
+    {
+      "id": 16,
+      "role": "sent",
+      "targetText": "Das werde ich auf jeden Fall. Es gefaellt mir hier sehr.",
+      "translation": "I definitely will. I like it here very much.",
+      "translationFa": "حتماً. اینجا خیلی دوست دارم."
+    },
+    {
+      "id": 17,
+      "role": "received",
+      "audioText": "Das freut uns! Einen schoenen Tag noch.",
+      "translation": "That pleases us! Have a nice day.",
+      "translationFa": "خوشحال شدیم! روز خوبی داشته باشید."
+    },
+    {
+      "id": 18,
+      "role": "sent",
+      "targetText": "Danke, Ihnen auch!",
+      "translation": "Thanks, you too!",
+      "translationFa": "ممنون، شما هم!"
     }
   ],
   "difficulty": "B1",

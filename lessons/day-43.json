@@ -71,6 +71,62 @@
       "targetText": "Ein Mineralwasser ohne Kohlensäure, bitte.",
       "translation": "A still mineral water, please.",
       "translationFa": "یه آب معدنی بدون گاز، لطفاً."
+    },
+    {
+      "id": 11,
+      "role": "received",
+      "audioText": "Natuerlich. Noch etwas?",
+      "translation": "Of course. Anything else?",
+      "translationFa": "البته. چیز دیگه‌ای؟"
+    },
+    {
+      "id": 12,
+      "role": "sent",
+      "targetText": "Ja, koennen Sie bitte auch die Inhaltsstoffe angeben? Wegen der Nussallergie.",
+      "translation": "Yes, could you also list the ingredients? Because of the nut allergy.",
+      "translationFa": "بله، می‌تونید مواد تشکیل‌دهنده رو هم بگید؟ به خاطر آلرژی به آجیل."
+    },
+    {
+      "id": 13,
+      "role": "received",
+      "audioText": "Selbstverstaendlich. Unser Curry enthaelt keine Nuesse, das garantiere ich.",
+      "translation": "Of course. Our curry contains no nuts, I guarantee that.",
+      "translationFa": "البته. کاری ما هیچ آجیلی نداره، این رو تضمین می‌کنم."
+    },
+    {
+      "id": 14,
+      "role": "sent",
+      "targetText": "Das ist sehr beruhigend. Danke fuer die Information.",
+      "translation": "That is very reassuring. Thank you for the information.",
+      "translationFa": "خیلی آرامش‌بخشه. ممنون از اطلاعات."
+    },
+    {
+      "id": 15,
+      "role": "received",
+      "audioText": "Gerne. Moechten Sie auch eine Nachspeise?",
+      "translation": "Of course. Would you also like a dessert?",
+      "translationFa": "خواهش می‌کنم. دسر هم می‌خواید؟"
+    },
+    {
+      "id": 16,
+      "role": "sent",
+      "targetText": "Was haben Sie fuer vegane Desserts?",
+      "translation": "What do you have for vegan desserts?",
+      "translationFa": "چه دسرهای وگانی دارید؟"
+    },
+    {
+      "id": 17,
+      "role": "received",
+      "audioText": "Wir haben Schokoladenmousse und Obstsalat, beides vegan.",
+      "translation": "We have chocolate mousse and fruit salad, both vegan.",
+      "translationFa": "موس شکلاتی و سالاد میوه داریم، هر دو وگان."
+    },
+    {
+      "id": 18,
+      "role": "sent",
+      "targetText": "Der Obstsalat klingt perfekt. Den nehme ich bitte.",
+      "translation": "The fruit salad sounds perfect. I will have that please.",
+      "translationFa": "سالاد میوه عالی به نظر می‌رسه. اونو می‌گیرم لطفاً."
     }
   ],
   "difficulty": "A2+",

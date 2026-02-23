@@ -71,6 +71,69 @@
       "audioText": "Hier ist Ihr Schlüssel. Zimmer 20.",
       "translation": "Here is your key. Room 20.",
       "translationFa": "بفرمایید کلیدتون. اتاق ۲۰."
+    },
+    {
+      "id": 11,
+      "role": "sent",
+      "targetText": "Danke. Um wie viel Uhr ist das Fruehstueck?",
+      "translation": "Thank you. What time is breakfast?",
+      "translationFa": "ممنون. صبحانه چه ساعتیه؟"
+    },
+    {
+      "id": 12,
+      "role": "received",
+      "audioText": "Von sieben bis zehn Uhr morgens im Erdgeschoss.",
+      "translation": "From seven to ten in the morning on the ground floor.",
+      "translationFa": "از هفت تا ده صبح در طبقه همکف."
+    },
+    {
+      "id": 13,
+      "role": "sent",
+      "targetText": "Gut. Gibt es auch einen Parkplatz?",
+      "translation": "Good. Is there also a parking space?",
+      "translationFa": "خوب. پارکینگ هم هست؟"
+    },
+    {
+      "id": 14,
+      "role": "received",
+      "audioText": "Ja, direkt hinter dem Hotel. Kostenlos fuer Hotelgaeste.",
+      "translation": "Yes, directly behind the hotel. Free for hotel guests.",
+      "translationFa": "بله، دقیقاً پشت هتل. رایگان برای مهمانان هتل."
+    },
+    {
+      "id": 15,
+      "role": "sent",
+      "targetText": "Perfekt. Kann ich meinen Koffer schon frueher hinstellen?",
+      "translation": "Perfect. Can I leave my suitcase earlier?",
+      "translationFa": "عالی. می‌تونم چمدونم رو زودتر بذارم؟"
+    },
+    {
+      "id": 16,
+      "role": "received",
+      "audioText": "Natuerlich, wir haben einen Gepaeckraum.",
+      "translation": "Of course, we have a luggage room.",
+      "translationFa": "البته، ما یه اتاق چمدون داریم."
+    },
+    {
+      "id": 17,
+      "role": "sent",
+      "targetText": "Ausgezeichnet. Und wann ist der Check-out?",
+      "translation": "Excellent. And when is check-out?",
+      "translationFa": "عالی. چک‌اوت کِیه؟"
+    },
+    {
+      "id": 18,
+      "role": "received",
+      "audioText": "Bis zwoelf Uhr mittags.",
+      "translation": "By twelve noon.",
+      "translationFa": "تا ظهر."
+    },
+    {
+      "id": 19,
+      "role": "sent",
+      "targetText": "Sehr gut. Ich freue mich auf meinen Aufenthalt.",
+      "translation": "Very good. I am looking forward to my stay.",
+      "translationFa": "خیلی خوب. منتظر اقامتم هستم."
     }
   ],
   "difficulty": "B1",

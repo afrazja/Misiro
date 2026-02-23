@@ -85,6 +85,48 @@
       "targetText": "Vielen Dank, Herr Doktor.",
       "translation": "Thank you very much, Doctor.",
       "translationFa": "خیلی ممنون، آقای دکتر."
+    },
+    {
+      "id": 13,
+      "role": "received",
+      "audioText": "Kommen Sie in zwei Wochen zur Kontrolle wieder.",
+      "translation": "Come back in two weeks for a check-up.",
+      "translationFa": "دو هفته دیگه برای کنترل بیاید."
+    },
+    {
+      "id": 14,
+      "role": "sent",
+      "targetText": "Kann ich in der Zwischenzeit normal essen?",
+      "translation": "Can I eat normally in the meantime?",
+      "translationFa": "در این مدت می‌تونم عادی غذا بخورم؟"
+    },
+    {
+      "id": 15,
+      "role": "received",
+      "audioText": "Vermeiden Sie heute harte und kalte Speisen.",
+      "translation": "Avoid hard and cold foods today.",
+      "translationFa": "امروز از غذاهای سفت و سرد پرهیز کنید."
+    },
+    {
+      "id": 16,
+      "role": "sent",
+      "targetText": "Was ist mit Kaffee?",
+      "translation": "What about coffee?",
+      "translationFa": "قهوه چطور؟"
+    },
+    {
+      "id": 17,
+      "role": "received",
+      "audioText": "Besser nicht fuer die naechsten zwei Stunden.",
+      "translation": "Better not for the next two hours.",
+      "translationFa": "بهتره دو ساعت آینده نه."
+    },
+    {
+      "id": 18,
+      "role": "sent",
+      "targetText": "Verstanden. Ich passe auf. Auf Wiedersehen!",
+      "translation": "Understood. I will be careful. Goodbye!",
+      "translationFa": "فهمیدم. مراقبم. خداحافظ!"
     }
   ],
   "difficulty": "A2+",
