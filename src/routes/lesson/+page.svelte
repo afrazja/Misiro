@@ -1260,11 +1260,11 @@
 	/* Script Panel */
 	.script-view {
 		height: 28vh;
-		background: #1a1a2e;
-		color: #fff;
+		background: #ffffff;
+		color: #333;
 		display: flex;
 		flex-direction: column;
-		border-top: 2px solid rgba(46, 204, 113, 0.3);
+		border-top: 2px solid rgba(46, 204, 113, 0.4);
 	}
 
 	.script-header {
@@ -1272,22 +1272,22 @@
 		display: flex;
 		align-items: center;
 		justify-content: space-between;
-		background: rgba(0, 0, 0, 0.25);
-		border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+		background: #f5f5f5;
+		border-bottom: 1px solid #e0e0e0;
 		flex-shrink: 0;
 	}
 
 	.script-header h3 {
 		margin: 0;
 		font-size: 0.88rem;
-		color: #2ecc71;
+		color: #1a7a4a;
 		font-weight: 700;
 		letter-spacing: 0.03em;
 	}
 
 	.script-count {
 		font-size: 0.75rem;
-		color: rgba(46, 204, 113, 0.75);
+		color: #1a7a4a;
 		font-weight: 600;
 	}
 
@@ -1310,14 +1310,14 @@
 	}
 
 	.script-item:hover {
-		background: rgba(255, 255, 255, 0.06);
+		background: rgba(0, 0, 0, 0.04);
 	}
 
 	.script-item.active {
-		background: rgba(46, 204, 113, 0.22);
+		background: rgba(46, 204, 113, 0.15);
 		border-left-color: #2ecc71;
 		border-left-width: 4px;
-		box-shadow: 0 0 0 1px rgba(46, 204, 113, 0.25), inset 0 0 24px rgba(46, 204, 113, 0.08);
+		box-shadow: 0 0 0 1px rgba(46, 204, 113, 0.3);
 	}
 
 	.script-item.done {
@@ -1327,10 +1327,10 @@
 	.script-num {
 		font-size: 0.65rem;
 		font-weight: 700;
-		color: rgba(46, 204, 113, 0.7);
+		color: #1a7a4a;
 		min-width: 18px;
 		height: 18px;
-		background: rgba(46, 204, 113, 0.12);
+		background: rgba(46, 204, 113, 0.15);
 		border-radius: 50%;
 		display: flex;
 		align-items: center;
@@ -1340,13 +1340,14 @@
 	}
 
 	.script-item.active .script-num {
-		background: rgba(46, 204, 113, 0.45);
-		color: #2ecc71;
+		background: #2ecc71;
+		color: #fff;
 		font-size: 0.7rem;
 	}
 
 	.script-item.done .script-num {
-		background: rgba(255, 255, 255, 0.04);
+		background: rgba(0, 0, 0, 0.06);
+		color: #999;
 	}
 
 	.script-text {
@@ -1356,20 +1357,20 @@
 
 	.script-item .german {
 		font-weight: 600;
-		color: #2ecc71;
+		color: #1a7a4a;
 		font-size: 0.9rem;
 		line-height: 1.35;
 	}
 
 	.script-item .translation {
-		color: rgba(255, 255, 255, 0.6);
+		color: #666;
 		font-size: 0.77rem;
 		margin-top: 2px;
 		line-height: 1.3;
 	}
 
 	.script-item.active .translation {
-		color: rgba(255, 255, 255, 0.92);
+		color: #333;
 	}
 
 	/* Word Tooltip */
@@ -1417,7 +1418,7 @@
 			height: auto;
 			overflow: hidden;
 			border-top: none;
-			border-left: 2px solid rgba(46, 204, 113, 0.3);
+			border-left: 2px solid #e0e0e0;
 		}
 	}
 
