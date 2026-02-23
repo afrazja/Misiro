@@ -64,6 +64,13 @@
       "audioText": "Gern geschehen.",
       "translation": "You're welcome.",
       "translationFa": "خواهش می‌کنم."
+    },
+    {
+      "id": 10,
+      "role": "sent",
+      "targetText": "Könnten Sie mir bitte den Weg erklären?",
+      "translation": "Could you please explain the way to me?",
+      "translationFa": "می‌تونید لطفاً مسیر رو برام توضیح بدید؟"
     }
   ],
   "difficulty": "A1+",

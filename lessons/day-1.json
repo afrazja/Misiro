@@ -57,6 +57,27 @@
       "targetText": "Ich spiele gerne Fußball und reise sehr gerne.",
       "translation": "I like playing football and love travelling.",
       "translationFa": "فوتبال بازی می‌کنم و سفر کردن رو دوست دارم."
+    },
+    {
+      "id": 9,
+      "role": "received",
+      "audioText": "Das klingt toll! Sprichst du noch andere Sprachen?",
+      "translation": "That sounds great! Do you speak any other languages?",
+      "translationFa": "عالی به نظر میاد! زبان دیگه‌ای هم بلدی؟"
+    },
+    {
+      "id": 10,
+      "role": "sent",
+      "targetText": "Ja, ich spreche Spanisch und lerne jetzt Deutsch.",
+      "translation": "Yes, I speak Spanish and I am learning German now.",
+      "translationFa": "بله، اسپانیایی بلدم و الان آلمانی یاد می‌گیرم."
+    },
+    {
+      "id": 11,
+      "role": "received",
+      "audioText": "Sehr gut! Viel Erfolg beim Deutschlernen!",
+      "translation": "Very good! Good luck learning German!",
+      "translationFa": "خیلی خوب! موفق باشید در یادگیری آلمانی!"
     }
   ],
   "difficulty": "A1",

@@ -57,6 +57,27 @@
       "targetText": "Hier ist fünf Euro. Stimmt so.",
       "translation": "Here is five euros. Keep the change.",
       "translationFa": "اینجا پنج یورو. بقیه‌اش مال شما."
+    },
+    {
+      "id": 9,
+      "role": "received",
+      "audioText": "Möchten Sie noch etwas bestellen?",
+      "translation": "Would you like to order anything else?",
+      "translationFa": "چیز دیگه‌ای می‌خواید سفارش بدید؟"
+    },
+    {
+      "id": 10,
+      "role": "sent",
+      "targetText": "Nein danke, das war alles. Es hat gut geschmeckt!",
+      "translation": "No thank you, that was all. It tasted good!",
+      "translationFa": "نه ممنون، همینه. خوشمزه بود!"
+    },
+    {
+      "id": 11,
+      "role": "received",
+      "audioText": "Das freut mich! Kommen Sie gerne wieder!",
+      "translation": "That pleases me! Please come again!",
+      "translationFa": "خوشحال شدم! حتماً دوباره بیاید!"
     }
   ],
   "difficulty": "A1+",

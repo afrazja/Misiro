@@ -57,6 +57,27 @@
       "targetText": "Wir treffen uns im nächsten September.",
       "translation": "We'll meet next September.",
       "translationFa": "سپتامبر بعدی همدیگه رو می‌بینیم."
+    },
+    {
+      "id": 9,
+      "role": "received",
+      "audioText": "Welche Jahreszeit magst du am liebsten?",
+      "translation": "Which season do you like most?",
+      "translationFa": "کدوم فصل رو بیشتر از همه دوست داری؟"
+    },
+    {
+      "id": 10,
+      "role": "sent",
+      "targetText": "Ich mag den Sommer am liebsten.",
+      "translation": "I like summer most.",
+      "translationFa": "من تابستون رو بیشتر از همه دوست دارم."
+    },
+    {
+      "id": 11,
+      "role": "received",
+      "audioText": "Ich auch! Im Sommer macht alles viel mehr Spaß.",
+      "translation": "Me too! Everything is much more fun in summer.",
+      "translationFa": "منم! تابستون همه چیز خیلی بیشتر باحاله."
     }
   ],
   "difficulty": "A1",

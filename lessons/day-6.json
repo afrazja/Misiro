@@ -57,6 +57,20 @@
       "targetText": "Mein Vater heißt Karl und meine Mutter heißt Anna.",
       "translation": "My father's name is Karl and my mother's name is Anna.",
       "translationFa": "اسم پدرم کارل و اسم مادرم آنا هست."
+    },
+    {
+      "id": 9,
+      "role": "received",
+      "audioText": "Wohnst du in der Nähe deiner Eltern?",
+      "translation": "Do you live near your parents?",
+      "translationFa": "نزدیک پدر و مادرت زندگی می‌کنی؟"
+    },
+    {
+      "id": 10,
+      "role": "sent",
+      "targetText": "Leider nein. Sie wohnen weit weg, aber wir telefonieren oft.",
+      "translation": "Unfortunately not. They live far away, but we call often.",
+      "translationFa": "متأسفانه نه. اونا دور زندگی می‌کنن، ولی زیاد تلفن می‌زنیم."
     }
   ],
   "difficulty": "A1",

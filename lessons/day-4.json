@@ -57,6 +57,20 @@
       "targetText": "Ich habe zwei Geschwister — einen Bruder und eine Schwester.",
       "translation": "I have two siblings — one brother and one sister.",
       "translationFa": "دو تا خواهر برادر دارم — یه برادر و یه خواهر."
+    },
+    {
+      "id": 9,
+      "role": "received",
+      "audioText": "Wie ist deine Adresse?",
+      "translation": "What is your address?",
+      "translationFa": "آدرست چیه؟"
+    },
+    {
+      "id": 10,
+      "role": "sent",
+      "targetText": "Ich wohne in der Hauptstraße fünfzehn.",
+      "translation": "I live at Hauptstrasse fifteen.",
+      "translationFa": "من در خیابان اصلی شماره پانزده زندگی می‌کنم."
     }
   ],
   "difficulty": "A1",

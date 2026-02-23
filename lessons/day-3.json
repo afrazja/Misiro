@@ -57,6 +57,27 @@
       "targetText": "Danke! Dir auch einen schönen Tag.",
       "translation": "Thanks! Have a nice day too.",
       "translationFa": "ممنون! روز خوبی داشته باشی."
+    },
+    {
+      "id": 9,
+      "role": "received",
+      "audioText": "Wie war dein Wochenende?",
+      "translation": "How was your weekend?",
+      "translationFa": "آخر هفته‌ات چطور بود؟"
+    },
+    {
+      "id": 10,
+      "role": "sent",
+      "targetText": "Es war sehr schön. Ich habe viel geschlafen.",
+      "translation": "It was very nice. I slept a lot.",
+      "translationFa": "خیلی خوب بود. خیلی خوابیدم."
+    },
+    {
+      "id": 11,
+      "role": "received",
+      "audioText": "Das ist schön! Schlaf ist sehr wichtig für die Gesundheit.",
+      "translation": "That is nice! Sleep is very important for your health.",
+      "translationFa": "خوبه! خواب خیلی مهمه برای سلامتی."
     }
   ],
   "difficulty": "A1",

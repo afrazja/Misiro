@@ -57,6 +57,20 @@
       "audioText": "Kein Problem.",
       "translation": "No problem.",
       "translationFa": "مشکلی نیست."
+    },
+    {
+      "id": 9,
+      "role": "sent",
+      "targetText": "Das war mein Fehler. Ich passe besser auf.",
+      "translation": "That was my mistake. I will be more careful.",
+      "translationFa": "این اشتباه من بود. بیشتر مواظب خواهم بود."
+    },
+    {
+      "id": 10,
+      "role": "received",
+      "audioText": "Gut. Dann machen wir weiter.",
+      "translation": "Good. Then let us continue.",
+      "translationFa": "خوبه. پس ادامه می‌دیم."
     }
   ],
   "difficulty": "A1+",

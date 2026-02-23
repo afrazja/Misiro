@@ -57,6 +57,27 @@
       "targetText": "Ja, das ist jetzt klar.",
       "translation": "Yes, that is clear now.",
       "translationFa": "بله، الان کاملاً روشنه."
+    },
+    {
+      "id": 9,
+      "role": "received",
+      "audioText": "Kann ich Ihnen sonst noch helfen?",
+      "translation": "Can I help you with anything else?",
+      "translationFa": "می‌تونم کمک دیگه‌ای بکنم؟"
+    },
+    {
+      "id": 10,
+      "role": "sent",
+      "targetText": "Nein, danke. Jetzt verstehe ich alles.",
+      "translation": "No, thank you. Now I understand everything.",
+      "translationFa": "نه، ممنون. الان همه چیز رو می‌فهمم."
+    },
+    {
+      "id": 11,
+      "role": "received",
+      "audioText": "Wunderbar! Dann machen wir jetzt weiter.",
+      "translation": "Wonderful! Then we will continue now.",
+      "translationFa": "عالیه! پس الان ادامه می‌دیم."
     }
   ],
   "difficulty": "A1+",

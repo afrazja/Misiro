@@ -50,6 +50,27 @@
       "audioText": "Es war schön, Sie kennenzulernen!",
       "translation": "It was lovely meeting you!",
       "translationFa": "از آشنایی با شما خوشحال شدم!"
+    },
+    {
+      "id": 8,
+      "role": "sent",
+      "targetText": "Guten Tag! Wie kann ich Ihnen helfen?",
+      "translation": "Good day! How can I help you?",
+      "translationFa": "روز بخیر! چطور می‌تونم کمکتون کنم؟"
+    },
+    {
+      "id": 9,
+      "role": "received",
+      "audioText": "Danke schön! Bis bald.",
+      "translation": "Thank you! See you soon.",
+      "translationFa": "خیلی ممنون! به زودی می‌بینمتون."
+    },
+    {
+      "id": 10,
+      "role": "sent",
+      "targetText": "Bis bald! Einen schönen Tag noch.",
+      "translation": "See you soon! Have a nice rest of the day.",
+      "translationFa": "به زودی! روز خوبی داشته باشید."
     }
   ],
   "difficulty": "A1",
