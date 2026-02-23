@@ -20,6 +20,8 @@
 		setAvatarUrl as setLocalAvatarUrl,
 		setDisplayName as setLocalDisplayName
 	} from '$services/data-layer';
+	import { getTargetLanguage, updateLanguagePreferences } from '$services/auth';
+	import type { TargetLanguage } from '$lib/stores/preferences';
 
 	// ============ STATE ============
 	let isLoading = $state(true);
@@ -27,7 +29,9 @@
 	let displayName = $state('');
 	let avatarUrl: string | null = $state(null);
 	let currentLang = $state('en');
+	let currentTargetLang = $state<TargetLanguage>('de');
 	let voiceSpeed = $state(1.0);
+	let langStatus = $state<{ text: string; type: 'success' | 'error' } | null>(null);
 
 	// Password fields
 	let newPassword = $state('');
@@ -145,10 +149,16 @@
 	}
 
 	// ============ PREFERENCES ============
-	function handleLanguageChange(e: Event) {
-		const val = (e.target as HTMLSelectElement).value;
-		currentLang = val;
-		setLanguage(val);
+	async function handleLanguageSave() {
+		const { error: err } = await updateLanguagePreferences(
+			currentLang as 'en' | 'fa',
+			currentTargetLang
+		);
+		if (err) {
+			showStatus((v) => (langStatus = v), err, 'error', false);
+		} else {
+			showStatus((v) => (langStatus = v), 'Language preferences saved!', 'success');
+		}
 	}
 
 	function handleSpeedChange(e: Event) {
@@ -191,6 +201,9 @@
 		// Load preferences
 		const savedLang = await getLanguage();
 		if (savedLang) currentLang = savedLang;
+
+		const savedTargetLang = await getTargetLanguage();
+		if (savedTargetLang === 'de' || savedTargetLang === 'fr') currentTargetLang = savedTargetLang;
 
 		const savedSpeed = await getVoiceSpeed();
 		if (savedSpeed !== null && !isNaN(savedSpeed)) voiceSpeed = savedSpeed;
@@ -289,11 +302,28 @@
 			<h3><span class="section-icon">⚙</span> Preferences</h3>
 
 			<div class="pref-row">
-				<label for="pref-language">Language</label>
-				<select id="pref-language" value={currentLang} onchange={handleLanguageChange}>
-					<option value="fa">{'\u0641\u0627\u0631\u0633\u06CC'}</option>
+				<label for="pref-language">Interface Language</label>
+				<select id="pref-language" bind:value={currentLang}>
+					<option value="fa">فارسی</option>
 					<option value="en">English</option>
 				</select>
+			</div>
+
+			<div class="pref-row">
+				<label for="pref-target">Learning Language</label>
+				<div class="target-lang-select">
+					<button
+						class="target-btn {currentTargetLang === 'de' ? 'active' : ''}"
+						onclick={() => (currentTargetLang = 'de')}
+						type="button"
+					>🇩🇪 German</button>
+					<button
+						class="target-btn disabled"
+						title="Coming soon"
+						disabled
+						type="button"
+					>🇫🇷 French <span class="soon-badge">Soon</span></button>
+				</div>
 			</div>
 
 			<div class="pref-row">
@@ -311,6 +341,11 @@
 					<span class="speed-value">{voiceSpeed.toFixed(1)}x</span>
 				</div>
 			</div>
+
+			<button class="btn-primary" onclick={handleLanguageSave} style="margin-top:8px;">Save Language Preferences</button>
+			{#if langStatus}
+				<div class="status-msg {langStatus.type}">{langStatus.text}</div>
+			{/if}
 		</div>
 
 		<!-- Account Section -->
@@ -560,6 +595,47 @@
 		font-weight: 600;
 		min-width: 40px;
 		text-align: center;
+	}
+
+	.target-lang-select {
+		display: flex;
+		gap: 8px;
+	}
+
+	.target-btn {
+		padding: 7px 14px;
+		border-radius: 10px;
+		border: 1px solid rgba(255, 255, 255, 0.2);
+		background: rgba(255, 255, 255, 0.06);
+		color: #fff;
+		font-size: 0.9rem;
+		cursor: pointer;
+		transition: all 0.2s ease;
+		display: flex;
+		align-items: center;
+		gap: 5px;
+	}
+
+	.target-btn.active {
+		border-color: #e94560;
+		background: rgba(233, 69, 96, 0.18);
+	}
+
+	.target-btn.disabled,
+	.target-btn:disabled {
+		opacity: 0.4;
+		cursor: not-allowed;
+	}
+
+	.soon-badge {
+		font-size: 0.6rem;
+		font-weight: 700;
+		text-transform: uppercase;
+		background: rgba(255, 215, 0, 0.15);
+		border: 1px solid rgba(255, 215, 0, 0.3);
+		color: #ffd700;
+		border-radius: 4px;
+		padding: 1px 5px;
 	}
 
 	.account-email {

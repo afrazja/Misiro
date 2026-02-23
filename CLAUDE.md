@@ -56,7 +56,7 @@ data-layer.ts  ←→  Svelte stores  →  components
 
 **`data-layer.ts`** is the single entry point for all read/write operations. When authenticated, Supabase is always written first; localStorage is the fallback for reads and the sole store when offline. Never read from Supabase or localStorage directly in components — always go through data-layer.
 
-**`sync-queue.ts`** persists failed cloud writes to `misiro_sync_queue` in localStorage and retries them (max 5, 10s delay). It deduplicates by operation type + key.
+**`sync-queue.ts`** persists failed cloud writes to `mirifer_sync_queue` in localStorage and retries them (max 5, 10s delay). It deduplicates by operation type + key.
 
 ### Lesson Flow
 
@@ -122,4 +122,11 @@ Tests use **Vitest + jsdom**. The setup file (`src/test/setup.ts`) stubs `Speech
 
 ## Deployment
 
-Deployed to **Vercel** via GitHub (`main` branch). The Vercel adapter is configured in `svelte.config.js`. Push to `main` to trigger a deploy. The project currently works off two branches: `main` (production) and `master` (development) — push with `git push origin master:main` to deploy.
+Deployed to **Vercel** via GitHub (`main` branch). The Vercel adapter is configured in `svelte.config.js`.
+
+**How to deploy:**
+1. Make changes in the worktree at `.claude/worktrees/affectionate-newton/` (this directory).
+2. Commit: `git add <files> && git commit -m "your message"`
+3. Push to GitHub to trigger Vercel: `git push origin master:main`
+
+The local branch is `master`; Vercel watches the `main` branch on GitHub (`https://github.com/afrazja/Misiro`). Always push with `master:main` — pushing to `master` alone will **not** trigger a deploy.

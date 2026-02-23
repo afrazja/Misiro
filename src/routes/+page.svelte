@@ -82,8 +82,9 @@
 				if (user) await auth.ensureProfile(user);
 				await updateProfileUI();
 				await dataLayer.syncOnLogin();
-				// After auth, send user to the app home page
-				goto('/home');
+				// If target language not yet chosen, go to onboarding first
+				const targetLang = await auth.getTargetLanguage();
+				goto(targetLang ? '/home' : '/onboarding');
 			}
 		} catch (e: any) {
 			authError = e.message || 'An error occurred.';

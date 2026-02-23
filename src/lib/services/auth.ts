@@ -293,6 +293,68 @@ export async function removeAvatar(): Promise<{ error: string | null }> {
 	}
 }
 
+/**
+ * Get the language the user is learning ('de' | 'fr'), stored in auth metadata.
+ * Returns null if not yet set (user needs onboarding).
+ */
+export async function getTargetLanguage(): Promise<'de' | 'fr' | null> {
+	const user = await getUser();
+	if (!user) return null;
+	const tl = user.user_metadata?.target_language;
+	if (tl === 'de' || tl === 'fr') return tl;
+	// Also check localStorage fallback
+	try {
+		const local = localStorage.getItem('mirifer_target_language');
+		if (local === 'de' || local === 'fr') return local;
+	} catch {
+		// localStorage not available (SSR)
+	}
+	return null;
+}
+
+/**
+ * Save both language preferences after onboarding or settings change.
+ * - nativeLang: the language the user reads translations in ('en' | 'fa')
+ * - targetLang: the language the user is learning ('de' | 'fr')
+ * target_language is stored in Supabase Auth user metadata (no DB migration needed).
+ */
+export async function updateLanguagePreferences(
+	nativeLang: 'en' | 'fa',
+	targetLang: 'de' | 'fr'
+): Promise<{ error: string | null }> {
+	const client = sb();
+	if (!client) return { error: 'Supabase not configured' };
+	try {
+		const user = await getUser();
+		if (!user) return { error: 'Not authenticated' };
+
+		// Save target language in auth metadata
+		const { error: authError } = await client.auth.updateUser({
+			data: { target_language: targetLang }
+		});
+		if (authError) return { error: authError.message };
+
+		// Save native language in user_profiles.language
+		const { error: dbError } = await client
+			.from('user_profiles')
+			.update({ language: nativeLang, updated_at: new Date().toISOString() })
+			.eq('id', user.id);
+		if (dbError) return { error: dbError.message };
+
+		// Cache both in localStorage
+		try {
+			localStorage.setItem('mirifer_target_language', targetLang);
+			localStorage.setItem('mirifer_language', nativeLang);
+		} catch {
+			// ignore
+		}
+
+		return { error: null };
+	} catch (e: any) {
+		return { error: e.message };
+	}
+}
+
 /** Get avatar URL from user_profiles */
 export async function getAvatarUrl(): Promise<string | null> {
 	const client = sb();

@@ -54,6 +54,36 @@ export async function setLanguage(lang: string): Promise<void> {
 	await cloudWrite('profile_update', 'language', { language: lang });
 }
 
+// ========== TARGET LANGUAGE (stored in auth metadata, cached in localStorage) ==========
+
+export async function getTargetLanguage(): Promise<string | null> {
+	if (await isAuthenticated()) {
+		try {
+			// Target language lives in Supabase Auth user metadata
+			const { getTargetLanguage: authGetTL } = await import('./auth');
+			const tl = await authGetTL();
+			if (tl) {
+				localStorage.setItem('mirifer_target_language', tl);
+				return tl;
+			}
+		} catch (e) {
+			logError('data-layer:getTargetLanguage', e);
+		}
+	}
+	return localStorage.getItem('mirifer_target_language') || null;
+}
+
+export async function setTargetLanguage(lang: string): Promise<void> {
+	localStorage.setItem('mirifer_target_language', lang);
+	try {
+		const { updateLanguagePreferences } = await import('./auth');
+		const client = (await import('$lib/supabase/client')).getSupabaseBrowserClient();
+		await client.auth.updateUser({ data: { target_language: lang } });
+	} catch (e) {
+		logError('data-layer:setTargetLanguage', e);
+	}
+}
+
 // ========== VOICE SPEED ==========
 
 export async function getVoiceSpeed(): Promise<number | null> {

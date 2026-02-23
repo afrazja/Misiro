@@ -75,7 +75,7 @@ function resetStores() {
 		completedLessons: {},
 		isListening: false
 	});
-	preferencesStore.set({ language: 'en', voiceSpeed: 1.0, blindMode: false });
+	preferencesStore.set({ language: 'en', voiceSpeed: 1.0, blindMode: false, targetLanguage: 'de' });
 	lessonStore.set({ currentLesson: null, glossary: {}, isLoading: false });
 	examStore.set({
 		isExamMode: false,
