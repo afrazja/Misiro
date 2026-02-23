@@ -1,0 +1,193 @@
+{
+  "title": "Day 78: Talking About Environmental Issues",
+  "titleFa": "روز ۷۸: صحبت درباره مسائل محیط زیستی",
+  "sentences": [
+    {
+      "id": 1,
+      "role": "received",
+      "audioText": "Der Umweltschutz ist sehr wichtig.",
+      "translation": "The protection of the environment is very important.",
+      "translationFa": "حفاظت از محیط زیست بسیار مهم است."
+    },
+    {
+      "id": 2,
+      "role": "received",
+      "audioText": "Der Klimawandel ist ein globales Problem.",
+      "translation": "Climate change is a global problem.",
+      "translationFa": "تغییرات آب و هوایی یک مشکل جهانی است."
+    },
+    {
+      "id": 3,
+      "role": "sent",
+      "targetText": "Wir müssen unseren CO2-Fußabdruck reduzieren.",
+      "translation": "We must reduce our carbon footprint.",
+      "translationFa": "ما باید ردپای کربن خود را کاهش دهیم."
+    },
+    {
+      "id": 4,
+      "role": "received",
+      "audioText": "Plastikmüll verschmutzt unsere Ozeane.",
+      "translation": "Plastic waste is polluting our oceans.",
+      "translationFa": "زباله‌های پلاستیکی در حال آلوده کردن اقیانوس‌های ما هستند."
+    },
+    {
+      "id": 5,
+      "role": "sent",
+      "targetText": "Es ist notwendig, Papier und Glas zu recyceln.",
+      "translation": "It is necessary to recycle paper and glass.",
+      "translationFa": "بازیافت کاغذ و شیشه ضروری است."
+    },
+    {
+      "id": 6,
+      "role": "received",
+      "audioText": "Viele Tiere verlieren ihre natürlichen Lebensräume.",
+      "translation": "Many animals are losing their natural habitats.",
+      "translationFa": "بسیاری از حیوانات در حال از دست دادن زیستگاه‌های طبیعی خود هستند."
+    },
+    {
+      "id": 7,
+      "role": "sent",
+      "targetText": "Erneuerbare Energiequellen sind die Zukunft.",
+      "translation": "Renewable energy sources are the future.",
+      "translationFa": "منابع انرژی تجدیدپذیر آینده هستند."
+    },
+    {
+      "id": 8,
+      "role": "sent",
+      "targetText": "Sonnen- und Windenergie sind umweltfreundlich.",
+      "translation": "Solar and wind power are environmentally friendly.",
+      "translationFa": "انرژی خورشیدی و بادی سازگار با محیط زیست هستند."
+    },
+    {
+      "id": 9,
+      "role": "sent",
+      "targetText": "Wir sollten häufiger öffentliche Verkehrsmittel nutzen.",
+      "translation": "We should use public transportation more often.",
+      "translationFa": "ما باید بیشتر از وسایل نقلیه عمومی استفاده کنیم."
+    },
+    {
+      "id": 10,
+      "role": "sent",
+      "targetText": "Fahrradfahren ist besser für die Luftqualität.",
+      "translation": "Riding a bike is better for the air quality.",
+      "translationFa": "دوچرخه‌سواری برای کیفیت هوا بهتر است."
+    },
+    {
+      "id": 11,
+      "role": "received",
+      "audioText": "Luftverschmutzung ist ein großes Gesundheitsrisiko in Großstädten.",
+      "translation": "Air pollution is a major health risk in big cities.",
+      "translationFa": "آلودگی هوا یک خطر بزرگ برای سلامتی در شهرهای بزرگ است."
+    },
+    {
+      "id": 12,
+      "role": "received",
+      "audioText": "Die Abholzung der Wälder trägt maßgeblich zur globalen Erwärmung bei.",
+      "translation": "Deforestation contributes significantly to global warming.",
+      "translationFa": "جنگل‌زدایی به طور قابل توجهی به گرمایش جهانی کمک می‌کند."
+    },
+    {
+      "id": 13,
+      "role": "sent",
+      "targetText": "Wir müssen vom Aussterben bedrohte Arten schützen.",
+      "translation": "We must protect endangered species.",
+      "translationFa": "ما باید از گونه‌های در معرض خطر انقراض محافظت کنیم."
+    },
+    {
+      "id": 14,
+      "role": "sent",
+      "targetText": "Wasserknappheit ist in vielen Regionen ein wachsendes Problem.",
+      "translation": "Water scarcity is a growing issue in many regions.",
+      "translationFa": "کمبود آب یک مشکل فزاینده در بسیاری از مناطق است."
+    },
+    {
+      "id": 15,
+      "role": "received",
+      "audioText": "Schalte das Licht aus, wenn du den Raum verlässt.",
+      "translation": "Turn off the lights when you leave the room.",
+      "translationFa": "وقتی از اتاق خارج می‌شوی، چراغ‌ها را خاموش کن."
+    },
+    {
+      "id": 16,
+      "role": "sent",
+      "targetText": "Wasser sparen ist genauso wichtig wie Strom sparen.",
+      "translation": "Saving water is just as important as saving electricity.",
+      "translationFa": "صرفه‌جویی در آب به اندازه صرفه‌جویی در برق مهم است."
+    },
+    {
+      "id": 17,
+      "role": "sent",
+      "targetText": "Regierungen müssen strengere Umweltgesetze erlassen.",
+      "translation": "Governments need to pass stricter environmental laws.",
+      "translationFa": "دولت‌ها باید قوانین زیست‌محیطی سخت‌گیرانه‌تری تصویب کنند."
+    },
+    {
+      "id": 18,
+      "role": "received",
+      "audioText": "Jeder kann jeden Tag einen kleinen Unterschied machen.",
+      "translation": "Everyone can make a small difference every day.",
+      "translationFa": "هر کسی می‌تواند هر روز تفاوت کوچکی ایجاد کند."
+    },
+    {
+      "id": 19,
+      "role": "sent",
+      "targetText": "Nachhaltige Landwirtschaft hilft, den Boden zu erhalten.",
+      "translation": "Sustainable agriculture helps to preserve the soil.",
+      "translationFa": "کشاورزی پایدار به حفظ خاک کمک می‌کند."
+    },
+    {
+      "id": 20,
+      "role": "sent",
+      "targetText": "Ich versuche, lokale und saisonale Produkte zu kaufen.",
+      "translation": "I try to buy local and seasonal products.",
+      "translationFa": "من سعی می‌کنم محصولات محلی و فصلی بخرم."
+    },
+    {
+      "id": 21,
+      "role": "sent",
+      "targetText": "Die Vermeidung von Einwegplastik ist ein guter erster Schritt.",
+      "translation": "Avoiding single-use plastics is a good first step.",
+      "translationFa": "اجتناب از پلاستیک‌های یک‌بار مصرف یک قدم اول خوب است."
+    },
+    {
+      "id": 22,
+      "role": "received",
+      "audioText": "Das Schmelzen der Polkappen ist alarmierend.",
+      "translation": "The melting of the polar ice caps is alarming.",
+      "translationFa": "ذوب شدن یخ‌های قطبی نگران‌کننده است."
+    },
+    {
+      "id": 23,
+      "role": "sent",
+      "targetText": "Wir müssen mehr Bäume pflanzen, um Kohlendioxid zu absorbieren.",
+      "translation": "We must plant more trees to absorb carbon dioxide.",
+      "translationFa": "ما باید درختان بیشتری بکاریم تا دی‌اکسید کربن را جذب کنند."
+    },
+    {
+      "id": 24,
+      "role": "sent",
+      "targetText": "Elektroschrott sollte ordnungsgemäß entsorgt werden.",
+      "translation": "E-waste should be disposed of properly.",
+      "translationFa": "زباله‌های الکترونیکی باید به درستی دفع شوند."
+    },
+    {
+      "id": 25,
+      "role": "sent",
+      "targetText": "Unsere Generation hat die Verantwortung, den Planeten zu schützen.",
+      "translation": "Our generation has a responsibility to protect the planet.",
+      "translationFa": "نسل ما مسئولیت دارد که از سیاره محافظت کند."
+    },
+    {
+      "id": 26,
+      "role": "sent",
+      "targetText": "Was können wir tun, um das Bewusstsein zu schärfen?",
+      "translation": "What can we do to raise awareness?",
+      "translationFa": "برای افزایش آگاهی چه کاری می‌توانیم انجام دهیم؟"
+    }
+  ],
+  "difficulty": "B1+",
+  "grammarFocus": "müssen / sollte + Infinitiv + Passiv: sollte entsorgt werden + um…zu + Infinitiv: um Kohlendioxid zu absorbieren + genauso…wie (Vergleich)",
+  "grammarFocusFa": "müssen / sollte + مصدر + مجهول: sollte entsorgt werden + um…zu + مصدر: um Kohlendioxid zu absorbieren + genauso…wie (مقایسه)",
+  "description": "Discuss environmental issues in German. Talk about climate change, pollution, renewable energy, and what individuals and governments can do to protect the planet.",
+  "descriptionFa": "مسائل محیط زیستی را به زبان آلمانی بحث کنید. درباره تغییرات آب و هوایی، آلودگی، انرژی تجدیدپذیر و کارهایی که افراد و دولت‌ها می‌توانند برای محافظت از سیاره انجام دهند صحبت کنید."
+}
