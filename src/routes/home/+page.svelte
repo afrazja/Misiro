@@ -56,6 +56,60 @@
 		return Math.round(((Math.min(daysCompleted, 60) - 40) / 20) * 100);
 	});
 
+	// ── Practice Calendar ──────────────────────────────
+	let calYear = $state(new Date().getFullYear());
+	let calMonth = $state(new Date().getMonth()); // 0-indexed
+
+	const MONTH_NAMES = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+
+	// Set of YYYY-MM-DD strings for days the user completed at least one lesson
+	const practiceDates = $derived.by(() => {
+		const s = new Set<string>();
+		for (const entry of Object.values(completedLessons)) {
+			if (entry.completedAt) {
+				const d = new Date(entry.completedAt);
+				s.add(`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`);
+			}
+		}
+		return s;
+	});
+
+	// Count of distinct practice days in the current calendar month
+	const thisMonthPracticed = $derived.by(() => {
+		const now = new Date();
+		const prefix = `${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}-`;
+		let count = 0;
+		for (const k of practiceDates) { if (k.startsWith(prefix)) count++; }
+		return count;
+	});
+
+	function buildCalCells(year: number, month: number): { day: number | null; key: string | null; isToday: boolean }[] {
+		const today = new Date();
+		const firstDow = new Date(year, month, 1).getDay(); // 0 = Sunday
+		const startOffset = (firstDow + 6) % 7; // shift so Mon = 0
+		const daysInMonth = new Date(year, month + 1, 0).getDate();
+		const cells: { day: number | null; key: string | null; isToday: boolean }[] = [];
+		for (let i = 0; i < startOffset; i++) cells.push({ day: null, key: null, isToday: false });
+		for (let d = 1; d <= daysInMonth; d++) {
+			const key = `${year}-${String(month+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+			const isToday = today.getFullYear() === year && today.getMonth() === month && today.getDate() === d;
+			cells.push({ day: d, key, isToday });
+		}
+		return cells;
+	}
+
+	function prevCalMonth() {
+		if (calMonth === 0) { calMonth = 11; calYear--; }
+		else calMonth--;
+	}
+
+	function nextCalMonth() {
+		const now = new Date();
+		if (calYear > now.getFullYear() || (calYear === now.getFullYear() && calMonth >= now.getMonth())) return;
+		if (calMonth === 11) { calMonth = 0; calYear++; }
+		else calMonth++;
+	}
+
 	// i18n content
 	const content = $derived({
 		langLabel: language === 'fa' ? 'زبان:' : 'Language:',
@@ -312,10 +366,7 @@
 
 			<div class="cal-header">
 				<h2>🗓️ Your 60-Day Journey</h2>
-				<p>
-					{daysCompleted} of 60 days completed
-					{#if streakCount > 0} · {streakCount}-day streak 🔥{/if}
-				</p>
+				<p>{daysCompleted} of 60 days completed</p>
 			</div>
 
 			<div class="cal-level-badges">
@@ -404,8 +455,8 @@
 				{#if isAuthenticated}
 					<h1>Welcome back, {displayName.split(' ')[0]}! 👋</h1>
 					<p>
-						{streakCount > 0
-							? `You're on a ${streakCount}-day streak — keep it going!`
+						{daysCompleted > 0
+							? `${daysCompleted} day${daysCompleted === 1 ? '' : 's'} completed — keep it going!`
 							: 'Pick up where you left off.'}
 					</p>
 				{:else}
@@ -435,12 +486,11 @@
 				<span class="stat-value">{currentLevel}</span>
 				<span class="stat-label">Current Level</span>
 			</div>
-			<button class="stat-card stat-card-clickable" onclick={() => showCalendar = true} title="View your 60-day calendar">
-				<span class="stat-icon">🔥</span>
-				<span class="stat-value">{streakCount}</span>
-				<span class="stat-label">Day Streak</span>
-				<span class="stat-cta-hint">view calendar →</span>
-			</button>
+			<div class="stat-card">
+				<span class="stat-icon">📅</span>
+				<span class="stat-value">{thisMonthPracticed}</span>
+				<span class="stat-label">This Month</span>
+			</div>
 			<a href="/lesson" class="stat-card stat-card-link" class:has-due={dueReviews > 0} title="Go to lesson for reviews">
 				<span class="stat-icon">🔄</span>
 				<span class="stat-value">{dueReviews}</span>
@@ -449,6 +499,47 @@
 					<span class="stat-cta">Review now →</span>
 				{/if}
 			</a>
+		</div>
+
+		<!-- ── Practice Calendar ────────────────────────── -->
+		<div class="practice-cal-card">
+			<div class="pcal-header">
+				<button class="pcal-nav-btn" onclick={prevCalMonth} aria-label="Previous month">‹</button>
+				<span class="pcal-title">{MONTH_NAMES[calMonth]} {calYear}</span>
+				<button
+					class="pcal-nav-btn"
+					onclick={nextCalMonth}
+					disabled={calYear === new Date().getFullYear() && calMonth >= new Date().getMonth()}
+					aria-label="Next month"
+				>›</button>
+			</div>
+
+			<div class="pcal-dow">
+				{#each ['M','T','W','T','F','S','S'] as label}
+					<span class="pcal-dow-cell">{label}</span>
+				{/each}
+			</div>
+
+			<div class="pcal-grid">
+				{#each buildCalCells(calYear, calMonth) as cell}
+					{#if cell.day === null}
+						<span class="pcal-cell pcal-empty"></span>
+					{:else}
+						<span
+							class="pcal-cell"
+							class:practiced={practiceDates.has(cell.key!)}
+							class:today={cell.isToday}
+							title={practiceDates.has(cell.key!) ? `Practiced on ${cell.key}` : (cell.isToday ? 'Today' : '')}
+						>{cell.day}</span>
+					{/if}
+				{/each}
+			</div>
+
+			<div class="pcal-footer">
+				<span class="pcal-legend-item"><span class="pcal-dot practiced-dot"></span>Practiced</span>
+				<span class="pcal-legend-item"><span class="pcal-dot today-dot"></span>Today</span>
+				<span class="pcal-month-count">{thisMonthPracticed} day{thisMonthPracticed !== 1 ? 's' : ''} this month</span>
+			</div>
 		</div>
 
 		<!-- ── Learning Path Progress ──────────────────── -->
@@ -1367,6 +1458,160 @@
 	.b1-sw   { background: rgba(155, 89, 182, 0.5); border: 1px solid rgba(155, 89, 182, 0.7); }
 	.cur-sw  { background: linear-gradient(135deg, #e94560, #ff6b6b); }
 	.empty-sw { background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 255, 255, 0.1); }
+
+	/* ── Practice Calendar Card ──────────────────────── */
+	.practice-cal-card {
+		background: rgba(255, 255, 255, 0.04);
+		border: 1px solid rgba(255, 255, 255, 0.08);
+		border-radius: 20px;
+		padding: 20px 24px;
+	}
+
+	.pcal-header {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		margin-bottom: 14px;
+	}
+
+	.pcal-title {
+		font-size: 0.92rem;
+		font-weight: 700;
+		color: #ccc;
+	}
+
+	.pcal-nav-btn {
+		background: rgba(255, 255, 255, 0.06);
+		border: 1px solid rgba(255, 255, 255, 0.1);
+		color: #aaa;
+		width: 28px;
+		height: 28px;
+		border-radius: 7px;
+		cursor: pointer;
+		font-size: 1.1rem;
+		font-family: inherit;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		line-height: 1;
+		transition: all 0.2s;
+	}
+
+	.pcal-nav-btn:hover:not(:disabled) {
+		background: rgba(255, 255, 255, 0.12);
+		border-color: rgba(255, 255, 255, 0.22);
+		color: #fff;
+	}
+
+	.pcal-nav-btn:disabled {
+		opacity: 0.25;
+		cursor: not-allowed;
+	}
+
+	.pcal-dow {
+		display: grid;
+		grid-template-columns: repeat(7, 1fr);
+		gap: 3px;
+		margin-bottom: 4px;
+	}
+
+	.pcal-dow-cell {
+		text-align: center;
+		font-size: 0.65rem;
+		font-weight: 700;
+		color: #444;
+		padding: 3px 0;
+		text-transform: uppercase;
+		letter-spacing: 0.04em;
+	}
+
+	.pcal-grid {
+		display: grid;
+		grid-template-columns: repeat(7, 1fr);
+		gap: 3px;
+	}
+
+	.pcal-cell {
+		aspect-ratio: 1;
+		border-radius: 7px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		font-size: 0.75rem;
+		font-weight: 500;
+		color: #555;
+		background: rgba(255, 255, 255, 0.03);
+		border: 1px solid transparent;
+		transition: background 0.15s, border-color 0.15s;
+		cursor: default;
+	}
+
+	.pcal-empty {
+		background: transparent !important;
+		border-color: transparent !important;
+	}
+
+	.pcal-cell.practiced {
+		background: rgba(46, 204, 113, 0.18);
+		border-color: rgba(46, 204, 113, 0.38);
+		color: #2ecc71;
+		font-weight: 700;
+	}
+
+	.pcal-cell.today {
+		border-color: rgba(233, 69, 96, 0.55);
+		color: #e94560;
+		font-weight: 700;
+	}
+
+	.pcal-cell.practiced.today {
+		background: rgba(46, 204, 113, 0.22);
+		border-color: #2ecc71;
+		color: #2ecc71;
+		box-shadow: inset 0 0 0 1px rgba(233, 69, 96, 0.45);
+	}
+
+	.pcal-footer {
+		display: flex;
+		align-items: center;
+		gap: 14px;
+		margin-top: 12px;
+		padding-top: 12px;
+		border-top: 1px solid rgba(255, 255, 255, 0.06);
+		flex-wrap: wrap;
+	}
+
+	.pcal-legend-item {
+		display: flex;
+		align-items: center;
+		gap: 5px;
+		font-size: 0.74rem;
+		color: #666;
+	}
+
+	.pcal-dot {
+		width: 11px;
+		height: 11px;
+		border-radius: 3px;
+		flex-shrink: 0;
+	}
+
+	.practiced-dot {
+		background: rgba(46, 204, 113, 0.25);
+		border: 1px solid rgba(46, 204, 113, 0.5);
+	}
+
+	.today-dot {
+		background: transparent;
+		border: 1px solid rgba(233, 69, 96, 0.55);
+	}
+
+	.pcal-month-count {
+		margin-left: auto;
+		font-size: 0.78rem;
+		color: #2ecc71;
+		font-weight: 700;
+	}
 
 	/* ── Responsive ───────────────────────────────────── */
 	@media (max-width: 700px) {
