@@ -103,7 +103,7 @@
 </script>
 
 <svelte:head>
-	<title>{catTitle} - Misiro</title>
+	<title>{catTitle} - Mirifer</title>
 </svelte:head>
 
 <a href="#content-container" class="skip-link">Skip to content</a>

@@ -1,5 +1,5 @@
 -- ============================================
--- MISIRO: Supabase Database Setup
+-- MIRIFER: Supabase Database Setup
 -- Run this ENTIRE script in Supabase SQL Editor
 -- ============================================
 

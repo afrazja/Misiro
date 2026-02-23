@@ -200,7 +200,7 @@
 </script>
 
 <svelte:head>
-	<title>Settings - Misiro</title>
+	<title>Settings - Mirifer</title>
 </svelte:head>
 
 {#if !isLoading}

@@ -3,7 +3,7 @@
 	const { counts } = data;
 </script>
 
-<svelte:head><title>Admin Dashboard - Misiro</title></svelte:head>
+<svelte:head><title>Admin Dashboard - Mirifer</title></svelte:head>
 
 <h1>Dashboard</h1>
 

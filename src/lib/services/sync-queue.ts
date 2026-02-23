@@ -9,7 +9,7 @@ import type { SyncStatus } from '$stores/sync';
 import { getUser } from './auth';
 import { logError, logWarn } from '$utils/error';
 
-const QUEUE_KEY = 'misiro_sync_queue';
+const QUEUE_KEY = 'mirifer_sync_queue';
 const MAX_RETRIES = 5;
 const RETRY_DELAY_MS = 10_000;
 

@@ -54,7 +54,7 @@ describe('offline mode (not authenticated)', () => {
 		});
 
 		it('returns the stored language from localStorage', async () => {
-			localStorage.setItem('misiro_language', 'fa');
+			localStorage.setItem('mirifer_language', 'fa');
 			expect(await getLanguage()).toBe('fa');
 		});
 	});
@@ -62,7 +62,7 @@ describe('offline mode (not authenticated)', () => {
 	describe('setLanguage', () => {
 		it('writes the language to localStorage', async () => {
 			await setLanguage('en');
-			expect(localStorage.getItem('misiro_language')).toBe('en');
+			expect(localStorage.getItem('mirifer_language')).toBe('en');
 		});
 
 		it('calls cloudWrite with the new language', async () => {
@@ -79,7 +79,7 @@ describe('offline mode (not authenticated)', () => {
 		});
 
 		it('parses and returns a float from localStorage', async () => {
-			localStorage.setItem('misiro_voice_speed', '0.75');
+			localStorage.setItem('mirifer_voice_speed', '0.75');
 			expect(await getVoiceSpeed()).toBe(0.75);
 		});
 	});
@@ -87,7 +87,7 @@ describe('offline mode (not authenticated)', () => {
 	describe('setVoiceSpeed', () => {
 		it('stores the speed as a string in localStorage', async () => {
 			await setVoiceSpeed(1.25);
-			expect(localStorage.getItem('misiro_voice_speed')).toBe('1.25');
+			expect(localStorage.getItem('mirifer_voice_speed')).toBe('1.25');
 		});
 	});
 
@@ -100,12 +100,12 @@ describe('offline mode (not authenticated)', () => {
 
 		it('returns parsed progress from localStorage', async () => {
 			const progress = { currentDay: 3, currentSentenceIndex: 2, lastSaved: 12345 };
-			localStorage.setItem('misiro_progress', JSON.stringify(progress));
+			localStorage.setItem('mirifer_progress', JSON.stringify(progress));
 			expect(await getProgress()).toEqual(progress);
 		});
 
 		it('returns null when localStorage contains corrupted JSON', async () => {
-			localStorage.setItem('misiro_progress', 'not-json');
+			localStorage.setItem('mirifer_progress', 'not-json');
 			expect(await getProgress()).toBeNull();
 		});
 	});
@@ -114,7 +114,7 @@ describe('offline mode (not authenticated)', () => {
 		it('writes progress to localStorage with a lastSaved timestamp', async () => {
 			const before = Date.now();
 			await saveProgress(5, 3);
-			const stored = JSON.parse(localStorage.getItem('misiro_progress')!);
+			const stored = JSON.parse(localStorage.getItem('mirifer_progress')!);
 			expect(stored.currentDay).toBe(5);
 			expect(stored.currentSentenceIndex).toBe(3);
 			expect(stored.lastSaved).toBeGreaterThanOrEqual(before);
@@ -139,12 +139,12 @@ describe('offline mode (not authenticated)', () => {
 
 		it('returns the parsed completed lessons map', async () => {
 			const data = { 1: { completedAt: 123, sentenceCount: 5 } };
-			localStorage.setItem('misiro_completed_lessons', JSON.stringify(data));
+			localStorage.setItem('mirifer_completed_lessons', JSON.stringify(data));
 			expect(await getCompletedLessons()).toEqual(data);
 		});
 
 		it('returns an empty object on corrupted JSON', async () => {
-			localStorage.setItem('misiro_completed_lessons', 'bad json');
+			localStorage.setItem('mirifer_completed_lessons', 'bad json');
 			expect(await getCompletedLessons()).toEqual({});
 		});
 	});
@@ -153,7 +153,7 @@ describe('offline mode (not authenticated)', () => {
 		it('persists the map to localStorage', async () => {
 			const data = { 1: { completedAt: 999, sentenceCount: 4 } };
 			await saveCompletedLessons(data);
-			expect(JSON.parse(localStorage.getItem('misiro_completed_lessons')!)).toEqual(data);
+			expect(JSON.parse(localStorage.getItem('mirifer_completed_lessons')!)).toEqual(data);
 		});
 	});
 
@@ -168,12 +168,12 @@ describe('offline mode (not authenticated)', () => {
 			const srData = {
 				'1:1': { ease: 2.5, interval: 3, nextReview: 999, attempts: 2, successes: 1 }
 			};
-			localStorage.setItem('misiro_sr_data', JSON.stringify(srData));
+			localStorage.setItem('mirifer_sr_data', JSON.stringify(srData));
 			expect(await loadSRData()).toEqual(srData);
 		});
 
 		it('returns an empty object on corrupted JSON', async () => {
-			localStorage.setItem('misiro_sr_data', 'bad json');
+			localStorage.setItem('mirifer_sr_data', 'bad json');
 			expect(await loadSRData()).toEqual({});
 		});
 	});
@@ -184,7 +184,7 @@ describe('offline mode (not authenticated)', () => {
 				'1:1': { ease: 2.5, interval: 3, nextReview: 999, attempts: 2, successes: 1, lastReview: null }
 			};
 			await saveSRData(srData);
-			expect(JSON.parse(localStorage.getItem('misiro_sr_data')!)).toEqual(srData);
+			expect(JSON.parse(localStorage.getItem('mirifer_sr_data')!)).toEqual(srData);
 		});
 
 		it('calls cloudWrite with the correct rows when data is non-empty', async () => {
@@ -215,7 +215,7 @@ describe('offline mode (not authenticated)', () => {
 		});
 
 		it('returns the stored display name', () => {
-			localStorage.setItem('misiro_display_name', 'Alice');
+			localStorage.setItem('mirifer_display_name', 'Alice');
 			expect(getDisplayName()).toBe('Alice');
 		});
 	});
@@ -223,7 +223,7 @@ describe('offline mode (not authenticated)', () => {
 	describe('setDisplayName', () => {
 		it('writes the display name to localStorage', async () => {
 			await setDisplayName('Bob');
-			expect(localStorage.getItem('misiro_display_name')).toBe('Bob');
+			expect(localStorage.getItem('mirifer_display_name')).toBe('Bob');
 		});
 	});
 
@@ -240,7 +240,7 @@ describe('offline mode (not authenticated)', () => {
 		});
 
 		it('removes the key when null is passed', () => {
-			localStorage.setItem('misiro_avatar_url', 'https://example.com/avatar.png');
+			localStorage.setItem('mirifer_avatar_url', 'https://example.com/avatar.png');
 			setAvatarUrl(null);
 			expect(getAvatarUrl()).toBeNull();
 		});
@@ -252,7 +252,7 @@ describe('offline mode (not authenticated)', () => {
 		it('writes a new exam result to localStorage', async () => {
 			const result = { score: 18, total: 20, percentage: 90, date: 12345, wrongAnswers: [] };
 			await saveExamResult('week_1', result);
-			const stored = JSON.parse(localStorage.getItem('misiro_exam_results')!);
+			const stored = JSON.parse(localStorage.getItem('mirifer_exam_results')!);
 			expect(stored['week_1']).toEqual(result);
 		});
 
@@ -260,11 +260,11 @@ describe('offline mode (not authenticated)', () => {
 			const existing = {
 				week_1: { score: 15, total: 20, percentage: 75, date: 111, wrongAnswers: [] }
 			};
-			localStorage.setItem('misiro_exam_results', JSON.stringify(existing));
+			localStorage.setItem('mirifer_exam_results', JSON.stringify(existing));
 
 			await saveExamResult('week_2', { score: 18, total: 20, percentage: 90, date: 222, wrongAnswers: [] });
 
-			const stored = JSON.parse(localStorage.getItem('misiro_exam_results')!);
+			const stored = JSON.parse(localStorage.getItem('mirifer_exam_results')!);
 			expect(stored['week_1']).toBeDefined();
 			expect(stored['week_2']).toBeDefined();
 		});
@@ -294,7 +294,7 @@ describe('offline mode (not authenticated)', () => {
 			const data = {
 				week_1: { score: 18, total: 20, percentage: 90, date: 12345, wrongAnswers: [] }
 			};
-			localStorage.setItem('misiro_exam_results', JSON.stringify(data));
+			localStorage.setItem('mirifer_exam_results', JSON.stringify(data));
 			expect(await getExamResults()).toEqual(data);
 		});
 	});
@@ -302,20 +302,20 @@ describe('offline mode (not authenticated)', () => {
 	// ── Clear all local ───────────────────────────────────────────────────────
 
 	describe('clearAllLocal', () => {
-		it('removes all misiro-prefixed keys from localStorage', () => {
-			localStorage.setItem('misiro_progress', '{}');
-			localStorage.setItem('misiro_language', 'en');
-			localStorage.setItem('misiro_display_name', 'Alice');
-			localStorage.setItem('misiro_sr_data', '{}');
+		it('removes all mirifer-prefixed keys from localStorage', () => {
+			localStorage.setItem('mirifer_progress', '{}');
+			localStorage.setItem('mirifer_language', 'en');
+			localStorage.setItem('mirifer_display_name', 'Alice');
+			localStorage.setItem('mirifer_sr_data', '{}');
 			localStorage.setItem('other_key', 'keep_me');
 
 			clearAllLocal();
 
-			expect(localStorage.getItem('misiro_progress')).toBeNull();
-			expect(localStorage.getItem('misiro_language')).toBeNull();
-			expect(localStorage.getItem('misiro_display_name')).toBeNull();
-			expect(localStorage.getItem('misiro_sr_data')).toBeNull();
-			// Non-misiro keys are preserved
+			expect(localStorage.getItem('mirifer_progress')).toBeNull();
+			expect(localStorage.getItem('mirifer_language')).toBeNull();
+			expect(localStorage.getItem('mirifer_display_name')).toBeNull();
+			expect(localStorage.getItem('mirifer_sr_data')).toBeNull();
+			// Non-mirifer keys are preserved
 			expect(localStorage.getItem('other_key')).toBe('keep_me');
 		});
 	});
@@ -348,18 +348,18 @@ describe('authenticated mode', () => {
 			setupAuthMock('user_profiles', { language: 'fa' });
 
 			expect(await getLanguage()).toBe('fa');
-			expect(localStorage.getItem('misiro_language')).toBe('fa');
+			expect(localStorage.getItem('mirifer_language')).toBe('fa');
 		});
 
 		it('falls back to localStorage when Supabase returns no profile data', async () => {
-			localStorage.setItem('misiro_language', 'en');
+			localStorage.setItem('mirifer_language', 'en');
 			setupAuthMock('user_profiles', null);
 
 			expect(await getLanguage()).toBe('en');
 		});
 
 		it('falls back to localStorage when the profile has no language field', async () => {
-			localStorage.setItem('misiro_language', 'fa');
+			localStorage.setItem('mirifer_language', 'fa');
 			setupAuthMock('user_profiles', { language: null });
 
 			expect(await getLanguage()).toBe('fa');
@@ -371,11 +371,11 @@ describe('authenticated mode', () => {
 			setupAuthMock('user_profiles', { voice_speed: 1.5 });
 
 			expect(await getVoiceSpeed()).toBe(1.5);
-			expect(localStorage.getItem('misiro_voice_speed')).toBe('1.5');
+			expect(localStorage.getItem('mirifer_voice_speed')).toBe('1.5');
 		});
 
 		it('falls back to localStorage when Supabase returns no data', async () => {
-			localStorage.setItem('misiro_voice_speed', '0.8');
+			localStorage.setItem('mirifer_voice_speed', '0.8');
 			setupAuthMock('user_profiles', null);
 
 			expect(await getVoiceSpeed()).toBe(0.8);
@@ -392,12 +392,12 @@ describe('authenticated mode', () => {
 
 			const progress = await getProgress();
 			expect(progress).toEqual({ currentDay: 5, currentSentenceIndex: 2, lastSaved: 99999 });
-			expect(JSON.parse(localStorage.getItem('misiro_progress')!)).toEqual(progress);
+			expect(JSON.parse(localStorage.getItem('mirifer_progress')!)).toEqual(progress);
 		});
 
 		it('falls back to localStorage when Supabase returns no progress row', async () => {
 			const cached = { currentDay: 3, currentSentenceIndex: 1, lastSaved: 55555 };
-			localStorage.setItem('misiro_progress', JSON.stringify(cached));
+			localStorage.setItem('mirifer_progress', JSON.stringify(cached));
 			setupAuthMock('user_progress', null);
 
 			expect(await getProgress()).toEqual(cached);
@@ -445,7 +445,7 @@ describe('authenticated mode', () => {
 			const cached = {
 				'2:3': { ease: 1.8, interval: 2, nextReview: 777, attempts: 3, successes: 2 }
 			};
-			localStorage.setItem('misiro_sr_data', JSON.stringify(cached));
+			localStorage.setItem('mirifer_sr_data', JSON.stringify(cached));
 
 			const chain = {
 				select: vi.fn().mockReturnThis(),

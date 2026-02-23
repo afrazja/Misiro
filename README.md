@@ -1,4 +1,4 @@
-# Misiro - Learn German
+# Mirifer - Learn German
 
 A sentence-based language learning application that teaches German through practical scenarios and voice interaction.
 

@@ -4,7 +4,7 @@
 
 <div class="admin-shell">
 	<nav class="admin-nav">
-		<div class="admin-brand">⚙️ Misiro Admin</div>
+		<div class="admin-brand">⚙️ Mirifer Admin</div>
 		<div class="admin-user">👤 {data.adminUser.displayName}</div>
 		<a href="/admin" class="nav-link">📊 Dashboard</a>
 		<a href="/admin/lessons" class="nav-link">📚 Lessons</a>

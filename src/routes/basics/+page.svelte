@@ -43,7 +43,7 @@
 </script>
 
 <svelte:head>
-	<title>{pageTitle} - Misiro</title>
+	<title>{pageTitle} - Mirifer</title>
 </svelte:head>
 
 <a href="#categories-container" class="skip-link">Skip to categories</a>

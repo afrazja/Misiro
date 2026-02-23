@@ -7,7 +7,7 @@
 import type { RequestHandler } from './$types';
 
 const ALLOWED_ORIGINS = [
-	'https://misiro.vercel.app',
+	'https://mirifer.vercel.app',
 	'http://localhost:5173',
 	'http://localhost:3000',
 	'http://localhost:5500',

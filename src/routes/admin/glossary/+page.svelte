@@ -110,7 +110,7 @@
 	}
 </script>
 
-<svelte:head><title>Glossary - Misiro Admin</title></svelte:head>
+<svelte:head><title>Glossary - Mirifer Admin</title></svelte:head>
 
 <div class="page-header">
 	<h1>Glossary <span class="count">({entries.length} entries)</span></h1>

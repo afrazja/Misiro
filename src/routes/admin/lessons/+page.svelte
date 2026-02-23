@@ -13,7 +13,7 @@
 	let deleting = $state<number | null>(null);
 </script>
 
-<svelte:head><title>Lessons - Misiro Admin</title></svelte:head>
+<svelte:head><title>Lessons - Mirifer Admin</title></svelte:head>
 
 <div class="page-header">
 	<h1>Lessons</h1>

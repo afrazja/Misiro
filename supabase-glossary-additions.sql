@@ -1,5 +1,5 @@
 -- ============================================================
--- MISIRO: Glossary Additions (~170 new entries)
+-- MIRIFER: Glossary Additions (~170 new entries)
 -- Run this in Supabase SQL Editor AFTER the existing glossary
 -- INSERT ON CONFLICT (word) DO UPDATE to be safe on re-runs.
 -- ============================================================

@@ -1,5 +1,5 @@
 -- ============================================================
--- MISIRO: Lesson Quality Columns Migration
+-- MIRIFER: Lesson Quality Columns Migration
 -- Run this in Supabase SQL Editor on an EXISTING database
 -- (If you're setting up fresh, use supabase-content-schema.sql instead)
 -- ============================================================

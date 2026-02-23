@@ -1,6 +1,6 @@
 /**
  * Auth Service — wraps Supabase Auth for use across the app.
- * Ported from supabase-client.js (window.misiroAuth IIFE).
+ * Ported from supabase-client.js (window.miriferAuth IIFE).
  */
 
 import { getSupabaseBrowserClient } from '$lib/supabase/client';

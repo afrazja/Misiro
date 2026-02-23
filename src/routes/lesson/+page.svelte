@@ -332,7 +332,7 @@
 </script>
 
 <svelte:head>
-	<title>Misiro - Learn German</title>
+	<title>Mirifer - Learn German</title>
 </svelte:head>
 
 <!-- Audio Unlock Overlay -->
@@ -351,7 +351,7 @@
 	<header class="header">
 		<div class="header-left">
 			<a href="/home" class="home-btn">&larr; Home</a>
-			<h1>{'🌍'} Misiro</h1>
+			<h1>{'🌍'} Mirifer</h1>
 		</div>
 
 		<div class="day-selection-control">

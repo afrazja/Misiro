@@ -74,7 +74,7 @@
 	}
 </script>
 
-<svelte:head><title>Edit Day {data.lesson.day} - Misiro Admin</title></svelte:head>
+<svelte:head><title>Edit Day {data.lesson.day} - Mirifer Admin</title></svelte:head>
 
 <div class="editor-header">
 	<a href="/admin/lessons" class="back-link">← All Lessons</a>

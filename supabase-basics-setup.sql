@@ -1,5 +1,5 @@
 -- ============================================================
--- Misiro: Basics Tables Setup
+-- Mirifer: Basics Tables Setup
 -- Run this in Supabase Dashboard → SQL Editor
 -- Creates basics_categories, basics_sections, basics_words
 -- ============================================================

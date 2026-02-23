@@ -2,7 +2,7 @@
  * Data Layer — Server-first data access with offline fallback.
  * Authenticated: Supabase is source of truth, localStorage is cache.
  * Not authenticated: localStorage only (offline mode).
- * Ported from data-layer.js (window.MisiroData IIFE).
+ * Ported from data-layer.js (window.MiriferData IIFE).
  */
 
 import { getSupabaseBrowserClient } from '$lib/supabase/client';
@@ -36,7 +36,7 @@ export async function getLanguage(): Promise<string | null> {
 			if (data) {
 				const parsed = UserProfileLanguageRowSchema.safeParse(data);
 				if (parsed.success && parsed.data.language) {
-					localStorage.setItem('misiro_language', parsed.data.language);
+					localStorage.setItem('mirifer_language', parsed.data.language);
 					return parsed.data.language;
 				} else if (!parsed.success) {
 					logWarn('data-layer:getLanguage', `Profile language row failed validation: ${parsed.error.message}`);
@@ -46,11 +46,11 @@ export async function getLanguage(): Promise<string | null> {
 			logError('data-layer:getLanguage', e);
 		}
 	}
-	return localStorage.getItem('misiro_language') || null;
+	return localStorage.getItem('mirifer_language') || null;
 }
 
 export async function setLanguage(lang: string): Promise<void> {
-	localStorage.setItem('misiro_language', lang);
+	localStorage.setItem('mirifer_language', lang);
 	await cloudWrite('profile_update', 'language', { language: lang });
 }
 
@@ -70,7 +70,7 @@ export async function getVoiceSpeed(): Promise<number | null> {
 			if (data) {
 				const parsed = UserProfileVoiceSpeedRowSchema.safeParse(data);
 				if (parsed.success && parsed.data.voice_speed != null) {
-					localStorage.setItem('misiro_voice_speed', parsed.data.voice_speed.toString());
+					localStorage.setItem('mirifer_voice_speed', parsed.data.voice_speed.toString());
 					return parsed.data.voice_speed;
 				} else if (!parsed.success) {
 					logWarn('data-layer:getVoiceSpeed', `Profile voice_speed row failed validation: ${parsed.error.message}`);
@@ -80,12 +80,12 @@ export async function getVoiceSpeed(): Promise<number | null> {
 			logError('data-layer:getVoiceSpeed', e);
 		}
 	}
-	const v = localStorage.getItem('misiro_voice_speed');
+	const v = localStorage.getItem('mirifer_voice_speed');
 	return v ? parseFloat(v) : null;
 }
 
 export async function setVoiceSpeed(speed: number): Promise<void> {
-	localStorage.setItem('misiro_voice_speed', speed.toString());
+	localStorage.setItem('mirifer_voice_speed', speed.toString());
 	await cloudWrite('profile_update', 'voice_speed', { voice_speed: speed });
 }
 
@@ -116,7 +116,7 @@ export async function getProgress(): Promise<Progress | null> {
 						currentSentenceIndex: parsed.data.current_sentence_index,
 						lastSaved: parsed.data.last_saved
 					};
-					localStorage.setItem('misiro_progress', JSON.stringify(progress));
+					localStorage.setItem('mirifer_progress', JSON.stringify(progress));
 					return progress;
 				} else {
 					logWarn('data-layer:getProgress', `Progress row failed validation: ${parsed.error.message}`);
@@ -126,7 +126,7 @@ export async function getProgress(): Promise<Progress | null> {
 			logError('data-layer:getProgress', e);
 		}
 	}
-	const raw = localStorage.getItem('misiro_progress');
+	const raw = localStorage.getItem('mirifer_progress');
 	if (!raw) return null;
 	try {
 		return JSON.parse(raw);
@@ -142,7 +142,7 @@ export async function saveProgress(currentDay: number, currentSentenceIndex: num
 		currentSentenceIndex,
 		lastSaved: Date.now()
 	};
-	localStorage.setItem('misiro_progress', JSON.stringify(data));
+	localStorage.setItem('mirifer_progress', JSON.stringify(data));
 	await cloudWrite('progress_upsert', 'progress', {
 		current_day: currentDay,
 		current_sentence_index: currentSentenceIndex,
@@ -166,7 +166,7 @@ export async function getCompletedLessons(): Promise<Record<number, any>> {
 			if (data) {
 				const parsed = CompletedLessonsRowSchema.safeParse(data);
 				if (parsed.success && parsed.data.completed_lessons) {
-					localStorage.setItem('misiro_completed_lessons', JSON.stringify(parsed.data.completed_lessons));
+					localStorage.setItem('mirifer_completed_lessons', JSON.stringify(parsed.data.completed_lessons));
 					return parsed.data.completed_lessons;
 				} else if (!parsed.success) {
 					logWarn('data-layer:getCompletedLessons', `Completed lessons row failed validation: ${parsed.error.message}`);
@@ -176,7 +176,7 @@ export async function getCompletedLessons(): Promise<Record<number, any>> {
 			logError('data-layer:getCompletedLessons', e);
 		}
 	}
-	const raw = localStorage.getItem('misiro_completed_lessons');
+	const raw = localStorage.getItem('mirifer_completed_lessons');
 	if (!raw) return {};
 	try {
 		return JSON.parse(raw);
@@ -187,7 +187,7 @@ export async function getCompletedLessons(): Promise<Record<number, any>> {
 }
 
 export async function saveCompletedLessons(completedLessons: Record<number, any>): Promise<void> {
-	localStorage.setItem('misiro_completed_lessons', JSON.stringify(completedLessons || {}));
+	localStorage.setItem('mirifer_completed_lessons', JSON.stringify(completedLessons || {}));
 	await cloudWrite('progress_upsert', 'completed_lessons', {
 		completed_lessons: completedLessons || {}
 	});
@@ -231,7 +231,7 @@ export async function loadSRData(): Promise<Record<string, SRCard>> {
 						lastReview: parsed.data.last_review
 					};
 				}
-				localStorage.setItem('misiro_sr_data', JSON.stringify(srMap));
+				localStorage.setItem('mirifer_sr_data', JSON.stringify(srMap));
 				return srMap;
 			}
 		} catch (e) {
@@ -239,7 +239,7 @@ export async function loadSRData(): Promise<Record<string, SRCard>> {
 		}
 	}
 	try {
-		const data = localStorage.getItem('misiro_sr_data');
+		const data = localStorage.getItem('mirifer_sr_data');
 		return data ? JSON.parse(data) : {};
 	} catch (e) {
 		logWarn('data-layer:loadSRData', 'Corrupted SR data in localStorage — clearing');
@@ -248,7 +248,7 @@ export async function loadSRData(): Promise<Record<string, SRCard>> {
 }
 
 export async function saveSRData(srData: Record<string, SRCard>): Promise<void> {
-	localStorage.setItem('misiro_sr_data', JSON.stringify(srData));
+	localStorage.setItem('mirifer_sr_data', JSON.stringify(srData));
 	const rows = Object.entries(srData).map(([key, card]) => {
 		const [day, sentenceId] = key.split(':').map(Number);
 		return {
@@ -287,11 +287,11 @@ export async function recordSRAttempt(
 // ========== DISPLAY NAME ==========
 
 export function getDisplayName(): string | null {
-	return localStorage.getItem('misiro_display_name') || null;
+	return localStorage.getItem('mirifer_display_name') || null;
 }
 
 export async function setDisplayName(name: string): Promise<void> {
-	localStorage.setItem('misiro_display_name', name);
+	localStorage.setItem('mirifer_display_name', name);
 	try {
 		await authUpdateDisplayName(name);
 	} catch (e) {
@@ -302,14 +302,14 @@ export async function setDisplayName(name: string): Promise<void> {
 // ========== AVATAR ==========
 
 export function getAvatarUrl(): string | null {
-	return localStorage.getItem('misiro_avatar_url') || null;
+	return localStorage.getItem('mirifer_avatar_url') || null;
 }
 
 export function setAvatarUrl(url: string | null): void {
 	if (url) {
-		localStorage.setItem('misiro_avatar_url', url);
+		localStorage.setItem('mirifer_avatar_url', url);
 	} else {
-		localStorage.removeItem('misiro_avatar_url');
+		localStorage.removeItem('mirifer_avatar_url');
 	}
 }
 
@@ -349,7 +349,7 @@ export async function getExamResults(): Promise<Record<string, ExamResultData>> 
 						wrongAnswers: parsed.data.wrong_answers ?? []
 					};
 				}
-				localStorage.setItem('misiro_exam_results', JSON.stringify(examsMap));
+				localStorage.setItem('mirifer_exam_results', JSON.stringify(examsMap));
 				return examsMap;
 			}
 		} catch (e) {
@@ -357,7 +357,7 @@ export async function getExamResults(): Promise<Record<string, ExamResultData>> 
 		}
 	}
 	try {
-		const data = localStorage.getItem('misiro_exam_results');
+		const data = localStorage.getItem('mirifer_exam_results');
 		return data ? JSON.parse(data) : {};
 	} catch (e) {
 		logWarn('data-layer:getExamResults', 'Corrupted exam results in localStorage — clearing');
@@ -368,14 +368,14 @@ export async function getExamResults(): Promise<Record<string, ExamResultData>> 
 export async function saveExamResult(weekKey: string, resultData: ExamResultData): Promise<void> {
 	let all: Record<string, ExamResultData> = {};
 	try {
-		const raw = localStorage.getItem('misiro_exam_results');
+		const raw = localStorage.getItem('mirifer_exam_results');
 		all = raw ? JSON.parse(raw) : {};
 	} catch (e) {
 		logWarn('data-layer:saveExamResult', 'Corrupted exam results in localStorage — resetting before save');
 		all = {};
 	}
 	all[weekKey] = resultData;
-	localStorage.setItem('misiro_exam_results', JSON.stringify(all));
+	localStorage.setItem('mirifer_exam_results', JSON.stringify(all));
 
 	const weekNum = parseInt(weekKey.replace('week_', ''), 10);
 	await cloudWrite('exam_upsert', `exam_${weekKey}`, {
@@ -391,15 +391,15 @@ export async function saveExamResult(weekKey: string, resultData: ExamResultData
 // ========== CLEAR ALL LOCAL DATA ==========
 
 export function clearAllLocal(): void {
-	localStorage.removeItem('misiro_progress');
-	localStorage.removeItem('misiro_completed_lessons');
-	localStorage.removeItem('misiro_sr_data');
-	localStorage.removeItem('misiro_exam_results');
-	localStorage.removeItem('misiro_language');
-	localStorage.removeItem('misiro_voice_speed');
-	localStorage.removeItem('misiro_display_name');
-	localStorage.removeItem('misiro_avatar_url');
-	localStorage.removeItem('misiro_sync_queue');
+	localStorage.removeItem('mirifer_progress');
+	localStorage.removeItem('mirifer_completed_lessons');
+	localStorage.removeItem('mirifer_sr_data');
+	localStorage.removeItem('mirifer_exam_results');
+	localStorage.removeItem('mirifer_language');
+	localStorage.removeItem('mirifer_voice_speed');
+	localStorage.removeItem('mirifer_display_name');
+	localStorage.removeItem('mirifer_avatar_url');
+	localStorage.removeItem('mirifer_sync_queue');
 }
 
 // ========== SYNC ON LOGIN ==========
@@ -424,15 +424,15 @@ export async function syncOnLogin(): Promise<void> {
 				logWarn('data-layer:syncOnLogin', `User profile row failed validation: ${profileParsed.error.message}`);
 			} else {
 				const p = profileParsed.data;
-				if (p.language) localStorage.setItem('misiro_language', p.language);
+				if (p.language) localStorage.setItem('mirifer_language', p.language);
 				if (p.voice_speed)
-					localStorage.setItem('misiro_voice_speed', p.voice_speed.toString());
+					localStorage.setItem('mirifer_voice_speed', p.voice_speed.toString());
 				if (p.display_name)
-					localStorage.setItem('misiro_display_name', p.display_name);
+					localStorage.setItem('mirifer_display_name', p.display_name);
 				if (p.avatar_url) {
-					localStorage.setItem('misiro_avatar_url', p.avatar_url);
+					localStorage.setItem('mirifer_avatar_url', p.avatar_url);
 				} else {
-					localStorage.removeItem('misiro_avatar_url');
+					localStorage.removeItem('mirifer_avatar_url');
 				}
 			}
 		}
@@ -450,7 +450,7 @@ export async function syncOnLogin(): Promise<void> {
 			} else {
 				const p = progressParsed.data;
 				localStorage.setItem(
-					'misiro_progress',
+					'mirifer_progress',
 					JSON.stringify({
 						currentDay: p.current_day,
 						currentSentenceIndex: p.current_sentence_index,
@@ -459,7 +459,7 @@ export async function syncOnLogin(): Promise<void> {
 				);
 				if (p.completed_lessons) {
 					localStorage.setItem(
-						'misiro_completed_lessons',
+						'mirifer_completed_lessons',
 						JSON.stringify(p.completed_lessons)
 					);
 				}
@@ -488,7 +488,7 @@ export async function syncOnLogin(): Promise<void> {
 					lastReview: parsed.data.last_review
 				};
 			}
-			localStorage.setItem('misiro_sr_data', JSON.stringify(srMap));
+			localStorage.setItem('mirifer_sr_data', JSON.stringify(srMap));
 		}
 
 		// Pull exam results
@@ -512,7 +512,7 @@ export async function syncOnLogin(): Promise<void> {
 					wrongAnswers: parsed.data.wrong_answers ?? []
 				};
 			}
-			localStorage.setItem('misiro_exam_results', JSON.stringify(examsMap));
+			localStorage.setItem('mirifer_exam_results', JSON.stringify(examsMap));
 		}
 
 		// Flush pending writes

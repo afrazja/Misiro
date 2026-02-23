@@ -37,7 +37,7 @@ import { logError, logWarn } from '$utils/error';
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
 
-const QUEUE_KEY = 'misiro_sync_queue';
+const QUEUE_KEY = 'mirifer_sync_queue';
 const USER_ID = 'user-abc123';
 
 /** Write raw operations into localStorage so tests can pre-seed the queue. */

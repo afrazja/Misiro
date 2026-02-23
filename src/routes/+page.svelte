@@ -168,7 +168,7 @@
 <svelte:window onkeydown={handleKeydown} onscroll={handleScroll} />
 
 <svelte:head>
-	<title>Misiro – Learn German the Natural Way</title>
+	<title>Mirifer – Learn German the Natural Way</title>
 	<meta
 		name="description"
 		content="Master German through real conversations. Voice recognition, spaced repetition, and 60 progressive lessons — built for English and Persian speakers."
@@ -266,7 +266,7 @@
 <nav class="navbar" class:scrolled>
 	<a href="/" class="brand">
 		<span class="brand-icon">🌍</span>
-		<span class="brand-name">Misiro</span>
+		<span class="brand-name">Mirifer</span>
 	</a>
 
 	<div class="navbar-right">
@@ -405,7 +405,7 @@
 			Built Around How <span class="grad-text">Humans Actually Learn</span>
 		</h2>
 		<p class="section-lead">
-			Forget memorising verb tables. Misiro puts you in real conversations from day one.
+			Forget memorising verb tables. Mirifer puts you in real conversations from day one.
 		</p>
 
 		<div class="steps-row">
@@ -611,7 +611,7 @@
 	<div class="footer-inner">
 		<div class="footer-brand">
 			<span>🌍</span>
-			<strong>Misiro</strong>
+			<strong>Mirifer</strong>
 		</div>
 		<p>Learn German the Natural Way</p>
 		<p class="footer-sub">Made with ❤️ for language learners</p>

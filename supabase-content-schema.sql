@@ -1,5 +1,5 @@
 -- ============================================================
--- MISIRO: Content Tables Schema
+-- MIRIFER: Content Tables Schema
 -- Run this in Supabase SQL Editor (after the original setup SQL)
 -- ============================================================
 

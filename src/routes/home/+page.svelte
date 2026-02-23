@@ -237,7 +237,7 @@
 <svelte:window onkeydown={handleKeydown} />
 
 <svelte:head>
-	<title>Misiro – My Dashboard</title>
+	<title>Mirifer – My Dashboard</title>
 </svelte:head>
 
 <!-- Confirmation Toast -->
@@ -296,7 +296,7 @@
 	<nav class="top-nav">
 		<a href="/" class="nav-brand" title="Back to home">
 			<span>🌍</span>
-			<span class="brand-text">Misiro</span>
+			<span class="brand-text">Mirifer</span>
 		</a>
 
 		<div class="nav-right">
@@ -340,7 +340,7 @@
 							: 'Pick up where you left off.'}
 					</p>
 				{:else}
-					<h1>Misiro</h1>
+					<h1>Mirifer</h1>
 					<p>Learn German the Natural Way</p>
 				{/if}
 			</div>

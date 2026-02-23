@@ -120,7 +120,7 @@
 	}
 </script>
 
-<svelte:head><title>Edit {data.category.title_en} - Misiro Admin</title></svelte:head>
+<svelte:head><title>Edit {data.category.title_en} - Mirifer Admin</title></svelte:head>
 
 <div class="editor-header">
 	<a href="/admin/basics" class="back-link">← All Categories</a>

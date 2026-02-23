@@ -8,7 +8,7 @@
 	};
 </script>
 
-<svelte:head><title>Basics - Misiro Admin</title></svelte:head>
+<svelte:head><title>Basics - Mirifer Admin</title></svelte:head>
 
 <h1>Basics Categories</h1>
 <p class="subtitle">Click a category to edit its words and content.</p>
