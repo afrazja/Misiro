@@ -1,0 +1,186 @@
+{
+  "title": "Day 72: Planning a Complex Trip",
+  "titleFa": "روز ۷۲: برنامه‌ریزی برای یک سفر پیچیده",
+  "sentences": [
+    {
+      "id": 1,
+      "role": "sent",
+      "targetText": "Wir planen diesen Sommer eine Reise nach Europa.",
+      "translation": "We are planning a trip to Europe this summer.",
+      "translationFa": "ما برای این تابستان یک سفر به اروپا برنامه‌ریزی می‌کنیم."
+    },
+    {
+      "id": 2,
+      "role": "received",
+      "audioText": "Hast du die Flugtickets schon gebucht?",
+      "translation": "Have you booked the flight tickets yet?",
+      "translationFa": "آیا بلیت‌های پرواز را از قبل رزرو کرده‌ای؟"
+    },
+    {
+      "id": 3,
+      "role": "sent",
+      "targetText": "Ich muss meinen Reisepass erneuern, bevor wir reisen.",
+      "translation": "I need to renew my passport before we travel.",
+      "translationFa": "من باید پاسپورتم را قبل از سفر تمدید کنم."
+    },
+    {
+      "id": 4,
+      "role": "sent",
+      "targetText": "Unser Flug startet um sechs Uhr morgens.",
+      "translation": "Our flight departs at six in the morning.",
+      "translationFa": "پرواز ما ساعت شش صبح حرکت می‌کند."
+    },
+    {
+      "id": 5,
+      "role": "sent",
+      "targetText": "Wir werden die ersten drei Nächte in einem Hotel übernachten.",
+      "translation": "We will stay in a hotel for the first three nights.",
+      "translationFa": "ما سه شب اول را در یک هتل اقامت خواهیم داشت."
+    },
+    {
+      "id": 6,
+      "role": "sent",
+      "targetText": "Danach wollen wir ein Auto mieten und nach Süden fahren.",
+      "translation": "After that, we want to rent a car and drive south.",
+      "translationFa": "بعد از آن، می‌خواهیم یک ماشین کرایه کنیم و به سمت جنوب برانیم."
+    },
+    {
+      "id": 7,
+      "role": "received",
+      "audioText": "Hast du die Preise für die Mietwagen verglichen?",
+      "translation": "Did you compare the prices for the rental cars?",
+      "translationFa": "آیا قیمت ماشین‌های کرایه‌ای را مقایسه کردی؟"
+    },
+    {
+      "id": 8,
+      "role": "received",
+      "audioText": "Die Reiseroute ist ziemlich voll, aber sehr spannend.",
+      "translation": "The itinerary is quite packed, but very exciting.",
+      "translationFa": "برنامه سفر نسبتاً پر است، اما بسیار هیجان‌انگیز است."
+    },
+    {
+      "id": 9,
+      "role": "sent",
+      "targetText": "Wir sollten auf jeden Fall eine Reiseversicherung abschließen.",
+      "translation": "We should definitely buy travel insurance.",
+      "translationFa": "ما حتماً باید بیمه مسافرتی بگیریم."
+    },
+    {
+      "id": 10,
+      "role": "sent",
+      "targetText": "Wie viel Gepäck dürfen wir mitnehmen?",
+      "translation": "How much luggage are we allowed to bring?",
+      "translationFa": "چقدر بار اجازه داریم با خود ببریم؟"
+    },
+    {
+      "id": 11,
+      "role": "sent",
+      "targetText": "Ich habe meinen Koffer schon gepackt.",
+      "translation": "I have already packed my suitcase.",
+      "translationFa": "من از قبل چمدانم را بسته‌ام."
+    },
+    {
+      "id": 12,
+      "role": "received",
+      "audioText": "Wir haben einen zweistündigen Aufenthalt in Frankfurt.",
+      "translation": "We have a two-hour layover in Frankfurt.",
+      "translationFa": "ما یک توقف دو ساعته در فرانکفورت داریم."
+    },
+    {
+      "id": 13,
+      "role": "received",
+      "audioText": "Bitte stelle sicher, dass wir pünktlich am Flughafen ankommen.",
+      "translation": "Please make sure we arrive at the airport on time.",
+      "translationFa": "لطفاً مطمئن شو که به موقع به فرودگاه می‌رسیم."
+    },
+    {
+      "id": 14,
+      "role": "sent",
+      "targetText": "Ist das Frühstück in der Hotelreservierung inbegriffen?",
+      "translation": "Is breakfast included in the hotel reservation?",
+      "translationFa": "آیا صبحانه در رزرو هتل شامل می‌شود؟"
+    },
+    {
+      "id": 15,
+      "role": "sent",
+      "targetText": "Wir müssen etwas Geld in die Landeswährung umtauschen.",
+      "translation": "We need to change some money into the local currency.",
+      "translationFa": "ما باید مقداری پول به ارز محلی تبدیل کنیم."
+    },
+    {
+      "id": 16,
+      "role": "sent",
+      "targetText": "Lass uns eine Offline-Karte der Stadt herunterladen.",
+      "translation": "Let's download an offline map of the city.",
+      "translationFa": "بیا یک نقشه آفلاین از شهر دانلود کنیم."
+    },
+    {
+      "id": 17,
+      "role": "sent",
+      "targetText": "Ich habe eine Liste der besten Restaurants vorbereitet.",
+      "translation": "I have prepared a list of the best restaurants.",
+      "translationFa": "من لیستی از بهترین رستوران‌ها آماده کرده‌ام."
+    },
+    {
+      "id": 18,
+      "role": "sent",
+      "targetText": "Wir fahren mit dem Zug von Berlin nach München.",
+      "translation": "We are taking the train from Berlin to Munich.",
+      "translationFa": "ما با قطار از برلین به مونیخ می‌رویم."
+    },
+    {
+      "id": 19,
+      "role": "received",
+      "audioText": "Die Reise mit dem Zug dauert etwa vier Stunden.",
+      "translation": "The journey by train takes about four hours.",
+      "translationFa": "سفر با قطار حدود چهار ساعت طول می‌کشد."
+    },
+    {
+      "id": 20,
+      "role": "sent",
+      "targetText": "Brauchen wir ein Visum für dieses Land?",
+      "translation": "Do we need a visa for this country?",
+      "translationFa": "آیا برای این کشور به ویزا نیاز داریم؟"
+    },
+    {
+      "id": 21,
+      "role": "sent",
+      "targetText": "Ich buche lieber Unterkünfte mit kostenloser Stornierung.",
+      "translation": "I prefer booking accommodations with free cancellation.",
+      "translationFa": "من ترجیح می‌دهم اقامتگاه‌هایی با امکان لغو رایگان رزرو کنم."
+    },
+    {
+      "id": 22,
+      "role": "sent",
+      "targetText": "Wir werden zwei Tage damit verbringen, den Nationalpark zu erkunden.",
+      "translation": "We will spend two days exploring the national park.",
+      "translationFa": "ما دو روز را صرف گشت و گذار در پارک ملی خواهیم کرد."
+    },
+    {
+      "id": 23,
+      "role": "received",
+      "audioText": "Kannst du die Abfahrtszeit noch einmal überprüfen?",
+      "translation": "Can you double-check the departure time?",
+      "translationFa": "می‌توانی زمان حرکت را دوباره بررسی کنی؟"
+    },
+    {
+      "id": 24,
+      "role": "sent",
+      "targetText": "Lass uns alle unsere Reisedokumente an einem sicheren Ort aufbewahren.",
+      "translation": "Let's keep all our travel documents in one safe place.",
+      "translationFa": "بیا تمام مدارک سفرمان را در یک مکان امن نگه داریم."
+    },
+    {
+      "id": 25,
+      "role": "sent",
+      "targetText": "Diese Reise wird ein unvergessliches Abenteuer.",
+      "translation": "This trip will be an unforgettable adventure.",
+      "translationFa": "این سفر یک ماجراجویی فراموش‌نشدنی خواهد بود."
+    }
+  ],
+  "difficulty": "B1+",
+  "grammarFocus": "Modal verbs: müssen / wollen / sollen / dürfen + Infinitiv + Futur I: werden + Infinitiv + Perfekt: habe gepackt / vorbereitet",
+  "grammarFocusFa": "افعال وجهی: müssen / wollen / sollen / dürfen + مصدر + آینده: werden + مصدر + ماضی نقلی: habe gepackt / vorbereitet",
+  "description": "Plan a complex multi-city trip in German. Book flights, hotels, and rental cars, discuss itineraries, and handle all the practical details of travel preparation.",
+  "descriptionFa": "یک سفر پیچیده چند شهره را به زبان آلمانی برنامه‌ریزی کنید. پرواز، هتل و ماشین کرایه‌ای رزرو کنید، درباره برنامه سفر بحث کنید و تمام جزئیات عملی آماده‌سازی سفر را بررسی کنید."
+}
