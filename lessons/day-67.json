@@ -1,0 +1,165 @@
+{
+  "title": "Day 67: Dealing with Bureaucracy",
+  "titleFa": "روز ۶۷: سر و کار داشتن با بروکراسی",
+  "sentences": [
+    {
+      "id": 1,
+      "role": "sent",
+      "targetText": "Ich muss einen Termin beim Bürgeramt machen.",
+      "translation": "I need to make an appointment at the citizen center.",
+      "translationFa": "من باید از اداره امور شهروندان یک وقت بگیرم."
+    },
+    {
+      "id": 2,
+      "role": "sent",
+      "targetText": "Wo kann ich eine Aufenthaltserlaubnis beantragen?",
+      "translation": "Where can I apply for a residence permit?",
+      "translationFa": "کجا می‌توانم برای اجازه اقامت درخواست دهم؟"
+    },
+    {
+      "id": 3,
+      "role": "received",
+      "audioText": "Sie müssen dieses Formular vollständig ausfüllen.",
+      "translation": "You must fill out this form completely.",
+      "translationFa": "شما باید این فرم را به طور کامل پر کنید."
+    },
+    {
+      "id": 4,
+      "role": "received",
+      "audioText": "Bitte unterschreiben Sie hier unten.",
+      "translation": "Please sign here at the bottom.",
+      "translationFa": "لطفاً اینجا پایین امضا کنید."
+    },
+    {
+      "id": 5,
+      "role": "received",
+      "audioText": "Ich brauche eine Kopie Ihres Reisepasses und Visums.",
+      "translation": "I need a copy of your passport and visa.",
+      "translationFa": "من به یک کپی از پاسپورت و ویزای شما نیاز دارم."
+    },
+    {
+      "id": 6,
+      "role": "received",
+      "audioText": "Haben Sie alle notwendigen Unterlagen mitgebracht?",
+      "translation": "Have you brought all the necessary documents?",
+      "translationFa": "آیا تمام مدارک لازم را به همراه آورده‌اید؟"
+    },
+    {
+      "id": 7,
+      "role": "received",
+      "audioText": "Die Bearbeitungszeit dauert etwa vier bis sechs Wochen.",
+      "translation": "The processing time takes about four to six weeks.",
+      "translationFa": "زمان پردازش حدود چهار تا شش هفته طول می‌کشد."
+    },
+    {
+      "id": 8,
+      "role": "received",
+      "audioText": "Sie müssen Ihre neue Adresse innerhalb von zwei Wochen anmelden.",
+      "translation": "You have to register your new address within two weeks.",
+      "translationFa": "شما باید آدرس جدید خود را در عرض دو هفته ثبت کنید."
+    },
+    {
+      "id": 9,
+      "role": "sent",
+      "targetText": "Wo befindet sich die Ausländerbehörde?",
+      "translation": "Where is the immigration office located?",
+      "translationFa": "اداره اتباع خارجی کجاست؟"
+    },
+    {
+      "id": 10,
+      "role": "sent",
+      "targetText": "Brauche ich eine beglaubigte Übersetzung meiner Geburtsurkunde?",
+      "translation": "Do I need a certified translation of my birth certificate?",
+      "translationFa": "آیا به ترجمه رسمی شناسنامه‌ام نیاز دارم؟"
+    },
+    {
+      "id": 11,
+      "role": "received",
+      "audioText": "Bitte ziehen Sie eine Nummer und warten Sie im Wartezimmer.",
+      "translation": "Please take a number and wait in the waiting room.",
+      "translationFa": "لطفاً یک شماره بگیرید و در اتاق انتظار منتظر بمانید."
+    },
+    {
+      "id": 12,
+      "role": "received",
+      "audioText": "Ihr Antrag wurde genehmigt.",
+      "translation": "Your application has been approved.",
+      "translationFa": "درخواست شما تأیید شده است."
+    },
+    {
+      "id": 13,
+      "role": "received",
+      "audioText": "Leider fehlt ein Dokument in Ihrem Antrag.",
+      "translation": "Unfortunately, a document is missing from your application.",
+      "translationFa": "متأسفانه یک مدرک در درخواست شما کم است."
+    },
+    {
+      "id": 14,
+      "role": "sent",
+      "targetText": "Wie hoch ist die Gebühr für die Verlängerung?",
+      "translation": "How much is the fee for the extension?",
+      "translationFa": "هزینه تمدید چقدر است؟"
+    },
+    {
+      "id": 15,
+      "role": "received",
+      "audioText": "Sie können die Gebühr an der Kasse bezahlen.",
+      "translation": "You can pay the fee at the cash register.",
+      "translationFa": "شما می‌توانید هزینه را در صندوق پرداخت کنید."
+    },
+    {
+      "id": 16,
+      "role": "sent",
+      "targetText": "Ich möchte diese Kopien beglaubigen lassen.",
+      "translation": "I would like to have these copies certified.",
+      "translationFa": "من می‌خواهم این کپی‌ها را برابر اصل کنم."
+    },
+    {
+      "id": 17,
+      "role": "sent",
+      "targetText": "Ist es möglich, die Dokumente online einzureichen?",
+      "translation": "Is it possible to submit the documents online?",
+      "translationFa": "آیا امکان ارسال آنلاین مدارک وجود دارد؟"
+    },
+    {
+      "id": 18,
+      "role": "sent",
+      "targetText": "Mein aktuelles Visum läuft nächsten Monat ab.",
+      "translation": "My current visa expires next month.",
+      "translationFa": "ویزای فعلی من ماه آینده منقضی می‌شود."
+    },
+    {
+      "id": 19,
+      "role": "sent",
+      "targetText": "Ich habe einen Brief vom Finanzamt bekommen.",
+      "translation": "I received a letter from the tax office.",
+      "translationFa": "من نامه‌ای از اداره مالیات دریافت کردم."
+    },
+    {
+      "id": 20,
+      "role": "sent",
+      "targetText": "Könnten Sie mir bitte helfen, diesen Brief zu verstehen?",
+      "translation": "Could you please help me understand this letter?",
+      "translationFa": "ممکن است لطفاً به من کمک کنید تا این نامه را بفهمم؟"
+    },
+    {
+      "id": 21,
+      "role": "sent",
+      "targetText": "Ich warte auf meine Arbeitserlaubnis.",
+      "translation": "I am waiting for my work permit.",
+      "translationFa": "من منتظر اجازه کارم هستم."
+    },
+    {
+      "id": 22,
+      "role": "sent",
+      "targetText": "Danke für Ihre Hilfe bei den Formularen.",
+      "translation": "Thank you for your help with the paperwork.",
+      "translationFa": "ممنون از کمک شما در انجام کارهای اداری."
+    }
+  ],
+  "difficulty": "B2",
+  "grammarFocus": "Bureaucratic vocabulary: Antrag, Unterlagen, beglaubigt + müssen + Infinitiv / Passiv: wurde genehmigt",
+  "grammarFocusFa": "واژگان اداری: Antrag، Unterlagen، beglaubigt + müssen + مصدر / مجهول: wurde genehmigt",
+  "description": "Navigate German bureaucracy — visit the Bürgeramt, apply for permits, and deal with official paperwork and government letters.",
+  "descriptionFa": "با بروکراسی آلمان کنار بیایید — به اداره امور شهروندان بروید، برای مجوزها درخواست دهید و با کاغذبازی و نامه‌های رسمی سروکار داشته باشید."
+}

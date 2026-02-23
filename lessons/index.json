@@ -65,7 +65,8 @@
     { "day": 63, "file": "day-63.json", "title": "Day 63: Giving & Receiving Advice", "titleFa": "روز ۶۳: دادن و گرفتن مشورت", "group": "advanced" },
     { "day": 64, "file": "day-64.json", "title": "Day 64: Expressing Agreement & Disagreement", "titleFa": "روز ۶۴: بیان موافقت و مخالفت", "group": "advanced" },
     { "day": 65, "file": "day-65.json", "title": "Day 65: Discussing the News & Current Events", "titleFa": "روز ۶۵: بحث درباره اخبار و رویدادهای جاری", "group": "advanced" },
-    { "day": 66, "file": "day-66.json", "title": "Day 66: Describing Personality & Character", "titleFa": "روز ۶۶: توصیف شخصیت و خصوصیات اخلاقی", "group": "advanced" }
+    { "day": 66, "file": "day-66.json", "title": "Day 66: Describing Personality & Character", "titleFa": "روز ۶۶: توصیف شخصیت و خصوصیات اخلاقی", "group": "advanced" },
+    { "day": 67, "file": "day-67.json", "title": "Day 67: Dealing with Bureaucracy", "titleFa": "روز ۶۷: سر و کار داشتن با بروکراسی", "group": "advanced" }
   ],
   "glossaryFile": "glossary.json"
 }
