@@ -365,46 +365,57 @@
 			<button class="cal-close" onclick={() => showCalendar = false} aria-label="Close calendar">×</button>
 
 			<div class="cal-header">
-				<h2>🗓️ Your 60-Day Journey</h2>
-				<p>{daysCompleted} of 60 days completed</p>
+				<h2>📅 Practice Calendar</h2>
+				<p>
+					{daysCompleted} lesson{daysCompleted === 1 ? '' : 's'} completed
+					{#if streakCount > 0} · {streakCount}-day streak 🔥{/if}
+				</p>
 			</div>
 
-			<div class="cal-level-badges">
-				<span class="cal-lvl-badge a1">A1 · Days 1–20</span>
-				<span class="cal-lvl-badge a2">A2 · Days 21–40</span>
-				<span class="cal-lvl-badge b1">B1+ · Days 41–60</span>
+			<!-- Month navigation -->
+			<div class="pcal-header">
+				<button class="pcal-nav-btn" onclick={prevCalMonth} aria-label="Previous month">‹</button>
+				<span class="pcal-title">{MONTH_NAMES[calMonth]} {calYear}</span>
+				<button
+					class="pcal-nav-btn"
+					onclick={nextCalMonth}
+					disabled={calYear === new Date().getFullYear() && calMonth >= new Date().getMonth()}
+					aria-label="Next month"
+				>›</button>
 			</div>
 
-			<div class="cal-grid">
-				{#each Array.from({ length: 60 }, (_, i) => i + 1) as day}
-					{@const done = !!completedLessons[day]}
-					{@const isCurrent = day === currentDay && !done}
-					{@const level = day <= 20 ? 'a1' : day <= 40 ? 'a2' : 'b1'}
-					{@const completedDate = done && completedLessons[day]?.completedAt
-						? new Date(completedLessons[day].completedAt).toLocaleDateString('en', { month: 'short', day: 'numeric' })
-						: null}
-					<div
-						class="cal-day {level}"
-						class:done
-						class:is-current={isCurrent}
-						title={done && completedDate
-							? `Day ${day} · Done on ${completedDate}`
-							: isCurrent
-							? `Day ${day} · Up next!`
-							: `Day ${day}`}
-					>
-						<span class="cal-day-icon">{done ? '✓' : isCurrent ? '▶' : ''}</span>
-						<span class="cal-day-num">{day}</span>
-					</div>
+			<!-- Day-of-week headers -->
+			<div class="pcal-dow">
+				{#each ['M','T','W','T','F','S','S'] as label}
+					<span class="pcal-dow-cell">{label}</span>
 				{/each}
 			</div>
 
+			<!-- Calendar day cells -->
+			<div class="pcal-grid">
+				{#each buildCalCells(calYear, calMonth) as cell}
+					{#if cell.day === null}
+						<span class="pcal-cell pcal-empty"></span>
+					{:else}
+						<span
+							class="pcal-cell"
+							class:practiced={practiceDates.has(cell.key!)}
+							class:today={cell.isToday}
+							title={practiceDates.has(cell.key!)
+								? `Practiced on ${new Date(cell.key!).toLocaleDateString('en', { month: 'long', day: 'numeric' })}`
+								: cell.isToday ? 'Today' : ''}
+						>{cell.day}</span>
+					{/if}
+				{/each}
+			</div>
+
+			<!-- Legend -->
 			<div class="cal-legend">
-				<span class="leg-item"><span class="leg-sw a1-sw"></span>A1 done</span>
-				<span class="leg-item"><span class="leg-sw a2-sw"></span>A2 done</span>
-				<span class="leg-item"><span class="leg-sw b1-sw"></span>B1+ done</span>
-				<span class="leg-item"><span class="leg-sw cur-sw"></span>Up next</span>
-				<span class="leg-item"><span class="leg-sw empty-sw"></span>Upcoming</span>
+				<span class="leg-item"><span class="leg-sw practiced-sw"></span>Practiced</span>
+				<span class="leg-item"><span class="leg-sw today-sw"></span>Today</span>
+				<span class="leg-item pcal-month-stat">
+					{thisMonthPracticed} day{thisMonthPracticed !== 1 ? 's' : ''} this month
+				</span>
 			</div>
 		</div>
 	</div>
@@ -455,8 +466,8 @@
 				{#if isAuthenticated}
 					<h1>Welcome back, {displayName.split(' ')[0]}! 👋</h1>
 					<p>
-						{daysCompleted > 0
-							? `${daysCompleted} day${daysCompleted === 1 ? '' : 's'} completed — keep it going!`
+						{streakCount > 0
+							? `You're on a ${streakCount}-day streak — keep it going!`
 							: 'Pick up where you left off.'}
 					</p>
 				{:else}
@@ -486,11 +497,12 @@
 				<span class="stat-value">{currentLevel}</span>
 				<span class="stat-label">Current Level</span>
 			</div>
-			<div class="stat-card">
-				<span class="stat-icon">📅</span>
-				<span class="stat-value">{thisMonthPracticed}</span>
-				<span class="stat-label">This Month</span>
-			</div>
+			<button class="stat-card stat-card-clickable" onclick={() => showCalendar = true} title="View your practice calendar">
+				<span class="stat-icon">🔥</span>
+				<span class="stat-value">{streakCount}</span>
+				<span class="stat-label">Day Streak</span>
+				<span class="stat-cta-hint">view calendar →</span>
+			</button>
 			<a href="/lesson" class="stat-card stat-card-link" class:has-due={dueReviews > 0} title="Go to lesson for reviews">
 				<span class="stat-icon">🔄</span>
 				<span class="stat-value">{dueReviews}</span>
@@ -499,47 +511,6 @@
 					<span class="stat-cta">Review now →</span>
 				{/if}
 			</a>
-		</div>
-
-		<!-- ── Practice Calendar ────────────────────────── -->
-		<div class="practice-cal-card">
-			<div class="pcal-header">
-				<button class="pcal-nav-btn" onclick={prevCalMonth} aria-label="Previous month">‹</button>
-				<span class="pcal-title">{MONTH_NAMES[calMonth]} {calYear}</span>
-				<button
-					class="pcal-nav-btn"
-					onclick={nextCalMonth}
-					disabled={calYear === new Date().getFullYear() && calMonth >= new Date().getMonth()}
-					aria-label="Next month"
-				>›</button>
-			</div>
-
-			<div class="pcal-dow">
-				{#each ['M','T','W','T','F','S','S'] as label}
-					<span class="pcal-dow-cell">{label}</span>
-				{/each}
-			</div>
-
-			<div class="pcal-grid">
-				{#each buildCalCells(calYear, calMonth) as cell}
-					{#if cell.day === null}
-						<span class="pcal-cell pcal-empty"></span>
-					{:else}
-						<span
-							class="pcal-cell"
-							class:practiced={practiceDates.has(cell.key!)}
-							class:today={cell.isToday}
-							title={practiceDates.has(cell.key!) ? `Practiced on ${cell.key}` : (cell.isToday ? 'Today' : '')}
-						>{cell.day}</span>
-					{/if}
-				{/each}
-			</div>
-
-			<div class="pcal-footer">
-				<span class="pcal-legend-item"><span class="pcal-dot practiced-dot"></span>Practiced</span>
-				<span class="pcal-legend-item"><span class="pcal-dot today-dot"></span>Today</span>
-				<span class="pcal-month-count">{thisMonthPracticed} day{thisMonthPracticed !== 1 ? 's' : ''} this month</span>
-			</div>
 		</div>
 
 		<!-- ── Learning Path Progress ──────────────────── -->
@@ -1350,89 +1321,117 @@
 	.cal-lvl-badge.a2 { background: rgba(52, 152, 219, 0.18); color: #3498db; }
 	.cal-lvl-badge.b1 { background: rgba(155, 89, 182, 0.18); color: #9b59b6; }
 
-	/* ── Day grid ─────────────────────────────────────── */
-	.cal-grid {
-		display: grid;
-		grid-template-columns: repeat(10, 1fr);
-		gap: 5px;
-		margin-bottom: 20px;
+	/* ── Practice Calendar (inside modal) ────────────── */
+	.pcal-header {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		margin-bottom: 12px;
 	}
 
-	.cal-day {
-		aspect-ratio: 1;
+	.pcal-title {
+		font-size: 0.95rem;
+		font-weight: 700;
+		color: #ccc;
+	}
+
+	.pcal-nav-btn {
+		background: rgba(255, 255, 255, 0.06);
+		border: 1px solid rgba(255, 255, 255, 0.1);
+		color: #aaa;
+		width: 30px;
+		height: 30px;
 		border-radius: 8px;
-		background: rgba(255, 255, 255, 0.04);
-		border: 1px solid rgba(255, 255, 255, 0.07);
+		cursor: pointer;
+		font-size: 1.1rem;
+		font-family: inherit;
 		display: flex;
-		flex-direction: column;
 		align-items: center;
 		justify-content: center;
-		gap: 1px;
-		cursor: default;
-		transition: transform 0.15s, box-shadow 0.15s;
-		position: relative;
-		overflow: hidden;
-	}
-
-	.cal-day:hover {
-		transform: scale(1.18);
-		z-index: 2;
-		box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
-	}
-
-	/* Level border tints for upcoming days */
-	.cal-day.a1 { border-color: rgba(46, 204, 113, 0.14); }
-	.cal-day.a2 { border-color: rgba(52, 152, 219, 0.14); }
-	.cal-day.b1 { border-color: rgba(155, 89, 182, 0.14); }
-
-	/* Completed days */
-	.cal-day.done.a1 {
-		background: rgba(46, 204, 113, 0.22);
-		border-color: rgba(46, 204, 113, 0.45);
-	}
-	.cal-day.done.a2 {
-		background: rgba(52, 152, 219, 0.22);
-		border-color: rgba(52, 152, 219, 0.45);
-	}
-	.cal-day.done.b1 {
-		background: rgba(155, 89, 182, 0.22);
-		border-color: rgba(155, 89, 182, 0.45);
-	}
-
-	/* Current / up-next day */
-	.cal-day.is-current {
-		background: linear-gradient(135deg, #e94560, #ff6b6b) !important;
-		border-color: transparent !important;
-		animation: calPulse 2s ease-in-out infinite;
-	}
-
-	@keyframes calPulse {
-		0%, 100% { box-shadow: 0 0 0 0 rgba(233, 69, 96, 0.5); }
-		50%       { box-shadow: 0 0 0 5px rgba(233, 69, 96, 0); }
-	}
-
-	.cal-day-icon {
-		font-size: 0.7rem;
 		line-height: 1;
+		transition: all 0.2s;
+	}
+
+	.pcal-nav-btn:hover:not(:disabled) {
+		background: rgba(255, 255, 255, 0.13);
+		border-color: rgba(255, 255, 255, 0.25);
 		color: #fff;
+	}
+
+	.pcal-nav-btn:disabled {
+		opacity: 0.25;
+		cursor: not-allowed;
+	}
+
+	.pcal-dow {
+		display: grid;
+		grid-template-columns: repeat(7, 1fr);
+		gap: 4px;
+		margin-bottom: 4px;
+	}
+
+	.pcal-dow-cell {
+		text-align: center;
+		font-size: 0.65rem;
+		font-weight: 700;
+		color: #444;
+		padding: 3px 0;
+		text-transform: uppercase;
+		letter-spacing: 0.04em;
+	}
+
+	.pcal-grid {
+		display: grid;
+		grid-template-columns: repeat(7, 1fr);
+		gap: 4px;
+		margin-bottom: 18px;
+	}
+
+	.pcal-cell {
+		aspect-ratio: 1;
+		border-radius: 8px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		font-size: 0.82rem;
+		font-weight: 500;
+		color: #555;
+		background: rgba(255, 255, 255, 0.03);
+		border: 1px solid transparent;
+		transition: background 0.15s, border-color 0.15s;
+		cursor: default;
+	}
+
+	.pcal-empty {
+		background: transparent !important;
+		border-color: transparent !important;
+	}
+
+	.pcal-cell.practiced {
+		background: rgba(46, 204, 113, 0.18);
+		border-color: rgba(46, 204, 113, 0.4);
+		color: #2ecc71;
 		font-weight: 700;
 	}
 
-	.cal-day-num {
-		font-size: 0.55rem;
-		color: #555;
-		font-weight: 600;
-		line-height: 1;
+	.pcal-cell.today {
+		border-color: rgba(233, 69, 96, 0.6);
+		color: #e94560;
+		font-weight: 700;
 	}
 
-	.cal-day.done .cal-day-num  { color: rgba(255, 255, 255, 0.7); }
-	.cal-day.is-current .cal-day-num { color: rgba(255, 255, 255, 0.85); }
+	.pcal-cell.practiced.today {
+		background: rgba(46, 204, 113, 0.22);
+		border-color: #2ecc71;
+		color: #2ecc71;
+		box-shadow: inset 0 0 0 1px rgba(233, 69, 96, 0.45);
+	}
 
 	/* ── Legend ───────────────────────────────────────── */
 	.cal-legend {
 		display: flex;
 		gap: 14px;
-		justify-content: center;
+		align-items: center;
 		flex-wrap: wrap;
 		padding-top: 14px;
 		border-top: 1px solid rgba(255, 255, 255, 0.07);
@@ -1453,162 +1452,11 @@
 		flex-shrink: 0;
 	}
 
-	.a1-sw   { background: rgba(46, 204, 113, 0.5); border: 1px solid rgba(46, 204, 113, 0.7); }
-	.a2-sw   { background: rgba(52, 152, 219, 0.5); border: 1px solid rgba(52, 152, 219, 0.7); }
-	.b1-sw   { background: rgba(155, 89, 182, 0.5); border: 1px solid rgba(155, 89, 182, 0.7); }
-	.cur-sw  { background: linear-gradient(135deg, #e94560, #ff6b6b); }
-	.empty-sw { background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 255, 255, 0.1); }
+	.practiced-sw { background: rgba(46, 204, 113, 0.25); border: 1px solid rgba(46, 204, 113, 0.5); }
+	.today-sw     { background: transparent; border: 1px solid rgba(233, 69, 96, 0.6); }
 
-	/* ── Practice Calendar Card ──────────────────────── */
-	.practice-cal-card {
-		background: rgba(255, 255, 255, 0.04);
-		border: 1px solid rgba(255, 255, 255, 0.08);
-		border-radius: 20px;
-		padding: 20px 24px;
-	}
-
-	.pcal-header {
-		display: flex;
-		align-items: center;
-		justify-content: space-between;
-		margin-bottom: 14px;
-	}
-
-	.pcal-title {
-		font-size: 0.92rem;
-		font-weight: 700;
-		color: #ccc;
-	}
-
-	.pcal-nav-btn {
-		background: rgba(255, 255, 255, 0.06);
-		border: 1px solid rgba(255, 255, 255, 0.1);
-		color: #aaa;
-		width: 28px;
-		height: 28px;
-		border-radius: 7px;
-		cursor: pointer;
-		font-size: 1.1rem;
-		font-family: inherit;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		line-height: 1;
-		transition: all 0.2s;
-	}
-
-	.pcal-nav-btn:hover:not(:disabled) {
-		background: rgba(255, 255, 255, 0.12);
-		border-color: rgba(255, 255, 255, 0.22);
-		color: #fff;
-	}
-
-	.pcal-nav-btn:disabled {
-		opacity: 0.25;
-		cursor: not-allowed;
-	}
-
-	.pcal-dow {
-		display: grid;
-		grid-template-columns: repeat(7, 1fr);
-		gap: 3px;
-		margin-bottom: 4px;
-	}
-
-	.pcal-dow-cell {
-		text-align: center;
-		font-size: 0.65rem;
-		font-weight: 700;
-		color: #444;
-		padding: 3px 0;
-		text-transform: uppercase;
-		letter-spacing: 0.04em;
-	}
-
-	.pcal-grid {
-		display: grid;
-		grid-template-columns: repeat(7, 1fr);
-		gap: 3px;
-	}
-
-	.pcal-cell {
-		aspect-ratio: 1;
-		border-radius: 7px;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		font-size: 0.75rem;
-		font-weight: 500;
-		color: #555;
-		background: rgba(255, 255, 255, 0.03);
-		border: 1px solid transparent;
-		transition: background 0.15s, border-color 0.15s;
-		cursor: default;
-	}
-
-	.pcal-empty {
-		background: transparent !important;
-		border-color: transparent !important;
-	}
-
-	.pcal-cell.practiced {
-		background: rgba(46, 204, 113, 0.18);
-		border-color: rgba(46, 204, 113, 0.38);
-		color: #2ecc71;
-		font-weight: 700;
-	}
-
-	.pcal-cell.today {
-		border-color: rgba(233, 69, 96, 0.55);
-		color: #e94560;
-		font-weight: 700;
-	}
-
-	.pcal-cell.practiced.today {
-		background: rgba(46, 204, 113, 0.22);
-		border-color: #2ecc71;
-		color: #2ecc71;
-		box-shadow: inset 0 0 0 1px rgba(233, 69, 96, 0.45);
-	}
-
-	.pcal-footer {
-		display: flex;
-		align-items: center;
-		gap: 14px;
-		margin-top: 12px;
-		padding-top: 12px;
-		border-top: 1px solid rgba(255, 255, 255, 0.06);
-		flex-wrap: wrap;
-	}
-
-	.pcal-legend-item {
-		display: flex;
-		align-items: center;
-		gap: 5px;
-		font-size: 0.74rem;
-		color: #666;
-	}
-
-	.pcal-dot {
-		width: 11px;
-		height: 11px;
-		border-radius: 3px;
-		flex-shrink: 0;
-	}
-
-	.practiced-dot {
-		background: rgba(46, 204, 113, 0.25);
-		border: 1px solid rgba(46, 204, 113, 0.5);
-	}
-
-	.today-dot {
-		background: transparent;
-		border: 1px solid rgba(233, 69, 96, 0.55);
-	}
-
-	.pcal-month-count {
+	.pcal-month-stat {
 		margin-left: auto;
-		font-size: 0.78rem;
 		color: #2ecc71;
 		font-weight: 700;
 	}
@@ -1618,7 +1466,6 @@
 		.home-container { padding: 20px 16px; gap: 20px; }
 
 		.cal-modal { padding: 24px 18px; }
-		.cal-grid { grid-template-columns: repeat(6, 1fr); gap: 6px; }
 
 		.stats-row { grid-template-columns: repeat(2, 1fr); }
 
