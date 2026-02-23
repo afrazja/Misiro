@@ -653,7 +653,7 @@
 						onclick={() => handleScriptItemClick(i)}
 						onkeydown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); handleScriptItemClick(i); } }}
 					>
-						<div class="script-num">{i + 1}</div>
+						<div class="script-num">{item.active ? '▶' : i + 1}</div>
 						<div class="script-text">
 							<div class="german">{item.german}</div>
 							<div class="translation" style="direction: {prefs.language === 'fa' ? 'rtl' : 'ltr'};">
@@ -1262,7 +1262,7 @@
 
 	.script-count {
 		font-size: 0.75rem;
-		color: #555;
+		color: #999;
 		font-weight: 600;
 	}
 
@@ -1289,9 +1289,10 @@
 	}
 
 	.script-item.active {
-		background: rgba(46, 204, 113, 0.2);
+		background: rgba(46, 204, 113, 0.22);
 		border-left-color: #2ecc71;
 		border-left-width: 4px;
+		box-shadow: 0 0 0 1px rgba(46, 204, 113, 0.25), inset 0 0 24px rgba(46, 204, 113, 0.08);
 	}
 
 	.script-item.done {
@@ -1301,10 +1302,10 @@
 	.script-num {
 		font-size: 0.65rem;
 		font-weight: 700;
-		color: #444;
+		color: #bbb;
 		min-width: 18px;
 		height: 18px;
-		background: rgba(255, 255, 255, 0.07);
+		background: rgba(255, 255, 255, 0.10);
 		border-radius: 50%;
 		display: flex;
 		align-items: center;
@@ -1314,8 +1315,9 @@
 	}
 
 	.script-item.active .script-num {
-		background: rgba(46, 204, 113, 0.35);
+		background: rgba(46, 204, 113, 0.45);
 		color: #2ecc71;
+		font-size: 0.7rem;
 	}
 
 	.script-item.done .script-num {
@@ -1335,14 +1337,14 @@
 	}
 
 	.script-item .translation {
-		color: #666;
+		color: #aaa;
 		font-size: 0.77rem;
 		margin-top: 2px;
 		line-height: 1.3;
 	}
 
 	.script-item.active .translation {
-		color: #888;
+		color: #ddd;
 	}
 
 	/* Word Tooltip */
@@ -1386,7 +1388,9 @@
 		.script-view {
 			width: 300px;
 			flex-shrink: 0;
-			height: auto;
+			height: 100%;
+			max-height: 100%;
+			overflow: hidden;
 			border-top: none;
 			border-left: 2px solid rgba(46, 204, 113, 0.3);
 		}
