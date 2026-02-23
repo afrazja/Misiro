@@ -1,0 +1,193 @@
+{
+  "title": "Day 74: Navigating Workplace Conflict",
+  "titleFa": "روز ۷۴: مدیریت تعارض در محیط کار",
+  "sentences": [
+    {
+      "id": 1,
+      "role": "sent",
+      "targetText": "Können wir über das sprechen, was gestern passiert ist?",
+      "translation": "Can we talk about what happened yesterday?",
+      "translationFa": "آیا می‌توانیم درباره آنچه دیروز اتفاق افتاد صحبت کنیم؟"
+    },
+    {
+      "id": 2,
+      "role": "sent",
+      "targetText": "Ich habe das Gefühl, dass es ein Missverständnis gegeben hat.",
+      "translation": "I feel there has been a misunderstanding.",
+      "translationFa": "من احساس می‌کنم یک سوءتفاهم پیش آمده است."
+    },
+    {
+      "id": 3,
+      "role": "sent",
+      "targetText": "Ich wollte dich nicht beleidigen.",
+      "translation": "I did not mean to offend you.",
+      "translationFa": "من قصد توهین به تو را نداشتم."
+    },
+    {
+      "id": 4,
+      "role": "sent",
+      "targetText": "Lass uns versuchen, gemeinsam eine Lösung zu finden.",
+      "translation": "Let's try to find a solution together.",
+      "translationFa": "بیا سعی کنیم با هم یک راه حل پیدا کنیم."
+    },
+    {
+      "id": 5,
+      "role": "sent",
+      "targetText": "Ich verstehe deinen Standpunkt.",
+      "translation": "I understand your point of view.",
+      "translationFa": "من دیدگاه تو را درک می‌کنم."
+    },
+    {
+      "id": 6,
+      "role": "sent",
+      "targetText": "Ich habe jedoch eine andere Perspektive.",
+      "translation": "However, I have a different perspective.",
+      "translationFa": "با این حال، من دیدگاه متفاوتی دارم."
+    },
+    {
+      "id": 7,
+      "role": "sent",
+      "targetText": "Bitte lass mich ausreden.",
+      "translation": "Please let me finish speaking.",
+      "translationFa": "لطفاً بگذار حرفم را تمام کنم."
+    },
+    {
+      "id": 8,
+      "role": "sent",
+      "targetText": "Ich fühlte mich während der Besprechung unterbrochen.",
+      "translation": "I felt interrupted during the meeting.",
+      "translationFa": "من احساس کردم در طول جلسه حرفم قطع شد."
+    },
+    {
+      "id": 9,
+      "role": "received",
+      "audioText": "Es ist wichtig, dass wir offen kommunizieren.",
+      "translation": "It is important that we communicate openly.",
+      "translationFa": "مهم است که ما آشکارا ارتباط برقرار کنیم."
+    },
+    {
+      "id": 10,
+      "role": "sent",
+      "targetText": "Ich würde es schätzen, wenn du mir direkt Feedback geben könntest.",
+      "translation": "I would appreciate it if you could give me feedback directly.",
+      "translationFa": "من قدردانی می‌کنم اگر بتوانی مستقیماً به من بازخورد بدهی."
+    },
+    {
+      "id": 11,
+      "role": "received",
+      "audioText": "Wir müssen als Team arbeiten.",
+      "translation": "We need to work as a team.",
+      "translationFa": "ما باید به عنوان یک تیم کار کنیم."
+    },
+    {
+      "id": 12,
+      "role": "sent",
+      "targetText": "Lass uns auf das Problem konzentrieren, nicht auf die Person.",
+      "translation": "Let us focus on the problem, not the person.",
+      "translationFa": "بیا روی مشکل تمرکز کنیم، نه روی شخص."
+    },
+    {
+      "id": 13,
+      "role": "sent",
+      "targetText": "Wie können wir das in Zukunft vermeiden?",
+      "translation": "How can we prevent this in the future?",
+      "translationFa": "چگونه می‌توانیم در آینده از این امر جلوگیری کنیم؟"
+    },
+    {
+      "id": 14,
+      "role": "sent",
+      "targetText": "Es tut mir leid, falls meine E-Mail hart klang.",
+      "translation": "I am sorry if my email sounded harsh.",
+      "translationFa": "متأسفم اگر ایمیل من تند به نظر رسید."
+    },
+    {
+      "id": 15,
+      "role": "sent",
+      "targetText": "Meine Absicht war es, die Fristen zu klären.",
+      "translation": "My intention was to clarify the deadlines.",
+      "translationFa": "قصد من این بود که مهلت‌ها را روشن کنم."
+    },
+    {
+      "id": 16,
+      "role": "sent",
+      "targetText": "Lass uns ein kurzes Meeting ansetzen, um die Sache zu klären.",
+      "translation": "Let's schedule a brief meeting to clear the air.",
+      "translationFa": "بیا یک جلسه کوتاه ترتیب دهیم تا موضوع را روشن کنیم."
+    },
+    {
+      "id": 17,
+      "role": "received",
+      "audioText": "Ich schätze deinen Beitrag zu diesem Projekt.",
+      "translation": "I value your contribution to this project.",
+      "translationFa": "من از مشارکت تو در این پروژه قدردانی می‌کنم."
+    },
+    {
+      "id": 18,
+      "role": "received",
+      "audioText": "Wir haben letztendlich das gleiche Ziel.",
+      "translation": "We have the same goal in the end.",
+      "translationFa": "ما در نهایت هدف یکسانی داریم."
+    },
+    {
+      "id": 19,
+      "role": "sent",
+      "targetText": "Lass uns auf einen Kompromiss einigen.",
+      "translation": "Let us agree on a compromise.",
+      "translationFa": "بیا روی یک سازش توافق کنیم."
+    },
+    {
+      "id": 20,
+      "role": "sent",
+      "targetText": "Können wir diese Diskussion professionell halten?",
+      "translation": "Can we keep this discussion professional?",
+      "translationFa": "آیا می‌توانیم این بحث را حرفه‌ای نگه داریم؟"
+    },
+    {
+      "id": 21,
+      "role": "sent",
+      "targetText": "Ich fühle mich mit dem aktuellen Arbeitspensum überfordert.",
+      "translation": "I feel overwhelmed with the current workload.",
+      "translationFa": "من با حجم کار فعلی احساس فشار می‌کنم."
+    },
+    {
+      "id": 22,
+      "role": "sent",
+      "targetText": "Ich brauche mehr Unterstützung vom Team.",
+      "translation": "I need more support from the team.",
+      "translationFa": "من به حمایت بیشتری از طرف تیم نیاز دارم."
+    },
+    {
+      "id": 23,
+      "role": "received",
+      "audioText": "Lass uns eine kurze Pause machen und uns beruhigen.",
+      "translation": "Let's take a short break and calm down.",
+      "translationFa": "بیا یک استراحت کوتاه بکنیم و آرام شویم."
+    },
+    {
+      "id": 24,
+      "role": "sent",
+      "targetText": "Ich bin bereit, meine Herangehensweise anzupassen.",
+      "translation": "I am willing to adjust my approach.",
+      "translationFa": "من مایل هستم که رویکرد خود را تغییر دهم."
+    },
+    {
+      "id": 25,
+      "role": "sent",
+      "targetText": "Ich hoffe, wir können das hinter uns lassen.",
+      "translation": "I hope we can move past this.",
+      "translationFa": "امیدوارم بتوانیم از این موضوع عبور کنیم."
+    },
+    {
+      "id": 26,
+      "role": "received",
+      "audioText": "Danke für deine Ehrlichkeit und dein Verständnis.",
+      "translation": "Thank you for your honesty and understanding.",
+      "translationFa": "از صداقت و درک تو سپاسگزارم."
+    }
+  ],
+  "difficulty": "B2",
+  "grammarFocus": "Konjunktiv II für höfliche Bitten: würde + Infinitiv / ich wollte nicht + Infinitiv / falls-Konjunktion + Präteritum: klang / fühlte mich",
+  "grammarFocusFa": "وجه التزامی II برای درخواست‌های مؤدبانه: würde + مصدر / ich wollte nicht + مصدر /接続詞 falls + گذشته: klang / fühlte mich",
+  "description": "Handle workplace conflict in German with professionalism and empathy. Express misunderstandings, set boundaries, propose compromises, and work toward a resolution.",
+  "descriptionFa": "با حرفه‌ای‌گری و همدلی با تعارض در محیط کار به زبان آلمانی کنار بیایید. سوءتفاهم‌ها را بیان کنید، مرزها را مشخص کنید، سازش پیشنهاد دهید و به سمت حل مشکل پیش بروید."
+}
