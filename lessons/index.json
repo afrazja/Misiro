@@ -73,7 +73,8 @@
     { "day": 71, "file": "day-71.json", "title": "Day 71: Art, Music & Entertainment", "titleFa": "روز ۷۱: هنر، موسیقی و سرگرمی", "group": "advanced" },
     { "day": 72, "file": "day-72.json", "title": "Day 72: Planning a Complex Trip", "titleFa": "روز ۷۲: برنامه‌ریزی برای یک سفر پیچیده", "group": "advanced" },
     { "day": 73, "file": "day-73.json", "title": "Day 73: Explaining a Recipe/Cooking Process", "titleFa": "روز ۷۳: توضیح دستور پخت / فرآیند آشپزی", "group": "advanced" },
-    { "day": 74, "file": "day-74.json", "title": "Day 74: Navigating Workplace Conflict", "titleFa": "روز ۷۴: مدیریت تعارض در محیط کار", "group": "advanced" }
+    { "day": 74, "file": "day-74.json", "title": "Day 74: Navigating Workplace Conflict", "titleFa": "روز ۷۴: مدیریت تعارض در محیط کار", "group": "advanced" },
+    { "day": 75, "file": "day-75.json", "title": "Day 75: Participating in a Meeting", "titleFa": "روز ۷۵: شرکت در یک جلسه", "group": "advanced" }
   ],
   "glossaryFile": "glossary.json"
 }

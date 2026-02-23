@@ -1,0 +1,200 @@
+{
+  "title": "Day 75: Participating in a Meeting",
+  "titleFa": "روز ۷۵: شرکت در یک جلسه",
+  "sentences": [
+    {
+      "id": 1,
+      "role": "sent",
+      "targetText": "Guten Morgen zusammen. Danke für die Teilnahme.",
+      "translation": "Good morning, everyone. Thanks for joining.",
+      "translationFa": "صبح بخیر همگی. ممنون از حضورتان."
+    },
+    {
+      "id": 2,
+      "role": "sent",
+      "targetText": "Lassen Sie uns mit der Besprechung beginnen.",
+      "translation": "Let's get started with the meeting.",
+      "translationFa": "بیایید جلسه را شروع کنیم."
+    },
+    {
+      "id": 3,
+      "role": "sent",
+      "targetText": "Der erste Punkt auf der Tagesordnung ist das neue Projekt.",
+      "translation": "The first item on the agenda is the new project.",
+      "translationFa": "اولین مورد در دستور جلسه پروژه جدید است."
+    },
+    {
+      "id": 4,
+      "role": "sent",
+      "targetText": "Wer möchte heute das Protokoll führen?",
+      "translation": "Who would like to take the minutes today?",
+      "translationFa": "چه کسی می‌خواهد امروز صورتجلسه را بنویسد؟"
+    },
+    {
+      "id": 5,
+      "role": "received",
+      "audioText": "Könntest du bitte deinen Bildschirm teilen?",
+      "translation": "Could you please share your screen?",
+      "translationFa": "ممکن است لطفاً صفحه نمایش خود را به اشتراک بگذاری؟"
+    },
+    {
+      "id": 6,
+      "role": "sent",
+      "targetText": "Können mich alle gut hören?",
+      "translation": "Can everyone hear me clearly?",
+      "translationFa": "آیا همه صدای من را واضح می‌شنوند؟"
+    },
+    {
+      "id": 7,
+      "role": "received",
+      "audioText": "Ich glaube, du bist stummgeschaltet.",
+      "translation": "I think you are on mute.",
+      "translationFa": "فکر می‌کنم صدای شما قطع است."
+    },
+    {
+      "id": 8,
+      "role": "sent",
+      "targetText": "Ich habe eine Frage zu dieser Folie.",
+      "translation": "I have a question about this slide.",
+      "translationFa": "من در مورد این اسلاید یک سوال دارم."
+    },
+    {
+      "id": 9,
+      "role": "sent",
+      "targetText": "Darf ich hier etwas hinzufügen?",
+      "translation": "May I add something here?",
+      "translationFa": "آیا می‌توانم چیزی در اینجا اضافه کنم؟"
+    },
+    {
+      "id": 10,
+      "role": "received",
+      "audioText": "Das ist ein sehr guter Punkt.",
+      "translation": "That is a very good point.",
+      "translationFa": "این یک نکته بسیار خوب است."
+    },
+    {
+      "id": 11,
+      "role": "received",
+      "audioText": "Was denkst du über diesen Vorschlag?",
+      "translation": "What do you think about this proposal?",
+      "translationFa": "نظر شما درباره این پیشنهاد چیست؟"
+    },
+    {
+      "id": 12,
+      "role": "sent",
+      "targetText": "Ich stimme deiner Idee völlig zu.",
+      "translation": "I completely agree with your idea.",
+      "translationFa": "من کاملاً با ایده شما موافقم."
+    },
+    {
+      "id": 13,
+      "role": "sent",
+      "targetText": "Lass uns die nächsten Schritte besprechen.",
+      "translation": "Let's discuss the next steps.",
+      "translationFa": "بیایید در مورد مراحل بعدی بحث کنیم."
+    },
+    {
+      "id": 14,
+      "role": "sent",
+      "targetText": "Wer ist für diese Aufgabe verantwortlich?",
+      "translation": "Who is responsible for this task?",
+      "translationFa": "چه کسی مسئول این کار است؟"
+    },
+    {
+      "id": 15,
+      "role": "sent",
+      "targetText": "Wir müssen eine Frist für dieses Projekt festlegen.",
+      "translation": "We need to set a deadline for this project.",
+      "translationFa": "ما باید یک مهلت برای این پروژه تعیین کنیم."
+    },
+    {
+      "id": 16,
+      "role": "received",
+      "audioText": "Kannst du mir den Bericht bis Freitag schicken?",
+      "translation": "Can you send me the report by Friday?",
+      "translationFa": "آیا می‌توانی گزارش را تا جمعه برای من بفرستی؟"
+    },
+    {
+      "id": 17,
+      "role": "sent",
+      "targetText": "Ich werde morgen bei dem Kunden nachfassen.",
+      "translation": "I will follow up with the client tomorrow.",
+      "translationFa": "من فردا موضوع را با مشتری پیگیری خواهم کرد."
+    },
+    {
+      "id": 18,
+      "role": "received",
+      "audioText": "Uns läuft die Zeit davon.",
+      "translation": "We are running out of time.",
+      "translationFa": "زمان ما در حال اتمام است."
+    },
+    {
+      "id": 19,
+      "role": "sent",
+      "targetText": "Lass uns dieses Thema auf die nächste Besprechung verschieben.",
+      "translation": "Let's table this topic for the next meeting.",
+      "translationFa": "بیایید این موضوع را به جلسه بعدی موکول کنیم."
+    },
+    {
+      "id": 20,
+      "role": "sent",
+      "targetText": "Um zusammenzufassen, was wir besprochen haben...",
+      "translation": "To summarize what we have discussed...",
+      "translationFa": "برای خلاصه کردن آنچه بحث کردیم..."
+    },
+    {
+      "id": 21,
+      "role": "sent",
+      "targetText": "Gibt es noch weitere Fragen?",
+      "translation": "Are there any other questions?",
+      "translationFa": "آیا سوال دیگری وجود دارد؟"
+    },
+    {
+      "id": 22,
+      "role": "sent",
+      "targetText": "Gibt es noch etwas, das wir behandeln müssen?",
+      "translation": "Is there anything else we need to cover?",
+      "translationFa": "آیا چیز دیگری هست که باید به آن بپردازیم؟"
+    },
+    {
+      "id": 23,
+      "role": "sent",
+      "targetText": "Danke für eure produktiven Beiträge.",
+      "translation": "Thank you for your productive contributions.",
+      "translationFa": "از مشارکت‌های سازنده شما سپاسگزارم."
+    },
+    {
+      "id": 24,
+      "role": "sent",
+      "targetText": "Ich werde die Besprechungsnotizen später am Tag verschicken.",
+      "translation": "I will send out the meeting notes later today.",
+      "translationFa": "من یادداشت‌های جلسه را اواخر امروز ارسال خواهم کرد."
+    },
+    {
+      "id": 25,
+      "role": "received",
+      "audioText": "Lassen Sie uns eine zehnminütige Pause machen.",
+      "translation": "Let's take a ten-minute break.",
+      "translationFa": "بیایید یک استراحت ده دقیقه‌ای داشته باشیم."
+    },
+    {
+      "id": 26,
+      "role": "sent",
+      "targetText": "Ich muss jetzt an einer anderen Besprechung teilnehmen.",
+      "translation": "I have another meeting to attend now.",
+      "translationFa": "من اکنون باید در یک جلسه دیگر شرکت کنم."
+    },
+    {
+      "id": 27,
+      "role": "received",
+      "audioText": "Die Besprechung ist offiziell beendet.",
+      "translation": "The meeting is officially closed.",
+      "translationFa": "جلسه رسماً به پایان رسید."
+    }
+  ],
+  "difficulty": "B2",
+  "grammarFocus": "Formal register: Lassen Sie uns + Infinitiv / Konjunktiv II: Könntest du / Futur I: Ich werde... + Relativsatz: etwas, das wir behandeln müssen",
+  "grammarFocusFa": "سبک رسمی: Lassen Sie uns + مصدر / وجه التزامی II: Könntest du / آینده I: Ich werde... + جمله موصولی: etwas, das wir behandeln müssen",
+  "description": "Participate in a professional German meeting as both chair and attendee. Open and close sessions, ask questions, assign tasks, and manage time effectively.",
+  "descriptionFa": "در یک جلسه حرفه‌ای آلمانی هم به عنوان رئیس جلسه و هم شرکت‌کننده شرکت کنید. جلسات را باز و بسته کنید، سوال بپرسید، وظایف تعیین کنید و زمان را به طور مؤثر مدیریت کنید."
+}
