@@ -435,6 +435,10 @@
 				</div>
 			{/if}
 
+			<!-- Content row: chat + sidebar side-by-side (desktop only) -->
+		<div class="chat-body">
+			<div class="chat-main">
+
 			<!-- Message History -->
 			<div class="chat-history" bind:this={chatHistoryEl} role="log" aria-live="polite" aria-label="Chat history">
 				<div class="chat-spacer"></div>
@@ -630,10 +634,11 @@
 					{app.isListening ? '🛑' : '🎙️'}
 				</button>
 			</div>
-		</div>
 
-		<!-- Script Panel -->
-		<aside class="script-view" id="script-view">
+			</div><!-- end chat-main -->
+
+			<!-- Script Panel -->
+			<aside class="script-view" id="script-view">
 			<div class="script-header">
 				<h3>{prefs.language === 'fa' ? '\u0645\u062A\u0646 \u062F\u0631\u0633' : 'Lesson Script'}</h3>
 				{#if lesson.currentLesson}
@@ -664,6 +669,8 @@
 				{/each}
 			</div>
 		</aside>
+		</div><!-- end chat-body -->
+	</div><!-- end chat-wrapper -->
 	</main>
 </div>
 
@@ -825,6 +832,23 @@
 		display: flex;
 		flex-direction: column;
 		overflow: hidden;
+	}
+
+	/* Row that holds chat content + sidebar (desktop) */
+	.chat-body {
+		flex: 1;
+		display: flex;
+		flex-direction: column;
+		overflow: hidden;
+		min-height: 0;
+	}
+
+	.chat-main {
+		flex: 1;
+		display: flex;
+		flex-direction: column;
+		overflow: hidden;
+		min-height: 0;
 	}
 
 	.chat-header {
@@ -1377,11 +1401,12 @@
 
 	/* ── Desktop: right sidebar layout ───────────────── */
 	@media (min-width: 768px) {
-		.learning-area {
+		/* Chat header stays full-width; sidebar only sits beside chat content */
+		.chat-body {
 			flex-direction: row;
 		}
 
-		.chat-wrapper {
+		.chat-main {
 			flex: 1;
 			min-width: 0;
 		}
@@ -1389,7 +1414,7 @@
 		.script-view {
 			width: 300px;
 			flex-shrink: 0;
-			height: auto;   /* override the base 28vh so flex can stretch it */
+			height: auto;
 			overflow: hidden;
 			border-top: none;
 			border-left: 2px solid rgba(46, 204, 113, 0.3);
