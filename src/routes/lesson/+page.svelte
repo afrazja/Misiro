@@ -543,7 +543,7 @@
 						</div>
 						<div class="teach-actions">
 							<button class="btn-replay" class:speaking={isSpeaking} onclick={handleSpeakerClick} aria-label="Replay audio">
-								🔊 {currentTeachStep.language === 'fa' ? 'دوباره' : 'Replay'}
+								{isSpeaking ? '⏹ Stop' : (currentTeachStep.language === 'fa' ? '🔊 دوباره' : '🔊 Replay')}
 							</button>
 							{#if currentTeachStep.role === 'sent' && (currentTeachStep.hint || currentTeachStep.hintFa)}
 								<button class="btn-hint" onclick={() => showHint = !showHint} aria-label="Toggle hint">
@@ -1284,14 +1284,8 @@
 	}
 
 	.btn-replay.speaking {
-		border-color: #25D366;
-		color: #25D366;
-		animation: replay-breathe 1.2s ease-in-out infinite;
-	}
-
-	@keyframes replay-breathe {
-		0%, 100% { opacity: 1;   }
-		50%      { opacity: 0.4; }
+		border-color: #e53935;
+		color: #e53935;
 	}
 
 	/* Hint button */
