@@ -486,12 +486,6 @@
 	<!-- ── Progress Stats ──────────────────────────────── -->
 	{#if isAuthenticated}
 		<div class="stats-row">
-			<button class="stat-card stat-card-clickable" onclick={() => showCalendar = true} title="View your 60-day calendar">
-				<span class="stat-icon">📅</span>
-				<span class="stat-value">{daysCompleted}<span class="stat-total">/60</span></span>
-				<span class="stat-label">Days Done</span>
-				<span class="stat-cta-hint">view calendar →</span>
-			</button>
 			<div class="stat-card">
 				<span class="stat-icon">🎯</span>
 				<span class="stat-value">{currentLevel}</span>
@@ -816,7 +810,7 @@
 	/* ── Stats Row ────────────────────────────────────── */
 	.stats-row {
 		display: grid;
-		grid-template-columns: repeat(4, 1fr);
+		grid-template-columns: repeat(3, 1fr);
 		gap: 16px;
 	}
 
