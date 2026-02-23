@@ -71,6 +71,55 @@
       "targetText": "Ich melde mich bei Ihnen.",
       "translation": "I'll get back to you.",
       "translationFa": "بهتون خبر میدم."
+    },
+    {
+      "id": 11,
+      "role": "received",
+      "audioText": "Hast du das Projekt schon abgeschlossen?",
+      "translation": "Have you finished the project yet?",
+      "translationFa": "پروژه رو هنوز تموم کردی؟"
+    },
+    {
+      "id": 12,
+      "role": "sent",
+      "targetText": "Ja, ich habe es gestern Abend fertiggestellt.",
+      "translation": "Yes, I finished it yesterday evening.",
+      "translationFa": "بله، دیشب تمومش کردم."
+    },
+    {
+      "id": 13,
+      "role": "received",
+      "audioText": "Sehr gut! Der Chef war sehr zufrieden damit.",
+      "translation": "Very good! The boss was very pleased with it.",
+      "translationFa": "خیلی خوب! رئیس خیلی راضی بود."
+    },
+    {
+      "id": 14,
+      "role": "sent",
+      "targetText": "Das freut mich. Gibt es noch etwas, das ich tun soll?",
+      "translation": "That pleases me. Is there anything else I should do?",
+      "translationFa": "خوشحالم. چیز دیگه‌ای هست که باید انجام بدم؟"
+    },
+    {
+      "id": 15,
+      "role": "received",
+      "audioText": "Ja, kannst du bitte das Meeting fuer morgen vorbereiten?",
+      "translation": "Yes, can you please prepare the meeting for tomorrow?",
+      "translationFa": "بله، می‌تونی جلسه فردا رو آماده کنی لطفاً؟"
+    },
+    {
+      "id": 16,
+      "role": "sent",
+      "targetText": "Natuerlich. Soll ich auch die Praesentation aktualisieren?",
+      "translation": "Of course. Should I also update the presentation?",
+      "translationFa": "البته. اسلایدها رو هم آپدیت کنم؟"
+    },
+    {
+      "id": 17,
+      "role": "received",
+      "audioText": "Ja, bitte. Vielen Dank fuer deine Zuverlaessigkeit!",
+      "translation": "Yes please. Thank you very much for your reliability!",
+      "translationFa": "بله لطفاً. خیلی ممنون از قابل اتکا بودنت!"
     }
   ],
   "difficulty": "A2+",

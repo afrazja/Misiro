@@ -71,6 +71,48 @@
       "targetText": "Meine Nummer ist 0176 1234567.",
       "translation": "My number is 0176 1234567.",
       "translationFa": "شماره‌م ۰۱۷۶ ۱۲۳۴۵۶۷ هست."
+    },
+    {
+      "id": 11,
+      "role": "received",
+      "audioText": "Gut. Und Ihr Name, bitte?",
+      "translation": "Good. And your name, please?",
+      "translationFa": "خوب. و اسمتون لطفاً؟"
+    },
+    {
+      "id": 12,
+      "role": "sent",
+      "targetText": "Mein Name ist Lukas Hoffmann.",
+      "translation": "My name is Lukas Hoffmann.",
+      "translationFa": "اسمم لوکاس هوفمان هست."
+    },
+    {
+      "id": 13,
+      "role": "received",
+      "audioText": "Wann kann Herr Mueller Sie zurueckrufen?",
+      "translation": "When can Mr Mueller call you back?",
+      "translationFa": "آقای مولر کِی می‌تونه زنگ بزنه؟"
+    },
+    {
+      "id": 14,
+      "role": "sent",
+      "targetText": "Am besten heute Nachmittag zwischen drei und fuenf Uhr.",
+      "translation": "Best this afternoon between three and five o'clock.",
+      "translationFa": "بهتره امروز بعدازظهر بین سه و پنج."
+    },
+    {
+      "id": 15,
+      "role": "received",
+      "audioText": "Ich werde es ihm ausrichten. Vielen Dank fuer Ihren Anruf.",
+      "translation": "I will pass on the message. Thank you very much for your call.",
+      "translationFa": "پیامش رو می‌رسونم. ممنون از تماستون."
+    },
+    {
+      "id": 16,
+      "role": "sent",
+      "targetText": "Danke schoen. Auf Wiederhoeren!",
+      "translation": "Thank you very much. Goodbye!",
+      "translationFa": "ممنون. خداحافظ!"
     }
   ],
   "difficulty": "A2+",

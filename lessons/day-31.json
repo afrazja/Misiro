@@ -71,6 +71,48 @@
       "targetText": "Das passt mir.",
       "translation": "That works for me.",
       "translationFa": "برام مناسبه."
+    },
+    {
+      "id": 11,
+      "role": "received",
+      "audioText": "Was hat Sie bei Ihrer Entscheidung ueberzeugt?",
+      "translation": "What convinced you in your decision?",
+      "translationFa": "چی شما رو مجاب کرد؟"
+    },
+    {
+      "id": 12,
+      "role": "sent",
+      "targetText": "Das Preis-Leistungs-Verhaeltnis ist sehr gut.",
+      "translation": "The value for money is very good.",
+      "translationFa": "ارزش برای پول خیلی خوبه."
+    },
+    {
+      "id": 13,
+      "role": "received",
+      "audioText": "Moechten Sie es als Geschenk verpacken lassen?",
+      "translation": "Would you like it gift wrapped?",
+      "translationFa": "می‌خواید بپیچیمش برای هدیه؟"
+    },
+    {
+      "id": 14,
+      "role": "sent",
+      "targetText": "Ja, bitte. Es ist ein Geschenk fuer meine Schwester.",
+      "translation": "Yes please. It is a gift for my sister.",
+      "translationFa": "بله لطفاً. هدیه‌ای برای خواهرمه."
+    },
+    {
+      "id": 15,
+      "role": "received",
+      "audioText": "Sehr schoen! Das machen wir sehr gerne.",
+      "translation": "Very nice! We are very happy to do that.",
+      "translationFa": "خیلی خوب! با کمال میل."
+    },
+    {
+      "id": 16,
+      "role": "sent",
+      "targetText": "Vielen Dank. Sie haben mir wirklich sehr geholfen.",
+      "translation": "Thank you very much. You have really helped me a lot.",
+      "translationFa": "خیلی ممنون. واقعاً خیلی کمک کردید."
     }
   ],
   "difficulty": "A2",

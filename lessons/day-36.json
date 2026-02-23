@@ -71,6 +71,55 @@
       "targetText": "Ich bin auf A2-Niveau und möchte B1 erreichen.",
       "translation": "I am at A2 level and want to reach B1.",
       "translationFa": "سطح A2 هستم و می‌خوام به B1 برسم."
+    },
+    {
+      "id": 11,
+      "role": "received",
+      "audioText": "Wie lernst du am liebsten? Mit Buechern oder Apps?",
+      "translation": "How do you prefer to learn? With books or apps?",
+      "translationFa": "دوست داری چطور یاد بگیری؟ با کتاب یا اپ؟"
+    },
+    {
+      "id": 12,
+      "role": "sent",
+      "targetText": "Ich benutze beides. Apps fuer Vokabeln und Buecher fuer Grammatik.",
+      "translation": "I use both. Apps for vocabulary and books for grammar.",
+      "translationFa": "هر دو رو استفاده می‌کنم. اپ برای لغات و کتاب برای گرامر."
+    },
+    {
+      "id": 13,
+      "role": "received",
+      "audioText": "Sehr clever! Hast du auch einen Sprachpartner?",
+      "translation": "Very clever! Do you also have a language partner?",
+      "translationFa": "خیلی باهوشانه! پارتنر زبانی هم داری؟"
+    },
+    {
+      "id": 14,
+      "role": "sent",
+      "targetText": "Nein, noch nicht. Wie finde ich einen?",
+      "translation": "No, not yet. How do I find one?",
+      "translationFa": "نه، هنوز نه. چطور پیدا کنم؟"
+    },
+    {
+      "id": 15,
+      "role": "received",
+      "audioText": "Es gibt Apps dafuer, zum Beispiel Tandem oder HelloTalk.",
+      "translation": "There are apps for that, for example Tandem or HelloTalk.",
+      "translationFa": "اپ‌هایی برای این هست، مثلاً Tandem یا HelloTalk."
+    },
+    {
+      "id": 16,
+      "role": "sent",
+      "targetText": "Das werde ich ausprobieren. Danke fuer den Tipp!",
+      "translation": "I will try that out. Thanks for the tip!",
+      "translationFa": "امتحانش می‌کنم. ممنون از راهنمایی!"
+    },
+    {
+      "id": 17,
+      "role": "received",
+      "audioText": "Viel Erfolg bei deiner Pruefung! Du schaffst das!",
+      "translation": "Good luck with your exam! You can do it!",
+      "translationFa": "موفق باشی توی آزمونت! می‌تونی!"
     }
   ],
   "difficulty": "A2+",

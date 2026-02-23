@@ -71,6 +71,48 @@
       "targetText": "Da stimme ich Ihnen zu.",
       "translation": "I agree with you.",
       "translationFa": "باهاتون موافقم."
+    },
+    {
+      "id": 11,
+      "role": "received",
+      "audioText": "Haben Sie einen Vorschlag fuer das naechste Treffen?",
+      "translation": "Do you have a suggestion for the next meeting?",
+      "translationFa": "برای جلسه بعدی پیشنهادی دارید؟"
+    },
+    {
+      "id": 12,
+      "role": "sent",
+      "targetText": "Ich wuerde vorschlagen, dass wir uns in einem Cafe treffen.",
+      "translation": "I would suggest that we meet in a cafe.",
+      "translationFa": "پیشنهادم اینه که در یه کافه ملاقات کنیم."
+    },
+    {
+      "id": 13,
+      "role": "received",
+      "audioText": "Gute Idee! Haben Sie ein bestimmtes im Sinn?",
+      "translation": "Good idea! Do you have a specific one in mind?",
+      "translationFa": "ایده خوبیه! یه جای خاصی مد نظر دارید؟"
+    },
+    {
+      "id": 14,
+      "role": "sent",
+      "targetText": "Ja, das Cafe Central in der Stadtmitte ist sehr schoen.",
+      "translation": "Yes, Cafe Central in the city centre is very nice.",
+      "translationFa": "بله، کافه سنترال در مرکز شهر خیلی خوبه."
+    },
+    {
+      "id": 15,
+      "role": "received",
+      "audioText": "Perfekt! Das kenne ich gut. Wann passt es Ihnen?",
+      "translation": "Perfect! I know it well. When suits you?",
+      "translationFa": "عالی! می‌شناسمش. کِی براتون مناسبه؟"
+    },
+    {
+      "id": 16,
+      "role": "sent",
+      "targetText": "Mittwoch um zehn Uhr waere ideal fuer mich.",
+      "translation": "Wednesday at ten o'clock would be ideal for me.",
+      "translationFa": "چهارشنبه ساعت ده ایده‌آل برامه."
     }
   ],
   "difficulty": "A2+",

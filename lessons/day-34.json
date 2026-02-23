@@ -71,6 +71,55 @@
       "targetText": "Gern geschehen! Bei Fragen melde dich einfach.",
       "translation": "You're welcome! Just get in touch if you have questions.",
       "translationFa": "خواهش می‌کنم! اگه سوالی داشتی بگو."
+    },
+    {
+      "id": 11,
+      "role": "received",
+      "audioText": "Muss ich die E-Mail noch an jemanden weiterleiten?",
+      "translation": "Do I need to forward the email to anyone else?",
+      "translationFa": "باید ایمیل رو به کس دیگه‌ای هم فوروارد کنم؟"
+    },
+    {
+      "id": 12,
+      "role": "sent",
+      "targetText": "Ja, bitte schicke eine Kopie an Frau Weber.",
+      "translation": "Yes, please send a copy to Ms Weber.",
+      "translationFa": "بله، لطفاً یه کپی برای خانم وبر بفرست."
+    },
+    {
+      "id": 13,
+      "role": "received",
+      "audioText": "In Ordnung. Soll ich sie in CC oder BCC setzen?",
+      "translation": "All right. Should I put her in CC or BCC?",
+      "translationFa": "باشه. CC بگذارمش یا BCC؟"
+    },
+    {
+      "id": 14,
+      "role": "sent",
+      "targetText": "In CC, damit sie den ganzen Verlauf sehen kann.",
+      "translation": "In CC so that she can see the whole thread.",
+      "translationFa": "در CC، تا بتونه همه مکالمه رو ببینه."
+    },
+    {
+      "id": 15,
+      "role": "received",
+      "audioText": "Verstanden. Bis wann muss die E-Mail raus?",
+      "translation": "Understood. When does the email need to go out by?",
+      "translationFa": "فهمیدم. تا کِی باید ایمیل بره؟"
+    },
+    {
+      "id": 16,
+      "role": "sent",
+      "targetText": "Bitte bis Freitag Mittag.",
+      "translation": "Please by Friday midday.",
+      "translationFa": "لطفاً تا ظهر جمعه."
+    },
+    {
+      "id": 17,
+      "role": "received",
+      "audioText": "Kein Problem. Ich erledige das rechtzeitig.",
+      "translation": "No problem. I will take care of it in time.",
+      "translationFa": "مشکلی نیست. به موقع انجامش می‌دم."
     }
   ],
   "difficulty": "A2+",
