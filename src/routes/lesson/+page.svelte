@@ -62,7 +62,8 @@
 	const prefs = $derived($preferencesStore);
 	const lesson = $derived($lessonStore);
 	const exam = $derived($examStore);
-	const isSpeaking = $derived($ttsIsPlaying);
+	let isSpeaking = $state(false);
+	$effect(() => ttsIsPlaying.subscribe(v => { isSpeaking = v; }));
 
 	const scenarioTitle = $derived(() => {
 		if (!lesson.currentLesson) return 'Loading...';
@@ -1204,13 +1205,14 @@
 	}
 
 	.btn-send.speaking {
-		animation: speaking-ring 1.4s ease-out infinite;
+		outline: 3px solid rgba(255,255,255,0.7);
+		outline-offset: 3px;
+		animation: speaking-ring 1.3s ease-in-out infinite;
 	}
 
 	@keyframes speaking-ring {
-		0%   { box-shadow: 0 0 0 0   rgba(7, 94, 84, 0.55); }
-		70%  { box-shadow: 0 0 0 10px rgba(7, 94, 84, 0);   }
-		100% { box-shadow: 0 0 0 0   rgba(7, 94, 84, 0);    }
+		0%, 100% { outline-color: rgba(255,255,255,0.75); outline-offset: 2px; }
+		50%      { outline-color: rgba(255,255,255,0.15); outline-offset: 5px; }
 	}
 
 	@keyframes pulse {
