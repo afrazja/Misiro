@@ -1,0 +1,186 @@
+{
+  "title": "Day 81: Education & Learning",
+  "titleFa": "روز ۸۱: آموزش و یادگیری",
+  "sentences": [
+    {
+      "id": 1,
+      "role": "sent",
+      "targetText": "Bildung ist sehr wichtig für die Zukunft.",
+      "translation": "Education is very important for the future.",
+      "translationFa": "آموزش برای آینده بسیار مهم است."
+    },
+    {
+      "id": 2,
+      "role": "sent",
+      "targetText": "Ich gehe jeden Tag zur Universität.",
+      "translation": "I go to the university every day.",
+      "translationFa": "من هر روز به دانشگاه می‌روم."
+    },
+    {
+      "id": 3,
+      "role": "received",
+      "audioText": "Was studierst du?",
+      "translation": "What are you studying?",
+      "translationFa": "تو چه چیزی می‌خوانی؟"
+    },
+    {
+      "id": 4,
+      "role": "sent",
+      "targetText": "Ich studiere Informatik.",
+      "translation": "I am studying computer science.",
+      "translationFa": "من در حال تحصیل در رشته علوم کامپیوتر هستم."
+    },
+    {
+      "id": 5,
+      "role": "received",
+      "audioText": "Die Vorlesung beginnt um neun Uhr.",
+      "translation": "The lecture starts at nine o'clock.",
+      "translationFa": "کلاس ساعت نه شروع می‌شود."
+    },
+    {
+      "id": 6,
+      "role": "sent",
+      "targetText": "Unser Professor erklärt das Thema sehr gut.",
+      "translation": "Our professor explains the topic very well.",
+      "translationFa": "استاد ما موضوع را بسیار خوب توضیح می‌دهد."
+    },
+    {
+      "id": 7,
+      "role": "sent",
+      "targetText": "Ich muss diese Woche einen langen Aufsatz schreiben.",
+      "translation": "I have to write a long essay this week.",
+      "translationFa": "من باید این هفته یک مقاله طولانی بنویسم."
+    },
+    {
+      "id": 8,
+      "role": "sent",
+      "targetText": "Die Prüfung war schwieriger als ich erwartet hatte.",
+      "translation": "The exam was more difficult than I expected.",
+      "translationFa": "امتحان سخت‌تر از چیزی بود که انتظار داشتم."
+    },
+    {
+      "id": 9,
+      "role": "received",
+      "audioText": "Hast du den Mathetest bestanden?",
+      "translation": "Did you pass the math test?",
+      "translationFa": "آیا در امتحان ریاضی قبول شدی؟"
+    },
+    {
+      "id": 10,
+      "role": "sent",
+      "targetText": "Ich bereite mich auf meine Abschlussprüfungen vor.",
+      "translation": "I am preparing for my final exams.",
+      "translationFa": "من در حال آماده شدن برای امتحانات نهایی خود هستم."
+    },
+    {
+      "id": 11,
+      "role": "sent",
+      "targetText": "Eine neue Sprache zu lernen braucht Zeit und Geduld.",
+      "translation": "Learning a new language takes time and patience.",
+      "translationFa": "یادگیری یک زبان جدید به زمان و صبر نیاز دارد."
+    },
+    {
+      "id": 12,
+      "role": "sent",
+      "targetText": "Ich übe meine Vokabeln jeden Abend.",
+      "translation": "I practice my vocabulary every evening.",
+      "translationFa": "من هر شب لغات خود را تمرین می‌کنم."
+    },
+    {
+      "id": 13,
+      "role": "sent",
+      "targetText": "Fehler zu machen ist ein Teil des Lernprozesses.",
+      "translation": "Making mistakes is part of the learning process.",
+      "translationFa": "اشتباه کردن بخشی از فرآیند یادگیری است."
+    },
+    {
+      "id": 14,
+      "role": "sent",
+      "targetText": "Ich muss meine Aussprache verbessern.",
+      "translation": "I need to improve my pronunciation.",
+      "translationFa": "من باید تلفظ خود را بهبود ببخشم."
+    },
+    {
+      "id": 15,
+      "role": "sent",
+      "targetText": "Mein Lieblingsfach in der Schule war Geschichte.",
+      "translation": "My favorite subject in school was history.",
+      "translationFa": "درس مورد علاقه من در مدرسه تاریخ بود."
+    },
+    {
+      "id": 16,
+      "role": "sent",
+      "targetText": "Wir hatten gestern viele Hausaufgaben.",
+      "translation": "We had a lot of homework yesterday.",
+      "translationFa": "ما دیروز تکالیف زیادی داشتیم."
+    },
+    {
+      "id": 17,
+      "role": "received",
+      "audioText": "Die Bibliothek ist ein ruhiger Ort zum Lernen.",
+      "translation": "The library is a quiet place to study.",
+      "translationFa": "کتابخانه مکان آرامی برای مطالعه است."
+    },
+    {
+      "id": 18,
+      "role": "sent",
+      "targetText": "Ich habe drei Bücher für meine Recherche ausgeliehen.",
+      "translation": "I borrowed three books for my research.",
+      "translationFa": "من سه کتاب برای تحقیق خود امانت گرفتم."
+    },
+    {
+      "id": 19,
+      "role": "received",
+      "audioText": "Du solltest dir während der Präsentation Notizen machen.",
+      "translation": "You should take notes during the presentation.",
+      "translationFa": "شما باید در طول ارائه یادداشت بردارید."
+    },
+    {
+      "id": 20,
+      "role": "sent",
+      "targetText": "Ich lerne am besten, wenn ich Podcasts höre.",
+      "translation": "I learn best when I listen to podcasts.",
+      "translationFa": "من زمانی که به پادکست‌ها گوش می‌دهم بهترین یادگیری را دارم."
+    },
+    {
+      "id": 21,
+      "role": "sent",
+      "targetText": "Grammatikregeln können manchmal verwirrend sein.",
+      "translation": "Grammar rules can sometimes be confusing.",
+      "translationFa": "قوانین گرامری گاهی اوقات می‌توانند گیج‌کننده باشند."
+    },
+    {
+      "id": 22,
+      "role": "sent",
+      "targetText": "Ich habe den Kurs mit einer sehr guten Note bestanden.",
+      "translation": "I passed the course with an excellent grade.",
+      "translationFa": "من دوره را با یک نمره عالی گذراندم."
+    },
+    {
+      "id": 23,
+      "role": "received",
+      "audioText": "Eine gute Ausbildung öffnet viele Türen.",
+      "translation": "A good education opens many doors.",
+      "translationFa": "یک آموزش خوب درهای زیادی را باز می‌کند."
+    },
+    {
+      "id": 24,
+      "role": "received",
+      "audioText": "Er möchte einen Masterstudiengang im Ausland machen.",
+      "translation": "He wants to do a master's degree abroad.",
+      "translationFa": "او می‌خواهد مدرک کارشناسی ارشد خود را در خارج از کشور بگیرد."
+    },
+    {
+      "id": 25,
+      "role": "sent",
+      "targetText": "Ich bin stolz auf meine akademischen Leistungen.",
+      "translation": "I am proud of my academic achievements.",
+      "translationFa": "من به دستاوردهای تحصیلی خود افتخار می‌کنم."
+    }
+  ],
+  "difficulty": "B1",
+  "grammarFocus": "Komparativ: schwieriger als erwartet hatte (Plusquamperfekt) + Infinitivsatz als Subjekt: Eine neue Sprache zu lernen… / Fehler zu machen… + Perfekt: habe bestanden / ausgeliehen",
+  "grammarFocusFa": "مقایسه‌ای: schwieriger als erwartet hatte (ماضی بعید) + جمله مصدری به عنوان فاعل: Eine neue Sprache zu lernen… + ماضی نقلی: habe bestanden / ausgeliehen",
+  "description": "Talk about education, university life, and the learning process in German. Discuss subjects, exams, study habits, and your academic goals.",
+  "descriptionFa": "درباره آموزش، زندگی دانشگاهی و فرآیند یادگیری به زبان آلمانی صحبت کنید. درباره دروس، امتحانات، عادات مطالعه و اهداف تحصیلی خود بحث کنید."
+}
