@@ -71,6 +71,55 @@
       "targetText": "Vielen Dank, Herr Doktor.",
       "translation": "Thank you very much, Doctor.",
       "translationFa": "خیلی ممنون، آقای دکتر."
+    },
+    {
+      "id": 11,
+      "role": "received",
+      "audioText": "Haben Sie auch andere Beschwerden?",
+      "translation": "Do you have any other complaints?",
+      "translationFa": "شکایت دیگه‌ای هم دارید؟"
+    },
+    {
+      "id": 12,
+      "role": "sent",
+      "targetText": "Ja, ich bin auch sehr muede und fuehle mich schwindelig.",
+      "translation": "Yes, I am also very tired and feel dizzy.",
+      "translationFa": "بله، خیلی خسته‌ام و سرگیجه دارم."
+    },
+    {
+      "id": 13,
+      "role": "received",
+      "audioText": "Ich messe Ihren Blutdruck. Bitte nehmen Sie Platz.",
+      "translation": "I will measure your blood pressure. Please take a seat.",
+      "translationFa": "فشار خونتون رو اندازه می‌گیرم. لطفاً بنشینید."
+    },
+    {
+      "id": 14,
+      "role": "sent",
+      "targetText": "Ist alles in Ordnung?",
+      "translation": "Is everything all right?",
+      "translationFa": "همه چیز خوبه؟"
+    },
+    {
+      "id": 15,
+      "role": "received",
+      "audioText": "Ihr Blutdruck ist etwas erhoehen. Trinken Sie genug Wasser?",
+      "translation": "Your blood pressure is a little high. Are you drinking enough water?",
+      "translationFa": "فشار خونتون کمی بالاست. آب کافی می‌نوشید؟"
+    },
+    {
+      "id": 16,
+      "role": "sent",
+      "targetText": "Ehrlich gesagt nicht. Ich vergesse es oft.",
+      "translation": "Honestly not. I often forget it.",
+      "translationFa": "صادقانه نه. اغلب فراموش می‌کنم."
+    },
+    {
+      "id": 17,
+      "role": "received",
+      "audioText": "Trinken Sie mindestens zwei Liter taeglich. Das ist sehr wichtig.",
+      "translation": "Drink at least two litres daily. That is very important.",
+      "translationFa": "روزانه حداقل دو لیتر بنوشید. خیلی مهمه."
     }
   ],
   "difficulty": "A2+",

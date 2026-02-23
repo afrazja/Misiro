@@ -71,6 +71,55 @@
       "targetText": "Dir auch! Bis dann.",
       "translation": "You too! See you then.",
       "translationFa": "تو هم! تا اون موقع."
+    },
+    {
+      "id": 11,
+      "role": "received",
+      "audioText": "Kannst du auch eine Kalendereinladung schicken?",
+      "translation": "Can you also send a calendar invitation?",
+      "translationFa": "می‌تونی دعوت‌نامه تقویم هم بفرستی؟"
+    },
+    {
+      "id": 12,
+      "role": "sent",
+      "targetText": "Ja, natuerlich. Welche E-Mail-Adresse soll ich nutzen?",
+      "translation": "Yes, of course. Which email address should I use?",
+      "translationFa": "بله، البته. از چه آدرس ایمیلی استفاده کنم؟"
+    },
+    {
+      "id": 13,
+      "role": "received",
+      "audioText": "Schick es an meine Bueroadresse: anna.mueller@firma.de",
+      "translation": "Send it to my office address: anna.mueller@firma.de",
+      "translationFa": "به آدرس دفترم بفرست: anna.mueller@firma.de"
+    },
+    {
+      "id": 14,
+      "role": "sent",
+      "targetText": "Erledigt. Du bekommst die Einladung in wenigen Minuten.",
+      "translation": "Done. You will get the invitation in a few minutes.",
+      "translationFa": "انجام شد. چند دقیقه دیگه دعوت‌نامه می‌رسه."
+    },
+    {
+      "id": 15,
+      "role": "received",
+      "audioText": "Perfekt, danke! Wo findet das Treffen eigentlich statt?",
+      "translation": "Perfect, thanks! Where is the meeting actually taking place?",
+      "translationFa": "عالی، ممنون! جلسه کجاست؟"
+    },
+    {
+      "id": 16,
+      "role": "sent",
+      "targetText": "Im Konferenzraum zwei im ersten Stock.",
+      "translation": "In conference room two on the first floor.",
+      "translationFa": "در اتاق کنفرانس دو در طبقه اول."
+    },
+    {
+      "id": 17,
+      "role": "received",
+      "audioText": "Alles klar! Bis Donnerstag dann.",
+      "translation": "All clear! Until Thursday then.",
+      "translationFa": "همه چیز روشنه! تا پنجشنبه."
     }
   ],
   "difficulty": "A2+",

@@ -71,6 +71,48 @@
       "targetText": "Ich brauche eine Pause.",
       "translation": "I need a break.",
       "translationFa": "به استراحت نیاز دارم."
+    },
+    {
+      "id": 11,
+      "role": "received",
+      "audioText": "Was ist passiert? Erzaehl mir.",
+      "translation": "What happened? Tell me.",
+      "translationFa": "چی شده؟ بگو."
+    },
+    {
+      "id": 12,
+      "role": "sent",
+      "targetText": "Ich habe seit zwei Tagen Halsschmerzen und Husten.",
+      "translation": "I have had a sore throat and a cough for two days.",
+      "translationFa": "دو روزه گلودرد و سرفه دارم."
+    },
+    {
+      "id": 13,
+      "role": "received",
+      "audioText": "Das klingt nach einer Erkaeltung. Hast du Vitamin C genommen?",
+      "translation": "That sounds like a cold. Have you taken vitamin C?",
+      "translationFa": "شبیه سرماخوردگیه. ویتامین C خوردی؟"
+    },
+    {
+      "id": 14,
+      "role": "sent",
+      "targetText": "Nein, noch nicht. Ich habe auch keinen Appetit.",
+      "translation": "No, not yet. I also have no appetite.",
+      "translationFa": "نه، هنوز نه. اشتها هم ندارم."
+    },
+    {
+      "id": 15,
+      "role": "received",
+      "audioText": "Ich mache dir eine warme Suppe. Das hilft bei Erkaeltungen.",
+      "translation": "I will make you a warm soup. That helps with colds.",
+      "translationFa": "برات سوپ گرم درست می‌کنم. کمک می‌کنه."
+    },
+    {
+      "id": 16,
+      "role": "sent",
+      "targetText": "Das ist sehr lieb von dir. Danke fuer deine Fuersorge!",
+      "translation": "That is very kind of you. Thank you for your care!",
+      "translationFa": "خیلی محبت داری. ممنون از مراقبتت!"
     }
   ],
   "difficulty": "A2+",

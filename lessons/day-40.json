@@ -71,6 +71,48 @@
       "audioText": "Das macht 15 Euro.",
       "translation": "That's 15 Euro.",
       "translationFa": "میشه ۱۵ یورو."
+    },
+    {
+      "id": 11,
+      "role": "received",
+      "audioText": "Bitte nehmen Sie nicht mehr als drei Tabletten pro Tag.",
+      "translation": "Please do not take more than three tablets per day.",
+      "translationFa": "لطفاً بیشتر از سه قرص در روز نخورید."
+    },
+    {
+      "id": 12,
+      "role": "sent",
+      "targetText": "Verstanden. Sind diese Tabletten rezeptfrei?",
+      "translation": "Understood. Are these tablets available without a prescription?",
+      "translationFa": "فهمیدم. این قرص‌ها بدون نسخه هستن؟"
+    },
+    {
+      "id": 13,
+      "role": "received",
+      "audioText": "Ja, diese sind rezeptfrei. Die staerkeren brauchen ein Rezept.",
+      "translation": "Yes, these are without prescription. The stronger ones need a prescription.",
+      "translationFa": "بله، اینا بدون نسخه‌ان. قوی‌ترها نسخه لازم دارن."
+    },
+    {
+      "id": 14,
+      "role": "sent",
+      "targetText": "Gut. Haben Sie auch etwas gegen Halsschmerzen?",
+      "translation": "Good. Do you also have something for a sore throat?",
+      "translationFa": "خوب. چیزی هم برای گلودرد دارید؟"
+    },
+    {
+      "id": 15,
+      "role": "received",
+      "audioText": "Ja, diese Lutschtabletten hier sind sehr gut.",
+      "translation": "Yes, these lozenges here are very good.",
+      "translationFa": "بله، این قرص‌های مکیدنی خیلی خوبن."
+    },
+    {
+      "id": 16,
+      "role": "sent",
+      "targetText": "Dann nehme ich die auch. Vielen Dank fuer Ihre Hilfe!",
+      "translation": "Then I will take those too. Thank you very much for your help!",
+      "translationFa": "پس اونا رو هم می‌گیرم. خیلی ممنون از کمکتون!"
     }
   ],
   "difficulty": "A2+",
