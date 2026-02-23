@@ -1,0 +1,186 @@
+{
+  "title": "Day 83: Expressing Sympathy & Condolences",
+  "titleFa": "روز ۸۳: ابراز همدردی و تسلیت",
+  "sentences": [
+    {
+      "id": 1,
+      "role": "sent",
+      "targetText": "Es tut mir so leid, das zu hören.",
+      "translation": "I am so sorry to hear that.",
+      "translationFa": "من از شنیدن این موضوع بسیار متأسفم."
+    },
+    {
+      "id": 2,
+      "role": "sent",
+      "targetText": "Mein herzliches Beileid zu deinem Verlust.",
+      "translation": "My deepest condolences on your loss.",
+      "translationFa": "تسلیت عمیق من را برای از دست دادن عزیزت بپذیر."
+    },
+    {
+      "id": 3,
+      "role": "sent",
+      "targetText": "Ich denke in dieser schweren Zeit an dich.",
+      "translation": "I am thinking of you in this difficult time.",
+      "translationFa": "من در این زمان سخت به یاد تو هستم."
+    },
+    {
+      "id": 4,
+      "role": "sent",
+      "targetText": "Bitte lass mich wissen, ob ich helfen kann.",
+      "translation": "Please let me know if I can help.",
+      "translationFa": "لطفاً به من اطلاع بده اگر می‌توانم کمکی کنم."
+    },
+    {
+      "id": 5,
+      "role": "sent",
+      "targetText": "Worte können nicht ausdrücken, wie leid es mir tut.",
+      "translation": "Words cannot express how sorry I am.",
+      "translationFa": "کلمات نمی‌توانند بیان کنند که چقدر متأسفم."
+    },
+    {
+      "id": 6,
+      "role": "sent",
+      "targetText": "Ich bin für dich da, wenn du reden möchtest.",
+      "translation": "I am here for you if you need to talk.",
+      "translationFa": "اگر نیاز به صحبت داری، من اینجا برای تو هستم."
+    },
+    {
+      "id": 7,
+      "role": "sent",
+      "targetText": "Das klingt nach einer schrecklichen Situation.",
+      "translation": "That sounds like a terrible situation.",
+      "translationFa": "این شبیه یک وضعیت وحشتناک به نظر می‌رسد."
+    },
+    {
+      "id": 8,
+      "role": "sent",
+      "targetText": "Ich hoffe, dass du dich bald besser fühlst.",
+      "translation": "I hope you feel better soon.",
+      "translationFa": "امیدوارم به زودی احساس بهتری داشته باشی."
+    },
+    {
+      "id": 9,
+      "role": "received",
+      "audioText": "Es ist völlig normal, traurig zu sein.",
+      "translation": "It is completely normal to be sad.",
+      "translationFa": "ناراحت بودن کاملاً طبیعی است."
+    },
+    {
+      "id": 10,
+      "role": "received",
+      "audioText": "Nimm dir alle Zeit, die du brauchst.",
+      "translation": "Take all the time you need.",
+      "translationFa": "هر چقدر زمان نیاز داری برای خودت وقت بگذار."
+    },
+    {
+      "id": 11,
+      "role": "sent",
+      "targetText": "Ich sende dir Kraft und Liebe.",
+      "translation": "I am sending you strength and love.",
+      "translationFa": "برای تو قدرت و عشق می‌فرستم."
+    },
+    {
+      "id": 12,
+      "role": "sent",
+      "targetText": "Er war ein wunderbarer Mensch und wird vermisst werden.",
+      "translation": "He was a wonderful person and will be missed.",
+      "translationFa": "او انسان فوق‌العاده‌ای بود و جای خالی‌اش احساس خواهد شد."
+    },
+    {
+      "id": 13,
+      "role": "sent",
+      "targetText": "Ich kann mir nicht vorstellen, was du durchmachst.",
+      "translation": "I cannot imagine what you are going through.",
+      "translationFa": "من نمی‌توانم تصور کنم که چه چیزی را می‌گذرانی."
+    },
+    {
+      "id": 14,
+      "role": "sent",
+      "targetText": "Meine Gedanken sind bei dir und deiner Familie.",
+      "translation": "My thoughts are with you and your family.",
+      "translationFa": "افکار من با تو و خانواده‌ات است."
+    },
+    {
+      "id": 15,
+      "role": "received",
+      "audioText": "Du bist damit nicht allein.",
+      "translation": "You are not alone in this.",
+      "translationFa": "تو در این مورد تنها نیستی."
+    },
+    {
+      "id": 16,
+      "role": "sent",
+      "targetText": "Es bricht mir das Herz, dich leiden zu sehen.",
+      "translation": "It breaks my heart to see you in pain.",
+      "translationFa": "دیدن درد کشیدن تو قلب مرا می‌شکند."
+    },
+    {
+      "id": 17,
+      "role": "sent",
+      "targetText": "Wenn ich irgendetwas tun kann, frag einfach.",
+      "translation": "If there is anything I can do, just ask.",
+      "translationFa": "اگر کاری هست که بتوانم انجام دهم، فقط بپرس."
+    },
+    {
+      "id": 18,
+      "role": "sent",
+      "targetText": "Es tut mir so leid wegen deiner schlechten Nachrichten.",
+      "translation": "I am so sorry for your bad news.",
+      "translationFa": "من بابت اخبار بدت بسیار متأسفم."
+    },
+    {
+      "id": 19,
+      "role": "received",
+      "audioText": "Das muss unglaublich schwer für dich sein.",
+      "translation": "This must be incredibly hard for you.",
+      "translationFa": "این باید برای تو فوق‌العاده سخت باشد."
+    },
+    {
+      "id": 20,
+      "role": "sent",
+      "targetText": "Bitte nimm mein aufrichtiges Beileid an.",
+      "translation": "Please accept my sincere condolences.",
+      "translationFa": "لطفاً تسلیت صمیمانه من را بپذیر."
+    },
+    {
+      "id": 21,
+      "role": "sent",
+      "targetText": "Möge er in Frieden ruhen.",
+      "translation": "May he rest in peace.",
+      "translationFa": "روحش شاد باشد."
+    },
+    {
+      "id": 22,
+      "role": "sent",
+      "targetText": "Ich werde mich immer an ihre Freundlichkeit erinnern.",
+      "translation": "I will always remember her kindness.",
+      "translationFa": "من همیشه مهربانی او را به یاد خواهم داشت."
+    },
+    {
+      "id": 23,
+      "role": "sent",
+      "targetText": "Lass uns an die guten Zeiten erinnern, die wir geteilt haben.",
+      "translation": "Let's remember the good times we shared.",
+      "translationFa": "بیایید روزهای خوبی را که با هم به اشتراک گذاشتیم به یاد بیاوریم."
+    },
+    {
+      "id": 24,
+      "role": "received",
+      "audioText": "Trauern ist ein langer und persönlicher Prozess.",
+      "translation": "Grieving is a long and personal process.",
+      "translationFa": "سوگواری یک فرآیند طولانی و شخصی است."
+    },
+    {
+      "id": 25,
+      "role": "received",
+      "audioText": "Bleib stark, es werden bessere Tage kommen.",
+      "translation": "Stay strong, better days will come.",
+      "translationFa": "قوی بمان، روزهای بهتری خواهند آمد."
+    }
+  ],
+  "difficulty": "B2",
+  "grammarFocus": "Infinitivsatz: Es tut mir leid, das zu hören / dich leiden zu sehen + Relativsatz: guten Zeiten, die wir geteilt haben + Konjunktiv I: Möge er ruhen + Futur I: wird vermisst werden",
+  "grammarFocusFa": "جمله مصدری: Es tut mir leid, das zu hören / dich leiden zu sehen + جمله موصولی: guten Zeiten, die wir geteilt haben + وجه التزامی I: Möge er ruhen + آینده I: wird vermisst werden",
+  "description": "Express sympathy, empathy, and condolences in German. Offer comfort to someone going through a difficult time, and find the right words to support them emotionally.",
+  "descriptionFa": "همدردی، همدلی و تسلیت را به زبان آلمانی بیان کنید. به کسی که زمان دشواری را سپری می‌کند آرامش بدهید و کلمات درست را برای حمایت عاطفی از آنها پیدا کنید."
+}
