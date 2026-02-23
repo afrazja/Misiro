@@ -1,0 +1,165 @@
+{
+  "title": "Day 64: Expressing Agreement & Disagreement",
+  "titleFa": "روز ۶۴: بیان موافقت و مخالفت",
+  "sentences": [
+    {
+      "id": 1,
+      "role": "sent",
+      "targetText": "Ich stimme dir voll und ganz zu.",
+      "translation": "I completely agree with you.",
+      "translationFa": "من کاملاً با تو موافقم."
+    },
+    {
+      "id": 2,
+      "role": "received",
+      "audioText": "Du hast absolut recht.",
+      "translation": "You are absolutely right.",
+      "translationFa": "حق کاملاً با توست."
+    },
+    {
+      "id": 3,
+      "role": "sent",
+      "targetText": "Das ist genau das, was ich denke.",
+      "translation": "That is exactly what I think.",
+      "translationFa": "این دقیقاً همان چیزی است که من فکر می‌کنم."
+    },
+    {
+      "id": 4,
+      "role": "received",
+      "audioText": "Ich teile deine Meinung in dieser Angelegenheit.",
+      "translation": "I share your opinion on this matter.",
+      "translationFa": "من در این مورد با تو هم‌عقیده هستم."
+    },
+    {
+      "id": 5,
+      "role": "sent",
+      "targetText": "Das ist ein sehr guter Punkt.",
+      "translation": "That is a very good point.",
+      "translationFa": "این یک نکته بسیار خوب است."
+    },
+    {
+      "id": 6,
+      "role": "received",
+      "audioText": "Ich bin der gleichen Meinung.",
+      "translation": "I am of the same opinion.",
+      "translationFa": "من هم همین نظر را دارم."
+    },
+    {
+      "id": 7,
+      "role": "sent",
+      "targetText": "Ich bin anderer Meinung.",
+      "translation": "I have a different opinion.",
+      "translationFa": "من نظر متفاوتی دارم."
+    },
+    {
+      "id": 8,
+      "role": "sent",
+      "targetText": "Damit bin ich überhaupt nicht einverstanden.",
+      "translation": "I don't agree with that at all.",
+      "translationFa": "من اصلاً با آن موافق نیستم."
+    },
+    {
+      "id": 9,
+      "role": "received",
+      "audioText": "Das ist nicht ganz richtig.",
+      "translation": "That is not quite true.",
+      "translationFa": "این کاملاً درست نیست."
+    },
+    {
+      "id": 10,
+      "role": "sent",
+      "targetText": "Ich sehe die Dinge anders.",
+      "translation": "I see things differently.",
+      "translationFa": "من مسائل را جور دیگری می‌بینم."
+    },
+    {
+      "id": 11,
+      "role": "sent",
+      "targetText": "Es tut mir leid, aber ich muss widersprechen.",
+      "translation": "I'm sorry, but I have to disagree.",
+      "translationFa": "متأسفم، اما باید مخالفت کنم."
+    },
+    {
+      "id": 12,
+      "role": "received",
+      "audioText": "Du magst recht haben, aber ich sehe das anders.",
+      "translation": "You might be right, but I see it differently.",
+      "translationFa": "ممکن است حق با تو باشد، اما من آن را جور دیگری می‌بینم."
+    },
+    {
+      "id": 13,
+      "role": "sent",
+      "targetText": "Ich verstehe deine Perspektive, jedoch bin ich nicht überzeugt.",
+      "translation": "I understand your perspective, however I am not convinced.",
+      "translationFa": "من دیدگاه تو را می‌فهمم، با این حال قانع نشدم."
+    },
+    {
+      "id": 14,
+      "role": "received",
+      "audioText": "Das ist möglich, aber ich bin mir nicht sicher.",
+      "translation": "That is possible, but I am not sure.",
+      "translationFa": "این امکان‌پذیر است، اما من مطمئن نیستم."
+    },
+    {
+      "id": 15,
+      "role": "sent",
+      "targetText": "Einerseits ja, aber andererseits gibt es auch Gegenargumente.",
+      "translation": "On the one hand yes, but on the other hand there are also counterarguments.",
+      "translationFa": "از یک طرف بله، اما از طرف دیگر استدلال‌های مخالفی هم وجود دارد."
+    },
+    {
+      "id": 16,
+      "role": "sent",
+      "targetText": "Ich kann dieses Argument nicht akzeptieren.",
+      "translation": "I cannot accept that argument.",
+      "translationFa": "من نمی‌توانم این استدلال را بپذیرم."
+    },
+    {
+      "id": 17,
+      "role": "received",
+      "audioText": "Bist du dir da sicher?",
+      "translation": "Are you sure about that?",
+      "translationFa": "آیا در این مورد مطمئنی؟"
+    },
+    {
+      "id": 18,
+      "role": "sent",
+      "targetText": "Ich denke, wir müssen das anders betrachten.",
+      "translation": "I think we have to look at it differently.",
+      "translationFa": "فکر می‌کنم باید به این موضوع جور دیگری نگاه کنیم."
+    },
+    {
+      "id": 19,
+      "role": "received",
+      "audioText": "Lass uns darauf einigen, dass wir uns nicht einig sind.",
+      "translation": "Let's agree to disagree.",
+      "translationFa": "بیا توافق کنیم که با هم مخالفیم."
+    },
+    {
+      "id": 20,
+      "role": "received",
+      "audioText": "Jeder hat das Recht auf seine eigene Meinung.",
+      "translation": "Everyone has the right to their own opinion.",
+      "translationFa": "هر کسی حق دارد نظر خودش را داشته باشد."
+    },
+    {
+      "id": 21,
+      "role": "sent",
+      "targetText": "Danke, dass du deine Gedanken geteilt hast.",
+      "translation": "Thank you for sharing your thoughts.",
+      "translationFa": "ممنون که افکارت را به اشتراک گذاشتی."
+    },
+    {
+      "id": 22,
+      "role": "sent",
+      "targetText": "Wir werden einen Kompromiss finden.",
+      "translation": "We will find a compromise.",
+      "translationFa": "ما یک سازش پیدا خواهیم کرد."
+    }
+  ],
+  "difficulty": "B2",
+  "grammarFocus": "Agreement & disagreement: Ich stimme zu / Ich bin anderer Meinung / Einerseits…andererseits",
+  "grammarFocusFa": "موافقت و مخالفت: Ich stimme zu / Ich bin anderer Meinung / Einerseits…andererseits",
+  "description": "Discuss a topic with a German speaker and practice expressing whether you agree or disagree, and how to handle differing opinions politely.",
+  "descriptionFa": "درباره یک موضوع با یک آلمانی‌زبان بحث کنید و تمرین کنید که موافقت یا مخالفت خود را بیان کنید و با نظرات متفاوت محترمانه برخورد کنید."
+}
