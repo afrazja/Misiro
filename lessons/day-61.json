@@ -1,0 +1,158 @@
+{
+  "title": "Day 61: Hobbies & Personal Interests",
+  "titleFa": "روز ۶۱: سرگرمی‌ها و علایق شخصی",
+  "sentences": [
+    {
+      "id": 1,
+      "role": "received",
+      "audioText": "Was machst du gerne in deiner Freizeit?",
+      "translation": "What do you like to do in your free time?",
+      "translationFa": "در اوقات فراغتت دوست داری چه کار کنی؟"
+    },
+    {
+      "id": 2,
+      "role": "sent",
+      "targetText": "Ich interessiere mich sehr für Fotografie.",
+      "translation": "I am very interested in photography.",
+      "translationFa": "من خیلی به عکاسی علاقه دارم."
+    },
+    {
+      "id": 3,
+      "role": "received",
+      "audioText": "In meiner Freizeit lese ich gerne Bücher.",
+      "translation": "In my free time, I like to read books.",
+      "translationFa": "در اوقات فراغت، دوست دارم کتاب بخوانم."
+    },
+    {
+      "id": 4,
+      "role": "received",
+      "audioText": "Spielst du ein Musikinstrument?",
+      "translation": "Do you play a musical instrument?",
+      "translationFa": "آیا ساز موسیقی می‌نوازی؟"
+    },
+    {
+      "id": 5,
+      "role": "sent",
+      "targetText": "Ich spiele seit fünf Jahren Klavier.",
+      "translation": "I have been playing the piano for five years.",
+      "translationFa": "من پنج سال است که پیانو می‌نوازم."
+    },
+    {
+      "id": 6,
+      "role": "sent",
+      "targetText": "Sport ist mir sehr wichtig.",
+      "translation": "Sports are very important to me.",
+      "translationFa": "ورزش برای من خیلی مهم است."
+    },
+    {
+      "id": 7,
+      "role": "sent",
+      "targetText": "Ich gehe zweimal pro Woche im Park joggen.",
+      "translation": "I go jogging in the park twice a week.",
+      "translationFa": "من هفته‌ای دو بار در پارک می‌دوم."
+    },
+    {
+      "id": 8,
+      "role": "received",
+      "audioText": "Was ist dein Lieblingshobby?",
+      "translation": "What is your favorite hobby?",
+      "translationFa": "سرگرمی مورد علاقه تو چیست؟"
+    },
+    {
+      "id": 9,
+      "role": "sent",
+      "targetText": "Ich liebe es zu reisen und neue Kulturen zu entdecken.",
+      "translation": "I love traveling and discovering new cultures.",
+      "translationFa": "من عاشق سفر کردن و کشف فرهنگ‌های جدید هستم."
+    },
+    {
+      "id": 10,
+      "role": "sent",
+      "targetText": "An den Wochenenden gehe ich oft in den Bergen wandern.",
+      "translation": "On weekends, I often go hiking in the mountains.",
+      "translationFa": "آخر هفته‌ها اغلب برای کوهنوردی به کوه می‌روم."
+    },
+    {
+      "id": 11,
+      "role": "sent",
+      "targetText": "Ich lerne eine neue Sprache, weil es Spaß macht.",
+      "translation": "I am learning a new language because it's fun.",
+      "translationFa": "من در حال یادگیری یک زبان جدید هستم چون سرگرم‌کننده است."
+    },
+    {
+      "id": 12,
+      "role": "received",
+      "audioText": "Leider habe ich nicht viel Freizeit.",
+      "translation": "Unfortunately, I don't have much free time.",
+      "translationFa": "متأسفانه، من وقت آزاد زیادی ندارم."
+    },
+    {
+      "id": 13,
+      "role": "sent",
+      "targetText": "Kochen ist eine große Leidenschaft von mir.",
+      "translation": "Cooking is a great passion of mine.",
+      "translationFa": "آشپزی اشتیاق بزرگ من است."
+    },
+    {
+      "id": 14,
+      "role": "sent",
+      "targetText": "Ich höre am liebsten klassische Musik.",
+      "translation": "I prefer listening to classical music.",
+      "translationFa": "من ترجیح می‌دهم به موسیقی کلاسیک گوش دهم."
+    },
+    {
+      "id": 15,
+      "role": "received",
+      "audioText": "Schaust du lieber Filme oder liest du Bücher?",
+      "translation": "Do you prefer watching movies or reading books?",
+      "translationFa": "ترجیح می‌دهی فیلم ببینی یا کتاب بخوانی؟"
+    },
+    {
+      "id": 16,
+      "role": "sent",
+      "targetText": "Ich sammle alte Briefmarken und Münzen.",
+      "translation": "I collect vintage stamps and coins.",
+      "translationFa": "من تمبر و سکه‌های قدیمی جمع‌آوری می‌کنم."
+    },
+    {
+      "id": 17,
+      "role": "sent",
+      "targetText": "Malen hilft mir, mich nach der Arbeit zu entspannen.",
+      "translation": "Painting helps me relax after work.",
+      "translationFa": "نقاشی کردن به من کمک می‌کند تا بعد از کار آرام شوم."
+    },
+    {
+      "id": 18,
+      "role": "sent",
+      "targetText": "Wir spielen oft Brettspiele am Freitagabend.",
+      "translation": "We often play board games on Friday evenings.",
+      "translationFa": "ما اغلب عصرهای جمعه بازی‌های رومیزی انجام می‌دهیم."
+    },
+    {
+      "id": 19,
+      "role": "received",
+      "audioText": "Bist du in einem Sportverein?",
+      "translation": "Are you in a sports club?",
+      "translationFa": "آیا در یک باشگاه ورزشی عضو هستی؟"
+    },
+    {
+      "id": 20,
+      "role": "sent",
+      "targetText": "Ich verbringe viel Zeit im Garten.",
+      "translation": "I spend a lot of time in the garden.",
+      "translationFa": "من زمان زیادی را در باغچه می‌گذرانم."
+    },
+    {
+      "id": 21,
+      "role": "sent",
+      "targetText": "Gartenarbeit ist mein liebster Weg, um Stress abzubauen.",
+      "translation": "Gardening is my favorite way to reduce stress.",
+      "translationFa": "باغبانی روش مورد علاقه من برای کاهش استرس است."
+    }
+  ],
+  "difficulty": "B1+",
+  "grammarFocus": "Hobbies + seit + Dativ: Ich spiele seit fünf Jahren Klavier / Ich interessiere mich für + Akkusativ",
+  "grammarFocusFa": "سرگرمی‌ها + seit + حالت سوم: Ich spiele seit fünf Jahren Klavier / Ich interessiere mich für + حالت چهارم",
+  "description": "Talk about your hobbies and personal interests with a German friend. Share what you enjoy doing in your spare time.",
+  "descriptionFa": "درباره سرگرمی‌ها و علایق شخصیتون با یه دوست آلمانی صحبت کنید. بگید در اوقات فراغت چه کار دوست دارید انجام بدید."
+}
