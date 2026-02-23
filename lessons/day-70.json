@@ -1,0 +1,165 @@
+{
+  "title": "Day 70: Discussing Books, Movies & TV",
+  "titleFa": "روز ۷۰: بحث درباره کتاب‌ها، فیلم‌ها و تلویزیون",
+  "sentences": [
+    {
+      "id": 1,
+      "role": "received",
+      "audioText": "Was ist dein Lieblingsfilm?",
+      "translation": "What is your favorite movie?",
+      "translationFa": "فیلم مورد علاقه تو چیست؟"
+    },
+    {
+      "id": 2,
+      "role": "sent",
+      "targetText": "Ich lese lieber Bücher als fernzusehen.",
+      "translation": "I prefer reading books to watching television.",
+      "translationFa": "من خواندن کتاب را به تماشای تلویزیون ترجیح می‌دهم."
+    },
+    {
+      "id": 3,
+      "role": "received",
+      "audioText": "Hast du die neue Folge dieser Serie gesehen?",
+      "translation": "Have you seen the new episode of this series?",
+      "translationFa": "آیا قسمت جدید این سریال را دیده‌ای؟"
+    },
+    {
+      "id": 4,
+      "role": "sent",
+      "targetText": "Die Handlung des Buches war sehr spannend.",
+      "translation": "The plot of the book was very exciting.",
+      "translationFa": "داستان کتاب بسیار هیجان‌انگیز بود."
+    },
+    {
+      "id": 5,
+      "role": "received",
+      "audioText": "Die Schauspieler haben fantastische Arbeit geleistet.",
+      "translation": "The actors did a fantastic job.",
+      "translationFa": "بازیگران کار فوق‌العاده‌ای انجام دادند."
+    },
+    {
+      "id": 6,
+      "role": "sent",
+      "targetText": "Dieser Film ist ein Klassiker.",
+      "translation": "This movie is a classic.",
+      "translationFa": "این فیلم یک شاهکار کلاسیک است."
+    },
+    {
+      "id": 7,
+      "role": "sent",
+      "targetText": "Ich mag keine Horrorfilme, weil sie mir Angst machen.",
+      "translation": "I don't like horror movies because they scare me.",
+      "translationFa": "من فیلم‌های ترسناک را دوست ندارم چون مرا می‌ترسانند."
+    },
+    {
+      "id": 8,
+      "role": "received",
+      "audioText": "Wer ist dein Lieblingsautor?",
+      "translation": "Who is your favorite author?",
+      "translationFa": "نویسنده مورد علاقه تو کیست؟"
+    },
+    {
+      "id": 9,
+      "role": "sent",
+      "targetText": "Ich habe gerade einen Science-Fiction-Roman zu Ende gelesen.",
+      "translation": "I just finished reading a science fiction novel.",
+      "translationFa": "من به تازگی خواندن یک رمان علمی تخیلی را تمام کردم."
+    },
+    {
+      "id": 10,
+      "role": "received",
+      "audioText": "Die Spezialeffekte in diesem Film waren unglaublich.",
+      "translation": "The special effects in this film were amazing.",
+      "translationFa": "جلوه‌های ویژه در این فیلم شگفت‌انگیز بودند."
+    },
+    {
+      "id": 11,
+      "role": "sent",
+      "targetText": "Ich kann diese Dokumentation wärmstens empfehlen.",
+      "translation": "I highly recommend this documentary.",
+      "translationFa": "من این مستند را به شدت توصیه می‌کنم."
+    },
+    {
+      "id": 12,
+      "role": "received",
+      "audioText": "Es basiert auf einer wahren Geschichte.",
+      "translation": "It is based on a true story.",
+      "translationFa": "این بر اساس یک داستان واقعی است."
+    },
+    {
+      "id": 13,
+      "role": "sent",
+      "targetText": "Lass uns dieses Wochenende ins Kino gehen.",
+      "translation": "Let's go to the cinema this weekend.",
+      "translationFa": "بیا این آخر هفته به سینما برویم."
+    },
+    {
+      "id": 14,
+      "role": "received",
+      "audioText": "Hast du die Kritiken gelesen, bevor du ihn gesehen hast?",
+      "translation": "Did you read the reviews before watching it?",
+      "translationFa": "آیا قبل از تماشای آن، نقدها را خواندی؟"
+    },
+    {
+      "id": 15,
+      "role": "sent",
+      "targetText": "Das Ende war völlig unerwartet.",
+      "translation": "The ending was completely unexpected.",
+      "translationFa": "پایان آن کاملاً غیرمنتظره بود."
+    },
+    {
+      "id": 16,
+      "role": "sent",
+      "targetText": "Ich habe ein Abonnement bei einem Streaming-Dienst.",
+      "translation": "I have a subscription to a streaming service.",
+      "translationFa": "من اشتراک یک سرویس پخش آنلاین دارم."
+    },
+    {
+      "id": 17,
+      "role": "sent",
+      "targetText": "Dieses Buch hat meine Sicht auf das Leben verändert.",
+      "translation": "This book changed my perspective on life.",
+      "translationFa": "این کتاب دیدگاه من را نسبت به زندگی تغییر داد."
+    },
+    {
+      "id": 18,
+      "role": "received",
+      "audioText": "Der Soundtrack des Films ist wunderschön.",
+      "translation": "The soundtrack of the movie is beautiful.",
+      "translationFa": "موسیقی متن فیلم بسیار زیباست."
+    },
+    {
+      "id": 19,
+      "role": "sent",
+      "targetText": "Ich lese normalerweise ein paar Seiten, bevor ich schlafen gehe.",
+      "translation": "I usually read a few pages before going to sleep.",
+      "translationFa": "من معمولاً قبل از خواب چند صفحه می‌خوانم."
+    },
+    {
+      "id": 20,
+      "role": "received",
+      "audioText": "Komödien bringen mich immer zum Lachen.",
+      "translation": "Comedies always make me laugh.",
+      "translationFa": "کمدی‌ها همیشه مرا می‌خندانند."
+    },
+    {
+      "id": 21,
+      "role": "sent",
+      "targetText": "Untertitel helfen mir, den Dialog besser zu verstehen.",
+      "translation": "Subtitles help me understand the dialogue better.",
+      "translationFa": "زیرنویس‌ها به من کمک می‌کنند تا دیالوگ‌ها را بهتر بفهمم."
+    },
+    {
+      "id": 22,
+      "role": "sent",
+      "targetText": "Ich kann es kaum erwarten, dass die Fortsetzung herauskommt.",
+      "translation": "I can't wait for the sequel to come out.",
+      "translationFa": "بی‌صبرانه منتظرم که دنباله آن منتشر شود."
+    }
+  ],
+  "difficulty": "B2",
+  "grammarFocus": "Comparative preference: lieber … als / Relative clauses: ein Film, der… / weil + Nebensatz",
+  "grammarFocusFa": "مقایسه ترجیحی: lieber … als / جملات وصفی: ein Film, der… / weil + جمله پیرو",
+  "description": "Discuss your favourite films, books and TV shows with a German friend. Share opinions, make recommendations, and plan a cinema trip.",
+  "descriptionFa": "فیلم‌ها، کتاب‌ها و سریال‌های مورد علاقه‌تان را با یک دوست آلمانی بحث کنید. نظر بدهید، پیشنهاد دهید و برای رفتن به سینما برنامه‌ریزی کنید."
+}
