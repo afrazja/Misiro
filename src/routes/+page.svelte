@@ -78,13 +78,14 @@
 				authEmail = '';
 				authPassword = '';
 				authName = '';
-				const user = await auth.getUser();
-				if (user) await auth.ensureProfile(user);
-				await updateProfileUI();
-				await dataLayer.syncOnLogin();
-				// If target language not yet chosen, go to onboarding first
-				const targetLang = await auth.getTargetLanguage();
-				goto(targetLang ? '/home' : '/onboarding');
+				// Navigate immediately — server guards handle the exact destination.
+				// Heavy background work (profile sync, UI refresh) runs after navigation.
+				const targetLang = result.user?.user_metadata?.target_language;
+				goto(targetLang === 'de' || targetLang === 'fr' ? '/home' : '/onboarding');
+				// Fire-and-forget: don't await these before navigating
+				if (result.user) auth.ensureProfile(result.user);
+				dataLayer.syncOnLogin();
+				updateProfileUI();
 			}
 		} catch (e: any) {
 			authError = e.message || 'An error occurred.';
