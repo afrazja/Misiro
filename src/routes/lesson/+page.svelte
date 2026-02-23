@@ -1335,7 +1335,7 @@
 	/* Script Panel */
 	.script-view {
 		height: 28vh;
-		background: #1a1a2e;
+		background: #141428;
 		color: #fff;
 		display: flex;
 		flex-direction: column;
@@ -1396,16 +1396,16 @@
 	}
 
 	.script-item.done {
-		opacity: 0.45;
+		opacity: 0.72;
 	}
 
 	.script-num {
 		font-size: 0.65rem;
 		font-weight: 700;
-		color: #a0e0b8;
+		color: #7fffa8;
 		min-width: 18px;
 		height: 18px;
-		background: rgba(46, 204, 113, 0.15);
+		background: rgba(46, 204, 113, 0.2);
 		border-radius: 50%;
 		display: flex;
 		align-items: center;
@@ -1421,8 +1421,8 @@
 	}
 
 	.script-item.done .script-num {
-		background: rgba(255, 255, 255, 0.05);
-		color: #777;
+		background: rgba(255, 255, 255, 0.08);
+		color: #aaa;
 	}
 
 	.script-text {
@@ -1431,17 +1431,21 @@
 	}
 
 	.script-item .german {
-		font-weight: 600;
-		color: #2ecc71;
+		font-weight: 700;
+		color: #5dfc8a;
 		font-size: 0.9rem;
 		line-height: 1.35;
 	}
 
 	.script-item .translation {
-		color: #c8e6c9;
-		font-size: 0.77rem;
+		color: #e8f5e9;
+		font-size: 0.78rem;
 		margin-top: 2px;
 		line-height: 1.3;
+	}
+
+	.script-item.active .german {
+		color: #ffffff;
 	}
 
 	.script-item.active .translation {
