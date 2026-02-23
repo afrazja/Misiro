@@ -1,0 +1,193 @@
+{
+  "title": "Day 86: Expressing Uncertainty & Guessing",
+  "titleFa": "روز ۸۶: بیان عدم اطمینان و حدس زدن",
+  "sentences": [
+    {
+      "id": 1,
+      "role": "sent",
+      "targetText": "Ich bin mir da nicht ganz sicher.",
+      "translation": "I am not completely sure about that.",
+      "translationFa": "من در این مورد کاملاً مطمئن نیستم."
+    },
+    {
+      "id": 2,
+      "role": "sent",
+      "targetText": "Ich nehme an, dass er später kommt.",
+      "translation": "I assume that he will come later.",
+      "translationFa": "من حدس می‌زنم که او بعداً بیاید."
+    },
+    {
+      "id": 3,
+      "role": "sent",
+      "targetText": "Es könnte sein, dass der Zug Verspätung hat.",
+      "translation": "It could be that the train is delayed.",
+      "translationFa": "ممکن است که قطار تأخیر داشته باشد."
+    },
+    {
+      "id": 4,
+      "role": "sent",
+      "targetText": "Ich vermute, sie ist schon gegangen.",
+      "translation": "I suppose she has already left.",
+      "translationFa": "من گمان می‌کنم او قبلاً رفته است."
+    },
+    {
+      "id": 5,
+      "role": "sent",
+      "targetText": "Soweit ich weiß, ist das Geschäft heute geschlossen.",
+      "translation": "As far as I know, the shop is closed today.",
+      "translationFa": "تا جایی که من می‌دانم، مغازه امروز بسته است."
+    },
+    {
+      "id": 6,
+      "role": "sent",
+      "targetText": "Ich bezweifle stark, dass das funktionieren wird.",
+      "translation": "I highly doubt that this will work.",
+      "translationFa": "من به شدت شک دارم که این کار جواب دهد."
+    },
+    {
+      "id": 7,
+      "role": "sent",
+      "targetText": "Es sieht so aus, als ob es regnen wird.",
+      "translation": "It looks as if it is going to rain.",
+      "translationFa": "به نظر می‌رسد که قرار است باران ببارد."
+    },
+    {
+      "id": 8,
+      "role": "sent",
+      "targetText": "Vielleicht sollten wir jemanden nach dem Weg fragen.",
+      "translation": "Perhaps we should ask someone for directions.",
+      "translationFa": "شاید باید از کسی آدرس را بپرسیم."
+    },
+    {
+      "id": 9,
+      "role": "sent",
+      "targetText": "Es ist möglich, dass ich einen Fehler gemacht habe.",
+      "translation": "It is possible that I made a mistake.",
+      "translationFa": "این امکان وجود دارد که من اشتباه کرده باشم."
+    },
+    {
+      "id": 10,
+      "role": "sent",
+      "targetText": "Ich schätze, wir müssen abwarten und sehen.",
+      "translation": "I guess we will have to wait and see.",
+      "translationFa": "من حدس می‌زنم که باید صبر کنیم و ببینیم."
+    },
+    {
+      "id": 11,
+      "role": "sent",
+      "targetText": "Es ist sehr wahrscheinlich, dass es wahr ist.",
+      "translation": "There is a high probability that it is true.",
+      "translationFa": "احتمال زیادی وجود دارد که این حقیقت داشته باشد."
+    },
+    {
+      "id": 12,
+      "role": "received",
+      "audioText": "Es ist unwahrscheinlich, dass sie pünktlich ankommen.",
+      "translation": "It is unlikely that they will arrive on time.",
+      "translationFa": "بعید است که آن‌ها به موقع برسند."
+    },
+    {
+      "id": 13,
+      "role": "sent",
+      "targetText": "Ich rate mal, dass dies der richtige Weg ist.",
+      "translation": "I am guessing that this is the right way.",
+      "translationFa": "من حدس می‌زنم که این راه درست است."
+    },
+    {
+      "id": 14,
+      "role": "sent",
+      "targetText": "Ich habe das Gefühl, dass etwas fehlt.",
+      "translation": "I have the feeling that something is missing.",
+      "translationFa": "من این احساس را دارم که چیزی کم است."
+    },
+    {
+      "id": 15,
+      "role": "received",
+      "audioText": "Mir scheint, dass du müde bist.",
+      "translation": "It seems to me that you are tired.",
+      "translationFa": "به نظر من می‌رسد که تو خسته هستی."
+    },
+    {
+      "id": 16,
+      "role": "received",
+      "audioText": "Aller Wahrscheinlichkeit nach wird das Treffen abgesagt.",
+      "translation": "In all likelihood, the meeting will be canceled.",
+      "translationFa": "به احتمال خیلی زیاد، جلسه لغو خواهد شد."
+    },
+    {
+      "id": 17,
+      "role": "sent",
+      "targetText": "Ich frage mich, ob er meine Nachricht erhalten hat.",
+      "translation": "I wonder if he received my message.",
+      "translationFa": "من در عجبم که آیا او پیام من را دریافت کرده است."
+    },
+    {
+      "id": 18,
+      "role": "sent",
+      "targetText": "Ich bin von dieser Idee noch nicht überzeugt.",
+      "translation": "I am not convinced of this idea yet.",
+      "translationFa": "من هنوز از این ایده متقاعد نشده‌ام."
+    },
+    {
+      "id": 19,
+      "role": "sent",
+      "targetText": "Es könnte eine gute Idee sein, ihn anzurufen.",
+      "translation": "It might be a good idea to call him.",
+      "translationFa": "ممکن است ایده خوبی باشد که با او تماس بگیریم."
+    },
+    {
+      "id": 20,
+      "role": "sent",
+      "targetText": "Ich kann es nicht mit Sicherheit sagen, aber ich denke schon.",
+      "translation": "I can't say for certain, but I think so.",
+      "translationFa": "نمی‌توانم با اطمینان بگویم، اما این‌طور فکر می‌کنم."
+    },
+    {
+      "id": 21,
+      "role": "sent",
+      "targetText": "Vermutlich haben sie unseren Termin vergessen.",
+      "translation": "Presumably, they have forgotten our appointment.",
+      "translationFa": "احتمالاً آن‌ها قرار ما را فراموش کرده‌اند."
+    },
+    {
+      "id": 22,
+      "role": "sent",
+      "targetText": "Ich würde sagen, dass es etwa fünfzig Euro kostet.",
+      "translation": "I would say that it costs around fifty euros.",
+      "translationFa": "من می‌گویم که حدود پنجاه یورو قیمت دارد."
+    },
+    {
+      "id": 23,
+      "role": "sent",
+      "targetText": "Wenn ich mich nicht irre, haben wir uns letztes Jahr kennengelernt.",
+      "translation": "Unless I am mistaken, we met last year.",
+      "translationFa": "اگر اشتباه نکنم، ما سال گذشته با هم آشنا شدیم."
+    },
+    {
+      "id": 24,
+      "role": "received",
+      "audioText": "Es ist schwer zu sagen, was als nächstes passieren wird.",
+      "translation": "It is hard to say what will happen next.",
+      "translationFa": "سخت است که بگوییم بعداً چه اتفاقی خواهد افتاد."
+    },
+    {
+      "id": 25,
+      "role": "received",
+      "audioText": "Anscheinend gab es einen Unfall auf der Autobahn.",
+      "translation": "Apparently, there was an accident on the highway.",
+      "translationFa": "ظاهراً یک تصادف در بزرگراه رخ داده است."
+    },
+    {
+      "id": 26,
+      "role": "sent",
+      "targetText": "Ich vermute, dass es ein technisches Problem gibt.",
+      "translation": "I suspect that there is a technical problem.",
+      "translationFa": "من گمان می‌کنم که یک مشکل فنی وجود دارد."
+    }
+  ],
+  "difficulty": "B2",
+  "grammarFocus": "Modalverb der Wahrscheinlichkeit: könnte sein / Es ist möglich/wahrscheinlich, dass + Konjunktiv II: Ich würde sagen / es könnte sein + als ob + Indikativ + Adverbien: vermutlich / anscheinend / soweit ich weiß",
+  "grammarFocusFa": "فعل وجهی احتمال: könnte sein / Es ist möglich/wahrscheinlich, dass + وجه التزامی II: Ich würde sagen / es könnte sein + als ob + اخبار + قیدها: vermutlich / anscheinend / soweit ich weiß",
+  "description": "Express uncertainty, make guesses, and hedge your statements in German. Use probability language, modal verbs, and softening expressions to communicate what you think might be true.",
+  "descriptionFa": "عدم اطمینان را بیان کنید، حدس بزنید و اظهارات خود را در آلمانی نرم کنید. از زبان احتمال، افعال وجهی و عبارات نرم‌کننده برای بیان آنچه فکر می‌کنید ممکن است درست باشد استفاده کنید."
+}
