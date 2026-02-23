@@ -1,0 +1,193 @@
+{
+  "title": "Day 77: Explaining a Complex Problem",
+  "titleFa": "روز ۷۷: توضیح یک مشکل پیچیده",
+  "sentences": [
+    {
+      "id": 1,
+      "role": "sent",
+      "targetText": "Das Problem ist komplizierter, als es auf den ersten Blick scheint.",
+      "translation": "The problem is more complicated than it seems at first glance.",
+      "translationFa": "مشکل پیچیده‌تر از آن چیزی است که در نگاه اول به نظر می‌رسد."
+    },
+    {
+      "id": 2,
+      "role": "sent",
+      "targetText": "Lassen Sie mich versuchen, dies in kleinere Teile zu zerlegen.",
+      "translation": "Let me try to break this down into smaller parts.",
+      "translationFa": "اجازه دهید سعی کنم این را به بخش‌های کوچکتر تقسیم کنم."
+    },
+    {
+      "id": 3,
+      "role": "sent",
+      "targetText": "Das Hauptproblem liegt in der Systemarchitektur.",
+      "translation": "The main issue lies in the system architecture.",
+      "translationFa": "مشکل اصلی در معماری سیستم نهفته است."
+    },
+    {
+      "id": 4,
+      "role": "sent",
+      "targetText": "Wir haben einen Fehler in der Anwendung.",
+      "translation": "We are experiencing a bug in the application.",
+      "translationFa": "ما با یک باگ در اپلیکیشن مواجه هستیم."
+    },
+    {
+      "id": 5,
+      "role": "sent",
+      "targetText": "Zuerst müssen wir die Fehlerquelle identifizieren.",
+      "translation": "First, we need to identify the root cause.",
+      "translationFa": "ابتدا باید علت اصلی را شناسایی کنیم."
+    },
+    {
+      "id": 6,
+      "role": "sent",
+      "targetText": "Die Datenbank synchronisiert sich nicht korrekt mit dem Server.",
+      "translation": "The database is not syncing correctly with the server.",
+      "translationFa": "پایگاه داده به درستی با سرور همگام نمی‌شود."
+    },
+    {
+      "id": 7,
+      "role": "received",
+      "audioText": "Infolgedessen friert die Benutzeroberfläche komplett ein.",
+      "translation": "As a result, the user interface freezes completely.",
+      "translationFa": "در نتیجه، رابط کاربری کاملاً فریز می‌شود."
+    },
+    {
+      "id": 8,
+      "role": "sent",
+      "targetText": "Es hat eine Weile gedauert, bis ich herausgefunden habe, was falsch war.",
+      "translation": "It took me a while to figure out what was wrong.",
+      "translationFa": "مدتی طول کشید تا بفهمم چه چیزی اشتباه است."
+    },
+    {
+      "id": 9,
+      "role": "sent",
+      "targetText": "Der Code verursacht eine Endlosschleife.",
+      "translation": "The code is causing an infinite loop.",
+      "translationFa": "کد باعث یک حلقه بی‌نهایت می‌شود."
+    },
+    {
+      "id": 10,
+      "role": "sent",
+      "targetText": "Ich kann Ihnen das Fehlerprotokoll zeigen, wenn das hilft.",
+      "translation": "I can show you the error log if it helps.",
+      "translationFa": "اگر کمک می‌کند، می‌توانم گزارش خطا را به شما نشان دهم."
+    },
+    {
+      "id": 11,
+      "role": "sent",
+      "targetText": "Lassen Sie uns Schritt für Schritt vorgehen.",
+      "translation": "Let's approach this step by step.",
+      "translationFa": "بیایید قدم به قدم پیش برویم."
+    },
+    {
+      "id": 12,
+      "role": "sent",
+      "targetText": "Wenn wir diesen Parameter ändern, könnte das System abstürzen.",
+      "translation": "If we change this parameter, the system might crash.",
+      "translationFa": "اگر این پارامتر را تغییر دهیم، ممکن است سیستم از کار بیفتد."
+    },
+    {
+      "id": 13,
+      "role": "received",
+      "audioText": "Gibt es alternative Lösungen, die wir noch nicht in Betracht gezogen haben?",
+      "translation": "Are there any alternative solutions we haven't considered?",
+      "translationFa": "آیا راه‌حل‌های جایگزینی وجود دارد که در نظر نگرفته باشیم؟"
+    },
+    {
+      "id": 14,
+      "role": "sent",
+      "targetText": "Ich muss einen erheblichen Teil der Logik neu schreiben.",
+      "translation": "I have to rewrite a significant portion of the logic.",
+      "translationFa": "من باید بخش قابل توجهی از منطق را دوباره بنویسم."
+    },
+    {
+      "id": 15,
+      "role": "sent",
+      "targetText": "Wir haben es mit einem unerwarteten Sonderfall zu tun.",
+      "translation": "We are dealing with an unexpected edge case.",
+      "translationFa": "ما با یک مورد خاص غیرمنتظره سر و کار داریم."
+    },
+    {
+      "id": 16,
+      "role": "received",
+      "audioText": "Die Dokumentation für dieses Framework ist ziemlich schlecht.",
+      "translation": "The documentation for this framework is quite poor.",
+      "translationFa": "مستندات این فریم‌ورک نسبتاً ضعیف است."
+    },
+    {
+      "id": 17,
+      "role": "sent",
+      "targetText": "Ich schlage vor, dass wir diese Komponente von Grund auf neu bauen.",
+      "translation": "I propose that we rebuild this component from scratch.",
+      "translationFa": "پیشنهاد می‌کنم این کامپوننت را از ابتدا دوباره بسازیم."
+    },
+    {
+      "id": 18,
+      "role": "sent",
+      "targetText": "Ohne technischen Hintergrund ist das schwer zu erklären.",
+      "translation": "It is difficult to explain without a technical background.",
+      "translationFa": "توضیح این بدون پیش‌زمینه فنی دشوار است."
+    },
+    {
+      "id": 19,
+      "role": "sent",
+      "targetText": "Im Grunde sprechen die beiden Systeme unterschiedliche Sprachen.",
+      "translation": "Essentially, the two systems are speaking different languages.",
+      "translationFa": "اساساً، این دو سیستم به زبان‌های متفاوتی صحبت می‌کنند."
+    },
+    {
+      "id": 20,
+      "role": "received",
+      "audioText": "Wir müssen die Leistung sofort optimieren.",
+      "translation": "We need to optimize the performance immediately.",
+      "translationFa": "ما باید فوراً عملکرد را بهینه‌سازی کنیم."
+    },
+    {
+      "id": 21,
+      "role": "received",
+      "audioText": "Hast du versucht, den Cache zu leeren?",
+      "translation": "Have you tried clearing the cache?",
+      "translationFa": "آیا سعی کرده‌ای حافظه پنهان را پاک کنی؟"
+    },
+    {
+      "id": 22,
+      "role": "sent",
+      "targetText": "Diese Notlösung ist nur eine vorübergehende Reparatur.",
+      "translation": "This workaround is only a temporary fix.",
+      "translationFa": "این راه حل موقت فقط یک تعمیر زودگذر است."
+    },
+    {
+      "id": 23,
+      "role": "sent",
+      "targetText": "Eine dauerhafte Lösung wird mindestens zwei Wochen dauern.",
+      "translation": "A permanent solution will take at least two weeks.",
+      "translationFa": "یک راه‌حل دائمی حداقل دو هفته طول خواهد کشید."
+    },
+    {
+      "id": 24,
+      "role": "sent",
+      "targetText": "Wir sollten dies vor der Markteinführung gründlich testen.",
+      "translation": "We should test this thoroughly before the launch.",
+      "translationFa": "ما باید این را قبل از راه‌اندازی به طور کامل آزمایش کنیم."
+    },
+    {
+      "id": 25,
+      "role": "sent",
+      "targetText": "Lassen Sie mich ein Diagramm zeichnen, um es klarer zu machen.",
+      "translation": "Let me draw a diagram to make it clearer.",
+      "translationFa": "اجازه دهید یک نمودار بکشم تا موضوع روشن‌تر شود."
+    },
+    {
+      "id": 26,
+      "role": "sent",
+      "targetText": "Ist diese Erklärung für Sie sinnvoll?",
+      "translation": "Does this explanation make sense to you?",
+      "translationFa": "آیا این توضیح برای شما منطقی است؟"
+    }
+  ],
+  "difficulty": "B2",
+  "grammarFocus": "Konjunktiv II für Bedingungen: wenn wir ändern, könnte abstürzen + Komparativ: komplizierter als + Infinitivsatz: bis ich herausgefunden habe",
+  "grammarFocusFa": "وجه التزامی II برای شرط: wenn wir ändern, könnte abstürzen + مقایسه‌ای: komplizierter als + جمله مصدری: bis ich herausgefunden habe",
+  "description": "Explain a complex technical or logical problem in German. Break it down clearly, identify root causes, propose solutions, and check for understanding.",
+  "descriptionFa": "یک مشکل فنی یا منطقی پیچیده را به زبان آلمانی توضیح دهید. آن را به وضوح تجزیه کنید، علل اصلی را شناسایی کنید، راه‌حل‌ها پیشنهاد دهید و درک را بررسی کنید."
+}
