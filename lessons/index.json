@@ -71,7 +71,8 @@
     { "day": 69, "file": "day-69.json", "title": "Day 69: Talking About Goals & the Future", "titleFa": "روز ۶۹: صحبت درباره اهداف و آینده", "group": "advanced" },
     { "day": 70, "file": "day-70.json", "title": "Day 70: Discussing Books, Movies & TV", "titleFa": "روز ۷۰: بحث درباره کتاب‌ها، فیلم‌ها و تلویزیون", "group": "advanced" },
     { "day": 71, "file": "day-71.json", "title": "Day 71: Art, Music & Entertainment", "titleFa": "روز ۷۱: هنر، موسیقی و سرگرمی", "group": "advanced" },
-    { "day": 72, "file": "day-72.json", "title": "Day 72: Planning a Complex Trip", "titleFa": "روز ۷۲: برنامه‌ریزی برای یک سفر پیچیده", "group": "advanced" }
+    { "day": 72, "file": "day-72.json", "title": "Day 72: Planning a Complex Trip", "titleFa": "روز ۷۲: برنامه‌ریزی برای یک سفر پیچیده", "group": "advanced" },
+    { "day": 73, "file": "day-73.json", "title": "Day 73: Explaining a Recipe/Cooking Process", "titleFa": "روز ۷۳: توضیح دستور پخت / فرآیند آشپزی", "group": "advanced" }
   ],
   "glossaryFile": "glossary.json"
 }
