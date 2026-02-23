@@ -1,0 +1,186 @@
+{
+  "title": "Day 82: Relationships & Dating",
+  "titleFa": "روز ۸۲: روابط و قرار ملاقات",
+  "sentences": [
+    {
+      "id": 1,
+      "role": "received",
+      "audioText": "Bist du Single oder in einer Beziehung?",
+      "translation": "Are you single or in a relationship?",
+      "translationFa": "آیا مجردی یا در یک رابطه هستی؟"
+    },
+    {
+      "id": 2,
+      "role": "sent",
+      "targetText": "Ich bin glücklich verheiratet.",
+      "translation": "I am happily married.",
+      "translationFa": "من با خوشحالی ازدواج کرده‌ام."
+    },
+    {
+      "id": 3,
+      "role": "sent",
+      "targetText": "Wir sind seit drei Jahren zusammen.",
+      "translation": "We have been together for three years.",
+      "translationFa": "ما سه سال است که با هم هستیم."
+    },
+    {
+      "id": 4,
+      "role": "sent",
+      "targetText": "Möchtest du mal mit mir ausgehen?",
+      "translation": "Would you like to go out with me sometime?",
+      "translationFa": "دوست داری یک وقت با من بیرون بروی؟"
+    },
+    {
+      "id": 5,
+      "role": "sent",
+      "targetText": "Lass uns heute Abend essen gehen.",
+      "translation": "Let's go out for dinner tonight.",
+      "translationFa": "بیا امشب برای شام بیرون برویم."
+    },
+    {
+      "id": 6,
+      "role": "received",
+      "audioText": "Du siehst heute sehr schön aus.",
+      "translation": "You look very beautiful today.",
+      "translationFa": "تو امروز خیلی زیبا به نظر می‌رسی."
+    },
+    {
+      "id": 7,
+      "role": "sent",
+      "targetText": "Ich verbringe sehr gerne Zeit mit dir.",
+      "translation": "I really enjoy spending time with you.",
+      "translationFa": "من واقعاً از وقت گذراندن با تو لذت می‌برم."
+    },
+    {
+      "id": 8,
+      "role": "sent",
+      "targetText": "Möchtest du dieses Wochenende auf ein Date gehen?",
+      "translation": "Do you want to go on a date this weekend?",
+      "translationFa": "آیا می‌خواهی این آخر هفته به یک قرار ملاقات برویم؟"
+    },
+    {
+      "id": 9,
+      "role": "sent",
+      "targetText": "Wir haben uns über gemeinsame Freunde kennengelernt.",
+      "translation": "We met through mutual friends.",
+      "translationFa": "ما از طریق دوستان مشترک با هم آشنا شدیم."
+    },
+    {
+      "id": 10,
+      "role": "sent",
+      "targetText": "Es war Liebe auf den ersten Blick.",
+      "translation": "It was love at first sight.",
+      "translationFa": "این عشق در نگاه اول بود."
+    },
+    {
+      "id": 11,
+      "role": "sent",
+      "targetText": "Er ist mein fester Freund und sie ist meine feste Freundin.",
+      "translation": "He is my boyfriend and she is my girlfriend.",
+      "translationFa": "او دوست پسر من است و او دوست دختر من است."
+    },
+    {
+      "id": 12,
+      "role": "sent",
+      "targetText": "Vertrauen ist das Wichtigste in einer Beziehung.",
+      "translation": "Trust is the most important thing in a relationship.",
+      "translationFa": "اعتماد مهم‌ترین چیز در یک رابطه است."
+    },
+    {
+      "id": 13,
+      "role": "sent",
+      "targetText": "Sie sind verlobt und werden nächstes Jahr heiraten.",
+      "translation": "They are engaged and will marry next year.",
+      "translationFa": "آن‌ها نامزد هستند و سال آینده ازدواج خواهند کرد."
+    },
+    {
+      "id": 14,
+      "role": "received",
+      "audioText": "Die Hochzeit wird im Sommer stattfinden.",
+      "translation": "The wedding will take place in the summer.",
+      "translationFa": "عروسی در تابستان برگزار خواهد شد."
+    },
+    {
+      "id": 15,
+      "role": "sent",
+      "targetText": "Wir teilen viele gemeinsame Interessen.",
+      "translation": "We share a lot of common interests.",
+      "translationFa": "ما علایق مشترک زیادی داریم."
+    },
+    {
+      "id": 16,
+      "role": "sent",
+      "targetText": "Kommunikation ist der Schlüssel zu einer gesunden Partnerschaft.",
+      "translation": "Communication is key to a healthy partnership.",
+      "translationFa": "ارتباط کلید یک شراکت سالم است."
+    },
+    {
+      "id": 17,
+      "role": "sent",
+      "targetText": "Ich vermisse dich, wenn du nicht hier bist.",
+      "translation": "I miss you when you are not here.",
+      "translationFa": "وقتی اینجا نیستی دلم برایت تنگ می‌شود."
+    },
+    {
+      "id": 18,
+      "role": "sent",
+      "targetText": "Ich habe mich in dich verliebt.",
+      "translation": "I have fallen in love with you.",
+      "translationFa": "من عاشق تو شده‌ام."
+    },
+    {
+      "id": 19,
+      "role": "received",
+      "audioText": "Manchmal streiten sich Paare, aber das ist normal.",
+      "translation": "Sometimes couples argue, but that is normal.",
+      "translationFa": "گاهی اوقات زوج‌ها دعوا می‌کنند، اما این طبیعی است."
+    },
+    {
+      "id": 20,
+      "role": "sent",
+      "targetText": "Sie haben beschlossen, sich zu trennen.",
+      "translation": "They decided to break up.",
+      "translationFa": "آن‌ها تصمیم گرفتند از هم جدا شوند."
+    },
+    {
+      "id": 21,
+      "role": "sent",
+      "targetText": "Ich suche nach einer langfristigen Beziehung.",
+      "translation": "I am looking for a long-term relationship.",
+      "translationFa": "من به دنبال یک رابطه طولانی مدت هستم."
+    },
+    {
+      "id": 22,
+      "role": "sent",
+      "targetText": "Wir sind nur gute Freunde.",
+      "translation": "We are just good friends.",
+      "translationFa": "ما فقط دوستان خوبی هستیم."
+    },
+    {
+      "id": 23,
+      "role": "received",
+      "audioText": "Online-Dating ist heutzutage sehr beliebt.",
+      "translation": "Online dating is very popular nowadays.",
+      "translationFa": "قرار ملاقات آنلاین این روزها بسیار محبوب است."
+    },
+    {
+      "id": 24,
+      "role": "sent",
+      "targetText": "Sie hat eine tolle Persönlichkeit und ein gutes Herz.",
+      "translation": "She has a great personality and a kind heart.",
+      "translationFa": "او شخصیت عالی و قلب مهربانی دارد."
+    },
+    {
+      "id": 25,
+      "role": "sent",
+      "targetText": "Ich möchte den Rest meines Lebens mit dir verbringen.",
+      "translation": "I want to spend the rest of my life with you.",
+      "translationFa": "من می‌خواهم بقیه عمرم را با تو بگذرانم."
+    }
+  ],
+  "difficulty": "B1",
+  "grammarFocus": "Reflexivverben: sich verlieben / sich kennenlernen / sich trennen / sich streiten + seit + Dativ: seit drei Jahren + Futur I: werden heiraten / wird stattfinden",
+  "grammarFocusFa": "افعال بازتابی: sich verlieben / sich kennenlernen / sich trennen + seit + مفعول‌به: seit drei Jahren + آینده I: werden heiraten / wird stattfinden",
+  "description": "Talk about relationships, dating, and love in German. Describe how you met someone, express your feelings, and discuss what makes a relationship work.",
+  "descriptionFa": "درباره روابط، قرار ملاقات و عشق به زبان آلمانی صحبت کنید. توضیح دهید چگونه کسی را ملاقات کردید، احساسات خود را بیان کنید و درباره اینکه چه چیزی رابطه را موفق می‌کند بحث کنید."
+}
