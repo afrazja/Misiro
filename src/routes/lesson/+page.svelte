@@ -814,6 +814,7 @@
 	/* Learning Area */
 	.learning-area {
 		flex: 1;
+		min-height: 0;
 		display: flex;
 		flex-direction: column;
 		overflow: hidden;
@@ -1262,7 +1263,7 @@
 
 	.script-count {
 		font-size: 0.75rem;
-		color: #999;
+		color: rgba(46, 204, 113, 0.75);
 		font-weight: 600;
 	}
 
@@ -1302,10 +1303,10 @@
 	.script-num {
 		font-size: 0.65rem;
 		font-weight: 700;
-		color: #bbb;
+		color: rgba(46, 204, 113, 0.7);
 		min-width: 18px;
 		height: 18px;
-		background: rgba(255, 255, 255, 0.10);
+		background: rgba(46, 204, 113, 0.12);
 		border-radius: 50%;
 		display: flex;
 		align-items: center;
@@ -1337,14 +1338,14 @@
 	}
 
 	.script-item .translation {
-		color: #aaa;
+		color: rgba(46, 204, 113, 0.6);
 		font-size: 0.77rem;
 		margin-top: 2px;
 		line-height: 1.3;
 	}
 
 	.script-item.active .translation {
-		color: #ddd;
+		color: rgba(46, 204, 113, 0.95);
 	}
 
 	/* Word Tooltip */
@@ -1388,8 +1389,6 @@
 		.script-view {
 			width: 300px;
 			flex-shrink: 0;
-			height: 100%;
-			max-height: 100%;
 			overflow: hidden;
 			border-top: none;
 			border-left: 2px solid rgba(46, 204, 113, 0.3);
