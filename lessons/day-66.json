@@ -1,0 +1,165 @@
+{
+  "title": "Day 66: Describing Personality & Character",
+  "titleFa": "روز ۶۶: توصیف شخصیت و خصوصیات اخلاقی",
+  "sentences": [
+    {
+      "id": 1,
+      "role": "received",
+      "audioText": "Wie würdest du deinen besten Freund beschreiben?",
+      "translation": "How would you describe your best friend?",
+      "translationFa": "بهترین دوستت را چگونه توصیف می‌کنی؟"
+    },
+    {
+      "id": 2,
+      "role": "sent",
+      "targetText": "Sie ist sehr freundlich und immer hilfsbereit.",
+      "translation": "She is very friendly and always helpful.",
+      "translationFa": "او بسیار دوستانه و همیشه کمک‌کننده است."
+    },
+    {
+      "id": 3,
+      "role": "sent",
+      "targetText": "Mein Bruder ist ziemlich schüchtern, aber sehr intelligent.",
+      "translation": "My brother is quite shy but very intelligent.",
+      "translationFa": "برادرم نسبتاً خجالتی اما بسیار باهوش است."
+    },
+    {
+      "id": 4,
+      "role": "received",
+      "audioText": "Er hat einen tollen Sinn für Humor.",
+      "translation": "He has a great sense of humor.",
+      "translationFa": "او حس طنز عالی‌ای دارد."
+    },
+    {
+      "id": 5,
+      "role": "sent",
+      "targetText": "Manchmal kann er ein bisschen stur sein.",
+      "translation": "Sometimes he can be a bit stubborn.",
+      "translationFa": "گاهی اوقات او می‌تواند کمی لجباز باشد."
+    },
+    {
+      "id": 6,
+      "role": "received",
+      "audioText": "Du bist die geduldigste Person, die ich kenne.",
+      "translation": "You are the most patient person I know.",
+      "translationFa": "تو صبورترین فردی هستی که من می‌شناسم."
+    },
+    {
+      "id": 7,
+      "role": "sent",
+      "targetText": "Mein neuer Kollege ist sehr ehrgeizig und fleißig.",
+      "translation": "My new colleague is very ambitious and hardworking.",
+      "translationFa": "همکار جدید من بسیار جاه‌طلب و سخت‌کوش است."
+    },
+    {
+      "id": 8,
+      "role": "received",
+      "audioText": "Sie ist immer ehrlich und sagt die Wahrheit.",
+      "translation": "She is always honest and tells the truth.",
+      "translationFa": "او همیشه صادق است و حقیقت را می‌گوید."
+    },
+    {
+      "id": 9,
+      "role": "sent",
+      "targetText": "Es ist wichtig, höflich zu anderen zu sein.",
+      "translation": "It is important to be polite to others.",
+      "translationFa": "مهم است که با دیگران مؤدب باشیم."
+    },
+    {
+      "id": 10,
+      "role": "sent",
+      "targetText": "Ich schätze Menschen, die zuverlässig sind.",
+      "translation": "I appreciate people who are reliable.",
+      "translationFa": "من از افرادی که قابل اعتماد هستند قدردانی می‌کنم."
+    },
+    {
+      "id": 11,
+      "role": "received",
+      "audioText": "Er ist sehr großzügig und liebt es, Geschenke zu machen.",
+      "translation": "He is very generous and loves giving gifts.",
+      "translationFa": "او بسیار سخاوتمند است و دوست دارد هدیه بدهد."
+    },
+    {
+      "id": 12,
+      "role": "sent",
+      "targetText": "Mein Chef ist streng, aber fair.",
+      "translation": "My boss is strict but fair.",
+      "translationFa": "رئیس من سخت‌گیر اما منصف است."
+    },
+    {
+      "id": 13,
+      "role": "received",
+      "audioText": "Sie ist eine aufgeschlossene und kreative Denkerin.",
+      "translation": "She is an open-minded and creative thinker.",
+      "translationFa": "او یک متفکر روشنفکر و خلاق است."
+    },
+    {
+      "id": 14,
+      "role": "received",
+      "audioText": "Warum bist du heute so nervös?",
+      "translation": "Why are you so nervous today?",
+      "translationFa": "چرا امروز اینقدر عصبی هستی؟"
+    },
+    {
+      "id": 15,
+      "role": "sent",
+      "targetText": "Er ist immer ruhig, auch in stressigen Situationen.",
+      "translation": "He is always calm, even in stressful situations.",
+      "translationFa": "او همیشه آرام است، حتی در موقعیت‌های استرس‌زا."
+    },
+    {
+      "id": 16,
+      "role": "sent",
+      "targetText": "Ich bin ein optimistischer Mensch und sehe die positiven Dinge.",
+      "translation": "I am an optimistic person and look on the bright side.",
+      "translationFa": "من آدم خوش‌بینی هستم و به جنبه‌های مثبت نگاه می‌کنم."
+    },
+    {
+      "id": 17,
+      "role": "received",
+      "audioText": "Manche Menschen sind einfach von Natur aus charismatisch.",
+      "translation": "Some people are just naturally charismatic.",
+      "translationFa": "برخی از افراد ذاتاً کاریزماتیک هستند."
+    },
+    {
+      "id": 18,
+      "role": "sent",
+      "targetText": "Es ist in Ordnung, sensibel zu sein.",
+      "translation": "It is okay to be sensitive.",
+      "translationFa": "حساس بودن اشکالی ندارد."
+    },
+    {
+      "id": 19,
+      "role": "received",
+      "audioText": "Sie ist sehr selbstbewusst und weiß, was sie will.",
+      "translation": "She is very confident and knows what she wants.",
+      "translationFa": "او بسیار با اعتماد به نفس است و می‌داند چه می‌خواهد."
+    },
+    {
+      "id": 20,
+      "role": "sent",
+      "targetText": "Er kann an den Wochenenden ein bisschen faul sein.",
+      "translation": "He can be a bit lazy on the weekends.",
+      "translationFa": "او می‌تواند آخر هفته‌ها کمی تنبل باشد."
+    },
+    {
+      "id": 21,
+      "role": "sent",
+      "targetText": "Ich bewundere ihren Mut und ihre Entschlossenheit.",
+      "translation": "I admire her courage and determination.",
+      "translationFa": "من شجاعت و عزم او را تحسین می‌کنم."
+    },
+    {
+      "id": 22,
+      "role": "received",
+      "audioText": "Die Persönlichkeit ist wichtiger als das Aussehen.",
+      "translation": "Personality is more important than appearance.",
+      "translationFa": "شخصیت مهم‌تر از ظاهر است."
+    }
+  ],
+  "difficulty": "B2",
+  "grammarFocus": "Adjective endings in nominative: ein freundlicher Mensch / die geduldigste Person + Superlativ",
+  "grammarFocusFa": "پسوندهای صفت در حالت فاعلی: ein freundlicher Mensch / die geduldigste Person + عالی",
+  "description": "Describe people's personalities and character traits to a German friend. Talk about strengths, weaknesses, and what you value in others.",
+  "descriptionFa": "شخصیت و خصوصیات اخلاقی افراد را برای یک دوست آلمانی توصیف کنید. درباره نقاط قوت، ضعف‌ها و آنچه در دیگران ارزش می‌گذارید صحبت کنید."
+}
