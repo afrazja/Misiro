@@ -1,0 +1,102 @@
+{
+  "title": "Day 71: Art, Music & Entertainment",
+  "titleFa": "روز ۷۱: هنر، موسیقی و سرگرمی",
+  "sentences": [
+    {
+      "id": 1,
+      "role": "sent",
+      "targetText": "Ich möchte lernen, wie man mit Aquarellfarben malt.",
+      "translation": "I want to learn how to paint with watercolors.",
+      "translationFa": "می‌خواهم یاد بگیرم که چگونه با آبرنگ نقاشی کنم."
+    },
+    {
+      "id": 2,
+      "role": "received",
+      "audioText": "Die Architektur dieses Gebäudes ist ein Meisterwerk.",
+      "translation": "The architecture of this building is a masterpiece.",
+      "translationFa": "معماری این ساختمان یک شاهکار است."
+    },
+    {
+      "id": 3,
+      "role": "sent",
+      "targetText": "Wir haben die ganze Nacht auf dem Festival getanzt.",
+      "translation": "We danced all night at the festival.",
+      "translationFa": "ما تمام شب را در جشنواره رقصیدیم."
+    },
+    {
+      "id": 4,
+      "role": "received",
+      "audioText": "Der Sänger hat eine unglaubliche Stimme.",
+      "translation": "The singer has an incredible voice.",
+      "translationFa": "خواننده صدای فوق‌العاده‌ای دارد."
+    },
+    {
+      "id": 5,
+      "role": "received",
+      "audioText": "Heute gibt es ein Straßenfest im Stadtzentrum.",
+      "translation": "There is a street festival in the city center today.",
+      "translationFa": "امروز در مرکز شهر یک جشنواره خیابانی برگزار می‌شود."
+    },
+    {
+      "id": 6,
+      "role": "sent",
+      "targetText": "Ich genieße es, an Wochenenden lokale Kunstgalerien zu erkunden.",
+      "translation": "I enjoy exploring local art galleries on weekends.",
+      "translationFa": "من از گشت و گذار در گالری‌های هنری محلی در آخر هفته‌ها لذت می‌برم."
+    },
+    {
+      "id": 7,
+      "role": "sent",
+      "targetText": "Die Tickets für die Show waren sehr schnell ausverkauft.",
+      "translation": "The tickets for the show sold out very quickly.",
+      "translationFa": "بلیت‌های نمایش خیلی سریع فروخته شد."
+    },
+    {
+      "id": 8,
+      "role": "received",
+      "audioText": "Welche Art von Musik hörst du normalerweise?",
+      "translation": "What kind of music do you usually listen to?",
+      "translationFa": "معمولاً به چه نوع موسیقی گوش می‌دهی؟"
+    },
+    {
+      "id": 9,
+      "role": "sent",
+      "targetText": "Ein Instrument zu spielen erfordert viel Übung.",
+      "translation": "Playing an instrument requires a lot of practice.",
+      "translationFa": "نواختن یک ساز نیاز به تمرین زیادی دارد."
+    },
+    {
+      "id": 10,
+      "role": "received",
+      "audioText": "Die Skulptur war aus massivem Marmor gefertigt.",
+      "translation": "The sculpture was made of solid marble.",
+      "translationFa": "این مجسمه از سنگ مرمر جامد ساخته شده بود."
+    },
+    {
+      "id": 11,
+      "role": "sent",
+      "targetText": "Wir haben auf der Ausstellung viele Fotos gemacht.",
+      "translation": "We took many photos at the exhibition.",
+      "translationFa": "ما در نمایشگاه عکس‌های زیادی گرفتیم."
+    },
+    {
+      "id": 12,
+      "role": "sent",
+      "targetText": "Ich finde abstrakte Kunst sehr schwer zu verstehen.",
+      "translation": "I find abstract art very difficult to understand.",
+      "translationFa": "درک هنر انتزاعی برای من بسیار دشوار است."
+    },
+    {
+      "id": 13,
+      "role": "sent",
+      "targetText": "Unterhaltung ist ein wichtiger Teil unserer Kultur.",
+      "translation": "Entertainment is an important part of our culture.",
+      "translationFa": "سرگرمی بخش مهمی از فرهنگ ما است."
+    }
+  ],
+  "difficulty": "B1+",
+  "grammarFocus": "Infinitivkonstruktionen: lernen zu + Infinitiv / es genießen + zu + Infinitiv + Perfekt: haben getanzt / war aus Marmor gefertigt (Passiv Präteritum)",
+  "grammarFocusFa": "ساختارهای مصدری: lernen zu + مصدر / es genießen + zu + مصدر + ماضی نقلی: haben getanzt / war aus Marmor gefertigt (مجهول ماضی)",
+  "description": "Talk about art, music, and entertainment in German. Discuss creative hobbies, cultural events, and opinions on different art forms.",
+  "descriptionFa": "درباره هنر، موسیقی و سرگرمی به آلمانی صحبت کنید. درباره سرگرمی‌های خلاقانه، رویدادهای فرهنگی و نظرات خود درباره اشکال مختلف هنر بحث کنید."
+}
