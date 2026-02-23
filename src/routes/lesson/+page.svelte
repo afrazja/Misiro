@@ -132,6 +132,7 @@
 
 	// ============ SCRIPT PANEL ============
 	let scriptItems: Array<{ german: string; translation: string; done: boolean; active: boolean }> = $state([]);
+	let showScript = $state(false);
 
 	function updateScript() {
 		if (!lesson.currentLesson) return;
@@ -622,12 +623,15 @@
 			</div><!-- end chat-main -->
 
 			<!-- Script Panel -->
-			<aside class="script-view" id="script-view">
+			<aside class="script-view" class:open={showScript} id="script-view">
 			<div class="script-header">
 				<h3>{prefs.language === 'fa' ? '\u0645\u062A\u0646 \u062F\u0631\u0633' : 'Lesson Script'}</h3>
-				{#if lesson.currentLesson}
-					<span class="script-count">{scriptItems.filter(s => s.done).length}/{scriptItems.length}</span>
-				{/if}
+				<div class="script-header-right">
+					{#if lesson.currentLesson}
+						<span class="script-count">{scriptItems.filter(s => s.done).length}/{scriptItems.length}</span>
+					{/if}
+					<button class="script-close-btn" onclick={() => showScript = false} aria-label="Close script">✕</button>
+				</div>
 			</div>
 			<div class="script-container">
 				{#each scriptItems as item, i}
@@ -653,8 +657,24 @@
 				{/each}
 			</div>
 		</aside>
+
+		<!-- Mobile: tap outside to close -->
+		{#if showScript}
+			<!-- svelte-ignore a11y_click_events_have_key_events -->
+			<!-- svelte-ignore a11y_no_static_element_interactions -->
+			<div class="script-backdrop" onclick={() => showScript = false}></div>
+		{/if}
 		</div><!-- end chat-body -->
 	</div><!-- end chat-wrapper -->
+
+	<!-- Mobile script toggle pill (hidden on desktop) -->
+	<button class="script-toggle-btn" onclick={() => showScript = !showScript} aria-label="Toggle lesson script">
+		📋 {prefs.language === 'fa' ? 'متن درس' : 'Script'}
+		{#if scriptItems.length > 0}
+			<span class="script-toggle-count">{scriptItems.filter(s => s.done).length}/{scriptItems.length}</span>
+		{/if}
+		<span class="script-toggle-arrow" class:open={showScript}>▲</span>
+	</button>
 	</main>
 </div>
 
@@ -1384,6 +1404,33 @@
 		}
 	}
 
+	/* ── Script header right side (count + close btn) ── */
+	.script-header-right {
+		display: flex;
+		align-items: center;
+		gap: 8px;
+	}
+
+	.script-close-btn {
+		display: none; /* shown only on mobile via media query */
+		background: none;
+		border: none;
+		color: #a0e0b8;
+		font-size: 1rem;
+		cursor: pointer;
+		padding: 2px 6px;
+		line-height: 1;
+	}
+
+	/* ── Mobile toggle pill ─────────────────────────── */
+	.script-toggle-btn {
+		display: none; /* hidden on desktop */
+	}
+
+	.script-backdrop {
+		display: none;
+	}
+
 	/* ── Desktop: right sidebar layout ───────────────── */
 	@media (min-width: 768px) {
 		/* Chat header stays full-width; sidebar only sits beside chat content */
@@ -1403,6 +1450,104 @@
 			overflow: hidden;
 			border-top: none;
 			border-left: 2px solid rgba(46, 204, 113, 0.3);
+		}
+	}
+
+	/* ── Mobile: bottom drawer ──────────────────────── */
+	@media (max-width: 767px) {
+		/* Hide the static sidebar panel; become a slide-up drawer */
+		.script-view {
+			position: fixed;
+			bottom: 0;
+			left: 0;
+			right: 0;
+			height: 65vh;
+			z-index: 400;
+			transform: translateY(100%);
+			transition: transform 0.32s cubic-bezier(0.4, 0, 0.2, 1);
+			border-top: none;
+			border-radius: 18px 18px 0 0;
+			box-shadow: 0 -4px 24px rgba(0, 0, 0, 0.4);
+		}
+
+		.script-view.open {
+			transform: translateY(0);
+		}
+
+		/* Drag handle at top of drawer */
+		.script-header::before {
+			content: '';
+			display: block;
+			width: 40px;
+			height: 4px;
+			background: rgba(255, 255, 255, 0.25);
+			border-radius: 2px;
+			margin: 0 auto 10px;
+		}
+
+		.script-header {
+			flex-direction: column;
+			align-items: stretch;
+		}
+
+		.script-header > * {
+			display: flex;
+			align-items: center;
+		}
+
+		.script-header h3,
+		.script-header-right {
+			display: flex;
+		}
+
+		/* Show close × button inside drawer on mobile */
+		.script-close-btn {
+			display: flex;
+		}
+
+		/* Toggle pill fixed above the mic bar */
+		.script-toggle-btn {
+			display: flex;
+			align-items: center;
+			gap: 6px;
+			position: fixed;
+			bottom: 70px;
+			right: 16px;
+			z-index: 300;
+			background: #1a1a2e;
+			color: #2ecc71;
+			border: 1.5px solid rgba(46, 204, 113, 0.5);
+			border-radius: 20px;
+			padding: 7px 14px;
+			font-size: 0.85rem;
+			font-weight: 600;
+			cursor: pointer;
+			box-shadow: 0 3px 12px rgba(0, 0, 0, 0.35);
+		}
+
+		.script-toggle-count {
+			background: rgba(46, 204, 113, 0.2);
+			border-radius: 10px;
+			padding: 1px 6px;
+			font-size: 0.75rem;
+		}
+
+		.script-toggle-arrow {
+			font-size: 0.7rem;
+			transition: transform 0.3s;
+		}
+
+		.script-toggle-arrow.open {
+			transform: rotate(180deg);
+		}
+
+		/* Backdrop behind open drawer */
+		.script-backdrop {
+			display: block;
+			position: fixed;
+			inset: 0;
+			background: rgba(0, 0, 0, 0.45);
+			z-index: 399;
 		}
 	}
 
@@ -1427,8 +1572,6 @@
 			display: none;
 		}
 
-		.script-view {
-			height: 28vh;
-		}
+		/* script-view is a fixed drawer on mobile — no height override needed */
 	}
 </style>
