@@ -3,6 +3,11 @@
 	import { onMount } from 'svelte';
 	import { getSupabaseBrowserClient } from '$lib/supabase/client';
 	import { authStore } from '$stores/auth';
+	import { inject } from '@vercel/analytics';
+	import { injectSpeedInsights } from '@vercel/speed-insights/sveltekit';
+
+	inject({ mode: 'production' });
+	injectSpeedInsights();
 
 	let { children, data } = $props();
 
