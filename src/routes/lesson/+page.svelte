@@ -1489,9 +1489,10 @@
 	}
 
 	.script-item.active {
-		background: rgba(255, 255, 255, 0.92);
+		background: rgba(46, 204, 113, 0.38);
 		border-left-color: #2ecc71;
 		border-left-width: 4px;
+		box-shadow: 0 0 0 1px rgba(46, 204, 113, 0.6);
 	}
 
 	.script-item.done {
@@ -1544,11 +1545,11 @@
 	}
 
 	.script-item.active .german {
-		color: #1a5c30;
+		color: #ffffff;
 	}
 
 	.script-item.active .translation {
-		color: #2d7a47;
+		color: #ffffff;
 	}
 
 	/* Word Tooltip */
