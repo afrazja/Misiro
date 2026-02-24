@@ -701,13 +701,16 @@
 	}
 
 	.flashcard.wrong-flash {
-		animation: flash-red 1s ease;
+		animation: flash-red 1s ease forwards;
+		transition: none;
+		border-color: #e74c3c;
+		box-shadow: 0 0 24px rgba(231, 76, 60, 0.5);
 	}
 
 	@keyframes flash-red {
-		0% { border-color: #e74c3c; box-shadow: 0 0 20px rgba(231, 76, 60, 0.5); }
-		50% { border-color: #e74c3c; box-shadow: 0 0 30px rgba(231, 76, 60, 0.3); }
-		100% { border-color: rgba(155, 89, 182, 0.4); box-shadow: none; }
+		0% { border-color: #e74c3c; box-shadow: 0 0 24px rgba(231, 76, 60, 0.6); background: rgba(231, 76, 60, 0.1); }
+		60% { border-color: #e74c3c; box-shadow: 0 0 16px rgba(231, 76, 60, 0.3); background: rgba(231, 76, 60, 0.05); }
+		100% { border-color: rgba(255, 255, 255, 0.1); box-shadow: none; background: rgba(255, 255, 255, 0.05); }
 	}
 
 	.flashcard-word {
