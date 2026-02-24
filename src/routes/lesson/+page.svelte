@@ -1144,7 +1144,6 @@
 			font-size: 0.85rem;
 		}
 
-		.blind-mode-control,
 		.progress-info {
 			display: none;
 		}
