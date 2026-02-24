@@ -1,21 +1,19 @@
 import type { RequestHandler } from './$types';
 
 /**
- * Reverse proxy for Microsoft Clarity.
+ * Reverse proxy for Microsoft Clarity script loading.
  *
  * Clarity's CDN (*.clarity.ms) is DNS-blocked by some ISPs (resolves to 0.0.0.0).
- * This proxy routes requests through our own domain so Vercel's serverless
- * functions (which run in US data centers) can reach clarity.ms on behalf of
- * the client.
+ * This proxy routes SCRIPT LOADING requests through our own domain so the
+ * Clarity JS can initialize for all visitors. Data collection (POST /collect)
+ * goes directly to Clarity's servers — works natively for visitors without
+ * DNS blocks.
  *
  * URL pattern:  /proxy/clarity/s/{subdomain}/{rest...}
  *   → https://{subdomain}.clarity.ms/{rest...}
  *
- * Examples:
- *   /proxy/clarity/s/www/tag/abc123         → https://www.clarity.ms/tag/abc123
- *   /proxy/clarity/s/scripts/0.8.55/clarity.js → https://scripts.clarity.ms/0.8.55/clarity.js
- *   /proxy/clarity/s/o/collect              → https://o.clarity.ms/collect
- *   /proxy/clarity/s/c/c.gif               → https://c.clarity.ms/c.gif
+ * Only GET requests for scripts are proxied and URL-rewritten.
+ * POST requests (data collection) are passed through without rewriting.
  */
 
 /** Headers we copy from the upstream response */
@@ -27,21 +25,6 @@ const PASSTHROUGH_HEADERS = [
 	'access-control-allow-headers',
 ];
 
-/**
- * Rewrite all *.clarity.ms URLs to route through our proxy.
- * Uses a single regex to capture the subdomain and rewrite the URL.
- */
-function rewriteBody(body: string, origin: string): string {
-	return body.replace(
-		/https:\/\/([\w-]+)\.clarity\.ms\//g,
-		`${origin}/proxy/clarity/s/$1/`
-	);
-}
-
-/**
- * Parse the proxy path and build the upstream URL.
- * Expected format: s/{subdomain}/{rest...}
- */
 // Allowed Clarity subdomains for security
 const ALLOWED_SUBDOMAINS = new Set([
 	'www', 'scripts', 'o', 'c', 'e',
@@ -50,13 +33,20 @@ const ALLOWED_SUBDOMAINS = new Set([
 ]);
 
 /**
- * Parse the proxy path and build the upstream URL.
- * Primary format:   s/{subdomain}/{rest...}
- * Legacy fallbacks:  tag/...  → www.clarity.ms
- *                    scripts/... → scripts.clarity.ms
- *                    collect/... → o.clarity.ms
- *                    c/...       → c.clarity.ms
+ * Rewrite *.clarity.ms script URLs to route through our proxy.
+ * Only rewrites script-loading URLs (tag, scripts, gif).
+ * Collect/upload URLs are left as-is so they go directly to Clarity.
  */
+function rewriteBody(body: string, origin: string): string {
+	// Rewrite script/tag URLs through our proxy
+	return body
+		.replace(/https:\/\/www\.clarity\.ms\/tag\//g, `${origin}/proxy/clarity/s/www/tag/`)
+		.replace(/https:\/\/scripts\.clarity\.ms\//g, `${origin}/proxy/clarity/s/scripts/`)
+		.replace(/https:\/\/c\.clarity\.ms\/c\.gif/g, `${origin}/proxy/clarity/s/c/c.gif`);
+	// Note: upload/collect URLs (o.clarity.ms, m.clarity.ms, etc.) are NOT rewritten
+	// so data collection goes directly to Clarity's servers.
+}
+
 function buildUpstreamUrl(path: string): string | null {
 	const segments = path.split('/');
 
@@ -78,12 +68,7 @@ function buildUpstreamUrl(path: string): string | null {
 	return null;
 }
 
-async function proxyRequest(
-	params: { path?: string },
-	url: URL,
-	request: Request,
-	method: 'GET' | 'POST'
-): Promise<Response> {
+export const GET: RequestHandler = async ({ params, url, request }) => {
 	const path = params.path;
 	if (!path) {
 		return new Response('Not found', { status: 404 });
@@ -94,36 +79,17 @@ async function proxyRequest(
 		return new Response('Not found', { status: 404 });
 	}
 
-	// Forward query params
 	const qs = url.search;
 	const fullUrl = qs ? `${upstreamUrl}${qs}` : upstreamUrl;
 
 	try {
-		// Build upstream headers - forward all relevant client headers
-		const upstreamHeaders: Record<string, string> = {};
-		const forwardHeaders = [
-			'user-agent', 'referer', 'origin', 'content-type',
-			'accept', 'accept-encoding', 'accept-language',
-		];
-		for (const h of forwardHeaders) {
-			const v = request.headers.get(h);
-			if (v) upstreamHeaders[h] = v;
-		}
+		const upstream = await fetch(fullUrl, {
+			headers: {
+				'User-Agent': request.headers.get('user-agent') || '',
+				'Referer': request.headers.get('referer') || '',
+			},
+		});
 
-		const fetchOptions: RequestInit = {
-			method,
-			headers: upstreamHeaders,
-		};
-
-		if (method === 'POST') {
-			fetchOptions.body = await request.arrayBuffer();
-			// Ensure content-type is set for POSTs
-			if (!upstreamHeaders['content-type']) {
-				upstreamHeaders['content-type'] = 'application/octet-stream';
-			}
-		}
-
-		const upstream = await fetch(fullUrl, fetchOptions);
 		const contentType = upstream.headers.get('content-type') || '';
 		const origin = url.origin;
 
@@ -135,40 +101,58 @@ async function proxyRequest(
 		}
 		headers.set('access-control-allow-origin', '*');
 
-		// For JS/text responses, rewrite clarity.ms URLs to route through proxy
-		if (contentType.includes('javascript') || contentType.includes('text')) {
+		// For JS responses, rewrite script URLs to route through proxy
+		if (contentType.includes('javascript')) {
 			const text = await upstream.text();
 			const rewritten = rewriteBody(text, origin);
-
-			// Cache JS scripts for 1 hour
-			if (contentType.includes('javascript')) {
-				headers.set('cache-control', 'public, max-age=3600, s-maxage=3600');
-			}
-
+			headers.set('cache-control', 'public, max-age=3600, s-maxage=3600');
 			return new Response(rewritten, { status: upstream.status, headers });
 		}
 
-		// For binary/other responses, pass through as-is
+		// For other responses (images, etc.), pass through as-is
 		const body = await upstream.arrayBuffer();
 		return new Response(body, { status: upstream.status, headers });
 	} catch {
-		if (method === 'GET') {
-			// Return empty JS to avoid client-side errors
-			return new Response('/* clarity proxy: upstream unavailable */', {
-				status: 200,
-				headers: { 'content-type': 'application/javascript', 'cache-control': 'no-cache' },
-			});
-		}
-		return new Response('', { status: 204 });
+		return new Response('/* clarity proxy: upstream unavailable */', {
+			status: 200,
+			headers: { 'content-type': 'application/javascript', 'cache-control': 'no-cache' },
+		});
 	}
-}
-
-export const GET: RequestHandler = async ({ params, url, request }) => {
-	return proxyRequest(params, url, request, 'GET');
 };
 
+// POST handler for collect endpoint (legacy URLs only, passes through to upstream)
 export const POST: RequestHandler = async ({ params, url, request }) => {
-	return proxyRequest(params, url, request, 'POST');
+	const path = params.path;
+	if (!path) return new Response('', { status: 404 });
+
+	const upstreamUrl = buildUpstreamUrl(path);
+	if (!upstreamUrl) return new Response('', { status: 404 });
+
+	const qs = url.search;
+	const fullUrl = qs ? `${upstreamUrl}${qs}` : upstreamUrl;
+
+	try {
+		const upstream = await fetch(fullUrl, {
+			method: 'POST',
+			headers: {
+				'Content-Type': request.headers.get('content-type') || 'application/octet-stream',
+				'User-Agent': request.headers.get('user-agent') || '',
+				'Origin': request.headers.get('origin') || '',
+			},
+			body: request.body,
+		});
+
+		const headers = new Headers();
+		for (const h of PASSTHROUGH_HEADERS) {
+			const v = upstream.headers.get(h);
+			if (v) headers.set(h, v);
+		}
+		headers.set('access-control-allow-origin', '*');
+
+		return new Response(upstream.body, { status: upstream.status, headers });
+	} catch {
+		return new Response('', { status: 204 });
+	}
 };
 
 // Handle CORS preflight requests
