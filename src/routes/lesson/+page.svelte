@@ -28,7 +28,8 @@
 	import { stopAllAudio, playAudioPromise } from '$services/tts';
 	import { unlockAudioContext } from '$services/audio-context';
 	import { initSpeechRecognition, setVoiceInputHandler, toggleMic, stopListening } from '$services/speech';
-	import { getLanguage, setLanguage, getVoiceSpeed, setVoiceSpeed } from '$services/data-layer';
+	import { getLanguage, setLanguage, getVoiceSpeed, setVoiceSpeed, saveWord, removeWord, getVocabulary } from '$services/data-layer';
+	import { loadGlossary } from '$services/lesson-loader';
 	import { getTranslation, getTranslationLang } from '$utils/i18n';
 	import { initSyncListeners } from '$services/sync-queue';
 
@@ -114,6 +115,7 @@
 
 	let wordTooltip: { word: string; meaning: string; x: number; y: number } | null = $state(null);
 	let tooltipTimer: ReturnType<typeof setTimeout> | null = null;
+	let savedWords = $state<Set<string>>(new Set());
 
 	function handleWordClick(word: string, meaning: string | null, event: MouseEvent) {
 		stopAllAudio();
@@ -129,7 +131,23 @@
 			const target = event.currentTarget as HTMLElement;
 			const rect = target.getBoundingClientRect();
 			wordTooltip = { word, meaning, x: rect.left + rect.width / 2, y: rect.top };
-			tooltipTimer = setTimeout(() => { wordTooltip = null; }, 3000);
+			tooltipTimer = setTimeout(() => { wordTooltip = null; }, 5000);
+		}
+	}
+
+	async function handleBookmarkWord() {
+		if (!wordTooltip) return;
+		const cleanWord = wordTooltip.word.toLowerCase().replace(/[.,!?]/g, '');
+		const glossary = await loadGlossary();
+		const entry = glossary[cleanWord];
+		if (!entry) return;
+
+		if (savedWords.has(cleanWord)) {
+			await removeWord(cleanWord);
+			savedWords = new Set([...savedWords].filter(w => w !== cleanWord));
+		} else {
+			await saveWord(cleanWord, entry.en, entry.fa);
+			savedWords = new Set([...savedWords, cleanWord]);
 		}
 	}
 
@@ -368,6 +386,11 @@
 
 		// Load due count
 		dueReviewCount = await getDueCount();
+
+		// Load saved vocabulary words
+		getVocabulary().then(words => {
+			savedWords = new Set(words.map(w => w.word));
+		});
 
 		// If no overlay needed (already clicked), start
 		if (!showOverlay) {
@@ -724,7 +747,18 @@
 <!-- Word Tooltip -->
 {#if wordTooltip}
 	<div class="word-tooltip" style="left: {wordTooltip.x}px; top: {wordTooltip.y - 10}px;">
-		{wordTooltip.meaning}
+		<span class="tooltip-meaning">{wordTooltip.meaning}</span>
+		<!-- svelte-ignore a11y_click_events_have_key_events -->
+		<!-- svelte-ignore a11y_no_static_element_interactions -->
+		<span
+			class="tooltip-bookmark"
+			class:saved={savedWords.has(wordTooltip.word.toLowerCase().replace(/[.,!?]/g, ''))}
+			onclick={(e) => { e.stopPropagation(); handleBookmarkWord(); }}
+			role="button"
+			tabindex="-1"
+		>
+			{savedWords.has(wordTooltip.word.toLowerCase().replace(/[.,!?]/g, '')) ? '★' : '☆'}
+		</span>
 	</div>
 {/if}
 
@@ -1556,16 +1590,38 @@
 	.word-tooltip {
 		position: fixed;
 		transform: translateX(-50%) translateY(-100%);
-		background: rgba(0, 0, 0, 0.85);
+		background: rgba(0, 0, 0, 0.9);
 		color: #fff;
 		padding: 6px 12px;
 		border-radius: 8px;
 		font-size: 0.85em;
 		white-space: nowrap;
 		z-index: 200;
-		pointer-events: none;
+		pointer-events: auto;
 		box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 		animation: popIn 0.2s ease-out;
+		display: flex;
+		align-items: center;
+		gap: 8px;
+	}
+
+	.tooltip-bookmark {
+		color: #888;
+		font-size: 1.1rem;
+		cursor: pointer;
+		padding: 0 2px;
+		line-height: 1;
+		transition: transform 0.2s, color 0.2s;
+		user-select: none;
+	}
+
+	.tooltip-bookmark:hover {
+		transform: scale(1.3);
+	}
+
+	.tooltip-bookmark.saved {
+		color: #ffd700;
+		text-shadow: 0 0 4px rgba(255, 215, 0, 0.5);
 	}
 
 	@keyframes popIn {

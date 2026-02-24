@@ -17,7 +17,8 @@ import {
 	UserProgressFullRowSchema,
 	CompletedLessonsRowSchema,
 	SRCardRowSchema,
-	ExamResultRowSchema
+	ExamResultRowSchema,
+	VocabularyRowSchema
 } from '$lib/schemas';
 
 // ========== LANGUAGE ==========
@@ -418,6 +419,110 @@ export async function saveExamResult(weekKey: string, resultData: ExamResultData
 	});
 }
 
+// ========== VOCABULARY ==========
+
+export interface SavedWord {
+	word: string;
+	meaningEn: string;
+	meaningFa: string;
+	savedAt: number;
+	known: boolean;
+}
+
+const VOCAB_LS_KEY = 'mirifer_vocabulary';
+
+function readVocabLocal(): SavedWord[] {
+	try {
+		const raw = localStorage.getItem(VOCAB_LS_KEY);
+		return raw ? JSON.parse(raw) : [];
+	} catch {
+		return [];
+	}
+}
+
+function writeVocabLocal(words: SavedWord[]): void {
+	localStorage.setItem(VOCAB_LS_KEY, JSON.stringify(words));
+}
+
+export async function getVocabulary(): Promise<SavedWord[]> {
+	if (await isAuthenticated()) {
+		try {
+			const user = await getUser();
+			if (!user) throw new Error('No user');
+			const client = getSupabaseBrowserClient();
+			const { data } = await client
+				.from('user_vocabulary')
+				.select('word, meaning_en, meaning_fa, saved_at, known')
+				.eq('user_id', user.id)
+				.order('saved_at', { ascending: false });
+			if (data && data.length > 0) {
+				const words: SavedWord[] = [];
+				for (const row of data) {
+					const parsed = VocabularyRowSchema.safeParse(row);
+					if (!parsed.success) {
+						logWarn('data-layer:getVocabulary', `Row failed validation: ${parsed.error.message}`);
+						continue;
+					}
+					words.push({
+						word: parsed.data.word,
+						meaningEn: parsed.data.meaning_en,
+						meaningFa: parsed.data.meaning_fa,
+						savedAt: parsed.data.saved_at,
+						known: parsed.data.known
+					});
+				}
+				writeVocabLocal(words);
+				return words;
+			}
+		} catch (e) {
+			logError('data-layer:getVocabulary', e);
+		}
+	}
+	return readVocabLocal();
+}
+
+export async function saveWord(word: string, meaningEn: string, meaningFa: string): Promise<void> {
+	const words = readVocabLocal();
+	const existing = words.findIndex((w) => w.word === word);
+	const entry: SavedWord = { word, meaningEn, meaningFa, savedAt: Date.now(), known: false };
+	if (existing >= 0) {
+		words[existing] = entry;
+	} else {
+		words.unshift(entry);
+	}
+	writeVocabLocal(words);
+
+	await cloudWrite('vocab_upsert', `vocab_${word}`, {
+		word,
+		meaning_en: meaningEn,
+		meaning_fa: meaningFa,
+		saved_at: entry.savedAt,
+		known: false
+	});
+}
+
+export async function removeWord(word: string): Promise<void> {
+	const words = readVocabLocal().filter((w) => w.word !== word);
+	writeVocabLocal(words);
+
+	await cloudWrite('vocab_delete', `vocab_${word}`, { word });
+}
+
+export async function updateWordKnown(word: string, known: boolean): Promise<void> {
+	const words = readVocabLocal();
+	const idx = words.findIndex((w) => w.word === word);
+	if (idx >= 0) {
+		words[idx].known = known;
+		writeVocabLocal(words);
+	}
+
+	await cloudWrite('vocab_update_known', `vocab_${word}`, { word, known });
+}
+
+export function getVocabularyCount(): number {
+	return readVocabLocal().length;
+}
+
 // ========== CLEAR ALL LOCAL DATA ==========
 
 export function clearAllLocal(): void {
@@ -430,6 +535,7 @@ export function clearAllLocal(): void {
 	localStorage.removeItem('mirifer_display_name');
 	localStorage.removeItem('mirifer_avatar_url');
 	localStorage.removeItem('mirifer_sync_queue');
+	localStorage.removeItem(VOCAB_LS_KEY);
 }
 
 // ========== SYNC ON LOGIN ==========
@@ -543,6 +649,31 @@ export async function syncOnLogin(): Promise<void> {
 				};
 			}
 			localStorage.setItem('mirifer_exam_results', JSON.stringify(examsMap));
+		}
+
+		// Pull vocabulary
+		const { data: vocabRows } = await client
+			.from('user_vocabulary')
+			.select('word, meaning_en, meaning_fa, saved_at, known')
+			.eq('user_id', uid)
+			.order('saved_at', { ascending: false });
+		if (vocabRows && vocabRows.length > 0) {
+			const words: SavedWord[] = [];
+			for (const row of vocabRows) {
+				const parsed = VocabularyRowSchema.safeParse(row);
+				if (!parsed.success) {
+					logWarn('data-layer:syncOnLogin', `Vocab row failed validation: ${parsed.error.message}`);
+					continue;
+				}
+				words.push({
+					word: parsed.data.word,
+					meaningEn: parsed.data.meaning_en,
+					meaningFa: parsed.data.meaning_fa,
+					savedAt: parsed.data.saved_at,
+					known: parsed.data.known
+				});
+			}
+			writeVocabLocal(words);
 		}
 
 		// Flush pending writes

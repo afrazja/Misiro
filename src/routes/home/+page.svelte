@@ -35,6 +35,7 @@
 	let currentDay = $state(1);
 	let streakCount = $state(0);
 	let dueReviews = $state(0);
+	let savedWordCount = $state(0);
 	let totalLessons = $state(0);
 	let completedLessons = $state<Record<number, { completedAt: number; sentenceCount: number }>>({});
 
@@ -173,6 +174,12 @@
 			dueReviews = await getDueCount();
 		} catch {
 			dueReviews = 0;
+		}
+
+		try {
+			savedWordCount = dataLayer.getVocabularyCount();
+		} catch {
+			savedWordCount = 0;
 		}
 	}
 
@@ -509,6 +516,14 @@
 					<span class="stat-cta">Review now →</span>
 				{/if}
 			</a>
+			<a href="/vocabulary" class="stat-card stat-card-link" class:has-words={savedWordCount > 0} title="View saved vocabulary">
+				<span class="stat-icon">📖</span>
+				<span class="stat-value">{savedWordCount}</span>
+				<span class="stat-label">Saved Words</span>
+				{#if savedWordCount > 0}
+					<span class="stat-cta vocab-cta">Practice →</span>
+				{/if}
+			</a>
 		</div>
 
 		{/if}
@@ -747,7 +762,7 @@
 	/* ── Stats Row ────────────────────────────────────── */
 	.stats-row {
 		display: grid;
-		grid-template-columns: repeat(3, 1fr);
+		grid-template-columns: repeat(4, 1fr);
 		gap: 16px;
 	}
 
@@ -916,11 +931,25 @@
 		box-shadow: 0 8px 24px rgba(46, 204, 113, 0.2);
 	}
 
+	.stat-card-link.has-words {
+		border-color: rgba(155, 89, 182, 0.3);
+		background: rgba(155, 89, 182, 0.07);
+	}
+
+	.stat-card-link.has-words:hover {
+		border-color: rgba(155, 89, 182, 0.6);
+		box-shadow: 0 8px 24px rgba(155, 89, 182, 0.2);
+	}
+
 	.stat-cta {
 		font-size: 0.72rem;
 		color: #2ecc71;
 		font-weight: 700;
 		margin-top: 2px;
+	}
+
+	.stat-cta.vocab-cta {
+		color: #9b59b6;
 	}
 
 	.nav-card .arrow {

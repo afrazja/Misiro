@@ -113,6 +113,31 @@ async function executeCloudWrite(uid: string, op: SyncOperation): Promise<void> 
 				);
 			break;
 
+		case 'vocab_upsert':
+			await client
+				.from('user_vocabulary')
+				.upsert(
+					{ user_id: uid, ...op.data, updated_at: new Date().toISOString() },
+					{ onConflict: 'user_id,word' }
+				);
+			break;
+
+		case 'vocab_delete':
+			await client
+				.from('user_vocabulary')
+				.delete()
+				.eq('user_id', uid)
+				.eq('word', op.data.word);
+			break;
+
+		case 'vocab_update_known':
+			await client
+				.from('user_vocabulary')
+				.update({ known: op.data.known, updated_at: new Date().toISOString() })
+				.eq('user_id', uid)
+				.eq('word', op.data.word);
+			break;
+
 		default:
 			logWarn('sync-queue:executeCloudWrite', `Unknown sync operation type: ${op.type}`);
 	}
