@@ -94,17 +94,23 @@ export const GET: RequestHandler = async ({ params, url, request }) => {
 };
 
 export const POST: RequestHandler = async ({ params, url, request }) => {
-	const path = params.path;
-	if (!path) return new Response('', { status: 204 });
-
-	const upstreamUrl = buildUpstreamUrl(path);
-	if (!upstreamUrl) return new Response('', { status: 204 });
-
-	const fullUrl = url.search ? `${upstreamUrl}${url.search}` : upstreamUrl;
-
 	try {
-		// Read body as Uint8Array for reliable binary forwarding
-		const bodyData = new Uint8Array(await request.arrayBuffer());
+		const path = params.path;
+		if (!path) return new Response('', { status: 204 });
+
+		const upstreamUrl = buildUpstreamUrl(path);
+		if (!upstreamUrl) return new Response('', { status: 204 });
+
+		const fullUrl = url.search ? `${upstreamUrl}${url.search}` : upstreamUrl;
+
+		// Read body safely
+		let bodyData: Uint8Array | undefined;
+		try {
+			const buf = await request.arrayBuffer();
+			bodyData = buf.byteLength > 0 ? new Uint8Array(buf) : undefined;
+		} catch {
+			bodyData = undefined;
+		}
 
 		// Forward essential headers — Origin must match the project domain
 		const upstreamHeaders: Record<string, string> = {
@@ -118,13 +124,18 @@ export const POST: RequestHandler = async ({ params, url, request }) => {
 		const upstream = await fetch(fullUrl, {
 			method: 'POST',
 			headers: upstreamHeaders,
-			body: bodyData.length > 0 ? bodyData : undefined,
+			body: bodyData,
 		});
 
+		// Return response - handle no-body responses (204, etc.)
 		const respHeaders = new Headers();
 		respHeaders.set('access-control-allow-origin', '*');
 		const respCt = upstream.headers.get('content-type');
 		if (respCt) respHeaders.set('content-type', respCt);
+
+		if (upstream.status === 204 || !upstream.body) {
+			return new Response(null, { status: upstream.status, headers: respHeaders });
+		}
 
 		const respBody = await upstream.arrayBuffer();
 		return new Response(respBody, { status: upstream.status, headers: respHeaders });
