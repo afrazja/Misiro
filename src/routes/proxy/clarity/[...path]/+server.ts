@@ -103,25 +103,31 @@ export const POST: RequestHandler = async ({ params, url, request }) => {
 	const fullUrl = url.search ? `${upstreamUrl}${url.search}` : upstreamUrl;
 
 	try {
-		// Read body as ArrayBuffer (works for all content types including beacon data)
-		const bodyData = await request.arrayBuffer();
+		// Read body as Uint8Array for reliable binary forwarding
+		const bodyData = new Uint8Array(await request.arrayBuffer());
+
+		// Forward essential headers — Origin must match the project domain
+		const upstreamHeaders: Record<string, string> = {
+			'Origin': 'https://www.mirifer.com',
+		};
+		const ct = request.headers.get('content-type');
+		if (ct) upstreamHeaders['Content-Type'] = ct;
+		const ua = request.headers.get('user-agent');
+		if (ua) upstreamHeaders['User-Agent'] = ua;
 
 		const upstream = await fetch(fullUrl, {
 			method: 'POST',
-			headers: {
-				'Content-Type': request.headers.get('content-type') || 'application/octet-stream',
-				'User-Agent': request.headers.get('user-agent') || '',
-			},
-			body: bodyData.byteLength > 0 ? bodyData : undefined,
+			headers: upstreamHeaders,
+			body: bodyData.length > 0 ? bodyData : undefined,
 		});
 
-		const headers = new Headers();
-		headers.set('access-control-allow-origin', '*');
-		const ct = upstream.headers.get('content-type');
-		if (ct) headers.set('content-type', ct);
+		const respHeaders = new Headers();
+		respHeaders.set('access-control-allow-origin', '*');
+		const respCt = upstream.headers.get('content-type');
+		if (respCt) respHeaders.set('content-type', respCt);
 
 		const respBody = await upstream.arrayBuffer();
-		return new Response(respBody, { status: upstream.status, headers });
+		return new Response(respBody, { status: upstream.status, headers: respHeaders });
 	} catch {
 		// Silently accept — Clarity retries on failure
 		return new Response('', { status: 204 });
