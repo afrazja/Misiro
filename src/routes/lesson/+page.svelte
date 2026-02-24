@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { onMount, onDestroy } from 'svelte';
+	import { get } from 'svelte/store';
 	import { appStore } from '$stores/app';
 	import { preferencesStore, type Language } from '$stores/preferences';
 	import { lessonStore, type Sentence } from '$stores/lesson';
@@ -54,6 +55,9 @@
 		text: string;
 	}
 	let msgCounter = 0;
+
+	// Direct $state for blind mode — ensures instant template reactivity on toggle
+	let blindModeActive = $state(false);
 
 	// Derived
 	const app = $derived($appStore);
@@ -247,6 +251,7 @@
 
 	function handleBlindModeChange(e: Event) {
 		const checked = (e.target as HTMLInputElement).checked;
+		blindModeActive = checked;
 		preferencesStore.update((s) => ({ ...s, blindMode: checked }));
 	}
 
@@ -286,6 +291,7 @@
 	});
 
 	onMount(async () => {
+		blindModeActive = get(preferencesStore).blindMode;
 		setupCallbacks();
 		initSyncListeners();
 		initSpeechRecognition();
@@ -372,7 +378,7 @@
 		</div>
 
 		<div class="blind-mode-control">
-			<input type="checkbox" id="blind-mode-toggle" checked={prefs.blindMode} onchange={handleBlindModeChange}>
+			<input type="checkbox" id="blind-mode-toggle" checked={blindModeActive} onchange={handleBlindModeChange}>
 			<label for="blind-mode-toggle">🙈 Blind Mode</label>
 		</div>
 
@@ -479,7 +485,7 @@
 								tabindex="0"
 							>🔊</span>
 							<span class="teach-text">
-								{#if prefs.blindMode}
+								{#if blindModeActive}
 									<span style="color:#ccc; font-weight:normal;">
 										{currentTeachStep.language === 'fa' ? '🙈 [مخفی] - گوش کن!' : '🙈 [Hidden] - Listen!'}
 									</span>
