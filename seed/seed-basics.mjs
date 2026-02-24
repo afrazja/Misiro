@@ -241,6 +241,86 @@ const basicsData = {
       { german: 'auch', en: 'also/too', fa: 'همچنین', example: 'Er hat auch viel Talent.', exampleEn: 'He also has a lot of talent.', exampleFa: 'او همچنین استعداد زیادی دارد.' },
       { german: 'nicht', en: 'not', fa: 'نه/نیست', example: 'Mein Name ist nicht Hendrik.', exampleEn: 'My name is not Hendrik.', exampleFa: 'اسم من هندریک نیست.' }
     ]
+  },
+  cases: {
+    icon: '📋',
+    title: { en: 'Cases (Fälle)', fa: 'حالت\u200Cهای دستوری' },
+    description: { en: 'Nominative, Accusative, Dative & Genitive', fa: 'فاعلی، مفعولی، متممی و اضافی' },
+    type: 'multi',
+    sections: [
+      {
+        heading: { en: 'Definite Articles (Bestimmte Artikel)', fa: 'حروف تعریف معین' },
+        type: 'declension',
+        declension: {
+          columns: [
+            { de: 'Maskulin', en: 'Masculine', fa: 'مذکر' },
+            { de: 'Feminin', en: 'Feminine', fa: 'مؤنث' },
+            { de: 'Neutrum', en: 'Neuter', fa: 'خنثی' },
+            { de: 'Plural', en: 'Plural', fa: 'جمع' }
+          ],
+          rows: [
+            { label: { de: 'Nominativ', en: 'Nominative', fa: 'فاعلی' }, forms: ['der', 'die', 'das', 'die'], example: 'Der Mann kauft Brot.', exampleEn: 'The man buys bread.', exampleFa: 'مرد نان می\u200Cخرد.' },
+            { label: { de: 'Akkusativ', en: 'Accusative', fa: 'مفعولی' }, forms: ['den', 'die', 'das', 'die'], example: 'Ich sehe den Mann.', exampleEn: 'I see the man.', exampleFa: 'من مرد را می\u200Cبینم.' },
+            { label: { de: 'Dativ', en: 'Dative', fa: 'متممی' }, forms: ['dem', 'der', 'dem', 'den'], example: 'Ich gebe dem Mann das Buch.', exampleEn: 'I give the man the book.', exampleFa: 'من کتاب را به مرد می\u200Cدهم.' },
+            { label: { de: 'Genitiv', en: 'Genitive', fa: 'اضافی' }, forms: ['des', 'der', 'des', 'der'], example: 'Das Auto des Mannes ist rot.', exampleEn: "The man's car is red.", exampleFa: 'ماشین مرد قرمز است.' }
+          ]
+        }
+      },
+      {
+        heading: { en: 'Indefinite Articles (Unbestimmte Artikel)', fa: 'حروف تعریف نامعین' },
+        type: 'declension',
+        declension: {
+          columns: [
+            { de: 'Maskulin', en: 'Masculine', fa: 'مذکر' },
+            { de: 'Feminin', en: 'Feminine', fa: 'مؤنث' },
+            { de: 'Neutrum', en: 'Neuter', fa: 'خنثی' }
+          ],
+          rows: [
+            { label: { de: 'Nominativ', en: 'Nominative', fa: 'فاعلی' }, forms: ['ein', 'eine', 'ein'], example: 'Ein Mann steht dort.', exampleEn: 'A man stands there.', exampleFa: 'یک مرد آنجا ایستاده.' },
+            { label: { de: 'Akkusativ', en: 'Accusative', fa: 'مفعولی' }, forms: ['einen', 'eine', 'ein'], example: 'Ich kaufe einen Hund.', exampleEn: 'I buy a dog.', exampleFa: 'من یک سگ می\u200Cخرم.' },
+            { label: { de: 'Dativ', en: 'Dative', fa: 'متممی' }, forms: ['einem', 'einer', 'einem'], example: 'Ich gebe einem Kind das Spielzeug.', exampleEn: 'I give a child the toy.', exampleFa: 'من اسباب\u200Cبازی را به یک بچه می\u200Cدهم.' },
+            { label: { de: 'Genitiv', en: 'Genitive', fa: 'اضافی' }, forms: ['eines', 'einer', 'eines'], example: 'Das Spielzeug eines Kindes.', exampleEn: "A child's toy.", exampleFa: 'اسباب\u200Cبازی یک بچه.' }
+          ]
+        }
+      },
+      {
+        heading: { en: 'Personal Pronouns by Case', fa: 'ضمایر شخصی بر اساس حالت' },
+        type: 'declension',
+        declension: {
+          columns: [
+            { de: 'Nominativ', en: 'Nominative', fa: 'فاعلی' },
+            { de: 'Akkusativ', en: 'Accusative', fa: 'مفعولی' },
+            { de: 'Dativ', en: 'Dative', fa: 'متممی' }
+          ],
+          rows: [
+            { label: { de: 'ich', en: 'I', fa: 'من' }, forms: ['ich', 'mich', 'mir'], example: 'Er gibt mir das Buch.', exampleEn: 'He gives me the book.', exampleFa: 'او کتاب را به من می\u200Cدهد.' },
+            { label: { de: 'du', en: 'you (inf.)', fa: 'تو' }, forms: ['du', 'dich', 'dir'], example: 'Ich helfe dir gern.', exampleEn: 'I gladly help you.', exampleFa: 'من با کمال میل به تو کمک می\u200Cکنم.' },
+            { label: { de: 'er', en: 'he', fa: 'او (مذکر)' }, forms: ['er', 'ihn', 'ihm'], example: 'Ich sehe ihn jeden Tag.', exampleEn: 'I see him every day.', exampleFa: 'من هر روز او را می\u200Cبینم.' },
+            { label: { de: 'sie', en: 'she', fa: 'او (مؤنث)' }, forms: ['sie', 'sie', 'ihr'], example: 'Ich gebe ihr die Blumen.', exampleEn: 'I give her the flowers.', exampleFa: 'من گل\u200Cها را به او می\u200Cدهم.' },
+            { label: { de: 'es', en: 'it', fa: 'آن' }, forms: ['es', 'es', 'ihm'], example: 'Ich gebe ihm Wasser.', exampleEn: 'I give it water.', exampleFa: 'من به آن آب می\u200Cدهم.' },
+            { label: { de: 'wir', en: 'we', fa: 'ما' }, forms: ['wir', 'uns', 'uns'], example: 'Er hilft uns immer.', exampleEn: 'He always helps us.', exampleFa: 'او همیشه به ما کمک می\u200Cکند.' },
+            { label: { de: 'ihr', en: 'you (pl.)', fa: 'شما (جمع)' }, forms: ['ihr', 'euch', 'euch'], example: 'Ich bringe euch Kaffee.', exampleEn: 'I bring you (all) coffee.', exampleFa: 'من برای شما قهوه می\u200Cآورم.' },
+            { label: { de: 'sie/Sie', en: 'they / you (formal)', fa: 'آنها / شما (رسمی)' }, forms: ['sie/Sie', 'sie/Sie', 'ihnen/Ihnen'], example: 'Ich danke Ihnen sehr.', exampleEn: 'I thank you very much.', exampleFa: 'من بسیار از شما متشکرم.' }
+          ]
+        }
+      },
+      {
+        heading: { en: 'Key Vocabulary', fa: 'واژگان کلیدی' },
+        type: 'grid',
+        words: [
+          { german: 'der Mann', en: 'the man', fa: 'مرد', example: 'Der Mann trinkt Kaffee.', exampleEn: 'The man drinks coffee.', exampleFa: 'مرد قهوه می\u200Cنوشد.' },
+          { german: 'die Frau', en: 'the woman', fa: 'زن', example: 'Die Frau liest ein Buch.', exampleEn: 'The woman reads a book.', exampleFa: 'زن یک کتاب می\u200Cخواند.' },
+          { german: 'das Kind', en: 'the child', fa: 'بچه', example: 'Das Kind spielt im Garten.', exampleEn: 'The child plays in the garden.', exampleFa: 'بچه در باغ بازی می\u200Cکند.' },
+          { german: 'der Hund', en: 'the dog', fa: 'سگ', example: 'Der Hund läuft schnell.', exampleEn: 'The dog runs fast.', exampleFa: 'سگ تند می\u200Cدود.' },
+          { german: 'die Katze', en: 'the cat', fa: 'گربه', example: 'Die Katze schläft gern.', exampleEn: 'The cat likes to sleep.', exampleFa: 'گربه دوست دارد بخوابد.' },
+          { german: 'das Buch', en: 'the book', fa: 'کتاب', example: 'Das Buch ist interessant.', exampleEn: 'The book is interesting.', exampleFa: 'کتاب جالب است.' },
+          { german: 'der Tisch', en: 'the table', fa: 'میز', example: 'Der Tisch ist aus Holz.', exampleEn: 'The table is made of wood.', exampleFa: 'میز از چوب است.' },
+          { german: 'die Tür', en: 'the door', fa: 'در', example: 'Die Tür ist offen.', exampleEn: 'The door is open.', exampleFa: 'در باز است.' },
+          { german: 'das Haus', en: 'the house', fa: 'خانه', example: 'Das Haus ist groß.', exampleEn: 'The house is big.', exampleFa: 'خانه بزرگ است.' },
+          { german: 'der Kaffee', en: 'the coffee', fa: 'قهوه', example: 'Der Kaffee ist heiß.', exampleEn: 'The coffee is hot.', exampleFa: 'قهوه داغ است.' }
+        ]
+      }
+    ]
   }
 };
 
@@ -297,7 +377,8 @@ for (const [key, cat] of Object.entries(basicsData)) {
           type: sec.type,
           sort_order: si,
           infinitive: sec.infinitive ? JSON.stringify(sec.infinitive) : null,
-          tenses: sec.tenses ? JSON.stringify(sec.tenses) : null
+          tenses: sec.tenses ? JSON.stringify(sec.tenses) : null,
+          declension: sec.declension ? JSON.stringify(sec.declension) : null
         })
         .select('id')
         .single();

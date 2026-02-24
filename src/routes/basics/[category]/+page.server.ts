@@ -22,7 +22,7 @@ export const load: PageServerLoad = async ({ locals, params }) => {
 		// Load sections for this category
 		const { data: sectionRows, error: secErr } = await locals.supabase
 			.from('basics_sections')
-			.select('id, heading_en, heading_fa, type, sort_order, infinitive, tenses')
+			.select('id, heading_en, heading_fa, type, sort_order, infinitive, tenses, declension')
 			.eq('category_id', cat.id)
 			.order('sort_order', { ascending: true });
 
@@ -40,7 +40,10 @@ export const load: PageServerLoad = async ({ locals, params }) => {
 					if (typeof sec.tenses === 'string') {
 						try { sec.tenses = JSON.parse(sec.tenses); } catch { /* leave as-is */ }
 					}
-					if (sec.type === 'conjugation') {
+					if (typeof sec.declension === 'string') {
+						try { sec.declension = JSON.parse(sec.declension); } catch { /* leave as-is */ }
+					}
+					if (sec.type === 'conjugation' || sec.type === 'declension') {
 						return { ...sec, words: [] };
 					}
 					const { data: wordRows } = await locals.supabase

@@ -32,12 +32,26 @@ export interface ConjugationTense {
 	forms: ConjugationForm[];
 }
 
+export interface DeclensionRow {
+	label: { de: string; en: string; fa: string };
+	forms: string[];
+	example?: string;
+	exampleEn?: string;
+	exampleFa?: string;
+}
+
+export interface DeclensionTable {
+	columns: { de: string; en: string; fa: string }[];
+	rows: DeclensionRow[];
+}
+
 export interface BasicSection {
 	heading: BilingualText;
-	type: 'table' | 'grid' | 'conjugation';
+	type: 'table' | 'grid' | 'conjugation' | 'declension';
 	words?: BasicWord[];
 	infinitive?: { german: string; en: string; fa: string };
 	tenses?: ConjugationTense[];
+	declension?: DeclensionTable;
 }
 
 export interface BasicCategory {
@@ -267,6 +281,185 @@ export const basicsData: BasicsDataMap = {
 			{ german: 'vielleicht', en: 'maybe', fa: '\u0634\u0627\u06CC\u062F', example: 'Vielleicht komme ich morgen.', exampleEn: "Maybe I'll come tomorrow.", exampleFa: '\u0634\u0627\u06CC\u062F \u0641\u0631\u062F\u0627 \u0628\u06CC\u0627\u06CC\u0645.' },
 			{ german: 'auch', en: 'also/too', fa: '\u0647\u0645\u0686\u0646\u06CC\u0646', example: 'Er hat auch viel Talent.', exampleEn: 'He also has a lot of talent.', exampleFa: '\u0627\u0648 \u0647\u0645\u0686\u0646\u06CC\u0646 \u0627\u0633\u062A\u0639\u062F\u0627\u062F \u0632\u06CC\u0627\u062F\u06CC \u062F\u0627\u0631\u062F.' },
 			{ german: 'nicht', en: 'not', fa: '\u0646\u0647/\u0646\u06CC\u0633\u062A', example: 'Mein Name ist nicht Hendrik.', exampleEn: 'My name is not Hendrik.', exampleFa: '\u0627\u0633\u0645 \u0645\u0646 \u0647\u0646\u062F\u0631\u06CC\u06A9 \u0646\u06CC\u0633\u062A.' }
+		]
+	},
+	cases: {
+		icon: '\u{1F4CB}',
+		title: { en: 'Cases (F\u00E4lle)', fa: '\u062D\u0627\u0644\u062A\u200C\u0647\u0627\u06CC \u062F\u0633\u062A\u0648\u0631\u06CC' },
+		description: {
+			en: 'Nominative, Accusative, Dative & Genitive',
+			fa: '\u0641\u0627\u0639\u0644\u06CC\u060C \u0645\u0641\u0639\u0648\u0644\u06CC\u060C \u0645\u062A\u0645\u0645\u06CC \u0648 \u0627\u0636\u0627\u0641\u06CC'
+		},
+		type: 'multi',
+		sections: [
+			{
+				heading: { en: 'Definite Articles (Bestimmte Artikel)', fa: '\u062D\u0631\u0648\u0641 \u062A\u0639\u0631\u06CC\u0641 \u0645\u0639\u06CC\u0646' },
+				type: 'declension',
+				declension: {
+					columns: [
+						{ de: 'Maskulin', en: 'Masculine', fa: '\u0645\u0630\u06A9\u0631' },
+						{ de: 'Feminin', en: 'Feminine', fa: '\u0645\u0624\u0646\u062B' },
+						{ de: 'Neutrum', en: 'Neuter', fa: '\u062E\u0646\u062B\u06CC' },
+						{ de: 'Plural', en: 'Plural', fa: '\u062C\u0645\u0639' }
+					],
+					rows: [
+						{
+							label: { de: 'Nominativ', en: 'Nominative', fa: '\u0641\u0627\u0639\u0644\u06CC' },
+							forms: ['der', 'die', 'das', 'die'],
+							example: 'Der Mann kauft Brot.',
+							exampleEn: 'The man buys bread.',
+							exampleFa: '\u0645\u0631\u062F \u0646\u0627\u0646 \u0645\u06CC\u200C\u062E\u0631\u062F.'
+						},
+						{
+							label: { de: 'Akkusativ', en: 'Accusative', fa: '\u0645\u0641\u0639\u0648\u0644\u06CC' },
+							forms: ['den', 'die', 'das', 'die'],
+							example: 'Ich sehe den Mann.',
+							exampleEn: 'I see the man.',
+							exampleFa: '\u0645\u0646 \u0645\u0631\u062F \u0631\u0627 \u0645\u06CC\u200C\u0628\u06CC\u0646\u0645.'
+						},
+						{
+							label: { de: 'Dativ', en: 'Dative', fa: '\u0645\u062A\u0645\u0645\u06CC' },
+							forms: ['dem', 'der', 'dem', 'den'],
+							example: 'Ich gebe dem Mann das Buch.',
+							exampleEn: 'I give the man the book.',
+							exampleFa: '\u0645\u0646 \u06A9\u062A\u0627\u0628 \u0631\u0627 \u0628\u0647 \u0645\u0631\u062F \u0645\u06CC\u200C\u062F\u0647\u0645.'
+						},
+						{
+							label: { de: 'Genitiv', en: 'Genitive', fa: '\u0627\u0636\u0627\u0641\u06CC' },
+							forms: ['des', 'der', 'des', 'der'],
+							example: 'Das Auto des Mannes ist rot.',
+							exampleEn: "The man's car is red.",
+							exampleFa: '\u0645\u0627\u0634\u06CC\u0646 \u0645\u0631\u062F \u0642\u0631\u0645\u0632 \u0627\u0633\u062A.'
+						}
+					]
+				}
+			},
+			{
+				heading: { en: 'Indefinite Articles (Unbestimmte Artikel)', fa: '\u062D\u0631\u0648\u0641 \u062A\u0639\u0631\u06CC\u0641 \u0646\u0627\u0645\u0639\u06CC\u0646' },
+				type: 'declension',
+				declension: {
+					columns: [
+						{ de: 'Maskulin', en: 'Masculine', fa: '\u0645\u0630\u06A9\u0631' },
+						{ de: 'Feminin', en: 'Feminine', fa: '\u0645\u0624\u0646\u062B' },
+						{ de: 'Neutrum', en: 'Neuter', fa: '\u062E\u0646\u062B\u06CC' }
+					],
+					rows: [
+						{
+							label: { de: 'Nominativ', en: 'Nominative', fa: '\u0641\u0627\u0639\u0644\u06CC' },
+							forms: ['ein', 'eine', 'ein'],
+							example: 'Ein Mann steht dort.',
+							exampleEn: 'A man stands there.',
+							exampleFa: '\u06CC\u06A9 \u0645\u0631\u062F \u0622\u0646\u062C\u0627 \u0627\u06CC\u0633\u062A\u0627\u062F\u0647.'
+						},
+						{
+							label: { de: 'Akkusativ', en: 'Accusative', fa: '\u0645\u0641\u0639\u0648\u0644\u06CC' },
+							forms: ['einen', 'eine', 'ein'],
+							example: 'Ich kaufe einen Hund.',
+							exampleEn: 'I buy a dog.',
+							exampleFa: '\u0645\u0646 \u06CC\u06A9 \u0633\u06AF \u0645\u06CC\u200C\u062E\u0631\u0645.'
+						},
+						{
+							label: { de: 'Dativ', en: 'Dative', fa: '\u0645\u062A\u0645\u0645\u06CC' },
+							forms: ['einem', 'einer', 'einem'],
+							example: 'Ich gebe einem Kind das Spielzeug.',
+							exampleEn: 'I give a child the toy.',
+							exampleFa: '\u0645\u0646 \u0627\u0633\u0628\u0627\u0628\u200C\u0628\u0627\u0632\u06CC \u0631\u0627 \u0628\u0647 \u06CC\u06A9 \u0628\u0686\u0647 \u0645\u06CC\u200C\u062F\u0647\u0645.'
+						},
+						{
+							label: { de: 'Genitiv', en: 'Genitive', fa: '\u0627\u0636\u0627\u0641\u06CC' },
+							forms: ['eines', 'einer', 'eines'],
+							example: 'Das Spielzeug eines Kindes.',
+							exampleEn: "A child's toy.",
+							exampleFa: '\u0627\u0633\u0628\u0627\u0628\u200C\u0628\u0627\u0632\u06CC \u06CC\u06A9 \u0628\u0686\u0647.'
+						}
+					]
+				}
+			},
+			{
+				heading: { en: 'Personal Pronouns by Case', fa: '\u0636\u0645\u0627\u06CC\u0631 \u0634\u062E\u0635\u06CC \u0628\u0631 \u0627\u0633\u0627\u0633 \u062D\u0627\u0644\u062A' },
+				type: 'declension',
+				declension: {
+					columns: [
+						{ de: 'Nominativ', en: 'Nominative', fa: '\u0641\u0627\u0639\u0644\u06CC' },
+						{ de: 'Akkusativ', en: 'Accusative', fa: '\u0645\u0641\u0639\u0648\u0644\u06CC' },
+						{ de: 'Dativ', en: 'Dative', fa: '\u0645\u062A\u0645\u0645\u06CC' }
+					],
+					rows: [
+						{
+							label: { de: 'ich', en: 'I', fa: '\u0645\u0646' },
+							forms: ['ich', 'mich', 'mir'],
+							example: 'Er gibt mir das Buch.',
+							exampleEn: 'He gives me the book.',
+							exampleFa: '\u0627\u0648 \u06A9\u062A\u0627\u0628 \u0631\u0627 \u0628\u0647 \u0645\u0646 \u0645\u06CC\u200C\u062F\u0647\u062F.'
+						},
+						{
+							label: { de: 'du', en: 'you (inf.)', fa: '\u062A\u0648' },
+							forms: ['du', 'dich', 'dir'],
+							example: 'Ich helfe dir gern.',
+							exampleEn: 'I gladly help you.',
+							exampleFa: '\u0645\u0646 \u0628\u0627 \u06A9\u0645\u0627\u0644 \u0645\u06CC\u0644 \u0628\u0647 \u062A\u0648 \u06A9\u0645\u06A9 \u0645\u06CC\u200C\u06A9\u0646\u0645.'
+						},
+						{
+							label: { de: 'er', en: 'he', fa: '\u0627\u0648 (\u0645\u0630\u06A9\u0631)' },
+							forms: ['er', 'ihn', 'ihm'],
+							example: 'Ich sehe ihn jeden Tag.',
+							exampleEn: 'I see him every day.',
+							exampleFa: '\u0645\u0646 \u0647\u0631 \u0631\u0648\u0632 \u0627\u0648 \u0631\u0627 \u0645\u06CC\u200C\u0628\u06CC\u0646\u0645.'
+						},
+						{
+							label: { de: 'sie', en: 'she', fa: '\u0627\u0648 (\u0645\u0624\u0646\u062B)' },
+							forms: ['sie', 'sie', 'ihr'],
+							example: 'Ich gebe ihr die Blumen.',
+							exampleEn: 'I give her the flowers.',
+							exampleFa: '\u0645\u0646 \u06AF\u0644\u200C\u0647\u0627 \u0631\u0627 \u0628\u0647 \u0627\u0648 \u0645\u06CC\u200C\u062F\u0647\u0645.'
+						},
+						{
+							label: { de: 'es', en: 'it', fa: '\u0622\u0646' },
+							forms: ['es', 'es', 'ihm'],
+							example: 'Ich gebe ihm Wasser.',
+							exampleEn: 'I give it water.',
+							exampleFa: '\u0645\u0646 \u0628\u0647 \u0622\u0646 \u0622\u0628 \u0645\u06CC\u200C\u062F\u0647\u0645.'
+						},
+						{
+							label: { de: 'wir', en: 'we', fa: '\u0645\u0627' },
+							forms: ['wir', 'uns', 'uns'],
+							example: 'Er hilft uns immer.',
+							exampleEn: 'He always helps us.',
+							exampleFa: '\u0627\u0648 \u0647\u0645\u06CC\u0634\u0647 \u0628\u0647 \u0645\u0627 \u06A9\u0645\u06A9 \u0645\u06CC\u200C\u06A9\u0646\u062F.'
+						},
+						{
+							label: { de: 'ihr', en: 'you (pl.)', fa: '\u0634\u0645\u0627 (\u062C\u0645\u0639)' },
+							forms: ['ihr', 'euch', 'euch'],
+							example: 'Ich bringe euch Kaffee.',
+							exampleEn: 'I bring you (all) coffee.',
+							exampleFa: '\u0645\u0646 \u0628\u0631\u0627\u06CC \u0634\u0645\u0627 \u0642\u0647\u0648\u0647 \u0645\u06CC\u200C\u0622\u0648\u0631\u0645.'
+						},
+						{
+							label: { de: 'sie/Sie', en: 'they / you (formal)', fa: '\u0622\u0646\u0647\u0627 / \u0634\u0645\u0627 (\u0631\u0633\u0645\u06CC)' },
+							forms: ['sie/Sie', 'sie/Sie', 'ihnen/Ihnen'],
+							example: 'Ich danke Ihnen sehr.',
+							exampleEn: 'I thank you very much.',
+							exampleFa: '\u0645\u0646 \u0628\u0633\u06CC\u0627\u0631 \u0627\u0632 \u0634\u0645\u0627 \u0645\u062A\u0634\u06A9\u0631\u0645.'
+						}
+					]
+				}
+			},
+			{
+				heading: { en: 'Key Vocabulary', fa: '\u0648\u0627\u0698\u06AF\u0627\u0646 \u06A9\u0644\u06CC\u062F\u06CC' },
+				type: 'grid',
+				words: [
+					{ german: 'der Mann', en: 'the man', fa: '\u0645\u0631\u062F', example: 'Der Mann trinkt Kaffee.', exampleEn: 'The man drinks coffee.', exampleFa: '\u0645\u0631\u062F \u0642\u0647\u0648\u0647 \u0645\u06CC\u200C\u0646\u0648\u0634\u062F.' },
+					{ german: 'die Frau', en: 'the woman', fa: '\u0632\u0646', example: 'Die Frau liest ein Buch.', exampleEn: 'The woman reads a book.', exampleFa: '\u0632\u0646 \u06CC\u06A9 \u06A9\u062A\u0627\u0628 \u0645\u06CC\u200C\u062E\u0648\u0627\u0646\u062F.' },
+					{ german: 'das Kind', en: 'the child', fa: '\u0628\u0686\u0647', example: 'Das Kind spielt im Garten.', exampleEn: 'The child plays in the garden.', exampleFa: '\u0628\u0686\u0647 \u062F\u0631 \u0628\u0627\u063A \u0628\u0627\u0632\u06CC \u0645\u06CC\u200C\u06A9\u0646\u062F.' },
+					{ german: 'der Hund', en: 'the dog', fa: '\u0633\u06AF', example: 'Der Hund l\u00E4uft schnell.', exampleEn: 'The dog runs fast.', exampleFa: '\u0633\u06AF \u062A\u0646\u062F \u0645\u06CC\u200C\u062F\u0648\u062F.' },
+					{ german: 'die Katze', en: 'the cat', fa: '\u06AF\u0631\u0628\u0647', example: 'Die Katze schl\u00E4ft gern.', exampleEn: 'The cat likes to sleep.', exampleFa: '\u06AF\u0631\u0628\u0647 \u062F\u0648\u0633\u062A \u062F\u0627\u0631\u062F \u0628\u062E\u0648\u0627\u0628\u062F.' },
+					{ german: 'das Buch', en: 'the book', fa: '\u06A9\u062A\u0627\u0628', example: 'Das Buch ist interessant.', exampleEn: 'The book is interesting.', exampleFa: '\u06A9\u062A\u0627\u0628 \u062C\u0627\u0644\u0628 \u0627\u0633\u062A.' },
+					{ german: 'der Tisch', en: 'the table', fa: '\u0645\u06CC\u0632', example: 'Der Tisch ist aus Holz.', exampleEn: 'The table is made of wood.', exampleFa: '\u0645\u06CC\u0632 \u0627\u0632 \u0686\u0648\u0628 \u0627\u0633\u062A.' },
+					{ german: 'die T\u00FCr', en: 'the door', fa: '\u062F\u0631', example: 'Die T\u00FCr ist offen.', exampleEn: 'The door is open.', exampleFa: '\u062F\u0631 \u0628\u0627\u0632 \u0627\u0633\u062A.' },
+					{ german: 'das Haus', en: 'the house', fa: '\u062E\u0627\u0646\u0647', example: 'Das Haus ist gro\u00DF.', exampleEn: 'The house is big.', exampleFa: '\u062E\u0627\u0646\u0647 \u0628\u0632\u0631\u06AF \u0627\u0633\u062A.' },
+					{ german: 'der Kaffee', en: 'the coffee', fa: '\u0642\u0647\u0648\u0647', example: 'Der Kaffee ist hei\u00DF.', exampleEn: 'The coffee is hot.', exampleFa: '\u0642\u0647\u0648\u0647 \u062F\u0627\u063A \u0627\u0633\u062A.' }
+				]
+			}
 		]
 	}
 };

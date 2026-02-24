@@ -5,7 +5,7 @@
 -- ============================================================
 
 -- 1. BASICS CATEGORIES
--- Stores the 8 top-level categories (pronouns, articles, numbers, etc.)
+-- Stores the top-level categories (pronouns, articles, numbers, cases, etc.)
 CREATE TABLE IF NOT EXISTS public.basics_categories (
     id          UUID DEFAULT gen_random_uuid() PRIMARY KEY,
     key         TEXT NOT NULL UNIQUE,
@@ -20,16 +20,17 @@ CREATE TABLE IF NOT EXISTS public.basics_categories (
 );
 
 -- 2. BASICS SECTIONS
--- Sub-sections within a "multi" category (e.g., Personal Pronouns, Verb: Sein)
+-- Sub-sections within a "multi" category (e.g., Personal Pronouns, Verb: Sein, Declension Tables)
 CREATE TABLE IF NOT EXISTS public.basics_sections (
     id          UUID DEFAULT gen_random_uuid() PRIMARY KEY,
     category_id UUID NOT NULL REFERENCES public.basics_categories(id) ON DELETE CASCADE,
     heading_en  TEXT NOT NULL DEFAULT '',
     heading_fa  TEXT NOT NULL DEFAULT '',
-    type        TEXT NOT NULL DEFAULT 'table' CHECK (type IN ('table', 'grid', 'conjugation')),
+    type        TEXT NOT NULL DEFAULT 'table' CHECK (type IN ('table', 'grid', 'conjugation', 'declension')),
     sort_order  INTEGER NOT NULL DEFAULT 0,
     infinitive  JSONB,   -- { german, en, fa } — conjugation sections only
-    tenses      JSONB    -- [ { name: {en,fa}, forms: [...] } ] — conjugation sections only
+    tenses      JSONB,   -- [ { name: {en,fa}, forms: [...] } ] — conjugation sections only
+    declension  JSONB    -- { columns: [...], rows: [...] } — declension sections only
 );
 
 -- 3. BASICS WORDS

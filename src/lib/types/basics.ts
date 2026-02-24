@@ -34,15 +34,29 @@ export interface ConjugationTense {
 	forms: ConjugationForm[];
 }
 
+export interface DeclensionRow {
+	label: { de: string; en: string; fa: string };
+	forms: string[];
+	example?: string;
+	example_en?: string;
+	example_fa?: string;
+}
+
+export interface DeclensionTable {
+	columns: { de: string; en: string; fa: string }[];
+	rows: DeclensionRow[];
+}
+
 export interface BasicSection {
 	id?: string;
 	heading_en: string;
 	heading_fa: string;
-	type: 'table' | 'grid' | 'conjugation';
+	type: 'table' | 'grid' | 'conjugation' | 'declension';
 	sort_order?: number;
 	words?: BasicWord[];
 	infinitive?: { german: string; en: string; fa: string };
 	tenses?: ConjugationTense[];
+	declension?: DeclensionTable;
 }
 
 export interface BasicCategory {

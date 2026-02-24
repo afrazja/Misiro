@@ -7,7 +7,7 @@
 	import { unlockAudioContext, playTone } from '$services/audio-context';
 	import { appStore } from '$stores/app';
 	import type { Language } from "$stores/preferences";
-	import type { BasicWord, ConjugationTense } from "$lib/types/basics";
+	import type { BasicWord, ConjugationTense, DeclensionTable } from "$lib/types/basics";
 
 	let { data } = $props();
 
@@ -461,6 +461,63 @@
 									</table>
 								</div>
 							{/each}
+
+						{:else if section.type === 'declension' && section.declension}
+							<!-- Declension Table -->
+							<div class="declension-section">
+								<div class="declension-scroll">
+									<table class="declension-table">
+										<thead>
+											<tr>
+												<th class="corner-cell"></th>
+												{#each section.declension.columns as col}
+													<th>{currentLang === 'fa' ? col.fa : col.en}</th>
+												{/each}
+											</tr>
+										</thead>
+										<tbody>
+											{#each section.declension.rows as row}
+												<tr>
+													<td class="case-label">{currentLang === 'fa' ? row.label.fa : row.label.en}</td>
+													{#each row.forms as form}
+														<!-- svelte-ignore a11y_interactive_supports_focus -->
+														<td
+															class="case-form"
+															role="button"
+															aria-label="Play {form}"
+															onclick={() => playWord(form)}
+															onkeydown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); playWord(form); } }}
+															tabindex="0"
+														>{form}</td>
+													{/each}
+												</tr>
+												{#if row.example}
+													<tr class="example-row">
+														<td colspan={section.declension.columns.length + 1}>
+															<!-- svelte-ignore a11y_interactive_supports_focus -->
+															<span
+																class="dec-example"
+																role="button"
+																aria-label="Play example: {row.example}"
+																onclick={() => playExample(row.example || '')}
+																onkeydown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); playExample(row.example || ''); } }}
+																tabindex="0"
+															>
+																{row.example} <span class="dec-speaker" aria-hidden="true">🔊</span>
+															</span>
+															{#if (currentLang === 'fa' ? row.example_fa : row.example_en)}
+																<span class="dec-example-trans">
+																	{currentLang === 'fa' ? (row.example_fa || '') : (row.example_en || '')}
+																</span>
+															{/if}
+														</td>
+													</tr>
+												{/if}
+											{/each}
+										</tbody>
+									</table>
+								</div>
+							</div>
 
 						{:else if section.type === 'table' && section.words}
 							<!-- Pronoun Table -->
@@ -937,6 +994,110 @@
 		opacity: 1;
 	}
 
+	/* Declension Table */
+	.declension-section {
+		margin-bottom: 25px;
+	}
+
+	.declension-scroll {
+		overflow-x: auto;
+		-webkit-overflow-scrolling: touch;
+		border-radius: 12px;
+	}
+
+	.declension-table {
+		width: 100%;
+		border-collapse: separate;
+		border-spacing: 0;
+		border-radius: 12px;
+		overflow: hidden;
+		background: rgba(255, 255, 255, 0.03);
+		border: 1px solid rgba(255, 255, 255, 0.08);
+		min-width: 400px;
+	}
+
+	.declension-table thead th {
+		padding: 14px 18px;
+		text-align: center;
+		font-weight: 600;
+		font-size: 0.85rem;
+		text-transform: uppercase;
+		letter-spacing: 0.5px;
+		color: #a0a0a0;
+		background: rgba(255, 255, 255, 0.05);
+		border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+	}
+
+	.declension-table .corner-cell {
+		width: 120px;
+	}
+
+	.declension-table td {
+		padding: 14px 18px;
+		border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+		text-align: center;
+		transition: all 0.2s ease;
+	}
+
+	.declension-table .case-label {
+		text-align: left;
+		color: #2ecc71;
+		font-weight: 700;
+		font-size: 0.95rem;
+		white-space: nowrap;
+	}
+
+	.declension-table .case-form {
+		color: #fff;
+		font-weight: 600;
+		font-size: 1.1rem;
+		cursor: pointer;
+		transition: all 0.2s ease;
+	}
+
+	.declension-table .case-form:hover {
+		background: rgba(46, 204, 113, 0.15);
+		color: #2ecc71;
+	}
+
+	.declension-table .example-row td {
+		padding: 6px 18px 14px;
+		border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+		background: rgba(255, 255, 255, 0.02);
+	}
+
+	.dec-example {
+		font-size: 0.85rem;
+		color: #888;
+		font-style: italic;
+		cursor: pointer;
+		transition: color 0.2s;
+	}
+
+	.dec-example:hover {
+		color: #2ecc71;
+	}
+
+	.dec-speaker {
+		opacity: 0.5;
+		transition: opacity 0.2s;
+	}
+
+	.dec-example:hover .dec-speaker {
+		opacity: 1;
+	}
+
+	.dec-example-trans {
+		display: block;
+		font-size: 0.78rem;
+		color: #3498db;
+		margin-top: 3px;
+	}
+
+	.declension-table tbody tr:last-child td {
+		border-bottom: none;
+	}
+
 	@media (max-width: 600px) {
 		.category-header {
 			flex-direction: column;
@@ -975,6 +1136,24 @@
 
 		.verb-main {
 			font-size: 1.4rem;
+		}
+
+		.declension-table {
+			min-width: 340px;
+		}
+
+		.declension-table thead th,
+		.declension-table td {
+			padding: 10px 12px;
+			font-size: 0.85rem;
+		}
+
+		.declension-table .case-form {
+			font-size: 0.95rem;
+		}
+
+		.declension-table .corner-cell {
+			width: 90px;
 		}
 	}
 
