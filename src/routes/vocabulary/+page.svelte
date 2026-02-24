@@ -681,7 +681,7 @@
 
 	.flashcard {
 		width: 100%;
-		min-height: 220px;
+		min-height: 280px;
 		background: rgba(255, 255, 255, 0.05);
 		border: 1px solid rgba(255, 255, 255, 0.1);
 		border-radius: 20px;
@@ -690,7 +690,7 @@
 		align-items: center;
 		justify-content: center;
 		gap: 16px;
-		padding: 32px 24px;
+		padding: 40px 24px;
 		transition: all 0.3s ease;
 		color: inherit;
 	}

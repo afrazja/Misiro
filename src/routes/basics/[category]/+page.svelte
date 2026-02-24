@@ -989,7 +989,8 @@
 		display: flex;
 		flex-direction: column;
 		align-items: center;
-		min-height: 60vh;
+		justify-content: center;
+		min-height: 70vh;
 		padding: 16px 0;
 	}
 
@@ -1020,7 +1021,7 @@
 	.quiz-card {
 		width: 100%;
 		max-width: 420px;
-		min-height: 220px;
+		min-height: 280px;
 		background: rgba(255, 255, 255, 0.05);
 		border: 1px solid rgba(255, 255, 255, 0.1);
 		border-radius: 20px;
@@ -1029,7 +1030,7 @@
 		align-items: center;
 		justify-content: center;
 		gap: 16px;
-		padding: 32px 24px;
+		padding: 40px 24px;
 		transition: all 0.3s ease;
 		color: inherit;
 	}
@@ -1060,7 +1061,7 @@
 	}
 
 	.quiz-meaning-prompt {
-		font-size: 1.6rem;
+		font-size: 2rem;
 		font-weight: 800;
 		color: #bb86fc;
 		text-align: center;
@@ -1215,8 +1216,7 @@
 		height: 4px;
 		background: rgba(255, 255, 255, 0.08);
 		border-radius: 2px;
-		margin-top: auto;
-		padding-top: 32px;
+		margin-top: 32px;
 		overflow: hidden;
 	}
 
