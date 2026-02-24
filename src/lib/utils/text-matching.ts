@@ -1,12 +1,48 @@
 /**
  * Text Matching — word-based matching for voice recognition evaluation.
- * Extracted from app.js handleVoiceInput() matching logic.
+ * Uses Levenshtein distance for accurate character-level comparison.
  */
+
+/** Minimum similarity (0–1) for two words to be considered a match. */
+const WORD_SIMILARITY_THRESHOLD = 0.75;
+
+/**
+ * Compute Levenshtein-based similarity between two strings.
+ * @returns 0.0 (completely different) to 1.0 (identical)
+ */
+function levenshteinSimilarity(a: string, b: string): number {
+	if (a === b) return 1;
+	if (!a.length || !b.length) return 0;
+
+	const matrix: number[][] = [];
+	for (let i = 0; i <= a.length; i++) matrix[i] = [i];
+	for (let j = 0; j <= b.length; j++) matrix[0][j] = j;
+
+	for (let i = 1; i <= a.length; i++) {
+		for (let j = 1; j <= b.length; j++) {
+			const cost = a[i - 1] === b[j - 1] ? 0 : 1;
+			matrix[i][j] = Math.min(
+				matrix[i - 1][j] + 1,
+				matrix[i][j - 1] + 1,
+				matrix[i - 1][j - 1] + cost
+			);
+		}
+	}
+
+	return 1 - matrix[a.length][b.length] / Math.max(a.length, b.length);
+}
+
+/**
+ * Check if a user word is similar enough to a target word.
+ */
+function isWordMatch(userWord: string, targetWord: string): boolean {
+	return levenshteinSimilarity(userWord, targetWord) >= WORD_SIMILARITY_THRESHOLD;
+}
 
 /**
  * Compare user's spoken text against the target German text.
- * Uses word-based matching: checks what percentage of target words
- * appear in the user's input (with fuzzy substring matching).
+ * Uses word-based matching with Levenshtein distance: checks what
+ * percentage of target words appear in the user's input.
  *
  * @param userText - What the user said (from speech recognition)
  * @param targetText - The expected German text
@@ -33,14 +69,7 @@ export function matchVoiceInput(
 
 	let matchedWords = 0;
 	targetWords.forEach((targetWord) => {
-		if (
-			userWords.some(
-				(userWord) =>
-					userWord === targetWord ||
-					userWord.includes(targetWord) ||
-					targetWord.includes(userWord)
-			)
-		) {
+		if (userWords.some((userWord) => isWordMatch(userWord, targetWord))) {
 			matchedWords++;
 		}
 	});
@@ -70,11 +99,12 @@ export function getWordMatchStatus(
 	words: string[]
 ): Map<string, boolean> {
 	const cleanUser = userText.toLowerCase().replace(/[.,!?]/g, '').trim();
+	const userWords = cleanUser.split(/\s+/);
 	const result = new Map<string, boolean>();
 
 	words.forEach((word) => {
 		const cleanWord = word.toLowerCase().replace(/[.,!?]/g, '').trim();
-		result.set(word, cleanUser.includes(cleanWord));
+		result.set(word, userWords.some((uw) => isWordMatch(uw, cleanWord)));
 	});
 
 	return result;
