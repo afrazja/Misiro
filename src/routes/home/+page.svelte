@@ -54,8 +54,9 @@
 
 	const progressPercent = $derived(totalLessons > 0 ? Math.round((daysCompleted / totalLessons) * 100) : 0);
 
-	const levelPercent = $derived(() => {
+	const levelPercent = $derived.by(() => {
 		const third = Math.ceil(totalLessons / 3);
+		if (third === 0) return 0;
 		const t2 = third * 2;
 		if (currentDay <= third) return Math.round((Math.min(daysCompleted, third) / third) * 100);
 		if (currentDay <= t2) return Math.round(((Math.min(daysCompleted, t2) - third) / third) * 100);
@@ -486,6 +487,14 @@
 							? `You're on a ${streakCount}-day streak — keep it going!`
 							: 'Pick up where you left off.'}
 					</p>
+					{#if totalLessons > 0}
+						<div class="journey-bar-wrap">
+							<div class="journey-bar">
+								<div class="journey-fill" style="width: {progressPercent}%"></div>
+							</div>
+							<span class="journey-label">{daysCompleted}/{totalLessons} days · {progressPercent}%</span>
+						</div>
+					{/if}
 				{:else}
 					<h1>Mirifer</h1>
 					<p>Learn German the Natural Way</p>
@@ -501,6 +510,9 @@
 				<span class="stat-icon">🎯</span>
 				<span class="stat-value">{currentLevel}</span>
 				<span class="stat-label">Current Level</span>
+				<div class="stat-bar">
+					<div class="stat-bar-fill" style="width: {levelPercent}%"></div>
+				</div>
 			</div>
 			<button class="stat-card stat-card-clickable" onclick={() => showCalendar = true} title="View your practice calendar">
 				<span class="stat-icon">🔥</span>
@@ -511,8 +523,10 @@
 			<a href="/lesson" class="stat-card stat-card-link" class:has-due={dueReviews > 0} title="Go to lesson for reviews">
 				<span class="stat-icon">🔄</span>
 				<span class="stat-value">{dueReviews}</span>
-				<span class="stat-label">Due Reviews</span>
-				{#if dueReviews > 0}
+				<span class="stat-label">{dueReviews === 0 ? 'All caught up!' : 'Due Reviews'}</span>
+				{#if dueReviews > 10}
+					<span class="stat-sub-note">Just do a few!</span>
+				{:else if dueReviews > 0}
 					<span class="stat-cta">Review now →</span>
 				{/if}
 			</a>
@@ -538,8 +552,10 @@
 			{#if isAuthenticated}
 				{#if totalLessons > 0 && daysCompleted >= totalLessons}
 					<div class="card-meta done">🎉 All {totalLessons} days complete!</div>
+					<div class="card-progress-bar"><div class="card-progress-fill" style="width: 100%"></div></div>
 				{:else if daysCompleted > 0}
-					<div class="card-meta">Next: Day {daysCompleted + 1} of {totalLessons}</div>
+					<div class="card-meta">{daysCompleted} of {totalLessons} days · {progressPercent}%</div>
+					<div class="card-progress-bar"><div class="card-progress-fill" style="width: {progressPercent}%"></div></div>
 				{:else}
 					<div class="card-meta">Start Day 1 →</div>
 				{/if}
@@ -950,6 +966,77 @@
 
 	.stat-cta.vocab-cta {
 		color: #9b59b6;
+	}
+
+	.stat-sub-note {
+		font-size: 0.68rem;
+		color: rgba(255, 255, 255, 0.35);
+		font-weight: 500;
+		margin-top: 1px;
+	}
+
+	/* ── Stat Progress Bar ── */
+	.stat-bar {
+		width: 100%;
+		height: 4px;
+		background: rgba(255, 255, 255, 0.08);
+		border-radius: 2px;
+		margin-top: 6px;
+		overflow: hidden;
+	}
+
+	.stat-bar-fill {
+		height: 100%;
+		background: linear-gradient(90deg, #2ecc71, #27ae60);
+		border-radius: 2px;
+		transition: width 0.5s ease;
+	}
+
+	/* ── Journey Progress Bar ── */
+	.journey-bar-wrap {
+		display: flex;
+		align-items: center;
+		gap: 10px;
+		margin-top: 6px;
+	}
+
+	.journey-bar {
+		width: 140px;
+		height: 6px;
+		background: rgba(255, 255, 255, 0.08);
+		border-radius: 3px;
+		overflow: hidden;
+	}
+
+	.journey-fill {
+		height: 100%;
+		background: linear-gradient(90deg, #e94560, #ff6b81);
+		border-radius: 3px;
+		transition: width 0.5s ease;
+	}
+
+	.journey-label {
+		font-size: 0.72rem;
+		color: rgba(255, 255, 255, 0.4);
+		font-weight: 500;
+		white-space: nowrap;
+	}
+
+	/* ── Card Progress Bar ── */
+	.card-progress-bar {
+		width: 100%;
+		height: 4px;
+		background: rgba(255, 255, 255, 0.08);
+		border-radius: 2px;
+		margin-top: 10px;
+		overflow: hidden;
+	}
+
+	.card-progress-fill {
+		height: 100%;
+		background: linear-gradient(90deg, #e94560, #ff6b81);
+		border-radius: 2px;
+		transition: width 0.5s ease;
 	}
 
 	.nav-card .arrow {

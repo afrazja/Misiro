@@ -10,6 +10,14 @@
 	let currentLang = $state("en" as Language);
 	let voiceSpeed: number = $state(1.0);
 
+	// Quiz mode state
+	let quizMode = $state(false);
+	let quizIndex = $state(0);
+	let quizRevealed = $state(false);
+	let quizDeck = $state<BasicWord[]>([]);
+	let quizDone = $state(false);
+	let quizGotIt = $state(0);
+
 	const category = $derived(data.category);
 	const words = $derived(data.words ?? []);
 	const sections = $derived(data.sections ?? []);
@@ -82,6 +90,73 @@
 		setVoiceSpeed(voiceSpeed);
 	}
 
+	// ── Quiz functions ──
+	function collectAllWords(): BasicWord[] {
+		const all: BasicWord[] = [];
+		// Flat words (grid/table categories)
+		if (words.length > 0) {
+			all.push(...words);
+		}
+		// Section-based words (multi categories)
+		for (const sec of sections) {
+			if (sec.words) {
+				all.push(...sec.words);
+			}
+			// Conjugation verbs: add infinitive as a word
+			if (sec.type === 'conjugation' && sec.infinitive) {
+				all.push({
+					german: sec.infinitive.german,
+					en: sec.infinitive.en,
+					fa: sec.infinitive.fa
+				});
+			}
+		}
+		return all;
+	}
+
+	function shuffleArray<T>(arr: T[]): T[] {
+		const a = [...arr];
+		for (let i = a.length - 1; i > 0; i--) {
+			const j = Math.floor(Math.random() * (i + 1));
+			[a[i], a[j]] = [a[j], a[i]];
+		}
+		return a;
+	}
+
+	function startQuiz() {
+		const all = collectAllWords();
+		if (all.length === 0) return;
+		quizDeck = shuffleArray(all);
+		quizIndex = 0;
+		quizRevealed = false;
+		quizDone = false;
+		quizGotIt = 0;
+		quizMode = true;
+	}
+
+	function revealQuiz() {
+		quizRevealed = true;
+		// Play the word audio
+		stopAllAudio();
+		playAudioPromise(quizDeck[quizIndex].german, 0.8, 'de-DE');
+	}
+
+	function quizAnswer(gotIt: boolean) {
+		if (gotIt) quizGotIt++;
+		if (quizIndex < quizDeck.length - 1) {
+			quizIndex++;
+			quizRevealed = false;
+		} else {
+			quizDone = true;
+		}
+	}
+
+	function exitQuiz() {
+		quizMode = false;
+	}
+
+	const hasQuizWords = $derived(words.length > 0 || sections.some((s) => (s.words && s.words.length > 0) || (s.type === 'conjugation' && s.infinitive)));
+
 	onMount(async () => {
 		const savedLang = await getLanguage();
 		if (savedLang === 'fa' || savedLang === 'en') {
@@ -119,6 +194,9 @@
 			<p>{catDesc}</p>
 		</div>
 		<div class="controls">
+			{#if hasQuizWords}
+				<button class="practice-btn" onclick={startQuiz}>Practice</button>
+			{/if}
 			<select aria-label="Select language" value={currentLang} onchange={handleLanguageChange}>
 				<option value="fa">\u0641\u0627\u0631\u0633\u06CC</option>
 				<option value="en">English</option>
@@ -132,6 +210,64 @@
 		</div>
 	</header>
 
+	{#if quizMode}
+		<!-- ══════ FLASHCARD QUIZ MODE ══════ -->
+		<div class="quiz-area">
+			<div class="quiz-nav">
+				<button class="quiz-back" onclick={exitQuiz}>← Back</button>
+				{#if !quizDone}
+					<span class="quiz-counter">{quizIndex + 1} / {quizDeck.length}</span>
+				{:else}
+					<span class="quiz-counter">Done!</span>
+				{/if}
+			</div>
+
+			{#if quizDone}
+				<div class="quiz-done">
+					<span class="quiz-done-icon">🎉</span>
+					<h2>Practice Complete!</h2>
+					<p>You reviewed {quizDeck.length} words.</p>
+					<div class="quiz-done-stats">
+						<span class="quiz-stat got-it">✓ {quizGotIt} got it</span>
+						<span class="quiz-stat still-learning">○ {quizDeck.length - quizGotIt} still learning</span>
+					</div>
+					<div class="quiz-done-actions">
+						<button class="quiz-action-btn primary" onclick={startQuiz}>Practice Again</button>
+						<button class="quiz-action-btn secondary" onclick={exitQuiz}>Back to {catTitle}</button>
+					</div>
+				</div>
+			{:else}
+				<button
+					class="quiz-card"
+					class:revealed={quizRevealed}
+					onclick={revealQuiz}
+				>
+					<span class="quiz-word">{quizDeck[quizIndex].german}</span>
+					{#if quizRevealed}
+						<span class="quiz-divider"></span>
+						<span class="quiz-meaning">{getWordTranslation(quizDeck[quizIndex])}</span>
+					{:else}
+						<span class="quiz-hint">Tap to reveal</span>
+					{/if}
+				</button>
+
+				{#if quizRevealed}
+					<div class="quiz-buttons">
+						<button class="quiz-btn still-learning" onclick={() => quizAnswer(false)}>
+							Still learning
+						</button>
+						<button class="quiz-btn got-it" onclick={() => quizAnswer(true)}>
+							Got it!
+						</button>
+					</div>
+				{/if}
+
+				<div class="quiz-progress-bar">
+					<div class="quiz-progress-fill" style="width: {(quizIndex / quizDeck.length) * 100}%"></div>
+				</div>
+			{/if}
+		</div>
+	{:else}
 	<div id="content-container">
 		{#if category}
 			{#if category.type === 'multi' && sections.length > 0}
@@ -320,6 +456,7 @@
 			<p style="color: #888; text-align: center; padding: 40px;">Category not found.</p>
 		{/if}
 	</div>
+	{/if}
 </div>
 
 <style>
@@ -721,5 +858,219 @@
 		.verb-main {
 			font-size: 1.4rem;
 		}
+	}
+
+	/* ══════ Practice Button ══════ */
+	.practice-btn {
+		padding: 8px 18px;
+		background: linear-gradient(135deg, #9b59b6, #8e44ad);
+		border: none;
+		border-radius: 20px;
+		color: #fff;
+		font-size: 0.85rem;
+		font-weight: 700;
+		cursor: pointer;
+		white-space: nowrap;
+		transition: opacity 0.2s;
+	}
+
+	.practice-btn:hover { opacity: 0.85; }
+
+	/* ══════ Quiz Mode ══════ */
+	.quiz-area {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		min-height: 60vh;
+		padding: 16px 0;
+	}
+
+	.quiz-nav {
+		width: 100%;
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		margin-bottom: 32px;
+	}
+
+	.quiz-back {
+		background: none;
+		border: none;
+		color: #e94560;
+		font-size: 0.95rem;
+		font-weight: 600;
+		cursor: pointer;
+		padding: 8px 0;
+	}
+
+	.quiz-counter {
+		font-size: 0.95rem;
+		font-weight: 700;
+		color: rgba(255, 255, 255, 0.5);
+	}
+
+	.quiz-card {
+		width: 100%;
+		max-width: 420px;
+		min-height: 220px;
+		background: rgba(255, 255, 255, 0.05);
+		border: 1px solid rgba(255, 255, 255, 0.1);
+		border-radius: 20px;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		gap: 16px;
+		padding: 32px 24px;
+		cursor: pointer;
+		transition: all 0.3s ease;
+		color: inherit;
+	}
+
+	.quiz-card:hover { border-color: rgba(155, 89, 182, 0.3); }
+
+	.quiz-card.revealed {
+		border-color: rgba(155, 89, 182, 0.4);
+		background: rgba(155, 89, 182, 0.06);
+	}
+
+	.quiz-word {
+		font-size: 2rem;
+		font-weight: 900;
+		color: #fff;
+		text-align: center;
+	}
+
+	.quiz-hint {
+		font-size: 0.85rem;
+		color: rgba(255, 255, 255, 0.3);
+	}
+
+	.quiz-divider {
+		width: 60px;
+		height: 2px;
+		background: rgba(155, 89, 182, 0.3);
+		border-radius: 1px;
+	}
+
+	.quiz-meaning {
+		font-size: 1.2rem;
+		color: rgba(255, 255, 255, 0.7);
+		text-align: center;
+	}
+
+	.quiz-buttons {
+		display: flex;
+		gap: 16px;
+		width: 100%;
+		max-width: 420px;
+		margin-top: 24px;
+	}
+
+	.quiz-btn {
+		flex: 1;
+		padding: 14px 20px;
+		border: none;
+		border-radius: 14px;
+		font-size: 0.95rem;
+		font-weight: 700;
+		cursor: pointer;
+		transition: opacity 0.2s;
+	}
+
+	.quiz-btn:active { opacity: 0.8; }
+
+	.quiz-btn.still-learning {
+		background: rgba(231, 76, 60, 0.15);
+		color: #e74c3c;
+		border: 1px solid rgba(231, 76, 60, 0.3);
+	}
+
+	.quiz-btn.got-it {
+		background: rgba(46, 204, 113, 0.15);
+		color: #2ecc71;
+		border: 1px solid rgba(46, 204, 113, 0.3);
+	}
+
+	.quiz-progress-bar {
+		width: 100%;
+		max-width: 420px;
+		height: 4px;
+		background: rgba(255, 255, 255, 0.08);
+		border-radius: 2px;
+		margin-top: auto;
+		padding-top: 32px;
+		overflow: hidden;
+	}
+
+	.quiz-progress-fill {
+		height: 4px;
+		background: linear-gradient(90deg, #9b59b6, #bb86fc);
+		border-radius: 2px;
+		transition: width 0.3s ease;
+	}
+
+	/* ── Quiz Done ── */
+	.quiz-done {
+		flex: 1;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		gap: 16px;
+		text-align: center;
+		padding: 40px 20px;
+	}
+
+	.quiz-done-icon { font-size: 3rem; }
+
+	.quiz-done h2 {
+		font-size: 1.5rem;
+		font-weight: 900;
+		color: #fff;
+	}
+
+	.quiz-done p {
+		color: rgba(255, 255, 255, 0.5);
+		font-size: 0.95rem;
+	}
+
+	.quiz-done-stats {
+		display: flex;
+		gap: 20px;
+		margin: 8px 0;
+	}
+
+	.quiz-stat {
+		font-size: 0.9rem;
+		font-weight: 700;
+	}
+
+	.quiz-stat.got-it { color: #2ecc71; }
+	.quiz-stat.still-learning { color: #e74c3c; }
+
+	.quiz-done-actions {
+		display: flex;
+		gap: 12px;
+		margin-top: 12px;
+	}
+
+	.quiz-action-btn {
+		padding: 12px 28px;
+		border: none;
+		border-radius: 14px;
+		font-size: 0.95rem;
+		font-weight: 700;
+		cursor: pointer;
+	}
+
+	.quiz-action-btn.primary {
+		background: linear-gradient(135deg, #9b59b6, #8e44ad);
+		color: #fff;
+	}
+
+	.quiz-action-btn.secondary {
+		background: rgba(255, 255, 255, 0.08);
+		color: rgba(255, 255, 255, 0.7);
 	}
 </style>

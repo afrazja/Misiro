@@ -414,7 +414,25 @@
 {#if showOverlay}
 	<div class="start-overlay">
 		<h1>Ready to Learn?</h1>
-		<p>Tap start to enable audio & voice.</p>
+		{#if lesson.currentLesson}
+			<div class="overlay-preview">
+				<h2 class="overlay-title">{scenarioTitle()}</h2>
+				{#if scenarioDescription()}
+					<p class="overlay-desc">{scenarioDescription()}</p>
+				{/if}
+				<div class="overlay-tags">
+					{#if lessonDifficulty()}
+						<span class="overlay-badge difficulty-{lessonDifficulty()?.replace('+', 'plus')}">{lessonDifficulty()}</span>
+					{/if}
+					{#if lessonGrammarFocus()}
+						<span class="overlay-badge grammar-tag">{lessonGrammarFocus()}</span>
+					{/if}
+					<span class="overlay-badge">{lesson.currentLesson.sentences.length} sentences</span>
+				</div>
+			</div>
+		{:else}
+			<p>Loading lesson details...</p>
+		{/if}
 		<button class="start-btn" onclick={handleStart} disabled={!isReady}>
 			{isReady ? '▶ Start Lesson' : '⏳ Loading...'}
 		</button>
@@ -628,9 +646,17 @@
 							<h2 style="margin:0 0 5px; color:#2e7d32;">
 								{completionData.language === 'fa' ? '\u0622\u0641\u0631\u06CC\u0646!' : 'Well Done!'}
 							</h2>
-							<p style="color:#555; margin:0;">
-								{completionData.language === 'fa' ? '\u0627\u06CC\u0646 \u062F\u0631\u0633 \u0631\u0627 \u0628\u0627 \u0645\u0648\u0641\u0642\u06CC\u062A \u062A\u0645\u0627\u0645 \u06A9\u0631\u062F\u06CC\u062F.' : 'You completed this lesson successfully.'}
+							<p style="color:#555; margin:0 0 8px;">
+								{completionData.language === 'fa' ? `\u0631\u0648\u0632 ${app.currentDay} \u0631\u0627 \u062A\u0645\u0627\u0645 \u06A9\u0631\u062F\u06CC\u062F!` : `Day ${app.currentDay} complete!`}
 							</p>
+							<div class="completion-stats">
+								{#if lesson.currentLesson}
+									<span class="comp-stat">{lesson.currentLesson.sentences.length} {completionData.language === 'fa' ? 'جمله' : 'sentences'}</span>
+								{/if}
+								{#if app.completedLessons}
+									<span class="comp-stat">🔥 {Object.keys(app.completedLessons).length}-{completionData.language === 'fa' ? 'روز' : 'day streak'}</span>
+								{/if}
+							</div>
 							{#if completionData.nextDay}
 								<button class="next-day-btn" onclick={() => goToNextDay(completionData!.nextDay!)}>
 									{completionData.language === 'fa' ? '\u062F\u0631\u0633 \u0628\u0639\u062F\u06CC' : 'Next Lesson'} &rarr;
@@ -709,6 +735,11 @@
 				</div>
 			</div>
 			<div class="script-container" bind:this={scriptContainerEl}>
+				{#if scriptItems.length === 0}
+					<div class="script-empty">
+						<p>Lesson script will appear here once you start.</p>
+					</div>
+				{/if}
 				{#each scriptItems as item, i}
 					<!-- svelte-ignore a11y_interactive_supports_focus -->
 					<div
@@ -808,6 +839,80 @@
 	.start-btn:disabled {
 		opacity: 0.6;
 		cursor: wait;
+	}
+
+	/* ── Overlay Preview ── */
+	.overlay-preview {
+		text-align: center;
+		max-width: 380px;
+		margin-bottom: 8px;
+	}
+
+	.overlay-title {
+		font-size: 1.2rem;
+		font-weight: 700;
+		color: #fff;
+		margin: 0 0 6px;
+	}
+
+	.overlay-desc {
+		font-size: 0.9rem;
+		color: rgba(255, 255, 255, 0.55);
+		margin: 0 0 10px;
+		line-height: 1.4;
+	}
+
+	.overlay-tags {
+		display: flex;
+		gap: 8px;
+		justify-content: center;
+		flex-wrap: wrap;
+	}
+
+	.overlay-badge {
+		font-size: 0.75rem;
+		font-weight: 600;
+		padding: 3px 10px;
+		border-radius: 12px;
+		background: rgba(255, 255, 255, 0.1);
+		color: rgba(255, 255, 255, 0.6);
+	}
+
+	.overlay-badge.difficulty-A1 { background: rgba(46, 204, 113, 0.2); color: #2ecc71; }
+	.overlay-badge.difficulty-A2 { background: rgba(52, 152, 219, 0.2); color: #3498db; }
+	.overlay-badge.difficulty-B1 { background: rgba(155, 89, 182, 0.2); color: #9b59b6; }
+	.overlay-badge.difficulty-B1plus { background: rgba(155, 89, 182, 0.2); color: #bb86fc; }
+	.overlay-badge.grammar-tag { background: rgba(241, 196, 15, 0.15); color: #f1c40f; }
+
+	/* ── Completion Stats ── */
+	.completion-stats {
+		display: flex;
+		gap: 16px;
+		justify-content: center;
+		margin: 10px 0;
+	}
+
+	.comp-stat {
+		font-size: 0.85rem;
+		color: #888;
+		font-weight: 600;
+	}
+
+	/* ── Script Empty ── */
+	.script-empty {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		height: 100%;
+		min-height: 120px;
+		text-align: center;
+		padding: 24px;
+	}
+
+	.script-empty p {
+		color: #555;
+		font-size: 0.88rem;
+		line-height: 1.5;
 	}
 
 	.hidden {

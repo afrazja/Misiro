@@ -199,12 +199,11 @@
 						</div>
 						<div class="word-actions">
 							<button
-								class="action-btn known-btn"
+								class="known-pill"
 								class:is-known={w.known}
 								onclick={() => handleToggleKnown(w)}
-								title={w.known ? 'Mark as learning' : 'Mark as known'}
 							>
-								{w.known ? '✓' : '○'}
+								{w.known ? '✓ Known' : '○ Learning'}
 							</button>
 							<button
 								class="action-btn delete-btn"
@@ -531,7 +530,20 @@
 		transition: all 0.2s;
 	}
 
-	.known-btn.is-known {
+	.known-pill {
+		padding: 4px 10px;
+		border-radius: 20px;
+		border: 1px solid rgba(255, 255, 255, 0.12);
+		background: rgba(255, 255, 255, 0.05);
+		color: rgba(255, 255, 255, 0.4);
+		font-size: 0.72rem;
+		font-weight: 600;
+		cursor: pointer;
+		transition: all 0.2s;
+		white-space: nowrap;
+	}
+
+	.known-pill.is-known {
 		background: rgba(46, 204, 113, 0.15);
 		border-color: rgba(46, 204, 113, 0.4);
 		color: #2ecc71;
