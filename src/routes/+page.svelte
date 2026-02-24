@@ -5,6 +5,7 @@
 	import * as auth from '$services/auth';
 	import * as dataLayer from '$services/data-layer';
 	import { initSyncListeners } from '$services/sync-queue';
+	import { getLessonIndex, getTotalLessons } from '$services/lesson-loader';
 
 	// Auth modal state
 	let showAuthModal = $state(false);
@@ -25,6 +26,15 @@
 
 	// Navbar scroll effect
 	let scrolled = $state(false);
+
+	// Dynamic lesson count
+	let totalLessons = $state(0);
+	let stageOneEnd = $derived(Math.round(totalLessons / 3));
+	let stageTwoEnd = $derived(Math.round((totalLessons * 2) / 3));
+	let stageThreeEnd = $derived(totalLessons);
+
+	// Phone mockup delayed message animation
+	let showDelayedMsg = $state(false);
 
 	// Refs for focus trap
 	let modalEl: HTMLDivElement | undefined = $state();
@@ -113,11 +123,8 @@
 		}
 	}
 
-	async function onLanguageChange(e: Event) {
-		const select = e.target as HTMLSelectElement;
-		language = select.value as Language;
-		preferencesStore.update((s) => ({ ...s, language }));
-		await dataLayer.setLanguage(language);
+	function scrollToMethod() {
+		document.getElementById('method-section')?.scrollIntoView({ behavior: 'smooth' });
 	}
 
 	function handleKeydown(e: KeyboardEvent) {
@@ -164,6 +171,13 @@
 			goto('/', { replaceState: true });
 		}
 		await updateProfileUI();
+
+		// Fetch lesson count for dynamic stats
+		await getLessonIndex();
+		totalLessons = getTotalLessons();
+
+		// Trigger delayed message animation in phone mockup
+		setTimeout(() => { showDelayedMsg = true; }, 2000);
 	});
 </script>
 
@@ -273,18 +287,7 @@
 
 	<div class="navbar-right">
 		{#if isAuthenticated}
-			<span class="nav-greeting">Hi, {displayName.split(' ')[0]} 👋</span>
-			<a href="/home" class="btn btn-primary">Go to App</a>
-			<button class="btn btn-ghost" onclick={handleSignOut}>Sign Out</button>
-			<a href="/settings" class="nav-avatar-link" title="Settings">
-				<div class="nav-avatar">
-					{#if avatarUrl}
-						<img src={avatarUrl} alt="Avatar" />
-					{:else}
-						{(displayName || 'L').charAt(0).toUpperCase()}
-					{/if}
-				</div>
-			</a>
+			<a href="/home" class="btn btn-primary">Open App &rarr;</a>
 		{:else}
 			<button class="btn btn-ghost" onclick={openSignIn}>Sign In</button>
 			<button class="btn btn-primary" onclick={openSignUp}>Get Started Free</button>
@@ -308,21 +311,20 @@
 			<span class="grad-text">You'd Learn It on the Street</span>
 		</h1>
 		<p class="hero-sub">
-			Real conversations. Real scenarios. Real progress — one day at a time.<br />
-			Speak from day one, not after months of grammar drills.
+			Speak German from day one — not after months of grammar drills.
 		</p>
 		<div class="hero-actions">
 			{#if isAuthenticated}
 				<a href="/home" class="cta-btn primary">Go to My Lessons →</a>
 			{:else}
-				<button class="cta-btn primary" onclick={openSignUp}>Start Learning Free</button>
-				<button class="cta-btn ghost" onclick={openSignIn}>I Have an Account</button>
+				<button class="cta-btn primary" onclick={openSignUp}>Start for Free</button>
+				<button class="cta-btn ghost" onclick={scrollToMethod}>See how it works &darr;</button>
 			{/if}
 		</div>
 		<div class="hero-trust">
 			<span>✅ No credit card</span>
 			<span>✅ Works on any device</span>
-			<span>✅ English &amp; Persian</span>
+			<span>✅ Free during early access</span>
 		</div>
 	</div>
 
@@ -353,10 +355,18 @@
 						<p class="de">Sehr gut! Woher kommen Sie?</p>
 						<p class="tr">Very good! Where are you from?</p>
 					</div>
-					<div class="cmsg sent typing">
-						<span class="mic-dot">🎙️</span>
-						<span>Listening…</span>
-					</div>
+					{#if !showDelayedMsg}
+						<div class="cmsg sent typing">
+							<span class="mic-dot">🎙️</span>
+							<span>Listening…</span>
+						</div>
+					{:else}
+						<div class="cmsg sent delayed-appear">
+							<p class="de">Ich komme aus Wien.</p>
+							<p class="tr">I come from Vienna.</p>
+							<span class="tick">✓✓</span>
+						</div>
+					{/if}
 				</div>
 
 				<div class="cw-bar">
@@ -374,10 +384,11 @@
 <!--  STATS                                                   -->
 <!-- ════════════════════════════════════════════════════════ -->
 <section class="stats-strip">
+	<p class="stats-header">What's Inside</p>
 	<div class="stats-inner">
 		<div class="stat-item">
-			<span class="stat-num">60</span>
-			<span class="stat-lbl">Daily Lessons</span>
+			<span class="stat-num">{totalLessons || 90}+</span>
+			<span class="stat-lbl">Lessons</span>
 		</div>
 		<div class="stat-sep"></div>
 		<div class="stat-item">
@@ -398,16 +409,17 @@
 </section>
 
 <!-- ════════════════════════════════════════════════════════ -->
-<!--  HOW IT WORKS                                            -->
+<!--  METHOD + FEATURES (merged)                               -->
 <!-- ════════════════════════════════════════════════════════ -->
-<section class="lp-section dark-section">
+<section class="lp-section dark-section" id="method-section">
 	<div class="lp-inner">
 		<p class="eyebrow">The Method</p>
 		<h2 class="section-h2">
 			Built Around How <span class="grad-text">Humans Actually Learn</span>
 		</h2>
 		<p class="section-lead">
-			Forget memorising verb tables. Mirifer puts you in real conversations from day one.
+			Forget memorising verb tables. Mirifer puts you in real conversations from day one.<br />
+			<em class="diff-line">Unlike gamified apps, Mirifer focuses entirely on real conversation.</em>
 		</p>
 
 		<div class="steps-row">
@@ -441,21 +453,9 @@
 				</p>
 			</div>
 		</div>
-	</div>
-</section>
 
-<!-- ════════════════════════════════════════════════════════ -->
-<!--  FEATURES                                                -->
-<!-- ════════════════════════════════════════════════════════ -->
-<section class="lp-section">
-	<div class="lp-inner">
-		<p class="eyebrow">Features</p>
-		<h2 class="section-h2">
-			Everything to <span class="grad-text">Actually Speak German</span>
-		</h2>
-		<p class="section-lead">No gimmicks. Just the tools that actually build fluency.</p>
-
-		<div class="feat-grid">
+		<!-- Feature highlights -->
+		<div class="feat-grid" style="margin-top: 80px;">
 			<div class="feat-card">
 				<span class="feat-icon">💬</span>
 				<h3>Real-Life Scenarios</h3>
@@ -464,37 +464,19 @@
 					face in Germany.
 				</p>
 			</div>
-			<div class="feat-card featured">
-				<span class="feat-icon">🎙️</span>
-				<h3>Voice Recognition</h3>
-				<p>
-					Speak into your mic and get instant feedback on every word — know exactly what to fix
-					before moving on.
-				</p>
-				<span class="feat-badge">⭐ Core Feature</span>
-			</div>
-			<div class="feat-card">
-				<span class="feat-icon">📅</span>
-				<h3>60-Day Curriculum</h3>
-				<p>
-					From "Hallo" on day 1 to full conversations by day 60. Carefully structured A1 → B1+
-					progression.
-				</p>
-			</div>
-			<div class="feat-card">
-				<span class="feat-icon">🔁</span>
-				<h3>Spaced Repetition</h3>
-				<p>
-					The SM-2 algorithm used by the world's top learning apps — built directly into your daily
-					lesson flow.
-				</p>
-			</div>
 			<div class="feat-card">
 				<span class="feat-icon">📖</span>
 				<h3>Word-by-Word Meanings</h3>
 				<p>
 					Tap any word in a sentence to see its meaning instantly. Build vocabulary in context, not
 					in isolation.
+				</p>
+			</div>
+			<div class="feat-card">
+				<span class="feat-icon">📊</span>
+				<h3>Progress Tracking</h3>
+				<p>
+					See your streak, completed lessons, and review stats. Know exactly how far you've come and what's next.
 				</p>
 			</div>
 			<div class="feat-card">
@@ -510,80 +492,50 @@
 </section>
 
 <!-- ════════════════════════════════════════════════════════ -->
-<!--  THE 60-DAY JOURNEY                                      -->
+<!--  YOUR LEARNING PATH                                       -->
 <!-- ════════════════════════════════════════════════════════ -->
 <section class="lp-section dark-section">
 	<div class="lp-inner">
-		<div class="journey-layout">
-			<!-- Text side -->
-			<div class="journey-text">
-				<p class="eyebrow" style="text-align:left">The 60-Day Plan</p>
-				<h2 class="section-h2" style="text-align:left">
-					A Clear Path from <span class="grad-text">Zero to Fluent</span>
-				</h2>
-				<p class="section-lead" style="text-align:left;margin-left:0;max-width:100%">
-					No more wondering "what should I study today?" Each day has a theme, a scenario, and five
-					carefully crafted sentences that build on everything you've learned before.
-				</p>
+		<p class="eyebrow">Your Learning Path</p>
+		<h2 class="section-h2">
+			A Clear Path from <span class="grad-text">Zero to Fluent</span>
+		</h2>
+		<p class="section-lead">
+			No more wondering "what should I study today?" Each day has a theme, a scenario, and
+			carefully crafted sentences that build on everything before.
+		</p>
 
-				<ul class="journey-list">
-					<li>
-						<span class="j-dot green"></span>
-						<div>
-							<strong>Days 1–20 · A1</strong>
-							<span>Greetings, numbers, colours, essential daily phrases</span>
-						</div>
-					</li>
-					<li>
-						<span class="j-dot blue"></span>
-						<div>
-							<strong>Days 21–40 · A2</strong>
-							<span>Shopping, travel, work, and social situations</span>
-						</div>
-					</li>
-					<li>
-						<span class="j-dot purple"></span>
-						<div>
-							<strong>Days 41–60 · B1+</strong>
-							<span>Opinions, storytelling, and complex conversations</span>
-						</div>
-					</li>
-				</ul>
-
-				{#if isAuthenticated}
-					<a href="/home" class="cta-btn primary inline">Go to My Lessons →</a>
-				{:else}
-					<button class="cta-btn primary inline" onclick={openSignUp}
-						>Begin Day 1 — It's Free</button
-					>
-				{/if}
-			</div>
-
-			<!-- Progress card mockup -->
-			<div class="journey-visual">
-				<div class="progress-card">
-					<div class="pc-header">
-						<span class="pc-title">🗓️ Your 60-Day Journey</span>
-						<span class="pc-badge">Day 1</span>
-					</div>
-					<div class="pc-grid">
-						{#each { length: 60 } as _, i}
-							<div class="pc-day" class:active={i === 0}>{i === 0 ? '★' : i + 1}</div>
-						{/each}
-					</div>
-					<div class="pc-levels">
-						<span class="plvl a1">A1</span>
-						<span class="plvl a2">A2</span>
-						<span class="plvl b1">B1+</span>
-					</div>
-					<div class="pc-stats">
-						<div class="pc-stat"><strong>0/60</strong><span>Days Done</span></div>
-						<div class="pc-stat"><strong>0</strong><span>Words Learned</span></div>
-						<div class="pc-stat"><strong>0</strong><span>Day Streak 🔥</span></div>
-					</div>
+		<ul class="journey-list centered">
+			<li>
+				<span class="j-dot green"></span>
+				<div>
+					<strong>Days 1–{stageOneEnd || 30} · A1</strong>
+					<span>Greetings, numbers, colours, essential daily phrases</span>
 				</div>
-			</div>
-		</div>
+			</li>
+			<li>
+				<span class="j-dot blue"></span>
+				<div>
+					<strong>Days {(stageOneEnd || 30) + 1}–{stageTwoEnd || 60} · A2</strong>
+					<span>Shopping, travel, work, and social situations</span>
+				</div>
+			</li>
+			<li>
+				<span class="j-dot purple"></span>
+				<div>
+					<strong>Days {(stageTwoEnd || 60) + 1}–{stageThreeEnd || 90} · B1+</strong>
+					<span>Opinions, storytelling, and complex conversations</span>
+				</div>
+			</li>
+		</ul>
+
+		{#if isAuthenticated}
+			<a href="/home" class="cta-btn primary inline">Go to My Lessons &rarr;</a>
+		{:else}
+			<button class="cta-btn primary inline" onclick={openSignUp}
+				>Begin Day 1 — It's Free</button
+			>
+		{/if}
 	</div>
 </section>
 
@@ -616,7 +568,7 @@
 			<strong>Mirifer</strong>
 		</div>
 		<p>Learn German the Natural Way</p>
-		<p class="footer-sub">Made with ❤️ for language learners</p>
+		<p class="footer-sub">Free during early access &nbsp;·&nbsp; Made with ❤️ for language learners</p>
 	</div>
 </footer>
 
@@ -967,43 +919,6 @@
 		gap: 12px;
 	}
 
-	.nav-greeting {
-		color: #a0a0a0;
-		font-size: 0.9rem;
-	}
-
-	.nav-avatar-link {
-		text-decoration: none;
-	}
-
-	.nav-avatar {
-		width: 40px;
-		height: 40px;
-		border-radius: 50%;
-		background: linear-gradient(135deg, #e94560, #ff6b6b);
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		font-size: 1.1rem;
-		font-weight: 700;
-		border: 2px solid rgba(255, 255, 255, 0.18);
-		overflow: hidden;
-		cursor: pointer;
-		transition: transform 0.2s, box-shadow 0.2s;
-	}
-
-	.nav-avatar:hover {
-		transform: scale(1.08);
-		box-shadow: 0 0 0 3px rgba(233, 69, 96, 0.4);
-	}
-
-	.nav-avatar img {
-		width: 100%;
-		height: 100%;
-		object-fit: cover;
-		border-radius: 50%;
-	}
-
 	/* ── Hero ─────────────────────────────────────────── */
 	.hero {
 		min-height: 100vh;
@@ -1269,6 +1184,14 @@
 			typingPulse 1.6s ease-in-out infinite;
 	}
 
+	.cmsg.delayed-appear {
+		background: #dcf8c6;
+		align-self: flex-end;
+		border-bottom-right-radius: 3px;
+		box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+		animation: msgIn 0.5s ease both;
+	}
+
 	@keyframes typingPulse {
 		0%,
 		100% {
@@ -1375,6 +1298,16 @@
 		border-top: 1px solid rgba(255, 255, 255, 0.07);
 		border-bottom: 1px solid rgba(255, 255, 255, 0.07);
 		padding: 44px 20px;
+	}
+
+	.stats-header {
+		text-align: center;
+		font-size: 0.8rem;
+		font-weight: 800;
+		letter-spacing: 0.18em;
+		text-transform: uppercase;
+		color: #e94560;
+		margin: 0 0 24px;
 	}
 
 	.stats-inner {
@@ -1536,11 +1469,6 @@
 		opacity: 1;
 	}
 
-	.feat-card.featured {
-		border-color: rgba(233, 69, 96, 0.4);
-		background: rgba(233, 69, 96, 0.07);
-	}
-
 	.feat-icon {
 		display: block;
 		font-size: 2.2rem;
@@ -1560,33 +1488,13 @@
 		font-size: 0.9rem;
 	}
 
-	.feat-badge {
-		display: inline-block;
-		margin-top: 14px;
-		padding: 4px 12px;
-		background: rgba(233, 69, 96, 0.2);
-		color: #ffaabb;
-		border-radius: 20px;
-		font-size: 0.78rem;
-		font-weight: 700;
+	.diff-line {
+		font-style: italic;
+		color: #888;
+		font-size: 0.95rem;
 	}
 
 	/* ── Journey section ──────────────────────────────── */
-	.journey-layout {
-		display: grid;
-		grid-template-columns: 1fr 1fr;
-		gap: 80px;
-		align-items: center;
-		text-align: left;
-	}
-
-	.journey-text .section-lead {
-		text-align: left;
-		margin-left: 0;
-		max-width: 100%;
-		margin-bottom: 28px;
-	}
-
 	.journey-list {
 		list-style: none;
 		padding: 0;
@@ -1637,237 +1545,9 @@
 		font-size: 0.9rem;
 	}
 
-	/* ── Progress preview card ────────────────────────── */
-	.journey-visual {
-		display: flex;
-		justify-content: center;
-	}
-
-	.progress-card {
-		background: linear-gradient(145deg, rgba(255, 255, 255, 0.07), rgba(255, 255, 255, 0.03));
-		border: 1px solid rgba(255, 255, 255, 0.11);
-		border-radius: 24px;
-		padding: 28px;
-		width: 100%;
-		max-width: 370px;
-	}
-
-	.pc-header {
-		display: flex;
-		justify-content: space-between;
-		align-items: center;
-		margin-bottom: 22px;
-	}
-
-	.pc-title {
-		font-weight: 700;
-		color: #fff;
-		font-size: 0.93rem;
-	}
-
-	.pc-badge {
-		background: rgba(233, 69, 96, 0.2);
-		color: #ffaabb;
-		padding: 4px 12px;
-		border-radius: 20px;
-		font-size: 0.78rem;
-		font-weight: 700;
-	}
-
-	.pc-grid {
-		display: grid;
-		grid-template-columns: repeat(10, 1fr);
-		gap: 5px;
-		margin-bottom: 18px;
-	}
-
-	.pc-day {
-		aspect-ratio: 1;
-		border-radius: 6px;
-		background: rgba(255, 255, 255, 0.06);
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		font-size: 0.52rem;
-		color: #444;
-		font-weight: 600;
-		transition: all 0.2s;
-	}
-
-	.pc-day.active {
-		background: linear-gradient(135deg, #e94560, #ff6b6b);
-		color: #fff;
-		font-size: 0.68rem;
-		box-shadow: 0 4px 14px rgba(233, 69, 96, 0.45);
-	}
-
-	.pc-levels {
-		display: flex;
-		gap: 8px;
-		margin-bottom: 20px;
-	}
-
-	.plvl {
-		padding: 4px 12px;
-		border-radius: 20px;
-		font-size: 0.76rem;
-		font-weight: 700;
-	}
-
-	.plvl.a1 {
-		background: rgba(46, 204, 113, 0.2);
-		color: #2ecc71;
-	}
-
-	.plvl.a2 {
-		background: rgba(52, 152, 219, 0.2);
-		color: #3498db;
-	}
-
-	.plvl.b1 {
-		background: rgba(155, 89, 182, 0.2);
-		color: #9b59b6;
-	}
-
-	.pc-stats {
-		display: grid;
-		grid-template-columns: repeat(3, 1fr);
-		gap: 12px;
-		padding-top: 16px;
-		border-top: 1px solid rgba(255, 255, 255, 0.07);
-	}
-
-	.pc-stat {
-		text-align: center;
-	}
-
-	.pc-stat strong {
-		display: block;
-		font-size: 1.2rem;
-		color: #fff;
-		font-weight: 900;
-	}
-
-	.pc-stat span {
-		font-size: 0.7rem;
-		color: #555;
-	}
-
-	/* ── App section (nav cards) ──────────────────────── */
-	.app-section {
-		padding-top: 80px;
-	}
-
-	.lang-row {
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		gap: 14px;
-		margin: 28px 0 50px;
-	}
-
-	.lang-lbl {
-		color: #a0a0a0;
-		font-size: 0.95rem;
-	}
-
-	.lang-row select {
-		padding: 10px 22px;
-		border-radius: 25px;
-		border: 2px solid rgba(255, 255, 255, 0.14);
-		background: rgba(255, 255, 255, 0.07);
-		color: #fff;
-		font-size: 0.95rem;
-		font-weight: 600;
-		cursor: pointer;
-		transition: all 0.3s ease;
-		font-family: inherit;
-	}
-
-	.lang-row select:hover {
-		border-color: #e94560;
-		background: rgba(233, 69, 96, 0.12);
-	}
-
-	.lang-row select option {
-		background: #1a1a2e;
-	}
-
-	.nav-cards {
-		display: grid;
-		grid-template-columns: repeat(2, 1fr);
-		gap: 28px;
-		max-width: 800px;
-		margin: 0 auto;
-	}
-
-	.nav-card {
-		background: rgba(255, 255, 255, 0.05);
-		border: 1px solid rgba(255, 255, 255, 0.08);
-		border-radius: 24px;
-		padding: 44px 36px;
-		text-decoration: none;
-		color: #fff;
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		text-align: center;
-		position: relative;
-		overflow: hidden;
-		transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-	}
-
-	.nav-card.lessons {
-		background: linear-gradient(145deg, rgba(52, 152, 219, 0.15), rgba(52, 152, 219, 0.04));
-	}
-
-	.nav-card.basics {
-		background: linear-gradient(145deg, rgba(46, 204, 113, 0.15), rgba(46, 204, 113, 0.04));
-	}
-
-	.nav-card:hover {
-		transform: translateY(-12px) scale(1.02);
-	}
-
-	.nav-card.lessons:hover {
-		border-color: #3498db;
-		box-shadow: 0 24px 64px rgba(52, 152, 219, 0.3);
-	}
-
-	.nav-card.basics:hover {
-		border-color: #2ecc71;
-		box-shadow: 0 24px 64px rgba(46, 204, 113, 0.3);
-	}
-
-	.nc-icon {
-		font-size: 3.6rem;
-		margin-bottom: 18px;
-		filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.3));
-	}
-
-	.nav-card h3 {
-		font-size: 1.5rem;
-		font-weight: 800;
-		margin-bottom: 12px;
-	}
-
-	.nav-card p {
-		color: #a0a0a0;
-		line-height: 1.65;
-		font-size: 0.93rem;
-	}
-
-	.nc-arrow {
-		margin-top: 22px;
-		font-size: 1.5rem;
-		opacity: 0;
-		transform: translateX(-10px);
-		transition: all 0.3s ease;
-	}
-
-	.nav-card:hover .nc-arrow {
-		opacity: 1;
-		transform: translateX(0);
+	.journey-list.centered {
+		max-width: 480px;
+		margin: 0 auto 32px;
 	}
 
 	/* ── Final CTA box ────────────────────────────────── */
@@ -1979,23 +1659,6 @@
 			grid-template-columns: repeat(2, 1fr);
 		}
 
-		.journey-layout {
-			grid-template-columns: 1fr;
-			gap: 50px;
-			text-align: center;
-		}
-
-		.journey-text .section-h2,
-		.journey-text .section-lead {
-			text-align: center;
-			margin-left: auto;
-			margin-right: auto;
-		}
-
-		.journey-list li {
-			justify-content: center;
-		}
-
 		.steps-row {
 			flex-direction: column;
 			align-items: center;
@@ -2018,10 +1681,6 @@
 
 	@media (max-width: 640px) {
 		.feat-grid {
-			grid-template-columns: 1fr;
-		}
-
-		.nav-cards {
 			grid-template-columns: 1fr;
 		}
 
