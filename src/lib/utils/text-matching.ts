@@ -4,7 +4,7 @@
  */
 
 /** Minimum similarity (0–1) for two words to be considered a match. */
-const WORD_SIMILARITY_THRESHOLD = 0.75;
+const WORD_SIMILARITY_THRESHOLD = 0.8;
 
 /**
  * Compute Levenshtein-based similarity between two strings.

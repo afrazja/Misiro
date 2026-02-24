@@ -47,7 +47,18 @@ export function initSpeechRecognition(): boolean {
 	};
 
 	recognition.onresult = (event: any) => {
-		const transcript = event.results[0][0].transcript;
+		const result = event.results[0][0];
+		const transcript = result.transcript;
+		const confidence = result.confidence ?? 1;
+
+		// Reject very low-confidence results — the recognizer
+		// guessed a word but wasn't sure; treat as "didn't understand"
+		if (confidence < 0.5) {
+			console.warn('Voice rejected (low confidence):', transcript, confidence);
+			playTone('error');
+			return;
+		}
+
 		if (onVoiceInput) onVoiceInput(transcript);
 	};
 
