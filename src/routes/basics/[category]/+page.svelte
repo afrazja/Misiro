@@ -2,6 +2,10 @@
 	import { onMount, onDestroy } from "svelte";
 	import { getLanguage, setLanguage, getVoiceSpeed, setVoiceSpeed } from "$services/data-layer";
 	import { stopAllAudio, playAudioPromise } from "$services/tts";
+	import { initSpeechRecognition, setVoiceInputHandler, setMicStateChangeHandler, toggleMic, stopListening, destroySpeechRecognition } from '$services/speech';
+	import { matchVoiceInput } from '$utils/text-matching';
+	import { unlockAudioContext, playTone } from '$services/audio-context';
+	import { appStore } from '$stores/app';
 	import type { Language } from "$stores/preferences";
 	import type { BasicWord, ConjugationTense } from "$lib/types/basics";
 
@@ -17,6 +21,14 @@
 	let quizDeck = $state<BasicWord[]>([]);
 	let quizDone = $state(false);
 	let quizGotIt = $state(0);
+
+	// Voice state
+	let speechSupported = $state(false);
+	let voiceTranscript = $state('');
+	let voiceResult: { isMatch: boolean; matchPercentage: number } | null = $state(null);
+	let cardPhase = $state<'prompt' | 'recording' | 'result'>('prompt');
+
+	const app = $derived($appStore);
 
 	const category = $derived(data.category);
 	const words = $derived(data.words ?? []);
@@ -131,6 +143,9 @@
 		quizRevealed = false;
 		quizDone = false;
 		quizGotIt = 0;
+		cardPhase = 'prompt';
+		voiceResult = null;
+		voiceTranscript = '';
 		quizMode = true;
 	}
 
@@ -143,6 +158,9 @@
 
 	function quizAnswer(gotIt: boolean) {
 		if (gotIt) quizGotIt++;
+		voiceTranscript = '';
+		voiceResult = null;
+		cardPhase = 'prompt';
 		if (quizIndex < quizDeck.length - 1) {
 			quizIndex++;
 			quizRevealed = false;
@@ -152,7 +170,48 @@
 	}
 
 	function exitQuiz() {
+		stopListening();
 		quizMode = false;
+	}
+
+	// ── Voice functions ──
+	function handleQuizMicClick() {
+		unlockAudioContext();
+		if (cardPhase === 'prompt') {
+			cardPhase = 'recording';
+		}
+		toggleMic();
+	}
+
+	function handleQuizVoiceResult(transcript: string) {
+		voiceTranscript = transcript;
+		const card = quizDeck[quizIndex];
+		const result = matchVoiceInput(transcript, card.german);
+		voiceResult = result;
+		cardPhase = 'result';
+
+		if (result.isMatch) {
+			quizGotIt++;
+			playTone('success');
+			stopAllAudio();
+			playAudioPromise(card.german, 0.8, 'de-DE');
+			setTimeout(() => quizAnswer(false), 1800); // already counted above
+		} else {
+			playTone('error');
+			setTimeout(() => {
+				stopAllAudio();
+				playAudioPromise(card.german, 0.8, 'de-DE');
+			}, 400);
+		}
+	}
+
+	function showQuizAnswer() {
+		cardPhase = 'result';
+		voiceTranscript = '';
+		voiceResult = null;
+		const card = quizDeck[quizIndex];
+		stopAllAudio();
+		playAudioPromise(card.german, 0.8, 'de-DE');
 	}
 
 	const hasQuizWords = $derived(words.length > 0 || sections.some((s) => (s.words && s.words.length > 0) || (s.type === 'conjugation' && s.infinitive)));
@@ -170,10 +229,16 @@
 		if (savedSpeed !== null && !isNaN(savedSpeed)) {
 			voiceSpeed = savedSpeed;
 		}
+
+		speechSupported = initSpeechRecognition();
+		setVoiceInputHandler(handleQuizVoiceResult);
+		setMicStateChangeHandler(() => {});
 	});
 
 	onDestroy(() => {
 		if (typeof window !== 'undefined') stopAllAudio();
+		stopListening();
+		destroySpeechRecognition();
 	});
 </script>
 
@@ -198,7 +263,7 @@
 				<button class="practice-btn" onclick={startQuiz}>Practice</button>
 			{/if}
 			<select aria-label="Select language" value={currentLang} onchange={handleLanguageChange}>
-				<option value="fa">\u0641\u0627\u0631\u0633\u06CC</option>
+				<option value="fa">{'\u0641\u0627\u0631\u0633\u06CC'}</option>
 				<option value="en">English</option>
 			</select>
 			<select aria-label="Select voice speed" value={voiceSpeed.toString()} onchange={handleSpeedChange}>
@@ -237,30 +302,67 @@
 					</div>
 				</div>
 			{:else}
-				<button
-					class="quiz-card"
-					class:revealed={quizRevealed}
-					onclick={revealQuiz}
-				>
-					<span class="quiz-word">{quizDeck[quizIndex].german}</span>
-					{#if quizRevealed}
+				<div class="quiz-card" class:result={cardPhase === 'result'}>
+					{#if cardPhase === 'result'}
+						<span class="quiz-word">{quizDeck[quizIndex].german}</span>
 						<span class="quiz-divider"></span>
 						<span class="quiz-meaning">{getWordTranslation(quizDeck[quizIndex])}</span>
-					{:else}
-						<span class="quiz-hint">Tap to reveal</span>
-					{/if}
-				</button>
 
-				{#if quizRevealed}
-					<div class="quiz-buttons">
-						<button class="quiz-btn still-learning" onclick={() => quizAnswer(false)}>
-							Still learning
+						{#if voiceResult}
+							<div class="voice-feedback" class:correct={voiceResult.isMatch} class:wrong={!voiceResult.isMatch}>
+								<span class="vf-icon">{voiceResult.isMatch ? '✅' : '❌'}</span>
+								<span class="vf-label">{voiceResult.isMatch ? 'Correct!' : 'Not quite'}</span>
+								{#if voiceTranscript}
+									<span class="vf-transcript">You said: "{voiceTranscript}"</span>
+								{/if}
+							</div>
+						{:else}
+							<div class="voice-feedback skipped">
+								<span class="vf-icon">👁️</span>
+								<span class="vf-label">Answer revealed</span>
+							</div>
+						{/if}
+					{:else}
+						<span class="quiz-meaning-prompt">{getWordTranslation(quizDeck[quizIndex])}</span>
+						<span class="quiz-hint">
+							{cardPhase === 'recording' ? 'Listening...' : 'Say the German word'}
+						</span>
+					{/if}
+				</div>
+
+				<div class="quiz-buttons">
+					{#if cardPhase === 'result'}
+						{#if voiceResult?.isMatch}
+							<button class="quiz-btn got-it" onclick={() => quizAnswer(false)}>
+								Continue →
+							</button>
+						{:else if voiceResult}
+							<button class="quiz-btn still-learning" onclick={() => quizAnswer(false)}>
+								Next →
+							</button>
+						{:else}
+							<button class="quiz-btn still-learning" onclick={() => quizAnswer(false)}>
+								Still learning
+							</button>
+							<button class="quiz-btn got-it" onclick={() => quizAnswer(true)}>
+								I knew it
+							</button>
+						{/if}
+					{:else}
+						{#if speechSupported}
+							<button
+								class="quiz-mic-btn"
+								class:pulse={app.isListening}
+								onclick={handleQuizMicClick}
+							>
+								🎙️
+							</button>
+						{/if}
+						<button class="quiz-skip-btn" onclick={showQuizAnswer}>
+							Show Answer
 						</button>
-						<button class="quiz-btn got-it" onclick={() => quizAnswer(true)}>
-							Got it!
-						</button>
-					</div>
-				{/if}
+					{/if}
+				</div>
 
 				<div class="quiz-progress-bar">
 					<div class="quiz-progress-fill" style="width: {(quizIndex / quizDeck.length) * 100}%"></div>
@@ -922,14 +1024,11 @@
 		justify-content: center;
 		gap: 16px;
 		padding: 32px 24px;
-		cursor: pointer;
 		transition: all 0.3s ease;
 		color: inherit;
 	}
 
-	.quiz-card:hover { border-color: rgba(155, 89, 182, 0.3); }
-
-	.quiz-card.revealed {
+	.quiz-card.result {
 		border-color: rgba(155, 89, 182, 0.4);
 		background: rgba(155, 89, 182, 0.06);
 	}
@@ -939,6 +1038,14 @@
 		font-weight: 900;
 		color: #fff;
 		text-align: center;
+	}
+
+	.quiz-meaning-prompt {
+		font-size: 1.6rem;
+		font-weight: 800;
+		color: #bb86fc;
+		text-align: center;
+		line-height: 1.3;
 	}
 
 	.quiz-hint {
@@ -959,12 +1066,56 @@
 		text-align: center;
 	}
 
+	/* Voice feedback */
+	.voice-feedback {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 6px;
+		margin-top: 8px;
+		padding: 12px 20px;
+		border-radius: 12px;
+		font-size: 0.9rem;
+	}
+
+	.voice-feedback.correct {
+		background: rgba(46, 204, 113, 0.12);
+		border: 1px solid rgba(46, 204, 113, 0.3);
+	}
+
+	.voice-feedback.wrong {
+		background: rgba(231, 76, 60, 0.12);
+		border: 1px solid rgba(231, 76, 60, 0.3);
+	}
+
+	.voice-feedback.skipped {
+		background: rgba(255, 255, 255, 0.06);
+		border: 1px solid rgba(255, 255, 255, 0.12);
+	}
+
+	.vf-icon {
+		font-size: 1.4rem;
+	}
+
+	.vf-label {
+		font-weight: 700;
+		color: rgba(255, 255, 255, 0.85);
+	}
+
+	.vf-transcript {
+		font-size: 0.8rem;
+		color: rgba(255, 255, 255, 0.45);
+		font-style: italic;
+	}
+
 	.quiz-buttons {
 		display: flex;
 		gap: 16px;
 		width: 100%;
 		max-width: 420px;
 		margin-top: 24px;
+		align-items: center;
+		justify-content: center;
 	}
 
 	.quiz-btn {
@@ -990,6 +1141,53 @@
 		background: rgba(46, 204, 113, 0.15);
 		color: #2ecc71;
 		border: 1px solid rgba(46, 204, 113, 0.3);
+	}
+
+	/* Mic button */
+	.quiz-mic-btn {
+		width: 64px;
+		height: 64px;
+		border-radius: 50%;
+		border: 2px solid rgba(46, 204, 113, 0.4);
+		background: rgba(46, 204, 113, 0.12);
+		font-size: 1.6rem;
+		cursor: pointer;
+		transition: all 0.2s;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		flex-shrink: 0;
+	}
+
+	.quiz-mic-btn:hover {
+		background: rgba(46, 204, 113, 0.2);
+		border-color: rgba(46, 204, 113, 0.6);
+	}
+
+	.quiz-mic-btn.pulse {
+		border-color: #e94560;
+		background: rgba(233, 69, 96, 0.15);
+		animation: mic-pulse 1.2s ease-in-out infinite;
+	}
+
+	@keyframes mic-pulse {
+		0%, 100% { box-shadow: 0 0 0 0 rgba(233, 69, 96, 0.3); }
+		50% { box-shadow: 0 0 0 12px rgba(233, 69, 96, 0); }
+	}
+
+	.quiz-skip-btn {
+		background: none;
+		border: none;
+		color: rgba(255, 255, 255, 0.4);
+		font-size: 0.85rem;
+		font-weight: 600;
+		cursor: pointer;
+		padding: 8px 16px;
+		transition: color 0.2s;
+	}
+
+	.quiz-skip-btn:hover {
+		color: rgba(255, 255, 255, 0.7);
 	}
 
 	.quiz-progress-bar {

@@ -1,10 +1,16 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
+	import { onMount, onDestroy } from 'svelte';
 	import { goto } from '$app/navigation';
 	import { preferencesStore } from '$stores/preferences';
 	import type { Language } from '$stores/preferences';
 	import { getVocabulary, removeWord, updateWordKnown, getLanguage } from '$services/data-layer';
 	import type { SavedWord } from '$services/data-layer';
+	import { initSpeechRecognition, setVoiceInputHandler, setMicStateChangeHandler, toggleMic, stopListening, destroySpeechRecognition } from '$services/speech';
+	import type { MicState } from '$services/speech';
+	import { matchVoiceInput } from '$utils/text-matching';
+	import { unlockAudioContext, playTone } from '$services/audio-context';
+	import { stopAllAudio, playAudioPromise } from '$services/tts';
+	import { appStore } from '$stores/app';
 
 	// ── State ──
 	let language = $state<Language>('en');
@@ -16,12 +22,19 @@
 
 	// Flashcard state
 	let flashcardIndex = $state(0);
-	let flashcardRevealed = $state(false);
 	let flashcardDeck = $state<SavedWord[]>([]);
 	let flashcardDone = $state(false);
+	let correctCount = $state(0);
+
+	// Voice state
+	let speechSupported = $state(false);
+	let voiceTranscript = $state('');
+	let voiceResult: { isMatch: boolean; matchPercentage: number } | null = $state(null);
+	let cardPhase = $state<'prompt' | 'recording' | 'result'>('prompt');
 
 	// Derived
 	const prefs = $derived($preferencesStore);
+	const app = $derived($appStore);
 
 	const filteredWords = $derived.by(() => {
 		let result = words;
@@ -55,12 +68,21 @@
 		language = (await getLanguage()) || 'en';
 		preferencesStore.update((s) => ({ ...s, language }));
 
+		speechSupported = initSpeechRecognition();
+		setVoiceInputHandler(handleVoiceResult);
+		setMicStateChangeHandler(() => {});
+
 		try {
 			words = await getVocabulary();
 		} catch {
 			words = [];
 		}
 		loading = false;
+	});
+
+	onDestroy(() => {
+		stopListening();
+		destroySpeechRecognition();
 	});
 
 	// ── Helpers ──
@@ -81,13 +103,15 @@
 
 	// ── Flashcard ──
 	function startFlashcards() {
-		// Shuffle: unknown first, then known
 		const unknown = words.filter((w) => !w.known);
 		const known = words.filter((w) => w.known);
 		flashcardDeck = shuffle([...unknown]).concat(shuffle([...known]));
 		flashcardIndex = 0;
-		flashcardRevealed = false;
 		flashcardDone = false;
+		correctCount = 0;
+		cardPhase = 'prompt';
+		voiceResult = null;
+		voiceTranscript = '';
 		mode = 'flashcard';
 	}
 
@@ -99,27 +123,69 @@
 		return arr;
 	}
 
-	function revealCard() {
-		flashcardRevealed = true;
+	function handleMicClick() {
+		unlockAudioContext();
+		if (cardPhase === 'prompt') {
+			cardPhase = 'recording';
+		}
+		toggleMic();
 	}
 
-	async function markCard(known: boolean) {
+	function handleVoiceResult(transcript: string) {
+		voiceTranscript = transcript;
+		const card = flashcardDeck[flashcardIndex];
+		const result = matchVoiceInput(transcript, card.word);
+		voiceResult = result;
+		cardPhase = 'result';
+
+		if (result.isMatch) {
+			correctCount++;
+			playTone('success');
+			// Play the correct pronunciation
+			stopAllAudio();
+			playAudioPromise(card.word, 0.8, 'de-DE');
+			// Auto-advance after delay
+			setTimeout(() => advanceCard(true), 1800);
+		} else {
+			playTone('error');
+			// Play the correct pronunciation so user hears it
+			setTimeout(() => {
+				stopAllAudio();
+				playAudioPromise(card.word, 0.8, 'de-DE');
+			}, 400);
+		}
+	}
+
+	function showAnswer() {
+		cardPhase = 'result';
+		voiceTranscript = '';
+		voiceResult = null;
+		// Play the word
+		const card = flashcardDeck[flashcardIndex];
+		stopAllAudio();
+		playAudioPromise(card.word, 0.8, 'de-DE');
+	}
+
+	async function advanceCard(known: boolean) {
 		const card = flashcardDeck[flashcardIndex];
 		if (card.known !== known) {
 			words = words.map((w) => (w.word === card.word ? { ...w, known } : w));
 			flashcardDeck[flashcardIndex] = { ...card, known };
 			await updateWordKnown(card.word, known);
 		}
-		// Next card
+		// Reset and next
+		voiceTranscript = '';
+		voiceResult = null;
+		cardPhase = 'prompt';
 		if (flashcardIndex < flashcardDeck.length - 1) {
 			flashcardIndex++;
-			flashcardRevealed = false;
 		} else {
 			flashcardDone = true;
 		}
 	}
 
 	function exitFlashcards() {
+		stopListening();
 		mode = 'list';
 	}
 </script>
@@ -250,32 +316,69 @@
 				</div>
 			</div>
 		{:else}
-			<!-- ── Flashcard ── -->
+			<!-- ── Voice Flashcard ── -->
 			<div class="flashcard-area">
-				<button
-					class="flashcard"
-					class:revealed={flashcardRevealed}
-					onclick={revealCard}
-				>
-					<span class="flashcard-word">{flashcardDeck[flashcardIndex].word}</span>
-					{#if flashcardRevealed}
+				<div class="flashcard" class:result={cardPhase === 'result'}>
+					{#if cardPhase === 'result'}
+						<span class="flashcard-word">{flashcardDeck[flashcardIndex].word}</span>
 						<span class="flashcard-divider"></span>
 						<span class="flashcard-meaning">{getMeaning(flashcardDeck[flashcardIndex])}</span>
-					{:else}
-						<span class="flashcard-hint">Tap to reveal</span>
-					{/if}
-				</button>
 
-				{#if flashcardRevealed}
-					<div class="flashcard-buttons">
-						<button class="fc-btn learning-btn" onclick={() => markCard(false)}>
-							Still learning
+						{#if voiceResult}
+							<div class="voice-feedback" class:correct={voiceResult.isMatch} class:wrong={!voiceResult.isMatch}>
+								<span class="vf-icon">{voiceResult.isMatch ? '✅' : '❌'}</span>
+								<span class="vf-label">{voiceResult.isMatch ? 'Correct!' : 'Not quite'}</span>
+								{#if voiceTranscript}
+									<span class="vf-transcript">You said: "{voiceTranscript}"</span>
+								{/if}
+							</div>
+						{:else}
+							<div class="voice-feedback skipped">
+								<span class="vf-icon">👁️</span>
+								<span class="vf-label">Answer revealed</span>
+							</div>
+						{/if}
+					{:else}
+						<span class="flashcard-meaning-prompt">{getMeaning(flashcardDeck[flashcardIndex])}</span>
+						<span class="flashcard-hint">
+							{cardPhase === 'recording' ? 'Listening...' : 'Say the German word'}
+						</span>
+					{/if}
+				</div>
+
+				<div class="flashcard-buttons">
+					{#if cardPhase === 'result'}
+						{#if voiceResult?.isMatch}
+							<button class="fc-btn known-btn-fc" onclick={() => advanceCard(true)}>
+								Continue →
+							</button>
+						{:else if voiceResult}
+							<button class="fc-btn learning-btn" onclick={() => advanceCard(false)}>
+								Next →
+							</button>
+						{:else}
+							<button class="fc-btn learning-btn" onclick={() => advanceCard(false)}>
+								Still learning
+							</button>
+							<button class="fc-btn known-btn-fc" onclick={() => advanceCard(true)}>
+								I knew it
+							</button>
+						{/if}
+					{:else}
+						{#if speechSupported}
+							<button
+								class="fc-mic-btn"
+								class:pulse={app.isListening}
+								onclick={handleMicClick}
+							>
+								🎙️
+							</button>
+						{/if}
+						<button class="fc-skip-btn" onclick={showAnswer}>
+							Show Answer
 						</button>
-						<button class="fc-btn known-btn-fc" onclick={() => markCard(true)}>
-							I know this
-						</button>
-					</div>
-				{/if}
+					{/if}
+				</div>
 			</div>
 
 			<!-- Progress bar -->
@@ -568,7 +671,7 @@
 		flex-direction: column;
 		align-items: center;
 		justify-content: center;
-		gap: 32px;
+		gap: 28px;
 		padding: 24px 0;
 	}
 
@@ -584,16 +687,11 @@
 		justify-content: center;
 		gap: 16px;
 		padding: 32px 24px;
-		cursor: pointer;
 		transition: all 0.3s ease;
 		color: inherit;
 	}
 
-	.flashcard:hover {
-		border-color: rgba(155, 89, 182, 0.3);
-	}
-
-	.flashcard.revealed {
+	.flashcard.result {
 		border-color: rgba(155, 89, 182, 0.4);
 		background: rgba(155, 89, 182, 0.06);
 	}
@@ -603,6 +701,14 @@
 		font-weight: 900;
 		color: #fff;
 		text-align: center;
+	}
+
+	.flashcard-meaning-prompt {
+		font-size: 1.6rem;
+		font-weight: 800;
+		color: #bb86fc;
+		text-align: center;
+		line-height: 1.3;
 	}
 
 	.flashcard-hint {
@@ -623,10 +729,55 @@
 		text-align: center;
 	}
 
+	/* Voice feedback */
+	.voice-feedback {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 6px;
+		margin-top: 8px;
+		padding: 12px 20px;
+		border-radius: 12px;
+		font-size: 0.9rem;
+	}
+
+	.voice-feedback.correct {
+		background: rgba(46, 204, 113, 0.12);
+		border: 1px solid rgba(46, 204, 113, 0.3);
+	}
+
+	.voice-feedback.wrong {
+		background: rgba(231, 76, 60, 0.12);
+		border: 1px solid rgba(231, 76, 60, 0.3);
+	}
+
+	.voice-feedback.skipped {
+		background: rgba(255, 255, 255, 0.06);
+		border: 1px solid rgba(255, 255, 255, 0.12);
+	}
+
+	.vf-icon {
+		font-size: 1.4rem;
+	}
+
+	.vf-label {
+		font-weight: 700;
+		color: rgba(255, 255, 255, 0.85);
+	}
+
+	.vf-transcript {
+		font-size: 0.8rem;
+		color: rgba(255, 255, 255, 0.45);
+		font-style: italic;
+	}
+
+	/* Action buttons */
 	.flashcard-buttons {
 		display: flex;
 		gap: 16px;
 		width: 100%;
+		align-items: center;
+		justify-content: center;
 	}
 
 	.fc-btn {
@@ -654,6 +805,53 @@
 		background: rgba(46, 204, 113, 0.15);
 		color: #2ecc71;
 		border: 1px solid rgba(46, 204, 113, 0.3);
+	}
+
+	/* Mic button */
+	.fc-mic-btn {
+		width: 64px;
+		height: 64px;
+		border-radius: 50%;
+		border: 2px solid rgba(46, 204, 113, 0.4);
+		background: rgba(46, 204, 113, 0.12);
+		font-size: 1.6rem;
+		cursor: pointer;
+		transition: all 0.2s;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		flex-shrink: 0;
+	}
+
+	.fc-mic-btn:hover {
+		background: rgba(46, 204, 113, 0.2);
+		border-color: rgba(46, 204, 113, 0.6);
+	}
+
+	.fc-mic-btn.pulse {
+		border-color: #e94560;
+		background: rgba(233, 69, 96, 0.15);
+		animation: mic-pulse 1.2s ease-in-out infinite;
+	}
+
+	@keyframes mic-pulse {
+		0%, 100% { box-shadow: 0 0 0 0 rgba(233, 69, 96, 0.3); }
+		50% { box-shadow: 0 0 0 12px rgba(233, 69, 96, 0); }
+	}
+
+	.fc-skip-btn {
+		background: none;
+		border: none;
+		color: rgba(255, 255, 255, 0.4);
+		font-size: 0.85rem;
+		font-weight: 600;
+		cursor: pointer;
+		padding: 8px 16px;
+		transition: color 0.2s;
+	}
+
+	.fc-skip-btn:hover {
+		color: rgba(255, 255, 255, 0.7);
 	}
 
 	/* ── Progress Bar ── */
