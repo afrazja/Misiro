@@ -105,7 +105,8 @@ export const GET: RequestHandler = async ({ params, url, request }) => {
 		if (contentType.includes('javascript')) {
 			const text = await upstream.text();
 			const rewritten = rewriteBody(text, origin);
-			headers.set('cache-control', 'public, max-age=3600, s-maxage=3600');
+			// Short cache to allow quick updates; increase once stable
+			headers.set('cache-control', 'public, max-age=60, s-maxage=60');
 			return new Response(rewritten, { status: upstream.status, headers });
 		}
 
