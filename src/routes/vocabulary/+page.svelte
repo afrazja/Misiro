@@ -169,6 +169,13 @@
 		playAudioPromise(card.word, 0.8, 'de-DE');
 	}
 
+	function retryCard() {
+		voiceTranscript = '';
+		voiceResult = null;
+		cardPhase = 'prompt';
+		wrongFlash = false;
+	}
+
 	async function advanceCard(known: boolean) {
 		const card = flashcardDeck[flashcardIndex];
 		if (card.known !== known) {
@@ -357,6 +364,9 @@
 								Continue →
 							</button>
 						{:else if voiceResult}
+							<button class="fc-btn retry-btn" onclick={retryCard}>
+								Retry 🎙️
+							</button>
 							<button class="fc-btn learning-btn" onclick={() => advanceCard(false)}>
 								Next →
 							</button>
@@ -816,6 +826,12 @@
 		background: rgba(231, 76, 60, 0.15);
 		color: #e74c3c;
 		border: 1px solid rgba(231, 76, 60, 0.3);
+	}
+
+	.retry-btn {
+		background: rgba(243, 156, 18, 0.15);
+		color: #f39c12;
+		border: 1px solid rgba(243, 156, 18, 0.4);
 	}
 
 	.known-btn-fc {

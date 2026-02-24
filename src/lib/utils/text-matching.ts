@@ -67,6 +67,25 @@ export function matchVoiceInput(
 	const targetWords = cleanTarget.split(/\s+/);
 	const userWords = cleanUser.split(/\s+/);
 
+	// ── Single-word targets (flashcards): stricter full-string comparison ──
+	if (targetWords.length === 1) {
+		const fullSimilarity = levenshteinSimilarity(cleanUser, cleanTarget);
+		const bestWordSimilarity = Math.max(
+			...userWords.map((uw) => levenshteinSimilarity(uw, targetWords[0]))
+		);
+		const bestScore = Math.max(fullSimilarity, bestWordSimilarity);
+
+		return {
+			isMatch: bestScore >= threshold,
+			matchPercentage: bestScore,
+			matchedWords: bestScore >= WORD_SIMILARITY_THRESHOLD ? 1 : 0,
+			totalWords: 1,
+			userWords,
+			targetWords
+		};
+	}
+
+	// ── Multi-word targets (sentences): word-by-word matching ──
 	let matchedWords = 0;
 	targetWords.forEach((targetWord) => {
 		if (userWords.some((userWord) => isWordMatch(userWord, targetWord))) {

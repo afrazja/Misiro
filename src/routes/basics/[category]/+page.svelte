@@ -218,6 +218,13 @@
 		playAudioPromise(card.german, 0.8, 'de-DE');
 	}
 
+	function retryQuizCard() {
+		voiceTranscript = '';
+		voiceResult = null;
+		cardPhase = 'prompt';
+		wrongFlash = false;
+	}
+
 	const hasQuizWords = $derived(words.length > 0 || sections.some((s) => (s.words && s.words.length > 0) || (s.type === 'conjugation' && s.infinitive)));
 
 	onMount(async () => {
@@ -343,6 +350,9 @@
 								Continue →
 							</button>
 						{:else if voiceResult}
+							<button class="quiz-btn retry-btn" onclick={retryQuizCard}>
+								Retry 🎙️
+							</button>
 							<button class="quiz-btn still-learning" onclick={() => quizAnswer(false)}>
 								Next →
 							</button>
@@ -1155,6 +1165,12 @@
 		background: rgba(231, 76, 60, 0.15);
 		color: #e74c3c;
 		border: 1px solid rgba(231, 76, 60, 0.3);
+	}
+
+	.quiz-btn.retry-btn {
+		background: rgba(243, 156, 18, 0.15);
+		color: #f39c12;
+		border: 1px solid rgba(243, 156, 18, 0.4);
 	}
 
 	.quiz-btn.got-it {
