@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1a1a2e"/>
+      <stop offset="55%" style="stop-color:#16213e"/>
+      <stop offset="100%" style="stop-color:#0f3460"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#e94560"/>
+      <stop offset="100%" style="stop-color:#ff6b6b"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="630" fill="url(#bg)"/>
+
+  <!-- Decorative circles -->
+  <circle cx="1050" cy="80" r="200" fill="#e94560" opacity="0.08"/>
+  <circle cx="150" cy="550" r="160" fill="#3498db" opacity="0.08"/>
+  <circle cx="600" cy="600" r="120" fill="#2ecc71" opacity="0.06"/>
+
+  <!-- Globe emoji placeholder -->
+  <text x="100" y="260" font-size="72" font-family="Arial, sans-serif">🌍</text>
+
+  <!-- Brand -->
+  <text x="190" y="258" font-size="56" font-weight="900" fill="url(#accent)" font-family="Arial, Helvetica, sans-serif">Mirifer</text>
+
+  <!-- Tagline -->
+  <text x="100" y="340" font-size="48" font-weight="800" fill="#ffffff" font-family="Arial, Helvetica, sans-serif">Learn German Online</text>
+  <text x="100" y="400" font-size="48" font-weight="800" fill="url(#accent)" font-family="Arial, Helvetica, sans-serif">Through Real Conversations</text>
+
+  <!-- Sub-features -->
+  <text x="100" y="475" font-size="24" fill="#a0a0a0" font-family="Arial, Helvetica, sans-serif">🎙️ Voice Practice  ·  🔄 Spaced Repetition  ·  📖 90+ Daily Lessons</text>
+
+  <!-- CTA badge -->
+  <rect x="100" y="510" width="220" height="48" rx="24" fill="url(#accent)" opacity="0.9"/>
+  <text x="140" y="542" font-size="18" font-weight="700" fill="#ffffff" font-family="Arial, Helvetica, sans-serif">Start Free Today</text>
+
+  <!-- Bottom accent line -->
+  <rect x="0" y="620" width="1200" height="10" fill="url(#accent)"/>
+</svg>

@@ -179,11 +179,76 @@
 <svelte:window onkeydown={handleKeydown} onscroll={handleScroll} />
 
 <svelte:head>
-	<title>Mirifer – Learn German the Natural Way</title>
+	<title>Learn German Online Free – Voice Practice & Daily Lessons | Mirifer</title>
 	<meta
 		name="description"
-		content="Master German through real conversations. Voice recognition, spaced repetition, and 60 progressive lessons — built for English and Persian speakers."
+		content="Learn German free with 90+ daily lessons, native audio, and voice practice. No grammar drills — just real conversations. Start today, no credit card needed."
 	/>
+	<link rel="canonical" href="https://www.mirifer.com/" />
+
+	<!-- Open Graph -->
+	<meta property="og:title" content="Mirifer – Learn German Through Real Conversations" />
+	<meta property="og:description" content="Master German with voice recognition, spaced repetition, and 90+ real-life daily lessons. Free to start — no grammar drills." />
+	<meta property="og:image" content="https://www.mirifer.com/og-image.jpg" />
+	<meta property="og:url" content="https://www.mirifer.com/" />
+	<meta property="og:type" content="website" />
+	<meta property="og:site_name" content="Mirifer" />
+
+	<!-- Twitter Card -->
+	<meta name="twitter:card" content="summary_large_image" />
+	<meta name="twitter:title" content="Mirifer – Learn German Through Real Conversations" />
+	<meta name="twitter:description" content="90+ daily lessons. Voice practice. Spaced repetition. Free access." />
+	<meta name="twitter:image" content="https://www.mirifer.com/og-image.jpg" />
+
+	<!-- Structured Data -->
+	{@html `<script type="application/ld+json">${JSON.stringify({
+		"@context": "https://schema.org",
+		"@type": "SoftwareApplication",
+		"name": "Mirifer",
+		"applicationCategory": "EducationApplication",
+		"description": "Learn German through real-life conversations with voice recognition and spaced repetition.",
+		"operatingSystem": "Web",
+		"offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+		"url": "https://www.mirifer.com"
+	})}</script>`}
+	{@html `<script type="application/ld+json">${JSON.stringify({
+		"@context": "https://schema.org",
+		"@type": "FAQPage",
+		"mainEntity": [
+			{
+				"@type": "Question",
+				"name": "How long does it take to learn German with Mirifer?",
+				"acceptedAnswer": {
+					"@type": "Answer",
+					"text": "Mirifer's 90+ lessons take you from complete beginner (A1) to intermediate (B1+). Spending 15–20 minutes a day, most learners complete the full path in about 3 months. Because every lesson uses real conversations, you'll start speaking from day one."
+				}
+			},
+			{
+				"@type": "Question",
+				"name": "Can I learn German for free?",
+				"acceptedAnswer": {
+					"@type": "Answer",
+					"text": "Yes. Mirifer is completely free during early access — no credit card, no trial period, no hidden fees. You get full access to all 90+ lessons, voice practice, and spaced repetition flashcards."
+				}
+			},
+			{
+				"@type": "Question",
+				"name": "How is Mirifer different from Duolingo?",
+				"acceptedAnswer": {
+					"@type": "Answer",
+					"text": "While Duolingo uses gamified drills with isolated words, Mirifer teaches through real-life conversations. Every lesson is a scenario you'd actually face in Germany — ordering food, asking for directions, making small talk. Mirifer also includes voice recognition for pronunciation practice and word-level feedback."
+				}
+			},
+			{
+				"@type": "Question",
+				"name": "What level of German does Mirifer teach?",
+				"acceptedAnswer": {
+					"@type": "Answer",
+					"text": "Mirifer covers A1 (complete beginner) through B1+ (intermediate). You'll progress from basic greetings and numbers through shopping and travel scenarios to complex conversations and expressing opinions."
+				}
+			}
+		]
+	})}</script>`}
 </svelte:head>
 
 <!-- ── Email Confirmation Toast ─────────────────────────── -->
@@ -302,8 +367,8 @@
 	<div class="hero-content">
 		<div class="hero-badge">🇩🇪 &nbsp;German Made for Real Life</div>
 		<h1 class="hero-h1">
-			Learn German the Way<br />
-			<span class="grad-text">You'd Learn It on the Street</span>
+			Learn German Online —<br />
+			<span class="grad-text">The Way You'd Learn It on the Street</span>
 		</h1>
 		<p class="hero-sub">
 			Speak German from day one — not after months of grammar drills.
@@ -492,6 +557,121 @@
 </section>
 
 <!-- ════════════════════════════════════════════════════════ -->
+<!--  WHY LEARN GERMAN                                         -->
+<!-- ════════════════════════════════════════════════════════ -->
+<section class="lp-section">
+	<div class="lp-inner">
+		<p class="eyebrow">Why German?</p>
+		<h2 class="section-h2">
+			Why Learn German <span class="grad-text">in 2025?</span>
+		</h2>
+		<p class="section-lead">
+			German is the most spoken native language in Europe and opens doors to careers, culture, and travel across Germany, Austria, and Switzerland.
+		</p>
+
+		<div class="reasons-grid">
+			<div class="reason-card">
+				<span class="reason-icon">💼</span>
+				<h3>Career Opportunities</h3>
+				<p>Germany has Europe's largest economy. Speaking German gives you access to top employers like Siemens, BMW, SAP, and thousands of companies actively hiring international talent.</p>
+			</div>
+			<div class="reason-card">
+				<span class="reason-icon">🎓</span>
+				<h3>Free University Education</h3>
+				<p>Most German public universities charge zero tuition — even for international students. Learning German unlocks access to world-class education without the debt.</p>
+			</div>
+			<div class="reason-card">
+				<span class="reason-icon">🌍</span>
+				<h3>100+ Million Speakers</h3>
+				<p>German is spoken natively by over 100 million people across Europe. It's an official language in Germany, Austria, Switzerland, Luxembourg, Belgium, and Liechtenstein.</p>
+			</div>
+			<div class="reason-card">
+				<span class="reason-icon">🏠</span>
+				<h3>Life in Germany</h3>
+				<p>Moving to Germany for work or study? Daily life — from finding an apartment to visiting the doctor — becomes dramatically easier when you speak the language.</p>
+			</div>
+		</div>
+	</div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════ -->
+<!--  WHO IS MIRIFER FOR                                       -->
+<!-- ════════════════════════════════════════════════════════ -->
+<section class="lp-section dark-section">
+	<div class="lp-inner">
+		<p class="eyebrow">Who It's For</p>
+		<h2 class="section-h2">
+			Built for People Who <span class="grad-text">Actually Want to Speak</span>
+		</h2>
+		<p class="section-lead">
+			Mirifer is designed for anyone who wants to have real German conversations — not just pass grammar quizzes.
+		</p>
+
+		<div class="audience-grid">
+			<div class="audience-card">
+				<span class="audience-emoji">🔰</span>
+				<h3>Complete Beginners</h3>
+				<p>Never spoken a word of German? Start from zero with day-one basics — greetings, numbers, and simple phrases you'll use immediately.</p>
+			</div>
+			<div class="audience-card">
+				<span class="audience-emoji">✈️</span>
+				<h3>Travellers to Germany</h3>
+				<p>Planning a trip to Berlin, Munich, or Vienna? Learn exactly the phrases you'll need — ordering food, asking directions, and making small talk.</p>
+			</div>
+			<div class="audience-card">
+				<span class="audience-emoji">🏢</span>
+				<h3>Expats &amp; New Residents</h3>
+				<p>Moving to a German-speaking country? Master daily situations like finding an apartment, opening a bank account, and navigating bureaucracy.</p>
+			</div>
+			<div class="audience-card">
+				<span class="audience-emoji">🇮🇷</span>
+				<h3>Persian Speakers</h3>
+				<p>Mirifer is one of the few German learning apps with full Persian (فارسی) translation support. Switch between English and Persian anytime.</p>
+			</div>
+		</div>
+	</div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════ -->
+<!--  FAQ                                                      -->
+<!-- ════════════════════════════════════════════════════════ -->
+<section class="lp-section">
+	<div class="lp-inner">
+		<p class="eyebrow">Common Questions</p>
+		<h2 class="section-h2">
+			Frequently Asked <span class="grad-text">Questions</span>
+		</h2>
+
+		<div class="faq-list">
+			<details class="faq-item">
+				<summary>How long does it take to learn German with Mirifer?</summary>
+				<p>Mirifer's 90+ lessons take you from complete beginner (A1) to intermediate (B1+). Spending 15–20 minutes a day, most learners complete the full path in about 3 months. Because every lesson uses real conversations, you'll start speaking from day one.</p>
+			</details>
+			<details class="faq-item">
+				<summary>Can I learn German for free?</summary>
+				<p>Yes! Mirifer is completely free during early access — no credit card, no trial period, no hidden fees. You get full access to all 90+ lessons, voice practice, and spaced repetition flashcards.</p>
+			</details>
+			<details class="faq-item">
+				<summary>How is Mirifer different from Duolingo?</summary>
+				<p>While Duolingo uses gamified drills with isolated words, Mirifer teaches through real-life conversations. Every lesson is a scenario you'd actually face in Germany — ordering food, asking for directions, making small talk. Mirifer also includes voice recognition so you practise speaking out loud, with word-level pronunciation feedback.</p>
+			</details>
+			<details class="faq-item">
+				<summary>What level of German does Mirifer teach?</summary>
+				<p>Mirifer covers A1 (complete beginner) through B1+ (intermediate). You'll progress from basic greetings and numbers through shopping and travel scenarios to complex conversations and expressing opinions.</p>
+			</details>
+			<details class="faq-item">
+				<summary>Do I need a microphone?</summary>
+				<p>A microphone helps you practise speaking, but it's not required. You can complete all lessons without voice input — though we highly recommend using it to build pronunciation confidence from the start.</p>
+			</details>
+			<details class="faq-item">
+				<summary>What's the best app to learn German as a beginner?</summary>
+				<p>The best app depends on your goal. If you want to speak German in real situations — not just translate isolated words — Mirifer is built exactly for that. It combines conversation-based lessons, voice practice, and spaced repetition to build speaking skills from day one.</p>
+			</details>
+		</div>
+	</div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════ -->
 <!--  FINAL CTA  (only for guests)                            -->
 <!-- ════════════════════════════════════════════════════════ -->
 {#if !isAuthenticated}
@@ -519,7 +699,7 @@
 			<span>🌍</span>
 			<strong>Mirifer</strong>
 		</div>
-		<p>Learn German the Natural Way</p>
+		<p>Learn German Through Real Conversations</p>
 		<p class="footer-sub">Free during early access &nbsp;·&nbsp; Made with ❤️ for language learners</p>
 	</div>
 </footer>
@@ -1369,6 +1549,148 @@
 		font-size: 0.82rem !important;
 	}
 
+	/* ── Why Learn German grid ───────────────────────── */
+	.reasons-grid {
+		display: grid;
+		grid-template-columns: repeat(2, 1fr);
+		gap: 22px;
+		margin-top: 48px;
+		text-align: left;
+	}
+
+	.reason-card {
+		background: rgba(255, 255, 255, 0.04);
+		border: 1px solid rgba(255, 255, 255, 0.08);
+		border-radius: 20px;
+		padding: 30px 26px;
+		transition: all 0.35s ease;
+	}
+
+	.reason-card:hover {
+		transform: translateY(-6px);
+		border-color: rgba(233, 69, 96, 0.3);
+		box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+	}
+
+	.reason-icon {
+		display: block;
+		font-size: 2rem;
+		margin-bottom: 14px;
+	}
+
+	.reason-card h3 {
+		font-size: 1.08rem;
+		font-weight: 700;
+		color: #fff;
+		margin-bottom: 10px;
+	}
+
+	.reason-card p {
+		color: #a0a0a0;
+		line-height: 1.65;
+		font-size: 0.9rem;
+	}
+
+	/* ── Who is Mirifer for grid ─────────────────────── */
+	.audience-grid {
+		display: grid;
+		grid-template-columns: repeat(2, 1fr);
+		gap: 22px;
+		margin-top: 48px;
+		text-align: left;
+	}
+
+	.audience-card {
+		background: rgba(255, 255, 255, 0.045);
+		border: 1px solid rgba(255, 255, 255, 0.08);
+		border-radius: 20px;
+		padding: 30px 26px;
+		transition: all 0.35s ease;
+	}
+
+	.audience-card:hover {
+		transform: translateY(-6px);
+		border-color: rgba(52, 152, 219, 0.35);
+		box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+	}
+
+	.audience-emoji {
+		display: block;
+		font-size: 2rem;
+		margin-bottom: 14px;
+	}
+
+	.audience-card h3 {
+		font-size: 1.08rem;
+		font-weight: 700;
+		color: #fff;
+		margin-bottom: 10px;
+	}
+
+	.audience-card p {
+		color: #a0a0a0;
+		line-height: 1.65;
+		font-size: 0.9rem;
+	}
+
+	/* ── FAQ ──────────────────────────────────────────── */
+	.faq-list {
+		max-width: 720px;
+		margin: 48px auto 0;
+		text-align: left;
+	}
+
+	.faq-item {
+		background: rgba(255, 255, 255, 0.04);
+		border: 1px solid rgba(255, 255, 255, 0.08);
+		border-radius: 16px;
+		margin-bottom: 12px;
+		overflow: hidden;
+		transition: border-color 0.3s;
+	}
+
+	.faq-item[open] {
+		border-color: rgba(233, 69, 96, 0.3);
+	}
+
+	.faq-item summary {
+		padding: 20px 24px;
+		font-size: 1.02rem;
+		font-weight: 600;
+		color: #fff;
+		cursor: pointer;
+		list-style: none;
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 16px;
+	}
+
+	.faq-item summary::-webkit-details-marker {
+		display: none;
+	}
+
+	.faq-item summary::after {
+		content: '+';
+		font-size: 1.3rem;
+		font-weight: 300;
+		color: #e94560;
+		flex-shrink: 0;
+		transition: transform 0.3s;
+	}
+
+	.faq-item[open] summary::after {
+		transform: rotate(45deg);
+	}
+
+	.faq-item p {
+		padding: 0 24px 20px;
+		color: #a0a0a0;
+		line-height: 1.7;
+		font-size: 0.94rem;
+		margin: 0;
+	}
+
 	/* ── Responsive ───────────────────────────────────── */
 	@media (max-width: 960px) {
 		.hero {
@@ -1415,7 +1737,9 @@
 	}
 
 	@media (max-width: 640px) {
-		.feat-grid {
+		.feat-grid,
+		.reasons-grid,
+		.audience-grid {
 			grid-template-columns: 1fr;
 		}
 
