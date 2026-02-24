@@ -401,7 +401,7 @@
 <!--  STATS                                                   -->
 <!-- ════════════════════════════════════════════════════════ -->
 <section class="stats-strip">
-	<p class="stats-header">What's Inside</p>
+	<h2 class="stats-header">What's Inside Mirifer</h2>
 	<div class="stats-inner">
 		<div class="stat-item">
 			<span class="stat-num">{totalLessons || 90}+</span>
@@ -432,7 +432,7 @@
 	<div class="lp-inner">
 		<p class="eyebrow">The Method</p>
 		<h2 class="section-h2">
-			Built Around How <span class="grad-text">Humans Actually Learn</span>
+			How Mirifer <span class="grad-text">Teaches You German</span>
 		</h2>
 		<p class="section-lead">
 			Forget memorising verb tables. Mirifer puts you in real conversations from day one.<br />
@@ -515,7 +515,7 @@
 	<div class="lp-inner">
 		<p class="eyebrow">Your Learning Path</p>
 		<h2 class="section-h2">
-			A Clear Path from <span class="grad-text">Zero to Fluent</span>
+			Your 90-Day Path from <span class="grad-text">Zero to Fluent</span>
 		</h2>
 		<p class="section-lead">
 			No more wondering "what should I study today?" Each day has a theme, a scenario, and
@@ -635,7 +635,7 @@
 <!-- ════════════════════════════════════════════════════════ -->
 <!--  FAQ                                                      -->
 <!-- ════════════════════════════════════════════════════════ -->
-<section class="lp-section">
+<section class="lp-section" id="faq-section">
 	<div class="lp-inner">
 		<p class="eyebrow">Common Questions</p>
 		<h2 class="section-h2">
@@ -700,6 +700,14 @@
 			<strong>Mirifer</strong>
 		</div>
 		<p>Learn German Through Real Conversations</p>
+
+		<nav class="footer-nav" aria-label="Footer navigation">
+			<a href="#method-section">How It Works</a>
+			<a href="#faq-section">FAQ</a>
+			<a href="/privacy">Privacy Policy</a>
+			<a href="/terms">Terms of Service</a>
+		</nav>
+
 		<p class="footer-sub">Free during early access &nbsp;·&nbsp; Made with ❤️ for language learners</p>
 	</div>
 </footer>
@@ -1223,6 +1231,7 @@
 		text-transform: uppercase;
 		color: #e94560;
 		margin: 0 0 24px;
+		line-height: 1;
 	}
 
 	.stats-inner {
@@ -1543,6 +1552,25 @@
 		color: #555;
 		font-size: 0.9rem;
 		margin-bottom: 6px;
+	}
+
+	.footer-nav {
+		display: flex;
+		justify-content: center;
+		flex-wrap: wrap;
+		gap: 8px 24px;
+		margin: 18px 0 14px;
+	}
+
+	.footer-nav a {
+		color: #777;
+		text-decoration: none;
+		font-size: 0.85rem;
+		transition: color 0.2s;
+	}
+
+	.footer-nav a:hover {
+		color: #e94560;
 	}
 
 	.footer-sub {

@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+Disallow: /home
+Disallow: /lesson/
+Disallow: /vocabulary
+Disallow: /basics/
+Disallow: /onboarding
+
+Sitemap: https://www.mirifer.com/sitemap.xml
