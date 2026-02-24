@@ -1489,10 +1489,9 @@
 	}
 
 	.script-item.active {
-		background: rgba(46, 204, 113, 0.18);
-		border-left-color: #2ecc71;
+		background: #2ecc71;
+		border-left-color: #27ae60;
 		border-left-width: 4px;
-		box-shadow: 0 0 0 1px rgba(46, 204, 113, 0.35);
 	}
 
 	.script-item.done {
