@@ -249,10 +249,8 @@
 		setVoiceSpeed(val);
 	}
 
-	function handleBlindModeChange(e: Event) {
-		const checked = (e.target as HTMLInputElement).checked;
-		blindModeActive = checked;
-		preferencesStore.update((s) => ({ ...s, blindMode: checked }));
+	function handleBlindModeChange() {
+		preferencesStore.update((s) => ({ ...s, blindMode: blindModeActive }));
 	}
 
 	function handleSpeakerClick() {
@@ -378,7 +376,7 @@
 		</div>
 
 		<div class="blind-mode-control">
-			<input type="checkbox" id="blind-mode-toggle" checked={blindModeActive} onchange={handleBlindModeChange}>
+			<input type="checkbox" id="blind-mode-toggle" bind:checked={blindModeActive} onchange={handleBlindModeChange}>
 			<label for="blind-mode-toggle">🙈 Blind Mode</label>
 		</div>
 
