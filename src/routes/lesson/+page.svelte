@@ -298,6 +298,28 @@
 			.then(() => { isSpeaking = false; });
 	}
 
+	async function handleListenerToggle() {
+		listenerMode = !listenerMode;
+		// If turning ON while a sentence is already shown and audio has finished,
+		// immediately start the listener sequence for the current sentence.
+		if (!listenerMode || !currentTeachStep || isSpeaking || exam.isExamMode) return;
+		const mySeq = _listenerSeq;
+		// Normal-speed play
+		isSpeaking = true;
+		await playAudioPromise(currentTeachStep.germanText, 0.8, 'de-DE');
+		isSpeaking = false;
+		await new Promise<void>((r) => setTimeout(r, 600));
+		if (_listenerSeq !== mySeq || !listenerMode) return;
+		// Slow play (0.75x)
+		stopAllAudio();
+		isSpeaking = true;
+		await playAudioPromise(currentTeachStep.germanText, 0.6, 'de-DE');
+		isSpeaking = false;
+		await new Promise<void>((r) => setTimeout(r, 600));
+		if (_listenerSeq !== mySeq || !listenerMode) return;
+		manualNext();
+	}
+
 	function handleScriptItemClick(index: number) {
 		jumpToSentence(index);
 		showScript = false; // close mobile drawer after selecting a sentence
@@ -432,7 +454,7 @@
 		<button
 			class="listener-mode-btn"
 			class:active={listenerMode}
-			onclick={() => { listenerMode = !listenerMode; }}
+			onclick={handleListenerToggle}
 			title={listenerMode ? "Listener Mode ON — click to disable" : "Enable Listener Mode"}
 		>
 			🎧 {listenerMode ? "Listener ON" : "Listener"}
