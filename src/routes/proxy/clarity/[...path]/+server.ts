@@ -99,18 +99,28 @@ async function proxyRequest(
 	const fullUrl = qs ? `${upstreamUrl}${qs}` : upstreamUrl;
 
 	try {
+		// Build upstream headers - forward all relevant client headers
+		const upstreamHeaders: Record<string, string> = {};
+		const forwardHeaders = [
+			'user-agent', 'referer', 'origin', 'content-type',
+			'accept', 'accept-encoding', 'accept-language',
+		];
+		for (const h of forwardHeaders) {
+			const v = request.headers.get(h);
+			if (v) upstreamHeaders[h] = v;
+		}
+
 		const fetchOptions: RequestInit = {
 			method,
-			headers: {
-				'User-Agent': request.headers.get('user-agent') || '',
-				'Referer': request.headers.get('referer') || '',
-			},
+			headers: upstreamHeaders,
 		};
 
 		if (method === 'POST') {
 			fetchOptions.body = await request.arrayBuffer();
-			(fetchOptions.headers as Record<string, string>)['Content-Type'] =
-				request.headers.get('content-type') || 'application/octet-stream';
+			// Ensure content-type is set for POSTs
+			if (!upstreamHeaders['content-type']) {
+				upstreamHeaders['content-type'] = 'application/octet-stream';
+			}
 		}
 
 		const upstream = await fetch(fullUrl, fetchOptions);
