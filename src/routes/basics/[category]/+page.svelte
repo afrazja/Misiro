@@ -249,6 +249,7 @@
 <a href="#content-container" class="skip-link">Skip to content</a>
 
 <div class="category-container">
+	{#if !quizMode}
 	<header class="category-header">
 		<a href="/basics" class="back-btn">&larr; {backText}</a>
 		<div class="header-title">
@@ -274,6 +275,7 @@
 			</select>
 		</div>
 	</header>
+	{/if}
 
 	{#if quizMode}
 		<!-- ══════ FLASHCARD QUIZ MODE ══════ -->
