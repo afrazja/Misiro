@@ -33,9 +33,6 @@
 	let stageTwoEnd = $derived(Math.round((totalLessons * 2) / 3));
 	let stageThreeEnd = $derived(totalLessons);
 
-	// Phone mockup delayed message animation
-	let showDelayedMsg = $state(false);
-
 	// Refs for focus trap
 	let modalEl: HTMLDivElement | undefined = $state();
 	let emailInput: HTMLInputElement | undefined = $state();
@@ -176,8 +173,6 @@
 		await getLessonIndex();
 		totalLessons = getTotalLessons();
 
-		// Trigger delayed message animation in phone mockup
-		setTimeout(() => { showDelayedMsg = true; }, 2000);
 	});
 </script>
 
@@ -328,54 +323,11 @@
 		</div>
 	</div>
 
-	<!-- Chat preview mockup -->
+	<!-- App preview mockup -->
 	<div class="hero-visual">
 		<div class="phone-frame">
 			<div class="phone-notch"></div>
-			<div class="chat-window">
-				<div class="cw-header">
-					<div class="cw-avatar">🇩🇪</div>
-					<div class="cw-meta">
-						<span class="cw-name">German Tutor</span>
-						<span class="cw-online">● online</span>
-					</div>
-				</div>
-
-				<div class="cw-messages">
-					<div class="cmsg received">
-						<p class="de">Wie heißen Sie?</p>
-						<p class="tr">What is your name?</p>
-					</div>
-					<div class="cmsg sent">
-						<p class="de">Ich heiße Sara.</p>
-						<p class="tr">My name is Sara.</p>
-						<span class="tick">✓✓</span>
-					</div>
-					<div class="cmsg received">
-						<p class="de">Sehr gut! Woher kommen Sie?</p>
-						<p class="tr">Very good! Where are you from?</p>
-					</div>
-					{#if !showDelayedMsg}
-						<div class="cmsg sent typing">
-							<span class="mic-dot">🎙️</span>
-							<span>Listening…</span>
-						</div>
-					{:else}
-						<div class="cmsg sent delayed-appear">
-							<p class="de">Ich komme aus Wien.</p>
-							<p class="tr">I come from Vienna.</p>
-							<span class="tick">✓✓</span>
-						</div>
-					{/if}
-				</div>
-
-				<div class="cw-bar">
-					<div class="cw-mic-btn">🎙️</div>
-					<div class="cw-wave">
-						<span></span><span></span><span></span><span></span><span></span>
-					</div>
-				</div>
-			</div>
+			<img src="/phone-preview.jpg" alt="Mirifer lesson interface" class="phone-screenshot" />
 		</div>
 	</div>
 </section>
@@ -1069,227 +1021,10 @@
 		margin: 0 auto;
 	}
 
-	.chat-window {
-		display: flex;
-		flex-direction: column;
-		height: 480px;
-	}
-
-	.cw-header {
-		background: #075e54;
-		padding: 10px 14px;
-		display: flex;
-		align-items: center;
-		gap: 10px;
-	}
-
-	.cw-avatar {
-		width: 36px;
-		height: 36px;
-		border-radius: 50%;
-		background: rgba(255, 255, 255, 0.15);
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		font-size: 1.2rem;
-	}
-
-	.cw-name {
-		font-size: 0.92rem;
-		font-weight: 700;
-		color: #fff;
+	.phone-screenshot {
+		width: 100%;
 		display: block;
-	}
-
-	.cw-online {
-		font-size: 0.72rem;
-		color: rgba(255, 255, 255, 0.55);
-	}
-
-	.cw-messages {
-		flex: 1;
-		background: #e5ddd5;
-		padding: 14px 12px;
-		display: flex;
-		flex-direction: column;
-		gap: 10px;
-		overflow: hidden;
-	}
-
-	.cmsg {
-		max-width: 88%;
-		padding: 9px 12px;
-		border-radius: 12px;
-		position: relative;
-	}
-
-	.cmsg.received {
-		background: #fff;
-		align-self: flex-start;
-		border-bottom-left-radius: 3px;
-		box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
-		animation: msgIn 0.4s ease both;
-	}
-
-	.cmsg.sent {
-		background: #dcf8c6;
-		align-self: flex-end;
-		border-bottom-right-radius: 3px;
-		box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
-		animation: msgIn 0.4s 0.15s ease both;
-	}
-
-	@keyframes msgIn {
-		from {
-			opacity: 0;
-			transform: translateY(6px) scale(0.97);
-		}
-		to {
-			opacity: 1;
-			transform: none;
-		}
-	}
-
-	.cmsg .de {
-		font-size: 0.88rem;
-		font-weight: 700;
-		color: #1a1a2e;
-		margin: 0 0 3px;
-	}
-
-	.cmsg .tr {
-		font-size: 0.73rem;
-		color: #888;
-		margin: 0;
-	}
-
-	.tick {
-		font-size: 0.68rem;
-		color: #4caf50;
-		float: right;
-		margin-top: 3px;
-	}
-
-	.cmsg.typing {
-		background: #dcf8c6;
-		align-self: flex-end;
-		border-bottom-right-radius: 3px;
-		display: flex;
-		align-items: center;
-		gap: 8px;
-		font-size: 0.83rem;
-		color: #555;
-		animation:
-			msgIn 0.4s 0.3s ease both,
-			typingPulse 1.6s ease-in-out infinite;
-	}
-
-	.cmsg.delayed-appear {
-		background: #dcf8c6;
-		align-self: flex-end;
-		border-bottom-right-radius: 3px;
-		box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
-		animation: msgIn 0.5s ease both;
-	}
-
-	@keyframes typingPulse {
-		0%,
-		100% {
-			opacity: 1;
-		}
-		50% {
-			opacity: 0.55;
-		}
-	}
-
-	.mic-dot {
-		animation: micBounce 0.8s ease-in-out infinite alternate;
-	}
-
-	@keyframes micBounce {
-		from {
-			transform: scale(1);
-		}
-		to {
-			transform: scale(1.25);
-		}
-	}
-
-	.cw-bar {
-		background: #f0f0f0;
-		padding: 10px 12px;
-		display: flex;
-		align-items: center;
-		gap: 10px;
-	}
-
-	.cw-mic-btn {
-		width: 36px;
-		height: 36px;
-		border-radius: 50%;
-		background: linear-gradient(135deg, #e94560, #ff6b6b);
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		font-size: 1rem;
-		flex-shrink: 0;
-		animation: micPulse 1.8s ease-in-out infinite;
-	}
-
-	@keyframes micPulse {
-		0%,
-		100% {
-			box-shadow: 0 0 0 0 rgba(233, 69, 96, 0.45);
-		}
-		50% {
-			box-shadow: 0 0 0 9px rgba(233, 69, 96, 0);
-		}
-	}
-
-	.cw-wave {
-		display: flex;
-		align-items: center;
-		gap: 4px;
-		flex: 1;
-	}
-
-	.cw-wave span {
-		display: block;
-		width: 4px;
-		background: #e94560;
-		border-radius: 2px;
-		animation: waveBar 1.3s ease-in-out infinite;
-	}
-
-	.cw-wave span:nth-child(1) {
-		height: 8px;
-		animation-delay: 0s;
-	}
-	.cw-wave span:nth-child(2) {
-		height: 20px;
-		animation-delay: 0.1s;
-	}
-	.cw-wave span:nth-child(3) {
-		height: 30px;
-		animation-delay: 0.2s;
-	}
-	.cw-wave span:nth-child(4) {
-		height: 20px;
-		animation-delay: 0.3s;
-	}
-	.cw-wave span:nth-child(5) {
-		height: 8px;
-		animation-delay: 0.4s;
-	}
-
-	@keyframes waveBar {
-		0%,
-		100% {
-			transform: scaleY(0.45);
-		}
-		50% {
-			transform: scaleY(1);
-		}
+		border-radius: 0 0 32px 32px;
 	}
 
 	/* ── Stats strip ──────────────────────────────────── */
@@ -1702,9 +1437,6 @@
 			width: 270px;
 		}
 
-		.chat-window {
-			height: 420px;
-		}
 
 		.navbar-right .btn-primary {
 			display: none;
