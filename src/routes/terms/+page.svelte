@@ -50,7 +50,7 @@
 		<p>We may update these terms as Mirifer evolves. Continued use of the Service after changes constitutes acceptance of the updated terms.</p>
 
 		<h2>11. Contact</h2>
-		<p>Questions? Reach us at <strong>support@mirifer.com</strong>.</p>
+		<p>Questions? Reach us at <strong>afraz.jva@gmail.com</strong>.</p>
 	</article>
 </div>
 

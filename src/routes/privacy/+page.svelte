@@ -43,7 +43,7 @@
 		<p>We may update this policy as Mirifer evolves. Significant changes will be communicated through the app.</p>
 
 		<h2>9. Contact</h2>
-		<p>Questions about your privacy? Reach us at <strong>privacy@mirifer.com</strong>.</p>
+		<p>Questions about your privacy? Reach us at <strong>afraz.jva@gmail.com</strong>.</p>
 	</article>
 </div>
 
