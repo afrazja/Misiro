@@ -27,6 +27,7 @@
 	let voiceTranscript = $state('');
 	let voiceResult: { isMatch: boolean; matchPercentage: number } | null = $state(null);
 	let cardPhase = $state<'prompt' | 'recording' | 'result'>('prompt');
+	let wrongFlash = $state(false);
 
 	const app = $derived($appStore);
 
@@ -161,6 +162,7 @@
 		voiceTranscript = '';
 		voiceResult = null;
 		cardPhase = 'prompt';
+		wrongFlash = false;
 		if (quizIndex < quizDeck.length - 1) {
 			quizIndex++;
 			quizRevealed = false;
@@ -198,6 +200,8 @@
 			setTimeout(() => quizAnswer(false), 1800); // already counted above
 		} else {
 			playTone('error');
+			wrongFlash = true;
+			setTimeout(() => { wrongFlash = false; }, 1000);
 			setTimeout(() => {
 				stopAllAudio();
 				playAudioPromise(card.german, 0.8, 'de-DE');
@@ -304,7 +308,7 @@
 					</div>
 				</div>
 			{:else}
-				<div class="quiz-card" class:result={cardPhase === 'result'}>
+				<div class="quiz-card" class:result={cardPhase === 'result'} class:wrong-flash={wrongFlash}>
 					{#if cardPhase === 'result'}
 						<span class="quiz-word">{quizDeck[quizIndex].german}</span>
 						<span class="quiz-divider"></span>
@@ -1033,6 +1037,16 @@
 	.quiz-card.result {
 		border-color: rgba(155, 89, 182, 0.4);
 		background: rgba(155, 89, 182, 0.06);
+	}
+
+	.quiz-card.wrong-flash {
+		animation: flash-red 1s ease;
+	}
+
+	@keyframes flash-red {
+		0% { border-color: #e74c3c; box-shadow: 0 0 20px rgba(231, 76, 60, 0.5); }
+		50% { border-color: #e74c3c; box-shadow: 0 0 30px rgba(231, 76, 60, 0.3); }
+		100% { border-color: rgba(155, 89, 182, 0.4); box-shadow: none; }
 	}
 
 	.quiz-word {

@@ -31,6 +31,7 @@
 	let voiceTranscript = $state('');
 	let voiceResult: { isMatch: boolean; matchPercentage: number } | null = $state(null);
 	let cardPhase = $state<'prompt' | 'recording' | 'result'>('prompt');
+	let wrongFlash = $state(false);
 
 	// Derived
 	const prefs = $derived($preferencesStore);
@@ -148,6 +149,8 @@
 			setTimeout(() => advanceCard(true), 1800);
 		} else {
 			playTone('error');
+			wrongFlash = true;
+			setTimeout(() => { wrongFlash = false; }, 1000);
 			// Play the correct pronunciation so user hears it
 			setTimeout(() => {
 				stopAllAudio();
@@ -177,6 +180,7 @@
 		voiceTranscript = '';
 		voiceResult = null;
 		cardPhase = 'prompt';
+		wrongFlash = false;
 		if (flashcardIndex < flashcardDeck.length - 1) {
 			flashcardIndex++;
 		} else {
@@ -318,7 +322,7 @@
 		{:else}
 			<!-- ── Voice Flashcard ── -->
 			<div class="flashcard-area">
-				<div class="flashcard" class:result={cardPhase === 'result'}>
+				<div class="flashcard" class:result={cardPhase === 'result'} class:wrong-flash={wrongFlash}>
 					{#if cardPhase === 'result'}
 						<span class="flashcard-word">{flashcardDeck[flashcardIndex].word}</span>
 						<span class="flashcard-divider"></span>
@@ -694,6 +698,16 @@
 	.flashcard.result {
 		border-color: rgba(155, 89, 182, 0.4);
 		background: rgba(155, 89, 182, 0.06);
+	}
+
+	.flashcard.wrong-flash {
+		animation: flash-red 1s ease;
+	}
+
+	@keyframes flash-red {
+		0% { border-color: #e74c3c; box-shadow: 0 0 20px rgba(231, 76, 60, 0.5); }
+		50% { border-color: #e74c3c; box-shadow: 0 0 30px rgba(231, 76, 60, 0.3); }
+		100% { border-color: rgba(155, 89, 182, 0.4); box-shadow: none; }
 	}
 
 	.flashcard-word {
