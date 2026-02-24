@@ -1489,7 +1489,7 @@
 	}
 
 	.script-item.active {
-		background: rgba(46, 204, 113, 0.38);
+		background: rgba(46, 204, 113, 0.65);
 		border-left-color: #2ecc71;
 		border-left-width: 4px;
 		box-shadow: 0 0 0 1px rgba(46, 204, 113, 0.6);
