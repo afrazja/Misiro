@@ -8,6 +8,7 @@
 	import * as dataLayer from '$services/data-layer';
 	import { getDueCount } from '$services/spaced-repetition';
 	import { initSyncListeners } from '$services/sync-queue';
+	import { getLessonIndex } from '$services/lesson-loader';
 
 	// Auth modal state
 	let showAuthModal = $state(false);
@@ -34,6 +35,7 @@
 	let currentDay = $state(1);
 	let streakCount = $state(0);
 	let dueReviews = $state(0);
+	let totalLessons = $state(0);
 	let completedLessons = $state<Record<number, { completedAt: number; sentenceCount: number }>>({});
 
 	// Calendar flashcard
@@ -44,16 +46,19 @@
 	let emailInput: HTMLInputElement | undefined = $state();
 
 	// Derived: current level label + progress %
-	const currentLevel = $derived(
-		currentDay <= 20 ? 'A1' : currentDay <= 40 ? 'A2' : 'B1+'
-	);
+	const currentLevel = $derived.by(() => {
+		const third = Math.ceil(totalLessons / 3) || 20;
+		return currentDay <= third ? 'A1' : currentDay <= third * 2 ? 'A2' : 'B1+';
+	});
 
-	const progressPercent = $derived(Math.round((daysCompleted / 60) * 100));
+	const progressPercent = $derived(totalLessons > 0 ? Math.round((daysCompleted / totalLessons) * 100) : 0);
 
 	const levelPercent = $derived(() => {
-		if (currentDay <= 20) return Math.round((Math.min(daysCompleted, 20) / 20) * 100);
-		if (currentDay <= 40) return Math.round(((Math.min(daysCompleted, 40) - 20) / 20) * 100);
-		return Math.round(((Math.min(daysCompleted, 60) - 40) / 20) * 100);
+		const third = Math.ceil(totalLessons / 3);
+		const t2 = third * 2;
+		if (currentDay <= third) return Math.round((Math.min(daysCompleted, third) / third) * 100);
+		if (currentDay <= t2) return Math.round(((Math.min(daysCompleted, t2) - third) / third) * 100);
+		return Math.round(((Math.min(daysCompleted, totalLessons) - t2) / third) * 100);
 	});
 
 	// ── Practice Calendar ──────────────────────────────
@@ -159,6 +164,10 @@
 
 		const progress = await dataLayer.getProgress();
 		currentDay = progress?.currentDay ?? 1;
+
+		// Fetch actual lesson count from database
+		const index = await getLessonIndex();
+		totalLessons = index.length;
 
 		try {
 			dueReviews = await getDueCount();
@@ -512,10 +521,10 @@
 			<h2>{content.lessonsTitle}</h2>
 			<p>{content.lessonsDesc}</p>
 			{#if isAuthenticated}
-				{#if daysCompleted >= 60}
-					<div class="card-meta done">🎉 All 60 days complete!</div>
+				{#if totalLessons > 0 && daysCompleted >= totalLessons}
+					<div class="card-meta done">🎉 All {totalLessons} days complete!</div>
 				{:else if daysCompleted > 0}
-					<div class="card-meta">Next: Day {daysCompleted + 1} of 60</div>
+					<div class="card-meta">Next: Day {daysCompleted + 1} of {totalLessons}</div>
 				{:else}
 					<div class="card-meta">Start Day 1 →</div>
 				{/if}
