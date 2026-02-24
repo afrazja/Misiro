@@ -42,23 +42,40 @@ function rewriteBody(body: string, origin: string): string {
  * Parse the proxy path and build the upstream URL.
  * Expected format: s/{subdomain}/{rest...}
  */
+// Allowed Clarity subdomains for security
+const ALLOWED_SUBDOMAINS = new Set([
+	'www', 'scripts', 'o', 'c', 'e',
+	'a', 'b', 'd', 'f', 'g', 'h', 'i', 'j', 'k', 'l',
+	'm', 'n', 'p', 'q', 'r', 't', 'u', 'v', 'w', 'x', 'y', 'z'
+]);
+
+/**
+ * Parse the proxy path and build the upstream URL.
+ * Primary format:   s/{subdomain}/{rest...}
+ * Legacy fallbacks:  tag/...  → www.clarity.ms
+ *                    scripts/... → scripts.clarity.ms
+ *                    collect/... → o.clarity.ms
+ *                    c/...       → c.clarity.ms
+ */
 function buildUpstreamUrl(path: string): string | null {
 	const segments = path.split('/');
 
-	if (segments[0] !== 's' || segments.length < 3) {
-		return null;
+	// New format: /proxy/clarity/s/{subdomain}/{rest}
+	if (segments[0] === 's' && segments.length >= 3) {
+		const subdomain = segments[1];
+		const rest = segments.slice(2).join('/');
+		if (!ALLOWED_SUBDOMAINS.has(subdomain)) return null;
+		return `https://${subdomain}.clarity.ms/${rest}`;
 	}
 
-	const subdomain = segments[1];
-	const rest = segments.slice(2).join('/');
+	// Legacy format: backward compatibility with v1 proxy URLs
+	const prefix = segments[0];
+	if (prefix === 'tag') return `https://www.clarity.ms/${segments.join('/')}`;
+	if (prefix === 'scripts') return `https://scripts.clarity.ms/${segments.slice(1).join('/')}`;
+	if (prefix === 'collect') return `https://o.clarity.ms/${segments.join('/')}`;
+	if (prefix === 'c') return `https://c.clarity.ms/${segments.slice(1).join('/')}`;
 
-	// Only allow known Clarity subdomains for security
-	const allowedSubdomains = ['www', 'scripts', 'o', 'c', 'e', 'a', 'b', 'd', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
-	if (!allowedSubdomains.includes(subdomain)) {
-		return null;
-	}
-
-	return `https://${subdomain}.clarity.ms/${rest}`;
+	return null;
 }
 
 async function proxyRequest(
