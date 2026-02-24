@@ -198,6 +198,10 @@
 			},
 			onScriptHighlight(index) {
 				scriptItems = scriptItems.map((item, i) => ({ ...item, active: i === index }));
+				setTimeout(() => {
+					const active = scriptContainerEl?.children[index] as HTMLElement | undefined;
+					active?.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+				}, 50);
 			},
 			onScriptMarkDone(index) {
 				if (scriptItems[index]) {
@@ -339,6 +343,7 @@
 
 	// ============ LIFECYCLE ============
 	let chatHistoryEl: HTMLDivElement | undefined = $state(undefined);
+	let scriptContainerEl: HTMLElement | undefined = $state(undefined);
 
 	$effect(() => {
 		// Auto-scroll when messages change
@@ -680,7 +685,7 @@
 					<button class="script-close-btn" onclick={() => showScript = false} aria-label="Close script">✕</button>
 				</div>
 			</div>
-			<div class="script-container">
+			<div class="script-container" bind:this={scriptContainerEl}>
 				{#each scriptItems as item, i}
 					<!-- svelte-ignore a11y_interactive_supports_focus -->
 					<div
