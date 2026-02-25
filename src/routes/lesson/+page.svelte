@@ -608,6 +608,7 @@
 	<!-- Main Learning Area -->
 	<main class="learning-area">
 		<!-- Mobile script toggle bar — top of content area on mobile -->
+		{#if reviewListData === null}
 		<button class="script-toggle-btn" onclick={() => showScript = !showScript} aria-label="Toggle lesson script">
 			📋 {prefs.language === 'fa' ? 'متن درس' : 'Script'}
 			{#if lesson.currentLesson}
@@ -617,10 +618,11 @@
 			{/if}
 			<span class="script-toggle-arrow" class:open={showScript}>▼</span>
 		</button>
+		{/if}
 
 		<div class="chat-wrapper">
 			<!-- Lesson Progress Bar -->
-			{#if lesson.currentLesson && !exam.isExamMode}
+			{#if lesson.currentLesson && !exam.isExamMode && reviewListData === null}
 				{@const total = lesson.currentLesson.sentences.length}
 				{@const current = Math.min(app.currentSentenceIndex, total)}
 				<div class="lesson-progress">
@@ -635,14 +637,8 @@
 			<!-- Current Sentence Area (one sentence at a time, centered) -->
 			<div class="chat-history" bind:this={chatHistoryEl} role="log" aria-live="polite" aria-label="Current sentence">
 
-	{#each systemMessages as msg}
-					<div class="message system">
-						<div class="text">{msg}</div>
-					</div>
-				{/each}
-
-				<!-- Review List View -->
-				{#if reviewListData !== null}
+	<!-- Review List View (replaces all lesson content when active) -->
+			{#if reviewListData !== null}
 					<div class="review-list-panel">
 						<div class="review-list-header">
 							<h3>{prefs.language === 'fa' ? '🔄 جملات مرور' : '🔄 Due Reviews'}</h3>
@@ -690,7 +686,13 @@
 							</div>
 						{/if}
 					</div>
-				{/if}
+				{:else}
+
+				{#each systemMessages as msg}
+					<div class="message system">
+						<div class="text">{msg}</div>
+					</div>
+				{/each}
 
 				<!-- Exam Progress Bar -->
 				{#if exam.isExamMode}
@@ -873,9 +875,12 @@
 						</div>
 					</div>
 				{/if}
+
+				{/if}<!-- end reviewListData if/else -->
 			</div>
 
 			<!-- Interaction Area -->
+			{#if reviewListData === null}
 			<div class="chat-interaction-area">
 				<div class="message-composer" aria-live="polite" aria-label="Your reply">
 					{@html answerLineHtml}
@@ -890,6 +895,7 @@
 					{app.isListening ? '🛑' : '🎙️'}
 				</button>
 			</div>
+			{/if}<!-- end reviewListData === null for interaction area -->
 
 			</div><!-- end chat-main -->
 
