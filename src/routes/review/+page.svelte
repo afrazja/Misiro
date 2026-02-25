@@ -1,13 +1,20 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
-	import { goto } from '$app/navigation';
-	import { preferencesStore, type Language } from '$stores/preferences';
-	import { getDueReviewItems, removeFromReview } from '$services/spaced-repetition';
-	import { getDueCount } from '$services/lesson-controller';
-	import { loadLessons, getLesson } from '$services/lesson-loader';
-	import { getTranslation } from '$utils/i18n';
-	import { getLanguage, setLanguage, removeBookmark } from '$services/data-layer';
-	import { initSyncListeners } from '$services/sync-queue';
+	import { onMount } from "svelte";
+	import { goto } from "$app/navigation";
+	import { preferencesStore, type Language } from "$stores/preferences";
+	import {
+		getDueReviewItems,
+		removeFromReview,
+	} from "$services/spaced-repetition";
+	import { getDueCount } from "$services/lesson-controller";
+	import { loadLessons, getLesson } from "$services/lesson-loader";
+	import { getTranslation } from "$utils/i18n";
+	import {
+		getLanguage,
+		setLanguage,
+		removeBookmark,
+	} from "$services/data-layer";
+	import { initSyncListeners } from "$services/sync-queue";
 
 	interface ReviewItem {
 		day: number;
@@ -30,22 +37,32 @@
 				return;
 			}
 
-			const uniqueDays = [...new Set(dueItems.map(i => i.day))];
+			const uniqueDays = [...new Set(dueItems.map((i) => i.day))];
 			await loadLessons(uniqueDays);
 
 			const items: ReviewItem[] = [];
 			for (const item of dueItems) {
 				const lessonData = getLesson(item.day);
 				if (!lessonData) continue;
-				const sentence = lessonData.sentences.find(s => s.id === item.sentenceId);
+				const sentence = lessonData.sentences.find(
+					(s) => s.id === item.sentenceId,
+				);
 				if (!sentence) continue;
-				const german = sentence.role === 'received' ? sentence.audioText! : sentence.targetText!;
+				const german =
+					sentence.role === "received"
+						? sentence.audioText!
+						: sentence.targetText!;
 				const translation = getTranslation(sentence, prefs.language);
-				items.push({ day: item.day, sentenceId: item.sentenceId, germanText: german, translation });
+				items.push({
+					day: item.day,
+					sentenceId: item.sentenceId,
+					germanText: german,
+					translation,
+				});
 			}
 			reviewItems = items;
 		} catch (err) {
-			console.error('[Review] Error loading items:', err);
+			console.error("[Review] Error loading items:", err);
 			reviewItems = [];
 		}
 		isLoading = false;
@@ -54,7 +71,9 @@
 	async function handleRemoveItem(day: number, sentenceId: number) {
 		await removeFromReview(day, sentenceId);
 		removeBookmark(day, sentenceId);
-		reviewItems = reviewItems.filter(i => !(i.day === day && i.sentenceId === sentenceId));
+		reviewItems = reviewItems.filter(
+			(i) => !(i.day === day && i.sentenceId === sentenceId),
+		);
 	}
 
 	async function handleClearAll() {
@@ -66,12 +85,12 @@
 	}
 
 	function handleStartQuiz() {
-		goto('/lesson?mode=review');
+		goto("/review/quiz");
 	}
 
 	function handleLanguageChange(e: Event) {
 		const val = (e.target as HTMLSelectElement).value as Language;
-		preferencesStore.update(s => ({ ...s, language: val }));
+		preferencesStore.update((s) => ({ ...s, language: val }));
 		setLanguage(val);
 		// Reload items with new language translations
 		loadReviewItems();
@@ -81,7 +100,10 @@
 		initSyncListeners();
 		const savedLang = await getLanguage();
 		if (savedLang) {
-			preferencesStore.update(s => ({ ...s, language: savedLang as Language }));
+			preferencesStore.update((s) => ({
+				...s,
+				language: savedLang as Language,
+			}));
 		}
 		await loadReviewItems();
 	});
@@ -93,10 +115,16 @@
 
 <div class="review-page">
 	<header class="review-header">
-		<a href="/home" class="home-btn">&larr; {prefs.language === 'fa' ? 'خانه' : 'Home'}</a>
-		<h1>🔄 {prefs.language === 'fa' ? 'مرور' : 'Review'}</h1>
+		<a href="/home" class="home-btn"
+			>&larr; {prefs.language === "fa" ? "خانه" : "Home"}</a
+		>
+		<h1>🔄 {prefs.language === "fa" ? "مرور" : "Review"}</h1>
 		<div class="header-right">
-			<select class="lang-select" value={prefs.language} onchange={handleLanguageChange}>
+			<select
+				class="lang-select"
+				value={prefs.language}
+				onchange={handleLanguageChange}
+			>
 				<option value="fa">فارسی</option>
 				<option value="en">English</option>
 			</select>
@@ -107,28 +135,47 @@
 		{#if isLoading}
 			<div class="empty-state">
 				<div class="empty-icon">⏳</div>
-				<p>{prefs.language === 'fa' ? 'در حال بارگذاری...' : 'Loading...'}</p>
+				<p>
+					{prefs.language === "fa"
+						? "در حال بارگذاری..."
+						: "Loading..."}
+				</p>
 			</div>
 		{:else if reviewItems.length === 0}
 			<div class="empty-state">
 				<div class="empty-icon">✅</div>
-				<h2>{prefs.language === 'fa' ? 'هیچ جمله‌ای برای مرور نیست!' : 'No sentences due for review!'}</h2>
-				<p>{prefs.language === 'fa' ? 'جملات را در درس‌ها ذخیره کنید تا اینجا ظاهر شوند.' : 'Save sentences in your lessons and they\'ll appear here.'}</p>
+				<h2>
+					{prefs.language === "fa"
+						? "هیچ جمله‌ای برای مرور نیست!"
+						: "No sentences due for review!"}
+				</h2>
+				<p>
+					{prefs.language === "fa"
+						? "جملات را در درس‌ها ذخیره کنید تا اینجا ظاهر شوند."
+						: "Save sentences in your lessons and they'll appear here."}
+				</p>
 				<a href="/lesson" class="back-to-lessons">
-					{prefs.language === 'fa' ? '📚 برو به درس‌ها' : '📚 Go to Lessons'}
+					{prefs.language === "fa"
+						? "📚 برو به درس‌ها"
+						: "📚 Go to Lessons"}
 				</a>
 			</div>
 		{:else}
 			<div class="review-actions">
 				<span class="review-count">
-					{reviewItems.length} {prefs.language === 'fa' ? 'مورد' : 'items'}
+					{reviewItems.length}
+					{prefs.language === "fa" ? "مورد" : "items"}
 				</span>
 				<div class="review-btns">
 					<button class="btn-quiz" onclick={handleStartQuiz}>
-						{prefs.language === 'fa' ? '🎯 شروع آزمون' : '🎯 Start Quiz'}
+						{prefs.language === "fa"
+							? "🎯 شروع آزمون"
+							: "🎯 Start Quiz"}
 					</button>
 					<button class="btn-clear" onclick={handleClearAll}>
-						{prefs.language === 'fa' ? '🗑️ حذف همه' : '🗑️ Clear All'}
+						{prefs.language === "fa"
+							? "🗑️ حذف همه"
+							: "🗑️ Clear All"}
 					</button>
 				</div>
 			</div>
@@ -137,13 +184,23 @@
 				{#each reviewItems as item}
 					<div class="review-item">
 						<div class="item-content">
-							<span class="item-day">{prefs.language === 'fa' ? `روز ${item.day}` : `Day ${item.day}`}</span>
+							<span class="item-day"
+								>{prefs.language === "fa"
+									? `روز ${item.day}`
+									: `Day ${item.day}`}</span
+							>
 							<div class="item-german">{item.germanText}</div>
-							<div class="item-translation" dir={prefs.language === 'fa' ? 'rtl' : 'ltr'}>{item.translation}</div>
+							<div
+								class="item-translation"
+								dir={prefs.language === "fa" ? "rtl" : "ltr"}
+							>
+								{item.translation}
+							</div>
 						</div>
 						<button
 							class="item-remove"
-							onclick={() => handleRemoveItem(item.day, item.sentenceId)}
+							onclick={() =>
+								handleRemoveItem(item.day, item.sentenceId)}
 							aria-label="Remove from review"
 						>
 							✕
@@ -208,8 +265,8 @@
 	.lang-select {
 		padding: 4px 8px;
 		border-radius: 8px;
-		border: 1px solid rgba(255,255,255,0.3);
-		background: rgba(255,255,255,0.15);
+		border: 1px solid rgba(255, 255, 255, 0.3);
+		background: rgba(255, 255, 255, 0.15);
 		color: white;
 		font-size: 0.85rem;
 		cursor: pointer;
@@ -278,7 +335,7 @@
 		padding: 12px 16px;
 		background: white;
 		border-radius: 12px;
-		box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+		box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
 	}
 
 	.review-count {
@@ -342,12 +399,12 @@
 		padding: 12px 14px;
 		background: white;
 		border-radius: 12px;
-		box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+		box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
 		transition: all 0.2s;
 	}
 
 	.review-item:hover {
-		box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+		box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 	}
 
 	.item-content {
