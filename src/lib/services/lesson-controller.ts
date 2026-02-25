@@ -24,7 +24,8 @@ import {
 	hasLesson
 } from '$services/lesson-loader';
 import { getLanguage, getVoiceSpeed, getCompletedLessons, getProgress, saveProgress, saveCompletedLessons } from '$services/data-layer';
-import { recordSRAttempt, getDueReviewItems } from '$services/spaced-repetition';
+import { recordSRAttempt, getDueReviewItems, removeFromReview } from '$services/spaced-repetition';
+import { removeBookmark } from '$services/data-layer';
 import { playAudioPromise, stopAllAudio } from '$services/tts';
 import { playTone } from '$services/audio-context';
 import { matchVoiceInput } from '$utils/text-matching';
@@ -765,4 +766,30 @@ async function finishExam(): Promise<void> {
 
 export async function getDueCount(): Promise<number> {
 	return (await getDueReviewItems()).length;
+}
+
+/**
+ * Remove the current review item from the SR queue and skip to the next question.
+ * Only works during review mode.
+ */
+export async function skipAndRemoveReviewItem(): Promise<void> {
+	const examState = get(examStore);
+	if (!examState.isReviewMode) return;
+
+	const q = examState.examQuestions[examState.currentExamIndex];
+	if (!q) return;
+
+	// Delete from SR and bookmarks
+	await removeFromReview(q.day, q.sentenceId);
+	removeBookmark(q.day, q.sentenceId);
+
+	// Remove this question from the array (currentExamIndex stays the same — next item slides in)
+	const updatedQuestions = examState.examQuestions.filter((_, i) => i !== examState.currentExamIndex);
+	examStore.update((s) => ({ ...s, examQuestions: updatedQuestions }));
+
+	if (updatedQuestions.length === 0 || examState.currentExamIndex >= updatedQuestions.length) {
+		finishExam();
+	} else {
+		processNextExamQuestion();
+	}
 }

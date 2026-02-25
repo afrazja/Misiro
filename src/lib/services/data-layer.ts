@@ -315,6 +315,22 @@ export async function recordSRAttempt(
 	});
 }
 
+export async function deleteSRCard(day: number, sentenceId: number): Promise<void> {
+	// Remove from localStorage
+	try {
+		const data = localStorage.getItem('mirifer_sr_data');
+		if (data) {
+			const srData = JSON.parse(data);
+			delete srData[`${day}:${sentenceId}`];
+			localStorage.setItem('mirifer_sr_data', JSON.stringify(srData));
+		}
+	} catch {
+		/* ignore */
+	}
+	// Queue cloud delete
+	await cloudWrite('sr_delete', `sr_del_${day}_${sentenceId}`, { day, sentence_id: sentenceId });
+}
+
 // ========== DISPLAY NAME ==========
 
 export function getDisplayName(): string | null {

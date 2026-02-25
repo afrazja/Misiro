@@ -4,7 +4,7 @@
  * Extracted from app.js SR functions.
  */
 
-import { loadSRData, saveSRData, recordSRAttempt as dataLayerRecordSR } from './data-layer';
+import { loadSRData, saveSRData, recordSRAttempt as dataLayerRecordSR, deleteSRCard } from './data-layer';
 import type { SRCard } from './data-layer';
 
 const SR_MIN_EASE = 1.3;
@@ -143,6 +143,14 @@ export async function bookmarkForReview(day: number, sentenceId: number): Promis
 
 	await saveSRData(srData);
 	await dataLayerRecordSR(day, sentenceId, srData[key]);
+}
+
+/**
+ * Remove a sentence from the SR review queue entirely.
+ * Deletes the card from both localStorage and Supabase.
+ */
+export async function removeFromReview(day: number, sentenceId: number): Promise<void> {
+	await deleteSRCard(day, sentenceId);
 }
 
 export type { SRCard };

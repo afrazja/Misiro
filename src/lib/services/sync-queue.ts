@@ -104,6 +104,15 @@ async function executeCloudWrite(uid: string, op: SyncOperation): Promise<void> 
 				);
 			break;
 
+		case 'sr_delete':
+			await client
+				.from('spaced_repetition')
+				.delete()
+				.eq('user_id', uid)
+				.eq('day', op.data.day)
+				.eq('sentence_id', op.data.sentence_id);
+			break;
+
 		case 'exam_upsert':
 			await client
 				.from('exam_results')

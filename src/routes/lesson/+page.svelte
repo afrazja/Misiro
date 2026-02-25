@@ -18,6 +18,7 @@
 		startReviewMode,
 		incrementSession,
 		getDueCount,
+		skipAndRemoveReviewItem,
 		type TeachStepData,
 		type CompletionCardData,
 		type ExamQuestionData,
@@ -169,6 +170,12 @@
 			bookmarkedSentences = new Set([...bookmarkedSentences, key]);
 			dueReviewCount = await getDueCount();
 		}
+	}
+
+	async function handleRemoveFromReview() {
+		await skipAndRemoveReviewItem();
+		dueReviewCount = await getDueCount();
+		bookmarkedSentences = getBookmarks();
 	}
 
 	// ============ SCRIPT PANEL ============
@@ -587,6 +594,11 @@
 									? `سوال ${examQuestionData.questionNumber} از ${examQuestionData.totalQuestions}`
 									: `Question ${examQuestionData.questionNumber}/${examQuestionData.totalQuestions}`}
 							</div>
+							{#if exam.isReviewMode}
+								<button class="btn-remove-review" onclick={handleRemoveFromReview}>
+									{examQuestionData.language === 'fa' ? '🗑️ حذف از مرور' : '🗑️ Remove'}
+								</button>
+							{/if}
 						</div>
 					</div>
 				{/if}
@@ -1567,6 +1579,24 @@
 	.btn-bookmark.bookmarked:hover {
 		background: #2980b9;
 		border-color: #2980b9;
+	}
+
+	/* Remove from review button */
+	.btn-remove-review {
+		padding: 5px 14px;
+		border-radius: 20px;
+		border: 2px solid #e74c3c;
+		background: transparent;
+		color: #e74c3c;
+		font-size: 0.8rem;
+		cursor: pointer;
+		transition: all 0.2s ease;
+		margin-top: 8px;
+	}
+
+	.btn-remove-review:hover {
+		background: #e74c3c;
+		color: white;
 	}
 
 	.hint-text {
