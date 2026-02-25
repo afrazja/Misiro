@@ -649,20 +649,6 @@
 									{currentTeachStep.language === 'fa' ? '🔊 دوباره' : '🔊 Replay'}
 								{/if}
 							</button>
-							{#if !exam.isExamMode && !exam.isReviewMode}
-							<button
-								class="btn-bookmark"
-								class:bookmarked={bookmarkedSentences.has(currentSentenceKey)}
-								onclick={handleBookmarkSentence}
-								aria-label={bookmarkedSentences.has(currentSentenceKey) ? 'Remove bookmark' : 'Bookmark sentence'}
-							>
-								{#if bookmarkedSentences.has(currentSentenceKey)}
-									{currentTeachStep.language === 'fa' ? '🔖 ذخیره‌شده' : '🔖 Saved'}
-								{:else}
-									{currentTeachStep.language === 'fa' ? '🏷️ ذخیره' : '🏷️ Save'}
-								{/if}
-							</button>
-						{/if}
 							{#if currentTeachStep.role === 'sent' && (currentTeachStep.hint || currentTeachStep.hintFa)}
 								<button class="btn-hint" onclick={() => showHint = !showHint} aria-label="Toggle hint">
 									💡 {currentTeachStep.language === 'fa' ? 'راهنما' : 'Hint'}
@@ -672,6 +658,20 @@
 								{currentTeachStep.language === 'fa' ? 'بعدی ←' : 'Next ➡'}
 							</button>
 						</div>
+						{#if !exam.isExamMode && !exam.isReviewMode}
+							<button
+								class="btn-bookmark"
+								class:bookmarked={bookmarkedSentences.has(currentSentenceKey)}
+								onclick={handleBookmarkSentence}
+								aria-label={bookmarkedSentences.has(currentSentenceKey) ? 'Remove bookmark' : 'Bookmark sentence'}
+							>
+								{#if bookmarkedSentences.has(currentSentenceKey)}
+									★
+								{:else}
+									☆
+								{/if}
+							</button>
+						{/if}
 						{#if showHint && currentTeachStep.role === 'sent'}
 							<div class="hint-text" dir={currentTeachStep.language === 'fa' ? 'rtl' : 'ltr'}>
 								{currentTeachStep.language === 'fa' && currentTeachStep.hintFa
@@ -1271,6 +1271,7 @@
 		padding: 24px 28px;
 		margin: 0;
 		box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+		position: relative;
 	}
 
 	.translation-line {
@@ -1550,33 +1551,32 @@
 		color: white;
 	}
 
-	/* Bookmark button */
+	/* Bookmark button - Star */
 	.btn-bookmark {
-		padding: 6px 16px;
-		border-radius: 20px;
-		border: 2px solid #3498db;
+		position: absolute;
+		bottom: 16px;
+		right: 18px;
+		font-size: 1.8rem;
 		background: transparent;
-		color: #3498db;
-		font-size: 0.85rem;
+		border: none;
+		color: #ccc;
 		cursor: pointer;
-		transition: all 0.2s ease;
-		white-space: nowrap;
+		padding: 4px;
+		transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275), color 0.2s;
+		line-height: 1;
 	}
 
 	.btn-bookmark:hover {
-		background: #3498db;
-		color: white;
+		transform: scale(1.15);
+		color: #f1c40f;
 	}
 
 	.btn-bookmark.bookmarked {
-		background: #3498db;
-		color: white;
-		border-color: #3498db;
+		color: #f1c40f;
 	}
 
 	.btn-bookmark.bookmarked:hover {
-		background: #2980b9;
-		border-color: #2980b9;
+		transform: scale(1.15);
 	}
 
 	/* Remove from review button */

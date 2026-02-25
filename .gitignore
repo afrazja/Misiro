@@ -30,3 +30,4 @@ Thumbs.db
 .svelte-kit/
 build/
 .vercel/
+.vercel
