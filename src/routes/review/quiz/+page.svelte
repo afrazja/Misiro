@@ -76,14 +76,11 @@
 			startTimer(30);
 		} else if (exam.examRetry && !isRetrying) {
 			isRetrying = true;
-			startTimer(15);
-		}
-
-		if (voiceResult) {
-			if (timerInterval) {
-				clearInterval(timerInterval);
-				timerInterval = null;
-			}
+			// Reset old voice result purely visually so the retry timer UI can show again
+			setTimeout(() => {
+				voiceResult = null;
+				startTimer(15);
+			}, 0);
 		}
 	});
 
@@ -121,6 +118,10 @@
 			},
 			onVoiceResult(result) {
 				voiceResult = result;
+				if (timerInterval) {
+					clearInterval(timerInterval);
+					timerInterval = null;
+				}
 			},
 			onAnswerPrompt(message) {
 				answerLineHtml = message;
