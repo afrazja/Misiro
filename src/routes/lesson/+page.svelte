@@ -28,7 +28,8 @@
 	import { stopAllAudio, playAudioPromise } from '$services/tts';
 	import { unlockAudioContext } from '$services/audio-context';
 	import { initSpeechRecognition, setVoiceInputHandler, toggleMic, stopListening } from '$services/speech';
-	import { getLanguage, setLanguage, getVoiceSpeed, setVoiceSpeed, saveWord, removeWord, getVocabulary } from '$services/data-layer';
+	import { getLanguage, setLanguage, getVoiceSpeed, setVoiceSpeed, saveWord, removeWord, getVocabulary, getBookmarks, addBookmark, removeBookmark } from '$services/data-layer';
+	import { bookmarkForReview } from '$services/spaced-repetition';
 	import { loadGlossary } from '$services/lesson-loader';
 	import { getTranslation, getTranslationLang } from '$utils/i18n';
 	import { initSyncListeners } from '$services/sync-queue';
@@ -116,6 +117,8 @@
 	let wordTooltip: { word: string; meaning: string; x: number; y: number } | null = $state(null);
 	let tooltipTimer: ReturnType<typeof setTimeout> | null = null;
 	let savedWords = $state<Set<string>>(new Set());
+	let bookmarkedSentences = $state<Set<string>>(new Set());
+	const currentSentenceKey = $derived(`${app.currentDay}:${lesson.currentLesson?.sentences[app.currentSentenceIndex]?.id}`);
 
 	function handleWordClick(word: string, meaning: string | null, event: MouseEvent) {
 		stopAllAudio();
@@ -148,6 +151,23 @@
 		} else {
 			await saveWord(cleanWord, entry.en, entry.fa);
 			savedWords = new Set([...savedWords, cleanWord]);
+		}
+	}
+
+	async function handleBookmarkSentence() {
+		const day = app.currentDay;
+		const sentence = lesson.currentLesson?.sentences[app.currentSentenceIndex];
+		if (!sentence) return;
+		const key = `${day}:${sentence.id}`;
+
+		if (bookmarkedSentences.has(key)) {
+			removeBookmark(day, sentence.id);
+			bookmarkedSentences = new Set([...bookmarkedSentences].filter(k => k !== key));
+		} else {
+			addBookmark(day, sentence.id);
+			await bookmarkForReview(day, sentence.id);
+			bookmarkedSentences = new Set([...bookmarkedSentences, key]);
+			dueReviewCount = await getDueCount();
 		}
 	}
 
@@ -392,6 +412,9 @@
 			savedWords = new Set(words.map(w => w.word));
 		});
 
+		// Load bookmarked sentences
+		bookmarkedSentences = getBookmarks();
+
 		// If no overlay needed (already clicked), start
 		if (!showOverlay) {
 			processNextStep();
@@ -617,6 +640,18 @@
 									</span>
 								{:else}
 									{currentTeachStep.language === 'fa' ? '🔊 دوباره' : '🔊 Replay'}
+								{/if}
+							</button>
+							<button
+								class="btn-bookmark"
+								class:bookmarked={bookmarkedSentences.has(currentSentenceKey)}
+								onclick={handleBookmarkSentence}
+								aria-label={bookmarkedSentences.has(currentSentenceKey) ? 'Remove bookmark' : 'Bookmark sentence'}
+							>
+								{#if bookmarkedSentences.has(currentSentenceKey)}
+									{currentTeachStep.language === 'fa' ? '🔖 ذخیره‌شده' : '🔖 Saved'}
+								{:else}
+									{currentTeachStep.language === 'fa' ? '🏷️ ذخیره' : '🏷️ Save'}
 								{/if}
 							</button>
 							{#if currentTeachStep.role === 'sent' && (currentTeachStep.hint || currentTeachStep.hintFa)}
@@ -1503,6 +1538,35 @@
 	.btn-hint:hover {
 		background: #f57c00;
 		color: white;
+	}
+
+	/* Bookmark button */
+	.btn-bookmark {
+		padding: 6px 16px;
+		border-radius: 20px;
+		border: 2px solid #3498db;
+		background: transparent;
+		color: #3498db;
+		font-size: 0.85rem;
+		cursor: pointer;
+		transition: all 0.2s ease;
+		white-space: nowrap;
+	}
+
+	.btn-bookmark:hover {
+		background: #3498db;
+		color: white;
+	}
+
+	.btn-bookmark.bookmarked {
+		background: #3498db;
+		color: white;
+		border-color: #3498db;
+	}
+
+	.btn-bookmark.bookmarked:hover {
+		background: #2980b9;
+		border-color: #2980b9;
 	}
 
 	.hint-text {

@@ -119,4 +119,30 @@ export async function getDueCount(): Promise<number> {
 	return (await getDueReviewItems()).length;
 }
 
+/**
+ * Inject a bookmarked sentence into the SR system so it appears as "due for review."
+ * If the card already exists, just reset nextReview to 0 (immediately due).
+ * If new, creates a card with attempts=1 so getDueReviewItems() picks it up.
+ */
+export async function bookmarkForReview(day: number, sentenceId: number): Promise<void> {
+	const srData = await loadSRData();
+	const key = `${day}:${sentenceId}`;
+
+	if (srData[key]) {
+		srData[key].nextReview = 0;
+	} else {
+		srData[key] = {
+			ease: 2.5,
+			interval: SR_INITIAL_INTERVAL,
+			nextReview: 0,
+			attempts: 1,
+			successes: 0,
+			lastReview: null
+		};
+	}
+
+	await saveSRData(srData);
+	await dataLayerRecordSR(day, sentenceId, srData[key]);
+}
+
 export type { SRCard };

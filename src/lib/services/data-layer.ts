@@ -523,6 +523,33 @@ export function getVocabularyCount(): number {
 	return readVocabLocal().length;
 }
 
+// ========== SENTENCE BOOKMARKS ==========
+
+const BOOKMARKS_LS_KEY = 'mirifer_bookmarks';
+
+export function getBookmarks(): Set<string> {
+	try {
+		const raw = localStorage.getItem(BOOKMARKS_LS_KEY);
+		return new Set(raw ? JSON.parse(raw) : []);
+	} catch {
+		return new Set();
+	}
+}
+
+export function addBookmark(day: number, sentenceId: number): void {
+	const key = `${day}:${sentenceId}`;
+	const bookmarks = getBookmarks();
+	bookmarks.add(key);
+	localStorage.setItem(BOOKMARKS_LS_KEY, JSON.stringify([...bookmarks]));
+}
+
+export function removeBookmark(day: number, sentenceId: number): void {
+	const key = `${day}:${sentenceId}`;
+	const bookmarks = getBookmarks();
+	bookmarks.delete(key);
+	localStorage.setItem(BOOKMARKS_LS_KEY, JSON.stringify([...bookmarks]));
+}
+
 // ========== CLEAR ALL LOCAL DATA ==========
 
 export function clearAllLocal(): void {
@@ -536,6 +563,7 @@ export function clearAllLocal(): void {
 	localStorage.removeItem('mirifer_avatar_url');
 	localStorage.removeItem('mirifer_sync_queue');
 	localStorage.removeItem(VOCAB_LS_KEY);
+	localStorage.removeItem(BOOKMARKS_LS_KEY);
 }
 
 // ========== SYNC ON LOGIN ==========
