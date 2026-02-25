@@ -587,7 +587,7 @@
 						</div>
 						<div class="german-line">
 							<span class="teach-text">
-								{#if currentTeachStep.isBlindMode}
+								{#if prefs.blindMode}
 									<span style="color:#ccc; font-weight:normal;">
 										{currentTeachStep.language === 'fa' ? '🙈 [مخفی] - گوش کن!' : '🙈 [Hidden] - Listen!'}
 									</span>
