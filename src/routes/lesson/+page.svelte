@@ -579,8 +579,8 @@
 				{#if currentTeachStep}
 					{@const words = createInteractiveWords(currentTeachStep.germanText)}
 					<div class="message instruction">
-						{#if lessonDifficulty()}
-							<span class="difficulty-badge difficulty-{lessonDifficulty()?.replace('+', 'plus')}">{lessonDifficulty()}</span>
+						{#if currentTeachStep.difficulty}
+							<span class="difficulty-badge difficulty-{currentTeachStep.difficulty}">{currentTeachStep.difficulty}</span>
 						{/if}
 						<div class="translation-line" style="direction:{currentTeachStep.language === 'fa' ? 'rtl' : 'ltr'};">
 							{currentTeachStep.translationText}

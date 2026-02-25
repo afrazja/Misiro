@@ -114,7 +114,7 @@ export async function loadLesson(day: number): Promise<Lesson | null> {
 	// Fetch sentences ordered by sentence_order
 	const { data: sentenceRows, error: sentErr } = await sb
 		.from('sentences')
-		.select('sentence_order, role, audio_text, target_text, translation, translation_fa, hint, hint_fa')
+		.select('sentence_order, role, audio_text, target_text, translation, translation_fa, hint, hint_fa, difficulty')
 		.eq('lesson_id', lessonRow.id)
 		.order('sentence_order', { ascending: true });
 
@@ -153,7 +153,8 @@ export async function loadLesson(day: number): Promise<Lesson | null> {
 			translation: s.translation,
 			translationFa: s.translation_fa ?? undefined,
 			hint: s.hint ?? undefined,
-			hintFa: s.hint_fa ?? undefined
+			hintFa: s.hint_fa ?? undefined,
+			difficulty: s.difficulty ?? undefined
 		}))
 	};
 

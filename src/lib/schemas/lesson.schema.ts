@@ -42,7 +42,8 @@ export const SentenceRowSchema = z.object({
 	translation: z.string(),
 	translation_fa: z.string().nullable(),
 	hint: z.string().nullable().optional(),
-	hint_fa: z.string().nullable().optional()
+	hint_fa: z.string().nullable().optional(),
+	difficulty: z.string().nullable().optional()
 });
 
 export type SentenceRow = z.infer<typeof SentenceRowSchema>;

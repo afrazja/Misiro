@@ -9,6 +9,7 @@ export interface Sentence {
 	translationFa?: string;
 	hint?: string;
 	hintFa?: string;
+	difficulty?: string;
 }
 
 export interface Lesson {

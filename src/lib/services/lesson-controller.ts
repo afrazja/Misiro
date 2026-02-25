@@ -59,6 +59,7 @@ export interface TeachStepData {
 	role: 'received' | 'sent';
 	hint?: string;
 	hintFa?: string;
+	difficulty?: string;
 }
 
 export interface CompletionCardData {
@@ -232,7 +233,8 @@ export async function processNextStep(skipAudio = false): Promise<void> {
 		isBlindMode: prefs.blindMode,
 		role: currentStep.role,
 		hint: currentStep.hint,
-		hintFa: currentStep.hintFa
+		hintFa: currentStep.hintFa,
+		difficulty: currentStep.difficulty
 	});
 
 	if (!skipAudio) {
