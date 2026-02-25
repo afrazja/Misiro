@@ -520,7 +520,7 @@
 				<span class="stat-label">Day Streak</span>
 				<span class="stat-cta-hint">view calendar →</span>
 			</button>
-			<a href="/lesson" class="stat-card stat-card-link" class:has-due={dueReviews > 0} title="Go to lesson for reviews">
+			<a href="/review" class="stat-card stat-card-link" class:has-due={dueReviews > 0} title="Go to reviews">
 				<span class="stat-icon">🔄</span>
 				<span class="stat-value">{dueReviews}</span>
 				<span class="stat-label">{dueReviews === 0 ? 'All caught up!' : 'Due Reviews'}</span>
