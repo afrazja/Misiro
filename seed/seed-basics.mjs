@@ -473,6 +473,28 @@ const basicsData = {
         ]
       }
     ]
+  },
+  questionWords: {
+    icon: '❓',
+    title: { en: 'Question Words (Fragewörter)', fa: 'کلمات پرسشی' },
+    description: { en: 'W-questions and how to ask in German', fa: 'پرسش‌های W و نحوه سوال پرسیدن به آلمانی' },
+    type: 'grid',
+    words: [
+      { german: 'wer', en: 'who', fa: 'چه کسی', example: 'Wer ist das?', exampleEn: 'Who is that?', exampleFa: 'آن کیست؟' },
+      { german: 'was', en: 'what', fa: 'چه/چی', example: 'Was machst du?', exampleEn: 'What are you doing?', exampleFa: 'چه کار می‌کنی؟' },
+      { german: 'wo', en: 'where', fa: 'کجا', example: 'Wo wohnst du?', exampleEn: 'Where do you live?', exampleFa: 'کجا زندگی می‌کنی؟' },
+      { german: 'wohin', en: 'where to', fa: 'به کجا', example: 'Wohin gehst du?', exampleEn: 'Where are you going?', exampleFa: 'کجا می‌روی؟' },
+      { german: 'woher', en: 'where from', fa: 'از کجا', example: 'Woher kommst du?', exampleEn: 'Where do you come from?', exampleFa: 'اهل کجایی؟' },
+      { german: 'wann', en: 'when', fa: 'کی/چه وقت', example: 'Wann kommst du?', exampleEn: 'When are you coming?', exampleFa: 'کی می‌آیی؟' },
+      { german: 'warum', en: 'why', fa: 'چرا', example: 'Warum lernst du Deutsch?', exampleEn: 'Why are you learning German?', exampleFa: 'چرا آلمانی یاد می‌گیری؟' },
+      { german: 'wie', en: 'how', fa: 'چطور/چگونه', example: 'Wie geht es dir?', exampleEn: 'How are you?', exampleFa: 'حالت چطور است؟' },
+      { german: 'wie viel', en: 'how much', fa: 'چقدر', example: 'Wie viel kostet das?', exampleEn: 'How much does that cost?', exampleFa: 'این چقدر قیمت دارد؟' },
+      { german: 'wie viele', en: 'how many', fa: 'چند تا', example: 'Wie viele Geschwister hast du?', exampleEn: 'How many siblings do you have?', exampleFa: 'چند تا خواهر و برادر داری؟' },
+      { german: 'welcher', en: 'which (masc)', fa: 'کدام (مذکر)', example: 'Welcher Tag ist heute?', exampleEn: 'Which day is today?', exampleFa: 'امروز چه روزی است؟' },
+      { german: 'welche', en: 'which (fem/pl)', fa: 'کدام (مؤنث/جمع)', example: 'Welche Farbe magst du?', exampleEn: 'Which color do you like?', exampleFa: 'کدام رنگ را دوست داری؟' },
+      { german: 'welches', en: 'which (neut)', fa: 'کدام (خنثی)', example: 'Welches Buch liest du?', exampleEn: 'Which book are you reading?', exampleFa: 'کدام کتاب را می‌خوانی؟' },
+      { german: 'wessen', en: 'whose', fa: 'مال چه کسی', example: 'Wessen Tasche ist das?', exampleEn: 'Whose bag is that?', exampleFa: 'این کیف مال کیست؟' }
+    ]
   }
 };
 
