@@ -127,72 +127,72 @@ export function isDayUnlocked(day: number): boolean {
 
 export async function initLesson(): Promise<void> {
 	try {
-	// Load saved language preference
-	const savedLang = await getLanguage();
-	if (savedLang === 'fa' || savedLang === 'en') {
-		preferencesStore.update((s) => ({ ...s, language: savedLang as Language }));
-	}
+		// Load saved language preference
+		const savedLang = await getLanguage();
+		if (savedLang === 'fa' || savedLang === 'en') {
+			preferencesStore.update((s) => ({ ...s, language: savedLang as Language }));
+		}
 
-	// Load voice speed
-	const savedSpeed = await getVoiceSpeed();
-	if (savedSpeed !== null) {
-		preferencesStore.update((s) => ({ ...s, voiceSpeed: savedSpeed }));
-	}
+		// Load voice speed
+		const savedSpeed = await getVoiceSpeed();
+		if (savedSpeed !== null) {
+			preferencesStore.update((s) => ({ ...s, voiceSpeed: savedSpeed }));
+		}
 
-	// Load index, saved progress, and completed lessons in parallel.
-	// getLessonIndex() must run before hasLesson() — it populates the index cache.
-	const [, savedProgress, completedLessons] = await Promise.all([
-		getLessonIndex(),
-		getProgress(),
-		getCompletedLessons()
-	]);
+		// Load index, saved progress, and completed lessons in parallel.
+		// getLessonIndex() must run before hasLesson() — it populates the index cache.
+		const [, savedProgress, completedLessons] = await Promise.all([
+			getLessonIndex(),
+			getProgress(),
+			getCompletedLessons()
+		]);
 
-	// Determine current day and sentence index.
-	let currentDay = 1;
-	let currentSentenceIndex = 0;
+		// Determine current day and sentence index.
+		let currentDay = 1;
+		let currentSentenceIndex = 0;
 
-	if (savedProgress && hasLesson(savedProgress.currentDay)) {
-		// Primary: restore exactly where the user left off mid-lesson.
-		currentDay = savedProgress.currentDay;
-		currentSentenceIndex = savedProgress.currentSentenceIndex;
-	} else {
-		// Fallback: infer position from completed lessons (new user or missing progress).
-		const completedDays = Object.keys(completedLessons || {})
-			.map(Number)
-			.filter((d) => hasLesson(d));
+		if (savedProgress && hasLesson(savedProgress.currentDay)) {
+			// Primary: restore exactly where the user left off mid-lesson.
+			currentDay = savedProgress.currentDay;
+			currentSentenceIndex = savedProgress.currentSentenceIndex;
+		} else {
+			// Fallback: infer position from completed lessons (new user or missing progress).
+			const completedDays = Object.keys(completedLessons || {})
+				.map(Number)
+				.filter((d) => hasLesson(d));
 
-		if (completedDays.length > 0) {
-			const lastCompletedDay = Math.max(...completedDays);
-			const nextDay = lastCompletedDay + 1;
-			if (hasLesson(nextDay)) {
-				currentDay = nextDay;
-				currentSentenceIndex = 0;
-			} else {
-				currentDay = lastCompletedDay;
-				// Will show completion card
-				const lesson = getLesson(lastCompletedDay);
-				currentSentenceIndex = lesson ? lesson.sentences.length : 0;
+			if (completedDays.length > 0) {
+				const lastCompletedDay = Math.max(...completedDays);
+				const nextDay = lastCompletedDay + 1;
+				if (hasLesson(nextDay)) {
+					currentDay = nextDay;
+					currentSentenceIndex = 0;
+				} else {
+					currentDay = lastCompletedDay;
+					// Will show completion card
+					const lesson = getLesson(lastCompletedDay);
+					currentSentenceIndex = lesson ? lesson.sentences.length : 0;
+				}
 			}
 		}
-	}
 
-	appStore.update((s) => ({
-		...s,
-		currentDay,
-		currentSentenceIndex,
-		completedLessons: completedLessons || {}
-	}));
+		appStore.update((s) => ({
+			...s,
+			currentDay,
+			currentSentenceIndex,
+			completedLessons: completedLessons || {}
+		}));
 
-	// Load current lesson and glossary
-	lessonStore.update((s) => ({ ...s, isLoading: true }));
-	const [lesson, glossary] = await Promise.all([loadLesson(currentDay), loadGlossary()]);
+		// Load current lesson and glossary
+		lessonStore.update((s) => ({ ...s, isLoading: true }));
+		const [lesson, glossary] = await Promise.all([loadLesson(currentDay), loadGlossary()]);
 
-	lessonStore.update((s) => ({
-		...s,
-		currentLesson: lesson,
-		glossary: glossary || {},
-		isLoading: false
-	}));
+		lessonStore.update((s) => ({
+			...s,
+			currentLesson: lesson,
+			glossary: glossary || {},
+			isLoading: false
+		}));
 	} catch (e) {
 		logError('lesson-controller:initLesson', e);
 		lessonStore.update((s) => ({ ...s, isLoading: false }));
@@ -656,17 +656,10 @@ function processNextExamQuestion(): void {
 		language: prefs.language
 	});
 
-	// Auto-play audio for listen questions
-	if (q.type === 'listen') {
-		const isFa = prefs.language === 'fa';
-		const listenMsg = isFa ? '\u06AF\u0648\u0634 \u06A9\u0646...' : 'Listening...';
-		callbacks?.onAnswerPrompt(listenMsg);
-		playAudioPromise(q.audioText, 0.8, 'de-DE');
-	} else {
-		const isFa = prefs.language === 'fa';
-		const speakMsg = isFa ? 'آلمانی بگو...' : 'Speak in German...';
-		callbacks?.onAnswerPrompt(`🎙️ ${speakMsg}`);
-	}
+	// Show the initial prompt for the user to answer
+	const isFa = prefs.language === 'fa';
+	const speakMsg = isFa ? 'آلمانی بگو...' : 'Speak in German...';
+	callbacks?.onAnswerPrompt(`🎙️ ${speakMsg}`);
 }
 
 async function handleExamCorrect(transcript: string): Promise<void> {

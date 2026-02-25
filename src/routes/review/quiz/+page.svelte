@@ -243,13 +243,9 @@
 					<div class="avatar">🎓</div>
 					<div class="content">
 						<div class="sub-text">
-							{examQuestionData.type === "listen"
-								? examQuestionData.language === "fa"
-									? "🎧 گوش کن و تکرار کن"
-									: "🎧 Listen & Repeat"
-								: examQuestionData.language === "fa"
-									? "🗣️ به آلمانی بگو"
-									: "🗣️ Say in German"}
+							{examQuestionData.language === "fa"
+								? "🗣️ به آلمانی بگو"
+								: "🗣️ Say in German"}
 						</div>
 						<div
 							class="text"
