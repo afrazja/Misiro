@@ -557,6 +557,8 @@ export async function startReviewMode(): Promise<void> {
 	const dueItems = (await getDueReviewItems()).slice(0, 15);
 	const isFa = prefs.language === 'fa';
 
+	console.log('[Review] Due items:', dueItems.length, dueItems.map(i => `day${i.day}:s${i.sentenceId}`));
+
 	if (dueItems.length === 0) {
 		const noMsg = isFa ? '\u0647\u06CC\u0686 \u0645\u0648\u0631\u062F\u06CC \u0628\u0631\u0627\u06CC \u0645\u0631\u0648\u0631 \u0646\u06CC\u0633\u062A!' : 'No items due for review!';
 		callbacks?.onSystemMessage(noMsg);
@@ -570,10 +572,16 @@ export async function startReviewMode(): Promise<void> {
 	const questions: ExamQuestion[] = [];
 	for (const item of dueItems) {
 		const lesson = getLesson(item.day);
-		if (!lesson?.sentences) continue;
+		if (!lesson?.sentences) {
+			console.warn('[Review] No lesson/sentences for day', item.day);
+			continue;
+		}
 
 		const sentence = lesson.sentences.find((s) => s.id === item.sentenceId);
-		if (!sentence) continue;
+		if (!sentence) {
+			console.warn('[Review] Sentence not found: day', item.day, 'sentenceId', item.sentenceId, 'available IDs:', lesson.sentences.map(s => s.id));
+			continue;
+		}
 
 		if (sentence.role === 'sent') {
 			questions.push({
@@ -597,6 +605,8 @@ export async function startReviewMode(): Promise<void> {
 			});
 		}
 	}
+
+	console.log('[Review] Built', questions.length, 'questions from', dueItems.length, 'due items');
 
 	if (questions.length === 0) {
 		const noMsg = isFa ? '\u0647\u06CC\u0686 \u0645\u0648\u0631\u062F\u06CC \u0628\u0631\u0627\u06CC \u0645\u0631\u0648\u0631 \u0646\u06CC\u0633\u062A!' : 'No items due for review!';

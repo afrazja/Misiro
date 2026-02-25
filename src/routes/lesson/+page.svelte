@@ -30,7 +30,7 @@
 	import { unlockAudioContext } from '$services/audio-context';
 	import { initSpeechRecognition, setVoiceInputHandler, toggleMic, stopListening } from '$services/speech';
 	import { getLanguage, setLanguage, getVoiceSpeed, setVoiceSpeed, saveWord, removeWord, getVocabulary, getBookmarks, addBookmark, removeBookmark } from '$services/data-layer';
-	import { bookmarkForReview } from '$services/spaced-repetition';
+	import { bookmarkForReview, removeFromReview } from '$services/spaced-repetition';
 	import { loadGlossary } from '$services/lesson-loader';
 	import { getTranslation, getTranslationLang } from '$utils/i18n';
 	import { initSyncListeners } from '$services/sync-queue';
@@ -163,7 +163,9 @@
 
 		if (bookmarkedSentences.has(key)) {
 			removeBookmark(day, sentence.id);
+			await removeFromReview(day, sentence.id);
 			bookmarkedSentences = new Set([...bookmarkedSentences].filter(k => k !== key));
+			dueReviewCount = await getDueCount();
 		} else {
 			addBookmark(day, sentence.id);
 			await bookmarkForReview(day, sentence.id);
