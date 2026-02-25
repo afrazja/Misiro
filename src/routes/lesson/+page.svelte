@@ -1,9 +1,9 @@
 <script lang="ts">
-	import { onMount, onDestroy } from 'svelte';
-	import { appStore } from '$stores/app';
-	import { preferencesStore, type Language } from '$stores/preferences';
-	import { lessonStore, type Sentence } from '$stores/lesson';
-	import { examStore } from '$stores/exam';
+	import { onMount, onDestroy } from "svelte";
+	import { appStore } from "$stores/app";
+	import { preferencesStore, type Language } from "$stores/preferences";
+	import { lessonStore, type Sentence } from "$stores/lesson";
+	import { examStore } from "$stores/exam";
 	import {
 		setCallbacks,
 		initLesson,
@@ -22,23 +22,49 @@
 		type CompletionCardData,
 		type ExamQuestionData,
 		type ExamResultsData,
-		type VoiceResultData
-	} from '$services/lesson-controller';
-	import { getLessonIndex, getGlossaryMeaning, hasLesson, type LessonMeta } from '$services/lesson-loader';
-	import { stopAllAudio, playAudioPromise } from '$services/tts';
-	import { unlockAudioContext } from '$services/audio-context';
-	import { initSpeechRecognition, setVoiceInputHandler, toggleMic, stopListening } from '$services/speech';
-	import { getLanguage, setLanguage, getVoiceSpeed, setVoiceSpeed, saveWord, removeWord, getVocabulary, getBookmarks, addBookmark, removeBookmark } from '$services/data-layer';
-	import { bookmarkForReview, removeFromReview } from '$services/spaced-repetition';
-	import { loadGlossary } from '$services/lesson-loader';
-	import { getTranslation, getTranslationLang } from '$utils/i18n';
-	import { initSyncListeners } from '$services/sync-queue';
+		type VoiceResultData,
+	} from "$services/lesson-controller";
+	import {
+		getLessonIndex,
+		getGlossaryMeaning,
+		hasLesson,
+		type LessonMeta,
+	} from "$services/lesson-loader";
+	import { stopAllAudio, playAudioPromise } from "$services/tts";
+	import { unlockAudioContext } from "$services/audio-context";
+	import {
+		initSpeechRecognition,
+		setVoiceInputHandler,
+		toggleMic,
+		stopListening,
+	} from "$services/speech";
+	import {
+		getLanguage,
+		setLanguage,
+		getVoiceSpeed,
+		setVoiceSpeed,
+		saveWord,
+		removeWord,
+		getVocabulary,
+		getBookmarks,
+		addBookmark,
+		removeBookmark,
+	} from "$services/data-layer";
+	import {
+		bookmarkForReview,
+		removeFromReview,
+	} from "$services/spaced-repetition";
+	import { loadGlossary } from "$services/lesson-loader";
+	import { getTranslation, getTranslationLang } from "$utils/i18n";
+	import { initSyncListeners } from "$services/sync-queue";
 
 	// ============ STATE ============
 	let showOverlay = $state(true);
 	let isReady = $state(false);
 	let chatMessages: ChatMessage[] = $state([]);
-	let answerLineHtml = $state('<span class="placeholder-text">Tap words to reply...</span>');
+	let answerLineHtml = $state(
+		'<span class="placeholder-text">Tap words to reply...</span>',
+	);
 	let currentTeachStep: TeachStepData | null = $state(null);
 	let showHint = $state(false);
 	let completionData: CompletionCardData | null = $state(null);
@@ -53,7 +79,7 @@
 
 	interface ChatMessage {
 		id: number;
-		type: 'received' | 'sent' | 'system';
+		type: "received" | "sent" | "system";
 		text: string;
 	}
 	let msgCounter = 0;
@@ -66,28 +92,31 @@
 	let isSpeaking = $state(false);
 
 	const scenarioTitle = $derived(() => {
-		if (!lesson.currentLesson) return 'Loading...';
+		if (!lesson.currentLesson) return "Loading...";
 		const l = lesson.currentLesson;
-		if (prefs.language === 'fa' && l.titleFa) {
-			const parts = l.titleFa.split(': ');
+		if (prefs.language === "fa" && l.titleFa) {
+			const parts = l.titleFa.split(": ");
 			return parts.length > 1 ? parts[1] : l.titleFa;
 		}
-		const parts = l.title.split(': ');
+		const parts = l.title.split(": ");
 		return parts.length > 1 ? parts[1] : l.title;
 	});
 
 	const scenarioDescription = $derived(() => {
 		if (!lesson.currentLesson) return null;
 		const l = lesson.currentLesson;
-		if (prefs.language === 'fa' && l.descriptionFa) return l.descriptionFa;
+		if (prefs.language === "fa" && l.descriptionFa) return l.descriptionFa;
 		return l.description ?? null;
 	});
 
-	const lessonDifficulty = $derived(() => lesson.currentLesson?.difficulty ?? null);
+	const lessonDifficulty = $derived(
+		() => lesson.currentLesson?.difficulty ?? null,
+	);
 	const lessonGrammarFocus = $derived(() => {
 		if (!lesson.currentLesson) return null;
 		const l = lesson.currentLesson;
-		if (prefs.language === 'fa' && l.grammarFocusFa) return l.grammarFocusFa;
+		if (prefs.language === "fa" && l.grammarFocusFa)
+			return l.grammarFocusFa;
 		return l.grammarFocus ?? null;
 	});
 
@@ -105,48 +134,70 @@
 	});
 
 	// ============ INTERACTIVE WORDS ============
-	function createInteractiveWords(text: string): Array<{ word: string; meaning: string | null }> {
-		return text.split(' ').map((word) => {
-			const cleanKey = word.toLowerCase().replace(/[.,!?]/g, '');
+	function createInteractiveWords(
+		text: string,
+	): Array<{ word: string; meaning: string | null }> {
+		return text.split(" ").map((word) => {
+			const cleanKey = word.toLowerCase().replace(/[.,!?]/g, "");
 			const meaning = getGlossaryMeaning(cleanKey, prefs.language);
 			return { word, meaning };
 		});
 	}
 
-	let wordTooltip: { word: string; meaning: string; x: number; y: number } | null = $state(null);
+	let wordTooltip: {
+		word: string;
+		meaning: string;
+		x: number;
+		y: number;
+	} | null = $state(null);
 	let tooltipTimer: ReturnType<typeof setTimeout> | null = null;
 	let savedWords = $state<Set<string>>(new Set());
 	let bookmarkedSentences = $state<Set<string>>(new Set());
-	const currentSentenceKey = $derived(`${app.currentDay}:${lesson.currentLesson?.sentences[app.currentSentenceIndex]?.id}`);
+	const currentSentenceKey = $derived(
+		`${app.currentDay}:${lesson.currentLesson?.sentences[app.currentSentenceIndex]?.id}`,
+	);
 
-	function handleWordClick(word: string, meaning: string | null, event: MouseEvent) {
+	function handleWordClick(
+		word: string,
+		meaning: string | null,
+		event: MouseEvent,
+	) {
 		stopAllAudio();
 		if ($appStore.isListening) stopListening();
 
 		// Play word
-		const clean = word.replace(/[.,!?]/g, '');
-		playAudioPromise(clean, 0.8, 'de-DE');
+		const clean = word.replace(/[.,!?]/g, "");
+		playAudioPromise(clean, 0.8, "de-DE");
 
 		// Show tooltip
 		if (meaning) {
 			if (tooltipTimer) clearTimeout(tooltipTimer);
 			const target = event.currentTarget as HTMLElement;
 			const rect = target.getBoundingClientRect();
-			wordTooltip = { word, meaning, x: rect.left + rect.width / 2, y: rect.top };
-			tooltipTimer = setTimeout(() => { wordTooltip = null; }, 5000);
+			wordTooltip = {
+				word,
+				meaning,
+				x: rect.left + rect.width / 2,
+				y: rect.top,
+			};
+			tooltipTimer = setTimeout(() => {
+				wordTooltip = null;
+			}, 5000);
 		}
 	}
 
 	async function handleBookmarkWord() {
 		if (!wordTooltip) return;
-		const cleanWord = wordTooltip.word.toLowerCase().replace(/[.,!?]/g, '');
+		const cleanWord = wordTooltip.word.toLowerCase().replace(/[.,!?]/g, "");
 		const glossary = await loadGlossary();
 		const entry = glossary[cleanWord];
 		if (!entry) return;
 
 		if (savedWords.has(cleanWord)) {
 			await removeWord(cleanWord);
-			savedWords = new Set([...savedWords].filter(w => w !== cleanWord));
+			savedWords = new Set(
+				[...savedWords].filter((w) => w !== cleanWord),
+			);
 		} else {
 			await saveWord(cleanWord, entry.en, entry.fa);
 			savedWords = new Set([...savedWords, cleanWord]);
@@ -155,14 +206,17 @@
 
 	async function handleBookmarkSentence() {
 		const day = app.currentDay;
-		const sentence = lesson.currentLesson?.sentences[app.currentSentenceIndex];
+		const sentence =
+			lesson.currentLesson?.sentences[app.currentSentenceIndex];
 		if (!sentence) return;
 		const key = `${day}:${sentence.id}`;
 
 		if (bookmarkedSentences.has(key)) {
 			removeBookmark(day, sentence.id);
 			await removeFromReview(day, sentence.id);
-			bookmarkedSentences = new Set([...bookmarkedSentences].filter(k => k !== key));
+			bookmarkedSentences = new Set(
+				[...bookmarkedSentences].filter((k) => k !== key),
+			);
 		} else {
 			addBookmark(day, sentence.id);
 			await bookmarkForReview(day, sentence.id);
@@ -176,22 +230,30 @@
 	}
 
 	// ============ SCRIPT PANEL ============
-	let scriptItems: Array<{ german: string; translation: string; done: boolean; active: boolean }> = $state([]);
+	let scriptItems: Array<{
+		german: string;
+		translation: string;
+		done: boolean;
+		active: boolean;
+	}> = $state([]);
 	let showScript = $state(false);
 	let showScenarioInfo = $state(false);
 
 	function updateScript() {
 		if (!lesson.currentLesson) return;
-		const isLessonDone = !!(app.completedLessons && app.completedLessons[app.currentDay]);
+		const isLessonDone = !!(
+			app.completedLessons && app.completedLessons[app.currentDay]
+		);
 
 		scriptItems = lesson.currentLesson.sentences.map((step, i) => {
-			const german = step.role === 'received' ? step.audioText! : step.targetText!;
+			const german =
+				step.role === "received" ? step.audioText! : step.targetText!;
 			const translation = getTranslation(step, prefs.language);
 			return {
 				german,
 				translation,
 				done: isLessonDone || i < app.currentSentenceIndex,
-				active: i === app.currentSentenceIndex
+				active: i === app.currentSentenceIndex,
 			};
 		});
 	}
@@ -218,7 +280,8 @@
 			async onAnswerPrompt(message) {
 				answerLineHtml = message;
 				isSpeaking = false; // audio just finished
-				if (!listenerMode || !currentTeachStep || exam.isExamMode) return;
+				if (!listenerMode || !currentTeachStep || exam.isExamMode)
+					return;
 				const mySeq = _listenerSeq;
 				const germanText = currentTeachStep.germanText;
 				// Brief pause after the normal-speed audio that just finished
@@ -226,7 +289,7 @@
 				if (_listenerSeq !== mySeq || !listenerMode) return;
 				// Play German a second time at 0.75x speed (rate 0.6 = 0.8 x 0.75)
 				stopAllAudio();
-				await playAudioPromise(germanText, 0.6, 'de-DE');
+				await playAudioPromise(germanText, 0.6, "de-DE");
 				await new Promise<void>((r) => setTimeout(r, 600));
 				if (_listenerSeq !== mySeq || !listenerMode) return;
 				manualNext();
@@ -234,21 +297,35 @@
 			onMessageBubble(step) {
 				currentTeachStep = null;
 				voiceResult = null;
-				const text = step.role === 'received' ? step.audioText! : step.targetText!;
-				chatMessages = [...chatMessages, { id: msgCounter++, type: step.role, text }];
+				const text =
+					step.role === "received"
+						? step.audioText!
+						: step.targetText!;
+				chatMessages = [
+					...chatMessages,
+					{ id: msgCounter++, type: step.role, text },
+				];
 				trimMessages();
 			},
 			onScriptHighlight(index) {
-				scriptItems = scriptItems.map((item, i) => ({ ...item, active: i === index }));
+				scriptItems = scriptItems.map((item, i) => ({
+					...item,
+					active: i === index,
+				}));
 				setTimeout(() => {
-					const active = scriptContainerEl?.children[index] as HTMLElement | undefined;
-					active?.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+					const active = scriptContainerEl?.children[index] as
+						| HTMLElement
+						| undefined;
+					active?.scrollIntoView({
+						block: "nearest",
+						behavior: "smooth",
+					});
 				}, 50);
 			},
 			onScriptMarkDone(index) {
 				if (scriptItems[index]) {
 					scriptItems = scriptItems.map((item, i) =>
-						i === index ? { ...item, done: true } : item
+						i === index ? { ...item, done: true } : item,
 					);
 				}
 			},
@@ -281,12 +358,12 @@
 				examResultsData = null;
 				voiceResult = null;
 				systemMessages = [];
-				answerLineHtml = '';
+				answerLineHtml = "";
 				updateScript();
 			},
 			onVoiceResult(result) {
 				voiceResult = result;
-			}
+			},
 		});
 	}
 
@@ -300,14 +377,17 @@
 	}
 
 	function handleMicClick() {
-		if (isSpeaking) { stopAllAudio(); return; }
+		if (isSpeaking) {
+			stopAllAudio();
+			return;
+		}
 		toggleMic();
 	}
 
 	function handleDaySelectChange(e: Event) {
 		const val = (e.target as HTMLSelectElement).value;
-		if (val.startsWith('exam')) {
-			const week = parseInt(val.replace('exam', ''));
+		if (val.startsWith("exam")) {
+			const week = parseInt(val.replace("exam", ""));
 			startExam(week);
 		} else {
 			changeDay(parseInt(val));
@@ -334,30 +414,38 @@
 
 	function handleSpeakerClick() {
 		if (!currentTeachStep) return;
-		if (isSpeaking) { _listenerSeq++; incrementSession(); stopAllAudio(); isSpeaking = false; return; }
+		if (isSpeaking) {
+			_listenerSeq++;
+			incrementSession();
+			stopAllAudio();
+			isSpeaking = false;
+			return;
+		}
 		if ($appStore.isListening) stopListening();
 		stopAllAudio();
 		isSpeaking = true;
-		playAudioPromise(currentTeachStep.germanText, 0.8, 'de-DE')
-			.then(() => { isSpeaking = false; });
+		playAudioPromise(currentTeachStep.germanText, 0.8, "de-DE").then(() => {
+			isSpeaking = false;
+		});
 	}
 
 	async function handleListenerToggle() {
 		listenerMode = !listenerMode;
 		// If turning ON while a sentence is already shown and audio has finished,
 		// immediately start the listener sequence for the current sentence.
-		if (!listenerMode || !currentTeachStep || isSpeaking || exam.isExamMode) return;
+		if (!listenerMode || !currentTeachStep || isSpeaking || exam.isExamMode)
+			return;
 		const mySeq = _listenerSeq;
 		// Normal-speed play
 		isSpeaking = true;
-		await playAudioPromise(currentTeachStep.germanText, 0.8, 'de-DE');
+		await playAudioPromise(currentTeachStep.germanText, 0.8, "de-DE");
 		isSpeaking = false;
 		await new Promise<void>((r) => setTimeout(r, 600));
 		if (_listenerSeq !== mySeq || !listenerMode) return;
 		// Slow play (0.75x)
 		stopAllAudio();
 		isSpeaking = true;
-		await playAudioPromise(currentTeachStep.germanText, 0.6, 'de-DE');
+		await playAudioPromise(currentTeachStep.germanText, 0.6, "de-DE");
 		isSpeaking = false;
 		await new Promise<void>((r) => setTimeout(r, 600));
 		if (_listenerSeq !== mySeq || !listenerMode) return;
@@ -372,7 +460,7 @@
 	function handleMessageBubbleClick(text: string) {
 		stopAllAudio();
 		if ($appStore.isListening) stopListening();
-		playAudioPromise(text, 0.8, 'de-DE');
+		playAudioPromise(text, 0.8, "de-DE");
 	}
 
 	function trimMessages() {
@@ -387,7 +475,13 @@
 
 	$effect(() => {
 		// Auto-scroll when messages change
-		if (chatHistoryEl && (chatMessages.length > 0 || currentTeachStep || completionData || examQuestionData)) {
+		if (
+			chatHistoryEl &&
+			(chatMessages.length > 0 ||
+				currentTeachStep ||
+				completionData ||
+				examQuestionData)
+		) {
 			setTimeout(() => {
 				chatHistoryEl!.scrollTop = chatHistoryEl!.scrollHeight;
 			}, 50);
@@ -398,7 +492,9 @@
 		setupCallbacks();
 		initSyncListeners();
 		initSpeechRecognition();
-		getLessonIndex().then((idx) => { lessonIndex = idx; });
+		getLessonIndex().then((idx) => {
+			lessonIndex = idx;
+		});
 		setVoiceInputHandler((transcript: string) => {
 			controllerHandleVoice(transcript);
 		});
@@ -407,8 +503,8 @@
 		isReady = true;
 
 		// Load saved vocabulary words
-		getVocabulary().then(words => {
-			savedWords = new Set(words.map(w => w.word));
+		getVocabulary().then((words) => {
+			savedWords = new Set(words.map((w) => w.word));
 		});
 
 		// Load bookmarked sentences
@@ -416,11 +512,11 @@
 
 		// Check for ?mode=review query param (coming from /review "Start Quiz")
 		const urlParams = new URLSearchParams(window.location.search);
-		if (urlParams.get('mode') === 'review') {
+		if (urlParams.get("mode") === "review") {
 			showOverlay = false;
 			unlockAudioContext();
 			startReviewMode();
-			window.history.replaceState({}, '', '/lesson');
+			window.history.replaceState({}, "", "/lesson");
 			return;
 		}
 
@@ -431,7 +527,7 @@
 	});
 
 	onDestroy(() => {
-		if (typeof window !== 'undefined') {
+		if (typeof window !== "undefined") {
 			stopAllAudio();
 			stopListening();
 		}
@@ -454,16 +550,20 @@
 				{/if}
 				<div class="overlay-tags">
 					{#if lessonGrammarFocus()}
-						<span class="overlay-badge grammar-tag">{lessonGrammarFocus()}</span>
+						<span class="overlay-badge grammar-tag"
+							>{lessonGrammarFocus()}</span
+						>
 					{/if}
-					<span class="overlay-badge">{lesson.currentLesson.sentences.length} sentences</span>
+					<span class="overlay-badge"
+						>{lesson.currentLesson.sentences.length} sentences</span
+					>
 				</div>
 			</div>
 		{:else}
 			<p>Loading lesson details...</p>
 		{/if}
 		<button class="start-btn" onclick={handleStart} disabled={!isReady}>
-			{isReady ? '▶ Start Lesson' : '⏳ Loading...'}
+			{isReady ? "▶ Start Lesson" : "⏳ Loading..."}
 		</button>
 	</div>
 {/if}
@@ -473,21 +573,28 @@
 	<header class="header">
 		<div class="header-left">
 			<a href="/home" class="home-btn">&larr; Home</a>
-			<h1>{'🌍'} Mirifer</h1>
+			<h1>{"🌍"} Mirifer</h1>
 		</div>
 
 		<div class="day-selection-control">
 			<label for="day-select">📅 Day:</label>
-			<select id="day-select" onchange={handleDaySelectChange} value={app.currentDay.toString()}>
+			<select
+				id="day-select"
+				onchange={handleDaySelectChange}
+				value={app.currentDay.toString()}
+			>
 				{#each Object.entries(weekGroups()) as [weekNum, days]}
 					<optgroup label="Week {weekNum}">
 						{#each days as meta}
-							{@const isCompleted = !!(app.completedLessons && app.completedLessons[meta.day])}
+							{@const isCompleted = !!(
+								app.completedLessons &&
+								app.completedLessons[meta.day]
+							)}
 							<option
 								value={meta.day.toString()}
 								selected={meta.day === app.currentDay}
 							>
-								{isCompleted ? '✅ ' : ''}{meta.title}
+								{isCompleted ? "✅ " : ""}{meta.title}
 							</option>
 						{/each}
 						{#if days.length === 7}
@@ -501,21 +608,36 @@
 		</div>
 
 		<div class="blind-mode-control">
-			<input type="checkbox" id="blind-mode-toggle" checked={prefs.blindMode} onchange={handleBlindModeChange}>
+			<input
+				type="checkbox"
+				id="blind-mode-toggle"
+				checked={prefs.blindMode}
+				onchange={handleBlindModeChange}
+			/>
 			<label for="blind-mode-toggle">🙈 Blind Mode</label>
 		</div>
 
 		<div class="language-control">
-			<select id="language-select" aria-label="Select language" value={prefs.language} onchange={handleLanguageSelectChange}>
+			<select
+				id="language-select"
+				aria-label="Select language"
+				value={prefs.language}
+				onchange={handleLanguageSelectChange}
+			>
 				<option value="fa">فارسی</option>
 				<option value="en">English</option>
 			</select>
 		</div>
 
 		<div class="speed-control">
-			<select id="speed-select" aria-label="Select voice speed" value={prefs.voiceSpeed.toString()} onchange={handleSpeedSelectChange}>
-				<option value="1">{'🔊 1x'}</option>
-				<option value="0.75">{'🔉 0.75x'}</option>
+			<select
+				id="speed-select"
+				aria-label="Select voice speed"
+				value={prefs.voiceSpeed.toString()}
+				onchange={handleSpeedSelectChange}
+			>
+				<option value="1">{"🔊 1x"}</option>
+				<option value="0.75">{"🔉 0.75x"}</option>
 			</select>
 		</div>
 
@@ -523,21 +645,29 @@
 			class="listener-mode-btn"
 			class:active={listenerMode}
 			onclick={handleListenerToggle}
-			title={listenerMode ? "Listener Mode ON — click to disable" : "Enable Listener Mode"}
+			title={listenerMode
+				? "Listener Mode ON — click to disable"
+				: "Enable Listener Mode"}
 		>
 			🎧 {listenerMode ? "Listener ON" : "Listener"}
 		</button>
-
 	</header>
 
 	<!-- Main Learning Area -->
 	<main class="learning-area">
 		<!-- Mobile script toggle bar — top of content area on mobile -->
-		<button class="script-toggle-btn" onclick={() => showScript = !showScript} aria-label="Toggle lesson script">
-			📋 {prefs.language === 'fa' ? 'متن درس' : 'Script'}
+		<button
+			class="script-toggle-btn"
+			onclick={() => (showScript = !showScript)}
+			aria-label="Toggle lesson script"
+		>
+			📋 {prefs.language === "fa" ? "متن درس" : "Script"}
 			{#if lesson.currentLesson}
 				<span class="script-toggle-count">
-					{Math.min(app.currentSentenceIndex + 1, lesson.currentLesson.sentences.length)} / {lesson.currentLesson.sentences.length}
+					{Math.min(
+						app.currentSentenceIndex + 1,
+						lesson.currentLesson.sentences.length,
+					)} / {lesson.currentLesson.sentences.length}
 				</span>
 			{/if}
 			<span class="script-toggle-arrow" class:open={showScript}>▼</span>
@@ -549,291 +679,556 @@
 				{@const total = lesson.currentLesson.sentences.length}
 				{@const current = Math.min(app.currentSentenceIndex, total)}
 				<div class="lesson-progress">
-					<div class="lesson-progress-fill" style="width: {total > 0 ? Math.round((current / total) * 100) : 0}%"></div>
+					<div
+						class="lesson-progress-fill"
+						style="width: {total > 0
+							? Math.round((current / total) * 100)
+							: 0}%"
+					></div>
 				</div>
 			{/if}
 
 			<!-- Content row: chat + sidebar side-by-side (desktop only) -->
-		<div class="chat-body">
-			<div class="chat-main">
-
-			<!-- Current Sentence Area (one sentence at a time, centered) -->
-			<div class="chat-history" bind:this={chatHistoryEl} role="log" aria-live="polite" aria-label="Current sentence">
-
-	{#each systemMessages as msg}
-					<div class="message system">
-						<div class="text">{msg}</div>
-					</div>
-				{/each}
-
-				<!-- Exam Progress Bar -->
-				{#if exam.isExamMode}
-					<div class="exam-progress-bar">
-						<div class="exam-progress-fill" style="width: {examProgressTotal > 0 ? Math.round((examProgressCurrent / examProgressTotal) * 100) : 0}%"></div>
-					</div>
-				{/if}
-
-				<!-- Exam Question -->
-				{#if examQuestionData}
-					<div class="message received" style="border-left: 4px solid {examQuestionData.type === 'listen' ? '#FF9800' : '#2196F3'}">
-						<div class="avatar">🎓</div>
-						<div class="content">
-							<div class="sub-text" style="font-size:0.75em; color:{examQuestionData.type === 'listen' ? '#FF9800' : '#2196F3'}; font-weight:bold; margin-bottom:4px;">
-								{examQuestionData.type === 'listen'
-									? (examQuestionData.language === 'fa' ? '🎧 گوش کن و تکرار کن' : '🎧 Listen & Repeat')
-									: (examQuestionData.language === 'fa' ? '🗣️ به آلمانی بگو' : '🗣️ Say in German')}
-							</div>
-							<div class="text" style="{examQuestionData.language === 'fa' ? 'direction:rtl;' : ''}">{examQuestionData.prompt}</div>
-							<div class="sub-text" style="font-size:0.8em; color:#666;">
-								{examQuestionData.language === 'fa'
-									? `سوال ${examQuestionData.questionNumber} از ${examQuestionData.totalQuestions}`
-									: `Question ${examQuestionData.questionNumber}/${examQuestionData.totalQuestions}`}
-							</div>
-							{#if exam.isReviewMode}
-								<button class="btn-remove-review" onclick={handleRemoveFromReview}>
-									{examQuestionData.language === 'fa' ? '🗑️ حذف از مرور' : '🗑️ Remove'}
-								</button>
-							{/if}
-						</div>
-					</div>
-				{/if}
-
-				<!-- Correct Feedback Banner -->
-				{#if voiceResult?.isCorrect}
-					<div class="correct-banner">
-						{prefs.language === 'fa' ? '✅ آفرین!' : '✅ Correct!'}
-					</div>
-				{/if}
-
-				<!-- Teach Bubble -->
-				{#if currentTeachStep}
-					{@const words = createInteractiveWords(currentTeachStep.germanText)}
-					<div class="message instruction">
-						{#if currentTeachStep.difficulty}
-							<span class="difficulty-badge difficulty-{currentTeachStep.difficulty}">{currentTeachStep.difficulty}</span>
-						{/if}
-						<div class="translation-line" style="direction:{currentTeachStep.language === 'fa' ? 'rtl' : 'ltr'};">
-							{currentTeachStep.translationText}
-						</div>
-						<div class="german-line">
-							<span class="teach-text">
-								{#if prefs.blindMode}
-									<span style="color:#ccc; font-weight:normal;">
-										{currentTeachStep.language === 'fa' ? '🙈 [مخفی] - گوش کن!' : '🙈 [Hidden] - Listen!'}
-									</span>
-								{:else}
-									{#each words as w, i}
-										<!-- svelte-ignore a11y_interactive_supports_focus -->
-										<span
-											class="interactive-word"
-											class:success={voiceResult && voiceResult.matchedWordIndices?.[i] === true}
-											class:error={voiceResult && voiceResult.isCorrect === false && voiceResult.matchedWordIndices?.[i] === false}
-											role="button"
-											tabindex="0"
-											aria-label="{w.word}{w.meaning ? `, meaning: ${w.meaning}` : ''}"
-											data-meaning={w.meaning || undefined}
-											onclick={(e) => handleWordClick(w.word, w.meaning, e)}
-											onkeydown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); handleWordClick(w.word, w.meaning, e as any); } }}
-										>{w.word}</span>{' '}
-									{/each}
-								{/if}
-							</span>
-						</div>
-						<div class="teach-actions">
-							<button class="btn-replay" class:speaking={isSpeaking} onclick={handleSpeakerClick} aria-label="Replay audio">
-								{#if isSpeaking}
-									<span class="audio-wave">
-										<span></span><span></span><span></span><span></span><span></span>
-									</span>
-								{:else}
-									{currentTeachStep.language === 'fa' ? '🔊 دوباره' : '🔊 Replay'}
-								{/if}
-							</button>
-							{#if currentTeachStep.role === 'sent' && (currentTeachStep.hint || currentTeachStep.hintFa)}
-								<button class="btn-hint" onclick={() => showHint = !showHint} aria-label="Toggle hint">
-									💡 {currentTeachStep.language === 'fa' ? 'راهنما' : 'Hint'}
-								</button>
-							{/if}
-							<button class="btn-inline-next" onclick={() => manualNext()}>
-								{currentTeachStep.language === 'fa' ? 'بعدی ←' : 'Next ➡'}
-							</button>
-						</div>
-						{#if !exam.isExamMode && !exam.isReviewMode}
-							<button
-								class="btn-bookmark"
-								class:bookmarked={bookmarkedSentences.has(currentSentenceKey)}
-								onclick={handleBookmarkSentence}
-								aria-label={bookmarkedSentences.has(currentSentenceKey) ? 'Remove bookmark' : 'Bookmark sentence'}
-							>
-								{#if bookmarkedSentences.has(currentSentenceKey)}
-									★
-								{:else}
-									☆
-								{/if}
-							</button>
-						{/if}
-						{#if showHint && currentTeachStep.role === 'sent'}
-							<div class="hint-text" dir={currentTeachStep.language === 'fa' ? 'rtl' : 'ltr'}>
-								{currentTeachStep.language === 'fa' && currentTeachStep.hintFa
-									? currentTeachStep.hintFa
-									: currentTeachStep.hint ?? ''}
-							</div>
-						{/if}
-					</div>
-				{/if}
-
-				<!-- Completion Card -->
-				{#if completionData}
-					<div class="message system completion-card">
-						<div class="text" style="text-align:center;">
-							<div style="font-size:2.5em; margin-bottom:10px;">🎉</div>
-							<h2 style="margin:0 0 5px; color:#2e7d32;">
-								{completionData.language === 'fa' ? '\u0622\u0641\u0631\u06CC\u0646!' : 'Well Done!'}
-							</h2>
-							<p style="color:#555; margin:0 0 8px;">
-								{completionData.language === 'fa' ? `\u0631\u0648\u0632 ${app.currentDay} \u0631\u0627 \u062A\u0645\u0627\u0645 \u06A9\u0631\u062F\u06CC\u062F!` : `Day ${app.currentDay} complete!`}
-							</p>
-							<div class="completion-stats">
-								{#if lesson.currentLesson}
-									<span class="comp-stat">{lesson.currentLesson.sentences.length} {completionData.language === 'fa' ? 'جمله' : 'sentences'}</span>
-								{/if}
-								{#if app.completedLessons}
-									<span class="comp-stat">🔥 {Object.keys(app.completedLessons).length}-{completionData.language === 'fa' ? 'روز' : 'day streak'}</span>
-								{/if}
-							</div>
-							{#if completionData.nextDay}
-								<button class="next-day-btn" onclick={() => goToNextDay(completionData!.nextDay!)}>
-									{completionData.language === 'fa' ? '\u062F\u0631\u0633 \u0628\u0639\u062F\u06CC' : 'Next Lesson'} &rarr;
-									<span style="font-weight:400; font-size:0.9em;">{completionData.nextLessonTitle || ''}</span>
-								</button>
-							{:else}
-								<p style="color:#a0a0a0; margin-top:10px;">
-									{completionData.language === 'fa' ? 'همه درس‌ها را تمام کردید! 🏆' : 'All lessons completed! 🏆'}
-								</p>
-							{/if}
-						</div>
-					</div>
-				{/if}
-
-				<!-- Exam Results -->
-				{#if examResultsData}
-					<div class="message system" style="background:{examResultsData.percentage >= 80 ? '#e8f5e9' : '#fff3e0'}; padding:20px; border-radius:15px;">
-						<div class="text" style="text-align:center">
-							<h2 style="margin:0">
-								{#if examResultsData.percentage >= 80}
-									{examResultsData.wasReview
-										? (examResultsData.language === 'fa' ? '🎉 مرور عالی بود!' : '🎉 Great Review!')
-										: (examResultsData.language === 'fa' ? '🎉 آفرین!' : '🎉 Well Done!')}
-								{:else}
-									{examResultsData.wasReview
-										? (examResultsData.language === 'fa' ? '🔄 ادامه بده!' : '🔄 Keep Going!')
-										: (examResultsData.language === 'fa' ? '📚 بیشتر تمرین کن' : '📚 Keep Practicing')}
-								{/if}
-							</h2>
-							<div style="font-size:2em; margin:10px 0;">{examResultsData.score} / {examResultsData.total}</div>
-							<p>{examResultsData.percentage}%</p>
-
-							{#if examResultsData.wrongAnswers.length > 0}
-								<div style="text-align:left; margin-top:15px; padding-top:15px; border-top:1px solid #ddd;">
-									<b>{examResultsData.language === 'fa' ? '\u0645\u0631\u0648\u0631 \u0627\u0634\u062A\u0628\u0627\u0647\u0627\u062A:' : 'Review mistakes:'}</b>
-									{#each examResultsData.wrongAnswers as w}
-										<div style="padding:6px 0; border-bottom:1px solid #eee;">
-											<div style="color:#333; font-weight:bold;">{w.question.targetText}</div>
-											<div style="color:#888; font-size:0.85em;">{w.question.translation}</div>
-										</div>
-									{/each}
-								</div>
-							{/if}
-						</div>
-					</div>
-				{/if}
-
-			</div>
-
-			<!-- Interaction Area -->
-			<div class="chat-interaction-area">
-				<div class="message-composer" aria-live="polite" aria-label="Your reply">
-					{@html answerLineHtml}
-				</div>
-				<button
-					class="btn-send"
-					class:pulse={app.isListening}
-					style="background: {app.isListening ? '#f44336' : '#075E54'};"
-					onclick={handleMicClick}
-					aria-label={app.isListening ? 'Stop recording' : 'Microphone - tap to record'}
-				>
-					{app.isListening ? '🛑' : '🎙️'}
-				</button>
-			</div>
-
-			</div><!-- end chat-main -->
-
-			<!-- Script Panel -->
-			<aside class="script-view" class:open={showScript} id="script-view">
-			<div class="script-header">
-				<h3>{prefs.language === 'fa' ? '\u0645\u062A\u0646 \u062F\u0631\u0633' : 'Lesson Script'}</h3>
-				<div class="script-header-right">
-					{#if lesson.currentLesson}
-						<span class="script-count">{Math.min(app.currentSentenceIndex + 1, scriptItems.length)}/{scriptItems.length}</span>
-					{/if}
-					<button class="script-close-btn" onclick={() => showScript = false} aria-label="Close script">✕</button>
-				</div>
-			</div>
-			<div class="script-container" bind:this={scriptContainerEl}>
-				{#if scriptItems.length === 0}
-					<div class="script-empty">
-						<p>Lesson script will appear here once you start.</p>
-					</div>
-				{/if}
-				{#each scriptItems as item, i}
-					<!-- svelte-ignore a11y_interactive_supports_focus -->
+			<div class="chat-body">
+				<div class="chat-main">
+					<!-- Current Sentence Area (one sentence at a time, centered) -->
 					<div
-						class="script-item"
-						class:done={item.done}
-						class:active={item.active}
-						role="button"
-						tabindex="0"
-						aria-label="Sentence {i + 1}: {item.german}"
-						onclick={() => handleScriptItemClick(i)}
-						onkeydown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); handleScriptItemClick(i); } }}
+						class="chat-history"
+						bind:this={chatHistoryEl}
+						role="log"
+						aria-live="polite"
+						aria-label="Current sentence"
 					>
-						<div class="script-num">{item.active ? '▶' : i + 1}</div>
-						<div class="script-text">
-							<div class="german">{item.german}</div>
-							<div class="translation" style="direction: {prefs.language === 'fa' ? 'rtl' : 'ltr'};">
-								{item.translation}
+						{#each systemMessages as msg}
+							<div class="message system">
+								<div class="text">{msg}</div>
 							</div>
+						{/each}
+
+						<!-- Exam Progress Bar -->
+						{#if exam.isExamMode}
+							<div class="exam-progress-bar">
+								<div
+									class="exam-progress-fill"
+									style="width: {examProgressTotal > 0
+										? Math.round(
+												(examProgressCurrent /
+													examProgressTotal) *
+													100,
+											)
+										: 0}%"
+								></div>
+							</div>
+						{/if}
+
+						<!-- Exam Question -->
+						{#if examQuestionData}
+							<div
+								class="message received"
+								style="border-left: 4px solid {examQuestionData.type ===
+								'listen'
+									? '#FF9800'
+									: '#2196F3'}"
+							>
+								<div class="avatar">🎓</div>
+								<div class="content">
+									<div
+										class="sub-text"
+										style="font-size:0.75em; color:{examQuestionData.type ===
+										'listen'
+											? '#FF9800'
+											: '#2196F3'}; font-weight:bold; margin-bottom:4px;"
+									>
+										{examQuestionData.type === "listen"
+											? examQuestionData.language === "fa"
+												? "🎧 گوش کن و تکرار کن"
+												: "🎧 Listen & Repeat"
+											: examQuestionData.language === "fa"
+												? "🗣️ به آلمانی بگو"
+												: "🗣️ Say in German"}
+									</div>
+									<div
+										class="text"
+										style={examQuestionData.language ===
+										"fa"
+											? "direction:rtl;"
+											: ""}
+									>
+										{examQuestionData.prompt}
+									</div>
+									<div
+										class="sub-text"
+										style="font-size:0.8em; color:#666;"
+									>
+										{examQuestionData.language === "fa"
+											? `سوال ${examQuestionData.questionNumber} از ${examQuestionData.totalQuestions}`
+											: `Question ${examQuestionData.questionNumber}/${examQuestionData.totalQuestions}`}
+									</div>
+									{#if exam.isReviewMode}
+										<button
+											class="btn-remove-review"
+											onclick={handleRemoveFromReview}
+										>
+											{examQuestionData.language === "fa"
+												? "🗑️ حذف از مرور"
+												: "🗑️ Remove"}
+										</button>
+									{/if}
+								</div>
+							</div>
+						{/if}
+
+						<!-- Correct Feedback Banner -->
+						{#if voiceResult?.isCorrect}
+							<div class="correct-banner">
+								{prefs.language === "fa"
+									? "✅ آفرین!"
+									: "✅ Correct!"}
+							</div>
+						{/if}
+
+						<!-- Teach Bubble -->
+						{#if currentTeachStep}
+							{@const words = createInteractiveWords(
+								currentTeachStep.germanText,
+							)}
+							<div class="message instruction">
+								{#if currentTeachStep.difficulty}
+									<span
+										class="difficulty-badge difficulty-{currentTeachStep.difficulty}"
+										>{currentTeachStep.difficulty}</span
+									>
+								{/if}
+								<div
+									class="translation-line"
+									style="direction:{currentTeachStep.language ===
+									'fa'
+										? 'rtl'
+										: 'ltr'};"
+								>
+									{currentTeachStep.translationText}
+								</div>
+								<div class="german-line">
+									<span class="teach-text">
+										{#if prefs.blindMode}
+											<span
+												style="color:#ccc; font-weight:normal;"
+											>
+												{currentTeachStep.language ===
+												"fa"
+													? "🙈 [مخفی] - گوش کن!"
+													: "🙈 [Hidden] - Listen!"}
+											</span>
+										{:else}
+											{#each words as w, i}
+												<!-- svelte-ignore a11y_interactive_supports_focus -->
+												<span
+													class="interactive-word"
+													class:success={voiceResult &&
+														voiceResult
+															.matchedWordIndices?.[
+															i
+														] === true}
+													class:error={voiceResult &&
+														voiceResult.isCorrect ===
+															false &&
+														voiceResult
+															.matchedWordIndices?.[
+															i
+														] === false}
+													role="button"
+													tabindex="0"
+													aria-label="{w.word}{w.meaning
+														? `, meaning: ${w.meaning}`
+														: ''}"
+													data-meaning={w.meaning ||
+														undefined}
+													onclick={(e) =>
+														handleWordClick(
+															w.word,
+															w.meaning,
+															e,
+														)}
+													onkeydown={(e) => {
+														if (
+															e.key === "Enter" ||
+															e.key === " "
+														) {
+															e.preventDefault();
+															handleWordClick(
+																w.word,
+																w.meaning,
+																e as any,
+															);
+														}
+													}}>{w.word}</span
+												>{" "}
+											{/each}
+										{/if}
+									</span>
+								</div>
+								<div class="teach-actions">
+									<button
+										class="btn-replay"
+										class:speaking={isSpeaking}
+										onclick={handleSpeakerClick}
+										aria-label="Replay audio"
+									>
+										{#if isSpeaking}
+											<span class="audio-wave">
+												<span></span><span></span><span
+												></span><span></span><span
+												></span>
+											</span>
+										{:else}
+											{currentTeachStep.language === "fa"
+												? "🔊 دوباره"
+												: "🔊 Replay"}
+										{/if}
+									</button>
+									{#if currentTeachStep.role === "sent" && (currentTeachStep.hint || currentTeachStep.hintFa)}
+										<button
+											class="btn-hint"
+											onclick={() =>
+												(showHint = !showHint)}
+											aria-label="Toggle hint"
+										>
+											💡 {currentTeachStep.language ===
+											"fa"
+												? "راهنما"
+												: "Hint"}
+										</button>
+									{/if}
+									<button
+										class="btn-inline-next"
+										onclick={() => manualNext()}
+									>
+										{currentTeachStep.language === "fa"
+											? "بعدی ←"
+											: "Next ➡"}
+									</button>
+								</div>
+								{#if !exam.isExamMode && !exam.isReviewMode}
+									<button
+										class="btn-bookmark"
+										class:bookmarked={bookmarkedSentences.has(
+											currentSentenceKey,
+										)}
+										onclick={handleBookmarkSentence}
+										aria-label={bookmarkedSentences.has(
+											currentSentenceKey,
+										)
+											? "Remove bookmark"
+											: "Bookmark sentence"}
+									>
+										{#if bookmarkedSentences.has(currentSentenceKey)}
+											★
+										{:else}
+											☆
+										{/if}
+									</button>
+								{/if}
+								{#if showHint && currentTeachStep.role === "sent"}
+									<div
+										class="hint-text"
+										dir={currentTeachStep.language === "fa"
+											? "rtl"
+											: "ltr"}
+									>
+										{currentTeachStep.language === "fa" &&
+										currentTeachStep.hintFa
+											? currentTeachStep.hintFa
+											: (currentTeachStep.hint ?? "")}
+									</div>
+								{/if}
+							</div>
+						{/if}
+
+						<!-- Completion Card -->
+						{#if completionData}
+							<div class="message system completion-card">
+								<div class="text" style="text-align:center;">
+									<div
+										style="font-size:2.5em; margin-bottom:10px;"
+									>
+										🎉
+									</div>
+									<h2 style="margin:0 0 5px; color:#2e7d32;">
+										{completionData.language === "fa"
+											? "\u0622\u0641\u0631\u06CC\u0646!"
+											: "Well Done!"}
+									</h2>
+									<p style="color:#555; margin:0 0 8px;">
+										{completionData.language === "fa"
+											? `\u0631\u0648\u0632 ${app.currentDay} \u0631\u0627 \u062A\u0645\u0627\u0645 \u06A9\u0631\u062F\u06CC\u062F!`
+											: `Day ${app.currentDay} complete!`}
+									</p>
+									<div class="completion-stats">
+										{#if lesson.currentLesson}
+											<span class="comp-stat"
+												>{lesson.currentLesson.sentences
+													.length}
+												{completionData.language ===
+												"fa"
+													? "جمله"
+													: "sentences"}</span
+											>
+										{/if}
+										{#if app.completedLessons}
+											<span class="comp-stat"
+												>🔥 {Object.keys(
+													app.completedLessons,
+												)
+													.length}-{completionData.language ===
+												"fa"
+													? "روز"
+													: "day streak"}</span
+											>
+										{/if}
+									</div>
+									{#if completionData.nextDay}
+										<button
+											class="next-day-btn"
+											onclick={() =>
+												goToNextDay(
+													completionData!.nextDay!,
+												)}
+										>
+											{completionData.language === "fa"
+												? "\u062F\u0631\u0633 \u0628\u0639\u062F\u06CC"
+												: "Next Lesson"} &rarr;
+											<span
+												style="font-weight:400; font-size:0.9em;"
+												>{completionData.nextLessonTitle ||
+													""}</span
+											>
+										</button>
+									{:else}
+										<p
+											style="color:#a0a0a0; margin-top:10px;"
+										>
+											{completionData.language === "fa"
+												? "همه درس‌ها را تمام کردید! 🏆"
+												: "All lessons completed! 🏆"}
+										</p>
+									{/if}
+								</div>
+							</div>
+						{/if}
+
+						<!-- Exam Results -->
+						{#if examResultsData}
+							<div
+								class="message system"
+								style="background:{examResultsData.percentage >=
+								80
+									? '#e8f5e9'
+									: '#fff3e0'}; padding:20px; border-radius:15px;"
+							>
+								<div class="text" style="text-align:center">
+									<h2 style="margin:0">
+										{#if examResultsData.percentage >= 80}
+											{examResultsData.wasReview
+												? examResultsData.language ===
+													"fa"
+													? "🎉 مرور عالی بود!"
+													: "🎉 Great Review!"
+												: examResultsData.language ===
+													  "fa"
+													? "🎉 آفرین!"
+													: "🎉 Well Done!"}
+										{:else}
+											{examResultsData.wasReview
+												? examResultsData.language ===
+													"fa"
+													? "🔄 ادامه بده!"
+													: "🔄 Keep Going!"
+												: examResultsData.language ===
+													  "fa"
+													? "📚 بیشتر تمرین کن"
+													: "📚 Keep Practicing"}
+										{/if}
+									</h2>
+									<div style="font-size:2em; margin:10px 0;">
+										{examResultsData.score} / {examResultsData.total}
+									</div>
+									<p>{examResultsData.percentage}%</p>
+
+									{#if examResultsData.wrongAnswers.length > 0}
+										<div
+											style="text-align:left; margin-top:15px; padding-top:15px; border-top:1px solid #ddd;"
+										>
+											<b
+												>{examResultsData.language ===
+												"fa"
+													? "\u0645\u0631\u0648\u0631 \u0627\u0634\u062A\u0628\u0627\u0647\u0627\u062A:"
+													: "Review mistakes:"}</b
+											>
+											{#each examResultsData.wrongAnswers as w}
+												<div
+													style="padding:6px 0; border-bottom:1px solid #eee;"
+												>
+													<div
+														style="color:#333; font-weight:bold;"
+													>
+														{w.question.targetText}
+													</div>
+													<div
+														style="color:#888; font-size:0.85em;"
+													>
+														{w.question.translation}
+													</div>
+												</div>
+											{/each}
+										</div>
+									{/if}
+								</div>
+							</div>
+						{/if}
+					</div>
+
+					<!-- Interaction Area -->
+					<div class="chat-interaction-area">
+						<div
+							class="message-composer"
+							aria-live="polite"
+							aria-label="Your reply"
+						>
+							{@html answerLineHtml}
+						</div>
+						<button
+							class="btn-send"
+							class:pulse={app.isListening}
+							style="background: {app.isListening
+								? '#f44336'
+								: '#075E54'};"
+							onclick={handleMicClick}
+							aria-label={app.isListening
+								? "Stop recording"
+								: "Microphone - tap to record"}
+						>
+							{app.isListening ? "🛑" : "🎙️"}
+						</button>
+					</div>
+				</div>
+				<!-- end chat-main -->
+
+				<!-- Script Panel -->
+				<aside
+					class="script-view"
+					class:open={showScript}
+					id="script-view"
+				>
+					<div class="script-header">
+						<h3>
+							{prefs.language === "fa"
+								? "\u0645\u062A\u0646 \u062F\u0631\u0633"
+								: "Lesson Script"}
+						</h3>
+						<div class="script-header-right">
+							{#if lesson.currentLesson}
+								<span class="script-count"
+									>{Math.min(
+										app.currentSentenceIndex + 1,
+										scriptItems.length,
+									)}/{scriptItems.length}</span
+								>
+							{/if}
+							<button
+								class="script-close-btn"
+								onclick={() => (showScript = false)}
+								aria-label="Close script">✕</button
+							>
 						</div>
 					</div>
-				{/each}
-			</div>
-		</aside>
+					<div class="script-container" bind:this={scriptContainerEl}>
+						{#if scriptItems.length === 0}
+							<div class="script-empty">
+								<p>
+									Lesson script will appear here once you
+									start.
+								</p>
+							</div>
+						{/if}
+						{#each scriptItems as item, i}
+							<!-- svelte-ignore a11y_interactive_supports_focus -->
+							<div
+								class="script-item"
+								class:done={item.done}
+								class:active={item.active}
+								role="button"
+								tabindex="0"
+								aria-label="Sentence {i + 1}: {item.german}"
+								onclick={() => handleScriptItemClick(i)}
+								onkeydown={(e) => {
+									if (e.key === "Enter" || e.key === " ") {
+										e.preventDefault();
+										handleScriptItemClick(i);
+									}
+								}}
+							>
+								<div class="script-num">
+									{item.active ? "▶" : i + 1}
+								</div>
+								<div class="script-text">
+									<div class="german">{item.german}</div>
+									<div
+										class="translation"
+										style="direction: {prefs.language ===
+										'fa'
+											? 'rtl'
+											: 'ltr'};"
+									>
+										{item.translation}
+									</div>
+								</div>
+							</div>
+						{/each}
+					</div>
+				</aside>
 
-		<!-- Mobile: tap outside to close -->
-		{#if showScript}
-			<!-- svelte-ignore a11y_click_events_have_key_events -->
-			<!-- svelte-ignore a11y_no_static_element_interactions -->
-			<div class="script-backdrop" onclick={() => showScript = false}></div>
-		{/if}
-		</div><!-- end chat-body -->
-	</div><!-- end chat-wrapper -->
+				<!-- Mobile: tap outside to close -->
+				{#if showScript}
+					<!-- svelte-ignore a11y_click_events_have_key_events -->
+					<!-- svelte-ignore a11y_no_static_element_interactions -->
+					<div
+						class="script-backdrop"
+						onclick={() => (showScript = false)}
+					></div>
+				{/if}
+			</div>
+			<!-- end chat-body -->
+		</div>
+		<!-- end chat-wrapper -->
 	</main>
 </div>
 
 <!-- Word Tooltip -->
 {#if wordTooltip}
-	<div class="word-tooltip" style="left: {wordTooltip.x}px; top: {wordTooltip.y - 10}px;">
+	<div
+		class="word-tooltip"
+		style="left: {wordTooltip.x}px; top: {wordTooltip.y - 10}px;"
+	>
 		<span class="tooltip-meaning">{wordTooltip.meaning}</span>
 		<!-- svelte-ignore a11y_click_events_have_key_events -->
 		<!-- svelte-ignore a11y_no_static_element_interactions -->
 		<span
 			class="tooltip-bookmark"
-			class:saved={savedWords.has(wordTooltip.word.toLowerCase().replace(/[.,!?]/g, ''))}
-			onclick={(e) => { e.stopPropagation(); handleBookmarkWord(); }}
+			class:saved={savedWords.has(
+				wordTooltip.word.toLowerCase().replace(/[.,!?]/g, ""),
+			)}
+			onclick={(e) => {
+				e.stopPropagation();
+				handleBookmarkWord();
+			}}
 			role="button"
 			tabindex="-1"
 		>
-			{savedWords.has(wordTooltip.word.toLowerCase().replace(/[.,!?]/g, '')) ? '★' : '☆'}
+			{savedWords.has(
+				wordTooltip.word.toLowerCase().replace(/[.,!?]/g, ""),
+			)
+				? "★"
+				: "☆"}
 		</span>
 	</div>
 {/if}
@@ -923,11 +1318,26 @@
 		color: rgba(255, 255, 255, 0.6);
 	}
 
-	.overlay-badge.difficulty-A1 { background: rgba(46, 204, 113, 0.2); color: #2ecc71; }
-	.overlay-badge.difficulty-A2 { background: rgba(52, 152, 219, 0.2); color: #3498db; }
-	.overlay-badge.difficulty-B1 { background: rgba(155, 89, 182, 0.2); color: #9b59b6; }
-	.overlay-badge.difficulty-B1plus { background: rgba(155, 89, 182, 0.2); color: #bb86fc; }
-	.overlay-badge.grammar-tag { background: rgba(241, 196, 15, 0.15); color: #f1c40f; }
+	.overlay-badge.difficulty-A1 {
+		background: rgba(46, 204, 113, 0.2);
+		color: #2ecc71;
+	}
+	.overlay-badge.difficulty-A2 {
+		background: rgba(52, 152, 219, 0.2);
+		color: #3498db;
+	}
+	.overlay-badge.difficulty-B1 {
+		background: rgba(155, 89, 182, 0.2);
+		color: #9b59b6;
+	}
+	.overlay-badge.difficulty-B1plus {
+		background: rgba(155, 89, 182, 0.2);
+		color: #bb86fc;
+	}
+	.overlay-badge.grammar-tag {
+		background: rgba(241, 196, 15, 0.15);
+		color: #f1c40f;
+	}
 
 	/* ── Completion Stats ── */
 	.completion-stats {
@@ -1023,7 +1433,7 @@
 	}
 
 	.header select,
-	.header input[type='checkbox'] {
+	.header input[type="checkbox"] {
 		color: #333;
 		background: #fff;
 		border: 2px solid #ddd;
@@ -1034,24 +1444,32 @@
 	}
 
 	/* Cap widths so the header stays on one row */
-	.language-control select { max-width: 120px; }
-	.speed-control select    { max-width: 90px; }
-	.day-selection-control select { max-width: 220px; }
+	.language-control select {
+		max-width: 120px;
+	}
+	.speed-control select {
+		max-width: 90px;
+	}
+	.day-selection-control select {
+		max-width: 220px;
+	}
 
 	.listener-mode-btn {
 		padding: 6px 12px;
 		border-radius: 20px;
-		border: 2px solid rgba(255,255,255,0.4);
-		background: rgba(255,255,255,0.15);
+		border: 2px solid rgba(255, 255, 255, 0.4);
+		background: rgba(255, 255, 255, 0.15);
 		color: #fff;
 		font-size: 0.82rem;
 		font-weight: 600;
 		cursor: pointer;
 		white-space: nowrap;
-		transition: background 0.2s, border-color 0.2s;
+		transition:
+			background 0.2s,
+			border-color 0.2s;
 	}
 	.listener-mode-btn:hover {
-		background: rgba(255,255,255,0.28);
+		background: rgba(255, 255, 255, 0.28);
 	}
 	.listener-mode-btn.active {
 		background: #22c55e;
@@ -1122,7 +1540,7 @@
 		color: white;
 		cursor: pointer;
 		user-select: none;
-		border-bottom: 1px solid rgba(255,255,255,0.1);
+		border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 		gap: 8px;
 	}
 
@@ -1157,19 +1575,25 @@
 	.scenario-dropdown {
 		background: #064d45;
 		padding: 10px 14px;
-		border-bottom: 1px solid rgba(255,255,255,0.08);
+		border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 		animation: dropIn 0.18s ease-out;
 	}
 
 	@keyframes dropIn {
-		from { opacity: 0; transform: translateY(-6px); }
-		to   { opacity: 1; transform: translateY(0); }
+		from {
+			opacity: 0;
+			transform: translateY(-6px);
+		}
+		to {
+			opacity: 1;
+			transform: translateY(0);
+		}
 	}
 
 	.scenario-drop-desc {
 		margin: 0 0 6px;
 		font-size: 0.82rem;
-		color: rgba(255,255,255,0.85);
+		color: rgba(255, 255, 255, 0.85);
 		line-height: 1.5;
 	}
 
@@ -1188,11 +1612,6 @@
 		align-items: center;
 		justify-content: center;
 		font-size: 1.3rem;
-	}
-
-	.header-info h3 {
-		margin: 0;
-		font-size: 1rem;
 	}
 
 	.status {
@@ -1303,8 +1722,10 @@
 		cursor: pointer;
 		padding: 2px 3px;
 		border-radius: 4px;
-		transition: background 0.2s, color 0.2s;
-		display: inline;        /* inline keeps natural word spacing */
+		transition:
+			background 0.2s,
+			color 0.2s;
+		display: inline; /* inline keeps natural word spacing */
 	}
 
 	.interactive-word:hover {
@@ -1425,7 +1846,7 @@
 		animation: pulse 1s infinite;
 	}
 
-@keyframes pulse {
+	@keyframes pulse {
 		0%,
 		100% {
 			transform: scale(1);
@@ -1439,7 +1860,7 @@
 	.lesson-progress {
 		position: relative;
 		height: 4px;
-		background: rgba(255,255,255,0.2);
+		background: rgba(255, 255, 255, 0.2);
 		overflow: visible;
 		display: flex;
 		align-items: center;
@@ -1456,7 +1877,7 @@
 		position: absolute;
 		right: 10px;
 		font-size: 0.7rem;
-		color: rgba(255,255,255,0.8);
+		color: rgba(255, 255, 255, 0.8);
 		font-weight: 600;
 		white-space: nowrap;
 	}
@@ -1522,15 +1943,30 @@
 		animation: wave-bar 0.7s ease-in-out infinite;
 	}
 
-	.audio-wave span:nth-child(1) { animation-delay: 0s;    }
-	.audio-wave span:nth-child(2) { animation-delay: 0.14s; }
-	.audio-wave span:nth-child(3) { animation-delay: 0.28s; }
-	.audio-wave span:nth-child(4) { animation-delay: 0.14s; }
-	.audio-wave span:nth-child(5) { animation-delay: 0s;    }
+	.audio-wave span:nth-child(1) {
+		animation-delay: 0s;
+	}
+	.audio-wave span:nth-child(2) {
+		animation-delay: 0.14s;
+	}
+	.audio-wave span:nth-child(3) {
+		animation-delay: 0.28s;
+	}
+	.audio-wave span:nth-child(4) {
+		animation-delay: 0.14s;
+	}
+	.audio-wave span:nth-child(5) {
+		animation-delay: 0s;
+	}
 
 	@keyframes wave-bar {
-		0%, 100% { transform: scaleY(0.25); }
-		50%      { transform: scaleY(1);    }
+		0%,
+		100% {
+			transform: scaleY(0.25);
+		}
+		50% {
+			transform: scaleY(1);
+		}
 	}
 
 	/* Hint button */
@@ -1562,7 +1998,9 @@
 		color: #ccc;
 		cursor: pointer;
 		padding: 4px;
-		transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275), color 0.2s;
+		transition:
+			transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275),
+			color 0.2s;
 		line-height: 1;
 	}
 
@@ -1643,19 +2081,31 @@
 	}
 
 	/* CEFR level colours */
-	.difficulty-A1    { background: #43a047; }
-	.difficulty-A1plus { background: #2e7d32; }
-	.difficulty-A2    { background: #1976d2; }
-	.difficulty-A2plus { background: #1565c0; }
-	.difficulty-B1    { background: #7b1fa2; }
-	.difficulty-B1plus { background: #4a148c; }
+	.difficulty-A1 {
+		background: #43a047;
+	}
+	.difficulty-A1plus {
+		background: #2e7d32;
+	}
+	.difficulty-A2 {
+		background: #1976d2;
+	}
+	.difficulty-A2plus {
+		background: #1565c0;
+	}
+	.difficulty-B1 {
+		background: #7b1fa2;
+	}
+	.difficulty-B1plus {
+		background: #4a148c;
+	}
 
 	.grammar-tag {
 		display: inline-block;
 		padding: 2px 10px;
 		border-radius: 10px;
 		font-size: 0.7rem;
-		background: rgba(255,255,255,0.2);
+		background: rgba(255, 255, 255, 0.2);
 		color: white;
 		max-width: 220px;
 		white-space: nowrap;
@@ -1708,7 +2158,9 @@
 		border-radius: 8px;
 		margin-bottom: 4px;
 		cursor: pointer;
-		transition: background 0.2s, border-color 0.2s;
+		transition:
+			background 0.2s,
+			border-color 0.2s;
 		border-left: 3px solid transparent;
 		display: flex;
 		gap: 8px;
@@ -1808,7 +2260,9 @@
 		cursor: pointer;
 		padding: 0 2px;
 		line-height: 1;
-		transition: transform 0.2s, color 0.2s;
+		transition:
+			transform 0.2s,
+			color 0.2s;
 		user-select: none;
 	}
 

@@ -1,6 +1,6 @@
 <script lang="ts">
 	let { data } = $props();
-	const { counts } = data;
+	const counts = $derived(data.counts);
 </script>
 
 <svelte:head><title>Admin Dashboard - Mirifer</title></svelte:head>
@@ -34,7 +34,10 @@
 </div>
 
 <style>
-	h1 { color: #2ecc71; margin-bottom: 32px; }
+	h1 {
+		color: #2ecc71;
+		margin-bottom: 32px;
+	}
 
 	.stats-grid {
 		display: grid;
@@ -43,8 +46,8 @@
 	}
 
 	.stat-card {
-		background: rgba(255,255,255,0.06);
-		border: 1px solid rgba(255,255,255,0.1);
+		background: rgba(255, 255, 255, 0.06);
+		border: 1px solid rgba(255, 255, 255, 0.1);
 		border-radius: 16px;
 		padding: 24px;
 	}
@@ -69,5 +72,7 @@
 		text-decoration: none;
 	}
 
-	.stat-link:hover { text-decoration: underline; }
+	.stat-link:hover {
+		text-decoration: underline;
+	}
 </style>

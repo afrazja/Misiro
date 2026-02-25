@@ -1,32 +1,32 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
-	import { page } from '$app/stores';
-	import { goto } from '$app/navigation';
-	import { preferencesStore } from '$stores/preferences';
-	import type { Language } from '$stores/preferences';
-	import * as auth from '$services/auth';
-	import * as dataLayer from '$services/data-layer';
-	import { getDueCount } from '$services/spaced-repetition';
-	import { initSyncListeners } from '$services/sync-queue';
-	import { getLessonIndex } from '$services/lesson-loader';
+	import { onMount } from "svelte";
+	import { page } from "$app/stores";
+	import { goto } from "$app/navigation";
+	import { preferencesStore } from "$stores/preferences";
+	import type { Language } from "$stores/preferences";
+	import * as auth from "$services/auth";
+	import * as dataLayer from "$services/data-layer";
+	import { getDueCount } from "$services/spaced-repetition";
+	import { initSyncListeners } from "$services/sync-queue";
+	import { getLessonIndex } from "$services/lesson-loader";
 
 	// Auth modal state
 	let showAuthModal = $state(false);
-	let authMode = $state<'signin' | 'signup'>('signin');
-	let authEmail = $state('');
-	let authPassword = $state('');
-	let authName = $state('');
-	let authError = $state('');
+	let authMode = $state<"signin" | "signup">("signin");
+	let authEmail = $state("");
+	let authPassword = $state("");
+	let authName = $state("");
+	let authError = $state("");
 	let authLoading = $state(false);
 
 	// Confirmation toast
 	let showConfirmToast = $state(false);
 
 	// Language
-	let language = $state<Language>('en');
+	let language = $state<Language>("en");
 
 	// Profile
-	let displayName = $state('Learner');
+	let displayName = $state("Learner");
 	let avatarUrl = $state<string | null>(null);
 	let isAuthenticated = $state(false);
 
@@ -37,7 +37,9 @@
 	let dueReviews = $state(0);
 	let savedWordCount = $state(0);
 	let totalLessons = $state(0);
-	let completedLessons = $state<Record<number, { completedAt: number; sentenceCount: number }>>({});
+	let completedLessons = $state<
+		Record<number, { completedAt: number; sentenceCount: number }>
+	>({});
 
 	// Calendar flashcard
 	let showCalendar = $state(false);
@@ -49,25 +51,50 @@
 	// Derived: current level label + progress %
 	const currentLevel = $derived.by(() => {
 		const third = Math.ceil(totalLessons / 3) || 20;
-		return currentDay <= third ? 'A1' : currentDay <= third * 2 ? 'A2' : 'B1+';
+		return currentDay <= third
+			? "A1"
+			: currentDay <= third * 2
+				? "A2"
+				: "B1+";
 	});
 
-	const progressPercent = $derived(totalLessons > 0 ? Math.round((daysCompleted / totalLessons) * 100) : 0);
+	const progressPercent = $derived(
+		totalLessons > 0 ? Math.round((daysCompleted / totalLessons) * 100) : 0,
+	);
 
 	const levelPercent = $derived.by(() => {
 		const third = Math.ceil(totalLessons / 3);
 		if (third === 0) return 0;
 		const t2 = third * 2;
-		if (currentDay <= third) return Math.round((Math.min(daysCompleted, third) / third) * 100);
-		if (currentDay <= t2) return Math.round(((Math.min(daysCompleted, t2) - third) / third) * 100);
-		return Math.round(((Math.min(daysCompleted, totalLessons) - t2) / third) * 100);
+		if (currentDay <= third)
+			return Math.round((Math.min(daysCompleted, third) / third) * 100);
+		if (currentDay <= t2)
+			return Math.round(
+				((Math.min(daysCompleted, t2) - third) / third) * 100,
+			);
+		return Math.round(
+			((Math.min(daysCompleted, totalLessons) - t2) / third) * 100,
+		);
 	});
 
 	// ── Practice Calendar ──────────────────────────────
 	let calYear = $state(new Date().getFullYear());
 	let calMonth = $state(new Date().getMonth()); // 0-indexed
 
-	const MONTH_NAMES = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+	const MONTH_NAMES = [
+		"January",
+		"February",
+		"March",
+		"April",
+		"May",
+		"June",
+		"July",
+		"August",
+		"September",
+		"October",
+		"November",
+		"December",
+	];
 
 	// Set of YYYY-MM-DD strings for days the user completed at least one lesson
 	const practiceDates = $derived.by(() => {
@@ -75,7 +102,9 @@
 		for (const entry of Object.values(completedLessons)) {
 			if (entry.completedAt) {
 				const d = new Date(entry.completedAt);
-				s.add(`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`);
+				s.add(
+					`${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`,
+				);
 			}
 		}
 		return s;
@@ -84,62 +113,88 @@
 	// Count of distinct practice days in the current calendar month
 	const thisMonthPracticed = $derived.by(() => {
 		const now = new Date();
-		const prefix = `${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}-`;
+		const prefix = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, "0")}-`;
 		let count = 0;
-		for (const k of practiceDates) { if (k.startsWith(prefix)) count++; }
+		for (const k of practiceDates) {
+			if (k.startsWith(prefix)) count++;
+		}
 		return count;
 	});
 
-	function buildCalCells(year: number, month: number): { day: number | null; key: string | null; isToday: boolean }[] {
+	function buildCalCells(
+		year: number,
+		month: number,
+	): { day: number | null; key: string | null; isToday: boolean }[] {
 		const today = new Date();
 		const firstDow = new Date(year, month, 1).getDay(); // 0 = Sunday
 		const startOffset = (firstDow + 6) % 7; // shift so Mon = 0
 		const daysInMonth = new Date(year, month + 1, 0).getDate();
-		const cells: { day: number | null; key: string | null; isToday: boolean }[] = [];
-		for (let i = 0; i < startOffset; i++) cells.push({ day: null, key: null, isToday: false });
+		const cells: {
+			day: number | null;
+			key: string | null;
+			isToday: boolean;
+		}[] = [];
+		for (let i = 0; i < startOffset; i++)
+			cells.push({ day: null, key: null, isToday: false });
 		for (let d = 1; d <= daysInMonth; d++) {
-			const key = `${year}-${String(month+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
-			const isToday = today.getFullYear() === year && today.getMonth() === month && today.getDate() === d;
+			const key = `${year}-${String(month + 1).padStart(2, "0")}-${String(d).padStart(2, "0")}`;
+			const isToday =
+				today.getFullYear() === year &&
+				today.getMonth() === month &&
+				today.getDate() === d;
 			cells.push({ day: d, key, isToday });
 		}
 		return cells;
 	}
 
 	function prevCalMonth() {
-		if (calMonth === 0) { calMonth = 11; calYear--; }
-		else calMonth--;
+		if (calMonth === 0) {
+			calMonth = 11;
+			calYear--;
+		} else calMonth--;
 	}
 
 	function nextCalMonth() {
 		const now = new Date();
-		if (calYear > now.getFullYear() || (calYear === now.getFullYear() && calMonth >= now.getMonth())) return;
-		if (calMonth === 11) { calMonth = 0; calYear++; }
-		else calMonth++;
+		if (
+			calYear > now.getFullYear() ||
+			(calYear === now.getFullYear() && calMonth >= now.getMonth())
+		)
+			return;
+		if (calMonth === 11) {
+			calMonth = 0;
+			calYear++;
+		} else calMonth++;
 	}
 
 	// i18n content
 	const content = $derived({
-		langLabel: language === 'fa' ? 'زبان:' : 'Language:',
-		lessonsTitle: language === 'fa' ? 'درس‌های روزانه' : 'Daily Lessons',
+		langLabel: language === "fa" ? "زبان:" : "Language:",
+		lessonsTitle: language === "fa" ? "درس‌های روزانه" : "Daily Lessons",
 		lessonsDesc:
-			language === 'fa'
-				? 'مکالمات واقعی آلمانی را تمرین کنید. هر روز سناریوهای جدید مثل سفارش در کافه، پرسیدن مسیر و موارد دیگر.'
-				: 'Practice real-world conversations. Each day brings new scenarios like ordering at a café, asking for directions, and more.',
-		basicsTitle: language === 'fa' ? 'مبانی آلمانی' : 'German Basics',
+			language === "fa"
+				? "مکالمات واقعی آلمانی را تمرین کنید. هر روز سناریوهای جدید مثل سفارش در کافه، پرسیدن مسیر و موارد دیگر."
+				: "Practice real-world conversations. Each day brings new scenarios like ordering at a café, asking for directions, and more.",
+		basicsTitle: language === "fa" ? "مبانی آلمانی" : "German Basics",
 		basicsDesc:
-			language === 'fa'
-				? 'یادگیری اصول اولیه: ضمایر، حروف تعریف، قیدها، اعداد، رنگ‌ها و روزهای هفته.'
-				: 'Essential building blocks: pronouns, articles, adverbs, numbers, colors, and days of the week.'
+			language === "fa"
+				? "یادگیری اصول اولیه: ضمایر، حروف تعریف، قیدها، اعداد، رنگ‌ها و روزهای هفته."
+				: "Essential building blocks: pronouns, articles, adverbs, numbers, colors, and days of the week.",
 	});
 
 	// Compute streak from completedLessons timestamps
-	function computeStreak(completedLessons: Record<number, { completedAt: number; sentenceCount: number }>): number {
+	function computeStreak(
+		completedLessons: Record<
+			number,
+			{ completedAt: number; sentenceCount: number }
+		>,
+	): number {
 		const entries = Object.values(completedLessons);
 		if (!entries.length) return 0;
 
 		// Group by calendar date (YYYY-MM-DD)
 		const days = new Set(
-			entries.map((e) => new Date(e.completedAt).toDateString())
+			entries.map((e) => new Date(e.completedAt).toDateString()),
 		);
 
 		let streak = 0;
@@ -186,26 +241,30 @@
 
 	function toggleAuthModal() {
 		showAuthModal = !showAuthModal;
-		authError = '';
+		authError = "";
 		if (showAuthModal) setTimeout(() => emailInput?.focus(), 100);
 	}
 
 	function toggleAuthMode() {
-		authMode = authMode === 'signin' ? 'signup' : 'signin';
-		authError = '';
+		authMode = authMode === "signin" ? "signup" : "signin";
+		authError = "";
 	}
 
 	async function submitAuth() {
-		authError = '';
+		authError = "";
 		if (!authEmail.trim() || !authPassword) {
-			authError = 'Please enter email and password.';
+			authError = "Please enter email and password.";
 			return;
 		}
 		authLoading = true;
 		try {
 			let result;
-			if (authMode === 'signup') {
-				result = await auth.signUp(authEmail.trim(), authPassword, authName.trim() || 'Learner');
+			if (authMode === "signup") {
+				result = await auth.signUp(
+					authEmail.trim(),
+					authPassword,
+					authName.trim() || "Learner",
+				);
 			} else {
 				result = await auth.signIn(authEmail.trim(), authPassword);
 			}
@@ -213,9 +272,9 @@
 				authError = result.error;
 			} else {
 				showAuthModal = false;
-				authEmail = '';
-				authPassword = '';
-				authName = '';
+				authEmail = "";
+				authPassword = "";
+				authName = "";
 				const user = await auth.getUser();
 				if (user) await auth.ensureProfile(user);
 				await updateProfileUI();
@@ -223,7 +282,7 @@
 				await loadProgress();
 			}
 		} catch (e: any) {
-			authError = e.message || 'An error occurred.';
+			authError = e.message || "An error occurred.";
 		} finally {
 			authLoading = false;
 		}
@@ -231,7 +290,7 @@
 
 	async function handleSignOut() {
 		await auth.signOut();
-		window.location.href = '/';
+		window.location.href = "/";
 	}
 
 	async function updateProfileUI() {
@@ -243,7 +302,7 @@
 			if (url) dataLayer.setAvatarUrl(url);
 			avatarUrl = url;
 		} else {
-			displayName = 'Learner';
+			displayName = "Learner";
 			avatarUrl = null;
 		}
 	}
@@ -256,16 +315,16 @@
 	}
 
 	function handleKeydown(e: KeyboardEvent) {
-		if (e.key === 'Escape' && showCalendar) showCalendar = false;
-		if (e.key === 'Escape' && showAuthModal) toggleAuthModal();
-		if (e.key === 'Tab' && showAuthModal && modalEl) {
+		if (e.key === "Escape" && showCalendar) showCalendar = false;
+		if (e.key === "Escape" && showAuthModal) toggleAuthModal();
+		if (e.key === "Tab" && showAuthModal && modalEl) {
 			const focusable = modalEl.querySelectorAll<HTMLElement>(
-				'input:not([style*="display:none"]), button, a[href], [tabindex]:not([tabindex="-1"])'
+				'input:not([style*="display:none"]), button, a[href], [tabindex]:not([tabindex="-1"])',
 			);
 			const visible = Array.from(focusable).filter((el) => {
 				let p: HTMLElement | null = el;
 				while (p && p !== modalEl) {
-					if (p.style && p.style.display === 'none') return false;
+					if (p.style && p.style.display === "none") return false;
 					p = p.parentElement as HTMLElement;
 				}
 				return true;
@@ -284,25 +343,25 @@
 	}
 
 	function handleAuthKeydown(e: KeyboardEvent) {
-		if (e.key === 'Enter') submitAuth();
+		if (e.key === "Enter") submitAuth();
 	}
 
 	onMount(async () => {
 		initSyncListeners();
 
 		const params = $page.url.searchParams;
-		if (params.get('confirmed') === 'true') {
+		if (params.get("confirmed") === "true") {
 			showConfirmToast = true;
 			setTimeout(() => (showConfirmToast = false), 5000);
-			goto('/home', { replaceState: true });
+			goto("/home", { replaceState: true });
 		}
 
 		const savedLang = await dataLayer.getLanguage();
 		if (savedLang) {
 			language = savedLang as Language;
 		} else {
-			const browserLang = navigator.language || 'en';
-			language = browserLang.startsWith('fa') ? 'fa' : 'en';
+			const browserLang = navigator.language || "en";
+			language = browserLang.startsWith("fa") ? "fa" : "en";
 		}
 		preferencesStore.update((s) => ({ ...s, language }));
 
@@ -331,36 +390,78 @@
 		role="dialog"
 		aria-modal="true"
 		aria-labelledby="auth-title"
-		onclick={(e) => { if (e.target === e.currentTarget) toggleAuthModal(); }}
+		onclick={(e) => {
+			if (e.target === e.currentTarget) toggleAuthModal();
+		}}
 	>
 		<div class="auth-modal" bind:this={modalEl}>
-			<button class="auth-close" onclick={toggleAuthModal} aria-label="Close dialog">×</button>
-			<h2 id="auth-title">{authMode === 'signin' ? 'Sign In' : 'Sign Up'}</h2>
+			<button
+				class="auth-close"
+				onclick={toggleAuthModal}
+				aria-label="Close dialog">×</button
+			>
+			<h2 id="auth-title">
+				{authMode === "signin" ? "Sign In" : "Sign Up"}
+			</h2>
 			{#if authError}
 				<div class="auth-error">{authError}</div>
 			{/if}
-			{#if authMode === 'signup'}
+			{#if authMode === "signup"}
 				<div class="auth-field">
-					<input type="text" placeholder="Display Name" aria-label="Display Name"
-						bind:value={authName} onkeydown={handleAuthKeydown} />
+					<input
+						type="text"
+						placeholder="Display Name"
+						aria-label="Display Name"
+						bind:value={authName}
+						onkeydown={handleAuthKeydown}
+					/>
 				</div>
 			{/if}
 			<div class="auth-field">
-				<input type="email" placeholder="Email" aria-label="Email address"
-					bind:this={emailInput} bind:value={authEmail} onkeydown={handleAuthKeydown} />
+				<input
+					type="email"
+					placeholder="Email"
+					aria-label="Email address"
+					bind:this={emailInput}
+					bind:value={authEmail}
+					onkeydown={handleAuthKeydown}
+				/>
 			</div>
 			<div class="auth-field">
-				<input type="password" placeholder="Password" aria-label="Password"
-					bind:value={authPassword} onkeydown={handleAuthKeydown} />
+				<input
+					type="password"
+					placeholder="Password"
+					aria-label="Password"
+					bind:value={authPassword}
+					onkeydown={handleAuthKeydown}
+				/>
 			</div>
-			<button class="auth-submit" onclick={submitAuth} disabled={authLoading}>
-				{authLoading ? '...' : authMode === 'signin' ? 'Sign In' : 'Sign Up'}
+			<button
+				class="auth-submit"
+				onclick={submitAuth}
+				disabled={authLoading}
+			>
+				{authLoading
+					? "..."
+					: authMode === "signin"
+						? "Sign In"
+						: "Sign Up"}
 			</button>
 			<p class="auth-toggle">
-				<span>{authMode === 'signin' ? "Don't have an account?" : 'Already have an account?'}</span>
+				<span
+					>{authMode === "signin"
+						? "Don't have an account?"
+						: "Already have an account?"}</span
+				>
 				<!-- svelte-ignore a11y_invalid_attribute -->
-				<a href="#" onclick={(e) => { e.preventDefault(); toggleAuthMode(); }}>
-					{authMode === 'signin' ? ' Sign Up' : ' Sign In'}
+				<a
+					href="#"
+					onclick={(e) => {
+						e.preventDefault();
+						toggleAuthMode();
+					}}
+				>
+					{authMode === "signin" ? " Sign Up" : " Sign In"}
 				</a>
 			</p>
 		</div>
@@ -376,34 +477,47 @@
 		role="dialog"
 		aria-modal="true"
 		aria-label="60-Day Journey Calendar"
-		onclick={(e) => { if (e.target === e.currentTarget) showCalendar = false; }}
+		onclick={(e) => {
+			if (e.target === e.currentTarget) showCalendar = false;
+		}}
 	>
 		<div class="cal-modal">
-			<button class="cal-close" onclick={() => showCalendar = false} aria-label="Close calendar">×</button>
+			<button
+				class="cal-close"
+				onclick={() => (showCalendar = false)}
+				aria-label="Close calendar">×</button
+			>
 
 			<div class="cal-header">
 				<h2>📅 Practice Calendar</h2>
 				<p>
-					{daysCompleted} lesson{daysCompleted === 1 ? '' : 's'} completed
-					{#if streakCount > 0} · {streakCount}-day streak 🔥{/if}
+					{daysCompleted} lesson{daysCompleted === 1 ? "" : "s"} completed
+					{#if streakCount > 0}
+						· {streakCount}-day streak 🔥{/if}
 				</p>
 			</div>
 
 			<!-- Month navigation -->
 			<div class="pcal-header">
-				<button class="pcal-nav-btn" onclick={prevCalMonth} aria-label="Previous month">‹</button>
-				<span class="pcal-title">{MONTH_NAMES[calMonth]} {calYear}</span>
+				<button
+					class="pcal-nav-btn"
+					onclick={prevCalMonth}
+					aria-label="Previous month">‹</button
+				>
+				<span class="pcal-title">{MONTH_NAMES[calMonth]} {calYear}</span
+				>
 				<button
 					class="pcal-nav-btn"
 					onclick={nextCalMonth}
-					disabled={calYear === new Date().getFullYear() && calMonth >= new Date().getMonth()}
-					aria-label="Next month"
-				>›</button>
+					disabled={calYear === new Date().getFullYear() &&
+						calMonth >= new Date().getMonth()}
+					aria-label="Next month">›</button
+				>
 			</div>
 
 			<!-- Day-of-week headers -->
 			<div class="pcal-dow">
-				{#each ['M','T','W','T','F','S','S'] as label}
+				{#each ["M", "T", "W", "T", "F", "S", "S"] as label}
 					<span class="pcal-dow-cell">{label}</span>
 				{/each}
 			</div>
@@ -419,19 +533,27 @@
 							class:practiced={practiceDates.has(cell.key!)}
 							class:today={cell.isToday}
 							title={practiceDates.has(cell.key!)
-								? `Practiced on ${new Date(cell.key!).toLocaleDateString('en', { month: 'long', day: 'numeric' })}`
-								: cell.isToday ? 'Today' : ''}
-						>{cell.day}</span>
+								? `Practiced on ${new Date(cell.key!).toLocaleDateString("en", { month: "long", day: "numeric" })}`
+								: cell.isToday
+									? "Today"
+									: ""}>{cell.day}</span
+						>
 					{/if}
 				{/each}
 			</div>
 
 			<!-- Legend -->
 			<div class="cal-legend">
-				<span class="leg-item"><span class="leg-sw practiced-sw"></span>Practiced</span>
-				<span class="leg-item"><span class="leg-sw today-sw"></span>Today</span>
+				<span class="leg-item"
+					><span class="leg-sw practiced-sw"></span>Practiced</span
+				>
+				<span class="leg-item"
+					><span class="leg-sw today-sw"></span>Today</span
+				>
 				<span class="leg-item pcal-month-stat">
-					{thisMonthPracticed} day{thisMonthPracticed !== 1 ? 's' : ''} this month
+					{thisMonthPracticed} day{thisMonthPracticed !== 1
+						? "s"
+						: ""} this month
 				</span>
 			</div>
 		</div>
@@ -439,7 +561,6 @@
 {/if}
 
 <div class="home-container">
-
 	<!-- ── Top Nav ─────────────────────────────────────── -->
 	<nav class="top-nav">
 		<a href="/" class="nav-brand" title="Back to home">
@@ -451,7 +572,11 @@
 			<!-- Language selector — compact, in nav -->
 			<div class="lang-compact">
 				<span class="lang-lbl">{content.langLabel}</span>
-				<select aria-label="Select language" value={language} onchange={onLanguageChange}>
+				<select
+					aria-label="Select language"
+					value={language}
+					onchange={onLanguageChange}
+				>
 					<option value="en">English</option>
 					<option value="fa">فارسی</option>
 				</select>
@@ -459,18 +584,22 @@
 
 			{#if isAuthenticated}
 				<a href="/settings" class="nav-icon-btn" title="Settings">⚙️</a>
-				<button class="nav-text-btn" onclick={handleSignOut}>Sign Out</button>
+				<button class="nav-text-btn" onclick={handleSignOut}
+					>Sign Out</button
+				>
 				<a href="/settings" class="avatar-link" title="Profile">
 					<div class="avatar">
 						{#if avatarUrl}
 							<img src={avatarUrl} alt="Avatar" />
 						{:else}
-							{(displayName || 'L').charAt(0).toUpperCase()}
+							{(displayName || "L").charAt(0).toUpperCase()}
 						{/if}
 					</div>
 				</a>
 			{:else}
-				<button class="nav-text-btn" onclick={toggleAuthModal}>Sign In</button>
+				<button class="nav-text-btn" onclick={toggleAuthModal}
+					>Sign In</button
+				>
 			{/if}
 		</div>
 	</nav>
@@ -481,18 +610,23 @@
 			<div class="logo-anim">🌍</div>
 			<div>
 				{#if isAuthenticated}
-					<h1>Welcome back, {displayName.split(' ')[0]}! 👋</h1>
+					<h1>Welcome back, {displayName.split(" ")[0]}! 👋</h1>
 					<p>
 						{streakCount > 0
 							? `You're on a ${streakCount}-day streak — keep it going!`
-							: 'Pick up where you left off.'}
+							: "Pick up where you left off."}
 					</p>
 					{#if totalLessons > 0}
 						<div class="journey-bar-wrap">
 							<div class="journey-bar">
-								<div class="journey-fill" style="width: {progressPercent}%"></div>
+								<div
+									class="journey-fill"
+									style="width: {progressPercent}%"
+								></div>
 							</div>
-							<span class="journey-label">{daysCompleted}/{totalLessons} days · {progressPercent}%</span>
+							<span class="journey-label"
+								>{daysCompleted}/{totalLessons} days · {progressPercent}%</span
+							>
 						</div>
 					{/if}
 				{:else}
@@ -501,7 +635,7 @@
 				{/if}
 			</div>
 		</div>
-		</div>
+	</div>
 
 	<!-- ── Progress Stats ──────────────────────────────── -->
 	{#if isAuthenticated}
@@ -511,26 +645,45 @@
 				<span class="stat-value">{currentLevel}</span>
 				<span class="stat-label">Current Level</span>
 				<div class="stat-bar">
-					<div class="stat-bar-fill" style="width: {levelPercent}%"></div>
+					<div
+						class="stat-bar-fill"
+						style="width: {levelPercent}%"
+					></div>
 				</div>
 			</div>
-			<button class="stat-card stat-card-clickable" onclick={() => showCalendar = true} title="View your practice calendar">
+			<button
+				class="stat-card stat-card-clickable"
+				onclick={() => (showCalendar = true)}
+				title="View your practice calendar"
+			>
 				<span class="stat-icon">🔥</span>
 				<span class="stat-value">{streakCount}</span>
 				<span class="stat-label">Day Streak</span>
 				<span class="stat-cta-hint">view calendar →</span>
 			</button>
-			<a href="/review" class="stat-card stat-card-link" class:has-due={dueReviews > 0} title="Go to reviews">
+			<a
+				href="/review"
+				class="stat-card stat-card-link"
+				class:has-due={dueReviews > 0}
+				title="Go to reviews"
+			>
 				<span class="stat-icon">🔄</span>
 				<span class="stat-value">{dueReviews}</span>
-				<span class="stat-label">{dueReviews === 0 ? 'All caught up!' : 'Due Reviews'}</span>
+				<span class="stat-label"
+					>{dueReviews === 0 ? "All caught up!" : "Due Reviews"}</span
+				>
 				{#if dueReviews > 10}
 					<span class="stat-sub-note">Just do a few!</span>
 				{:else if dueReviews > 0}
 					<span class="stat-cta">Review now →</span>
 				{/if}
 			</a>
-			<a href="/vocabulary" class="stat-card stat-card-link" class:has-words={savedWordCount > 0} title="View saved vocabulary">
+			<a
+				href="/vocabulary"
+				class="stat-card stat-card-link"
+				class:has-words={savedWordCount > 0}
+				title="View saved vocabulary"
+			>
 				<span class="stat-icon">📖</span>
 				<span class="stat-value">{savedWordCount}</span>
 				<span class="stat-label">Saved Words</span>
@@ -539,8 +692,7 @@
 				{/if}
 			</a>
 		</div>
-
-		{/if}
+	{/if}
 
 	<!-- ── Nav Cards ───────────────────────────────────── -->
 	<div class="nav-cards" id="categories-grid">
@@ -551,11 +703,25 @@
 			<p>{content.lessonsDesc}</p>
 			{#if isAuthenticated}
 				{#if totalLessons > 0 && daysCompleted >= totalLessons}
-					<div class="card-meta done">🎉 All {totalLessons} days complete!</div>
-					<div class="card-progress-bar"><div class="card-progress-fill" style="width: 100%"></div></div>
+					<div class="card-meta done">
+						🎉 All {totalLessons} days complete!
+					</div>
+					<div class="card-progress-bar">
+						<div
+							class="card-progress-fill"
+							style="width: 100%"
+						></div>
+					</div>
 				{:else if daysCompleted > 0}
-					<div class="card-meta">{daysCompleted} of {totalLessons} days · {progressPercent}%</div>
-					<div class="card-progress-bar"><div class="card-progress-fill" style="width: {progressPercent}%"></div></div>
+					<div class="card-meta">
+						{daysCompleted} of {totalLessons} days · {progressPercent}%
+					</div>
+					<div class="card-progress-bar">
+						<div
+							class="card-progress-fill"
+							style="width: {progressPercent}%"
+						></div>
+					</div>
 				{:else}
 					<div class="card-meta">Start Day 1 →</div>
 				{/if}
@@ -568,7 +734,9 @@
 			<div class="icon">🔤</div>
 			<h2>{content.basicsTitle}</h2>
 			<p>{content.basicsDesc}</p>
-			<div class="card-meta basics-meta">8 topics · Pronouns, Articles &amp; more</div>
+			<div class="card-meta basics-meta">
+				8 topics · Pronouns, Articles &amp; more
+			</div>
 			<div class="arrow">→</div>
 		</a>
 	</div>
@@ -593,7 +761,7 @@
 		display: flex;
 		flex-direction: column;
 		gap: 28px;
-		font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+		font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 		color: #fff;
 	}
 
@@ -713,7 +881,9 @@
 		border: 2px solid rgba(255, 255, 255, 0.2);
 		overflow: hidden;
 		cursor: pointer;
-		transition: transform 0.2s, box-shadow 0.2s;
+		transition:
+			transform 0.2s,
+			box-shadow 0.2s;
 	}
 
 	.avatar:hover {
@@ -730,7 +900,11 @@
 
 	/* ── Welcome Banner ───────────────────────────────── */
 	.welcome-banner {
-		background: linear-gradient(135deg, rgba(233, 69, 96, 0.12), rgba(255, 107, 107, 0.06));
+		background: linear-gradient(
+			135deg,
+			rgba(233, 69, 96, 0.12),
+			rgba(255, 107, 107, 0.06)
+		);
 		border: 1px solid rgba(233, 69, 96, 0.2);
 		border-radius: 20px;
 		padding: 28px 32px;
@@ -753,8 +927,13 @@
 	}
 
 	@keyframes float {
-		0%, 100% { transform: translateY(0); }
-		50% { transform: translateY(-8px); }
+		0%,
+		100% {
+			transform: translateY(0);
+		}
+		50% {
+			transform: translateY(-8px);
+		}
 	}
 
 	.welcome-left h1 {
@@ -774,7 +953,6 @@
 		font-size: 0.95rem;
 	}
 
-
 	/* ── Stats Row ────────────────────────────────────── */
 	.stats-row {
 		display: grid;
@@ -792,7 +970,9 @@
 		align-items: center;
 		gap: 6px;
 		text-align: center;
-		transition: transform 0.25s ease, border-color 0.25s;
+		transition:
+			transform 0.25s ease,
+			border-color 0.25s;
 	}
 
 	.stat-card:hover {
@@ -811,12 +991,6 @@
 		line-height: 1;
 	}
 
-	.stat-total {
-		font-size: 1rem;
-		color: #666;
-		font-weight: 500;
-	}
-
 	.stat-label {
 		font-size: 0.78rem;
 		color: #777;
@@ -831,7 +1005,11 @@
 	}
 
 	.nav-card {
-		background: linear-gradient(145deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.04));
+		background: linear-gradient(
+			145deg,
+			rgba(255, 255, 255, 0.08),
+			rgba(255, 255, 255, 0.04)
+		);
 		border-radius: 24px;
 		padding: 36px 32px;
 		text-decoration: none;
@@ -855,11 +1033,19 @@
 	}
 
 	.nav-card.lessons .card-glow {
-		background: radial-gradient(circle at 50% 0%, rgba(52, 152, 219, 0.18), transparent 70%);
+		background: radial-gradient(
+			circle at 50% 0%,
+			rgba(52, 152, 219, 0.18),
+			transparent 70%
+		);
 	}
 
 	.nav-card.basics .card-glow {
-		background: radial-gradient(circle at 50% 0%, rgba(46, 204, 113, 0.18), transparent 70%);
+		background: radial-gradient(
+			circle at 50% 0%,
+			rgba(46, 204, 113, 0.18),
+			transparent 70%
+		);
 	}
 
 	.nav-card:hover .card-glow {
@@ -871,7 +1057,11 @@
 	}
 
 	.nav-card.lessons {
-		background: linear-gradient(145deg, rgba(52, 152, 219, 0.18), rgba(52, 152, 219, 0.04));
+		background: linear-gradient(
+			145deg,
+			rgba(52, 152, 219, 0.18),
+			rgba(52, 152, 219, 0.04)
+		);
 	}
 
 	.nav-card.lessons:hover {
@@ -880,7 +1070,11 @@
 	}
 
 	.nav-card.basics {
-		background: linear-gradient(145deg, rgba(46, 204, 113, 0.18), rgba(46, 204, 113, 0.04));
+		background: linear-gradient(
+			145deg,
+			rgba(46, 204, 113, 0.18),
+			rgba(46, 204, 113, 0.04)
+		);
 	}
 
 	.nav-card.basics:hover {
@@ -1149,7 +1343,9 @@
 		font-family: inherit;
 	}
 
-	.auth-field input::placeholder { color: #666; }
+	.auth-field input::placeholder {
+		color: #666;
+	}
 
 	.auth-submit {
 		width: 100%;
@@ -1166,7 +1362,10 @@
 		font-family: inherit;
 	}
 
-	.auth-submit:disabled { opacity: 0.6; cursor: not-allowed; }
+	.auth-submit:disabled {
+		opacity: 0.6;
+		cursor: not-allowed;
+	}
 
 	.auth-toggle {
 		text-align: center;
@@ -1175,7 +1374,11 @@
 		font-size: 0.9rem;
 	}
 
-	.auth-toggle a { color: #e94560; text-decoration: none; font-weight: 600; }
+	.auth-toggle a {
+		color: #e94560;
+		text-decoration: none;
+		font-weight: 600;
+	}
 
 	/* ── Clickable stat card ──────────────────────────── */
 	.stat-card-clickable {
@@ -1245,7 +1448,9 @@
 		font-family: inherit;
 	}
 
-	.cal-close:hover { color: #fff; }
+	.cal-close:hover {
+		color: #fff;
+	}
 
 	.cal-header {
 		margin-bottom: 18px;
@@ -1264,24 +1469,6 @@
 		color: #888;
 		margin: 0;
 	}
-
-	.cal-level-badges {
-		display: flex;
-		gap: 8px;
-		margin-bottom: 18px;
-		flex-wrap: wrap;
-	}
-
-	.cal-lvl-badge {
-		padding: 4px 12px;
-		border-radius: 20px;
-		font-size: 0.74rem;
-		font-weight: 700;
-	}
-
-	.cal-lvl-badge.a1 { background: rgba(46, 204, 113, 0.18); color: #2ecc71; }
-	.cal-lvl-badge.a2 { background: rgba(52, 152, 219, 0.18); color: #3498db; }
-	.cal-lvl-badge.b1 { background: rgba(155, 89, 182, 0.18); color: #9b59b6; }
 
 	/* ── Practice Calendar (inside modal) ────────────── */
 	.pcal-header {
@@ -1360,7 +1547,9 @@
 		color: #555;
 		background: rgba(255, 255, 255, 0.03);
 		border: 1px solid transparent;
-		transition: background 0.15s, border-color 0.15s;
+		transition:
+			background 0.15s,
+			border-color 0.15s;
 		cursor: default;
 	}
 
@@ -1414,8 +1603,14 @@
 		flex-shrink: 0;
 	}
 
-	.practiced-sw { background: rgba(46, 204, 113, 0.25); border: 1px solid rgba(46, 204, 113, 0.5); }
-	.today-sw     { background: transparent; border: 1px solid rgba(233, 69, 96, 0.6); }
+	.practiced-sw {
+		background: rgba(46, 204, 113, 0.25);
+		border: 1px solid rgba(46, 204, 113, 0.5);
+	}
+	.today-sw {
+		background: transparent;
+		border: 1px solid rgba(233, 69, 96, 0.6);
+	}
 
 	.pcal-month-stat {
 		margin-left: auto;
@@ -1425,22 +1620,43 @@
 
 	/* ── Responsive ───────────────────────────────────── */
 	@media (max-width: 700px) {
-		.home-container { padding: 20px 16px; gap: 20px; }
+		.home-container {
+			padding: 20px 16px;
+			gap: 20px;
+		}
 
-		.cal-modal { padding: 24px 18px; }
+		.cal-modal {
+			padding: 24px 18px;
+		}
 
-		.stats-row { grid-template-columns: repeat(2, 1fr); }
+		.stats-row {
+			grid-template-columns: repeat(2, 1fr);
+		}
 
-		.nav-cards { grid-template-columns: 1fr; }
+		.nav-cards {
+			grid-template-columns: 1fr;
+		}
 
-		.welcome-banner { flex-direction: column; align-items: flex-start; gap: 14px; }
+		.welcome-banner {
+			flex-direction: column;
+			align-items: flex-start;
+			gap: 14px;
+		}
 
-.nav-card { padding: 28px 24px; }
+		.nav-card {
+			padding: 28px 24px;
+		}
 
-		.lang-compact { display: none; }
+		.lang-compact {
+			display: none;
+		}
 
-		.welcome-left { gap: 14px; }
+		.welcome-left {
+			gap: 14px;
+		}
 
-		.welcome-left h1 { font-size: 1.3rem; }
+		.welcome-left h1 {
+			font-size: 1.3rem;
+		}
 	}
 </style>

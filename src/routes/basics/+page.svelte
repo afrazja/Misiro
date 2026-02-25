@@ -1,29 +1,36 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
-	import { getLanguage, setLanguage } from '$services/data-layer';
-	import type { Language } from '$stores/preferences';
+	import { onMount } from "svelte";
+	import { getLanguage, setLanguage } from "$services/data-layer";
+	import type { Language } from "$stores/preferences";
 
 	let { data } = $props();
 
-	let currentLang = $state('en' as Language);
+	let currentLang = $state("en" as Language);
 
 	const categories = $derived(
 		(data.categories ?? []).map((cat: any) => ({
 			key: cat.key,
 			icon: cat.icon,
-			title: currentLang === 'fa' ? cat.title_fa : cat.title_en,
-			description: currentLang === 'fa' ? cat.description_fa : cat.description_en,
-		}))
+			title: currentLang === "fa" ? cat.title_fa : cat.title_en,
+			description:
+				currentLang === "fa" ? cat.description_fa : cat.description_en,
+		})),
 	);
 
-	const pageTitle = $derived(currentLang === 'fa' ? '🔤 مبانی آلمانی' : '🔤 German Basics');
-	const pageSubtitle = $derived(
-		currentLang === 'fa'
-			? '\u06CC\u06A9 \u062F\u0633\u062A\u0647\u200C\u0628\u0646\u062F\u06CC \u0631\u0627 \u0628\u0631\u0627\u06CC \u0634\u0631\u0648\u0639 \u06CC\u0627\u062F\u06AF\u06CC\u0631\u06CC \u0627\u0646\u062A\u062E\u0627\u0628 \u06A9\u0646\u06CC\u062F'
-			: 'Choose a category to start learning'
+	const pageTitle = $derived(
+		currentLang === "fa" ? "🔤 مبانی آلمانی" : "🔤 German Basics",
 	);
-	const backText = $derived(currentLang === 'fa' ? '\u062E\u0627\u0646\u0647' : 'Home');
-	const wordsLabel = $derived(currentLang === 'fa' ? '\u06A9\u0644\u0645\u0647' : 'words');
+	const pageSubtitle = $derived(
+		currentLang === "fa"
+			? "\u06CC\u06A9 \u062F\u0633\u062A\u0647\u200C\u0628\u0646\u062F\u06CC \u0631\u0627 \u0628\u0631\u0627\u06CC \u0634\u0631\u0648\u0639 \u06CC\u0627\u062F\u06AF\u06CC\u0631\u06CC \u0627\u0646\u062A\u062E\u0627\u0628 \u06A9\u0646\u06CC\u062F"
+			: "Choose a category to start learning",
+	);
+	const backText = $derived(
+		currentLang === "fa" ? "\u062E\u0627\u0646\u0647" : "Home",
+	);
+	const wordsLabel = $derived(
+		currentLang === "fa" ? "\u06A9\u0644\u0645\u0647" : "words",
+	);
 
 	function handleLanguageChange(e: Event) {
 		const target = e.target as HTMLSelectElement;
@@ -33,11 +40,11 @@
 
 	onMount(async () => {
 		const savedLang = await getLanguage();
-		if (savedLang === 'fa' || savedLang === 'en') {
+		if (savedLang === "fa" || savedLang === "en") {
 			currentLang = savedLang;
 		} else {
-			const browserLang = navigator.language || 'en';
-			currentLang = browserLang.startsWith('fa') ? 'fa' : 'en';
+			const browserLang = navigator.language || "en";
+			currentLang = browserLang.startsWith("fa") ? "fa" : "en";
 		}
 	});
 </script>
@@ -151,7 +158,11 @@
 	}
 
 	.category-card {
-		background: linear-gradient(145deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.03));
+		background: linear-gradient(
+			145deg,
+			rgba(255, 255, 255, 0.08),
+			rgba(255, 255, 255, 0.03)
+		);
 		border-radius: 20px;
 		padding: 25px;
 		text-decoration: none;
@@ -165,13 +176,17 @@
 	}
 
 	.category-card::before {
-		content: '';
+		content: "";
 		position: absolute;
 		top: 0;
 		left: 0;
 		right: 0;
 		bottom: 0;
-		background: linear-gradient(145deg, rgba(46, 204, 113, 0.1), transparent);
+		background: linear-gradient(
+			145deg,
+			rgba(46, 204, 113, 0.1),
+			transparent
+		);
 		opacity: 0;
 		transition: opacity 0.3s ease;
 	}
@@ -207,17 +222,6 @@
 		position: relative;
 		z-index: 1;
 		flex: 1;
-	}
-
-	.category-count {
-		margin-top: 15px;
-		padding-top: 12px;
-		border-top: 1px solid rgba(255, 255, 255, 0.1);
-		font-size: 0.85rem;
-		color: #2ecc71;
-		font-weight: 600;
-		position: relative;
-		z-index: 1;
 	}
 
 	.category-arrow {

@@ -1,6 +1,6 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
-	import { goto } from '$app/navigation';
+	import { onMount } from "svelte";
+	import { goto } from "$app/navigation";
 	import {
 		isAuthenticated,
 		getUser,
@@ -10,55 +10,70 @@
 		uploadAvatar,
 		removeAvatar,
 		getAvatarUrl,
-		signOut
-	} from '$services/auth';
+		signOut,
+	} from "$services/auth";
 	import {
 		getLanguage,
 		setLanguage,
 		getVoiceSpeed,
 		setVoiceSpeed,
 		setAvatarUrl as setLocalAvatarUrl,
-		setDisplayName as setLocalDisplayName
-	} from '$services/data-layer';
-	import { getTargetLanguage, updateLanguagePreferences } from '$services/auth';
-	import type { TargetLanguage } from '$lib/stores/preferences';
+		setDisplayName as setLocalDisplayName,
+	} from "$services/data-layer";
+	import {
+		getTargetLanguage,
+		updateLanguagePreferences,
+	} from "$services/auth";
+	import type { TargetLanguage } from "$lib/stores/preferences";
 
 	// ============ STATE ============
 	let isLoading = $state(true);
-	let email = $state('');
-	let displayName = $state('');
+	let email = $state("");
+	let displayName = $state("");
 	let avatarUrl: string | null = $state(null);
-	let currentLang = $state('en');
-	let currentTargetLang = $state<TargetLanguage>('de');
+	let currentLang = $state("en");
+	let currentTargetLang = $state<TargetLanguage>("de");
 	let voiceSpeed = $state(1.0);
-	let langStatus = $state<{ text: string; type: 'success' | 'error' } | null>(null);
+	let langStatus = $state<{ text: string; type: "success" | "error" } | null>(
+		null,
+	);
 
 	// Password fields
-	let newPassword = $state('');
-	let confirmPassword = $state('');
+	let newPassword = $state("");
+	let confirmPassword = $state("");
 
 	// Status messages
-	let avatarStatus = $state<{ text: string; type: 'success' | 'error' } | null>(null);
-	let nameStatus = $state<{ text: string; type: 'success' | 'error' } | null>(null);
-	let passwordStatus = $state<{ text: string; type: 'success' | 'error' } | null>(null);
+	let avatarStatus = $state<{
+		text: string;
+		type: "success" | "error";
+	} | null>(null);
+	let nameStatus = $state<{ text: string; type: "success" | "error" } | null>(
+		null,
+	);
+	let passwordStatus = $state<{
+		text: string;
+		type: "success" | "error";
+	} | null>(null);
 
 	// File input ref
 	let fileInput: HTMLInputElement | undefined = $state(undefined);
 
 	// ============ COMPUTED ============
 	const avatarInitial = $derived(
-		(displayName || 'L').charAt(0).toUpperCase()
+		(displayName || "L").charAt(0).toUpperCase(),
 	);
 
 	// ============ STATUS HELPERS ============
 	function showStatus(
-		setter: (val: { text: string; type: 'success' | 'error' } | null) => void,
+		setter: (
+			val: { text: string; type: "success" | "error" } | null,
+		) => void,
 		text: string,
-		type: 'success' | 'error',
-		autoHide = true
+		type: "success" | "error",
+		autoHide = true,
 	) {
 		setter({ text, type });
-		if (autoHide && type === 'success') {
+		if (autoHide && type === "success") {
 			setTimeout(() => setter(null), 3000);
 		}
 	}
@@ -70,39 +85,53 @@
 		if (!file) return;
 
 		if (file.size > 5 * 1024 * 1024) {
-			showStatus((v) => (avatarStatus = v), 'Image must be less than 5MB.', 'error', false);
+			showStatus(
+				(v) => (avatarStatus = v),
+				"Image must be less than 5MB.",
+				"error",
+				false,
+			);
 			return;
 		}
 
-		showStatus((v) => (avatarStatus = v), 'Uploading...', 'success', false);
+		showStatus((v) => (avatarStatus = v), "Uploading...", "success", false);
 
 		const result = await uploadAvatar(file);
 		if (result.error) {
-			showStatus((v) => (avatarStatus = v), result.error, 'error', false);
+			showStatus((v) => (avatarStatus = v), result.error, "error", false);
 		} else if (result.url) {
 			setLocalAvatarUrl(result.url);
 			avatarUrl = result.url;
 			if (result.warning) {
-				showStatus((v) => (avatarStatus = v), 'Photo set! Note: ' + result.warning, 'success', false);
+				showStatus(
+					(v) => (avatarStatus = v),
+					"Photo set! Note: " + result.warning,
+					"success",
+					false,
+				);
 			} else {
-				showStatus((v) => (avatarStatus = v), 'Photo updated!', 'success');
+				showStatus(
+					(v) => (avatarStatus = v),
+					"Photo updated!",
+					"success",
+				);
 			}
 		}
 
 		// Reset file input
-		target.value = '';
+		target.value = "";
 	}
 
 	async function handleRemoveAvatar() {
-		showStatus((v) => (avatarStatus = v), 'Removing...', 'success', false);
+		showStatus((v) => (avatarStatus = v), "Removing...", "success", false);
 
 		const { error } = await removeAvatar();
 		if (error) {
-			showStatus((v) => (avatarStatus = v), error, 'error', false);
+			showStatus((v) => (avatarStatus = v), error, "error", false);
 		} else {
 			setLocalAvatarUrl(null);
 			avatarUrl = null;
-			showStatus((v) => (avatarStatus = v), 'Photo removed.', 'success');
+			showStatus((v) => (avatarStatus = v), "Photo removed.", "success");
 		}
 	}
 
@@ -110,54 +139,82 @@
 	async function handleSaveName() {
 		const trimmed = displayName.trim();
 		if (!trimmed) {
-			showStatus((v) => (nameStatus = v), 'Name cannot be empty.', 'error', false);
+			showStatus(
+				(v) => (nameStatus = v),
+				"Name cannot be empty.",
+				"error",
+				false,
+			);
 			return;
 		}
 
 		const { error } = await updateDisplayName(trimmed);
 		if (error) {
-			showStatus((v) => (nameStatus = v), error, 'error', false);
+			showStatus((v) => (nameStatus = v), error, "error", false);
 		} else {
 			setLocalDisplayName(trimmed);
-			showStatus((v) => (nameStatus = v), 'Name saved!', 'success');
+			showStatus((v) => (nameStatus = v), "Name saved!", "success");
 		}
 	}
 
 	// ============ PASSWORD ============
 	async function handleChangePassword() {
 		if (!newPassword || !confirmPassword) {
-			showStatus((v) => (passwordStatus = v), 'Please fill in both fields.', 'error', false);
+			showStatus(
+				(v) => (passwordStatus = v),
+				"Please fill in both fields.",
+				"error",
+				false,
+			);
 			return;
 		}
 		if (newPassword.length < 6) {
-			showStatus((v) => (passwordStatus = v), 'Password must be at least 6 characters.', 'error', false);
+			showStatus(
+				(v) => (passwordStatus = v),
+				"Password must be at least 6 characters.",
+				"error",
+				false,
+			);
 			return;
 		}
 		if (newPassword !== confirmPassword) {
-			showStatus((v) => (passwordStatus = v), 'Passwords do not match.', 'error', false);
+			showStatus(
+				(v) => (passwordStatus = v),
+				"Passwords do not match.",
+				"error",
+				false,
+			);
 			return;
 		}
 
 		const { error } = await updatePassword(newPassword);
 		if (error) {
-			showStatus((v) => (passwordStatus = v), error, 'error', false);
+			showStatus((v) => (passwordStatus = v), error, "error", false);
 		} else {
-			showStatus((v) => (passwordStatus = v), 'Password updated!', 'success');
-			newPassword = '';
-			confirmPassword = '';
+			showStatus(
+				(v) => (passwordStatus = v),
+				"Password updated!",
+				"success",
+			);
+			newPassword = "";
+			confirmPassword = "";
 		}
 	}
 
 	// ============ PREFERENCES ============
 	async function handleLanguageSave() {
 		const { error: err } = await updateLanguagePreferences(
-			currentLang as 'en' | 'fa',
-			currentTargetLang
+			currentLang as "en" | "fa",
+			currentTargetLang,
 		);
 		if (err) {
-			showStatus((v) => (langStatus = v), err, 'error', false);
+			showStatus((v) => (langStatus = v), err, "error", false);
 		} else {
-			showStatus((v) => (langStatus = v), 'Language preferences saved!', 'success');
+			showStatus(
+				(v) => (langStatus = v),
+				"Language preferences saved!",
+				"success",
+			);
 		}
 	}
 
@@ -170,21 +227,21 @@
 	// ============ SIGN OUT ============
 	async function handleSignOut() {
 		await signOut();
-		window.location.href = '/';
+		window.location.href = "/";
 	}
 
 	// ============ LIFECYCLE ============
 	onMount(async () => {
 		const authed = await isAuthenticated();
 		if (!authed) {
-			goto('/');
+			goto("/");
 			return;
 		}
 
 		// Load user info
 		const user = await getUser();
 		if (user) {
-			email = user.email || '';
+			email = user.email || "";
 		}
 
 		// Load display name
@@ -203,7 +260,8 @@
 		if (savedLang) currentLang = savedLang;
 
 		const savedTargetLang = await getTargetLanguage();
-		if (savedTargetLang === 'de' || savedTargetLang === 'fr') currentTargetLang = savedTargetLang;
+		if (savedTargetLang === "de" || savedTargetLang === "fr")
+			currentTargetLang = savedTargetLang;
 
 		const savedSpeed = await getVoiceSpeed();
 		if (savedSpeed !== null && !isNaN(savedSpeed)) voiceSpeed = savedSpeed;
@@ -234,7 +292,10 @@
 					{/if}
 				</div>
 				<div class="avatar-actions">
-					<button class="btn-secondary" onclick={() => fileInput?.click()}>Upload Photo</button>
+					<button
+						class="btn-secondary"
+						onclick={() => fileInput?.click()}>Upload Photo</button
+					>
 					<input
 						type="file"
 						accept="image/*"
@@ -243,12 +304,17 @@
 						style="display:none;"
 					/>
 					{#if avatarUrl}
-						<button class="btn-secondary" onclick={handleRemoveAvatar}>Remove Photo</button>
+						<button
+							class="btn-secondary"
+							onclick={handleRemoveAvatar}>Remove Photo</button
+						>
 					{/if}
 				</div>
 			</div>
 			{#if avatarStatus}
-				<div class="status-msg {avatarStatus.type}">{avatarStatus.text}</div>
+				<div class="status-msg {avatarStatus.type}">
+					{avatarStatus.text}
+				</div>
 			{/if}
 
 			<div class="form-group">
@@ -261,9 +327,13 @@
 					bind:value={displayName}
 				/>
 			</div>
-			<button class="btn-primary" onclick={handleSaveName}>Save Name</button>
+			<button class="btn-primary" onclick={handleSaveName}
+				>Save Name</button
+			>
 			{#if nameStatus}
-				<div class="status-msg {nameStatus.type}">{nameStatus.text}</div>
+				<div class="status-msg {nameStatus.type}">
+					{nameStatus.text}
+				</div>
 			{/if}
 		</div>
 
@@ -291,9 +361,13 @@
 					bind:value={confirmPassword}
 				/>
 			</div>
-			<button class="btn-primary" onclick={handleChangePassword}>Update Password</button>
+			<button class="btn-primary" onclick={handleChangePassword}
+				>Update Password</button
+			>
 			{#if passwordStatus}
-				<div class="status-msg {passwordStatus.type}">{passwordStatus.text}</div>
+				<div class="status-msg {passwordStatus.type}">
+					{passwordStatus.text}
+				</div>
 			{/if}
 		</div>
 
@@ -313,16 +387,19 @@
 				<label for="pref-target">Learning Language</label>
 				<div class="target-lang-select">
 					<button
-						class="target-btn {currentTargetLang === 'de' ? 'active' : ''}"
-						onclick={() => (currentTargetLang = 'de')}
-						type="button"
-					>🇩🇪 German</button>
+						class="target-btn {currentTargetLang === 'de'
+							? 'active'
+							: ''}"
+						onclick={() => (currentTargetLang = "de")}
+						type="button">🇩🇪 German</button
+					>
 					<button
 						class="target-btn disabled"
 						title="Coming soon"
 						disabled
 						type="button"
-					>🇫🇷 French <span class="soon-badge">Soon</span></button>
+						>🇫🇷 French <span class="soon-badge">Soon</span></button
+					>
 				</div>
 			</div>
 
@@ -342,9 +419,15 @@
 				</div>
 			</div>
 
-			<button class="btn-primary" onclick={handleLanguageSave} style="margin-top:8px;">Save Language Preferences</button>
+			<button
+				class="btn-primary"
+				onclick={handleLanguageSave}
+				style="margin-top:8px;">Save Language Preferences</button
+			>
 			{#if langStatus}
-				<div class="status-msg {langStatus.type}">{langStatus.text}</div>
+				<div class="status-msg {langStatus.type}">
+					{langStatus.text}
+				</div>
 			{/if}
 		</div>
 
@@ -353,8 +436,8 @@
 			<h3><span class="section-icon">📧</span> Account</h3>
 
 			<div class="form-group">
-				<label>Email</label>
-				<div class="account-email">{email || 'Loading...'}</div>
+				<span class="fake-label">Email</span>
+				<div class="account-email">{email || "Loading..."}</div>
 			</div>
 
 			<button class="btn-danger" onclick={handleSignOut}>Sign Out</button>
@@ -395,7 +478,11 @@
 	}
 
 	.settings-section {
-		background: linear-gradient(145deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
+		background: linear-gradient(
+			145deg,
+			rgba(255, 255, 255, 0.1),
+			rgba(255, 255, 255, 0.05)
+		);
 		border-radius: 20px;
 		padding: 30px;
 		margin-bottom: 20px;
@@ -419,15 +506,16 @@
 		margin-bottom: 15px;
 	}
 
-	.form-group label {
+	.form-group label,
+	.form-group .fake-label {
 		display: block;
 		font-size: 0.9rem;
 		color: #a0a0a0;
 		margin-bottom: 6px;
 	}
 
-	.form-group input[type='text'],
-	.form-group input[type='password'] {
+	.form-group input[type="text"],
+	.form-group input[type="password"] {
 		width: 100%;
 		padding: 12px;
 		border-radius: 10px;
@@ -584,7 +672,7 @@
 		gap: 10px;
 	}
 
-	.speed-control input[type='range'] {
+	.speed-control input[type="range"] {
 		width: 120px;
 		accent-color: #e94560;
 	}
