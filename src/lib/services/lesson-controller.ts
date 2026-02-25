@@ -796,3 +796,24 @@ export async function skipAndRemoveReviewItem(): Promise<void> {
 		processNextExamQuestion();
 	}
 }
+
+/**
+ * Defer the current review item to the end of the queue.
+ * Only works during review mode.
+ */
+export function skipAndDeferReviewItem(): void {
+	const examState = get(examStore);
+	if (!examState.isReviewMode) return;
+
+	const q = examState.examQuestions[examState.currentExamIndex];
+	if (!q) return;
+
+	// Remove current question and push to the end
+	const updatedQuestions = [...examState.examQuestions];
+	updatedQuestions.splice(examState.currentExamIndex, 1);
+	updatedQuestions.push(q);
+
+	examStore.update((s) => ({ ...s, examQuestions: updatedQuestions, examRetry: false }));
+
+	processNextExamQuestion();
+}

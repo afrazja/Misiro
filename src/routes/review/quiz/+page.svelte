@@ -9,6 +9,7 @@
 		startReviewMode,
 		handleVoiceInput as controllerHandleVoice,
 		skipAndRemoveReviewItem,
+		skipAndDeferReviewItem,
 		type ExamQuestionData,
 		type ExamResultsData,
 		type VoiceResultData,
@@ -143,6 +144,10 @@
 		await skipAndRemoveReviewItem();
 	}
 
+	function handleSkipItem() {
+		skipAndDeferReviewItem();
+	}
+
 	onMount(() => {
 		setupCallbacks();
 		initSpeechRecognition();
@@ -271,14 +276,25 @@
 							</div>
 						{/if}
 
-						<button
-							class="btn-remove-review"
-							onclick={handleRemoveFromReview}
-						>
-							{examQuestionData.language === "fa"
-								? "🗑️ حذف از مرور"
-								: "🗑️ Remove from review"}
-						</button>
+						<div class="action-buttons-row">
+							<button
+								class="btn-skip-item"
+								onclick={handleSkipItem}
+							>
+								{examQuestionData.language === "fa"
+									? "⏭️ رد کردن و تمرین در آخر"
+									: "⏭️ Skip & Retry Later"}
+							</button>
+
+							<button
+								class="btn-remove-review"
+								onclick={handleRemoveFromReview}
+							>
+								{examQuestionData.language === "fa"
+									? "🗑️ حذف از مرور"
+									: "🗑️ Remove from review"}
+							</button>
+						</div>
 					</div>
 				</div>
 			{/if}
@@ -603,6 +619,29 @@
 		50% {
 			transform: scale(1.05);
 		}
+	}
+
+	.action-buttons-row {
+		display: flex;
+		gap: 12px;
+		flex-wrap: wrap;
+	}
+
+	.btn-skip-item {
+		padding: 8px 16px;
+		border-radius: 20px;
+		border: 1px solid #95a5a6;
+		background: transparent;
+		color: #7f8c8d;
+		font-size: 0.85rem;
+		font-weight: 600;
+		cursor: pointer;
+		transition: all 0.2s;
+	}
+
+	.btn-skip-item:hover {
+		background: #95a5a6;
+		color: white;
 	}
 
 	.btn-remove-review {
