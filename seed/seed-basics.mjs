@@ -321,6 +321,158 @@ const basicsData = {
         ]
       }
     ]
+  },
+  verbConjugation: {
+    icon: '🔄',
+    title: { en: 'Verb Conjugation (Present Tense)', fa: 'صرف فعل (زمان حال)' },
+    description: { en: 'Essential verbs conjugated in the present tense', fa: 'افعال ضروری صرف شده در زمان حال' },
+    type: 'multi',
+    sections: [
+      {
+        heading: { en: 'haben (to have)', fa: 'haben (داشتن)' },
+        type: 'conjugation',
+        infinitive: { german: 'haben', en: 'to have', fa: 'داشتن' },
+        tenses: [
+          {
+            name: { en: 'Present (Präsens)', fa: 'حال (Präsens)' },
+            forms: [
+              { pronoun: 'ich', verb: 'habe', en: 'I have', fa: 'من دارم', example: 'Ich habe einen Hund.', exampleEn: 'I have a dog.', exampleFa: 'من یک سگ دارم.' },
+              { pronoun: 'du', verb: 'hast', en: 'you have', fa: 'تو داری', example: 'Du hast recht.', exampleEn: 'You are right.', exampleFa: 'تو حق داری.' },
+              { pronoun: 'er/sie/es', verb: 'hat', en: 'he/she/it has', fa: 'او/آن دارد', example: 'Er hat keine Zeit.', exampleEn: 'He has no time.', exampleFa: 'او وقت ندارد.' },
+              { pronoun: 'wir', verb: 'haben', en: 'we have', fa: 'ما داریم', example: 'Wir haben Hunger.', exampleEn: 'We are hungry.', exampleFa: 'ما گرسنه هستیم.' },
+              { pronoun: 'ihr', verb: 'habt', en: 'you have', fa: 'شما دارید', example: 'Ihr habt ein schönes Haus.', exampleEn: 'You have a beautiful house.', exampleFa: 'شما خانه زیبایی دارید.' },
+              { pronoun: 'sie/Sie', verb: 'haben', en: 'they/you have', fa: 'آنها/شما دارند', example: 'Sie haben zwei Kinder.', exampleEn: 'They have two children.', exampleFa: 'آنها دو فرزند دارند.' }
+            ]
+          }
+        ]
+      },
+      {
+        heading: { en: 'machen (to do/make)', fa: 'machen (انجام دادن/ساختن)' },
+        type: 'conjugation',
+        infinitive: { german: 'machen', en: 'to do / to make', fa: 'انجام دادن / ساختن' },
+        tenses: [
+          {
+            name: { en: 'Present (Präsens)', fa: 'حال (Präsens)' },
+            forms: [
+              { pronoun: 'ich', verb: 'mache', en: 'I do/make', fa: 'من انجام می‌دهم', example: 'Ich mache meine Hausaufgaben.', exampleEn: 'I do my homework.', exampleFa: 'من تکالیفم را انجام می‌دهم.' },
+              { pronoun: 'du', verb: 'machst', en: 'you do/make', fa: 'تو انجام می‌دهی', example: 'Du machst das sehr gut.', exampleEn: 'You do that very well.', exampleFa: 'تو آن را خیلی خوب انجام می‌دهی.' },
+              { pronoun: 'er/sie/es', verb: 'macht', en: 'he/she/it does/makes', fa: 'او انجام می‌دهد', example: 'Sie macht einen Kuchen.', exampleEn: 'She makes a cake.', exampleFa: 'او یک کیک درست می‌کند.' },
+              { pronoun: 'wir', verb: 'machen', en: 'we do/make', fa: 'ما انجام می‌دهیم', example: 'Wir machen einen Ausflug.', exampleEn: 'We are going on a trip.', exampleFa: 'ما به گردش می‌رویم.' },
+              { pronoun: 'ihr', verb: 'macht', en: 'you do/make', fa: 'شما انجام می‌دهید', example: 'Ihr macht das richtig.', exampleEn: 'You are doing it right.', exampleFa: 'شما آن را درست انجام می‌دهید.' },
+              { pronoun: 'sie/Sie', verb: 'machen', en: 'they/you do/make', fa: 'آنها انجام می‌دهند', example: 'Sie machen Sport.', exampleEn: 'They do sports.', exampleFa: 'آنها ورزش می‌کنند.' }
+            ]
+          }
+        ]
+      },
+      {
+        heading: { en: 'gehen (to go)', fa: 'gehen (رفتن)' },
+        type: 'conjugation',
+        infinitive: { german: 'gehen', en: 'to go', fa: 'رفتن' },
+        tenses: [
+          {
+            name: { en: 'Present (Präsens)', fa: 'حال (Präsens)' },
+            forms: [
+              { pronoun: 'ich', verb: 'gehe', en: 'I go', fa: 'من می‌روم', example: 'Ich gehe zur Schule.', exampleEn: 'I go to school.', exampleFa: 'من به مدرسه می‌روم.' },
+              { pronoun: 'du', verb: 'gehst', en: 'you go', fa: 'تو می‌روی', example: 'Du gehst nach Hause.', exampleEn: 'You go home.', exampleFa: 'تو به خانه می‌روی.' },
+              { pronoun: 'er/sie/es', verb: 'geht', en: 'he/she/it goes', fa: 'او می‌رود', example: 'Er geht ins Kino.', exampleEn: 'He goes to the cinema.', exampleFa: 'او به سینما می‌رود.' },
+              { pronoun: 'wir', verb: 'gehen', en: 'we go', fa: 'ما می‌رویم', example: 'Wir gehen einkaufen.', exampleEn: 'We go shopping.', exampleFa: 'ما به خرید می‌رویم.' },
+              { pronoun: 'ihr', verb: 'geht', en: 'you go', fa: 'شما می‌روید', example: 'Ihr geht in den Park.', exampleEn: 'You go to the park.', exampleFa: 'شما به پارک می‌روید.' },
+              { pronoun: 'sie/Sie', verb: 'gehen', en: 'they/you go', fa: 'آنها می‌روند', example: 'Sie gehen spazieren.', exampleEn: 'They go for a walk.', exampleFa: 'آنها قدم می‌زنند.' }
+            ]
+          }
+        ]
+      },
+      {
+        heading: { en: 'kommen (to come)', fa: 'kommen (آمدن)' },
+        type: 'conjugation',
+        infinitive: { german: 'kommen', en: 'to come', fa: 'آمدن' },
+        tenses: [
+          {
+            name: { en: 'Present (Präsens)', fa: 'حال (Präsens)' },
+            forms: [
+              { pronoun: 'ich', verb: 'komme', en: 'I come', fa: 'من می‌آیم', example: 'Ich komme aus dem Iran.', exampleEn: 'I come from Iran.', exampleFa: 'من اهل ایران هستم.' },
+              { pronoun: 'du', verb: 'kommst', en: 'you come', fa: 'تو می‌آیی', example: 'Du kommst zu spät.', exampleEn: 'You are coming too late.', exampleFa: 'تو دیر می‌آیی.' },
+              { pronoun: 'er/sie/es', verb: 'kommt', en: 'he/she/it comes', fa: 'او می‌آید', example: 'Er kommt morgen.', exampleEn: 'He comes tomorrow.', exampleFa: 'او فردا می‌آید.' },
+              { pronoun: 'wir', verb: 'kommen', en: 'we come', fa: 'ما می‌آییم', example: 'Wir kommen um acht Uhr.', exampleEn: 'We come at eight o\'clock.', exampleFa: 'ما ساعت هشت می‌آییم.' },
+              { pronoun: 'ihr', verb: 'kommt', en: 'you come', fa: 'شما می‌آیید', example: 'Ihr kommt aus Deutschland.', exampleEn: 'You come from Germany.', exampleFa: 'شما اهل آلمان هستید.' },
+              { pronoun: 'sie/Sie', verb: 'kommen', en: 'they/you come', fa: 'آنها می‌آیند', example: 'Sie kommen bald.', exampleEn: 'They come soon.', exampleFa: 'آنها به زودی می‌آیند.' }
+            ]
+          }
+        ]
+      },
+      {
+        heading: { en: 'sprechen (to speak)', fa: 'sprechen (صحبت کردن)' },
+        type: 'conjugation',
+        infinitive: { german: 'sprechen', en: 'to speak', fa: 'صحبت کردن' },
+        tenses: [
+          {
+            name: { en: 'Present (Präsens)', fa: 'حال (Präsens)' },
+            forms: [
+              { pronoun: 'ich', verb: 'spreche', en: 'I speak', fa: 'من صحبت می‌کنم', example: 'Ich spreche Deutsch.', exampleEn: 'I speak German.', exampleFa: 'من آلمانی صحبت می‌کنم.' },
+              { pronoun: 'du', verb: 'sprichst', en: 'you speak', fa: 'تو صحبت می‌کنی', example: 'Du sprichst sehr gut Englisch.', exampleEn: 'You speak English very well.', exampleFa: 'تو انگلیسی را خیلی خوب صحبت می‌کنی.' },
+              { pronoun: 'er/sie/es', verb: 'spricht', en: 'he/she/it speaks', fa: 'او صحبت می‌کند', example: 'Sie spricht drei Sprachen.', exampleEn: 'She speaks three languages.', exampleFa: 'او سه زبان صحبت می‌کند.' },
+              { pronoun: 'wir', verb: 'sprechen', en: 'we speak', fa: 'ما صحبت می‌کنیم', example: 'Wir sprechen über das Wetter.', exampleEn: 'We talk about the weather.', exampleFa: 'ما درباره آب و هوا صحبت می‌کنیم.' },
+              { pronoun: 'ihr', verb: 'sprecht', en: 'you speak', fa: 'شما صحبت می‌کنید', example: 'Ihr sprecht zu schnell.', exampleEn: 'You speak too fast.', exampleFa: 'شما خیلی تند صحبت می‌کنید.' },
+              { pronoun: 'sie/Sie', verb: 'sprechen', en: 'they/you speak', fa: 'آنها صحبت می‌کنند', example: 'Sie sprechen Französisch.', exampleEn: 'They speak French.', exampleFa: 'آنها فرانسوی صحبت می‌کنند.' }
+            ]
+          }
+        ]
+      },
+      {
+        heading: { en: 'essen (to eat)', fa: 'essen (خوردن)' },
+        type: 'conjugation',
+        infinitive: { german: 'essen', en: 'to eat', fa: 'خوردن' },
+        tenses: [
+          {
+            name: { en: 'Present (Präsens)', fa: 'حال (Präsens)' },
+            forms: [
+              { pronoun: 'ich', verb: 'esse', en: 'I eat', fa: 'من می‌خورم', example: 'Ich esse gern Pizza.', exampleEn: 'I like to eat pizza.', exampleFa: 'من پیتزا دوست دارم.' },
+              { pronoun: 'du', verb: 'isst', en: 'you eat', fa: 'تو می‌خوری', example: 'Du isst zu schnell.', exampleEn: 'You eat too fast.', exampleFa: 'تو خیلی تند غذا می‌خوری.' },
+              { pronoun: 'er/sie/es', verb: 'isst', en: 'he/she/it eats', fa: 'او می‌خورد', example: 'Er isst einen Apfel.', exampleEn: 'He eats an apple.', exampleFa: 'او یک سیب می‌خورد.' },
+              { pronoun: 'wir', verb: 'essen', en: 'we eat', fa: 'ما می‌خوریم', example: 'Wir essen zusammen.', exampleEn: 'We eat together.', exampleFa: 'ما با هم غذا می‌خوریم.' },
+              { pronoun: 'ihr', verb: 'esst', en: 'you eat', fa: 'شما می‌خورید', example: 'Ihr esst viel Obst.', exampleEn: 'You eat a lot of fruit.', exampleFa: 'شما میوه زیاد می‌خورید.' },
+              { pronoun: 'sie/Sie', verb: 'essen', en: 'they/you eat', fa: 'آنها می‌خورند', example: 'Sie essen im Restaurant.', exampleEn: 'They eat at the restaurant.', exampleFa: 'آنها در رستوران غذا می‌خورند.' }
+            ]
+          }
+        ]
+      },
+      {
+        heading: { en: 'fahren (to drive/travel)', fa: 'fahren (رانندگی کردن/سفر کردن)' },
+        type: 'conjugation',
+        infinitive: { german: 'fahren', en: 'to drive / to travel', fa: 'رانندگی کردن / سفر کردن' },
+        tenses: [
+          {
+            name: { en: 'Present (Präsens)', fa: 'حال (Präsens)' },
+            forms: [
+              { pronoun: 'ich', verb: 'fahre', en: 'I drive', fa: 'من رانندگی می‌کنم', example: 'Ich fahre mit dem Bus.', exampleEn: 'I go by bus.', exampleFa: 'من با اتوبوس می‌روم.' },
+              { pronoun: 'du', verb: 'fährst', en: 'you drive', fa: 'تو رانندگی می‌کنی', example: 'Du fährst zu schnell.', exampleEn: 'You drive too fast.', exampleFa: 'تو خیلی تند رانندگی می‌کنی.' },
+              { pronoun: 'er/sie/es', verb: 'fährt', en: 'he/she/it drives', fa: 'او رانندگی می‌کند', example: 'Er fährt nach Berlin.', exampleEn: 'He drives to Berlin.', exampleFa: 'او به برلین می‌رود.' },
+              { pronoun: 'wir', verb: 'fahren', en: 'we drive', fa: 'ما رانندگی می‌کنیم', example: 'Wir fahren in den Urlaub.', exampleEn: 'We drive on vacation.', exampleFa: 'ما به تعطیلات می‌رویم.' },
+              { pronoun: 'ihr', verb: 'fahrt', en: 'you drive', fa: 'شما رانندگی می‌کنید', example: 'Ihr fahrt mit dem Zug.', exampleEn: 'You go by train.', exampleFa: 'شما با قطار می‌روید.' },
+              { pronoun: 'sie/Sie', verb: 'fahren', en: 'they/you drive', fa: 'آنها رانندگی می‌کنند', example: 'Sie fahren nach München.', exampleEn: 'They drive to Munich.', exampleFa: 'آنها به مونیخ می‌روند.' }
+            ]
+          }
+        ]
+      },
+      {
+        heading: { en: 'sehen (to see)', fa: 'sehen (دیدن)' },
+        type: 'conjugation',
+        infinitive: { german: 'sehen', en: 'to see', fa: 'دیدن' },
+        tenses: [
+          {
+            name: { en: 'Present (Präsens)', fa: 'حال (Präsens)' },
+            forms: [
+              { pronoun: 'ich', verb: 'sehe', en: 'I see', fa: 'من می‌بینم', example: 'Ich sehe einen Vogel.', exampleEn: 'I see a bird.', exampleFa: 'من یک پرنده می‌بینم.' },
+              { pronoun: 'du', verb: 'siehst', en: 'you see', fa: 'تو می‌بینی', example: 'Du siehst müde aus.', exampleEn: 'You look tired.', exampleFa: 'تو خسته به نظر می‌رسی.' },
+              { pronoun: 'er/sie/es', verb: 'sieht', en: 'he/she/it sees', fa: 'او می‌بیند', example: 'Sie sieht einen Film.', exampleEn: 'She watches a movie.', exampleFa: 'او یک فیلم می‌بیند.' },
+              { pronoun: 'wir', verb: 'sehen', en: 'we see', fa: 'ما می‌بینیم', example: 'Wir sehen die Berge.', exampleEn: 'We see the mountains.', exampleFa: 'ما کوه‌ها را می‌بینیم.' },
+              { pronoun: 'ihr', verb: 'seht', en: 'you see', fa: 'شما می‌بینید', example: 'Ihr seht das Meer.', exampleEn: 'You see the sea.', exampleFa: 'شما دریا را می‌بینید.' },
+              { pronoun: 'sie/Sie', verb: 'sehen', en: 'they/you see', fa: 'آنها می‌بینند', example: 'Sie sehen fern.', exampleEn: 'They watch TV.', exampleFa: 'آنها تلویزیون تماشا می‌کنند.' }
+            ]
+          }
+        ]
+      }
+    ]
   }
 };
 
