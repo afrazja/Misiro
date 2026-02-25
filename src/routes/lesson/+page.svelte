@@ -421,9 +421,6 @@
 					<p class="overlay-desc">{scenarioDescription()}</p>
 				{/if}
 				<div class="overlay-tags">
-					{#if lessonDifficulty()}
-						<span class="overlay-badge difficulty-{lessonDifficulty()?.replace('+', 'plus')}">{lessonDifficulty()}</span>
-					{/if}
 					{#if lessonGrammarFocus()}
 						<span class="overlay-badge grammar-tag">{lessonGrammarFocus()}</span>
 					{/if}
@@ -465,7 +462,7 @@
 								value={meta.day.toString()}
 								selected={meta.day === app.currentDay}
 							>
-								{isCompleted ? '✅ ' : ''}{meta.title}{meta.difficulty ? ` · ${meta.difficulty}` : ''}
+								{isCompleted ? '✅ ' : ''}{meta.title}
 							</option>
 						{/each}
 						{#if days.length === 7}
