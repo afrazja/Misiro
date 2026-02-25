@@ -495,6 +495,133 @@ const basicsData = {
       { german: 'welches', en: 'which (neut)', fa: 'کدام (خنثی)', example: 'Welches Buch liest du?', exampleEn: 'Which book are you reading?', exampleFa: 'کدام کتاب را می‌خوانی؟' },
       { german: 'wessen', en: 'whose', fa: 'مال چه کسی', example: 'Wessen Tasche ist das?', exampleEn: 'Whose bag is that?', exampleFa: 'این کیف مال کیست؟' }
     ]
+  },
+  modalVerbs: {
+    icon: '🎯',
+    title: { en: 'Modal Verbs (Modalverben)', fa: 'افعال کمکی (Modalverben)' },
+    description: { en: 'Must, can, want, should, may & like — essential modal verbs', fa: 'باید، توانستن، خواستن، بایستن، اجازه داشتن و دوست داشتن' },
+    type: 'multi',
+    sections: [
+      {
+        heading: { en: 'können (can / to be able to)', fa: 'können (توانستن)' },
+        type: 'conjugation',
+        infinitive: { german: 'können', en: 'can / to be able to', fa: 'توانستن' },
+        tenses: [
+          {
+            name: { en: 'Present (Präsens)', fa: 'حال (Präsens)' },
+            forms: [
+              { pronoun: 'ich', verb: 'kann', en: 'I can', fa: 'من می‌توانم', example: 'Ich kann Deutsch sprechen.', exampleEn: 'I can speak German.', exampleFa: 'من می‌توانم آلمانی صحبت کنم.' },
+              { pronoun: 'du', verb: 'kannst', en: 'you can', fa: 'تو می‌توانی', example: 'Du kannst gut schwimmen.', exampleEn: 'You can swim well.', exampleFa: 'تو می‌توانی خوب شنا کنی.' },
+              { pronoun: 'er/sie/es', verb: 'kann', en: 'he/she/it can', fa: 'او می‌تواند', example: 'Er kann Klavier spielen.', exampleEn: 'He can play piano.', exampleFa: 'او می‌تواند پیانو بزند.' },
+              { pronoun: 'wir', verb: 'können', en: 'we can', fa: 'ما می‌توانیم', example: 'Wir können dir helfen.', exampleEn: 'We can help you.', exampleFa: 'ما می‌توانیم به تو کمک کنیم.' },
+              { pronoun: 'ihr', verb: 'könnt', en: 'you can', fa: 'شما می‌توانید', example: 'Ihr könnt morgen kommen.', exampleEn: 'You can come tomorrow.', exampleFa: 'شما می‌توانید فردا بیایید.' },
+              { pronoun: 'sie/Sie', verb: 'können', en: 'they/you can', fa: 'آنها می‌توانند', example: 'Sie können hier parken.', exampleEn: 'They can park here.', exampleFa: 'آنها می‌توانند اینجا پارک کنند.' }
+            ]
+          }
+        ]
+      },
+      {
+        heading: { en: 'müssen (must / to have to)', fa: 'müssen (باید / مجبور بودن)' },
+        type: 'conjugation',
+        infinitive: { german: 'müssen', en: 'must / to have to', fa: 'باید / مجبور بودن' },
+        tenses: [
+          {
+            name: { en: 'Present (Präsens)', fa: 'حال (Präsens)' },
+            forms: [
+              { pronoun: 'ich', verb: 'muss', en: 'I must', fa: 'من باید', example: 'Ich muss jetzt gehen.', exampleEn: 'I must go now.', exampleFa: 'من باید الان بروم.' },
+              { pronoun: 'du', verb: 'musst', en: 'you must', fa: 'تو باید', example: 'Du musst mehr lernen.', exampleEn: 'You must study more.', exampleFa: 'تو باید بیشتر درس بخوانی.' },
+              { pronoun: 'er/sie/es', verb: 'muss', en: 'he/she/it must', fa: 'او باید', example: 'Er muss früh aufstehen.', exampleEn: 'He must get up early.', exampleFa: 'او باید زود بیدار شود.' },
+              { pronoun: 'wir', verb: 'müssen', en: 'we must', fa: 'ما باید', example: 'Wir müssen den Zug nehmen.', exampleEn: 'We must take the train.', exampleFa: 'ما باید قطار بگیریم.' },
+              { pronoun: 'ihr', verb: 'müsst', en: 'you must', fa: 'شما باید', example: 'Ihr müsst leise sein.', exampleEn: 'You must be quiet.', exampleFa: 'شما باید ساکت باشید.' },
+              { pronoun: 'sie/Sie', verb: 'müssen', en: 'they/you must', fa: 'آنها باید', example: 'Sie müssen das Formular ausfüllen.', exampleEn: 'They must fill out the form.', exampleFa: 'آنها باید فرم را پر کنند.' }
+            ]
+          }
+        ]
+      },
+      {
+        heading: { en: 'wollen (to want to)', fa: 'wollen (خواستن)' },
+        type: 'conjugation',
+        infinitive: { german: 'wollen', en: 'to want to', fa: 'خواستن' },
+        tenses: [
+          {
+            name: { en: 'Present (Präsens)', fa: 'حال (Präsens)' },
+            forms: [
+              { pronoun: 'ich', verb: 'will', en: 'I want to', fa: 'من می‌خواهم', example: 'Ich will Deutsch lernen.', exampleEn: 'I want to learn German.', exampleFa: 'من می‌خواهم آلمانی یاد بگیرم.' },
+              { pronoun: 'du', verb: 'willst', en: 'you want to', fa: 'تو می‌خواهی', example: 'Du willst nach Hause gehen.', exampleEn: 'You want to go home.', exampleFa: 'تو می‌خواهی به خانه بروی.' },
+              { pronoun: 'er/sie/es', verb: 'will', en: 'he/she/it wants to', fa: 'او می‌خواهد', example: 'Sie will Ärztin werden.', exampleEn: 'She wants to become a doctor.', exampleFa: 'او می‌خواهد دکتر شود.' },
+              { pronoun: 'wir', verb: 'wollen', en: 'we want to', fa: 'ما می‌خواهیم', example: 'Wir wollen ins Kino gehen.', exampleEn: 'We want to go to the cinema.', exampleFa: 'ما می‌خواهیم به سینما برویم.' },
+              { pronoun: 'ihr', verb: 'wollt', en: 'you want to', fa: 'شما می‌خواهید', example: 'Ihr wollt Pizza bestellen.', exampleEn: 'You want to order pizza.', exampleFa: 'شما می‌خواهید پیتزا سفارش دهید.' },
+              { pronoun: 'sie/Sie', verb: 'wollen', en: 'they/you want to', fa: 'آنها می‌خواهند', example: 'Sie wollen ein Haus kaufen.', exampleEn: 'They want to buy a house.', exampleFa: 'آنها می‌خواهند یک خانه بخرند.' }
+            ]
+          }
+        ]
+      },
+      {
+        heading: { en: 'sollen (should / to be supposed to)', fa: 'sollen (بایستن / قرار بودن)' },
+        type: 'conjugation',
+        infinitive: { german: 'sollen', en: 'should / to be supposed to', fa: 'بایستن / قرار بودن' },
+        tenses: [
+          {
+            name: { en: 'Present (Präsens)', fa: 'حال (Präsens)' },
+            forms: [
+              { pronoun: 'ich', verb: 'soll', en: 'I should', fa: 'من باید (توصیه)', example: 'Ich soll mehr Wasser trinken.', exampleEn: 'I should drink more water.', exampleFa: 'من باید آب بیشتری بنوشم.' },
+              { pronoun: 'du', verb: 'sollst', en: 'you should', fa: 'تو باید (توصیه)', example: 'Du sollst nicht so laut sein.', exampleEn: 'You should not be so loud.', exampleFa: 'تو نباید اینقدر بلند صحبت کنی.' },
+              { pronoun: 'er/sie/es', verb: 'soll', en: 'he/she/it should', fa: 'او باید (توصیه)', example: 'Er soll pünktlich sein.', exampleEn: 'He should be on time.', exampleFa: 'او باید به موقع باشد.' },
+              { pronoun: 'wir', verb: 'sollen', en: 'we should', fa: 'ما باید (توصیه)', example: 'Wir sollen früh anfangen.', exampleEn: 'We should start early.', exampleFa: 'ما باید زود شروع کنیم.' },
+              { pronoun: 'ihr', verb: 'sollt', en: 'you should', fa: 'شما باید (توصیه)', example: 'Ihr sollt eure Eltern anrufen.', exampleEn: 'You should call your parents.', exampleFa: 'شما باید به والدینتان زنگ بزنید.' },
+              { pronoun: 'sie/Sie', verb: 'sollen', en: 'they/you should', fa: 'آنها باید (توصیه)', example: 'Sie sollen den Arzt fragen.', exampleEn: 'They should ask the doctor.', exampleFa: 'آنها باید از دکتر بپرسند.' }
+            ]
+          }
+        ]
+      },
+      {
+        heading: { en: 'dürfen (may / to be allowed to)', fa: 'dürfen (اجازه داشتن)' },
+        type: 'conjugation',
+        infinitive: { german: 'dürfen', en: 'may / to be allowed to', fa: 'اجازه داشتن' },
+        tenses: [
+          {
+            name: { en: 'Present (Präsens)', fa: 'حال (Präsens)' },
+            forms: [
+              { pronoun: 'ich', verb: 'darf', en: 'I may', fa: 'من اجازه دارم', example: 'Ich darf hier nicht rauchen.', exampleEn: 'I may not smoke here.', exampleFa: 'من اجازه ندارم اینجا سیگار بکشم.' },
+              { pronoun: 'du', verb: 'darfst', en: 'you may', fa: 'تو اجازه داری', example: 'Du darfst jetzt gehen.', exampleEn: 'You may go now.', exampleFa: 'تو اجازه داری الان بروی.' },
+              { pronoun: 'er/sie/es', verb: 'darf', en: 'he/she/it may', fa: 'او اجازه دارد', example: 'Das Kind darf fernsehen.', exampleEn: 'The child may watch TV.', exampleFa: 'بچه اجازه دارد تلویزیون تماشا کند.' },
+              { pronoun: 'wir', verb: 'dürfen', en: 'we may', fa: 'ما اجازه داریم', example: 'Wir dürfen den Raum benutzen.', exampleEn: 'We may use the room.', exampleFa: 'ما اجازه داریم از اتاق استفاده کنیم.' },
+              { pronoun: 'ihr', verb: 'dürft', en: 'you may', fa: 'شما اجازه دارید', example: 'Ihr dürft draußen spielen.', exampleEn: 'You may play outside.', exampleFa: 'شما اجازه دارید بیرون بازی کنید.' },
+              { pronoun: 'sie/Sie', verb: 'dürfen', en: 'they/you may', fa: 'آنها اجازه دارند', example: 'Sie dürfen hier parken.', exampleEn: 'They may park here.', exampleFa: 'آنها اجازه دارند اینجا پارک کنند.' }
+            ]
+          }
+        ]
+      },
+      {
+        heading: { en: 'mögen / möchten (to like / would like)', fa: 'mögen / möchten (دوست داشتن / مایل بودن)' },
+        type: 'conjugation',
+        infinitive: { german: 'mögen', en: 'to like / would like', fa: 'دوست داشتن / مایل بودن' },
+        tenses: [
+          {
+            name: { en: 'mögen – Present (Präsens)', fa: 'mögen – حال (Präsens)' },
+            forms: [
+              { pronoun: 'ich', verb: 'mag', en: 'I like', fa: 'من دوست دارم', example: 'Ich mag Schokolade.', exampleEn: 'I like chocolate.', exampleFa: 'من شکلات دوست دارم.' },
+              { pronoun: 'du', verb: 'magst', en: 'you like', fa: 'تو دوست داری', example: 'Du magst Musik.', exampleEn: 'You like music.', exampleFa: 'تو موسیقی دوست داری.' },
+              { pronoun: 'er/sie/es', verb: 'mag', en: 'he/she/it likes', fa: 'او دوست دارد', example: 'Sie mag Blumen.', exampleEn: 'She likes flowers.', exampleFa: 'او گل دوست دارد.' },
+              { pronoun: 'wir', verb: 'mögen', en: 'we like', fa: 'ما دوست داریم', example: 'Wir mögen dieses Restaurant.', exampleEn: 'We like this restaurant.', exampleFa: 'ما این رستوران را دوست داریم.' },
+              { pronoun: 'ihr', verb: 'mögt', en: 'you like', fa: 'شما دوست دارید', example: 'Ihr mögt den neuen Lehrer.', exampleEn: 'You like the new teacher.', exampleFa: 'شما معلم جدید را دوست دارید.' },
+              { pronoun: 'sie/Sie', verb: 'mögen', en: 'they/you like', fa: 'آنها دوست دارند', example: 'Sie mögen Tee.', exampleEn: 'They like tea.', exampleFa: 'آنها چای دوست دارند.' }
+            ]
+          },
+          {
+            name: { en: 'möchten – Would like (Konjunktiv II)', fa: 'möchten – مایل بودن' },
+            forms: [
+              { pronoun: 'ich', verb: 'möchte', en: 'I would like', fa: 'من مایلم', example: 'Ich möchte einen Kaffee.', exampleEn: 'I would like a coffee.', exampleFa: 'من یک قهوه می‌خواهم.' },
+              { pronoun: 'du', verb: 'möchtest', en: 'you would like', fa: 'تو مایلی', example: 'Möchtest du mitkommen?', exampleEn: 'Would you like to come along?', exampleFa: 'مایلی همراه بیایی؟' },
+              { pronoun: 'er/sie/es', verb: 'möchte', en: 'he/she/it would like', fa: 'او مایل است', example: 'Er möchte ein Eis.', exampleEn: 'He would like an ice cream.', exampleFa: 'او یک بستنی می‌خواهد.' },
+              { pronoun: 'wir', verb: 'möchten', en: 'we would like', fa: 'ما مایلیم', example: 'Wir möchten bestellen.', exampleEn: 'We would like to order.', exampleFa: 'ما می‌خواهیم سفارش بدهیم.' },
+              { pronoun: 'ihr', verb: 'möchtet', en: 'you would like', fa: 'شما مایلید', example: 'Möchtet ihr etwas trinken?', exampleEn: 'Would you like something to drink?', exampleFa: 'مایلید چیزی بنوشید؟' },
+              { pronoun: 'sie/Sie', verb: 'möchten', en: 'they/you would like', fa: 'آنها مایلند', example: 'Möchten Sie Tee oder Kaffee?', exampleEn: 'Would you like tea or coffee?', exampleFa: 'چای یا قهوه میل دارید؟' }
+            ]
+          }
+        ]
+      }
+    ]
   }
 };
 
