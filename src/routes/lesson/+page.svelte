@@ -30,7 +30,8 @@
 	import { unlockAudioContext } from '$services/audio-context';
 	import { initSpeechRecognition, setVoiceInputHandler, toggleMic, stopListening } from '$services/speech';
 	import { getLanguage, setLanguage, getVoiceSpeed, setVoiceSpeed, saveWord, removeWord, getVocabulary, getBookmarks, addBookmark, removeBookmark } from '$services/data-layer';
-	import { bookmarkForReview, removeFromReview } from '$services/spaced-repetition';
+	import { bookmarkForReview, removeFromReview, getDueReviewItems } from '$services/spaced-repetition';
+	import { loadLessons, getLesson } from '$services/lesson-loader';
 	import { loadGlossary } from '$services/lesson-loader';
 	import { getTranslation, getTranslationLang } from '$utils/i18n';
 	import { initSyncListeners } from '$services/sync-queue';
@@ -50,6 +51,7 @@
 	let systemMessages: string[] = $state([]);
 	let voiceResult: VoiceResultData | null = $state(null);
 	let dueReviewCount = $state(0);
+	let reviewListData: Array<{ day: number; sentenceId: number; germanText: string; translation: string }> | null = $state(null);
 	let listenerMode = $state(false);
 	let _listenerSeq = 0;
 
@@ -178,6 +180,72 @@
 		await skipAndRemoveReviewItem();
 		dueReviewCount = await getDueCount();
 		bookmarkedSentences = getBookmarks();
+	}
+
+	// ============ REVIEW LIST ============
+	let isLoadingReviewList = $state(false);
+
+	async function showReviewList() {
+		isLoadingReviewList = true;
+		reviewListData = [];
+		try {
+			const dueItems = await getDueReviewItems();
+			if (dueItems.length === 0) {
+				reviewListData = [];
+				isLoadingReviewList = false;
+				return;
+			}
+			// Load all unique days
+			const uniqueDays = [...new Set(dueItems.map(i => i.day))];
+			await loadLessons(uniqueDays);
+
+			const items: Array<{ day: number; sentenceId: number; germanText: string; translation: string }> = [];
+			for (const item of dueItems) {
+				const lessonData = getLesson(item.day);
+				if (!lessonData) continue;
+				const sentence = lessonData.sentences.find(s => s.id === item.sentenceId);
+				if (!sentence) continue;
+				const german = sentence.role === 'received' ? sentence.audioText! : sentence.targetText!;
+				const translation = getTranslation(sentence, prefs.language);
+				items.push({ day: item.day, sentenceId: item.sentenceId, germanText: german, translation });
+			}
+			reviewListData = items;
+		} catch (err) {
+			console.error('[ReviewList] Error loading review items:', err);
+			reviewListData = [];
+		}
+		isLoadingReviewList = false;
+	}
+
+	async function handleRemoveReviewListItem(day: number, sentenceId: number) {
+		await removeFromReview(day, sentenceId);
+		removeBookmark(day, sentenceId);
+		// Remove from local list
+		if (reviewListData) {
+			reviewListData = reviewListData.filter(i => !(i.day === day && i.sentenceId === sentenceId));
+		}
+		dueReviewCount = await getDueCount();
+		bookmarkedSentences = getBookmarks();
+	}
+
+	async function handleClearAllReviewItems() {
+		if (!reviewListData) return;
+		for (const item of reviewListData) {
+			await removeFromReview(item.day, item.sentenceId);
+			removeBookmark(item.day, item.sentenceId);
+		}
+		reviewListData = [];
+		dueReviewCount = await getDueCount();
+		bookmarkedSentences = getBookmarks();
+	}
+
+	function closeReviewList() {
+		reviewListData = null;
+	}
+
+	async function startReviewQuiz() {
+		reviewListData = null;
+		startReviewMode();
 	}
 
 	// ============ SCRIPT PANEL ============
@@ -312,7 +380,7 @@
 	function handleDaySelectChange(e: Event) {
 		const val = (e.target as HTMLSelectElement).value;
 		if (val === 'review') {
-			startReviewMode();
+			showReviewList();
 		} else if (val.startsWith('exam')) {
 			const week = parseInt(val.replace('exam', ''));
 			startExam(week);
@@ -573,6 +641,57 @@
 					</div>
 				{/each}
 
+				<!-- Review List View -->
+				{#if reviewListData !== null}
+					<div class="review-list-panel">
+						<div class="review-list-header">
+							<h3>{prefs.language === 'fa' ? '🔄 جملات مرور' : '🔄 Due Reviews'}</h3>
+							<button class="review-list-close" onclick={closeReviewList} aria-label="Close review list">✕</button>
+						</div>
+						{#if isLoadingReviewList}
+							<div class="review-list-empty">
+								<p>{prefs.language === 'fa' ? '⏳ در حال بارگذاری...' : '⏳ Loading...'}</p>
+							</div>
+						{:else if reviewListData.length === 0}
+							<div class="review-list-empty">
+								<p>{prefs.language === 'fa' ? '✅ هیچ جمله‌ای برای مرور نیست!' : '✅ No sentences due for review!'}</p>
+							</div>
+						{:else}
+							<div class="review-list-actions-top">
+								<span class="review-list-count">
+									{reviewListData.length} {prefs.language === 'fa' ? 'مورد' : 'items'}
+								</span>
+								<div class="review-list-btns">
+									<button class="review-btn-quiz" onclick={startReviewQuiz}>
+										{prefs.language === 'fa' ? '🎯 شروع آزمون' : '🎯 Start Quiz'}
+									</button>
+									<button class="review-btn-clear" onclick={handleClearAllReviewItems}>
+										{prefs.language === 'fa' ? '🗑️ حذف همه' : '🗑️ Clear All'}
+									</button>
+								</div>
+							</div>
+							<div class="review-list-items">
+								{#each reviewListData as item}
+									<div class="review-list-item">
+										<div class="review-item-info">
+											<span class="review-item-day">{prefs.language === 'fa' ? `روز ${item.day}` : `Day ${item.day}`}</span>
+											<div class="review-item-german">{item.germanText}</div>
+											<div class="review-item-translation" dir={prefs.language === 'fa' ? 'rtl' : 'ltr'}>{item.translation}</div>
+										</div>
+										<button
+											class="review-item-remove"
+											onclick={() => handleRemoveReviewListItem(item.day, item.sentenceId)}
+											aria-label="Remove from review"
+										>
+											✕
+										</button>
+									</div>
+								{/each}
+							</div>
+						{/if}
+					</div>
+				{/if}
+
 				<!-- Exam Progress Bar -->
 				{#if exam.isExamMode}
 					<div class="exam-progress-bar">
@@ -656,6 +775,7 @@
 									{currentTeachStep.language === 'fa' ? '🔊 دوباره' : '🔊 Replay'}
 								{/if}
 							</button>
+							{#if !exam.isExamMode && !exam.isReviewMode}
 							<button
 								class="btn-bookmark"
 								class:bookmarked={bookmarkedSentences.has(currentSentenceKey)}
@@ -668,6 +788,7 @@
 									{currentTeachStep.language === 'fa' ? '🏷️ ذخیره' : '🏷️ Save'}
 								{/if}
 							</button>
+						{/if}
 							{#if currentTeachStep.role === 'sent' && (currentTeachStep.hint || currentTeachStep.hintFa)}
 								<button class="btn-hint" onclick={() => showHint = !showHint} aria-label="Toggle hint">
 									💡 {currentTeachStep.language === 'fa' ? 'راهنما' : 'Hint'}
@@ -1599,6 +1720,179 @@
 	.btn-remove-review:hover {
 		background: #e74c3c;
 		color: white;
+	}
+
+	/* Review List Panel */
+	.review-list-panel {
+		background: #fff;
+		border-radius: 16px;
+		padding: 16px;
+		margin: 10px 0;
+		box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+		border: 1px solid #e0e0e0;
+	}
+
+	.review-list-header {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		margin-bottom: 12px;
+		padding-bottom: 10px;
+		border-bottom: 1px solid #eee;
+	}
+
+	.review-list-header h3 {
+		margin: 0;
+		font-size: 1.1rem;
+		color: #333;
+	}
+
+	.review-list-close {
+		background: none;
+		border: none;
+		font-size: 1.2rem;
+		color: #999;
+		cursor: pointer;
+		padding: 4px 8px;
+		border-radius: 50%;
+		transition: all 0.2s;
+	}
+
+	.review-list-close:hover {
+		background: #f0f0f0;
+		color: #333;
+	}
+
+	.review-list-empty {
+		text-align: center;
+		padding: 24px;
+		color: #888;
+		font-size: 1rem;
+	}
+
+	.review-list-actions-top {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		margin-bottom: 12px;
+	}
+
+	.review-list-count {
+		font-size: 0.85rem;
+		color: #888;
+		font-weight: 500;
+	}
+
+	.review-list-btns {
+		display: flex;
+		gap: 8px;
+	}
+
+	.review-btn-quiz {
+		padding: 6px 14px;
+		border-radius: 20px;
+		border: 2px solid #4caf50;
+		background: #4caf50;
+		color: white;
+		font-size: 0.8rem;
+		cursor: pointer;
+		transition: all 0.2s ease;
+		white-space: nowrap;
+	}
+
+	.review-btn-quiz:hover {
+		background: #43a047;
+		border-color: #43a047;
+	}
+
+	.review-btn-clear {
+		padding: 6px 14px;
+		border-radius: 20px;
+		border: 2px solid #e74c3c;
+		background: transparent;
+		color: #e74c3c;
+		font-size: 0.8rem;
+		cursor: pointer;
+		transition: all 0.2s ease;
+		white-space: nowrap;
+	}
+
+	.review-btn-clear:hover {
+		background: #e74c3c;
+		color: white;
+	}
+
+	.review-list-items {
+		max-height: 60vh;
+		overflow-y: auto;
+		display: flex;
+		flex-direction: column;
+		gap: 6px;
+	}
+
+	.review-list-item {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		padding: 10px 12px;
+		background: #f8f9fa;
+		border-radius: 10px;
+		transition: background 0.2s;
+	}
+
+	.review-list-item:hover {
+		background: #f0f0f0;
+	}
+
+	.review-item-info {
+		flex: 1;
+		min-width: 0;
+	}
+
+	.review-item-day {
+		font-size: 0.7rem;
+		color: #999;
+		font-weight: 600;
+		text-transform: uppercase;
+		letter-spacing: 0.5px;
+	}
+
+	.review-item-german {
+		font-size: 0.95rem;
+		color: #333;
+		font-weight: 500;
+		margin: 2px 0;
+		overflow: hidden;
+		text-overflow: ellipsis;
+	}
+
+	.review-item-translation {
+		font-size: 0.8rem;
+		color: #888;
+		overflow: hidden;
+		text-overflow: ellipsis;
+	}
+
+	.review-item-remove {
+		flex-shrink: 0;
+		width: 32px;
+		height: 32px;
+		border-radius: 50%;
+		border: none;
+		background: transparent;
+		color: #ccc;
+		font-size: 1rem;
+		cursor: pointer;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		transition: all 0.2s;
+		margin-left: 8px;
+	}
+
+	.review-item-remove:hover {
+		background: #fdecea;
+		color: #e74c3c;
 	}
 
 	.hint-text {
