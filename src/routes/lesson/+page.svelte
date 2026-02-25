@@ -465,7 +465,7 @@
 								value={meta.day.toString()}
 								selected={meta.day === app.currentDay}
 							>
-								{isCompleted ? '✅ ' : ''}{meta.title}
+								{isCompleted ? '✅ ' : ''}{meta.title}{meta.difficulty ? ` · ${meta.difficulty}` : ''}
 							</option>
 						{/each}
 						{#if days.length === 7}

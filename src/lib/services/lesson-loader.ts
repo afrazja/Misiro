@@ -21,6 +21,7 @@ export interface LessonMeta {
 	title: string;
 	titleFa: string;
 	group: string;
+	difficulty?: string;
 }
 
 // Module-level caches (persist for the tab's lifetime)
@@ -38,7 +39,7 @@ export async function getLessonIndex(): Promise<LessonMeta[]> {
 	const sb = getSupabaseBrowserClient();
 	const { data, error } = await sb
 		.from('lessons')
-		.select('day, title, title_fa, group, sort_order')
+		.select('day, title, title_fa, group, sort_order, difficulty')
 		.order('day', { ascending: true });
 
 	if (error || !data) {
@@ -66,7 +67,8 @@ export async function getLessonIndex(): Promise<LessonMeta[]> {
 		file: `day-${r.day}.json`, // backward-compat shim
 		title: r.title,
 		titleFa: r.title_fa ?? '',
-		group: r.group
+		group: r.group,
+		difficulty: r.difficulty ?? undefined
 	}));
 
 	return indexCache;

@@ -12,7 +12,8 @@ export const LessonRowSchema = z.object({
 	title: z.string(),
 	title_fa: z.string().nullable(),
 	group: z.string(),
-	sort_order: z.number().int().nullable().optional()
+	sort_order: z.number().int().nullable().optional(),
+	difficulty: z.string().nullable().optional()
 });
 
 export type LessonRow = z.infer<typeof LessonRowSchema>;
