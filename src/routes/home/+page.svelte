@@ -719,20 +719,6 @@
 							</button>
 						</div>
 					</div>
-
-					{#if totalLessons > 0}
-						<div class="journey-bar-wrap">
-							<div class="journey-bar">
-								<div
-									class="journey-fill"
-									style="width: {progressPercent}%"
-								></div>
-							</div>
-							<span class="journey-label"
-								>{daysCompleted}/{totalLessons} days · {progressPercent}%</span
-							>
-						</div>
-					{/if}
 				{:else}
 					<h1>Mirifer</h1>
 					<p>Learn German the Natural Way</p>
