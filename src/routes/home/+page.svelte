@@ -10,6 +10,7 @@
 	import { initSyncListeners } from "$services/sync-queue";
 	import { getLessonIndex } from "$services/lesson-loader";
 	import Heatmap from "$lib/components/Heatmap.svelte";
+	import TrophyCabinet from "$lib/components/TrophyCabinet.svelte";
 
 	// Auth modal state
 	let showAuthModal = $state(false);
@@ -45,6 +46,10 @@
 
 	// Calendar flashcard
 	let showCalendar = $state(false);
+
+	// Gamification & Badges
+	let unlockedBadges = $state<string[]>([]);
+	let unreadBadgesCount = $state(0);
 
 	// Refs for focus trap
 	let modalEl: HTMLDivElement | undefined = $state();
@@ -241,6 +246,38 @@
 			savedWordCount = dataLayer.getVocabularyCount();
 		} catch {
 			savedWordCount = 0;
+		}
+
+		// Unlock Achievements Engine
+		let currentBadges = progress?.achievements
+			? [...progress.achievements]
+			: [];
+		let newlyUnlocked = 0;
+
+		const checkBadge = (id: string, condition: boolean) => {
+			if (condition && !currentBadges.includes(id)) {
+				currentBadges.push(id);
+				newlyUnlocked++;
+
+				// Optional: You could show a specialized toast here
+				// showToast(`Unlocked Achievement: ${id}!`);
+			}
+		};
+
+		checkBadge("first_lesson", daysCompleted >= 1);
+		checkBadge("active_learner_5", daysCompleted >= 5);
+		checkBadge("polyglot_50", savedWordCount >= 50);
+		checkBadge("perfectionist", totalXp >= 1000);
+
+		unlockedBadges = currentBadges;
+
+		if (newlyUnlocked > 0 && progress) {
+			await dataLayer.saveProgress(
+				currentDay,
+				progress.currentSentenceIndex ?? 0,
+				totalXp,
+				unlockedBadges,
+			);
 		}
 	}
 
@@ -719,6 +756,9 @@
 
 		<!-- ── Practice Heatmap ────────────────────────────── -->
 		<Heatmap {practiceDates} />
+
+		<!-- ── Trophy Cabinet ──────────────────────────────── -->
+		<TrophyCabinet unlockedIds={unlockedBadges} />
 	{/if}
 
 	<!-- ── Nav Cards ───────────────────────────────────── -->
