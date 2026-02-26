@@ -1,26 +1,26 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
-	import { page } from '$app/stores';
-	import { goto } from '$app/navigation';
-	import * as auth from '$services/auth';
-	import * as dataLayer from '$services/data-layer';
-	import { initSyncListeners } from '$services/sync-queue';
-	import { getLessonIndex, getTotalLessons } from '$services/lesson-loader';
+	import { onMount } from "svelte";
+	import { page } from "$app/stores";
+	import { goto } from "$app/navigation";
+	import * as auth from "$services/auth";
+	import * as dataLayer from "$services/data-layer";
+	import { initSyncListeners } from "$services/sync-queue";
+	import { getLessonIndex, getTotalLessons } from "$services/lesson-loader";
 
 	// Auth modal state
 	let showAuthModal = $state(false);
-	let authMode = $state<'signin' | 'signup'>('signin');
-	let authEmail = $state('');
-	let authPassword = $state('');
-	let authName = $state('');
-	let authError = $state('');
+	let authMode = $state<"signin" | "signup">("signin");
+	let authEmail = $state("");
+	let authPassword = $state("");
+	let authName = $state("");
+	let authError = $state("");
 	let authLoading = $state(false);
 
 	// Confirmation toast
 	let showConfirmToast = $state(false);
 
 	// Profile
-	let displayName = $state('Learner');
+	let displayName = $state("Learner");
 	let avatarUrl = $state<string | null>(null);
 	let isAuthenticated = $state(false);
 
@@ -40,41 +40,45 @@
 	// No i18n needed on landing page — content is English only
 
 	function openSignUp() {
-		authMode = 'signup';
+		authMode = "signup";
 		showAuthModal = true;
-		authError = '';
+		authError = "";
 		setTimeout(() => emailInput?.focus(), 100);
 	}
 
 	function openSignIn() {
-		authMode = 'signin';
+		authMode = "signin";
 		showAuthModal = true;
-		authError = '';
+		authError = "";
 		setTimeout(() => emailInput?.focus(), 100);
 	}
 
 	function toggleAuthModal() {
 		showAuthModal = !showAuthModal;
-		authError = '';
+		authError = "";
 		if (showAuthModal) setTimeout(() => emailInput?.focus(), 100);
 	}
 
 	function toggleAuthMode() {
-		authMode = authMode === 'signin' ? 'signup' : 'signin';
-		authError = '';
+		authMode = authMode === "signin" ? "signup" : "signin";
+		authError = "";
 	}
 
 	async function submitAuth() {
-		authError = '';
+		authError = "";
 		if (!authEmail.trim() || !authPassword) {
-			authError = 'Please enter email and password.';
+			authError = "Please enter email and password.";
 			return;
 		}
 		authLoading = true;
 		try {
 			let result;
-			if (authMode === 'signup') {
-				result = await auth.signUp(authEmail.trim(), authPassword, authName.trim() || 'Learner');
+			if (authMode === "signup") {
+				result = await auth.signUp(
+					authEmail.trim(),
+					authPassword,
+					authName.trim() || "Learner",
+				);
 			} else {
 				result = await auth.signIn(authEmail.trim(), authPassword);
 			}
@@ -82,20 +86,24 @@
 				authError = result.error;
 			} else {
 				showAuthModal = false;
-				authEmail = '';
-				authPassword = '';
-				authName = '';
+				authEmail = "";
+				authPassword = "";
+				authName = "";
 				// Navigate immediately — server guards handle the exact destination.
 				// Heavy background work (profile sync, UI refresh) runs after navigation.
 				const targetLang = result.user?.user_metadata?.target_language;
-				goto(targetLang === 'de' || targetLang === 'fr' ? '/home' : '/onboarding');
+				goto(
+					targetLang === "de" || targetLang === "fr"
+						? "/home"
+						: "/onboarding",
+				);
 				// Fire-and-forget: don't await these before navigating
 				if (result.user) auth.ensureProfile(result.user);
 				dataLayer.syncOnLogin();
 				updateProfileUI();
 			}
 		} catch (e: any) {
-			authError = e.message || 'An error occurred.';
+			authError = e.message || "An error occurred.";
 		} finally {
 			authLoading = false;
 		}
@@ -115,25 +123,27 @@
 			if (url) dataLayer.setAvatarUrl(url);
 			avatarUrl = url;
 		} else {
-			displayName = 'Learner';
+			displayName = "Learner";
 			avatarUrl = null;
 		}
 	}
 
 	function scrollToMethod() {
-		document.getElementById('method-section')?.scrollIntoView({ behavior: 'smooth' });
+		document
+			.getElementById("method-section")
+			?.scrollIntoView({ behavior: "smooth" });
 	}
 
 	function handleKeydown(e: KeyboardEvent) {
-		if (e.key === 'Escape' && showAuthModal) toggleAuthModal();
-		if (e.key === 'Tab' && showAuthModal && modalEl) {
+		if (e.key === "Escape" && showAuthModal) toggleAuthModal();
+		if (e.key === "Tab" && showAuthModal && modalEl) {
 			const focusable = modalEl.querySelectorAll<HTMLElement>(
-				'input:not([style*="display:none"]), button, a[href], [tabindex]:not([tabindex="-1"])'
+				'input:not([style*="display:none"]), button, a[href], [tabindex]:not([tabindex="-1"])',
 			);
 			const visible = Array.from(focusable).filter((el) => {
 				let p: HTMLElement | null = el;
 				while (p && p !== modalEl) {
-					if (p.style && p.style.display === 'none') return false;
+					if (p.style && p.style.display === "none") return false;
 					p = p.parentElement as HTMLElement;
 				}
 				return true;
@@ -152,7 +162,7 @@
 	}
 
 	function handleAuthKeydown(e: KeyboardEvent) {
-		if (e.key === 'Enter') submitAuth();
+		if (e.key === "Enter") submitAuth();
 	}
 
 	function handleScroll() {
@@ -162,24 +172,25 @@
 	onMount(async () => {
 		initSyncListeners();
 		const params = $page.url.searchParams;
-		if (params.get('confirmed') === 'true') {
+		if (params.get("confirmed") === "true") {
 			showConfirmToast = true;
 			setTimeout(() => (showConfirmToast = false), 5000);
-			goto('/', { replaceState: true });
+			goto("/", { replaceState: true });
 		}
 		await updateProfileUI();
 
 		// Fetch lesson count for dynamic stats
 		await getLessonIndex();
 		totalLessons = getTotalLessons();
-
 	});
 </script>
 
 <svelte:window onkeydown={handleKeydown} onscroll={handleScroll} />
 
 <svelte:head>
-	<title>Learn German Online Free – Voice Practice & Daily Lessons | Mirifer</title>
+	<title
+		>Learn German Online Free – Voice Practice & Daily Lessons | Mirifer</title
+	>
 	<meta
 		name="description"
 		content="Learn German free with 90+ daily lessons, native audio, and voice practice. No grammar drills — just real conversations. Start today, no credit card needed."
@@ -187,8 +198,14 @@
 	<link rel="canonical" href="https://www.mirifer.com/" />
 
 	<!-- Open Graph -->
-	<meta property="og:title" content="Mirifer – Learn German Through Real Conversations" />
-	<meta property="og:description" content="Master German with voice recognition, spaced repetition, and 90+ real-life daily lessons. Free to start — no grammar drills." />
+	<meta
+		property="og:title"
+		content="Mirifer – Learn German Through Real Conversations"
+	/>
+	<meta
+		property="og:description"
+		content="Master German with voice recognition, spaced repetition, and 90+ real-life daily lessons. Free to start — no grammar drills."
+	/>
 	<meta property="og:image" content="https://www.mirifer.com/og-image.jpg" />
 	<meta property="og:url" content="https://www.mirifer.com/" />
 	<meta property="og:type" content="website" />
@@ -196,63 +213,72 @@
 
 	<!-- Twitter Card -->
 	<meta name="twitter:card" content="summary_large_image" />
-	<meta name="twitter:title" content="Mirifer – Learn German Through Real Conversations" />
-	<meta name="twitter:description" content="90+ daily lessons. Voice practice. Spaced repetition. Free access." />
+	<meta
+		name="twitter:title"
+		content="Mirifer – Learn German Through Real Conversations"
+	/>
+	<meta
+		name="twitter:description"
+		content="90+ daily lessons. Voice practice. Spaced repetition. Free access."
+	/>
 	<meta name="twitter:image" content="https://www.mirifer.com/og-image.jpg" />
 
 	<!-- Structured Data -->
 	{@html `<script type="application/ld+json">${JSON.stringify({
 		"@context": "https://schema.org",
 		"@type": "SoftwareApplication",
-		"name": "Mirifer",
-		"applicationCategory": "EducationApplication",
-		"description": "Learn German through real-life conversations with voice recognition and spaced repetition.",
-		"operatingSystem": "Web",
-		"offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
-		"url": "https://www.mirifer.com"
+		name: "Mirifer",
+		applicationCategory: "EducationApplication",
+		description:
+			"Learn German through real-life conversations with voice recognition and spaced repetition.",
+		operatingSystem: "Web",
+		offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
+		url: "https://www.mirifer.com",
 	})}</script>`}
 	{@html `<script type="application/ld+json">${JSON.stringify({
 		"@context": "https://schema.org",
 		"@type": "FAQPage",
-		"mainEntity": [
+		mainEntity: [
 			{
 				"@type": "Question",
-				"name": "How long does it take to learn German with Mirifer?",
-				"acceptedAnswer": {
+				name: "How long does it take to learn German with Mirifer?",
+				acceptedAnswer: {
 					"@type": "Answer",
-					"text": "Mirifer's 90+ lessons take you from complete beginner (A1) to intermediate (B1+). Spending 15–20 minutes a day, most learners complete the full path in about 3 months. Because every lesson uses real conversations, you'll start speaking from day one."
-				}
+					text: "Mirifer's 90+ lessons take you from complete beginner (A1) to intermediate (B1+). Spending 15–20 minutes a day, most learners complete the full path in about 3 months. Because every lesson uses real conversations, you'll start speaking from day one.",
+				},
 			},
 			{
 				"@type": "Question",
-				"name": "Can I learn German for free?",
-				"acceptedAnswer": {
+				name: "Can I learn German for free?",
+				acceptedAnswer: {
 					"@type": "Answer",
-					"text": "Yes. Mirifer is completely free during early access — no credit card, no trial period, no hidden fees. You get full access to all 90+ lessons, voice practice, and spaced repetition flashcards."
-				}
+					text: "Yes. Mirifer is completely free during early access — no credit card, no trial period, no hidden fees. You get full access to all 90+ lessons, voice practice, and spaced repetition flashcards.",
+				},
 			},
 			{
 				"@type": "Question",
-				"name": "How is Mirifer different from Duolingo?",
-				"acceptedAnswer": {
+				name: "How is Mirifer different from Duolingo?",
+				acceptedAnswer: {
 					"@type": "Answer",
-					"text": "While Duolingo uses gamified drills with isolated words, Mirifer teaches through real-life conversations. Every lesson is a scenario you'd actually face in Germany — ordering food, asking for directions, making small talk. Mirifer also includes voice recognition for pronunciation practice and word-level feedback."
-				}
+					text: "While Duolingo uses gamified drills with isolated words, Mirifer teaches through real-life conversations. Every lesson is a scenario you'd actually face in Germany — ordering food, asking for directions, making small talk. Mirifer also includes voice recognition for pronunciation practice and word-level feedback.",
+				},
 			},
 			{
 				"@type": "Question",
-				"name": "What level of German does Mirifer teach?",
-				"acceptedAnswer": {
+				name: "What level of German does Mirifer teach?",
+				acceptedAnswer: {
 					"@type": "Answer",
-					"text": "Mirifer covers A1 (complete beginner) through B1+ (intermediate). You'll progress from basic greetings and numbers through shopping and travel scenarios to complex conversations and expressing opinions."
-				}
-			}
-		]
+					text: "Mirifer covers A1 (complete beginner) through B1+ (intermediate). You'll progress from basic greetings and numbers through shopping and travel scenarios to complex conversations and expressing opinions.",
+				},
+			},
+		],
 	})}</script>`}
 </svelte:head>
 
 <!-- ── Email Confirmation Toast ─────────────────────────── -->
-<div class="confirm-toast" class:show={showConfirmToast}>✅ Email confirmed! You can now sign in.</div>
+<div class="confirm-toast" class:show={showConfirmToast}>
+	✅ Email confirmed! You can now sign in.
+</div>
 
 <!-- ── Auth Modal ──────────────────────────────────────── -->
 {#if showAuthModal}
@@ -268,20 +294,32 @@
 		}}
 	>
 		<div class="auth-modal" bind:this={modalEl}>
-			<button class="auth-close" onclick={toggleAuthModal} aria-label="Close dialog">×</button>
-			<div class="auth-logo">🌍</div>
-			<h2 id="auth-title">{authMode === 'signin' ? 'Welcome Back' : 'Start Your Journey'}</h2>
+			<button
+				class="auth-close"
+				onclick={toggleAuthModal}
+				aria-label="Close dialog">×</button
+			>
+			<div class="auth-logo">
+				<img
+					src="/favicon.svg"
+					alt="Mirifer Logo"
+					style="width: 44px; height: 44px; border-radius: 8px;"
+				/>
+			</div>
+			<h2 id="auth-title">
+				{authMode === "signin" ? "Welcome Back" : "Start Your Journey"}
+			</h2>
 			<p class="auth-subtitle">
-				{authMode === 'signin'
-					? 'Sign in to continue learning German'
-					: 'Create your free account — no card required'}
+				{authMode === "signin"
+					? "Sign in to continue learning German"
+					: "Create your free account — no card required"}
 			</p>
 
 			{#if authError}
 				<div class="auth-error">{authError}</div>
 			{/if}
 
-			{#if authMode === 'signup'}
+			{#if authMode === "signup"}
 				<div class="auth-field">
 					<input
 						type="text"
@@ -313,23 +351,31 @@
 				/>
 			</div>
 
-			<button class="auth-submit" onclick={submitAuth} disabled={authLoading}>
+			<button
+				class="auth-submit"
+				onclick={submitAuth}
+				disabled={authLoading}
+			>
 				{authLoading
-					? '···'
-					: authMode === 'signin'
-						? 'Sign In'
-						: 'Create Free Account'}
+					? "···"
+					: authMode === "signin"
+						? "Sign In"
+						: "Create Free Account"}
 			</button>
 
 			<p class="auth-toggle">
-				<span>{authMode === 'signin' ? "Don't have an account?" : 'Already have an account?'}</span>
+				<span
+					>{authMode === "signin"
+						? "Don't have an account?"
+						: "Already have an account?"}</span
+				>
 				<!-- svelte-ignore a11y_invalid_attribute -->
 				<a
 					href="#"
 					onclick={(e) => {
 						e.preventDefault();
 						toggleAuthMode();
-					}}>{authMode === 'signin' ? ' Sign Up Free' : ' Sign In'}</a
+					}}>{authMode === "signin" ? " Sign Up Free" : " Sign In"}</a
 				>
 			</p>
 		</div>
@@ -341,7 +387,12 @@
 <!-- ════════════════════════════════════════════════════════ -->
 <nav class="navbar" class:scrolled>
 	<a href="/" class="brand">
-		<span class="brand-icon">🌍</span>
+		<img
+			src="/favicon.svg"
+			alt="Mirifer Logo"
+			class="brand-icon"
+			style="width: 32px; height: 32px; border-radius: 6px;"
+		/>
 		<span class="brand-name">Mirifer</span>
 	</a>
 
@@ -350,7 +401,9 @@
 			<a href="/home" class="btn btn-primary">Open App &rarr;</a>
 		{:else}
 			<button class="btn btn-ghost" onclick={openSignIn}>Sign In</button>
-			<button class="btn btn-primary" onclick={openSignUp}>Get Started Free</button>
+			<button class="btn btn-primary" onclick={openSignUp}
+				>Get Started Free</button
+			>
 		{/if}
 	</div>
 </nav>
@@ -377,8 +430,12 @@
 			{#if isAuthenticated}
 				<a href="/home" class="cta-btn primary">Go to My Lessons →</a>
 			{:else}
-				<button class="cta-btn primary" onclick={openSignUp}>Start for Free</button>
-				<button class="cta-btn ghost" onclick={scrollToMethod}>See how it works &darr;</button>
+				<button class="cta-btn primary" onclick={openSignUp}
+					>Start for Free</button
+				>
+				<button class="cta-btn ghost" onclick={scrollToMethod}
+					>See how it works &darr;</button
+				>
 			{/if}
 		</div>
 		<div class="hero-trust">
@@ -392,7 +449,11 @@
 	<div class="hero-visual">
 		<div class="phone-frame">
 			<div class="phone-notch"></div>
-			<img src="/phone-preview.jpg" alt="Mirifer lesson interface" class="phone-screenshot" />
+			<img
+				src="/phone-preview.jpg"
+				alt="Mirifer lesson interface"
+				class="phone-screenshot"
+			/>
 		</div>
 	</div>
 </section>
@@ -435,8 +496,12 @@
 			How Mirifer <span class="grad-text">Teaches You German</span>
 		</h2>
 		<p class="section-lead">
-			Forget memorising verb tables. Mirifer puts you in real conversations from day one.<br />
-			<em class="diff-line">Unlike gamified apps, Mirifer focuses entirely on real conversation.</em>
+			Forget memorising verb tables. Mirifer puts you in real
+			conversations from day one.<br />
+			<em class="diff-line"
+				>Unlike gamified apps, Mirifer focuses entirely on real
+				conversation.</em
+			>
 		</p>
 
 		<div class="steps-row">
@@ -445,8 +510,8 @@
 				<span class="step-emoji">🎧</span>
 				<h3>Hear Native Audio</h3>
 				<p>
-					Every sentence is read aloud at a natural pace — so you hear how German actually sounds,
-					not exaggerated slow speech.
+					Every sentence is read aloud at a natural pace — so you hear
+					how German actually sounds, not exaggerated slow speech.
 				</p>
 			</div>
 			<div class="step-arrow">→</div>
@@ -455,8 +520,8 @@
 				<span class="step-emoji">🎙️</span>
 				<h3>Say It Out Loud</h3>
 				<p>
-					Your mic captures what you say and checks it against the target. Get instant, word-level
-					pronunciation feedback.
+					Your mic captures what you say and checks it against the
+					target. Get instant, word-level pronunciation feedback.
 				</p>
 			</div>
 			<div class="step-arrow">→</div>
@@ -465,8 +530,8 @@
 				<span class="step-emoji">🔄</span>
 				<h3>Review at the Right Time</h3>
 				<p>
-					Spaced repetition (SM-2) surfaces words you're about to forget — exactly when you need to
-					see them again.
+					Spaced repetition (SM-2) surfaces words you're about to
+					forget — exactly when you need to see them again.
 				</p>
 			</div>
 		</div>
@@ -477,31 +542,32 @@
 				<span class="feat-icon">💬</span>
 				<h3>Real-Life Scenarios</h3>
 				<p>
-					Order coffee, ask for directions, introduce yourself. Every lesson is a situation you'll
-					face in Germany.
+					Order coffee, ask for directions, introduce yourself. Every
+					lesson is a situation you'll face in Germany.
 				</p>
 			</div>
 			<div class="feat-card">
 				<span class="feat-icon">📖</span>
 				<h3>Word-by-Word Meanings</h3>
 				<p>
-					Tap any word in a sentence to see its meaning instantly. Build vocabulary in context, not
-					in isolation.
+					Tap any word in a sentence to see its meaning instantly.
+					Build vocabulary in context, not in isolation.
 				</p>
 			</div>
 			<div class="feat-card">
 				<span class="feat-icon">📊</span>
 				<h3>Progress Tracking</h3>
 				<p>
-					See your streak, completed lessons, and review stats. Know exactly how far you've come and what's next.
+					See your streak, completed lessons, and review stats. Know
+					exactly how far you've come and what's next.
 				</p>
 			</div>
 			<div class="feat-card">
 				<span class="feat-icon">🌐</span>
 				<h3>English &amp; Persian</h3>
 				<p>
-					All hints and translations in both English and Persian (فارسی). Switch languages any time,
-					even mid-lesson.
+					All hints and translations in both English and Persian
+					(فارسی). Switch languages any time, even mid-lesson.
 				</p>
 			</div>
 		</div>
@@ -518,8 +584,9 @@
 			Your 90-Day Path from <span class="grad-text">Zero to Fluent</span>
 		</h2>
 		<p class="section-lead">
-			No more wondering "what should I study today?" Each day has a theme, a scenario, and
-			carefully crafted sentences that build on everything before.
+			No more wondering "what should I study today?" Each day has a theme,
+			a scenario, and carefully crafted sentences that build on everything
+			before.
 		</p>
 
 		<ul class="journey-list centered">
@@ -527,27 +594,37 @@
 				<span class="j-dot green"></span>
 				<div>
 					<strong>Days 1–{stageOneEnd || 30} · A1</strong>
-					<span>Greetings, numbers, colours, essential daily phrases</span>
+					<span
+						>Greetings, numbers, colours, essential daily phrases</span
+					>
 				</div>
 			</li>
 			<li>
 				<span class="j-dot blue"></span>
 				<div>
-					<strong>Days {(stageOneEnd || 30) + 1}–{stageTwoEnd || 60} · A2</strong>
+					<strong
+						>Days {(stageOneEnd || 30) + 1}–{stageTwoEnd || 60} · A2</strong
+					>
 					<span>Shopping, travel, work, and social situations</span>
 				</div>
 			</li>
 			<li>
 				<span class="j-dot purple"></span>
 				<div>
-					<strong>Days {(stageTwoEnd || 60) + 1}–{stageThreeEnd || 90} · B1+</strong>
-					<span>Opinions, storytelling, and complex conversations</span>
+					<strong
+						>Days {(stageTwoEnd || 60) + 1}–{stageThreeEnd || 90} · B1+</strong
+					>
+					<span
+						>Opinions, storytelling, and complex conversations</span
+					>
 				</div>
 			</li>
 		</ul>
 
 		{#if isAuthenticated}
-			<a href="/home" class="cta-btn primary inline">Go to My Lessons &rarr;</a>
+			<a href="/home" class="cta-btn primary inline"
+				>Go to My Lessons &rarr;</a
+			>
 		{:else}
 			<button class="cta-btn primary inline" onclick={openSignUp}
 				>Begin Day 1 — It's Free</button
@@ -566,29 +643,47 @@
 			Why Learn German <span class="grad-text">in 2025?</span>
 		</h2>
 		<p class="section-lead">
-			German is the most spoken native language in Europe and opens doors to careers, culture, and travel across Germany, Austria, and Switzerland.
+			German is the most spoken native language in Europe and opens doors
+			to careers, culture, and travel across Germany, Austria, and
+			Switzerland.
 		</p>
 
 		<div class="reasons-grid">
 			<div class="reason-card">
 				<span class="reason-icon">💼</span>
 				<h3>Career Opportunities</h3>
-				<p>Germany has Europe's largest economy. Speaking German gives you access to top employers like Siemens, BMW, SAP, and thousands of companies actively hiring international talent.</p>
+				<p>
+					Germany has Europe's largest economy. Speaking German gives
+					you access to top employers like Siemens, BMW, SAP, and
+					thousands of companies actively hiring international talent.
+				</p>
 			</div>
 			<div class="reason-card">
 				<span class="reason-icon">🎓</span>
 				<h3>Free University Education</h3>
-				<p>Most German public universities charge zero tuition — even for international students. Learning German unlocks access to world-class education without the debt.</p>
+				<p>
+					Most German public universities charge zero tuition — even
+					for international students. Learning German unlocks access
+					to world-class education without the debt.
+				</p>
 			</div>
 			<div class="reason-card">
 				<span class="reason-icon">🌍</span>
 				<h3>100+ Million Speakers</h3>
-				<p>German is spoken natively by over 100 million people across Europe. It's an official language in Germany, Austria, Switzerland, Luxembourg, Belgium, and Liechtenstein.</p>
+				<p>
+					German is spoken natively by over 100 million people across
+					Europe. It's an official language in Germany, Austria,
+					Switzerland, Luxembourg, Belgium, and Liechtenstein.
+				</p>
 			</div>
 			<div class="reason-card">
 				<span class="reason-icon">🏠</span>
 				<h3>Life in Germany</h3>
-				<p>Moving to Germany for work or study? Daily life — from finding an apartment to visiting the doctor — becomes dramatically easier when you speak the language.</p>
+				<p>
+					Moving to Germany for work or study? Daily life — from
+					finding an apartment to visiting the doctor — becomes
+					dramatically easier when you speak the language.
+				</p>
 			</div>
 		</div>
 	</div>
@@ -601,32 +696,51 @@
 	<div class="lp-inner">
 		<p class="eyebrow">Who It's For</p>
 		<h2 class="section-h2">
-			Built for People Who <span class="grad-text">Actually Want to Speak</span>
+			Built for People Who <span class="grad-text"
+				>Actually Want to Speak</span
+			>
 		</h2>
 		<p class="section-lead">
-			Mirifer is designed for anyone who wants to have real German conversations — not just pass grammar quizzes.
+			Mirifer is designed for anyone who wants to have real German
+			conversations — not just pass grammar quizzes.
 		</p>
 
 		<div class="audience-grid">
 			<div class="audience-card">
 				<span class="audience-emoji">🔰</span>
 				<h3>Complete Beginners</h3>
-				<p>Never spoken a word of German? Start from zero with day-one basics — greetings, numbers, and simple phrases you'll use immediately.</p>
+				<p>
+					Never spoken a word of German? Start from zero with day-one
+					basics — greetings, numbers, and simple phrases you'll use
+					immediately.
+				</p>
 			</div>
 			<div class="audience-card">
 				<span class="audience-emoji">✈️</span>
 				<h3>Travellers to Germany</h3>
-				<p>Planning a trip to Berlin, Munich, or Vienna? Learn exactly the phrases you'll need — ordering food, asking directions, and making small talk.</p>
+				<p>
+					Planning a trip to Berlin, Munich, or Vienna? Learn exactly
+					the phrases you'll need — ordering food, asking directions,
+					and making small talk.
+				</p>
 			</div>
 			<div class="audience-card">
 				<span class="audience-emoji">🏢</span>
 				<h3>Expats &amp; New Residents</h3>
-				<p>Moving to a German-speaking country? Master daily situations like finding an apartment, opening a bank account, and navigating bureaucracy.</p>
+				<p>
+					Moving to a German-speaking country? Master daily situations
+					like finding an apartment, opening a bank account, and
+					navigating bureaucracy.
+				</p>
 			</div>
 			<div class="audience-card">
 				<span class="audience-emoji">🇮🇷</span>
 				<h3>Persian Speakers</h3>
-				<p>Mirifer is one of the few German learning apps with full Persian (فارسی) translation support. Switch between English and Persian anytime.</p>
+				<p>
+					Mirifer is one of the few German learning apps with full
+					Persian (فارسی) translation support. Switch between English
+					and Persian anytime.
+				</p>
 			</div>
 		</div>
 	</div>
@@ -644,28 +758,66 @@
 
 		<div class="faq-list">
 			<details class="faq-item">
-				<summary>How long does it take to learn German with Mirifer?</summary>
-				<p>Mirifer's 90+ lessons take you from complete beginner (A1) to intermediate (B1+). Spending 15–20 minutes a day, most learners complete the full path in about 3 months. Because every lesson uses real conversations, you'll start speaking from day one.</p>
+				<summary
+					>How long does it take to learn German with Mirifer?</summary
+				>
+				<p>
+					Mirifer's 90+ lessons take you from complete beginner (A1)
+					to intermediate (B1+). Spending 15–20 minutes a day, most
+					learners complete the full path in about 3 months. Because
+					every lesson uses real conversations, you'll start speaking
+					from day one.
+				</p>
 			</details>
 			<details class="faq-item">
 				<summary>Can I learn German for free?</summary>
-				<p>Yes! Mirifer is completely free during early access — no credit card, no trial period, no hidden fees. You get full access to all 90+ lessons, voice practice, and spaced repetition flashcards.</p>
+				<p>
+					Yes! Mirifer is completely free during early access — no
+					credit card, no trial period, no hidden fees. You get full
+					access to all 90+ lessons, voice practice, and spaced
+					repetition flashcards.
+				</p>
 			</details>
 			<details class="faq-item">
 				<summary>How is Mirifer different from Duolingo?</summary>
-				<p>While Duolingo uses gamified drills with isolated words, Mirifer teaches through real-life conversations. Every lesson is a scenario you'd actually face in Germany — ordering food, asking for directions, making small talk. Mirifer also includes voice recognition so you practise speaking out loud, with word-level pronunciation feedback.</p>
+				<p>
+					While Duolingo uses gamified drills with isolated words,
+					Mirifer teaches through real-life conversations. Every
+					lesson is a scenario you'd actually face in Germany —
+					ordering food, asking for directions, making small talk.
+					Mirifer also includes voice recognition so you practise
+					speaking out loud, with word-level pronunciation feedback.
+				</p>
 			</details>
 			<details class="faq-item">
 				<summary>What level of German does Mirifer teach?</summary>
-				<p>Mirifer covers A1 (complete beginner) through B1+ (intermediate). You'll progress from basic greetings and numbers through shopping and travel scenarios to complex conversations and expressing opinions.</p>
+				<p>
+					Mirifer covers A1 (complete beginner) through B1+
+					(intermediate). You'll progress from basic greetings and
+					numbers through shopping and travel scenarios to complex
+					conversations and expressing opinions.
+				</p>
 			</details>
 			<details class="faq-item">
 				<summary>Do I need a microphone?</summary>
-				<p>A microphone helps you practise speaking, but it's not required. You can complete all lessons without voice input — though we highly recommend using it to build pronunciation confidence from the start.</p>
+				<p>
+					A microphone helps you practise speaking, but it's not
+					required. You can complete all lessons without voice input —
+					though we highly recommend using it to build pronunciation
+					confidence from the start.
+				</p>
 			</details>
 			<details class="faq-item">
-				<summary>What's the best app to learn German as a beginner?</summary>
-				<p>The best app depends on your goal. If you want to speak German in real situations — not just translate isolated words — Mirifer is built exactly for that. It combines conversation-based lessons, voice practice, and spaced repetition to build speaking skills from day one.</p>
+				<summary
+					>What's the best app to learn German as a beginner?</summary
+				>
+				<p>
+					The best app depends on your goal. If you want to speak
+					German in real situations — not just translate isolated
+					words — Mirifer is built exactly for that. It combines
+					conversation-based lessons, voice practice, and spaced
+					repetition to build speaking skills from day one.
+				</p>
 			</details>
 		</div>
 	</div>
@@ -680,11 +832,17 @@
 			<div class="cta-box">
 				<span class="cta-icon">🚀</span>
 				<h2>Ready to Speak German?</h2>
-				<p>Join learners building real German skills — one conversation at a time.</p>
+				<p>
+					Join learners building real German skills — one conversation
+					at a time.
+				</p>
 				<button class="cta-btn primary large" onclick={openSignUp}
 					>Create Your Free Account</button
 				>
-				<p class="cta-fine">No credit card &nbsp;·&nbsp; No spam &nbsp;·&nbsp; Just German</p>
+				<p class="cta-fine">
+					No credit card &nbsp;·&nbsp; No spam &nbsp;·&nbsp; Just
+					German
+				</p>
 			</div>
 		</div>
 	</section>
@@ -696,7 +854,11 @@
 <footer class="site-footer">
 	<div class="footer-inner">
 		<div class="footer-brand">
-			<span>🌍</span>
+			<img
+				src="/favicon.svg"
+				alt="Mirifer Logo"
+				style="width: 32px; height: 32px; border-radius: 6px; margin-right: 8px;"
+			/>
 			<strong>Mirifer</strong>
 		</div>
 		<p>Learn German Through Real Conversations</p>
@@ -708,7 +870,10 @@
 			<a href="/terms">Terms of Service</a>
 		</nav>
 
-		<p class="footer-sub">Free during early access &nbsp;·&nbsp; Made with ❤️ for language learners</p>
+		<p class="footer-sub">
+			Free during early access &nbsp;·&nbsp; Made with ❤️ for language
+			learners
+		</p>
 	</div>
 </footer>
 
@@ -973,7 +1138,9 @@
 		font-weight: 700;
 		cursor: pointer;
 		margin-top: 8px;
-		transition: opacity 0.2s, transform 0.2s;
+		transition:
+			opacity 0.2s,
+			transform 0.2s;
 		font-family: inherit;
 	}
 
@@ -1068,7 +1235,12 @@
 		gap: 60px;
 		padding: 110px 80px 80px;
 		position: relative;
-		background: linear-gradient(135deg, #1a1a2e 0%, #16213e 55%, #0f3460 100%);
+		background: linear-gradient(
+			135deg,
+			#1a1a2e 0%,
+			#16213e 55%,
+			#0f3460 100%
+		);
 		overflow: hidden;
 	}
 
@@ -1374,10 +1546,14 @@
 	}
 
 	.feat-card::after {
-		content: '';
+		content: "";
 		position: absolute;
 		inset: 0;
-		background: linear-gradient(135deg, rgba(233, 69, 96, 0.08), transparent);
+		background: linear-gradient(
+			135deg,
+			rgba(233, 69, 96, 0.08),
+			transparent
+		);
 		opacity: 0;
 		transition: opacity 0.3s;
 		border-radius: inherit;
@@ -1480,7 +1656,11 @@
 	}
 
 	.cta-box {
-		background: linear-gradient(145deg, rgba(233, 69, 96, 0.1), rgba(255, 107, 107, 0.05));
+		background: linear-gradient(
+			145deg,
+			rgba(233, 69, 96, 0.1),
+			rgba(255, 107, 107, 0.05)
+		);
 		border: 1px solid rgba(233, 69, 96, 0.22);
 		border-radius: 32px;
 		padding: 80px 40px;
@@ -1699,7 +1879,7 @@
 	}
 
 	.faq-item summary::after {
-		content: '+';
+		content: "+";
 		font-size: 1.3rem;
 		font-weight: 300;
 		color: #e94560;
@@ -1788,7 +1968,6 @@
 		.phone-frame {
 			width: 270px;
 		}
-
 
 		.navbar-right .btn-primary {
 			display: none;
