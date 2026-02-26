@@ -633,14 +633,15 @@
 <div class="home-container">
 	<!-- ── Top Nav ─────────────────────────────────────── -->
 	<nav class="top-nav">
-		<a href="/" class="nav-brand" title="Back to home">
-			<img
-				src="/android-chrome-192x192.png"
-				alt="Mirifer Logo"
-				class="brand-icon"
-				style="width: 28px; height: 28px; border-radius: 4px;"
-			/>
-			<span class="brand-text">Mirifer</span>
+		<a href="/settings" class="nav-profile-brand" title="Profile Settings">
+			<div class="brand-avatar">
+				{#if avatarUrl}
+					<img src={avatarUrl} alt="Avatar" />
+				{:else}
+					{(displayName || "L").charAt(0).toUpperCase()}
+				{/if}
+			</div>
+			<span class="brand-text">{displayName}</span>
 		</a>
 
 		<div class="nav-right">
@@ -662,15 +663,6 @@
 				<button class="nav-text-btn" onclick={handleSignOut}
 					>Sign Out</button
 				>
-				<a href="/settings" class="avatar-link" title="Profile">
-					<div class="avatar">
-						{#if avatarUrl}
-							<img src={avatarUrl} alt="Avatar" />
-						{:else}
-							{(displayName || "L").charAt(0).toUpperCase()}
-						{/if}
-					</div>
-				</a>
 			{:else}
 				<button class="nav-text-btn" onclick={toggleAuthModal}
 					>Sign In</button
@@ -855,16 +847,43 @@
 		transition: opacity 0.2s;
 	}
 
-	.nav-brand:hover {
+	.nav-profile-brand {
+		display: flex;
+		align-items: center;
+		gap: 12px;
+		text-decoration: none;
+		transition: opacity 0.2s;
+	}
+
+	.nav-profile-brand:hover {
 		opacity: 0.8;
 	}
 
+	.brand-avatar {
+		width: 32px;
+		height: 32px;
+		border-radius: 50%;
+		background: linear-gradient(135deg, #e94560, #ff6b6b);
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		font-size: 0.9rem;
+		font-weight: 700;
+		color: #fff;
+		border: 1.5px solid rgba(255, 255, 255, 0.2);
+		overflow: hidden;
+	}
+
+	.brand-avatar img {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+	}
+
 	.brand-text {
-		font-weight: 800;
-		background: linear-gradient(90deg, #e94560, #ff6b6b);
-		-webkit-background-clip: text;
-		-webkit-text-fill-color: transparent;
-		background-clip: text;
+		font-weight: 700;
+		font-size: 1rem;
+		color: #fff;
 	}
 
 	.nav-right {
