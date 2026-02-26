@@ -682,7 +682,6 @@
 	<!-- ── Welcome Banner ──────────────────────────────── -->
 	<div class="welcome-banner">
 		<div class="welcome-left">
-			<div class="logo-anim">🌍</div>
 			<div>
 				{#if isAuthenticated}
 					<div class="welcome-header-row">
