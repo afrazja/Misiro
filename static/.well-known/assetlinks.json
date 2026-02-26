@@ -1,0 +1,14 @@
+[
+    {
+        "relation": [
+            "delegate_permission/common.handle_all_urls"
+        ],
+        "target": {
+            "namespace": "android_app",
+            "package_name": "com.mirifer.www.two",
+            "sha256_cert_fingerprints": [
+                "88:92:E9:D6:43:0C:91:7E:C1:FE:F6:8B:34:F4:39:D5:93:35:5D:82:DB:E1:67:F9:49:E8:D0:7A:F9:C4:D5:C0"
+            ]
+        }
+    }
+]
