@@ -9,6 +9,7 @@
 	import { getDueCount } from "$services/spaced-repetition";
 	import { initSyncListeners } from "$services/sync-queue";
 	import { getLessonIndex } from "$services/lesson-loader";
+	import Heatmap from "$lib/components/Heatmap.svelte";
 
 	// Auth modal state
 	let showAuthModal = $state(false);
@@ -656,16 +657,17 @@
 					></div>
 				</div>
 			</div>
-			<button
-				class="stat-card stat-card-clickable"
-				onclick={() => (showCalendar = true)}
-				title="View your practice calendar"
+			<a
+				href="#history"
+				class="stat-card stat-card-link"
+				class:has-due={streakCount > 0}
+				title="View your practice history"
 			>
 				<span class="stat-icon">🔥</span>
 				<span class="stat-value">{streakCount}</span>
 				<span class="stat-label">Day Streak</span>
 				<span class="stat-cta-hint">view calendar →</span>
-			</button>
+			</a>
 			<a
 				href="/review"
 				class="stat-card stat-card-link"
@@ -697,6 +699,9 @@
 				{/if}
 			</a>
 		</div>
+
+		<!-- ── Practice Heatmap ────────────────────────────── -->
+		<Heatmap {practiceDates} />
 	{/if}
 
 	<!-- ── Nav Cards ───────────────────────────────────── -->
