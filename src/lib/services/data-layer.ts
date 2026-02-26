@@ -127,6 +127,7 @@ export interface Progress {
 	currentSentenceIndex: number;
 	lastSaved: number;
 	xp: number;
+	achievements: string[];
 }
 
 export async function getProgress(): Promise<Progress | null> {
@@ -137,7 +138,7 @@ export async function getProgress(): Promise<Progress | null> {
 			const client = getSupabaseBrowserClient();
 			const { data } = await client
 				.from('user_progress')
-				.select('current_day, current_sentence_index, last_saved, xp')
+				.select('current_day, current_sentence_index, last_saved, xp, achievements')
 				.eq('user_id', user.id)
 				.maybeSingle();
 			if (data) {
@@ -147,7 +148,8 @@ export async function getProgress(): Promise<Progress | null> {
 						currentDay: parsed.data.current_day,
 						currentSentenceIndex: parsed.data.current_sentence_index,
 						lastSaved: parsed.data.last_saved,
-						xp: parsed.data.xp ?? 0
+						xp: parsed.data.xp ?? 0,
+						achievements: parsed.data.achievements ?? []
 					};
 					localStorage.setItem('mirifer_progress', JSON.stringify(progress));
 					return progress;
@@ -169,19 +171,21 @@ export async function getProgress(): Promise<Progress | null> {
 	}
 }
 
-export async function saveProgress(currentDay: number, currentSentenceIndex: number, xp: number = 0): Promise<void> {
+export async function saveProgress(currentDay: number, currentSentenceIndex: number, xp: number = 0, achievements: string[] = []): Promise<void> {
 	const data = {
 		currentDay,
 		currentSentenceIndex,
 		lastSaved: Date.now(),
-		xp
+		xp,
+		achievements
 	};
 	localStorage.setItem('mirifer_progress', JSON.stringify(data));
 	await cloudWrite('progress_upsert', 'progress', {
 		current_day: currentDay,
 		current_sentence_index: currentSentenceIndex,
 		last_saved: data.lastSaved,
-		xp: data.xp
+		xp: data.xp,
+		achievements: data.achievements
 	});
 }
 
@@ -543,6 +547,53 @@ export function getVocabularyCount(): number {
 	return readVocabLocal().length;
 }
 
+// ========== STATS & AGGREGATIONS ==========
+
+export async function getLearnedSentenceBreakdown(): Promise<Record<string, number>> {
+	try {
+		const srData = await loadSRData();
+		const learnedKeys = Object.keys(srData).filter((key) => srData[key].successes > 0);
+
+		if (learnedKeys.length === 0) return { A1: 0, A2: 0, B1: 0 };
+
+		const learnedDays = [...new Set(learnedKeys.map((key) => parseInt(key.split(':')[0])))];
+
+		// Fetch all sentences for these days
+		const client = getSupabaseBrowserClient();
+		const { data: sentences, error } = await client
+			.from('sentences')
+			.select(`
+				sentence_order,
+				difficulty,
+				lessons!inner(day)
+			`)
+			.in('lessons.day', learnedDays);
+
+		if (error || !sentences) {
+			logError('data-layer:getLearnedSentenceBreakdown', error?.message || 'No data');
+			return { A1: 0, A2: 0, B1: 0 };
+		}
+
+		const breakdown: Record<string, number> = { A1: 0, A2: 0, B1: 0 };
+
+		for (const s of sentences) {
+			const day = (s.lessons as any).day;
+			const sentenceId = s.sentence_order + 1;
+			const key = `${day}:${sentenceId}`;
+
+			if (learnedKeys.includes(key)) {
+				const diff = s.difficulty || 'A1';
+				breakdown[diff] = (breakdown[diff] || 0) + 1;
+			}
+		}
+
+		return breakdown;
+	} catch (e) {
+		logError('data-layer:getLearnedSentenceBreakdown', e);
+		return { A1: 0, A2: 0, B1: 0 };
+	}
+}
+
 // ========== SENTENCE BOOKMARKS ==========
 
 const BOOKMARKS_LS_KEY = 'mirifer_bookmarks';
@@ -639,7 +690,8 @@ export async function syncOnLogin(): Promise<void> {
 						currentDay: p.current_day,
 						currentSentenceIndex: p.current_sentence_index,
 						lastSaved: p.last_saved,
-						xp: p.xp ?? 0
+						xp: p.xp ?? 0,
+						achievements: p.achievements ?? []
 					})
 				);
 				if (p.completed_lessons) {

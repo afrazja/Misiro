@@ -49,6 +49,7 @@
 	let showBadges = $state(false);
 	let unlockedBadges = $state<string[]>([]);
 	let unreadBadgesCount = $state(0);
+	let sentenceStats = $state<Record<string, number>>({ A1: 0, A2: 0, B1: 0 });
 
 	// Refs for focus trap
 	let modalEl: HTMLDivElement | undefined = $state();
@@ -278,6 +279,9 @@
 				unlockedBadges,
 			);
 		}
+
+		// Fetch sentence stats
+		sentenceStats = await dataLayer.getLearnedSentenceBreakdown();
 	}
 
 	function toggleAuthModal() {
@@ -530,7 +534,30 @@
 			>
 			<div class="cal-header">
 				<h2>🏆 My Achievements</h2>
-				<p>Earn XP and complete lessons to unlock more badges!</p>
+				<p>Your journey and mastery level at a glance.</p>
+			</div>
+
+			<div class="stats-overview">
+				<div class="mastery-section">
+					<h3>Sentence Mastery</h3>
+					<div class="mastery-grid">
+						<div class="mastery-item a1">
+							<span class="m-label">A1</span>
+							<span class="m-value">{sentenceStats.A1 || 0}</span>
+							<span class="m-sub">Beginner</span>
+						</div>
+						<div class="mastery-item a2">
+							<span class="m-label">A2</span>
+							<span class="m-value">{sentenceStats.A2 || 0}</span>
+							<span class="m-sub">Elementary</span>
+						</div>
+						<div class="mastery-item b1">
+							<span class="m-label">B1</span>
+							<span class="m-value">{sentenceStats.B1 || 0}</span>
+							<span class="m-sub">Intermediate</span>
+						</div>
+					</div>
+				</div>
 			</div>
 
 			<TrophyCabinet unlockedIds={unlockedBadges} />
@@ -1557,6 +1584,85 @@
 		box-shadow: inset 0 0 0 1px rgba(233, 69, 96, 0.45);
 	}
 
+	/* ── Mastery Section ──────────────────────────────── */
+	.stats-overview {
+		margin-bottom: 24px;
+	}
+
+	.mastery-section {
+		background: rgba(255, 255, 255, 0.03);
+		border: 1px solid rgba(255, 255, 255, 0.08);
+		border-radius: 20px;
+		padding: 20px 24px;
+	}
+
+	.mastery-section h3 {
+		font-size: 0.95rem;
+		font-weight: 700;
+		color: #888;
+		text-transform: uppercase;
+		letter-spacing: 0.05em;
+		margin: 0 0 16px;
+	}
+
+	.mastery-grid {
+		display: grid;
+		grid-template-columns: repeat(3, 1fr);
+		gap: 16px;
+	}
+
+	.mastery-item {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		padding: 12px;
+		background: rgba(255, 255, 255, 0.02);
+		border-radius: 12px;
+		border: 1px solid rgba(255, 255, 255, 0.05);
+		transition: transform 0.2s;
+	}
+
+	.mastery-item:hover {
+		transform: translateY(-2px);
+		background: rgba(255, 255, 255, 0.04);
+	}
+
+	.m-label {
+		font-size: 0.75rem;
+		font-weight: 800;
+		padding: 2px 8px;
+		border-radius: 6px;
+		margin-bottom: 8px;
+	}
+
+	.mastery-item.a1 .m-label {
+		background: rgba(52, 152, 219, 0.15);
+		color: #3498db;
+	}
+	.mastery-item.a2 .m-label {
+		background: rgba(155, 89, 182, 0.15);
+		color: #9b59b6;
+	}
+	.mastery-item.b1 .m-label {
+		background: rgba(230, 126, 34, 0.15);
+		color: #e67e22;
+	}
+
+	.m-value {
+		font-size: 1.5rem;
+		font-weight: 800;
+		color: #fff;
+		line-height: 1;
+		margin-bottom: 4px;
+	}
+
+	.m-sub {
+		font-size: 0.65rem;
+		color: #666;
+		text-transform: uppercase;
+		font-weight: 600;
+	}
+
 	/* ── Legend ───────────────────────────────────────── */
 	.cal-legend {
 		display: flex;
@@ -1678,6 +1784,18 @@
 
 		.welcome-left p {
 			font-size: 0.88rem;
+		}
+
+		.mastery-grid {
+			gap: 8px;
+		}
+
+		.mastery-item {
+			padding: 8px;
+		}
+
+		.m-value {
+			font-size: 1.2rem;
 		}
 	}
 </style>
