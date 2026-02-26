@@ -685,12 +685,42 @@
 			<div class="logo-anim">🌍</div>
 			<div>
 				{#if isAuthenticated}
-					<h1>Welcome back, {displayName.split(" ")[0]}! 👋</h1>
-					<p>
-						{streakCount > 0
-							? `You're on a ${streakCount}-day streak — keep it going!`
-							: "Pick up where you left off."}
-					</p>
+					<div class="welcome-header-row">
+						<div>
+							<h1>
+								Welcome back, {displayName.split(" ")[0]}! 👋
+							</h1>
+							<p>
+								{streakCount > 0
+									? `You're on a ${streakCount}-day streak — keep it going!`
+									: "Pick up where you left off."}
+							</p>
+						</div>
+
+						<div class="banner-stats">
+							<button
+								class="banner-stat xp"
+								onclick={() => (showBadges = true)}
+							>
+								<span class="bs-icon">🌟</span>
+								<div class="bs-info">
+									<span class="bs-value">{totalXp} XP</span>
+									<span class="bs-label">{currentLevel}</span>
+								</div>
+							</button>
+							<button
+								class="banner-stat streak"
+								onclick={() => (showCalendar = true)}
+							>
+								<span class="bs-icon">🔥</span>
+								<div class="bs-info">
+									<span class="bs-value">{streakCount}</span>
+									<span class="bs-label">Streak</span>
+								</div>
+							</button>
+						</div>
+					</div>
+
 					{#if totalLessons > 0}
 						<div class="journey-bar-wrap">
 							<div class="journey-bar">
@@ -714,77 +744,37 @@
 
 	<!-- ── Progress Stats ──────────────────────────────── -->
 	{#if isAuthenticated}
-		<div class="stats-row">
-			<button
-				class="stat-card stat-card-link"
-				style="border-color: rgba(52, 152, 219, 0.3);"
-				onclick={() => {
-					showBadges = true;
-				}}
-			>
-				<span class="stat-icon">🌟</span>
-				<span class="stat-value">{currentLevel}</span>
-				<span class="stat-label">{totalXp} XP</span>
-				<div
-					class="stat-bar"
-					style="background: rgba(52, 152, 219, 0.1);"
-				>
-					<div
-						class="stat-bar-fill"
-						style="width: {levelPercent}%; background: #3498db;"
-					></div>
-				</div>
-				<span class="stat-sub-note" style="margin-top:2px;"
-					>{levelPercent}% to {currentLevel === "A1"
-						? "A2"
-						: currentLevel === "A2"
-							? "B1+"
-							: "Max"}</span
-				>
-			</button>
-
-			<button
-				class="stat-card stat-card-link"
-				class:has-due={streakCount > 0}
-				title="View your practice history"
-				onclick={() => {
-					showCalendar = true;
-				}}
-			>
-				<span class="stat-icon">🔥</span>
-				<span class="stat-value">{streakCount}</span>
-				<span class="stat-label">Day Streak</span>
-				<span class="stat-cta-hint" style="opacity: 1;"
-					>view history →</span
-				>
-			</button>
-
+		<div class="stats-row action-row">
 			<a
 				href="/review"
-				class="stat-card stat-card-link"
+				class="stat-card stat-card-link action-card"
 				class:has-due={dueReviews > 0}
 				title="Go to reviews"
 			>
 				<span class="stat-icon">🔄</span>
-				<span class="stat-value">{dueReviews}</span>
-				<span class="stat-label"
-					>{dueReviews === 0 ? "All caught up!" : "Due Reviews"}</span
-				>
-				{#if dueReviews > 10}
-					<span class="stat-sub-note">Just do a few!</span>
-				{:else if dueReviews > 0}
+				<div class="stat-content">
+					<span class="stat-value">{dueReviews}</span>
+					<span class="stat-label"
+						>{dueReviews === 0
+							? "All caught up!"
+							: "Due Reviews"}</span
+					>
+				</div>
+				{#if dueReviews > 0}
 					<span class="stat-cta">Review now →</span>
 				{/if}
 			</a>
 			<a
 				href="/vocabulary"
-				class="stat-card stat-card-link"
+				class="stat-card stat-card-link action-card"
 				class:has-words={savedWordCount > 0}
 				title="View saved vocabulary"
 			>
 				<span class="stat-icon">📖</span>
-				<span class="stat-value">{savedWordCount}</span>
-				<span class="stat-label">Saved Words</span>
+				<div class="stat-content">
+					<span class="stat-value">{savedWordCount}</span>
+					<span class="stat-label">Saved Words</span>
+				</div>
 				{#if savedWordCount > 0}
 					<span class="stat-cta vocab-cta">Practice →</span>
 				{/if}
@@ -1016,22 +1006,62 @@
 		display: flex;
 		align-items: center;
 		gap: 20px;
+		flex: 1;
 	}
 
-	.logo-anim {
-		font-size: 3rem;
-		animation: float 3s ease-in-out infinite;
-		flex-shrink: 0;
+	.welcome-header-row {
+		display: flex;
+		justify-content: space-between;
+		align-items: flex-start;
+		width: 100%;
+		gap: 20px;
 	}
 
-	@keyframes float {
-		0%,
-		100% {
-			transform: translateY(0);
-		}
-		50% {
-			transform: translateY(-8px);
-		}
+	.banner-stats {
+		display: flex;
+		gap: 12px;
+	}
+
+	.banner-stat {
+		background: rgba(255, 255, 255, 0.08);
+		border: 1px solid rgba(255, 255, 255, 0.1);
+		border-radius: 14px;
+		padding: 8px 14px;
+		display: flex;
+		align-items: center;
+		gap: 10px;
+		cursor: pointer;
+		transition: all 0.2s;
+		font-family: inherit;
+		text-align: left;
+	}
+
+	.banner-stat:hover {
+		background: rgba(255, 255, 255, 0.15);
+		transform: translateY(-2px);
+		border-color: rgba(233, 69, 96, 0.4);
+	}
+
+	.bs-icon {
+		font-size: 1.4rem;
+	}
+
+	.bs-info {
+		display: flex;
+		flex-direction: column;
+	}
+
+	.bs-value {
+		font-size: 1rem;
+		font-weight: 800;
+		color: #fff;
+	}
+
+	.bs-label {
+		font-size: 0.7rem;
+		color: #aaa;
+		text-transform: uppercase;
+		letter-spacing: 0.05em;
 	}
 
 	.welcome-left h1 {
@@ -1056,6 +1086,34 @@
 		display: grid;
 		grid-template-columns: repeat(4, 1fr);
 		gap: 16px;
+	}
+
+	.action-row {
+		grid-template-columns: repeat(2, 1fr);
+	}
+
+	.action-card {
+		flex-direction: row !important;
+		justify-content: flex-start !important;
+		gap: 20px !important;
+		padding: 16px 24px !important;
+		text-align: left !important;
+	}
+
+	.stat-content {
+		display: flex;
+		flex-direction: column;
+		align-items: flex-start;
+		flex: 1;
+	}
+
+	.action-card .stat-icon {
+		font-size: 2rem;
+	}
+
+	.action-card .stat-cta {
+		margin-top: 0;
+		font-size: 0.85rem;
 	}
 
 	.stat-card {
