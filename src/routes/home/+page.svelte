@@ -509,6 +509,35 @@
 	</div>
 {/if}
 
+<!-- ── Trophy Cabinet Overlay ────────────────────────── -->
+{#if showBadges}
+	<!-- svelte-ignore a11y_click_events_have_key_events -->
+	<!-- svelte-ignore a11y_interactive_supports_focus -->
+	<div
+		class="cal-overlay"
+		role="dialog"
+		aria-modal="true"
+		aria-label="Trophy Cabinet"
+		onclick={(e) => {
+			if (e.target === e.currentTarget) showBadges = false;
+		}}
+	>
+		<div class="cal-modal">
+			<button
+				class="cal-close"
+				onclick={() => (showBadges = false)}
+				aria-label="Close cabinet">×</button
+			>
+			<div class="cal-header">
+				<h2>🏆 My Achievements</h2>
+				<p>Earn XP and complete lessons to unlock more badges!</p>
+			</div>
+
+			<TrophyCabinet unlockedIds={unlockedBadges} />
+		</div>
+	</div>
+{/if}
+
 <!-- ── 60-Day Calendar Flashcard ───────────────────── -->
 {#if showCalendar}
 	<!-- svelte-ignore a11y_click_events_have_key_events -->
@@ -686,22 +715,12 @@
 	<!-- ── Progress Stats ──────────────────────────────── -->
 	{#if isAuthenticated}
 		<div class="stats-row">
-			<div
+			<button
 				class="stat-card stat-card-link"
-				class:active={showBadges}
-				role="button"
-				tabindex="0"
-				onclick={() => {
-					showBadges = !showBadges;
-					showCalendar = false;
-				}}
-				onkeydown={(e) => {
-					if (e.key === "Enter" || e.key === " ") {
-						showBadges = !showBadges;
-						showCalendar = false;
-					}
-				}}
 				style="border-color: rgba(52, 152, 219, 0.3);"
+				onclick={() => {
+					showBadges = true;
+				}}
 			>
 				<span class="stat-icon">🌟</span>
 				<span class="stat-value">{currentLevel}</span>
@@ -722,44 +741,23 @@
 							? "B1+"
 							: "Max"}</span
 				>
-				{#if showBadges}
-					<div class="stat-dropdown trophy-dropdown">
-						<TrophyCabinet unlockedIds={unlockedBadges} />
-					</div>
-				{/if}
-			</div>
+			</button>
 
-			<div
+			<button
 				class="stat-card stat-card-link"
-				class:active={showCalendar}
-				role="button"
-				tabindex="0"
-				onclick={() => {
-					showCalendar = !showCalendar;
-					showBadges = false;
-				}}
-				onkeydown={(e) => {
-					if (e.key === "Enter" || e.key === " ") {
-						showCalendar = !showCalendar;
-						showBadges = false;
-					}
-				}}
 				class:has-due={streakCount > 0}
 				title="View your practice history"
+				onclick={() => {
+					showCalendar = true;
+				}}
 			>
 				<span class="stat-icon">🔥</span>
 				<span class="stat-value">{streakCount}</span>
 				<span class="stat-label">Day Streak</span>
 				<span class="stat-cta-hint" style="opacity: 1;"
-					>view history ▾</span
+					>view history →</span
 				>
-
-				{#if showCalendar}
-					<div class="stat-dropdown heatmap-dropdown">
-						<Heatmap {practiceDates} />
-					</div>
-				{/if}
-			</div>
+			</button>
 
 			<a
 				href="/review"
