@@ -1022,23 +1022,22 @@
 	}
 
 	.banner-stat {
-		background: rgba(255, 255, 255, 0.08);
-		border: 1px solid rgba(255, 255, 255, 0.1);
-		border-radius: 14px;
-		padding: 8px 14px;
+		background: transparent;
+		border: none;
+		border-radius: 10px;
+		padding: 6px 10px;
 		display: flex;
 		align-items: center;
-		gap: 10px;
+		gap: 8px;
 		cursor: pointer;
-		transition: all 0.2s;
+		transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 		font-family: inherit;
-		text-align: left;
+		color: #fff;
 	}
 
 	.banner-stat:hover {
-		background: rgba(255, 255, 255, 0.15);
-		transform: translateY(-2px);
-		border-color: rgba(233, 69, 96, 0.4);
+		background: rgba(255, 255, 255, 0.08);
+		transform: scale(1.05);
 	}
 
 	.bs-icon {
