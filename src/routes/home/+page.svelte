@@ -612,13 +612,7 @@
 	<!-- ── Welcome Banner ──────────────────────────────── -->
 	<div class="welcome-banner">
 		<div class="welcome-left">
-			<div class="logo-anim">
-				<img
-					src="/favicon.svg"
-					alt="Mirifer Logo"
-					style="width: 52px; height: 52px; border-radius: 10px;"
-				/>
-			</div>
+			<div class="logo-anim">🌍</div>
 			<div>
 				{#if isAuthenticated}
 					<h1>Welcome back, {displayName.split(" ")[0]}! 👋</h1>
