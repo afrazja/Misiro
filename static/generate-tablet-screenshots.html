@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Generate Tablet Screenshots</title>
+    <style>
+        body {
+            background: #111;
+            color: white;
+            padding: 40px;
+            font-family: sans-serif;
+            text-align: center;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .canvas-container {
+            border: 2px solid #e94560;
+            border-radius: 8px;
+            overflow: hidden;
+            position: relative;
+            cursor: pointer;
+        }
+
+        canvas {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .btn {
+            padding: 16px 32px;
+            font-size: 1.2rem;
+            background: #e94560;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            margin-bottom: 30px;
+        }
+
+        .btn:hover {
+            background: #ff6b6b;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Your Google Play Tablet Screenshots (9:16)</h1>
+    <p>Click the "Download All" button below to retrieve 4 beautiful, high-resolution screenshots for the Play Store.
+    </p>
+    <button class="btn" id="dl-btn">Download All Screenshots</button>
+
+    <div class="grid" id="grid">
+        <!-- canvases injected here -->
+    </div>
+
+    <script>
+        const width = 1080;
+        const height = 1920;
+
+        const screenshots = [
+            {
+                id: "screen1",
+                name: "1_Dashboard.png",
+                svg: `
+<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="1920" viewBox="0 0 1080 1920">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#16213e"/>
+      <stop offset="100%" style="stop-color:#0d0d1a"/>
+    </linearGradient>
+    <linearGradient id="primary" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#e94560"/>
+      <stop offset="100%" style="stop-color:#ff6b6b"/>
+    </linearGradient>
+  </defs>
+  <rect width="1080" height="1920" fill="url(#bg)"/>
+  
+  <rect x="0" y="0" width="1080" height="500" fill="url(#primary)" opacity="0.1"/>
+  
+  <text x="540" y="200" font-size="80" font-weight="900" text-anchor="middle" fill="#ffffff" font-family="Arial, sans-serif">Learn German 🌍</text>
+  <text x="540" y="280" font-size="60" font-weight="800" text-anchor="middle" fill="url(#primary)" font-family="Arial, sans-serif">Through Real Conversations</text>
+  
+  <rect x="140" y="450" width="800" height="1100" rx="40" fill="#1a1a2e" stroke="rgba(255,255,255,0.1)" stroke-width="4"/>
+  
+  <text x="220" y="580" font-size="48" font-weight="900" fill="#ffffff" font-family="Arial, sans-serif">Mirifer 👋</text>
+  <text x="220" y="640" font-size="34" fill="#a0a0a0" font-family="Arial, sans-serif">Welcome back, Learner!</text>
+  
+  <!-- Lesson Card -->
+  <rect x="220" y="720" width="640" height="300" rx="24" fill="rgba(52,152,219,0.15)" stroke="#3498db" stroke-width="3"/>
+  <text x="280" y="820" font-size="80" font-family="Arial, sans-serif">📚</text>
+  <text x="420" y="810" font-size="44" font-weight="bold" fill="#ffffff" font-family="Arial, sans-serif">Daily Lessons</text>
+  <text x="420" y="870" font-size="32" fill="#a0a0a0" font-family="Arial, sans-serif">Practice real-world scenarios</text>
+  
+  <rect x="420" y="920" width="400" height="16" rx="8" fill="rgba(255,255,255,0.2)"/>
+  <rect x="420" y="920" width="200" height="16" rx="8" fill="#3498db"/>
+
+  <!-- Basics Card -->
+  <rect x="220" y="1060" width="640" height="300" rx="24" fill="rgba(46,204,113,0.15)" stroke="#2ecc71" stroke-width="3"/>
+  <text x="280" y="1160" font-size="80" font-family="Arial, sans-serif">🔤</text>
+  <text x="420" y="1150" font-size="44" font-weight="bold" fill="#ffffff" font-family="Arial, sans-serif">German Basics</text>
+  <text x="420" y="1210" font-size="32" fill="#a0a0a0" font-family="Arial, sans-serif">Pronouns, Articles &amp; more</text>
+
+  <rect x="220" y="1420" width="300" height="80" rx="40" fill="url(#primary)"/>
+  <text x="370" y="1470" font-size="32" font-weight="bold" fill="#ffffff" text-anchor="middle" font-family="Arial, sans-serif">Start Day 1</text>
+  
+</svg>`
+            },
+            {
+                id: "screen2",
+                name: "2_Voice.png",
+                svg: `
+<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="1920" viewBox="0 0 1080 1920">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#0d0d1a"/>
+      <stop offset="100%" style="stop-color:#16213e"/>
+    </linearGradient>
+    <linearGradient id="primary" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#3498db"/>
+      <stop offset="100%" style="stop-color:#9b59b6"/>
+    </linearGradient>
+  </defs>
+  <rect width="1080" height="1920" fill="url(#bg)"/>
+  
+  <text x="540" y="200" font-size="80" font-weight="900" text-anchor="middle" fill="#ffffff" font-family="Arial, sans-serif">Speak With Confidence 💬</text>
+  <text x="540" y="280" font-size="60" font-weight="800" text-anchor="middle" fill="url(#primary)" font-family="Arial, sans-serif">Instant Pronunciation Feedback</text>
+
+  <rect x="140" y="450" width="800" height="1100" rx="40" fill="#1a1a2e" stroke="rgba(255,255,255,0.1)" stroke-width="4"/>
+  
+  <text x="540" y="600" font-size="36" fill="#a0a0a0" text-anchor="middle" font-family="Arial, sans-serif">Say it out loud</text>
+  
+  <!-- Dialogue bubbles -->
+  <rect x="200" y="680" width="680" height="160" rx="20" fill="rgba(52,152,219,0.2)"/>
+  <text x="240" y="770" font-size="44" font-weight="bold" fill="#ffffff" font-family="Arial, sans-serif">Ich hätte gern einen Kaffee.</text>
+  
+  <text x="540" y="900" font-size="34" fill="#a0a0a0" text-anchor="middle" font-family="Arial, sans-serif">I would like a coffee.</text>
+
+  <!-- Mic icon -->
+  <circle cx="540" cy="1150" r="140" fill="#e94560" opacity="0.2"/>
+  <circle cx="540" cy="1150" r="100" fill="#e94560"/>
+  <text x="540" y="1180" font-size="80" text-anchor="middle" fill="#ffffff" font-family="Arial, sans-serif">🎙️</text>
+  <text x="540" y="1360" font-size="36" fill="#2ecc71" font-weight="bold" text-anchor="middle" font-family="Arial, sans-serif">Listening...</text>
+</svg>`
+            },
+            {
+                id: "screen3",
+                name: "3_Flashcards.png",
+                svg: `
+<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="1920" viewBox="0 0 1080 1920">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#16213e"/>
+      <stop offset="100%" style="stop-color:#0f3460"/>
+    </linearGradient>
+    <linearGradient id="primary" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#f1c40f"/>
+      <stop offset="100%" style="stop-color:#e67e22"/>
+    </linearGradient>
+  </defs>
+  <rect width="1080" height="1920" fill="url(#bg)"/>
+  
+  <text x="540" y="200" font-size="80" font-weight="900" text-anchor="middle" fill="#ffffff" font-family="Arial, sans-serif">Never Forget A Word 🧠</text>
+  <text x="540" y="280" font-size="60" font-weight="800" text-anchor="middle" fill="url(#primary)" font-family="Arial, sans-serif">Smart Spaced Repetition</text>
+
+  <rect x="140" y="450" width="800" height="1100" rx="40" fill="#1a1a2e" stroke="rgba(255,255,255,0.1)" stroke-width="4"/>
+  
+  <!-- Flashcard top -->
+  <rect x="200" y="580" width="680" height="400" rx="20" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.2)" stroke-width="2"/>
+  <text x="540" y="780" font-size="72" font-weight="bold" fill="#ffffff" text-anchor="middle" font-family="Arial, sans-serif">der Bahnhof</text>
+  <text x="540" y="850" font-size="34" fill="#a0a0a0" text-anchor="middle" font-family="Arial, sans-serif">Noun (m) · Station</text>
+  
+  <text x="540" y="1060" font-size="36" fill="#ffffff" text-anchor="middle" font-family="Arial, sans-serif">How well did you know this?</text>
+  
+  <rect x="200" y="1140" width="200" height="100" rx="16" fill="rgba(231,76,60,0.2)" stroke="#e74c3c" stroke-width="2"/>
+  <text x="300" y="1200" font-size="32" font-weight="bold" fill="#e74c3c" text-anchor="middle" font-family="Arial, sans-serif">Hard</text>
+  
+  <rect x="440" y="1140" width="200" height="100" rx="16" fill="rgba(241,196,15,0.2)" stroke="#f1c40f" stroke-width="2"/>
+  <text x="540" y="1200" font-size="32" font-weight="bold" fill="#f1c40f" text-anchor="middle" font-family="Arial, sans-serif">Good</text>
+  
+  <rect x="680" y="1140" width="200" height="100" rx="16" fill="rgba(46,204,113,0.2)" stroke="#2ecc71" stroke-width="2"/>
+  <text x="780" y="1200" font-size="32" font-weight="bold" fill="#2ecc71" text-anchor="middle" font-family="Arial, sans-serif">Easy</text>
+
+</svg>`
+            },
+            {
+                id: "screen4",
+                name: "4_Progress.png",
+                svg: `
+<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="1920" viewBox="0 0 1080 1920">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#0d0d1a"/>
+      <stop offset="100%" style="stop-color:#1a1a2e"/>
+    </linearGradient>
+    <linearGradient id="primary" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#2ecc71"/>
+      <stop offset="100%" style="stop-color:#27ae60"/>
+    </linearGradient>
+  </defs>
+  <rect width="1080" height="1920" fill="url(#bg)"/>
+  
+  <text x="540" y="200" font-size="80" font-weight="900" text-anchor="middle" fill="#ffffff" font-family="Arial, sans-serif">Track Your Journey 🚀</text>
+  <text x="540" y="280" font-size="60" font-weight="800" text-anchor="middle" fill="url(#primary)" font-family="Arial, sans-serif">Stay Motivated Every Day</text>
+
+  <rect x="140" y="450" width="800" height="1100" rx="40" fill="#16213e" stroke="rgba(255,255,255,0.1)" stroke-width="4"/>
+  
+  <!-- Stats row -->
+  <rect x="200" y="550" width="320" height="240" rx="20" fill="rgba(255,255,255,0.05)"/>
+  <text x="360" y="650" font-size="80" font-weight="900" text-anchor="middle" fill="#ffffff" font-family="Arial, sans-serif">14</text>
+  <text x="360" y="730" font-size="32" fill="#a0a0a0" text-anchor="middle" font-family="Arial, sans-serif">Day Streak 🔥</text>
+  
+  <rect x="560" y="550" width="320" height="240" rx="20" fill="rgba(255,255,255,0.05)"/>
+  <text x="720" y="650" font-size="80" font-weight="900" text-anchor="middle" fill="#ffffff" font-family="Arial, sans-serif">A2</text>
+  <text x="720" y="730" font-size="32" fill="#a0a0a0" text-anchor="middle" font-family="Arial, sans-serif">Current Level 🎯</text>
+  
+  <!-- Calendar mockup -->
+  <text x="200" y="900" font-size="44" font-weight="bold" fill="#ffffff" font-family="Arial, sans-serif">Practice History</text>
+  
+  <!-- Simple grid of circles -->
+  <circle cx="250" cy="1020" r="40" fill="#2ecc71"/>
+  <circle cx="370" cy="1020" r="40" fill="#2ecc71"/>
+  <circle cx="490" cy="1020" r="40" fill="#2ecc71"/>
+  <circle cx="610" cy="1020" r="40" fill="rgba(255,255,255,0.08)"/>
+  <circle cx="730" cy="1020" r="40" fill="#2ecc71"/>
+  <circle cx="850" cy="1020" r="40" fill="#2ecc71"/>
+  
+  <circle cx="250" cy="1140" r="40" fill="rgba(255,255,255,0.08)"/>
+  <circle cx="370" cy="1140" r="40" fill="#2ecc71"/>
+  <circle cx="490" cy="1140" r="40" fill="#2ecc71"/>
+  <circle cx="610" cy="1140" r="40" fill="#2ecc71"/>
+  <circle cx="730" cy="1140" r="40" fill="#2ecc71"/>
+
+</svg>`
+            }
+        ];
+
+        const grid = document.getElementById('grid');
+        const dlBtn = document.getElementById('dl-btn');
+
+        const downloadLinks = [];
+
+        screenshots.forEach(sc => {
+            const container = document.createElement('div');
+            container.className = 'canvas-container';
+
+            const canvas = document.createElement('canvas');
+            canvas.width = width;
+            canvas.height = height;
+            container.appendChild(canvas);
+            grid.appendChild(container);
+
+            const ctx = canvas.getContext('2d');
+            const img = new Image();
+            const svgBlob = new Blob([sc.svg], { type: "image/svg+xml;charset=utf-8" });
+            const url = URL.createObjectURL(svgBlob);
+
+            img.onload = () => {
+                ctx.drawImage(img, 0, 0);
+                URL.revokeObjectURL(url);
+                downloadLinks.push({ name: sc.name, data: canvas.toDataURL('image/png') });
+            };
+            img.src = url;
+        });
+
+        dlBtn.onclick = () => {
+            if (downloadLinks.length < screenshots.length) {
+                alert("Images are still rendering, please wait a second.");
+                return;
+            }
+            // trigger downloads sequentially
+            downloadLinks.forEach((linkObj, idx) => {
+                setTimeout(() => {
+                    const a = document.createElement('a');
+                    a.download = linkObj.name;
+                    a.href = linkObj.data;
+                    a.click();
+                }, idx * 500); // 500ms delay to ensure browser doesn't block multiples
+            });
+        };
+    </script>
+</body>
+
+</html>

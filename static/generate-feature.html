@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Generate Feature Graphic</title>
+</head>
+<body style="background: #111; color: white; display:flex; flex-direction:column; align-items:center; padding: 50px; font-family:sans-serif;">
+  <h1>Your Google Play Feature Graphic</h1>
+  <p>Click the graphic below to instantly download it as a PNG (exactly 1024x500 pixels).</p>
+  <canvas id="canvas" width="1024" height="500" style="border: 2px solid #e94560; cursor: pointer; border-radius: 8px;"></canvas>
+
+  <script>
+    const svgContent = `
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="500" viewBox="0 0 1024 500">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1a1a2e"/>
+      <stop offset="55%" style="stop-color:#16213e"/>
+      <stop offset="100%" style="stop-color:#0f3460"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#e94560"/>
+      <stop offset="100%" style="stop-color:#ff6b6b"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1024" height="500" fill="url(#bg)"/>
+
+  <!-- Decorative circles -->
+  <circle cx="950" cy="80" r="150" fill="#e94560" opacity="0.08"/>
+  <circle cx="150" cy="450" r="160" fill="#3498db" opacity="0.08"/>
+  <circle cx="500" cy="500" r="120" fill="#2ecc71" opacity="0.06"/>
+
+  <!-- Globe emoji placeholder -->
+  <text x="80" y="190" font-size="64" font-family="Arial, sans-serif">🌍</text>
+
+  <!-- Brand -->
+  <text x="160" y="188" font-size="50" font-weight="900" fill="url(#accent)" font-family="Arial, Helvetica, sans-serif">Mirifer</text>
+
+  <!-- Tagline -->
+  <text x="80" y="270" font-size="42" font-weight="800" fill="#ffffff" font-family="Arial, Helvetica, sans-serif">Learn German Online</text>
+  <text x="80" y="325" font-size="42" font-weight="800" fill="url(#accent)" font-family="Arial, Helvetica, sans-serif">Through Real Conversations</text>
+
+  <!-- Sub-features -->
+  <text x="80" y="390" font-size="20" fill="#a0a0a0" font-family="Arial, Helvetica, sans-serif">🎙️ Voice Practice  ·  🔄 Spaced Repetition  ·  📖 90+ Daily Lessons</text>
+
+  <!-- Bottom accent line -->
+  <rect x="0" y="490" width="1024" height="10" fill="url(#accent)"/>
+</svg>`;
+
+    const canvas = document.getElementById('canvas');
+    const ctx = canvas.getContext('2d');
+    const img = new Image();
+    const svgBlob = new Blob([svgContent], {type: "image/svg+xml;charset=utf-8"});
+    const url = URL.createObjectURL(svgBlob);
+
+    img.onload = () => {
+      ctx.drawImage(img, 0, 0);
+      URL.revokeObjectURL(url);
+    };
+    img.src = url;
+
+    canvas.onclick = () => {
+      const link = document.createElement('a');
+      link.download = 'feature-graphic.png';
+      link.href = canvas.toDataURL('image/png');
+      link.click();
+    };
+  </script>
+</body>
+</html>
