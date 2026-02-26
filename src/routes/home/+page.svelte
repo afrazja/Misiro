@@ -564,7 +564,12 @@
 	<!-- ── Top Nav ─────────────────────────────────────── -->
 	<nav class="top-nav">
 		<a href="/" class="nav-brand" title="Back to home">
-			<span>🌍</span>
+			<img
+				src="/favicon.svg"
+				alt="Mirifer Logo"
+				class="brand-icon"
+				style="width: 28px; height: 28px; border-radius: 4px;"
+			/>
 			<span class="brand-text">Mirifer</span>
 		</a>
 
@@ -607,7 +612,13 @@
 	<!-- ── Welcome Banner ──────────────────────────────── -->
 	<div class="welcome-banner">
 		<div class="welcome-left">
-			<div class="logo-anim">🌍</div>
+			<div class="logo-anim">
+				<img
+					src="/favicon.svg"
+					alt="Mirifer Logo"
+					style="width: 52px; height: 52px; border-radius: 10px;"
+				/>
+			</div>
 			<div>
 				{#if isAuthenticated}
 					<h1>Welcome back, {displayName.split(" ")[0]}! 👋</h1>
