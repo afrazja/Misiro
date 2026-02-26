@@ -645,19 +645,6 @@
 		</a>
 
 		<div class="nav-right">
-			<!-- Language selector — compact, in nav -->
-			<div class="lang-compact">
-				<span class="lang-lbl">{content.langLabel}</span>
-				<select
-					aria-label="Select language"
-					value={language}
-					onchange={onLanguageChange}
-				>
-					<option value="en">English</option>
-					<option value="fa">فارسی</option>
-				</select>
-			</div>
-
 			{#if isAuthenticated}
 				<div class="nav-stats">
 					<button
@@ -880,37 +867,6 @@
 	}
 
 	/* Compact language picker */
-	.lang-compact {
-		display: flex;
-		align-items: center;
-		gap: 6px;
-	}
-
-	.lang-lbl {
-		font-size: 0.82rem;
-		color: #888;
-	}
-
-	.lang-compact select {
-		padding: 5px 12px;
-		border-radius: 20px;
-		border: 1px solid rgba(255, 255, 255, 0.15);
-		background: rgba(255, 255, 255, 0.07);
-		color: #fff;
-		font-size: 0.82rem;
-		font-weight: 600;
-		cursor: pointer;
-		font-family: inherit;
-		transition: border-color 0.2s;
-	}
-
-	.lang-compact select:hover {
-		border-color: rgba(255, 255, 255, 0.35);
-	}
-
-	.lang-compact select option {
-		background: #1a1a2e;
-	}
 
 	.nav-icon-btn {
 		font-size: 1.2rem;
@@ -1688,10 +1644,6 @@
 		.welcome-header-row {
 			flex-direction: column;
 			gap: 12px;
-		}
-
-		.lang-compact {
-			display: none;
 		}
 
 		.brand-text {
