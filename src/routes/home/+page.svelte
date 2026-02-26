@@ -659,6 +659,25 @@
 			</div>
 
 			{#if isAuthenticated}
+				<div class="nav-stats">
+					<button
+						class="nav-stat xp"
+						onclick={() => (showBadges = true)}
+						title="View XP & Badges"
+					>
+						<span class="ns-icon">🌟</span>
+						<span class="ns-value">{totalXp}</span>
+					</button>
+					<button
+						class="nav-stat streak"
+						onclick={() => (showCalendar = true)}
+						title="View Streak History"
+					>
+						<span class="ns-icon">🔥</span>
+						<span class="ns-value">{streakCount}</span>
+					</button>
+				</div>
+
 				<a href="/settings" class="nav-icon-btn" title="Settings">⚙️</a>
 				<button class="nav-text-btn" onclick={handleSignOut}
 					>Sign Out</button
@@ -686,29 +705,6 @@
 									? `You're on a ${streakCount}-day streak — keep it going!`
 									: "Pick up where you left off."}
 							</p>
-						</div>
-
-						<div class="banner-stats">
-							<button
-								class="banner-stat xp"
-								onclick={() => (showBadges = true)}
-							>
-								<span class="bs-icon">🌟</span>
-								<div class="bs-info">
-									<span class="bs-value">{totalXp} XP</span>
-									<span class="bs-label">{currentLevel}</span>
-								</div>
-							</button>
-							<button
-								class="banner-stat streak"
-								onclick={() => (showCalendar = true)}
-							>
-								<span class="bs-icon">🔥</span>
-								<div class="bs-info">
-									<span class="bs-value">{streakCount}</span>
-									<span class="bs-label">Streak</span>
-								</div>
-							</button>
 						</div>
 					</div>
 				{:else}
@@ -838,15 +834,6 @@
 		gap: 16px;
 	}
 
-	.nav-brand {
-		display: flex;
-		align-items: center;
-		gap: 8px;
-		text-decoration: none;
-		font-size: 1.4rem;
-		transition: opacity 0.2s;
-	}
-
 	.nav-profile-brand {
 		display: flex;
 		align-items: center;
@@ -956,40 +943,6 @@
 		background: rgba(233, 69, 96, 0.12);
 	}
 
-	.avatar-link {
-		text-decoration: none;
-	}
-
-	.avatar {
-		width: 38px;
-		height: 38px;
-		border-radius: 50%;
-		background: linear-gradient(135deg, #e94560, #ff6b6b);
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		font-size: 1.1rem;
-		font-weight: 700;
-		border: 2px solid rgba(255, 255, 255, 0.2);
-		overflow: hidden;
-		cursor: pointer;
-		transition:
-			transform 0.2s,
-			box-shadow 0.2s;
-	}
-
-	.avatar:hover {
-		transform: scale(1.08);
-		box-shadow: 0 0 0 3px rgba(233, 69, 96, 0.4);
-	}
-
-	.avatar img {
-		width: 100%;
-		height: 100%;
-		object-fit: cover;
-		border-radius: 50%;
-	}
-
 	/* ── Welcome Banner ───────────────────────────────── */
 	.welcome-banner {
 		background: linear-gradient(
@@ -1021,50 +974,42 @@
 		gap: 20px;
 	}
 
-	.banner-stats {
-		display: flex;
-		gap: 12px;
-	}
-
-	.banner-stat {
-		background: transparent;
-		border: none;
-		border-radius: 10px;
-		padding: 6px 10px;
+	.nav-stats {
 		display: flex;
 		align-items: center;
-		gap: 8px;
+		gap: 4px;
+		margin-right: 8px;
+		background: rgba(255, 255, 255, 0.05);
+		padding: 4px;
+		border-radius: 12px;
+		border: 1px solid rgba(255, 255, 255, 0.08);
+	}
+
+	.nav-stat {
+		background: transparent;
+		border: none;
+		border-radius: 8px;
+		padding: 4px 8px;
+		display: flex;
+		align-items: center;
+		gap: 6px;
 		cursor: pointer;
-		transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+		transition: all 0.2s;
 		font-family: inherit;
 		color: #fff;
 	}
 
-	.banner-stat:hover {
-		background: rgba(255, 255, 255, 0.08);
-		transform: scale(1.05);
+	.nav-stat:hover {
+		background: rgba(255, 255, 255, 0.1);
 	}
 
-	.bs-icon {
-		font-size: 1.4rem;
+	.ns-icon {
+		font-size: 1.1rem;
 	}
 
-	.bs-info {
-		display: flex;
-		flex-direction: column;
-	}
-
-	.bs-value {
-		font-size: 1rem;
-		font-weight: 800;
-		color: #fff;
-	}
-
-	.bs-label {
-		font-size: 0.7rem;
-		color: #aaa;
-		text-transform: uppercase;
-		letter-spacing: 0.05em;
+	.ns-value {
+		font-size: 0.9rem;
+		font-weight: 700;
 	}
 
 	.welcome-left h1 {
@@ -1319,36 +1264,6 @@
 
 	.stat-cta.vocab-cta {
 		color: #9b59b6;
-	}
-
-	/* ── Journey Progress Bar ── */
-	.journey-bar-wrap {
-		display: flex;
-		align-items: center;
-		gap: 10px;
-		margin-top: 6px;
-	}
-
-	.journey-bar {
-		width: 140px;
-		height: 6px;
-		background: rgba(255, 255, 255, 0.08);
-		border-radius: 3px;
-		overflow: hidden;
-	}
-
-	.journey-fill {
-		height: 100%;
-		background: linear-gradient(90deg, #e94560, #ff6b81);
-		border-radius: 3px;
-		transition: width 0.5s ease;
-	}
-
-	.journey-label {
-		font-size: 0.72rem;
-		color: rgba(255, 255, 255, 0.4);
-		font-weight: 500;
-		white-space: nowrap;
 	}
 
 	/* ── Card Progress Bar ── */
@@ -1775,17 +1690,30 @@
 			gap: 12px;
 		}
 
-		.banner-stats {
-			justify-content: flex-start;
-			gap: 8px;
-		}
-
-		.nav-card {
-			padding: 28px 24px;
-		}
-
 		.lang-compact {
 			display: none;
+		}
+
+		.brand-text {
+			display: none;
+		}
+
+		.nav-stats {
+			display: flex;
+			margin-right: 0;
+			background: transparent;
+			border: none;
+			padding: 0;
+			gap: 2px;
+		}
+
+		.ns-value {
+			font-size: 0.8rem;
+		}
+
+		.nav-text-btn {
+			padding: 4px 10px;
+			font-size: 0.75rem;
 		}
 
 		.welcome-left {
