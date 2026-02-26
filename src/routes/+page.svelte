@@ -301,7 +301,7 @@
 			>
 			<div class="auth-logo">
 				<img
-					src="/favicon.svg"
+					src="/android-chrome-192x192.png"
 					alt="Mirifer Logo"
 					style="width: 44px; height: 44px; border-radius: 8px;"
 				/>
@@ -388,7 +388,7 @@
 <nav class="navbar" class:scrolled>
 	<a href="/" class="brand">
 		<img
-			src="/favicon.svg"
+			src="/android-chrome-192x192.png"
 			alt="Mirifer Logo"
 			class="brand-icon"
 			style="width: 32px; height: 32px; border-radius: 6px;"
@@ -855,7 +855,7 @@
 	<div class="footer-inner">
 		<div class="footer-brand">
 			<img
-				src="/favicon.svg"
+				src="/android-chrome-192x192.png"
 				alt="Mirifer Logo"
 				style="width: 32px; height: 32px; border-radius: 6px; margin-right: 8px;"
 			/>

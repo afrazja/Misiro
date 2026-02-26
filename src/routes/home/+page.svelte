@@ -607,7 +607,7 @@
 	<nav class="top-nav">
 		<a href="/" class="nav-brand" title="Back to home">
 			<img
-				src="/favicon.svg"
+				src="/android-chrome-192x192.png"
 				alt="Mirifer Logo"
 				class="brand-icon"
 				style="width: 28px; height: 28px; border-radius: 4px;"
