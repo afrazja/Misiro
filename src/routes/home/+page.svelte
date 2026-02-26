@@ -44,10 +44,9 @@
 		Record<number, { completedAt: number; sentenceCount: number }>
 	>({});
 
-	// Calendar flashcard
+	// Badges & Calendar expansion
 	let showCalendar = $state(false);
-
-	// Gamification & Badges
+	let showBadges = $state(false);
 	let unlockedBadges = $state<string[]>([]);
 	let unreadBadgesCount = $state(0);
 
@@ -688,7 +687,20 @@
 	{#if isAuthenticated}
 		<div class="stats-row">
 			<div
-				class="stat-card"
+				class="stat-card stat-card-link"
+				class:active={showBadges}
+				role="button"
+				tabindex="0"
+				onclick={() => {
+					showBadges = !showBadges;
+					showCalendar = false;
+				}}
+				onkeydown={(e) => {
+					if (e.key === "Enter" || e.key === " ") {
+						showBadges = !showBadges;
+						showCalendar = false;
+					}
+				}}
 				style="border-color: rgba(52, 152, 219, 0.3);"
 			>
 				<span class="stat-icon">🌟</span>
@@ -710,18 +722,45 @@
 							? "B1+"
 							: "Max"}</span
 				>
+				{#if showBadges}
+					<div class="stat-dropdown trophy-dropdown">
+						<TrophyCabinet unlockedIds={unlockedBadges} />
+					</div>
+				{/if}
 			</div>
-			<a
-				href="#history"
+
+			<div
 				class="stat-card stat-card-link"
+				class:active={showCalendar}
+				role="button"
+				tabindex="0"
+				onclick={() => {
+					showCalendar = !showCalendar;
+					showBadges = false;
+				}}
+				onkeydown={(e) => {
+					if (e.key === "Enter" || e.key === " ") {
+						showCalendar = !showCalendar;
+						showBadges = false;
+					}
+				}}
 				class:has-due={streakCount > 0}
 				title="View your practice history"
 			>
 				<span class="stat-icon">🔥</span>
 				<span class="stat-value">{streakCount}</span>
 				<span class="stat-label">Day Streak</span>
-				<span class="stat-cta-hint">view calendar →</span>
-			</a>
+				<span class="stat-cta-hint" style="opacity: 1;"
+					>view history ▾</span
+				>
+
+				{#if showCalendar}
+					<div class="stat-dropdown heatmap-dropdown">
+						<Heatmap {practiceDates} />
+					</div>
+				{/if}
+			</div>
+
 			<a
 				href="/review"
 				class="stat-card stat-card-link"
@@ -753,12 +792,6 @@
 				{/if}
 			</a>
 		</div>
-
-		<!-- ── Practice Heatmap ────────────────────────────── -->
-		<Heatmap {practiceDates} />
-
-		<!-- ── Trophy Cabinet ──────────────────────────────── -->
-		<TrophyCabinet unlockedIds={unlockedBadges} />
 	{/if}
 
 	<!-- ── Nav Cards ───────────────────────────────────── -->
@@ -1045,6 +1078,33 @@
 	.stat-card:hover {
 		transform: translateY(-4px);
 		border-color: rgba(233, 69, 96, 0.3);
+	}
+
+	.stat-card.active {
+		border-color: #e94560;
+		background: rgba(233, 69, 96, 0.1);
+		transform: none;
+	}
+
+	.stat-dropdown {
+		grid-column: 1 / -1;
+		margin-top: 10px;
+		background: rgba(0, 0, 0, 0.2);
+		border-radius: 12px;
+		padding: 16px;
+		width: 100%;
+		animation: slideDown 0.3s ease-out;
+	}
+
+	@keyframes slideDown {
+		from {
+			opacity: 0;
+			transform: translateY(-10px);
+		}
+		to {
+			opacity: 1;
+			transform: translateY(0);
+		}
 	}
 
 	.stat-icon {
