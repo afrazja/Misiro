@@ -126,6 +126,7 @@ export interface Progress {
 	currentDay: number;
 	currentSentenceIndex: number;
 	lastSaved: number;
+	xp: number;
 }
 
 export async function getProgress(): Promise<Progress | null> {
@@ -136,7 +137,7 @@ export async function getProgress(): Promise<Progress | null> {
 			const client = getSupabaseBrowserClient();
 			const { data } = await client
 				.from('user_progress')
-				.select('current_day, current_sentence_index, last_saved')
+				.select('current_day, current_sentence_index, last_saved, xp')
 				.eq('user_id', user.id)
 				.maybeSingle();
 			if (data) {
@@ -145,7 +146,8 @@ export async function getProgress(): Promise<Progress | null> {
 					const progress: Progress = {
 						currentDay: parsed.data.current_day,
 						currentSentenceIndex: parsed.data.current_sentence_index,
-						lastSaved: parsed.data.last_saved
+						lastSaved: parsed.data.last_saved,
+						xp: parsed.data.xp ?? 0
 					};
 					localStorage.setItem('mirifer_progress', JSON.stringify(progress));
 					return progress;
@@ -167,17 +169,19 @@ export async function getProgress(): Promise<Progress | null> {
 	}
 }
 
-export async function saveProgress(currentDay: number, currentSentenceIndex: number): Promise<void> {
+export async function saveProgress(currentDay: number, currentSentenceIndex: number, xp: number = 0): Promise<void> {
 	const data = {
 		currentDay,
 		currentSentenceIndex,
-		lastSaved: Date.now()
+		lastSaved: Date.now(),
+		xp
 	};
 	localStorage.setItem('mirifer_progress', JSON.stringify(data));
 	await cloudWrite('progress_upsert', 'progress', {
 		current_day: currentDay,
 		current_sentence_index: currentSentenceIndex,
-		last_saved: data.lastSaved
+		last_saved: data.lastSaved,
+		xp: data.xp
 	});
 }
 
@@ -634,7 +638,8 @@ export async function syncOnLogin(): Promise<void> {
 					JSON.stringify({
 						currentDay: p.current_day,
 						currentSentenceIndex: p.current_sentence_index,
-						lastSaved: p.last_saved
+						lastSaved: p.last_saved,
+						xp: p.xp ?? 0
 					})
 				);
 				if (p.completed_lessons) {

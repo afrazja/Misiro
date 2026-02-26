@@ -35,6 +35,7 @@
 	let daysCompleted = $state(0);
 	let currentDay = $state(1);
 	let streakCount = $state(0);
+	let totalXp = $state(0);
 	let dueReviews = $state(0);
 	let savedWordCount = $state(0);
 	let totalLessons = $state(0);
@@ -49,34 +50,36 @@
 	let modalEl: HTMLDivElement | undefined = $state();
 	let emailInput: HTMLInputElement | undefined = $state();
 
-	// Derived: current level label + progress %
+	// Derived: gamified level based on XP
+	const TIER_A1 = 0;
+	const TIER_A2 = 1500;
+	const TIER_B1 = 4500;
+
 	const currentLevel = $derived.by(() => {
-		const third = Math.ceil(totalLessons / 3) || 20;
-		return currentDay <= third
-			? "A1"
-			: currentDay <= third * 2
-				? "A2"
-				: "B1+";
+		if (totalXp >= TIER_B1) return "B1+";
+		if (totalXp >= TIER_A2) return "A2";
+		return "A1";
+	});
+
+	// How far along are they to the NEXT tier?
+	const levelPercent = $derived.by(() => {
+		if (totalXp >= TIER_B1) return 100; // Maxed out
+		if (totalXp >= TIER_A2)
+			return Math.round(
+				((totalXp - TIER_A2) / (TIER_B1 - TIER_A2)) * 100,
+			);
+		return Math.round((totalXp / TIER_A2) * 100);
+	});
+
+	const nextTierXp = $derived.by(() => {
+		if (totalXp >= TIER_B1) return "Max";
+		if (totalXp >= TIER_A2) return TIER_B1;
+		return TIER_A2;
 	});
 
 	const progressPercent = $derived(
 		totalLessons > 0 ? Math.round((daysCompleted / totalLessons) * 100) : 0,
 	);
-
-	const levelPercent = $derived.by(() => {
-		const third = Math.ceil(totalLessons / 3);
-		if (third === 0) return 0;
-		const t2 = third * 2;
-		if (currentDay <= third)
-			return Math.round((Math.min(daysCompleted, third) / third) * 100);
-		if (currentDay <= t2)
-			return Math.round(
-				((Math.min(daysCompleted, t2) - third) / third) * 100,
-			);
-		return Math.round(
-			((Math.min(daysCompleted, totalLessons) - t2) / third) * 100,
-		);
-	});
 
 	// ── Practice Calendar ──────────────────────────────
 	let calYear = $state(new Date().getFullYear());
@@ -222,6 +225,7 @@
 
 		const progress = await dataLayer.getProgress();
 		currentDay = progress?.currentDay ?? 1;
+		totalXp = progress?.xp ?? 0;
 
 		// Fetch actual lesson count from database
 		const index = await getLessonIndex();
@@ -646,16 +650,29 @@
 	<!-- ── Progress Stats ──────────────────────────────── -->
 	{#if isAuthenticated}
 		<div class="stats-row">
-			<div class="stat-card">
-				<span class="stat-icon">🎯</span>
+			<div
+				class="stat-card"
+				style="border-color: rgba(52, 152, 219, 0.3);"
+			>
+				<span class="stat-icon">🌟</span>
 				<span class="stat-value">{currentLevel}</span>
-				<span class="stat-label">Current Level</span>
-				<div class="stat-bar">
+				<span class="stat-label">{totalXp} XP</span>
+				<div
+					class="stat-bar"
+					style="background: rgba(52, 152, 219, 0.1);"
+				>
 					<div
 						class="stat-bar-fill"
-						style="width: {levelPercent}%"
+						style="width: {levelPercent}%; background: #3498db;"
 					></div>
 				</div>
+				<span class="stat-sub-note" style="margin-top:2px;"
+					>{levelPercent}% to {currentLevel === "A1"
+						? "A2"
+						: currentLevel === "A2"
+							? "B1+"
+							: "Max"}</span
+				>
 			</div>
 			<a
 				href="#history"

@@ -11,6 +11,7 @@ export interface AppState {
 	sessionID: number;
 	completedLessons: Record<number, CompletedLesson>;
 	isListening: boolean;
+	xp: number;
 }
 
 const initialState: AppState = {
@@ -18,7 +19,8 @@ const initialState: AppState = {
 	currentSentenceIndex: 0,
 	sessionID: 0,
 	completedLessons: {},
-	isListening: false
+	isListening: false,
+	xp: 0
 };
 
 export const appStore = writable<AppState>(initialState);

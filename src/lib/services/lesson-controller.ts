@@ -150,11 +150,13 @@ export async function initLesson(): Promise<void> {
 		// Determine current day and sentence index.
 		let currentDay = 1;
 		let currentSentenceIndex = 0;
+		let xp = 0;
 
 		if (savedProgress && hasLesson(savedProgress.currentDay)) {
 			// Primary: restore exactly where the user left off mid-lesson.
 			currentDay = savedProgress.currentDay;
 			currentSentenceIndex = savedProgress.currentSentenceIndex;
+			xp = savedProgress.xp || 0;
 		} else {
 			// Fallback: infer position from completed lessons (new user or missing progress).
 			const completedDays = Object.keys(completedLessons || {})
@@ -180,6 +182,7 @@ export async function initLesson(): Promise<void> {
 			...s,
 			currentDay,
 			currentSentenceIndex,
+			xp,
 			completedLessons: completedLessons || {}
 		}));
 
@@ -276,8 +279,9 @@ async function handleLessonCompletion(
 		sentenceCount: lesson.sentences.length
 	};
 
-	appStore.update((s) => ({ ...s, completedLessons: updatedCompleted }));
-	await saveProgress(app.currentDay, app.currentSentenceIndex);
+	app.xp += 50; // Bonus for finishing a lesson
+	appStore.update((s) => ({ ...s, completedLessons: updatedCompleted, xp: app.xp }));
+	await saveProgress(app.currentDay, app.currentSentenceIndex, app.xp);
 	await saveCompletedLessons(updatedCompleted);
 
 	// Determine next day
@@ -322,8 +326,9 @@ export async function manualNext(): Promise<void> {
 	// Mark done and advance
 	callbacks?.onScriptMarkDone(app.currentSentenceIndex);
 	const nextIndex = app.currentSentenceIndex + 1;
-	appStore.update((s) => ({ ...s, currentSentenceIndex: nextIndex }));
-	await saveProgress(app.currentDay, nextIndex);
+	app.xp += 5; // Half points for manually skipping
+	appStore.update((s) => ({ ...s, currentSentenceIndex: nextIndex, xp: app.xp }));
+	await saveProgress(app.currentDay, nextIndex, app.xp);
 	processNextStep();
 }
 
@@ -342,7 +347,7 @@ export async function goToNextDay(nextDay: number): Promise<void> {
 		examStore.update((s) => ({ ...s, isExamMode: false, isReviewMode: false }));
 	}
 
-	await saveProgress(nextDay, 0);
+	await saveProgress(nextDay, 0, get(appStore).xp);
 	const lesson = await loadLesson(nextDay);
 	lessonStore.update((s) => ({ ...s, currentLesson: lesson, isLoading: false }));
 
@@ -378,7 +383,7 @@ export async function changeDay(day: number): Promise<void> {
 		currentSentenceIndex: 0
 	}));
 
-	await saveProgress(day, 0);
+	await saveProgress(day, 0, get(appStore).xp);
 	lessonStore.update((s) => ({ ...s, currentLesson: selectedLesson, isLoading: false }));
 
 	callbacks?.onClearChat();
@@ -462,8 +467,9 @@ async function handleLessonCorrect(step: Sentence, transcript: string): Promise<
 	// Advance
 	callbacks?.onScriptMarkDone(app.currentSentenceIndex);
 	const nextIndex = app.currentSentenceIndex + 1;
-	appStore.update((s) => ({ ...s, currentSentenceIndex: nextIndex }));
-	await saveProgress(app.currentDay, nextIndex);
+	app.xp += 10; // Reward for perfect voice match
+	appStore.update((s) => ({ ...s, currentSentenceIndex: nextIndex, xp: app.xp }));
+	await saveProgress(app.currentDay, nextIndex, app.xp);
 	processNextStep();
 }
 
