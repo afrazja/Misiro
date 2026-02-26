@@ -1134,33 +1134,6 @@
 		border-color: rgba(233, 69, 96, 0.3);
 	}
 
-	.stat-card.active {
-		border-color: #e94560;
-		background: rgba(233, 69, 96, 0.1);
-		transform: none;
-	}
-
-	.stat-dropdown {
-		grid-column: 1 / -1;
-		margin-top: 10px;
-		background: rgba(0, 0, 0, 0.2);
-		border-radius: 12px;
-		padding: 16px;
-		width: 100%;
-		animation: slideDown 0.3s ease-out;
-	}
-
-	@keyframes slideDown {
-		from {
-			opacity: 0;
-			transform: translateY(-10px);
-		}
-		to {
-			opacity: 1;
-			transform: translateY(0);
-		}
-	}
-
 	.stat-icon {
 		font-size: 1.6rem;
 	}
@@ -1341,30 +1314,6 @@
 
 	.stat-cta.vocab-cta {
 		color: #9b59b6;
-	}
-
-	.stat-sub-note {
-		font-size: 0.68rem;
-		color: rgba(255, 255, 255, 0.35);
-		font-weight: 500;
-		margin-top: 1px;
-	}
-
-	/* ── Stat Progress Bar ── */
-	.stat-bar {
-		width: 100%;
-		height: 4px;
-		background: rgba(255, 255, 255, 0.08);
-		border-radius: 2px;
-		margin-top: 6px;
-		overflow: hidden;
-	}
-
-	.stat-bar-fill {
-		height: 100%;
-		background: linear-gradient(90deg, #2ecc71, #27ae60);
-		border-radius: 2px;
-		transition: width 0.5s ease;
 	}
 
 	/* ── Journey Progress Bar ── */
@@ -1559,33 +1508,6 @@
 		color: #e94560;
 		text-decoration: none;
 		font-weight: 600;
-	}
-
-	/* ── Clickable stat card ──────────────────────────── */
-	.stat-card-clickable {
-		cursor: pointer;
-		font-family: inherit;
-		background: rgba(255, 255, 255, 0.05);
-		border: 1px solid rgba(255, 255, 255, 0.08);
-	}
-
-	.stat-card-clickable:hover {
-		border-color: rgba(233, 69, 96, 0.45);
-		background: rgba(233, 69, 96, 0.07);
-		transform: translateY(-4px);
-	}
-
-	.stat-cta-hint {
-		font-size: 0.68rem;
-		color: #e94560;
-		font-weight: 600;
-		opacity: 0;
-		transition: opacity 0.2s;
-		margin-top: 2px;
-	}
-
-	.stat-card-clickable:hover .stat-cta-hint {
-		opacity: 1;
 	}
 
 	/* ── Calendar flashcard overlay ───────────────────── */
@@ -1814,14 +1736,43 @@
 			grid-template-columns: repeat(2, 1fr);
 		}
 
+		.action-row {
+			grid-template-columns: 1fr;
+			gap: 12px;
+		}
+
+		.action-card {
+			padding: 14px 20px !important;
+			gap: 16px !important;
+		}
+
+		.action-card .stat-icon {
+			font-size: 1.6rem;
+		}
+
+		.action-card .stat-value {
+			font-size: 1.4rem;
+		}
+
 		.nav-cards {
 			grid-template-columns: 1fr;
 		}
 
 		.welcome-banner {
 			flex-direction: column;
-			align-items: flex-start;
-			gap: 14px;
+			align-items: stretch;
+			gap: 18px;
+			padding: 20px;
+		}
+
+		.welcome-header-row {
+			flex-direction: column;
+			gap: 12px;
+		}
+
+		.banner-stats {
+			justify-content: flex-start;
+			gap: 8px;
 		}
 
 		.nav-card {
@@ -1837,7 +1788,11 @@
 		}
 
 		.welcome-left h1 {
-			font-size: 1.3rem;
+			font-size: 1.35rem;
+		}
+
+		.welcome-left p {
+			font-size: 0.88rem;
 		}
 	}
 </style>
