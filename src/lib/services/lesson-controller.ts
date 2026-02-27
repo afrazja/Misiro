@@ -55,6 +55,7 @@ export interface LessonCallbacks {
 export interface TeachStepData {
 	germanText: string;
 	translationText: string;
+	englishTranslation: string;
 	language: Language;
 	isBlindMode: boolean;
 	role: 'received' | 'sent';
@@ -233,6 +234,7 @@ export async function processNextStep(skipAudio = false): Promise<void> {
 	callbacks?.onTeachStep({
 		germanText,
 		translationText,
+		englishTranslation: currentStep.translation,
 		language: prefs.language,
 		isBlindMode: prefs.blindMode,
 		role: currentStep.role,

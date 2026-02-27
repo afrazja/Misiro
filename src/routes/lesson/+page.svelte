@@ -139,7 +139,7 @@
 	): Array<{ word: string; meaning: string | null }> {
 		return text.split(" ").map((word) => {
 			const cleanKey = word.toLowerCase().replace(/[.,!?]/g, "");
-			const meaning = getGlossaryMeaning(cleanKey, prefs.language);
+			const meaning = getGlossaryMeaning(cleanKey, 'en');
 			return { word, meaning };
 		});
 	}
@@ -169,14 +169,15 @@
 		const clean = word.replace(/[.,!?]/g, "");
 		playAudioPromise(clean, 0.8, "de-DE");
 
-		// Show tooltip
-		if (meaning) {
+		// Show tooltip — always show English translation
+		{
 			if (tooltipTimer) clearTimeout(tooltipTimer);
 			const target = event.currentTarget as HTMLElement;
 			const rect = target.getBoundingClientRect();
+			const tooltipText = meaning || currentTeachStep?.englishTranslation || clean;
 			wordTooltip = {
 				word,
-				meaning,
+				meaning: tooltipText,
 				x: rect.left + rect.width / 2,
 				y: rect.top,
 			};
