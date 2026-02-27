@@ -1,0 +1,102 @@
+{
+  "day": 68,
+  "title": "68: Job Interview",
+  "titleFa": "مصاحبه شغلی",
+  "sentences": [
+    {
+      "id": 1,
+      "day": 68,
+      "role": "received",
+      "difficulty": "B1",
+      "translation": "Please tell us something about yourself.",
+      "translationFa": "لطفا کمی درباره خودتان بگویید.",
+      "audioText": "Erzählen Sie uns bitte etwas über sich."
+    },
+    {
+      "id": 2,
+      "day": 68,
+      "role": "sent",
+      "difficulty": "B1",
+      "translation": "I studied computer science at the University of Tehran and have been working as a developer for three years.",
+      "translationFa": "در دانشگاه تهران کامپیوتر خوانده‌ام و سه سال است به عنوان برنامه‌نویس کار می‌کنم.",
+      "targetText": "Ich habe an der Universität Teheran Informatik studiert und arbeite seit drei Jahren als Entwickler."
+    },
+    {
+      "id": 3,
+      "day": 68,
+      "role": "received",
+      "difficulty": "B1",
+      "translation": "Why did you apply to us?",
+      "translationFa": "چرا پیش ما درخواست دادید؟",
+      "audioText": "Warum haben Sie sich bei uns beworben?"
+    },
+    {
+      "id": 4,
+      "day": 68,
+      "role": "sent",
+      "difficulty": "B1",
+      "translation": "I applied because your company is known for innovative projects.",
+      "translationFa": "درخواست دادم چون شرکت شما به خاطر پروژه‌های نوآورانه مشهور است.",
+      "targetText": "Ich habe mich beworben, weil Ihre Firma für innovative Projekte bekannt ist."
+    },
+    {
+      "id": 5,
+      "day": 68,
+      "role": "received",
+      "difficulty": "B1",
+      "translation": "What are your strengths?",
+      "translationFa": "نقاط قوت شما چیست؟",
+      "audioText": "Was sind Ihre Stärken?"
+    },
+    {
+      "id": 6,
+      "day": 68,
+      "role": "sent",
+      "difficulty": "B1",
+      "translation": "I am a team player, reliable and good at solving problems.",
+      "translationFa": "کار تیمی بلدم، قابل اعتماد هستم و در حل مسائل خوب هستم.",
+      "targetText": "Ich bin teamfähig, zuverlässig und kann gut Probleme lösen."
+    },
+    {
+      "id": 7,
+      "day": 68,
+      "role": "received",
+      "difficulty": "B2",
+      "translation": "Where do you see yourself in five years?",
+      "translationFa": "پنج سال بعد خودتان را کجا می‌بینید؟",
+      "audioText": "Wo sehen Sie sich in fünf Jahren?"
+    },
+    {
+      "id": 8,
+      "day": 68,
+      "role": "sent",
+      "difficulty": "B2",
+      "translation": "In five years I would like to have a leading position in software development.",
+      "translationFa": "پنج سال بعد دوست دارم پست مدیریتی در توسعه نرم‌افزار داشته باشم.",
+      "targetText": "In fünf Jahren möchte ich eine leitende Position in der Softwareentwicklung haben."
+    },
+    {
+      "id": 9,
+      "day": 68,
+      "role": "received",
+      "difficulty": "B1",
+      "translation": "Do you have any questions for us?",
+      "translationFa": "سوالی از ما دارید؟",
+      "audioText": "Haben Sie noch Fragen an uns?"
+    },
+    {
+      "id": 10,
+      "day": 68,
+      "role": "sent",
+      "difficulty": "B1",
+      "translation": "Yes, what does a typical workday in your team look like?",
+      "translationFa": "بله، یک روز کاری معمولی در تیم شما چه شکلی است؟",
+      "targetText": "Ja, wie sieht ein typischer Arbeitstag in Ihrem Team aus?"
+    }
+  ],
+  "difficulty": "B1",
+  "grammarFocus": "Complex self-presentation",
+  "grammarFocusFa": "معرفی پیچیده خود",
+  "description": "Handle professional apologies in German — take responsibility for mistakes, address client complaints, and promise corrective action.",
+  "descriptionFa": "در آلمان به صورت حرفه‌ای عذرخواهی کنید — مسئولیت اشتباهات را بپذیرید، به شکایات مشتریان رسیدگی کنید و اقدام اصلاحی قول دهید."
+}

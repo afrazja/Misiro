@@ -1,0 +1,102 @@
+{
+  "day": 100,
+  "title": "100: Celebration and Future Goals",
+  "titleFa": "جشن و اهداف آینده",
+  "sentences": [
+    {
+      "id": 1,
+      "day": 100,
+      "role": "received",
+      "difficulty": "B1",
+      "translation": "Congratulations! You've completed all one hundred lessons!",
+      "translationFa": "تبریک! هر صد درس را تمام کردی!",
+      "audioText": "Herzlichen Glückwunsch! Du hast alle hundert Lektionen geschafft!"
+    },
+    {
+      "id": 2,
+      "day": 100,
+      "role": "sent",
+      "difficulty": "B1",
+      "translation": "Thank you! I'm very proud of myself.",
+      "translationFa": "ممنون! از خودم خیلی راضی‌ام.",
+      "targetText": "Danke! Ich bin sehr stolz auf mich."
+    },
+    {
+      "id": 3,
+      "day": 100,
+      "role": "received",
+      "difficulty": "B1",
+      "translation": "What are your goals for the future?",
+      "translationFa": "اهدافت برای آینده چیست؟",
+      "audioText": "Was sind deine Ziele für die Zukunft?"
+    },
+    {
+      "id": 4,
+      "day": 100,
+      "role": "sent",
+      "difficulty": "B1",
+      "translation": "I will continue learning German and take the B1 exam.",
+      "translationFa": "به یادگیری آلمانی ادامه می‌دهم و آزمون B1 می‌دهم.",
+      "targetText": "Ich werde weiter Deutsch lernen und die B1-Prüfung machen."
+    },
+    {
+      "id": 5,
+      "day": 100,
+      "role": "received",
+      "difficulty": "B1",
+      "translation": "That's a great goal! I'm sure you'll make it.",
+      "translationFa": "هدف عالی‌ه! مطمئنم موفق می‌شوی.",
+      "audioText": "Das ist ein tolles Ziel! Ich bin sicher, dass du es schaffst."
+    },
+    {
+      "id": 6,
+      "day": 100,
+      "role": "sent",
+      "difficulty": "B1",
+      "translation": "If I pass the exam, I will apply for a job in Germany.",
+      "translationFa": "اگر قبول شوم، در آلمان برای کار درخواست خواهم داد.",
+      "targetText": "Wenn ich die Prüfung bestehe, werde ich mich um eine Stelle in Deutschland bewerben."
+    },
+    {
+      "id": 7,
+      "day": 100,
+      "role": "received",
+      "difficulty": "B1",
+      "translation": "Would you really move to Germany?",
+      "translationFa": "واقعاً به آلمان نقل مکان می‌کنی؟",
+      "audioText": "Würdest du wirklich nach Deutschland ziehen?"
+    },
+    {
+      "id": 8,
+      "day": 100,
+      "role": "sent",
+      "difficulty": "B1",
+      "translation": "Yes, that would be my dream. I would like to live in Munich or Berlin.",
+      "translationFa": "بله، آرزویم همین است. دوست دارم در مونیخ یا برلین زندگی کنم.",
+      "targetText": "Ja, das wäre mein Traum. Ich würde gern in München oder Berlin leben."
+    },
+    {
+      "id": 9,
+      "day": 100,
+      "role": "received",
+      "difficulty": "B1",
+      "translation": "Then I wish you much success on your way!",
+      "translationFa": "پس برایت آرزوی موفقیت می‌کنم در مسیرت!",
+      "audioText": "Dann wünsche ich dir viel Erfolg auf deinem Weg!"
+    },
+    {
+      "id": 10,
+      "day": 100,
+      "role": "sent",
+      "difficulty": "B1",
+      "translation": "Thank you for everything! This adventure was just the beginning.",
+      "translationFa": "از همه چیز ممنونم! این ماجرا فقط شروع بود.",
+      "targetText": "Vielen Dank für alles! Dieses Abenteuer war erst der Anfang."
+    }
+  ],
+  "difficulty": "B1",
+  "grammarFocus": "Review: werden future, Konjunktiv II; goal vocabulary",
+  "grammarFocusFa": "مرور: آینده با werden، التزامی دوم؛ واژگان اهداف",
+  "description": "",
+  "descriptionFa": ""
+}

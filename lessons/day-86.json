@@ -1,0 +1,102 @@
+{
+  "day": 86,
+  "title": "86: Learning a Language",
+  "titleFa": "یادگیری یک زبان",
+  "sentences": [
+    {
+      "id": 1,
+      "day": 86,
+      "role": "received",
+      "difficulty": "A2",
+      "translation": "How long have you been learning German?",
+      "translationFa": "چه مدت است که آلمانی یاد می‌گیری؟",
+      "audioText": "Wie lange lernst du schon Deutsch?"
+    },
+    {
+      "id": 2,
+      "day": 86,
+      "role": "sent",
+      "difficulty": "A2",
+      "translation": "For six months. I like learning with apps.",
+      "translationFa": "شش ماه است. با اپلیکیشن یاد گرفتن را دوست دارم.",
+      "targetText": "Seit sechs Monaten. Ich lerne gern mit Apps."
+    },
+    {
+      "id": 3,
+      "day": 86,
+      "role": "received",
+      "difficulty": "A2",
+      "translation": "Do you prefer learning alone or in a group?",
+      "translationFa": "ترجیح می‌دهی تنها یاد بگیری یا در گروه؟",
+      "audioText": "Lernst du lieber allein oder in einer Gruppe?"
+    },
+    {
+      "id": 4,
+      "day": 86,
+      "role": "sent",
+      "difficulty": "A2",
+      "translation": "I prefer learning in a small group.",
+      "translationFa": "ترجیح می‌دهم در یک گروه کوچک یاد بگیرم.",
+      "targetText": "Ich lerne lieber in einer kleinen Gruppe."
+    },
+    {
+      "id": 5,
+      "day": 86,
+      "role": "received",
+      "difficulty": "A2",
+      "translation": "What do you find most difficult?",
+      "translationFa": "چه چیزی را از همه سخت‌تر می‌دانی؟",
+      "audioText": "Was findest du am schwierigsten?"
+    },
+    {
+      "id": 6,
+      "day": 86,
+      "role": "sent",
+      "difficulty": "A2",
+      "translation": "I find the articles most difficult: der, die, das.",
+      "translationFa": "حرف تعریف‌ها را از همه سخت‌تر می‌دانم: der, die, das.",
+      "targetText": "Am schwierigsten finde ich die Artikel: der, die, das."
+    },
+    {
+      "id": 7,
+      "day": 86,
+      "role": "received",
+      "difficulty": "A2",
+      "translation": "Yes, that's difficult for many learners.",
+      "translationFa": "بله، برای خیلی از زبان‌آموزان سخت است.",
+      "audioText": "Ja, das ist für viele Lernende schwer."
+    },
+    {
+      "id": 8,
+      "day": 86,
+      "role": "sent",
+      "difficulty": "A2",
+      "translation": "I like listening to German podcasts the most.",
+      "translationFa": "بیشتر از همه دوست دارم پادکست‌های آلمانی گوش بدهم.",
+      "targetText": "Am liebsten höre ich deutsche Podcasts."
+    },
+    {
+      "id": 9,
+      "day": 86,
+      "role": "received",
+      "difficulty": "A2",
+      "translation": "That's a good method for listening comprehension.",
+      "translationFa": "روش خوبی برای درک شنیداری است.",
+      "audioText": "Das ist eine gute Methode für das Hörverständnis."
+    },
+    {
+      "id": 10,
+      "day": 86,
+      "role": "sent",
+      "difficulty": "A2",
+      "translation": "Yes, and I also like watching German films with subtitles.",
+      "translationFa": "بله، و فیلم‌های آلمانی با زیرنویس هم دوست دارم ببینم.",
+      "targetText": "Ja, und ich sehe auch gern deutsche Filme mit Untertiteln."
+    }
+  ],
+  "difficulty": "A2",
+  "grammarFocus": "gern/lieber/am liebsten; learning vocabulary",
+  "grammarFocusFa": "gern/lieber/am liebsten؛ واژگان یادگیری",
+  "description": "",
+  "descriptionFa": ""
+}

@@ -1,0 +1,102 @@
+{
+  "day": 46,
+  "title": "46: Adjective Declension: Acc/Dat",
+  "titleFa": "صرف صفت: مفعولی",
+  "sentences": [
+    {
+      "id": 1,
+      "day": 46,
+      "role": "received",
+      "difficulty": "B1",
+      "translation": "I am looking for a warm coat for winter.",
+      "translationFa": "دنبال یک پالتوی گرم برای زمستان می‌گردم.",
+      "audioText": "Ich suche einen warmen Mantel für den Winter."
+    },
+    {
+      "id": 2,
+      "day": 46,
+      "role": "sent",
+      "difficulty": "B1",
+      "translation": "In this shop there are nice warm coats.",
+      "translationFa": "در این مغازه پالتوهای گرم زیبایی هست.",
+      "targetText": "In diesem Geschäft gibt es schöne warme Mäntel."
+    },
+    {
+      "id": 3,
+      "day": 46,
+      "role": "received",
+      "difficulty": "B1",
+      "translation": "Have you seen the new movie with the famous actor?",
+      "translationFa": "فیلم جدید با آن بازیگر معروف را دیده‌ای؟",
+      "audioText": "Hast du den neuen Film mit dem berühmten Schauspieler gesehen?"
+    },
+    {
+      "id": 4,
+      "day": 46,
+      "role": "sent",
+      "difficulty": "B1",
+      "translation": "Yes, I saw the new movie last week in the big cinema.",
+      "translationFa": "بله، هفته پیش فیلم جدید را در سینمای بزرگ دیدم.",
+      "targetText": "Ja, ich habe den neuen Film letzte Woche im großen Kino gesehen."
+    },
+    {
+      "id": 5,
+      "day": 46,
+      "role": "received",
+      "difficulty": "B1",
+      "translation": "Who did you go to the expensive restaurant with?",
+      "translationFa": "با چه کسی به رستوران گران رفتی؟",
+      "audioText": "Mit wem bist du in das teure Restaurant gegangen?"
+    },
+    {
+      "id": 6,
+      "day": 46,
+      "role": "sent",
+      "difficulty": "B1",
+      "translation": "I went with my best friend.",
+      "translationFa": "با بهترین دوستم رفتم.",
+      "targetText": "Ich bin mit meiner besten Freundin gegangen."
+    },
+    {
+      "id": 7,
+      "day": 46,
+      "role": "received",
+      "difficulty": "B1",
+      "translation": "Do you know the old man with the long beard?",
+      "translationFa": "پیرمرد با ریش بلند را می‌شناسی؟",
+      "audioText": "Kennst du den alten Mann mit dem langen Bart?"
+    },
+    {
+      "id": 8,
+      "day": 46,
+      "role": "sent",
+      "difficulty": "B1",
+      "translation": "Yes, he lives in the yellow house next to the small bakery.",
+      "translationFa": "بله، در خانه زرد کنار نانوایی کوچک زندگی می‌کند.",
+      "targetText": "Ja, er wohnt in dem gelben Haus neben der kleinen Bäckerei."
+    },
+    {
+      "id": 9,
+      "day": 46,
+      "role": "received",
+      "difficulty": "B1",
+      "translation": "I would like a big piece of the fresh cake.",
+      "translationFa": "یک تکه بزرگ از آن کیک تازه می‌خواهم.",
+      "audioText": "Ich möchte ein großes Stück von dem frischen Kuchen."
+    },
+    {
+      "id": 10,
+      "day": 46,
+      "role": "sent",
+      "difficulty": "B1",
+      "translation": "Gladly! The fresh cake tastes the best.",
+      "translationFa": "با کمال میل! کیک تازه بهترین مزه را دارد.",
+      "targetText": "Gern! Der frische Kuchen schmeckt am besten."
+    }
+  ],
+  "difficulty": "B1",
+  "grammarFocus": "den großen Mann, mit dem kleinen Kind",
+  "grammarFocusFa": "مرد بزرگ را، با بچه کوچک",
+  "description": "You've been invited to a colleague's birthday party. Bring a gift and join in the celebrations.",
+  "descriptionFa": "به مهمانی تولد یه همکار دعوت شدید. یه هدیه بیارید و توی جشن شرکت کنید."
+}

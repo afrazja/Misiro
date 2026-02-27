@@ -1,0 +1,102 @@
+{
+  "day": 82,
+  "title": "82: Online Shopping",
+  "titleFa": "خرید آنلاین",
+  "sentences": [
+    {
+      "id": 1,
+      "day": 82,
+      "role": "received",
+      "difficulty": "A2",
+      "translation": "Do you often shop on the internet?",
+      "translationFa": "زیاد اینترنتی خرید می‌کنی؟",
+      "audioText": "Kaufst du oft im Internet ein?"
+    },
+    {
+      "id": 2,
+      "day": 82,
+      "role": "sent",
+      "difficulty": "A2",
+      "translation": "Yes, it's easier to shop online.",
+      "translationFa": "بله، خرید آنلاین راحت‌تر است.",
+      "targetText": "Ja, es ist einfacher, online einzukaufen."
+    },
+    {
+      "id": 3,
+      "day": 82,
+      "role": "received",
+      "difficulty": "A2",
+      "translation": "What did you order last?",
+      "translationFa": "آخرین بار چه سفارش دادی؟",
+      "audioText": "Was hast du zuletzt bestellt?"
+    },
+    {
+      "id": 4,
+      "day": 82,
+      "role": "sent",
+      "difficulty": "A2",
+      "translation": "I ordered new shoes, but they don't fit.",
+      "translationFa": "کفش جدید سفارش دادم، ولی اندازه نیست.",
+      "targetText": "Ich habe neue Schuhe bestellt, aber sie passen nicht."
+    },
+    {
+      "id": 5,
+      "day": 82,
+      "role": "received",
+      "difficulty": "A2",
+      "translation": "Can you send them back?",
+      "translationFa": "می‌توانی پسشان بفرستی؟",
+      "audioText": "Kannst du sie zurückschicken?"
+    },
+    {
+      "id": 6,
+      "day": 82,
+      "role": "sent",
+      "difficulty": "A2",
+      "translation": "Yes, I have thirty days to return them.",
+      "translationFa": "بله، سی روز فرصت دارم برای برگرداندنشان.",
+      "targetText": "Ja, ich habe dreißig Tage Zeit, um sie zurückzugeben."
+    },
+    {
+      "id": 7,
+      "day": 82,
+      "role": "received",
+      "difficulty": "A2",
+      "translation": "That's practical. Is shipping free?",
+      "translationFa": "عملی‌ه. ارسال رایگان است؟",
+      "audioText": "Das ist praktisch. Ist der Versand kostenlos?"
+    },
+    {
+      "id": 8,
+      "day": 82,
+      "role": "sent",
+      "difficulty": "A2",
+      "translation": "From fifty euros shipping is free.",
+      "translationFa": "از پنجاه یورو به بالا ارسال رایگان است.",
+      "targetText": "Ab fünfzig Euro ist der Versand kostenlos."
+    },
+    {
+      "id": 9,
+      "day": 82,
+      "role": "received",
+      "difficulty": "A2",
+      "translation": "Do you pay by credit card?",
+      "translationFa": "با کارت اعتباری پرداخت می‌کنی؟",
+      "audioText": "Bezahlst du mit Kreditkarte?"
+    },
+    {
+      "id": 10,
+      "day": 82,
+      "role": "sent",
+      "difficulty": "A2",
+      "translation": "No, I prefer to pay by bank transfer.",
+      "translationFa": "نه، ترجیح می‌دهم با انتقال بانکی پرداخت کنم.",
+      "targetText": "Nein, ich bevorzuge es, per Überweisung zu bezahlen."
+    }
+  ],
+  "difficulty": "A2",
+  "grammarFocus": "zu + infinitive; shopping vocabulary",
+  "grammarFocusFa": "zu + مصدر؛ واژگان خرید",
+  "description": "",
+  "descriptionFa": ""
+}

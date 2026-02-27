@@ -1,0 +1,120 @@
+{
+  "day": 10,
+  "title": "10: Articles: der, die, das",
+  "titleFa": "حروف تعریف",
+  "sentences": [
+    {
+      "id": 1,
+      "day": 10,
+      "role": "received",
+      "difficulty": "A1",
+      "translation": "Is that a book or a newspaper?",
+      "translationFa": "آن یک کتاب است یا یک روزنامه؟",
+      "audioText": "Ist das ein Buch oder eine Zeitung?"
+    },
+    {
+      "id": 2,
+      "day": 10,
+      "role": "sent",
+      "difficulty": "A1",
+      "translation": "That is a book. The book is very interesting.",
+      "translationFa": "آن یک کتاب است. کتاب خیلی جالب است.",
+      "targetText": "Das ist ein Buch. Das Buch ist sehr interessant."
+    },
+    {
+      "id": 3,
+      "day": 10,
+      "role": "received",
+      "difficulty": "A1",
+      "translation": "Do you see the man there?",
+      "translationFa": "آن مرد را آنجا می‌بینی؟",
+      "audioText": "Siehst du den Mann dort?"
+    },
+    {
+      "id": 4,
+      "day": 10,
+      "role": "sent",
+      "difficulty": "A1",
+      "translation": "Yes, the man is wearing a hat.",
+      "translationFa": "بله، آن مرد کلاه دارد.",
+      "targetText": "Ja, der Mann trägt einen Hut."
+    },
+    {
+      "id": 5,
+      "day": 10,
+      "role": "received",
+      "difficulty": "A1",
+      "translation": "Where is the cat?",
+      "translationFa": "گربه کجاست؟",
+      "audioText": "Wo ist die Katze?"
+    },
+    {
+      "id": 6,
+      "day": 10,
+      "role": "sent",
+      "difficulty": "A1",
+      "translation": "The cat is under the table.",
+      "translationFa": "گربه زیر میز است.",
+      "targetText": "Die Katze ist unter dem Tisch."
+    },
+    {
+      "id": 7,
+      "day": 10,
+      "role": "received",
+      "difficulty": "A1",
+      "translation": "Do you need a pen?",
+      "translationFa": "قلم لازم داری؟",
+      "audioText": "Brauchst du einen Stift?"
+    },
+    {
+      "id": 8,
+      "day": 10,
+      "role": "sent",
+      "difficulty": "A1",
+      "translation": "Yes, I need a pen and a notebook.",
+      "translationFa": "بله، یک قلم و یک دفتر لازم دارم.",
+      "targetText": "Ja, ich brauche einen Stift und ein Heft."
+    },
+    {
+      "id": 9,
+      "day": 10,
+      "role": "received",
+      "difficulty": "A1",
+      "translation": "The table is made of wood. And the chair?",
+      "translationFa": "میز از چوب است. و صندلی؟",
+      "audioText": "Der Tisch ist aus Holz. Und der Stuhl?"
+    },
+    {
+      "id": 10,
+      "day": 10,
+      "role": "sent",
+      "difficulty": "A1",
+      "translation": "The chair is also made of wood.",
+      "translationFa": "صندلی هم از چوب است.",
+      "targetText": "Der Stuhl ist auch aus Holz."
+    },
+    {
+      "id": 11,
+      "day": 10,
+      "role": "received",
+      "difficulty": "A1",
+      "translation": "Is the water cold?",
+      "translationFa": "آب سرد است؟",
+      "audioText": "Ist das Wasser kalt?"
+    },
+    {
+      "id": 12,
+      "day": 10,
+      "role": "sent",
+      "difficulty": "A1",
+      "translation": "No, the water is warm.",
+      "translationFa": "نه، آب گرم است.",
+      "targetText": "Nein, das Wasser ist warm."
+    }
+  ],
+  "difficulty": "A1",
+  "grammarFocus": "Definite and indefinite articles",
+  "grammarFocusFa": "حروف تعریف معین و نامعین",
+  "description": "You're running late for a meeting and something has gone wrong. Apologize and explain.",
+  "descriptionFa": "دیر به جلسه رسیدید و یه مشکلی پیش اومده. عذرخواهی کنید و توضیح بدید."
+}

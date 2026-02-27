@@ -1,0 +1,120 @@
+{
+  "day": 40,
+  "title": "40: Hotel & Accommodation",
+  "titleFa": "هتل و اقامت",
+  "sentences": [
+    {
+      "id": 1,
+      "day": 40,
+      "role": "received",
+      "difficulty": "A2",
+      "translation": "Good day! Do you have a room available?",
+      "translationFa": "روز بخیر! اتاق خالی دارید؟",
+      "audioText": "Guten Tag! Haben Sie ein Zimmer frei?"
+    },
+    {
+      "id": 2,
+      "day": 40,
+      "role": "sent",
+      "difficulty": "A2",
+      "translation": "Yes, we have a single room on the third floor.",
+      "translationFa": "بله، یک اتاق یک‌نفره در طبقه سوم داریم.",
+      "targetText": "Ja, wir haben ein Einzelzimmer im dritten Stock."
+    },
+    {
+      "id": 3,
+      "day": 40,
+      "role": "received",
+      "difficulty": "A2",
+      "translation": "How much does the room cost per night?",
+      "translationFa": "قیمت اتاق هر شب چقدر است؟",
+      "audioText": "Was kostet das Zimmer pro Nacht?"
+    },
+    {
+      "id": 4,
+      "day": 40,
+      "role": "sent",
+      "difficulty": "A2",
+      "translation": "The single room costs eighty euros per night with breakfast.",
+      "translationFa": "اتاق یک‌نفره هشتاد یورو هر شب با صبحانه است.",
+      "targetText": "Das Einzelzimmer kostet achtzig Euro pro Nacht mit Frühstück."
+    },
+    {
+      "id": 5,
+      "day": 40,
+      "role": "received",
+      "difficulty": "A2",
+      "translation": "I would like to stay three nights, from the first to the fourth of May.",
+      "translationFa": "سه شب می‌خواهم بمانم، از اول تا چهارم مه.",
+      "audioText": "Ich möchte drei Nächte bleiben, vom ersten bis zum vierten Mai."
+    },
+    {
+      "id": 6,
+      "day": 40,
+      "role": "sent",
+      "difficulty": "A2",
+      "translation": "That works. Please fill in this form.",
+      "translationFa": "امکان‌پذیر است. لطفا این فرم را پر کنید.",
+      "targetText": "Das geht. Füllen Sie bitte dieses Formular aus."
+    },
+    {
+      "id": 7,
+      "day": 40,
+      "role": "received",
+      "difficulty": "A2",
+      "translation": "What time is check-out?",
+      "translationFa": "ساعت خروج چند است؟",
+      "audioText": "Um wie viel Uhr ist der Check-out?"
+    },
+    {
+      "id": 8,
+      "day": 40,
+      "role": "sent",
+      "difficulty": "A2",
+      "translation": "Check-out is by eleven o'clock.",
+      "translationFa": "خروج تا ساعت یازده است.",
+      "targetText": "Der Check-out ist bis elf Uhr."
+    },
+    {
+      "id": 9,
+      "day": 40,
+      "role": "received",
+      "difficulty": "A2",
+      "translation": "Is there WiFi in the hotel?",
+      "translationFa": "در هتل وای‌فای هست؟",
+      "audioText": "Gibt es WLAN im Hotel?"
+    },
+    {
+      "id": 10,
+      "day": 40,
+      "role": "sent",
+      "difficulty": "A2",
+      "translation": "Yes, WiFi is free. The password is on the card.",
+      "translationFa": "بله، وای‌فای رایگان است. رمز روی کارت نوشته شده.",
+      "targetText": "Ja, das WLAN ist kostenlos. Das Passwort steht auf der Karte."
+    },
+    {
+      "id": 11,
+      "day": 40,
+      "role": "received",
+      "difficulty": "A2",
+      "translation": "Where is the elevator?",
+      "translationFa": "آسانسور کجاست؟",
+      "audioText": "Wo ist der Aufzug?"
+    },
+    {
+      "id": 12,
+      "day": 40,
+      "role": "sent",
+      "difficulty": "A2",
+      "translation": "The elevator is at the end of the corridor on the right side.",
+      "translationFa": "آسانسور انتهای راهرو سمت راست است.",
+      "targetText": "Der Aufzug ist am Ende des Flurs auf der rechten Seite."
+    }
+  ],
+  "difficulty": "A2",
+  "grammarFocus": "Ordinal numbers: erste, zweite, dritte",
+  "grammarFocusFa": "اعداد ترتیبی: اول، دوم، سوم",
+  "description": "You have a cold and need something from the pharmacy. Describe symptoms and ask for a remedy.",
+  "descriptionFa": "سرما خوردید و از داروخانه چیزی نیاز دارید. علائم رو بگید و داروی مناسب بخواید."
+}

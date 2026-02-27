@@ -1,0 +1,102 @@
+{
+  "day": 60,
+  "title": "60: Cultural Differences",
+  "titleFa": "تفاوت‌های فرهنگی",
+  "sentences": [
+    {
+      "id": 1,
+      "day": 60,
+      "role": "received",
+      "difficulty": "B1",
+      "translation": "What surprised you most when you came to Germany?",
+      "translationFa": "وقتی به آلمان آمدی بیشتر از همه از چه چیزی تعجب کردی؟",
+      "audioText": "Was hat dich am meisten überrascht, als du nach Deutschland kamst?"
+    },
+    {
+      "id": 2,
+      "day": 60,
+      "role": "sent",
+      "difficulty": "B1",
+      "translation": "Before I came to Germany, I didn't know that punctuality is so important.",
+      "translationFa": "قبل از اینکه به آلمان بیایم نمی‌دانستم وقت‌شناسی اینقدر مهم است.",
+      "targetText": "Bevor ich nach Deutschland kam, wusste ich nicht, dass Pünktlichkeit so wichtig ist."
+    },
+    {
+      "id": 3,
+      "day": 60,
+      "role": "received",
+      "difficulty": "B1",
+      "translation": "Are there big differences between German and Iranian culture?",
+      "translationFa": "بین فرهنگ آلمانی و ایرانی تفاوت‌های بزرگی هست؟",
+      "audioText": "Gibt es große Unterschiede zwischen der deutschen und iranischen Kultur?"
+    },
+    {
+      "id": 4,
+      "day": 60,
+      "role": "sent",
+      "difficulty": "B1",
+      "translation": "Yes, after I lived here for some time, I noticed many differences.",
+      "translationFa": "بله، بعد از اینکه مدتی اینجا زندگی کردم تفاوت‌های زیادی دیدم.",
+      "targetText": "Ja, nachdem ich einige Zeit hier gelebt habe, habe ich viele Unterschiede bemerkt."
+    },
+    {
+      "id": 5,
+      "day": 60,
+      "role": "received",
+      "difficulty": "B1",
+      "translation": "How do you celebrate New Year in Iran?",
+      "translationFa": "در ایران سال نو چطور جشن گرفته می‌شود؟",
+      "audioText": "Wie feiert man Neujahr im Iran?"
+    },
+    {
+      "id": 6,
+      "day": 60,
+      "role": "sent",
+      "difficulty": "B1",
+      "translation": "While in Germany New Year is celebrated on December 31st, we celebrate Nowruz in March.",
+      "translationFa": "در حالی که در آلمان سال نو ۳۱ دسامبر جشن گرفته می‌شود، ما نوروز را در مارس جشن می‌گیریم.",
+      "targetText": "Während in Deutschland Silvester am 31. Dezember gefeiert wird, feiern wir Nowruz im März."
+    },
+    {
+      "id": 7,
+      "day": 60,
+      "role": "received",
+      "difficulty": "B1",
+      "translation": "What do you miss most from your homeland?",
+      "translationFa": "بیشتر از همه از وطنت چه چیزی دلت تنگ شده؟",
+      "audioText": "Was vermisst du am meisten aus deiner Heimat?"
+    },
+    {
+      "id": 8,
+      "day": 60,
+      "role": "sent",
+      "difficulty": "B1",
+      "translation": "After being here for a year, I missed Iranian food the most.",
+      "translationFa": "بعد از یک سال اینجا، بیشتر از همه دلم برای غذای ایرانی تنگ شده.",
+      "targetText": "Nachdem ich ein Jahr hier war, habe ich das iranische Essen am meisten vermisst."
+    },
+    {
+      "id": 9,
+      "day": 60,
+      "role": "received",
+      "difficulty": "B1",
+      "translation": "Is it hard to adapt to a new culture?",
+      "translationFa": "سازگار شدن با فرهنگ جدید سخت است؟",
+      "audioText": "Ist es schwer, sich an eine neue Kultur anzupassen?"
+    },
+    {
+      "id": 10,
+      "day": 60,
+      "role": "sent",
+      "difficulty": "B1",
+      "translation": "In the beginning it was hard, but while you make new friends, it gets easier.",
+      "translationFa": "اوایل سخت بود ولی در حالی که دوست‌های جدید پیدا می‌کنی آسان‌تر می‌شود.",
+      "targetText": "Am Anfang war es schwer, aber während man neue Freunde findet, wird es leichter."
+    }
+  ],
+  "difficulty": "B1",
+  "grammarFocus": "Temporal clauses: bevor, nachdem, während",
+  "grammarFocusFa": "جملات زمانی: قبل از، بعد از، در حین",
+  "description": "Your wallet has been stolen while sightseeing. Report the theft to the police and contact your embassy.",
+  "descriptionFa": "موقع گردشگری کیف پولتون دزدیده شده. دزدی رو به پلیس گزارش بدید و با سفارت‌خانه تماس بگیرید."
+}

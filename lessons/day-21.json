@@ -1,0 +1,120 @@
+{
+  "day": 21,
+  "title": "21: Irregular Verbs: sein & haben",
+  "titleFa": "افعال بی‌قاعده: بودن و داشتن",
+  "sentences": [
+    {
+      "id": 1,
+      "day": 21,
+      "role": "received",
+      "difficulty": "A1",
+      "translation": "Are you tired?",
+      "translationFa": "خسته‌ای؟",
+      "audioText": "Bist du müde?"
+    },
+    {
+      "id": 2,
+      "day": 21,
+      "role": "sent",
+      "difficulty": "A1",
+      "translation": "Yes, I am very tired. I have worked a lot.",
+      "translationFa": "بله، خیلی خسته‌ام. زیاد کار کرده‌ام.",
+      "targetText": "Ja, ich bin sehr müde. Ich habe viel gearbeitet."
+    },
+    {
+      "id": 3,
+      "day": 21,
+      "role": "received",
+      "difficulty": "A1",
+      "translation": "Do you have children?",
+      "translationFa": "بچه دارید؟",
+      "audioText": "Haben Sie Kinder?"
+    },
+    {
+      "id": 4,
+      "day": 21,
+      "role": "sent",
+      "difficulty": "A1",
+      "translation": "Yes, we have two children. They are five and seven years old.",
+      "translationFa": "بله، دو بچه داریم. پنج و هفت ساله هستند.",
+      "targetText": "Ja, wir haben zwei Kinder. Sie sind fünf und sieben Jahre alt."
+    },
+    {
+      "id": 5,
+      "day": 21,
+      "role": "received",
+      "difficulty": "A1",
+      "translation": "Where is your brother now?",
+      "translationFa": "برادرت الان کجاست؟",
+      "audioText": "Wo ist dein Bruder jetzt?"
+    },
+    {
+      "id": 6,
+      "day": 21,
+      "role": "sent",
+      "difficulty": "A1",
+      "translation": "He is at school. He has class today.",
+      "translationFa": "او در مدرسه است. امروز کلاس دارد.",
+      "targetText": "Er ist in der Schule. Er hat heute Unterricht."
+    },
+    {
+      "id": 7,
+      "day": 21,
+      "role": "received",
+      "difficulty": "A1",
+      "translation": "Are you students?",
+      "translationFa": "شما دانشجو هستید؟",
+      "audioText": "Seid ihr Studenten?"
+    },
+    {
+      "id": 8,
+      "day": 21,
+      "role": "sent",
+      "difficulty": "A1",
+      "translation": "Yes, we are students at the University of Munich.",
+      "translationFa": "بله، ما دانشجوی دانشگاه مونیخ هستیم.",
+      "targetText": "Ja, wir sind Studenten an der Universität München."
+    },
+    {
+      "id": 9,
+      "day": 21,
+      "role": "received",
+      "difficulty": "A1",
+      "translation": "Are you hungry?",
+      "translationFa": "گرسنه هستید؟",
+      "audioText": "Haben Sie Hunger?"
+    },
+    {
+      "id": 10,
+      "day": 21,
+      "role": "sent",
+      "difficulty": "A1",
+      "translation": "Yes, I am very hungry and also thirsty.",
+      "translationFa": "بله، خیلی گرسنه‌ام و تشنه هم هستم.",
+      "targetText": "Ja, ich habe großen Hunger und auch Durst."
+    },
+    {
+      "id": 11,
+      "day": 21,
+      "role": "received",
+      "difficulty": "A1",
+      "translation": "We are happy that you are here!",
+      "translationFa": "خوشحالیم که اینجایی!",
+      "audioText": "Wir sind froh, dass du hier bist!"
+    },
+    {
+      "id": 12,
+      "day": 21,
+      "role": "sent",
+      "difficulty": "A1",
+      "translation": "I am also happy. You are very nice.",
+      "translationFa": "من هم خوشحالم. شما خیلی مهربان هستید.",
+      "targetText": "Ich bin auch froh. Ihr seid sehr nett."
+    }
+  ],
+  "difficulty": "A1",
+  "grammarFocus": "Conjugation of sein and haben",
+  "grammarFocusFa": "صرف فعل بودن و داشتن",
+  "description": "A friend comes over for dinner. Chat about what you're cooking and whether they're hungry.",
+  "descriptionFa": "یه دوست برای شام می‌آد. درباره آنچه می‌پزید و اینکه گرسنه‌ان صحبت کنید."
+}

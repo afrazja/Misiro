@@ -1,0 +1,102 @@
+{
+  "day": 99,
+  "title": "99: Looking Back on Learning",
+  "titleFa": "نگاه به گذشته یادگیری",
+  "sentences": [
+    {
+      "id": 1,
+      "day": 99,
+      "role": "received",
+      "difficulty": "B1",
+      "translation": "How do you feel about your German after these lessons?",
+      "translationFa": "بعد از این درس‌ها حس چطوری درباره آلمانیت داری؟",
+      "audioText": "Wie fühlst du dich mit deinem Deutsch nach diesen Lektionen?"
+    },
+    {
+      "id": 2,
+      "day": 99,
+      "role": "sent",
+      "difficulty": "B1",
+      "translation": "I'm glad that I've learned so much.",
+      "translationFa": "خوشحالم که این‌قدر یاد گرفته‌ام.",
+      "targetText": "Ich bin froh, dass ich so viel gelernt habe."
+    },
+    {
+      "id": 3,
+      "day": 99,
+      "role": "received",
+      "difficulty": "B1",
+      "translation": "What helped you the most?",
+      "translationFa": "چه چیزی بیشتر از همه کمکت کرده؟",
+      "audioText": "Was hat dir am meisten geholfen?"
+    },
+    {
+      "id": 4,
+      "day": 99,
+      "role": "sent",
+      "difficulty": "B1",
+      "translation": "I believe that the dialogues were most helpful because they are very practical.",
+      "translationFa": "فکر می‌کنم مکالمه‌ها بیشتر از همه کمک‌کننده بودند، چون خیلی کاربردی هستند.",
+      "targetText": "Ich glaube, dass die Dialoge am hilfreichsten waren, weil sie sehr praktisch sind."
+    },
+    {
+      "id": 5,
+      "day": 99,
+      "role": "received",
+      "difficulty": "B1",
+      "translation": "Can you communicate better in daily life now?",
+      "translationFa": "حالا می‌توانی بهتر در زندگی روزمره ارتباط برقرار کنی؟",
+      "audioText": "Kannst du jetzt besser im Alltag kommunizieren?"
+    },
+    {
+      "id": 6,
+      "day": 99,
+      "role": "sent",
+      "difficulty": "B1",
+      "translation": "Yes, I can now speak German at the doctor, in restaurants, and at work.",
+      "translationFa": "بله، حالا می‌توانم پیش دکتر، در رستوران و سر کار آلمانی صحبت کنم.",
+      "targetText": "Ja, ich kann jetzt beim Arzt, im Restaurant und bei der Arbeit Deutsch sprechen."
+    },
+    {
+      "id": 7,
+      "day": 99,
+      "role": "received",
+      "difficulty": "B1",
+      "translation": "That's great progress!",
+      "translationFa": "پیشرفت بزرگی است!",
+      "audioText": "Das ist ein großer Fortschritt!"
+    },
+    {
+      "id": 8,
+      "day": 99,
+      "role": "sent",
+      "difficulty": "B1",
+      "translation": "Yes, because I practiced every day.",
+      "translationFa": "بله، چون هر روز تمرین کرده‌ام.",
+      "targetText": "Ja, weil ich jeden Tag geübt habe."
+    },
+    {
+      "id": 9,
+      "day": 99,
+      "role": "received",
+      "difficulty": "B1",
+      "translation": "What would you like to learn next?",
+      "translationFa": "بعد از این چه چیزی می‌خواهی یاد بگیری؟",
+      "audioText": "Was möchtest du als Nächstes lernen?"
+    },
+    {
+      "id": 10,
+      "day": 99,
+      "role": "sent",
+      "difficulty": "B1",
+      "translation": "I want to improve my listening comprehension and read more books in German.",
+      "translationFa": "می‌خواهم درک شنیداری‌ام را بهتر کنم و کتاب‌های بیشتری به آلمانی بخوانم.",
+      "targetText": "Ich möchte mein Hörverständnis verbessern und mehr Bücher auf Deutsch lesen."
+    }
+  ],
+  "difficulty": "B1",
+  "grammarFocus": "Review: Perfekt, weil, dass; reflection vocabulary",
+  "grammarFocusFa": "مرور: گذشته، weil، dass؛ واژگان بازتاب",
+  "description": "",
+  "descriptionFa": ""
+}

@@ -1,0 +1,102 @@
+{
+  "day": 64,
+  "title": "64: N-Declension",
+  "titleFa": "تصریف نون",
+  "sentences": [
+    {
+      "id": 1,
+      "day": 64,
+      "role": "received",
+      "difficulty": "B1",
+      "translation": "Do you know the new student in our course?",
+      "translationFa": "دانشجوی جدید کلاسمان را می‌شناسی؟",
+      "audioText": "Kennst du den neuen Studenten in unserem Kurs?"
+    },
+    {
+      "id": 2,
+      "day": 64,
+      "role": "sent",
+      "difficulty": "B1",
+      "translation": "Yes, I helped the student with the assignment yesterday.",
+      "translationFa": "بله، دیروز به دانشجو در تکلیف کمک کردم.",
+      "targetText": "Ja, ich habe dem Studenten gestern bei der Aufgabe geholfen."
+    },
+    {
+      "id": 3,
+      "day": 64,
+      "role": "received",
+      "difficulty": "B1",
+      "translation": "The gentleman's name unfortunately slipped my mind.",
+      "translationFa": "متاسفانه نام آن آقا یادم رفته.",
+      "audioText": "Der Name des Herrn ist mir leider entfallen."
+    },
+    {
+      "id": 4,
+      "day": 64,
+      "role": "sent",
+      "difficulty": "B1",
+      "translation": "His name is Mr. Schmidt. He is a colleague of my neighbor.",
+      "translationFa": "نامش آقای اشمیت است. همکار همسایه‌ام است.",
+      "targetText": "Er heißt Herr Schmidt. Er ist ein Kollege meines Nachbarn."
+    },
+    {
+      "id": 5,
+      "day": 64,
+      "role": "received",
+      "difficulty": "B1",
+      "translation": "I have an appointment with the president of the university.",
+      "translationFa": "با رئیس دانشگاه وقت ملاقات دارم.",
+      "audioText": "Ich habe einen Termin beim Präsidenten der Universität."
+    },
+    {
+      "id": 6,
+      "day": 64,
+      "role": "sent",
+      "difficulty": "B1",
+      "translation": "Which expert did you go to for advice?",
+      "translationFa": "پیش کدام کارشناس برای مشاوره رفتی؟",
+      "targetText": "Bei welchem Experten warst du zur Beratung?"
+    },
+    {
+      "id": 7,
+      "day": 64,
+      "role": "received",
+      "difficulty": "B1",
+      "translation": "I was at the specialist for heart diseases.",
+      "translationFa": "پیش متخصص بیماری‌های قلبی بودم.",
+      "audioText": "Ich war beim Spezialisten für Herzerkrankungen."
+    },
+    {
+      "id": 8,
+      "day": 64,
+      "role": "sent",
+      "difficulty": "B1",
+      "translation": "Hopefully the specialist gave you good news.",
+      "translationFa": "امیدوارم متخصص خبرهای خوبی داده باشد.",
+      "targetText": "Hoffentlich hat der Spezialist dir gute Nachrichten gegeben."
+    },
+    {
+      "id": 9,
+      "day": 64,
+      "role": "received",
+      "difficulty": "B1",
+      "translation": "The photographer photographed the diplomat at the conference.",
+      "translationFa": "عکاس از دیپلمات در کنفرانس عکس گرفت.",
+      "audioText": "Der Fotograf hat den Diplomaten bei der Konferenz fotografiert."
+    },
+    {
+      "id": 10,
+      "day": 64,
+      "role": "sent",
+      "difficulty": "B1",
+      "translation": "The speech of the philosopher was very impressive.",
+      "translationFa": "سخنرانی فیلسوف بسیار تاثیرگذار بود.",
+      "targetText": "Die Rede des Philosophen war sehr beeindruckend."
+    }
+  ],
+  "difficulty": "B1",
+  "grammarFocus": "den Studenten, dem Kollegen, des Herrn",
+  "grammarFocusFa": "دانشجو را، به همکار، آقای",
+  "description": "Discuss a topic with a German speaker and practice expressing whether you agree or disagree, and how to handle differing opinions politely.",
+  "descriptionFa": "درباره یک موضوع با یک آلمانی‌زبان بحث کنید و تمرین کنید که موافقت یا مخالفت خود را بیان کنید و با نظرات متفاوت محترمانه برخورد کنید."
+}

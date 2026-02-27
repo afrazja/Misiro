@@ -1,0 +1,120 @@
+{
+  "day": 12,
+  "title": "12: Telling Time",
+  "titleFa": "ساعت",
+  "sentences": [
+    {
+      "id": 1,
+      "day": 12,
+      "role": "received",
+      "difficulty": "A1",
+      "translation": "Excuse me, what time is it?",
+      "translationFa": "ببخشید، ساعت چند است؟",
+      "audioText": "Entschuldigung, wie spät ist es?"
+    },
+    {
+      "id": 2,
+      "day": 12,
+      "role": "sent",
+      "difficulty": "A1",
+      "translation": "It is ten o'clock.",
+      "translationFa": "ساعت ده است.",
+      "targetText": "Es ist zehn Uhr."
+    },
+    {
+      "id": 3,
+      "day": 12,
+      "role": "received",
+      "difficulty": "A1",
+      "translation": "When does the movie start?",
+      "translationFa": "فیلم کی شروع می‌شود؟",
+      "audioText": "Wann beginnt der Film?"
+    },
+    {
+      "id": 4,
+      "day": 12,
+      "role": "sent",
+      "difficulty": "A1",
+      "translation": "The movie starts at half past seven.",
+      "translationFa": "فیلم ساعت هفت و نیم شروع می‌شود.",
+      "targetText": "Der Film beginnt um halb acht."
+    },
+    {
+      "id": 5,
+      "day": 12,
+      "role": "received",
+      "difficulty": "A1",
+      "translation": "And when does it end?",
+      "translationFa": "و کی تمام می‌شود؟",
+      "audioText": "Und wann endet er?"
+    },
+    {
+      "id": 6,
+      "day": 12,
+      "role": "sent",
+      "difficulty": "A1",
+      "translation": "It ends at quarter to ten.",
+      "translationFa": "ساعت ده و ربع کم تمام می‌شود.",
+      "targetText": "Er endet um Viertel vor zehn."
+    },
+    {
+      "id": 7,
+      "day": 12,
+      "role": "received",
+      "difficulty": "A1",
+      "translation": "What time do you get up?",
+      "translationFa": "ساعت چند بیدار می‌شوی؟",
+      "audioText": "Um wie viel Uhr stehst du auf?"
+    },
+    {
+      "id": 8,
+      "day": 12,
+      "role": "sent",
+      "difficulty": "A1",
+      "translation": "I get up at seven o'clock.",
+      "translationFa": "ساعت هفت بیدار می‌شوم.",
+      "targetText": "Ich stehe um sieben Uhr auf."
+    },
+    {
+      "id": 9,
+      "day": 12,
+      "role": "received",
+      "difficulty": "A1",
+      "translation": "When do you eat lunch?",
+      "translationFa": "کی ناهار می‌خوری؟",
+      "audioText": "Wann isst du Mittagessen?"
+    },
+    {
+      "id": 10,
+      "day": 12,
+      "role": "sent",
+      "difficulty": "A1",
+      "translation": "I eat lunch at twelve thirty.",
+      "translationFa": "ساعت دوازده و نیم ناهار می‌خورم.",
+      "targetText": "Ich esse um zwölf Uhr dreißig Mittagessen."
+    },
+    {
+      "id": 11,
+      "day": 12,
+      "role": "received",
+      "difficulty": "A1",
+      "translation": "The train comes at quarter past three.",
+      "translationFa": "قطار ساعت سه و ربع می‌آید.",
+      "audioText": "Der Zug kommt um Viertel nach drei."
+    },
+    {
+      "id": 12,
+      "day": 12,
+      "role": "sent",
+      "difficulty": "A1",
+      "translation": "Thanks! Then I still have time.",
+      "translationFa": "ممنون! پس هنوز وقت دارم.",
+      "targetText": "Danke! Dann habe ich noch Zeit."
+    }
+  ],
+  "difficulty": "A1",
+  "grammarFocus": "Wie spät ist es? Es ist...",
+  "grammarFocusFa": "ساعت چند است؟ ساعت...",
+  "description": "You're describing objects and places around you using colors and basic adjectives.",
+  "descriptionFa": "دارید اشیاء و مکان‌های اطرافتون رو با رنگ‌ها و صفات پایه توصیف می‌کنید."
+}

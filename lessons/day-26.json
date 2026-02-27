@@ -1,0 +1,120 @@
+{
+  "day": 26,
+  "title": "26: Perfect Tense Part 1",
+  "titleFa": "زمان گذشته بخش ۱",
+  "sentences": [
+    {
+      "id": 1,
+      "day": 26,
+      "role": "received",
+      "difficulty": "A2",
+      "translation": "What did you do yesterday?",
+      "translationFa": "دیروز چه کار کردی؟",
+      "audioText": "Was hast du gestern gemacht?"
+    },
+    {
+      "id": 2,
+      "day": 26,
+      "role": "sent",
+      "difficulty": "A2",
+      "translation": "I studied a lot yesterday and then cooked.",
+      "translationFa": "دیروز زیاد درس خواندم و بعد آشپزی کردم.",
+      "targetText": "Ich habe gestern viel gelernt und dann gekocht."
+    },
+    {
+      "id": 3,
+      "day": 26,
+      "role": "received",
+      "difficulty": "A2",
+      "translation": "Did you watch the movie?",
+      "translationFa": "فیلم را دیدی؟",
+      "audioText": "Hast du den Film gesehen?"
+    },
+    {
+      "id": 4,
+      "day": 26,
+      "role": "sent",
+      "difficulty": "A2",
+      "translation": "Yes, I watched the movie on the weekend.",
+      "translationFa": "بله، آخر هفته فیلم را دیدم.",
+      "targetText": "Ja, ich habe den Film am Wochenende gesehen."
+    },
+    {
+      "id": 5,
+      "day": 26,
+      "role": "received",
+      "difficulty": "A2",
+      "translation": "Did Maria also call?",
+      "translationFa": "ماریا هم زنگ زد؟",
+      "audioText": "Hat Maria auch angerufen?"
+    },
+    {
+      "id": 6,
+      "day": 26,
+      "role": "sent",
+      "difficulty": "A2",
+      "translation": "Yes, she called yesterday evening.",
+      "translationFa": "بله، دیشب زنگ زد.",
+      "targetText": "Ja, sie hat gestern Abend angerufen."
+    },
+    {
+      "id": 7,
+      "day": 26,
+      "role": "received",
+      "difficulty": "A2",
+      "translation": "Did you do the homework?",
+      "translationFa": "تکالیف را انجام دادید؟",
+      "audioText": "Habt ihr die Hausaufgaben gemacht?"
+    },
+    {
+      "id": 8,
+      "day": 26,
+      "role": "sent",
+      "difficulty": "A2",
+      "translation": "Yes, we did all the assignments.",
+      "translationFa": "بله، همه تکالیف را انجام دادیم.",
+      "targetText": "Ja, wir haben alle Aufgaben gemacht."
+    },
+    {
+      "id": 9,
+      "day": 26,
+      "role": "received",
+      "difficulty": "A2",
+      "translation": "How long did the trip last?",
+      "translationFa": "سفر چقدر طول کشید؟",
+      "audioText": "Wie lange hat die Reise gedauert?"
+    },
+    {
+      "id": 10,
+      "day": 26,
+      "role": "sent",
+      "difficulty": "A2",
+      "translation": "The trip lasted three hours.",
+      "translationFa": "سفر سه ساعت طول کشید.",
+      "targetText": "Die Reise hat drei Stunden gedauert."
+    },
+    {
+      "id": 11,
+      "day": 26,
+      "role": "received",
+      "difficulty": "A2",
+      "translation": "Have you already had breakfast?",
+      "translationFa": "صبحانه خورده‌ای؟",
+      "audioText": "Hast du schon gefrühstückt?"
+    },
+    {
+      "id": 12,
+      "day": 26,
+      "role": "sent",
+      "difficulty": "A2",
+      "translation": "No, I have not had breakfast yet.",
+      "translationFa": "نه، هنوز صبحانه نخورده‌ام.",
+      "targetText": "Nein, ich habe noch nicht gefrühstückt."
+    }
+  ],
+  "difficulty": "A2",
+  "grammarFocus": "Perfekt with haben (regular verbs)",
+  "grammarFocusFa": "ماضی نقلی با haben (افعال باقاعده)",
+  "description": "You're shopping at a weekend market. Ask about prices and pay for your items.",
+  "descriptionFa": "دارید تو یه بازار آخر هفته خرید می‌کنید. درباره قیمت‌ها بپرسید و پول بدید."
+}

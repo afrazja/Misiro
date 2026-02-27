@@ -1,0 +1,120 @@
+{
+  "day": 25,
+  "title": "25: Personal Pronouns & Cases",
+  "titleFa": "ضمایر شخصی و حالت‌ها",
+  "sentences": [
+    {
+      "id": 1,
+      "day": 25,
+      "role": "received",
+      "difficulty": "A2",
+      "translation": "Do you see the man there? Do you know him?",
+      "translationFa": "آن مرد را آنجا می‌بینی؟ او را می‌شناسی؟",
+      "audioText": "Siehst du den Mann dort? Kennst du ihn?"
+    },
+    {
+      "id": 2,
+      "day": 25,
+      "role": "sent",
+      "difficulty": "A2",
+      "translation": "Yes, I know him. He is my neighbor.",
+      "translationFa": "بله، او را می‌شناسم. همسایه‌ام است.",
+      "targetText": "Ja, ich kenne ihn. Er ist mein Nachbar."
+    },
+    {
+      "id": 3,
+      "day": 25,
+      "role": "received",
+      "difficulty": "A2",
+      "translation": "Can I call you tomorrow?",
+      "translationFa": "فردا می‌توانم بهت زنگ بزنم؟",
+      "audioText": "Kann ich dich morgen anrufen?"
+    },
+    {
+      "id": 4,
+      "day": 25,
+      "role": "sent",
+      "difficulty": "A2",
+      "translation": "Yes, you can call me in the afternoon.",
+      "translationFa": "بله، بعدازظهر می‌توانی بهم زنگ بزنی.",
+      "targetText": "Ja, du kannst mich am Nachmittag anrufen."
+    },
+    {
+      "id": 5,
+      "day": 25,
+      "role": "received",
+      "difficulty": "A2",
+      "translation": "Do you love her?",
+      "translationFa": "او را دوست داری؟",
+      "audioText": "Liebst du sie?"
+    },
+    {
+      "id": 6,
+      "day": 25,
+      "role": "sent",
+      "difficulty": "A2",
+      "translation": "Yes, I love her very much. We have been together for two years.",
+      "translationFa": "بله، خیلی دوستش دارم. دو سال است که با هم هستیم.",
+      "targetText": "Ja, ich liebe sie sehr. Wir sind seit zwei Jahren zusammen."
+    },
+    {
+      "id": 7,
+      "day": 25,
+      "role": "received",
+      "difficulty": "A2",
+      "translation": "The teacher gave us an assignment.",
+      "translationFa": "معلم به ما تکلیف داد.",
+      "audioText": "Der Lehrer hat uns eine Aufgabe gegeben."
+    },
+    {
+      "id": 8,
+      "day": 25,
+      "role": "sent",
+      "difficulty": "A2",
+      "translation": "Yes, he gave us a lot of homework.",
+      "translationFa": "بله، تکلیف زیادی به ما داد.",
+      "targetText": "Ja, er hat uns viele Hausaufgaben gegeben."
+    },
+    {
+      "id": 9,
+      "day": 25,
+      "role": "received",
+      "difficulty": "A2",
+      "translation": "I am looking for my glasses. Have you seen them?",
+      "translationFa": "دنبال عینکم می‌گردم. آن‌ها را دیده‌ای؟",
+      "audioText": "Ich suche meine Brille. Hast du sie gesehen?"
+    },
+    {
+      "id": 10,
+      "day": 25,
+      "role": "sent",
+      "difficulty": "A2",
+      "translation": "Yes, I saw them on the table.",
+      "translationFa": "بله، آن‌ها را روی میز دیدم.",
+      "targetText": "Ja, ich habe sie auf dem Tisch gesehen."
+    },
+    {
+      "id": 11,
+      "day": 25,
+      "role": "received",
+      "difficulty": "A2",
+      "translation": "Will you call me or should I call you?",
+      "translationFa": "تو بهم زنگ می‌زنی یا من بهت زنگ بزنم؟",
+      "audioText": "Rufst du mich an oder soll ich dich anrufen?"
+    },
+    {
+      "id": 12,
+      "day": 25,
+      "role": "sent",
+      "difficulty": "A2",
+      "translation": "I will call you this evening.",
+      "translationFa": "امشب بهت زنگ می‌زنم.",
+      "targetText": "Ich rufe dich heute Abend an."
+    }
+  ],
+  "difficulty": "A2",
+  "grammarFocus": "Nominative and Accusative pronouns",
+  "grammarFocusFa": "ضمایر فاعلی و مفعولی",
+  "description": "It's Thursday evening. You're arranging plans with a friend for the weekend.",
+  "descriptionFa": "شب پنجشنبه‌ست. دارید با یه دوست برای آخر هفته برنامه‌ریزی می‌کنید."
+}

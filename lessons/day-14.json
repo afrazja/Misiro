@@ -1,0 +1,120 @@
+{
+  "day": 14,
+  "title": "14: Hobbies & Free Time",
+  "titleFa": "سرگرمی‌ها و اوقات فراغت",
+  "sentences": [
+    {
+      "id": 1,
+      "day": 14,
+      "role": "received",
+      "difficulty": "A1",
+      "translation": "What do you do in your free time?",
+      "translationFa": "اوقات فراغتت چه کار می‌کنی؟",
+      "audioText": "Was machst du in deiner Freizeit?"
+    },
+    {
+      "id": 2,
+      "day": 14,
+      "role": "sent",
+      "difficulty": "A1",
+      "translation": "I like reading books and listening to music.",
+      "translationFa": "کتاب خواندن و موسیقی گوش دادن را دوست دارم.",
+      "targetText": "Ich lese gern Bücher und höre Musik."
+    },
+    {
+      "id": 3,
+      "day": 14,
+      "role": "received",
+      "difficulty": "A1",
+      "translation": "What music do you like listening to?",
+      "translationFa": "چه موسیقی‌ای گوش می‌دهی؟",
+      "audioText": "Welche Musik hörst du gern?"
+    },
+    {
+      "id": 4,
+      "day": 14,
+      "role": "sent",
+      "difficulty": "A1",
+      "translation": "I like listening to pop and classical music.",
+      "translationFa": "پاپ و موسیقی کلاسیک گوش می‌دهم.",
+      "targetText": "Ich höre gern Pop und klassische Musik."
+    },
+    {
+      "id": 5,
+      "day": 14,
+      "role": "received",
+      "difficulty": "A1",
+      "translation": "Do you do sports?",
+      "translationFa": "ورزش می‌کنی؟",
+      "audioText": "Treibst du Sport?"
+    },
+    {
+      "id": 6,
+      "day": 14,
+      "role": "sent",
+      "difficulty": "A1",
+      "translation": "Yes, I like swimming and riding my bike.",
+      "translationFa": "بله، شنا کردن و دوچرخه‌سواری را دوست دارم.",
+      "targetText": "Ja, ich schwimme gern und fahre Fahrrad."
+    },
+    {
+      "id": 7,
+      "day": 14,
+      "role": "received",
+      "difficulty": "A1",
+      "translation": "Do you play an instrument?",
+      "translationFa": "آیا سازی می‌زنی؟",
+      "audioText": "Spielst du ein Instrument?"
+    },
+    {
+      "id": 8,
+      "day": 14,
+      "role": "sent",
+      "difficulty": "A1",
+      "translation": "Yes, I play guitar.",
+      "translationFa": "بله، گیتار می‌زنم.",
+      "targetText": "Ja, ich spiele Gitarre."
+    },
+    {
+      "id": 9,
+      "day": 14,
+      "role": "received",
+      "difficulty": "A1",
+      "translation": "How often do you go to the cinema?",
+      "translationFa": "چند وقت یکبار سینما می‌روی؟",
+      "audioText": "Wie oft gehst du ins Kino?"
+    },
+    {
+      "id": 10,
+      "day": 14,
+      "role": "sent",
+      "difficulty": "A1",
+      "translation": "I go to the cinema once a week.",
+      "translationFa": "هفته‌ای یکبار سینما می‌روم.",
+      "targetText": "Ich gehe einmal pro Woche ins Kino."
+    },
+    {
+      "id": 11,
+      "day": 14,
+      "role": "received",
+      "difficulty": "A1",
+      "translation": "Do you also like painting?",
+      "translationFa": "نقاشی هم دوست داری؟",
+      "audioText": "Malst du auch gern?"
+    },
+    {
+      "id": 12,
+      "day": 14,
+      "role": "sent",
+      "difficulty": "A1",
+      "translation": "No, I don't like painting, but I like photography.",
+      "translationFa": "نه، نقاشی دوست ندارم، ولی عکاسی را دوست دارم.",
+      "targetText": "Nein, ich male nicht gern, aber ich fotografiere gern."
+    }
+  ],
+  "difficulty": "A1",
+  "grammarFocus": "Verb + gern: Ich spiele gern...",
+  "grammarFocusFa": "فعل + با میل: من با میل بازی می‌کنم...",
+  "description": "You're looking for the post office in a complex area. Get more detailed directions using landmarks.",
+  "descriptionFa": "دارید دنبال اداره پست تو یه منطقه پیچیده می‌گردید. مسیر دقیق‌تر با نشانه‌های محلی بگیرید."
+}

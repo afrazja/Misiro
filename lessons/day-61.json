@@ -1,0 +1,102 @@
+{
+  "day": 61,
+  "title": "61: Konjunktiv II: würde + Infinitiv",
+  "titleFa": "وجه التزامی: فرضی",
+  "sentences": [
+    {
+      "id": 1,
+      "day": 61,
+      "role": "received",
+      "difficulty": "B1",
+      "translation": "What would you do if you had a lot of money?",
+      "translationFa": "اگر پول زیادی داشتی چه کار می‌کردی؟",
+      "audioText": "Was würdest du machen, wenn du viel Geld hättest?"
+    },
+    {
+      "id": 2,
+      "day": 61,
+      "role": "sent",
+      "difficulty": "B1",
+      "translation": "I would travel around the world and visit many countries.",
+      "translationFa": "دور دنیا سفر می‌کردم و کشورهای زیادی می‌دیدم.",
+      "targetText": "Ich würde um die Welt reisen und viele Länder besuchen."
+    },
+    {
+      "id": 3,
+      "day": 61,
+      "role": "received",
+      "difficulty": "B1",
+      "translation": "Would you stay in Germany or go back?",
+      "translationFa": "در آلمان می‌ماندی یا برمی‌گشتی؟",
+      "audioText": "Würdest du in Deutschland bleiben oder zurückgehen?"
+    },
+    {
+      "id": 4,
+      "day": 61,
+      "role": "sent",
+      "difficulty": "B1",
+      "translation": "I would probably stay here because I feel comfortable here.",
+      "translationFa": "احتمالا اینجا می‌ماندم چون اینجا احساس راحتی می‌کنم.",
+      "targetText": "Ich würde wahrscheinlich hier bleiben, weil ich mich hier wohlfühle."
+    },
+    {
+      "id": 5,
+      "day": 61,
+      "role": "received",
+      "difficulty": "B1",
+      "translation": "If I were you, I would practice more German.",
+      "translationFa": "اگر جای تو بودم بیشتر آلمانی تمرین می‌کردم.",
+      "audioText": "Wenn ich du wäre, würde ich mehr Deutsch üben."
+    },
+    {
+      "id": 6,
+      "day": 61,
+      "role": "sent",
+      "difficulty": "B1",
+      "translation": "You are right. I would like to find a tandem partner.",
+      "translationFa": "حق با توست. دوست دارم یک شریک تمرین زبان پیدا کنم.",
+      "targetText": "Du hast Recht. Ich würde gern einen Tandempartner finden."
+    },
+    {
+      "id": 7,
+      "day": 61,
+      "role": "received",
+      "difficulty": "B1",
+      "translation": "Would you please explain the way to the museum?",
+      "translationFa": "لطفا مسیر موزه را توضیح می‌دهید؟",
+      "audioText": "Würden Sie mir bitte den Weg zum Museum erklären?"
+    },
+    {
+      "id": 8,
+      "day": 61,
+      "role": "sent",
+      "difficulty": "B1",
+      "translation": "Of course! In your place I would take bus line 5.",
+      "translationFa": "البته! به جای شما اتوبوس خط ۵ را می‌گرفتم.",
+      "targetText": "Natürlich! An Ihrer Stelle würde ich den Bus Linie 5 nehmen."
+    },
+    {
+      "id": 9,
+      "day": 61,
+      "role": "received",
+      "difficulty": "B1",
+      "translation": "It would be nice if we would cook together.",
+      "translationFa": "خوب بود اگر با هم آشپزی می‌کردیم.",
+      "audioText": "Es wäre schön, wenn wir zusammen kochen würden."
+    },
+    {
+      "id": 10,
+      "day": 61,
+      "role": "sent",
+      "difficulty": "B1",
+      "translation": "Yes, that would be a lot of fun for me!",
+      "translationFa": "بله، خیلی لذت‌بخش می‌شد!",
+      "targetText": "Ja, das würde mir großen Spaß machen!"
+    }
+  ],
+  "difficulty": "B1",
+  "grammarFocus": "Hypothetical situations with würde",
+  "grammarFocusFa": "حالت‌های فرضی با würde",
+  "description": "Talk about your hobbies and personal interests with a German friend. Share what you enjoy doing in your spare time.",
+  "descriptionFa": "درباره سرگرمی‌ها و علایق شخصیتون با یه دوست آلمانی صحبت کنید. بگید در اوقات فراغت چه کار دوست دارید انجام بدید."
+}

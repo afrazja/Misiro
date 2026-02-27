@@ -1,0 +1,120 @@
+{
+  "day": 23,
+  "title": "23: Yes/No Questions",
+  "titleFa": "سوالات بله/خیر",
+  "sentences": [
+    {
+      "id": 1,
+      "day": 23,
+      "role": "received",
+      "difficulty": "A1",
+      "translation": "Do you speak English?",
+      "translationFa": "انگلیسی صحبت می‌کنید؟",
+      "audioText": "Sprechen Sie Englisch?"
+    },
+    {
+      "id": 2,
+      "day": 23,
+      "role": "sent",
+      "difficulty": "A1",
+      "translation": "Yes, I speak a little English.",
+      "translationFa": "بله، کمی انگلیسی صحبت می‌کنم.",
+      "targetText": "Ja, ich spreche ein bisschen Englisch."
+    },
+    {
+      "id": 3,
+      "day": 23,
+      "role": "received",
+      "difficulty": "A1",
+      "translation": "Do you live in Munich?",
+      "translationFa": "در مونیخ زندگی می‌کنید؟",
+      "audioText": "Wohnen Sie in München?"
+    },
+    {
+      "id": 4,
+      "day": 23,
+      "role": "sent",
+      "difficulty": "A1",
+      "translation": "No, I don't live in Munich, but in Berlin.",
+      "translationFa": "نه، در مونیخ زندگی نمی‌کنم، بلکه در برلین.",
+      "targetText": "Nein, ich wohne nicht in München, sondern in Berlin."
+    },
+    {
+      "id": 5,
+      "day": 23,
+      "role": "received",
+      "difficulty": "A1",
+      "translation": "Do you have time today?",
+      "translationFa": "امروز وقت دارید؟",
+      "audioText": "Haben Sie heute Zeit?"
+    },
+    {
+      "id": 6,
+      "day": 23,
+      "role": "sent",
+      "difficulty": "A1",
+      "translation": "Yes, I have time this afternoon.",
+      "translationFa": "بله، امروز بعدازظهر وقت دارم.",
+      "targetText": "Ja, ich habe heute Nachmittag Zeit."
+    },
+    {
+      "id": 7,
+      "day": 23,
+      "role": "received",
+      "difficulty": "A1",
+      "translation": "Would you like to come along?",
+      "translationFa": "میل دارید بیایید؟",
+      "audioText": "Möchten Sie mitkommen?"
+    },
+    {
+      "id": 8,
+      "day": 23,
+      "role": "sent",
+      "difficulty": "A1",
+      "translation": "Yes, gladly! Where are we going?",
+      "translationFa": "بله، با کمال میل! کجا می‌رویم؟",
+      "targetText": "Ja, gern! Wohin gehen wir?"
+    },
+    {
+      "id": 9,
+      "day": 23,
+      "role": "received",
+      "difficulty": "A1",
+      "translation": "Do you know this movie?",
+      "translationFa": "این فیلم را می‌شناسید؟",
+      "audioText": "Kennen Sie diesen Film?"
+    },
+    {
+      "id": 10,
+      "day": 23,
+      "role": "sent",
+      "difficulty": "A1",
+      "translation": "No, I don't know the movie. Is it good?",
+      "translationFa": "نه، فیلم را نمی‌شناسم. خوب است؟",
+      "targetText": "Nein, ich kenne den Film nicht. Ist er gut?"
+    },
+    {
+      "id": 11,
+      "day": 23,
+      "role": "received",
+      "difficulty": "A1",
+      "translation": "Do you like Berlin?",
+      "translationFa": "برلین را دوست دارید؟",
+      "audioText": "Gefällt Ihnen Berlin?"
+    },
+    {
+      "id": 12,
+      "day": 23,
+      "role": "sent",
+      "difficulty": "A1",
+      "translation": "Yes, I like Berlin very much!",
+      "translationFa": "بله، برلین را خیلی دوست دارم!",
+      "targetText": "Ja, Berlin gefällt mir sehr gut!"
+    }
+  ],
+  "difficulty": "A1",
+  "grammarFocus": "Verb-first question formation",
+  "grammarFocusFa": "ساختار سوالی با فعل در ابتدا",
+  "description": "You're at a party and start chatting with someone you've just met. Make some small talk.",
+  "descriptionFa": "تو یه مهمانی هستید و با یه نفر که تازه باهاش آشنا شدید صحبت می‌کنید."
+}

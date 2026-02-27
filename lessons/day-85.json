@@ -1,0 +1,102 @@
+{
+  "day": 85,
+  "title": "85: Recycling and Environment",
+  "titleFa": "بازیافت و محیط زیست",
+  "sentences": [
+    {
+      "id": 1,
+      "day": 85,
+      "role": "received",
+      "difficulty": "B1",
+      "translation": "In Germany you have to separate the trash.",
+      "translationFa": "در آلمان باید زباله‌ها را جدا کرد.",
+      "audioText": "In Deutschland muss man den Müll trennen."
+    },
+    {
+      "id": 2,
+      "day": 85,
+      "role": "sent",
+      "difficulty": "B1",
+      "translation": "Yes, I know. But I'm not sure how to do it correctly.",
+      "translationFa": "بله، می‌دانم. ولی مطمئن نیستم چطور درست انجامش بدهم.",
+      "targetText": "Ja, ich weiß. Aber ich bin mir nicht sicher, wie man das richtig macht."
+    },
+    {
+      "id": 3,
+      "day": 85,
+      "role": "received",
+      "difficulty": "B1",
+      "translation": "Paper goes in the blue bin and plastic in the yellow.",
+      "translationFa": "کاغذ در سطل آبی و پلاستیک در سطل زرد.",
+      "audioText": "Papier kommt in die blaue Tonne und Plastik in die gelbe."
+    },
+    {
+      "id": 4,
+      "day": 85,
+      "role": "sent",
+      "difficulty": "B1",
+      "translation": "And where does one bring glass bottles?",
+      "translationFa": "و شیشه‌ها را کجا می‌برند؟",
+      "targetText": "Und wohin bringt man Glasflaschen?"
+    },
+    {
+      "id": 5,
+      "day": 85,
+      "role": "received",
+      "difficulty": "B1",
+      "translation": "Glass you bring to the glass container. There are different colors.",
+      "translationFa": "شیشه را به محل جمع‌آوری شیشه می‌برند. رنگ‌های مختلفی دارد.",
+      "audioText": "Glas bringt man zum Glascontainer. Es gibt verschiedene Farben."
+    },
+    {
+      "id": 6,
+      "day": 85,
+      "role": "sent",
+      "difficulty": "B1",
+      "translation": "You can also return deposit bottles at the supermarket, right?",
+      "translationFa": "بطری‌های سپرده‌دار را هم می‌شود در سوپرمارکت پس داد، نه؟",
+      "targetText": "Man kann auch Pfandflaschen im Supermarkt zurückgeben, oder?"
+    },
+    {
+      "id": 7,
+      "day": 85,
+      "role": "received",
+      "difficulty": "B1",
+      "translation": "Exactly! For that you get twenty-five cents per bottle.",
+      "translationFa": "دقیقاً! بابتش بیست و پنج سنت در هر بطری می‌گیرید.",
+      "audioText": "Genau! Dafür bekommt man fünfundzwanzig Cent pro Flasche."
+    },
+    {
+      "id": 8,
+      "day": 85,
+      "role": "sent",
+      "difficulty": "B1",
+      "translation": "I think that's good. That's how you protect the environment.",
+      "translationFa": "به نظرم خوبه. اینطوری از محیط زیست محافظت می‌شود.",
+      "targetText": "Das finde ich gut. So schützt man die Umwelt."
+    },
+    {
+      "id": 9,
+      "day": 85,
+      "role": "received",
+      "difficulty": "B1",
+      "translation": "If everyone participates, you can change a lot.",
+      "translationFa": "اگر همه مشارکت کنند، می‌شود خیلی چیزها را تغییر داد.",
+      "audioText": "Wenn alle mitmachen, kann man viel verändern."
+    },
+    {
+      "id": 10,
+      "day": 85,
+      "role": "sent",
+      "difficulty": "B1",
+      "translation": "You're right about that. I'll pay better attention.",
+      "translationFa": "حق با توست. بیشتر دقت خواهم کرد.",
+      "targetText": "Da hast du recht. Ich werde besser aufpassen."
+    }
+  ],
+  "difficulty": "B1",
+  "grammarFocus": "man + verb; environment vocabulary",
+  "grammarFocusFa": "man + فعل؛ واژگان محیط زیست",
+  "description": "",
+  "descriptionFa": ""
+}

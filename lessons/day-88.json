@@ -1,0 +1,102 @@
+{
+  "day": 88,
+  "title": "88: Neighbors",
+  "titleFa": "همسایه‌ها",
+  "sentences": [
+    {
+      "id": 1,
+      "day": 88,
+      "role": "received",
+      "difficulty": "B1",
+      "translation": "Do you know your neighbors?",
+      "translationFa": "همسایه‌هایت را می‌شناسی؟",
+      "audioText": "Kennst du deine Nachbarn?"
+    },
+    {
+      "id": 2,
+      "day": 88,
+      "role": "sent",
+      "difficulty": "B1",
+      "translation": "Yes, the family that lives next to me is very nice.",
+      "translationFa": "بله، خانواده‌ای که کنارم زندگی می‌کنند خیلی مهربان هستند.",
+      "targetText": "Ja, die Familie, die neben mir wohnt, ist sehr nett."
+    },
+    {
+      "id": 3,
+      "day": 88,
+      "role": "received",
+      "difficulty": "B1",
+      "translation": "Do you have a neighbor who is loud?",
+      "translationFa": "همسایه‌ای داری که سروصدا کند؟",
+      "audioText": "Hast du einen Nachbarn, der laut ist?"
+    },
+    {
+      "id": 4,
+      "day": 88,
+      "role": "sent",
+      "difficulty": "B1",
+      "translation": "The man who lives above me sometimes listens to loud music in the evening.",
+      "translationFa": "مردی که بالای من زندگی می‌کند گاهی شب‌ها موسیقی بلند گوش می‌دهد.",
+      "targetText": "Der Mann, der über mir wohnt, hört manchmal abends laute Musik."
+    },
+    {
+      "id": 5,
+      "day": 88,
+      "role": "received",
+      "difficulty": "B1",
+      "translation": "Have you already spoken with him?",
+      "translationFa": "با او صحبت کرده‌ای؟",
+      "audioText": "Hast du schon mit ihm gesprochen?"
+    },
+    {
+      "id": 6,
+      "day": 88,
+      "role": "sent",
+      "difficulty": "B1",
+      "translation": "Yes, he apologized. The problem that we had is now solved.",
+      "translationFa": "بله، عذرخواهی کرد. مشکلی که داشتیم حالا حل شده.",
+      "targetText": "Ja, er hat sich entschuldigt. Das Problem, das wir hatten, ist jetzt gelöst."
+    },
+    {
+      "id": 7,
+      "day": 88,
+      "role": "received",
+      "difficulty": "B1",
+      "translation": "That's good. In my building there's a woman who always bakes cakes.",
+      "translationFa": "خوبه. در ساختمان من خانمی هست که همیشه کیک می‌پزد.",
+      "audioText": "Das ist gut. In meinem Haus gibt es eine Frau, die immer Kuchen backt."
+    },
+    {
+      "id": 8,
+      "day": 88,
+      "role": "sent",
+      "difficulty": "B1",
+      "translation": "That sounds great! The neighborhood where I live is quiet and friendly.",
+      "translationFa": "عالی به نظر می‌رسد! محله‌ای که من در آن زندگی می‌کنم آرام و دوستانه است.",
+      "targetText": "Das klingt toll! Die Nachbarschaft, in der ich wohne, ist ruhig und freundlich."
+    },
+    {
+      "id": 9,
+      "day": 88,
+      "role": "received",
+      "difficulty": "B1",
+      "translation": "It's important to have good neighbors.",
+      "translationFa": "مهمه که همسایه‌های خوبی داشته باشیم.",
+      "audioText": "Es ist wichtig, gute Nachbarn zu haben."
+    },
+    {
+      "id": 10,
+      "day": 88,
+      "role": "sent",
+      "difficulty": "B1",
+      "translation": "I agree with you. Good neighbors make life nicer.",
+      "translationFa": "با تو موافقم. همسایه‌های خوب زندگی را زیباتر می‌کنند.",
+      "targetText": "Da stimme ich dir zu. Gute Nachbarn machen das Leben schöner."
+    }
+  ],
+  "difficulty": "B1",
+  "grammarFocus": "Relative clauses with der/die/das; neighbor vocabulary",
+  "grammarFocusFa": "جملات موصولی با der/die/das؛ واژگان همسایگی",
+  "description": "",
+  "descriptionFa": ""
+}

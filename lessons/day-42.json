@@ -1,0 +1,120 @@
+{
+  "day": 42,
+  "title": "42: Subordinate Clauses: weil",
+  "titleFa": "جملات وابسته: زیرا",
+  "sentences": [
+    {
+      "id": 1,
+      "day": 42,
+      "role": "received",
+      "difficulty": "A2",
+      "translation": "Why are you learning German?",
+      "translationFa": "چرا آلمانی یاد می‌گیری؟",
+      "audioText": "Warum lernst du Deutsch?"
+    },
+    {
+      "id": 2,
+      "day": 42,
+      "role": "sent",
+      "difficulty": "A2",
+      "translation": "I learn German because I want to study in Germany.",
+      "translationFa": "آلمانی یاد می‌گیرم چون می‌خواهم در آلمان تحصیل کنم.",
+      "targetText": "Ich lerne Deutsch, weil ich in Deutschland studieren möchte."
+    },
+    {
+      "id": 3,
+      "day": 42,
+      "role": "received",
+      "difficulty": "A2",
+      "translation": "Why are you tired?",
+      "translationFa": "چرا خسته‌ای؟",
+      "audioText": "Warum bist du müde?"
+    },
+    {
+      "id": 4,
+      "day": 42,
+      "role": "sent",
+      "difficulty": "A2",
+      "translation": "I am tired because I went to bed late yesterday.",
+      "translationFa": "خسته‌ام چون دیشب دیر خوابیدم.",
+      "targetText": "Ich bin müde, weil ich gestern spät ins Bett gegangen bin."
+    },
+    {
+      "id": 5,
+      "day": 42,
+      "role": "received",
+      "difficulty": "A2",
+      "translation": "Why doesn't he drive by car?",
+      "translationFa": "چرا با ماشین نمی‌رود؟",
+      "audioText": "Warum fährt er nicht mit dem Auto?"
+    },
+    {
+      "id": 6,
+      "day": 42,
+      "role": "sent",
+      "difficulty": "A2",
+      "translation": "He doesn't drive because he doesn't have a driver's license.",
+      "translationFa": "با ماشین نمی‌رود چون گواهینامه ندارد.",
+      "targetText": "Er fährt nicht mit dem Auto, weil er keinen Führerschein hat."
+    },
+    {
+      "id": 7,
+      "day": 42,
+      "role": "received",
+      "difficulty": "A2",
+      "translation": "Why don't you eat meat?",
+      "translationFa": "چرا گوشت نمی‌خوری؟",
+      "audioText": "Warum isst du kein Fleisch?"
+    },
+    {
+      "id": 8,
+      "day": 42,
+      "role": "sent",
+      "difficulty": "A2",
+      "translation": "I don't eat meat because I am a vegetarian.",
+      "translationFa": "گوشت نمی‌خورم چون گیاه‌خوار هستم.",
+      "targetText": "Ich esse kein Fleisch, weil ich Vegetarier bin."
+    },
+    {
+      "id": 9,
+      "day": 42,
+      "role": "received",
+      "difficulty": "A2",
+      "translation": "Why are you staying home today?",
+      "translationFa": "چرا امروز خانه می‌مانی؟",
+      "audioText": "Warum bleibst du heute zu Hause?"
+    },
+    {
+      "id": 10,
+      "day": 42,
+      "role": "sent",
+      "difficulty": "A2",
+      "translation": "I am staying home because I am sick.",
+      "translationFa": "خانه می‌مانم چون مریض هستم.",
+      "targetText": "Ich bleibe zu Hause, weil ich krank bin."
+    },
+    {
+      "id": 11,
+      "day": 42,
+      "role": "received",
+      "difficulty": "A2",
+      "translation": "Why do you like Berlin?",
+      "translationFa": "چرا برلین را دوست داری؟",
+      "audioText": "Warum magst du Berlin?"
+    },
+    {
+      "id": 12,
+      "day": 42,
+      "role": "sent",
+      "difficulty": "A2",
+      "translation": "I like Berlin because the city is very lively and multicultural.",
+      "translationFa": "برلین را دوست دارم چون شهر خیلی پرانرژی و چندفرهنگی است.",
+      "targetText": "Ich mag Berlin, weil die Stadt sehr lebendig und multikulturell ist."
+    }
+  ],
+  "difficulty": "A2",
+  "grammarFocus": "Verb-final position with weil",
+  "grammarFocusFa": "فعل در انتهای جمله با weil",
+  "description": "You've joined a gym and are chatting with another member about fitness routines and goals.",
+  "descriptionFa": "به باشگاه پیوستید و با یه عضو دیگه درباره برنامه ورزشی و اهداف صحبت می‌کنید."
+}

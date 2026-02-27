@@ -1,0 +1,102 @@
+{
+  "day": 57,
+  "title": "57: Media & News",
+  "titleFa": "رسانه و اخبار",
+  "sentences": [
+    {
+      "id": 1,
+      "day": 57,
+      "role": "received",
+      "difficulty": "B1",
+      "translation": "Do you read news regularly?",
+      "translationFa": "مرتب اخبار می‌خوانی؟",
+      "audioText": "Liest du regelmäßig Nachrichten?"
+    },
+    {
+      "id": 2,
+      "day": 57,
+      "role": "sent",
+      "difficulty": "B1",
+      "translation": "Yes, I read the news online every morning.",
+      "translationFa": "بله، هر صبح اخبار آنلاین می‌خوانم.",
+      "targetText": "Ja, ich lese jeden Morgen die Nachrichten online."
+    },
+    {
+      "id": 3,
+      "day": 57,
+      "role": "received",
+      "difficulty": "B1",
+      "translation": "What does the report say about the economy?",
+      "translationFa": "گزارش درباره اقتصاد چه می‌گوید؟",
+      "audioText": "Was sagt der Bericht über die Wirtschaft?"
+    },
+    {
+      "id": 4,
+      "day": 57,
+      "role": "sent",
+      "difficulty": "B1",
+      "translation": "The report says that the economy is growing slowly.",
+      "translationFa": "گزارش می‌گوید که اقتصاد به آرامی رشد می‌کند.",
+      "targetText": "Der Bericht sagt, dass die Wirtschaft langsam wächst."
+    },
+    {
+      "id": 5,
+      "day": 57,
+      "role": "received",
+      "difficulty": "B1",
+      "translation": "The journalist reports that there will be new laws.",
+      "translationFa": "خبرنگار گزارش می‌دهد که قوانین جدیدی خواهد آمد.",
+      "audioText": "Der Journalist berichtet, dass es neue Gesetze geben wird."
+    },
+    {
+      "id": 6,
+      "day": 57,
+      "role": "sent",
+      "difficulty": "B1",
+      "translation": "I heard that the government wants to invest more in education.",
+      "translationFa": "شنیده‌ام که دولت می‌خواهد بیشتر در آموزش سرمایه‌گذاری کند.",
+      "targetText": "Ich habe gehört, dass die Regierung mehr in Bildung investieren will."
+    },
+    {
+      "id": 7,
+      "day": 57,
+      "role": "received",
+      "difficulty": "B1",
+      "translation": "Do you believe everything that is in the media?",
+      "translationFa": "همه چیزی که در رسانه‌ها هست باور می‌کنی؟",
+      "audioText": "Glaubst du alles, was in den Medien steht?"
+    },
+    {
+      "id": 8,
+      "day": 57,
+      "role": "sent",
+      "difficulty": "B1",
+      "translation": "No, one has to compare different sources.",
+      "translationFa": "نه، باید منابع مختلف را مقایسه کرد.",
+      "targetText": "Nein, man muss verschiedene Quellen vergleichen."
+    },
+    {
+      "id": 9,
+      "day": 57,
+      "role": "received",
+      "difficulty": "B1",
+      "translation": "Social media plays a big role today.",
+      "translationFa": "رسانه‌های اجتماعی امروزه نقش بزرگی دارند.",
+      "audioText": "Soziale Medien spielen heute eine große Rolle."
+    },
+    {
+      "id": 10,
+      "day": 57,
+      "role": "sent",
+      "difficulty": "B1",
+      "translation": "Yes, but one has to be careful with misinformation.",
+      "translationFa": "بله، ولی باید مراقب اطلاعات نادرست بود.",
+      "targetText": "Ja, aber man muss vorsichtig sein mit Falschinformationen."
+    }
+  ],
+  "difficulty": "B1",
+  "grammarFocus": "Reported speech basics: Er sagt, dass...",
+  "grammarFocusFa": "نقل‌قول پایه: او می‌گوید که...",
+  "description": "Your internet has gone down and you've been without connection for hours. Call the provider for help.",
+  "descriptionFa": "اینترنتتون قطع شده و چند ساعته بدون اتصال هستید. با ارائه‌دهنده تماس بگیرید."
+}

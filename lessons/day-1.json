@@ -1,0 +1,138 @@
+{
+  "day": 1,
+  "title": "1: Greetings & Introductions",
+  "titleFa": "احوالپرسی و معرفی",
+  "sentences": [
+    {
+      "id": 1,
+      "day": 1,
+      "role": "received",
+      "difficulty": "A1",
+      "translation": "Hello! Good morning.",
+      "translationFa": "سلام! صبح بخیر.",
+      "audioText": "Hallo! Guten Morgen."
+    },
+    {
+      "id": 2,
+      "day": 1,
+      "role": "sent",
+      "difficulty": "A1",
+      "translation": "Good morning! How are you?",
+      "translationFa": "صبح بخیر! حالتان چطور است؟",
+      "targetText": "Guten Morgen! Wie geht es Ihnen?"
+    },
+    {
+      "id": 3,
+      "day": 1,
+      "role": "received",
+      "difficulty": "A1",
+      "translation": "I am fine, thank you. And you?",
+      "translationFa": "من خوبم، ممنون. شما چطور؟",
+      "audioText": "Mir geht es gut, danke. Und Ihnen?"
+    },
+    {
+      "id": 4,
+      "day": 1,
+      "role": "sent",
+      "difficulty": "A1",
+      "translation": "Also good, thanks.",
+      "translationFa": "من هم خوبم، ممنون.",
+      "targetText": "Auch gut, danke."
+    },
+    {
+      "id": 5,
+      "day": 1,
+      "role": "received",
+      "difficulty": "A1",
+      "translation": "My name is Anna. What is your name?",
+      "translationFa": "اسم من آنا است. اسم شما چیست؟",
+      "audioText": "Ich heiße Anna. Wie heißen Sie?"
+    },
+    {
+      "id": 6,
+      "day": 1,
+      "role": "sent",
+      "difficulty": "A1",
+      "translation": "My name is Ali. Nice to meet you!",
+      "translationFa": "اسم من علی است. خوشبختم!",
+      "targetText": "Ich heiße Ali. Freut mich!"
+    },
+    {
+      "id": 7,
+      "day": 1,
+      "role": "received",
+      "difficulty": "A1",
+      "translation": "Nice to meet you too! Where are you from?",
+      "translationFa": "من هم خوشبختم! شما اهل کجا هستید؟",
+      "audioText": "Freut mich auch! Woher kommen Sie?"
+    },
+    {
+      "id": 8,
+      "day": 1,
+      "role": "sent",
+      "difficulty": "A1",
+      "translation": "I come from Iran.",
+      "translationFa": "من اهل ایران هستم.",
+      "targetText": "Ich komme aus dem Iran."
+    },
+    {
+      "id": 9,
+      "day": 1,
+      "role": "received",
+      "difficulty": "A1",
+      "translation": "Oh, interesting! Welcome to Germany.",
+      "translationFa": "اوه، جالب! به آلمان خوش آمدید.",
+      "audioText": "Oh, interessant! Willkommen in Deutschland."
+    },
+    {
+      "id": 10,
+      "day": 1,
+      "role": "sent",
+      "difficulty": "A1",
+      "translation": "Thank you very much! Germany is very beautiful.",
+      "translationFa": "خیلی ممنون! آلمان خیلی زیباست.",
+      "targetText": "Vielen Dank! Deutschland ist sehr schön."
+    },
+    {
+      "id": 11,
+      "day": 1,
+      "role": "received",
+      "difficulty": "A1",
+      "translation": "Do you speak German?",
+      "translationFa": "آیا آلمانی صحبت می‌کنید؟",
+      "audioText": "Sprechen Sie Deutsch?"
+    },
+    {
+      "id": 12,
+      "day": 1,
+      "role": "sent",
+      "difficulty": "A1",
+      "translation": "A little bit. I am learning German.",
+      "translationFa": "کمی. من دارم آلمانی یاد می‌گیرم.",
+      "targetText": "Ein bisschen. Ich lerne Deutsch."
+    },
+    {
+      "id": 13,
+      "day": 1,
+      "role": "received",
+      "difficulty": "A1",
+      "translation": "That is great! Good luck!",
+      "translationFa": "عالیه! موفق باشید!",
+      "audioText": "Das ist toll! Viel Erfolg!"
+    },
+    {
+      "id": 14,
+      "day": 1,
+      "role": "sent",
+      "difficulty": "A1",
+      "translation": "Thank you! Goodbye.",
+      "translationFa": "ممنونم! خداحافظ.",
+      "targetText": "Danke schön! Auf Wiedersehen."
+    }
+  ],
+  "difficulty": "A1",
+  "grammarFocus": "Basic greetings: Hallo, Guten Tag, Tschüss",
+  "grammarFocusFa": "احوالپرسی پایه",
+  "description": "You're meeting someone new for the first time. Introduce yourself and find out about them.",
+  "descriptionFa": "با یه نفر جدید آشنا می‌شید. خودتون رو معرفی کنید و درباره‌شون بیشتر بدونید."
+}

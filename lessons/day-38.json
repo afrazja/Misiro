@@ -1,0 +1,120 @@
+{
+  "day": 38,
+  "title": "38: Making Appointments",
+  "titleFa": "گرفتن وقت ملاقات",
+  "sentences": [
+    {
+      "id": 1,
+      "day": 38,
+      "role": "received",
+      "difficulty": "A2",
+      "translation": "Dr. Schmidt's office, good day!",
+      "translationFa": "مطب دکتر اشمیت، روز بخیر!",
+      "audioText": "Praxis Dr. Schmidt, guten Tag!"
+    },
+    {
+      "id": 2,
+      "day": 38,
+      "role": "sent",
+      "difficulty": "A2",
+      "translation": "Good day, I would like to make an appointment.",
+      "translationFa": "روز بخیر، می‌خواهم وقت بگیرم.",
+      "targetText": "Guten Tag, ich möchte einen Termin machen."
+    },
+    {
+      "id": 3,
+      "day": 38,
+      "role": "received",
+      "difficulty": "A2",
+      "translation": "When suits you?",
+      "translationFa": "چه وقتی مناسبتان است؟",
+      "audioText": "Wann passt es Ihnen?"
+    },
+    {
+      "id": 4,
+      "day": 38,
+      "role": "sent",
+      "difficulty": "A2",
+      "translation": "Is Thursday morning possible?",
+      "translationFa": "پنج‌شنبه صبح امکان‌پذیر است؟",
+      "targetText": "Geht es am Donnerstag Vormittag?"
+    },
+    {
+      "id": 5,
+      "day": 38,
+      "role": "received",
+      "difficulty": "A2",
+      "translation": "Unfortunately we don't have an appointment free on Thursday.",
+      "translationFa": "متاسفانه پنج‌شنبه وقت خالی نداریم.",
+      "audioText": "Am Donnerstag haben wir leider keinen Termin frei."
+    },
+    {
+      "id": 6,
+      "day": 38,
+      "role": "sent",
+      "difficulty": "A2",
+      "translation": "And on Friday? Do you have something available then?",
+      "translationFa": "و جمعه؟ وقت خالی دارید؟",
+      "targetText": "Und am Freitag? Haben Sie da noch etwas frei?"
+    },
+    {
+      "id": 7,
+      "day": 38,
+      "role": "received",
+      "difficulty": "A2",
+      "translation": "On Friday at ten thirty there would be an appointment free.",
+      "translationFa": "جمعه ساعت ده و نیم یک وقت خالی هست.",
+      "audioText": "Am Freitag um zehn Uhr dreißig wäre ein Termin frei."
+    },
+    {
+      "id": 8,
+      "day": 38,
+      "role": "sent",
+      "difficulty": "A2",
+      "translation": "That suits me well. I will be there on time.",
+      "translationFa": "برایم مناسب است. سر وقت خواهم آمد.",
+      "targetText": "Das passt mir gut. Ich werde pünktlich da sein."
+    },
+    {
+      "id": 9,
+      "day": 38,
+      "role": "received",
+      "difficulty": "A2",
+      "translation": "What is your name, please?",
+      "translationFa": "اسمتان چیست، لطفا؟",
+      "audioText": "Wie ist Ihr Name, bitte?"
+    },
+    {
+      "id": 10,
+      "day": 38,
+      "role": "sent",
+      "difficulty": "A2",
+      "translation": "My name is Ahmadi. A-H-M-A-D-I.",
+      "translationFa": "اسمم احمدی است.",
+      "targetText": "Mein Name ist Ahmadi. A-H-M-A-D-I."
+    },
+    {
+      "id": 11,
+      "day": 38,
+      "role": "received",
+      "difficulty": "A2",
+      "translation": "Good, Mr. Ahmadi. We will expect you on Friday.",
+      "translationFa": "خوب، آقای احمدی. جمعه منتظرتان خواهیم بود.",
+      "audioText": "Gut, Herr Ahmadi. Wir werden Sie am Freitag erwarten."
+    },
+    {
+      "id": 12,
+      "day": 38,
+      "role": "sent",
+      "difficulty": "A2",
+      "translation": "Thank you very much! See you Friday!",
+      "translationFa": "خیلی ممنون! تا جمعه!",
+      "targetText": "Vielen Dank! Bis Freitag!"
+    }
+  ],
+  "difficulty": "A2",
+  "grammarFocus": "Future with werden + time expressions",
+  "grammarFocusFa": "آینده با werden + عبارات زمانی",
+  "description": "You're not feeling well and a colleague notices. Explain your symptoms and decide what to do.",
+  "descriptionFa": "حالتون خوب نیست و یه همکار متوجه می‌شه. علائمتون رو توضیح بدید و تصمیم بگیرید چیکار کنید."
+}

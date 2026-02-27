@@ -1,0 +1,120 @@
+{
+  "day": 17,
+  "title": "17: Body Parts & Health",
+  "titleFa": "اعضای بدن و سلامت",
+  "sentences": [
+    {
+      "id": 1,
+      "day": 17,
+      "role": "received",
+      "difficulty": "A1",
+      "translation": "Good day! What is wrong?",
+      "translationFa": "روز بخیر! مشکلتان چیست؟",
+      "audioText": "Guten Tag! Was fehlt Ihnen?"
+    },
+    {
+      "id": 2,
+      "day": 17,
+      "role": "sent",
+      "difficulty": "A1",
+      "translation": "My head hurts.",
+      "translationFa": "سرم درد می‌کند.",
+      "targetText": "Mein Kopf tut weh."
+    },
+    {
+      "id": 3,
+      "day": 17,
+      "role": "received",
+      "difficulty": "A1",
+      "translation": "Do you also have a fever?",
+      "translationFa": "تب هم دارید؟",
+      "audioText": "Haben Sie auch Fieber?"
+    },
+    {
+      "id": 4,
+      "day": 17,
+      "role": "sent",
+      "difficulty": "A1",
+      "translation": "Yes, I have a fever and a sore throat.",
+      "translationFa": "بله، تب دارم و گلودرد دارم.",
+      "targetText": "Ja, ich habe Fieber und Halsschmerzen."
+    },
+    {
+      "id": 5,
+      "day": 17,
+      "role": "received",
+      "difficulty": "A1",
+      "translation": "Since when do you have the pain?",
+      "translationFa": "از کی درد دارید؟",
+      "audioText": "Seit wann haben Sie die Schmerzen?"
+    },
+    {
+      "id": 6,
+      "day": 17,
+      "role": "sent",
+      "difficulty": "A1",
+      "translation": "For two days.",
+      "translationFa": "از دو روز پیش.",
+      "targetText": "Seit zwei Tagen."
+    },
+    {
+      "id": 7,
+      "day": 17,
+      "role": "received",
+      "difficulty": "A1",
+      "translation": "Does your stomach also hurt?",
+      "translationFa": "شکمتان هم درد می‌کند؟",
+      "audioText": "Tut auch Ihr Bauch weh?"
+    },
+    {
+      "id": 8,
+      "day": 17,
+      "role": "sent",
+      "difficulty": "A1",
+      "translation": "No, but my back hurts.",
+      "translationFa": "نه، ولی کمرم درد می‌کند.",
+      "targetText": "Nein, aber mein Rücken tut weh."
+    },
+    {
+      "id": 9,
+      "day": 17,
+      "role": "received",
+      "difficulty": "A1",
+      "translation": "Take these tablets three times a day.",
+      "translationFa": "این قرص‌ها را روزی سه بار بخورید.",
+      "audioText": "Nehmen Sie diese Tabletten dreimal am Tag."
+    },
+    {
+      "id": 10,
+      "day": 17,
+      "role": "sent",
+      "difficulty": "A1",
+      "translation": "Do I have to stay in bed?",
+      "translationFa": "باید در تخت بمانم؟",
+      "targetText": "Muss ich im Bett bleiben?"
+    },
+    {
+      "id": 11,
+      "day": 17,
+      "role": "received",
+      "difficulty": "A1",
+      "translation": "Yes, you should sleep a lot and drink tea.",
+      "translationFa": "بله، باید زیاد بخوابید و چای بنوشید.",
+      "audioText": "Ja, Sie sollen viel schlafen und Tee trinken."
+    },
+    {
+      "id": 12,
+      "day": 17,
+      "role": "sent",
+      "difficulty": "A1",
+      "translation": "Thank you, Doctor. Goodbye.",
+      "translationFa": "ممنون، آقای دکتر. خداحافظ.",
+      "targetText": "Danke, Herr Doktor. Auf Wiedersehen."
+    }
+  ],
+  "difficulty": "A1",
+  "grammarFocus": "Mein/Meine... tut/tun weh",
+  "grammarFocusFa": "...من درد می‌کند",
+  "description": "You're checking in for your flight. Navigate check-in, baggage drop-off, and finding your gate.",
+  "descriptionFa": "دارید برای پروازتون چک‌این می‌کنید. چک‌این، تحویل بار و پیدا کردن گیت رو مدیریت کنید."
+}

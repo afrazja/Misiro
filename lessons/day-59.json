@@ -1,0 +1,102 @@
+{
+  "day": 59,
+  "title": "59: Expressing Opinions",
+  "titleFa": "بیان نظر",
+  "sentences": [
+    {
+      "id": 1,
+      "day": 59,
+      "role": "received",
+      "difficulty": "B1",
+      "translation": "What do you think about life in Germany?",
+      "translationFa": "درباره زندگی در آلمان چه فکر می‌کنی؟",
+      "audioText": "Was denkst du über das Leben in Deutschland?"
+    },
+    {
+      "id": 2,
+      "day": 59,
+      "role": "sent",
+      "difficulty": "B1",
+      "translation": "I think that life here is well organized.",
+      "translationFa": "به نظرم زندگی اینجا خوب سازمان‌دهی شده.",
+      "targetText": "Ich finde, dass das Leben hier gut organisiert ist."
+    },
+    {
+      "id": 3,
+      "day": 59,
+      "role": "received",
+      "difficulty": "B1",
+      "translation": "Do you agree that education should be free?",
+      "translationFa": "موافقی که آموزش باید رایگان باشد؟",
+      "audioText": "Bist du damit einverstanden, dass Bildung kostenlos sein sollte?"
+    },
+    {
+      "id": 4,
+      "day": 59,
+      "role": "sent",
+      "difficulty": "B1",
+      "translation": "Yes, I am of the opinion that everyone should have access to free education.",
+      "translationFa": "بله، نظرم این است که همه باید به آموزش رایگان دسترسی داشته باشند.",
+      "targetText": "Ja, ich bin der Meinung, dass jeder Zugang zu kostenloser Bildung haben sollte."
+    },
+    {
+      "id": 5,
+      "day": 59,
+      "role": "received",
+      "difficulty": "B1",
+      "translation": "Some people think that technology makes life more complicated.",
+      "translationFa": "بعضی‌ها معتقدند که فناوری زندگی را پیچیده‌تر می‌کند.",
+      "audioText": "Manche Leute meinen, dass Technologie das Leben komplizierter macht."
+    },
+    {
+      "id": 6,
+      "day": 59,
+      "role": "sent",
+      "difficulty": "B1",
+      "translation": "I disagree. I believe that technology makes many things easier.",
+      "translationFa": "من نظر دیگری دارم. معتقدم که فناوری خیلی چیزها را آسان‌تر می‌کند.",
+      "targetText": "Da bin ich anderer Meinung. Ich glaube, dass Technologie vieles erleichtert."
+    },
+    {
+      "id": 7,
+      "day": 59,
+      "role": "received",
+      "difficulty": "B1",
+      "translation": "What do you think of the public transport connections?",
+      "translationFa": "نظرت درباره حمل‌ونقل عمومی چیه؟",
+      "audioText": "Was hältst du von der öffentlichen Verkehrsanbindung?"
+    },
+    {
+      "id": 8,
+      "day": 59,
+      "role": "sent",
+      "difficulty": "B1",
+      "translation": "In my opinion public transport here is very good.",
+      "translationFa": "به نظر من حمل‌ونقل عمومی اینجا خیلی خوب است.",
+      "targetText": "Meiner Meinung nach ist der öffentliche Verkehr hier sehr gut."
+    },
+    {
+      "id": 9,
+      "day": 59,
+      "role": "received",
+      "difficulty": "B1",
+      "translation": "Do you think one has to learn a foreign language?",
+      "translationFa": "فکر می‌کنی آدم باید زبان خارجی یاد بگیرد؟",
+      "audioText": "Findest du, dass man eine Fremdsprache lernen muss?"
+    },
+    {
+      "id": 10,
+      "day": 59,
+      "role": "sent",
+      "difficulty": "B1",
+      "translation": "Absolutely! I am convinced that languages open the world.",
+      "translationFa": "قطعا! متقاعد هستم که زبان‌ها دنیا را باز می‌کنند.",
+      "targetText": "Auf jeden Fall! Ich bin überzeugt, dass Sprachen die Welt öffnen."
+    }
+  ],
+  "difficulty": "B1",
+  "grammarFocus": "Ich finde/denke/meine, dass...",
+  "grammarFocusFa": "فکر می‌کنم/به نظرم، که...",
+  "description": "You have a job interview at a German company. Answer questions about your experience and motivation.",
+  "descriptionFa": "مصاحبه شغلی در یه شرکت آلمانی دارید. به سوالات درباره تجربه و انگیزه‌تون جواب بدید."
+}

@@ -1,0 +1,120 @@
+{
+  "day": 13,
+  "title": "13: Weather",
+  "titleFa": "آب و هوا",
+  "sentences": [
+    {
+      "id": 1,
+      "day": 13,
+      "role": "received",
+      "difficulty": "A1",
+      "translation": "How is the weather today?",
+      "translationFa": "هوا امروز چطور است؟",
+      "audioText": "Wie ist das Wetter heute?"
+    },
+    {
+      "id": 2,
+      "day": 13,
+      "role": "sent",
+      "difficulty": "A1",
+      "translation": "It is sunny and warm.",
+      "translationFa": "هوا آفتابی و گرم است.",
+      "targetText": "Es ist sonnig und warm."
+    },
+    {
+      "id": 3,
+      "day": 13,
+      "role": "received",
+      "difficulty": "A1",
+      "translation": "Is the sun shining?",
+      "translationFa": "آفتاب می‌تابد؟",
+      "audioText": "Scheint die Sonne?"
+    },
+    {
+      "id": 4,
+      "day": 13,
+      "role": "sent",
+      "difficulty": "A1",
+      "translation": "Yes, the sun is shining and it is twenty-five degrees.",
+      "translationFa": "بله، آفتاب می‌تابد و بیست و پنج درجه است.",
+      "targetText": "Ja, die Sonne scheint und es ist fünfundzwanzig Grad."
+    },
+    {
+      "id": 5,
+      "day": 13,
+      "role": "received",
+      "difficulty": "A1",
+      "translation": "Will it rain tomorrow?",
+      "translationFa": "فردا باران می‌بارد؟",
+      "audioText": "Regnet es morgen?"
+    },
+    {
+      "id": 6,
+      "day": 13,
+      "role": "sent",
+      "difficulty": "A1",
+      "translation": "Yes, tomorrow it will rain and it will be cold.",
+      "translationFa": "بله، فردا باران می‌بارد و سرد می‌شود.",
+      "targetText": "Ja, morgen regnet es und es wird kalt."
+    },
+    {
+      "id": 7,
+      "day": 13,
+      "role": "received",
+      "difficulty": "A1",
+      "translation": "What is your favorite season?",
+      "translationFa": "فصل مورد علاقه‌ات چیه؟",
+      "audioText": "Was ist deine Lieblingsjahreszeit?"
+    },
+    {
+      "id": 8,
+      "day": 13,
+      "role": "sent",
+      "difficulty": "A1",
+      "translation": "I like spring. It is not too hot and not too cold.",
+      "translationFa": "من بهار را دوست دارم. نه خیلی گرم است نه خیلی سرد.",
+      "targetText": "Ich mag den Frühling. Es ist nicht zu heiß und nicht zu kalt."
+    },
+    {
+      "id": 9,
+      "day": 13,
+      "role": "received",
+      "difficulty": "A1",
+      "translation": "In winter it often snows in Germany.",
+      "translationFa": "در زمستان در آلمان اغلب برف می‌بارد.",
+      "audioText": "Im Winter schneit es oft in Deutschland."
+    },
+    {
+      "id": 10,
+      "day": 13,
+      "role": "sent",
+      "difficulty": "A1",
+      "translation": "Does it also snow in Munich?",
+      "translationFa": "در مونیخ هم برف می‌بارد؟",
+      "targetText": "Schneit es auch in München?"
+    },
+    {
+      "id": 11,
+      "day": 13,
+      "role": "received",
+      "difficulty": "A1",
+      "translation": "Yes, in December and January it snows a lot.",
+      "translationFa": "بله، در دسامبر و ژانویه خیلی برف می‌بارد.",
+      "audioText": "Ja, im Dezember und Januar schneit es viel."
+    },
+    {
+      "id": 12,
+      "day": 13,
+      "role": "sent",
+      "difficulty": "A1",
+      "translation": "In Iran the summer is very hot.",
+      "translationFa": "در ایران تابستان خیلی گرم است.",
+      "targetText": "Im Iran ist der Sommer sehr heiß."
+    }
+  ],
+  "difficulty": "A1",
+  "grammarFocus": "Es ist... + weather adjectives",
+  "grammarFocusFa": "هوا... است + صفات آب و هوا",
+  "description": "You need to find a pharmacy in an unfamiliar neighborhood. Ask a passerby for simple directions.",
+  "descriptionFa": "باید یه داروخانه تو محله ناآشنا پیدا کنید. از یه رهگذر مسیر ساده بخواید."
+}

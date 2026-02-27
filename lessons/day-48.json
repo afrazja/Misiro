@@ -1,0 +1,102 @@
+{
+  "day": 48,
+  "title": "48: Education & School",
+  "titleFa": "آموزش و مدرسه",
+  "sentences": [
+    {
+      "id": 1,
+      "day": 48,
+      "role": "received",
+      "difficulty": "A2",
+      "translation": "Why did you come to Germany?",
+      "translationFa": "چرا به آلمان آمدی؟",
+      "audioText": "Warum bist du nach Deutschland gekommen?"
+    },
+    {
+      "id": 2,
+      "day": 48,
+      "role": "sent",
+      "difficulty": "B1",
+      "translation": "I came to Germany to study medicine.",
+      "translationFa": "به آلمان آمدم تا پزشکی بخوانم.",
+      "targetText": "Ich bin nach Deutschland gekommen, um Medizin zu studieren."
+    },
+    {
+      "id": 3,
+      "day": 48,
+      "role": "received",
+      "difficulty": "B1",
+      "translation": "How is the education system in Germany?",
+      "translationFa": "سیستم آموزشی آلمان چطور است؟",
+      "audioText": "Wie ist das Bildungssystem in Deutschland?"
+    },
+    {
+      "id": 4,
+      "day": 48,
+      "role": "sent",
+      "difficulty": "B1",
+      "translation": "It is different from Iran. You have to study a lot independently.",
+      "translationFa": "فرق دارد با ایران. باید خیلی مستقل درس بخوانی.",
+      "targetText": "Es ist anders als im Iran. Man muss viel selbstständig lernen."
+    },
+    {
+      "id": 5,
+      "day": 48,
+      "role": "received",
+      "difficulty": "B1",
+      "translation": "What do you need to study at the university?",
+      "translationFa": "برای تحصیل در دانشگاه چه لازم داری؟",
+      "audioText": "Was brauchst du, um an der Universität zu studieren?"
+    },
+    {
+      "id": 6,
+      "day": 48,
+      "role": "sent",
+      "difficulty": "B1",
+      "translation": "You need the Abitur or a recognized qualification to study.",
+      "translationFa": "برای تحصیل به دیپلم آلمانی یا مدرک معادل نیاز داری.",
+      "targetText": "Man braucht das Abitur oder eine anerkannte Qualifikation, um zu studieren."
+    },
+    {
+      "id": 7,
+      "day": 48,
+      "role": "received",
+      "difficulty": "A2",
+      "translation": "Do you also study at home?",
+      "translationFa": "خانه هم درس می‌خوانی؟",
+      "audioText": "Lernst du auch zu Hause?"
+    },
+    {
+      "id": 8,
+      "day": 48,
+      "role": "sent",
+      "difficulty": "B1",
+      "translation": "Yes, I go to the library every day to study in peace.",
+      "translationFa": "بله، هر روز کتابخانه می‌روم تا در آرامش درس بخوانم.",
+      "targetText": "Ja, ich gehe jeden Tag in die Bibliothek, um in Ruhe zu lernen."
+    },
+    {
+      "id": 9,
+      "day": 48,
+      "role": "received",
+      "difficulty": "A2",
+      "translation": "Have you already passed all exams?",
+      "translationFa": "همه امتحان‌ها را قبول شده‌ای؟",
+      "audioText": "Hast du schon alle Prüfungen bestanden?"
+    },
+    {
+      "id": 10,
+      "day": 48,
+      "role": "sent",
+      "difficulty": "B1",
+      "translation": "I have passed almost all. I still have to take one exam to finish the semester.",
+      "translationFa": "تقریبا همه را قبول شدم. هنوز باید یک امتحان بدهم تا ترم را تمام کنم.",
+      "targetText": "Ich habe fast alle bestanden. Ich muss noch eine Prüfung ablegen, um das Semester abzuschließen."
+    }
+  ],
+  "difficulty": "B1",
+  "grammarFocus": "um...zu + infinitive (purpose clauses)",
+  "grammarFocusFa": "برای... + مصدر (جملات هدف)",
+  "description": "You're at a social gathering and meet someone new. Pay compliments and strike up a conversation.",
+  "descriptionFa": "تو یه گردهمایی اجتماعی هستید و با یه نفر جدید آشنا می‌شید. تعریف کنید و مکالمه شروع کنید."
+}

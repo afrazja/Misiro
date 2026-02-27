@@ -1,0 +1,2250 @@
+{
+  "hallo": {
+    "en": "Hello",
+    "fa": "سلام"
+  },
+  "morgen": {
+    "en": "Morning",
+    "fa": "صبح"
+  },
+  "danke": {
+    "en": "Thanks",
+    "fa": "ممنون"
+  },
+  "bitte": {
+    "en": "Please",
+    "fa": "لطفاً"
+  },
+  "ja": {
+    "en": "Yes",
+    "fa": "بله"
+  },
+  "nein": {
+    "en": "No",
+    "fa": "نه"
+  },
+  "ich": {
+    "en": "I",
+    "fa": "من"
+  },
+  "du": {
+    "en": "You",
+    "fa": "تو"
+  },
+  "sie": {
+    "en": "You (formal)/She/They",
+    "fa": "شما/او/آنها"
+  },
+  "helfen": {
+    "en": "Help",
+    "fa": "کمک کردن"
+  },
+  "problem": {
+    "en": "Problem",
+    "fa": "مشکل"
+  },
+  "verstehe": {
+    "en": "Understand",
+    "fa": "می‌فهمم"
+  },
+  "wiederholen": {
+    "en": "Repeat",
+    "fa": "تکرار کردن"
+  },
+  "langsammer": {
+    "en": "Slower",
+    "fa": "آروم‌تر"
+  },
+  "bedeutet": {
+    "en": "Means",
+    "fa": "یعنی"
+  },
+  "heute": {
+    "en": "Today",
+    "fa": "امروز"
+  },
+  "jetzt": {
+    "en": "Now",
+    "fa": "الان"
+  },
+  "hier": {
+    "en": "Here",
+    "fa": "اینجا"
+  },
+  "dort": {
+    "en": "There",
+    "fa": "آنجا"
+  },
+  "wo": {
+    "en": "Where",
+    "fa": "کجا"
+  },
+  "wann": {
+    "en": "When",
+    "fa": "کی"
+  },
+  "gut": {
+    "en": "Good",
+    "fa": "خوب"
+  },
+  "schlecht": {
+    "en": "Bad",
+    "fa": "بد"
+  },
+  "teuer": {
+    "en": "Expensive",
+    "fa": "گرون"
+  },
+  "billig": {
+    "en": "Cheap",
+    "fa": "ارزون"
+  },
+  "denken": {
+    "en": "Think",
+    "fa": "فکر کردن"
+  },
+  "idee": {
+    "en": "Idea",
+    "fa": "ایده"
+  },
+  "stress": {
+    "en": "Stress",
+    "fa": "استرس"
+  },
+  "müde": {
+    "en": "Tired",
+    "fa": "خسته"
+  },
+  "abend": {
+    "en": "evening",
+    "fa": "عصر"
+  },
+  "abends": {
+    "en": "evenings",
+    "fa": "عصرها"
+  },
+  "aber": {
+    "en": "but",
+    "fa": "اما"
+  },
+  "acht": {
+    "en": "eight",
+    "fa": "هشت"
+  },
+  "achtzehn": {
+    "en": "eighteen",
+    "fa": "هجده"
+  },
+  "alle": {
+    "en": "all",
+    "fa": "همه"
+  },
+  "allein": {
+    "en": "alone",
+    "fa": "تنها"
+  },
+  "alt": {
+    "en": "old",
+    "fa": "پیر/قدیمی"
+  },
+  "am": {
+    "en": "at the",
+    "fa": "در"
+  },
+  "ampel": {
+    "en": "traffic light",
+    "fa": "چراغ راهنمایی"
+  },
+  "an": {
+    "en": "at/on",
+    "fa": "به/در"
+  },
+  "apotheke": {
+    "en": "pharmacy",
+    "fa": "داروخانه"
+  },
+  "arbeit": {
+    "en": "work",
+    "fa": "کار"
+  },
+  "arbeiten": {
+    "en": "to work",
+    "fa": "کار کردن"
+  },
+  "arbeitet": {
+    "en": "works",
+    "fa": "کار می‌کند"
+  },
+  "auch": {
+    "en": "also",
+    "fa": "همچنین"
+  },
+  "auf": {
+    "en": "on",
+    "fa": "روی"
+  },
+  "aufgabe": {
+    "en": "task/exercise",
+    "fa": "تکلیف/وظیفه"
+  },
+  "aufgaben": {
+    "en": "tasks",
+    "fa": "تکالیف"
+  },
+  "aus": {
+    "en": "from/out of",
+    "fa": "از"
+  },
+  "auto": {
+    "en": "car",
+    "fa": "ماشین"
+  },
+  "bad": {
+    "en": "bathroom/bath",
+    "fa": "حمام"
+  },
+  "bahnhof": {
+    "en": "train station",
+    "fa": "ایستگاه قطار"
+  },
+  "balkon": {
+    "en": "balcony",
+    "fa": "بالکن"
+  },
+  "bauch": {
+    "en": "stomach",
+    "fa": "شکم"
+  },
+  "beginnt": {
+    "en": "begins",
+    "fa": "شروع می‌شود"
+  },
+  "bei": {
+    "en": "at",
+    "fa": "پیش/نزد"
+  },
+  "berlin": {
+    "en": "Berlin",
+    "fa": "برلین"
+  },
+  "beruflich": {
+    "en": "professionally",
+    "fa": "شغلی"
+  },
+  "bestellen": {
+    "en": "to order",
+    "fa": "سفارش دادن"
+  },
+  "bett": {
+    "en": "bed",
+    "fa": "تخت خواب"
+  },
+  "biegen": {
+    "en": "to turn/bend",
+    "fa": "پیچیدن"
+  },
+  "bin": {
+    "en": "am",
+    "fa": "هستم"
+  },
+  "bis": {
+    "en": "until",
+    "fa": "تا"
+  },
+  "bisschen": {
+    "en": "a little",
+    "fa": "کمی"
+  },
+  "bist": {
+    "en": "are (singular)",
+    "fa": "هستی"
+  },
+  "blau": {
+    "en": "blue",
+    "fa": "آبی"
+  },
+  "blaue": {
+    "en": "blue",
+    "fa": "آبی"
+  },
+  "bleiben": {
+    "en": "to stay",
+    "fa": "ماندن"
+  },
+  "blumen": {
+    "en": "flowers",
+    "fa": "گل‌ها"
+  },
+  "brauche": {
+    "en": "need (I)",
+    "fa": "نیاز دارم"
+  },
+  "brauchen": {
+    "en": "to need",
+    "fa": "نیاز داشتن"
+  },
+  "brauchst": {
+    "en": "need (you)",
+    "fa": "نیاز داری"
+  },
+  "braun": {
+    "en": "brown",
+    "fa": "قهوه‌ای"
+  },
+  "brille": {
+    "en": "glasses",
+    "fa": "عینک"
+  },
+  "brot": {
+    "en": "bread",
+    "fa": "نان"
+  },
+  "bruder": {
+    "en": "brother",
+    "fa": "برادر"
+  },
+  "brötchen": {
+    "en": "bread roll",
+    "fa": "نان ساندویچی"
+  },
+  "buch": {
+    "en": "book",
+    "fa": "کتاب"
+  },
+  "buchstabieren": {
+    "en": "to spell",
+    "fa": "هجی کردن"
+  },
+  "bus": {
+    "en": "bus",
+    "fa": "اتوبوس"
+  },
+  "bushaltestelle": {
+    "en": "bus stop",
+    "fa": "ایستگاه اتوبوس"
+  },
+  "butter": {
+    "en": "butter",
+    "fa": "کره"
+  },
+  "bücher": {
+    "en": "books",
+    "fa": "کتاب‌ها"
+  },
+  "café": {
+    "en": "café",
+    "fa": "کافه"
+  },
+  "dank": {
+    "en": "thanks",
+    "fa": "سپاس"
+  },
+  "dann": {
+    "en": "then",
+    "fa": "سپس"
+  },
+  "darf": {
+    "en": "may/allowed to",
+    "fa": "اجازه داشتن"
+  },
+  "das": {
+    "en": "the/that",
+    "fa": "آن"
+  },
+  "dass": {
+    "en": "that",
+    "fa": "که"
+  },
+  "dein": {
+    "en": "your (masc/neut)",
+    "fa": "مال تو"
+  },
+  "deine": {
+    "en": "your (fem/plur)",
+    "fa": "مال تو"
+  },
+  "deiner": {
+    "en": "your",
+    "fa": "مال تو"
+  },
+  "dem": {
+    "en": "the (dat masc/neut)",
+    "fa": "حرف تعریف"
+  },
+  "den": {
+    "en": "the (acc masc/dat plur)",
+    "fa": "حرف تعریف"
+  },
+  "der": {
+    "en": "the (masc nom)",
+    "fa": "حرف تعریف"
+  },
+  "deutsch": {
+    "en": "German",
+    "fa": "آلمانی"
+  },
+  "deutsche": {
+    "en": "German",
+    "fa": "آلمانی"
+  },
+  "deutschkurs": {
+    "en": "German course",
+    "fa": "کلاس آلمانی"
+  },
+  "deutschland": {
+    "en": "Germany",
+    "fa": "آلمان"
+  },
+  "dezember": {
+    "en": "December",
+    "fa": "دسامبر"
+  },
+  "dich": {
+    "en": "you (acc)",
+    "fa": "تو را"
+  },
+  "die": {
+    "en": "the (fem nom/acc)",
+    "fa": "حرف تعریف"
+  },
+  "dienstag": {
+    "en": "Tuesday",
+    "fa": "سه‌شنبه"
+  },
+  "diese": {
+    "en": "this",
+    "fa": "این"
+  },
+  "diesen": {
+    "en": "this (acc masc)",
+    "fa": "این"
+  },
+  "doktor": {
+    "en": "doctor",
+    "fa": "دکتر"
+  },
+  "dorthin": {
+    "en": "there/to that place",
+    "fa": "به آنجا"
+  },
+  "draußen": {
+    "en": "outside",
+    "fa": "بیرون"
+  },
+  "drei": {
+    "en": "three",
+    "fa": "سه"
+  },
+  "dreimal": {
+    "en": "three times",
+    "fa": "سه بار"
+  },
+  "dreißig": {
+    "en": "thirty",
+    "fa": "سی"
+  },
+  "drin": {
+    "en": "inside",
+    "fa": "داخل"
+  },
+  "drinnen": {
+    "en": "inside",
+    "fa": "درون"
+  },
+  "drüben": {
+    "en": "over there",
+    "fa": "آن طرف"
+  },
+  "durst": {
+    "en": "thirst",
+    "fa": "تشنگی"
+  },
+  "dusche": {
+    "en": "shower",
+    "fa": "دوش"
+  },
+  "dürfen": {
+    "en": "be allowed to",
+    "fa": "اجازه داشتن"
+  },
+  "ein": {
+    "en": "a/one",
+    "fa": "یک"
+  },
+  "eine": {
+    "en": "a/one (fem)",
+    "fa": "یک"
+  },
+  "einen": {
+    "en": "a/one (acc masc)",
+    "fa": "یک"
+  },
+  "einmal": {
+    "en": "once",
+    "fa": "یک بار"
+  },
+  "eins": {
+    "en": "one",
+    "fa": "یک"
+  },
+  "elf": {
+    "en": "eleven",
+    "fa": "یازده"
+  },
+  "eltern": {
+    "en": "parents",
+    "fa": "والدین"
+  },
+  "empfehlen": {
+    "en": "to recommend",
+    "fa": "توصیه کردن"
+  },
+  "endet": {
+    "en": "ends",
+    "fa": "تمام می‌شود"
+  },
+  "englisch": {
+    "en": "English",
+    "fa": "انگلیسی"
+  },
+  "entschuldigung": {
+    "en": "excuse me",
+    "fa": "ببخشید"
+  },
+  "er": {
+    "en": "he",
+    "fa": "او (مذکر)"
+  },
+  "erfolg": {
+    "en": "success",
+    "fa": "موفقیت"
+  },
+  "ersten": {
+    "en": "first",
+    "fa": "اولین"
+  },
+  "es": {
+    "en": "it",
+    "fa": "آن"
+  },
+  "esse": {
+    "en": "eat (I)",
+    "fa": "می‌خورم"
+  },
+  "essen": {
+    "en": "to eat",
+    "fa": "خوردن"
+  },
+  "etwas": {
+    "en": "something/some",
+    "fa": "چیزی/کمی"
+  },
+  "euch": {
+    "en": "you (plural acc/dat)",
+    "fa": "شمارا/به شما"
+  },
+  "euro": {
+    "en": "Euro",
+    "fa": "یورو"
+  },
+  "fahre": {
+    "en": "drive/go (I)",
+    "fa": "می‌روم/می‌رانم"
+  },
+  "fahren": {
+    "en": "to drive/go",
+    "fa": "رفتن/راندن"
+  },
+  "fahrrad": {
+    "en": "bicycle",
+    "fa": "دوچرخه"
+  },
+  "familie": {
+    "en": "family",
+    "fa": "خانواده"
+  },
+  "farbe": {
+    "en": "color",
+    "fa": "رنگ"
+  },
+  "februar": {
+    "en": "February",
+    "fa": "فوریه"
+  },
+  "fehlt": {
+    "en": "missing",
+    "fa": "کم است/نیست"
+  },
+  "fenster": {
+    "en": "window",
+    "fa": "پنجره"
+  },
+  "fern": {
+    "en": "far",
+    "fa": "دور"
+  },
+  "fernseher": {
+    "en": "television",
+    "fa": "تلویزیون"
+  },
+  "fieber": {
+    "en": "fever",
+    "fa": "تب"
+  },
+  "film": {
+    "en": "film",
+    "fa": "فیلم"
+  },
+  "foto": {
+    "en": "photo",
+    "fa": "عکس"
+  },
+  "fotografiere": {
+    "en": "take photos (I)",
+    "fa": "عکاسی می‌کنم"
+  },
+  "frei": {
+    "en": "free",
+    "fa": "آزاد/خالی"
+  },
+  "freizeit": {
+    "en": "free time",
+    "fa": "اوقات فراغت"
+  },
+  "freund": {
+    "en": "friend",
+    "fa": "دوست"
+  },
+  "freunden": {
+    "en": "friends",
+    "fa": "دوستان"
+  },
+  "freut": {
+    "en": "glad/pleased",
+    "fa": "خوشحال"
+  },
+  "frisch": {
+    "en": "fresh",
+    "fa": "تازه"
+  },
+  "frische": {
+    "en": "fresh",
+    "fa": "تازه"
+  },
+  "froh": {
+    "en": "happy",
+    "fa": "شاد"
+  },
+  "frühling": {
+    "en": "spring",
+    "fa": "بهار"
+  },
+  "frühstück": {
+    "en": "breakfast",
+    "fa": "صبحانه"
+  },
+  "frühstücke": {
+    "en": "eat breakfast (I)",
+    "fa": "صبحانه می‌خورم"
+  },
+  "frühstückst": {
+    "en": "eat breakfast (you)",
+    "fa": "صبحانه می‌خوری"
+  },
+  "fuß": {
+    "en": "foot",
+    "fa": "پا"
+  },
+  "fußball": {
+    "en": "football",
+    "fa": "فوتبال"
+  },
+  "fängt": {
+    "en": "starts/begins",
+    "fa": "شروع می‌شود"
+  },
+  "fünf": {
+    "en": "five",
+    "fa": "پنج"
+  },
+  "fünfhundert": {
+    "en": "five hundred",
+    "fa": "پانصد"
+  },
+  "fünften": {
+    "en": "fifth",
+    "fa": "پنجمین"
+  },
+  "fünfundzwanzig": {
+    "en": "twenty-five",
+    "fa": "بیست و پنج"
+  },
+  "fünfzig": {
+    "en": "fifty",
+    "fa": "پنجاه"
+  },
+  "für": {
+    "en": "for",
+    "fa": "برای"
+  },
+  "gearbeitet": {
+    "en": "worked",
+    "fa": "کار کرده"
+  },
+  "gebe": {
+    "en": "give (I)",
+    "fa": "می‌دهم"
+  },
+  "geblieben": {
+    "en": "stayed",
+    "fa": "مانده"
+  },
+  "geburtstag": {
+    "en": "birthday",
+    "fa": "تولد"
+  },
+  "gedauert": {
+    "en": "lasted",
+    "fa": "طول کشیده"
+  },
+  "gefahren": {
+    "en": "driven/gone",
+    "fa": "رفته/رانده"
+  },
+  "gefallen": {
+    "en": "to please",
+    "fa": "پسندیده کردن"
+  },
+  "gefrühstückt": {
+    "en": "had breakfast",
+    "fa": "صبحانه خورده"
+  },
+  "gefällt": {
+    "en": "pleases/likes",
+    "fa": "خوشش می‌آید"
+  },
+  "gegangen": {
+    "en": "gone/walked",
+    "fa": "رفته"
+  },
+  "gegeben": {
+    "en": "given",
+    "fa": "داده"
+  },
+  "gegenüber": {
+    "en": "opposite",
+    "fa": "روبرو"
+  },
+  "gehe": {
+    "en": "go (I)",
+    "fa": "می‌روم"
+  },
+  "gehen": {
+    "en": "to go",
+    "fa": "رفتن"
+  },
+  "gehst": {
+    "en": "go (you)",
+    "fa": "می‌روی"
+  },
+  "geht": {
+    "en": "goes",
+    "fa": "می‌رود"
+  },
+  "gekocht": {
+    "en": "cooked",
+    "fa": "پخته شده"
+  },
+  "gekommen": {
+    "en": "come",
+    "fa": "آمده"
+  },
+  "gelb": {
+    "en": "yellow",
+    "fa": "زرد"
+  },
+  "gelernt": {
+    "en": "learned",
+    "fa": "یاد گرفته"
+  },
+  "gemacht": {
+    "en": "made/done",
+    "fa": "انجام داده/ساخته"
+  },
+  "genau": {
+    "en": "exactly",
+    "fa": "دقیقاً"
+  },
+  "geradeaus": {
+    "en": "straight ahead",
+    "fa": "مستقیم"
+  },
+  "gereist": {
+    "en": "travelled",
+    "fa": "سفر کرده"
+  },
+  "gern": {
+    "en": "gladly/like to",
+    "fa": "با کمال میل"
+  },
+  "geschmeckt": {
+    "en": "tasted",
+    "fa": "چشیده/مزه داده"
+  },
+  "geschwister": {
+    "en": "siblings",
+    "fa": "خواهر و برادر"
+  },
+  "gesehen": {
+    "en": "seen",
+    "fa": "دیده شده"
+  },
+  "gestern": {
+    "en": "yesterday",
+    "fa": "دیروز"
+  },
+  "gibst": {
+    "en": "give (you)",
+    "fa": "می‌دهی"
+  },
+  "gibt": {
+    "en": "gives/there is",
+    "fa": "می‌دهد/وجود دارد"
+  },
+  "gitarre": {
+    "en": "guitar",
+    "fa": "گیتار"
+  },
+  "grad": {
+    "en": "degree",
+    "fa": "درجه"
+  },
+  "groß": {
+    "en": "big/tall",
+    "fa": "بزرگ/قدبلند"
+  },
+  "große": {
+    "en": "big",
+    "fa": "بزرگ"
+  },
+  "großen": {
+    "en": "big",
+    "fa": "بزرگ"
+  },
+  "großvater": {
+    "en": "grandfather",
+    "fa": "پدربزرگ"
+  },
+  "größe": {
+    "en": "size",
+    "fa": "سایز"
+  },
+  "grün": {
+    "en": "green",
+    "fa": "سبز"
+  },
+  "guten": {
+    "en": "good",
+    "fa": "خوب"
+  },
+  "habe": {
+    "en": "have (I)",
+    "fa": "دارم"
+  },
+  "haben": {
+    "en": "to have",
+    "fa": "داشتن"
+  },
+  "habt": {
+    "en": "have (you plural)",
+    "fa": "دارید"
+  },
+  "hafen": {
+    "en": "port/harbor",
+    "fa": "بندر"
+  },
+  "halb": {
+    "en": "half",
+    "fa": "نیم/نصف"
+  },
+  "halbes": {
+    "en": "half",
+    "fa": "نصف"
+  },
+  "halsschmerzen": {
+    "en": "sore throat",
+    "fa": "گلودرد"
+  },
+  "hamburg": {
+    "en": "Hamburg",
+    "fa": "هامبورگ"
+  },
+  "hast": {
+    "en": "have (you)",
+    "fa": "داری"
+  },
+  "hat": {
+    "en": "has",
+    "fa": "دارد"
+  },
+  "haus": {
+    "en": "house",
+    "fa": "خانه"
+  },
+  "hausaufgaben": {
+    "en": "homework",
+    "fa": "تکالیف خانه"
+  },
+  "heft": {
+    "en": "notebook",
+    "fa": "دفتر"
+  },
+  "heiß": {
+    "en": "hot",
+    "fa": "داغ"
+  },
+  "heiße": {
+    "en": "named (I am)",
+    "fa": "نامیده می‌شوم"
+  },
+  "heißen": {
+    "en": "to be named",
+    "fa": "نامیده شدن"
+  },
+  "heißt": {
+    "en": "named/means",
+    "fa": "نامیده می‌شود"
+  },
+  "herd": {
+    "en": "stove",
+    "fa": "اجاق گاز"
+  },
+  "herr": {
+    "en": "Mr./Gentleman",
+    "fa": "آقا"
+  },
+  "himmel": {
+    "en": "sky",
+    "fa": "آسمان"
+  },
+  "holz": {
+    "en": "wood",
+    "fa": "چوب"
+  },
+  "hund": {
+    "en": "dog",
+    "fa": "سگ"
+  },
+  "hunger": {
+    "en": "hunger",
+    "fa": "گرسنگی"
+  },
+  "hut": {
+    "en": "hat",
+    "fa": "کلاه"
+  },
+  "hätte": {
+    "en": "would have",
+    "fa": "داشتم (فرضی)"
+  },
+  "hätten": {
+    "en": "would have",
+    "fa": "داشتیم (فرضی)"
+  },
+  "höre": {
+    "en": "hear/listen (I)",
+    "fa": "می‌شنوم"
+  },
+  "hörst": {
+    "en": "hear/listen (you)",
+    "fa": "می‌شنوی"
+  },
+  "ihm": {
+    "en": "him (dat)",
+    "fa": "او را"
+  },
+  "ihn": {
+    "en": "him (acc)",
+    "fa": "او را"
+  },
+  "ihnen": {
+    "en": "them/you (formal dat)",
+    "fa": "ایشان/شما"
+  },
+  "ihr": {
+    "en": "you (plural)/her/their",
+    "fa": "شما/او/آنها"
+  },
+  "ihre": {
+    "en": "her/their/your (formal)",
+    "fa": "مال او/آنها"
+  },
+  "im": {
+    "en": "in the",
+    "fa": "در"
+  },
+  "in": {
+    "en": "in",
+    "fa": "در"
+  },
+  "informatik": {
+    "en": "computer science",
+    "fa": "انفورماتیک"
+  },
+  "ingenieur": {
+    "en": "engineer",
+    "fa": "مهندس"
+  },
+  "ins": {
+    "en": "into the",
+    "fa": "به داخل"
+  },
+  "instrument": {
+    "en": "instrument",
+    "fa": "ساز/ابزار"
+  },
+  "interessant": {
+    "en": "interesting",
+    "fa": "جالب"
+  },
+  "iran": {
+    "en": "Iran",
+    "fa": "ایران"
+  },
+  "isst": {
+    "en": "eats",
+    "fa": "می‌خورد"
+  },
+  "ist": {
+    "en": "is",
+    "fa": "است"
+  },
+  "italienisches": {
+    "en": "Italian",
+    "fa": "ایتالیایی"
+  },
+  "jacke": {
+    "en": "jacket",
+    "fa": "ژاکت"
+  },
+  "jahre": {
+    "en": "years",
+    "fa": "سال‌ها"
+  },
+  "jahren": {
+    "en": "years",
+    "fa": "سال‌ها"
+  },
+  "januar": {
+    "en": "January",
+    "fa": "ژانویه"
+  },
+  "jeden": {
+    "en": "every",
+    "fa": "هر"
+  },
+  "kaffee": {
+    "en": "coffee",
+    "fa": "قهوه"
+  },
+  "kaffees": {
+    "en": "coffees",
+    "fa": "قهوه‌ها"
+  },
+  "kalt": {
+    "en": "cold",
+    "fa": "سرد"
+  },
+  "kann": {
+    "en": "can",
+    "fa": "می‌تواند"
+  },
+  "kannst": {
+    "en": "can (you)",
+    "fa": "می‌توانی"
+  },
+  "katze": {
+    "en": "cat",
+    "fa": "گربه"
+  },
+  "kaufe": {
+    "en": "buy (I)",
+    "fa": "می‌خرم"
+  },
+  "kaufst": {
+    "en": "buy (you)",
+    "fa": "می‌خری"
+  },
+  "kein": {
+    "en": "no/not any",
+    "fa": "هیچ"
+  },
+  "keinen": {
+    "en": "no/not any (acc)",
+    "fa": "هیچ"
+  },
+  "kenne": {
+    "en": "know (person/place)",
+    "fa": "می‌شناسم"
+  },
+  "kennen": {
+    "en": "to know",
+    "fa": "شناختن"
+  },
+  "kennengelernt": {
+    "en": "met/got to know",
+    "fa": "شناخته شده"
+  },
+  "kennst": {
+    "en": "know (you)",
+    "fa": "می‌شناسی"
+  },
+  "kilo": {
+    "en": "kilo",
+    "fa": "کیلو"
+  },
+  "kinder": {
+    "en": "children",
+    "fa": "بچه‌ها"
+  },
+  "kino": {
+    "en": "cinema",
+    "fa": "سینما"
+  },
+  "klassische": {
+    "en": "classical",
+    "fa": "کلاسیک"
+  },
+  "kleid": {
+    "en": "dress",
+    "fa": "پیراهن زنانه"
+  },
+  "klein": {
+    "en": "small",
+    "fa": "کوچک"
+  },
+  "kleinen": {
+    "en": "small",
+    "fa": "کوچک"
+  },
+  "koche": {
+    "en": "cook (I)",
+    "fa": "آشپزی می‌کنم"
+  },
+  "kochen": {
+    "en": "to cook",
+    "fa": "آشپزی کردن"
+  },
+  "komme": {
+    "en": "come (I)",
+    "fa": "می‌آیم"
+  },
+  "kommen": {
+    "en": "to come",
+    "fa": "آمدن"
+  },
+  "kommst": {
+    "en": "come (you)",
+    "fa": "می‌آیی"
+  },
+  "kommt": {
+    "en": "comes",
+    "fa": "می‌آید"
+  },
+  "kopf": {
+    "en": "head",
+    "fa": "سر"
+  },
+  "kostet": {
+    "en": "costs",
+    "fa": "قیمت دارد"
+  },
+  "krankenhaus": {
+    "en": "hospital",
+    "fa": "بیمارستان"
+  },
+  "kuchen": {
+    "en": "cake",
+    "fa": "کیک"
+  },
+  "kurs": {
+    "en": "course",
+    "fa": "دوره آموزشی"
+  },
+  "käse": {
+    "en": "cheese",
+    "fa": "پنیر"
+  },
+  "können": {
+    "en": "can/to be able to",
+    "fa": "توانستن"
+  },
+  "küche": {
+    "en": "kitchen",
+    "fa": "آشپزخانه"
+  },
+  "kühlschrank": {
+    "en": "fridge",
+    "fa": "یخچال"
+  },
+  "lang": {
+    "en": "long",
+    "fa": "طولانی/بلند"
+  },
+  "lange": {
+    "en": "long",
+    "fa": "طولانی"
+  },
+  "lecker": {
+    "en": "delicious",
+    "fa": "خوشمزه"
+  },
+  "lehrer": {
+    "en": "teacher (masc)",
+    "fa": "معلم (مرد)"
+  },
+  "lehrerin": {
+    "en": "teacher (fem)",
+    "fa": "معلم (زن)"
+  },
+  "lerne": {
+    "en": "learn (I)",
+    "fa": "یاد می‌گیرم"
+  },
+  "lernst": {
+    "en": "learn (you)",
+    "fa": "یاد می‌گیری"
+  },
+  "lese": {
+    "en": "read (I)",
+    "fa": "می‌خوانم"
+  },
+  "liebe": {
+    "en": "love (I)",
+    "fa": "دوست دارم/عشق"
+  },
+  "lieber": {
+    "en": "rather/dearer",
+    "fa": "ترجیحاً/عزیزتر"
+  },
+  "liebst": {
+    "en": "love (you)",
+    "fa": "دوست داری"
+  },
+  "liest": {
+    "en": "reads",
+    "fa": "می‌خواند"
+  },
+  "lila": {
+    "en": "purple",
+    "fa": "بنفش"
+  },
+  "links": {
+    "en": "left",
+    "fa": "چپ"
+  },
+  "machen": {
+    "en": "to do/make",
+    "fa": "انجام دادن"
+  },
+  "machst": {
+    "en": "do/make (you)",
+    "fa": "انجام می‌دهی"
+  },
+  "macht": {
+    "en": "does/makes",
+    "fa": "انجام می‌دهد"
+  },
+  "mag": {
+    "en": "like (I/he/she)",
+    "fa": "دوست دارد"
+  },
+  "magst": {
+    "en": "like (you)",
+    "fa": "دوست داری"
+  },
+  "male": {
+    "en": "paint (I)",
+    "fa": "نقاشی می‌کنم"
+  },
+  "malst": {
+    "en": "paint (you)",
+    "fa": "نقاشی می‌کنی"
+  },
+  "man": {
+    "en": "one/you (indefinite)",
+    "fa": "آدم/شخص"
+  },
+  "mann": {
+    "en": "man/husband",
+    "fa": "مرد/شوهر"
+  },
+  "medizin": {
+    "en": "medicine",
+    "fa": "پزشکی/دارو"
+  },
+  "mein": {
+    "en": "my",
+    "fa": "مال من"
+  },
+  "meine": {
+    "en": "my (fem/plur)",
+    "fa": "مال من"
+  },
+  "meinem": {
+    "en": "my (dat masc/neut)",
+    "fa": "مال من"
+  },
+  "mich": {
+    "en": "me (acc)",
+    "fa": "من را"
+  },
+  "miete": {
+    "en": "rent",
+    "fa": "اجاره"
+  },
+  "milch": {
+    "en": "milk",
+    "fa": "شیر"
+  },
+  "minuten": {
+    "en": "minutes",
+    "fa": "دقیقه"
+  },
+  "mir": {
+    "en": "me (dat)",
+    "fa": "به من"
+  },
+  "mit": {
+    "en": "with",
+    "fa": "با"
+  },
+  "mitkommen": {
+    "en": "to come along",
+    "fa": "همراه آمدن"
+  },
+  "mittagessen": {
+    "en": "lunch",
+    "fa": "ناهار"
+  },
+  "mittwoch": {
+    "en": "Wednesday",
+    "fa": "چهارشنبه"
+  },
+  "monat": {
+    "en": "month",
+    "fa": "ماه"
+  },
+  "monaten": {
+    "en": "months",
+    "fa": "ماه‌ها"
+  },
+  "montag": {
+    "en": "Monday",
+    "fa": "دوشنبه"
+  },
+  "morgens": {
+    "en": "in the morning",
+    "fa": "صبح‌ها"
+  },
+  "museum": {
+    "en": "museum",
+    "fa": "موزه"
+  },
+  "musik": {
+    "en": "music",
+    "fa": "موسیقی"
+  },
+  "muss": {
+    "en": "must",
+    "fa": "باید"
+  },
+  "musst": {
+    "en": "must (you)",
+    "fa": "باید (تو)"
+  },
+  "mutter": {
+    "en": "mother",
+    "fa": "مادر"
+  },
+  "märz": {
+    "en": "March",
+    "fa": "مارس"
+  },
+  "möchte": {
+    "en": "would like",
+    "fa": "میل دارم"
+  },
+  "möchten": {
+    "en": "would like (plural)",
+    "fa": "میل داریم"
+  },
+  "mögen": {
+    "en": "to like",
+    "fa": "دوست داشتن"
+  },
+  "münchen": {
+    "en": "Munich",
+    "fa": "مونیخ"
+  },
+  "müssen": {
+    "en": "must/to have to",
+    "fa": "بایستن"
+  },
+  "nach": {
+    "en": "after/to (cities/countries)",
+    "fa": "بعد از/به"
+  },
+  "nachbar": {
+    "en": "neighbor",
+    "fa": "همسایه"
+  },
+  "nachmittag": {
+    "en": "afternoon",
+    "fa": "بعد از ظهر"
+  },
+  "name": {
+    "en": "name",
+    "fa": "نام"
+  },
+  "namen": {
+    "en": "names",
+    "fa": "نام‌ها"
+  },
+  "natur": {
+    "en": "nature",
+    "fa": "طبیعت"
+  },
+  "natürlich": {
+    "en": "naturally/of course",
+    "fa": "البته"
+  },
+  "nehme": {
+    "en": "take (I)",
+    "fa": "برمی‌دارم"
+  },
+  "nehmen": {
+    "en": "to take",
+    "fa": "برداشتن"
+  },
+  "nett": {
+    "en": "nice",
+    "fa": "مهربان"
+  },
+  "neun": {
+    "en": "nine",
+    "fa": "نه"
+  },
+  "neunundsiebzig": {
+    "en": "seventy-nine",
+    "fa": "هفتاد و نه"
+  },
+  "nicht": {
+    "en": "not",
+    "fa": "نیست/نه"
+  },
+  "noch": {
+    "en": "still/yet",
+    "fa": "هنوز"
+  },
+  "normalerweise": {
+    "en": "normally",
+    "fa": "معمولاً"
+  },
+  "null": {
+    "en": "zero",
+    "fa": "صفر"
+  },
+  "nummer": {
+    "en": "number",
+    "fa": "شماره"
+  },
+  "nur": {
+    "en": "only",
+    "fa": "فقط"
+  },
+  "nächste": {
+    "en": "next",
+    "fa": "بعدی"
+  },
+  "nähe": {
+    "en": "near/proximity",
+    "fa": "نزدیکی"
+  },
+  "oben": {
+    "en": "up/above",
+    "fa": "بالا"
+  },
+  "oder": {
+    "en": "or",
+    "fa": "یا"
+  },
+  "oft": {
+    "en": "often",
+    "fa": "اغلب"
+  },
+  "ohne": {
+    "en": "without",
+    "fa": "بدون"
+  },
+  "park": {
+    "en": "park",
+    "fa": "پارک"
+  },
+  "passiert": {
+    "en": "happened",
+    "fa": "اتفاق افتاده"
+  },
+  "passt": {
+    "en": "fits",
+    "fa": "مناسب است"
+  },
+  "pasta": {
+    "en": "pasta",
+    "fa": "پاستا"
+  },
+  "persisch": {
+    "en": "Persian",
+    "fa": "فارسی"
+  },
+  "persisches": {
+    "en": "Persian",
+    "fa": "فارسی"
+  },
+  "personen": {
+    "en": "persons/people",
+    "fa": "اشخاص"
+  },
+  "pizza": {
+    "en": "pizza",
+    "fa": "پیتزا"
+  },
+  "pommes": {
+    "en": "fries",
+    "fa": "سیب‌زمینی سرخ‌کرده"
+  },
+  "pop": {
+    "en": "pop (music)",
+    "fa": "پاپ"
+  },
+  "pro": {
+    "en": "per",
+    "fa": "هر"
+  },
+  "punkte": {
+    "en": "points",
+    "fa": "امتیازات/نقاط"
+  },
+  "rauchen": {
+    "en": "to smoke",
+    "fa": "سیگار کشیدن"
+  },
+  "rechnung": {
+    "en": "bill/invoice",
+    "fa": "صورتحساب"
+  },
+  "rechts": {
+    "en": "right",
+    "fa": "راست"
+  },
+  "regnet": {
+    "en": "rains",
+    "fa": "باران می‌بارد"
+  },
+  "reise": {
+    "en": "journey/travel",
+    "fa": "سفر"
+  },
+  "reserviert": {
+    "en": "reserved",
+    "fa": "رزرو شده"
+  },
+  "restaurant": {
+    "en": "restaurant",
+    "fa": "رستوران"
+  },
+  "rot": {
+    "en": "red",
+    "fa": "قرمز"
+  },
+  "rufe": {
+    "en": "call (I)",
+    "fa": "صدا می‌زنم/تماس می‌گیرم"
+  },
+  "rufst": {
+    "en": "call (you)",
+    "fa": "صدا می‌زنی"
+  },
+  "ruht": {
+    "en": "rests",
+    "fa": "استراحت می‌کند"
+  },
+  "rücken": {
+    "en": "back",
+    "fa": "پشت (بدن)"
+  },
+  "samstag": {
+    "en": "Saturday",
+    "fa": "شنبه"
+  },
+  "schade": {
+    "en": "pity/shame",
+    "fa": "حیف"
+  },
+  "scheint": {
+    "en": "shines/seems",
+    "fa": "می‌تابد/به نظر می‌رسد"
+  },
+  "schenken": {
+    "en": "to give (gift)",
+    "fa": "هدیه دادن"
+  },
+  "schlafen": {
+    "en": "to sleep",
+    "fa": "خوابیدن"
+  },
+  "schlafzimmer": {
+    "en": "bedroom",
+    "fa": "اتاق خواب"
+  },
+  "schmerzen": {
+    "en": "pains",
+    "fa": "دردها"
+  },
+  "schneit": {
+    "en": "snows",
+    "fa": "برف می‌بارد"
+  },
+  "schnitzel": {
+    "en": "schnitzel",
+    "fa": "شنیتسل"
+  },
+  "schokolade": {
+    "en": "chocolate",
+    "fa": "شکلات"
+  },
+  "schokoladenkuchen": {
+    "en": "chocolate cake",
+    "fa": "کیک شکلاتی"
+  },
+  "schon": {
+    "en": "already",
+    "fa": "قبلاً"
+  },
+  "schrank": {
+    "en": "cupboard/wardrobe",
+    "fa": "کمد"
+  },
+  "schreibt": {
+    "en": "writes",
+    "fa": "می‌نویسد"
+  },
+  "schuhe": {
+    "en": "shoes",
+    "fa": "کفش‌ها"
+  },
+  "schule": {
+    "en": "school",
+    "fa": "مدرسه"
+  },
+  "schwarze": {
+    "en": "black",
+    "fa": "سیاه"
+  },
+  "schwarzen": {
+    "en": "black",
+    "fa": "سیاه"
+  },
+  "schwester": {
+    "en": "sister",
+    "fa": "خواهر"
+  },
+  "schwimme": {
+    "en": "swim (I)",
+    "fa": "شنا می‌کنم"
+  },
+  "schön": {
+    "en": "beautiful/nice",
+    "fa": "زیبا"
+  },
+  "sechs": {
+    "en": "six",
+    "fa": "شش"
+  },
+  "sehe": {
+    "en": "see (I)",
+    "fa": "می‌بینم"
+  },
+  "sehr": {
+    "en": "very",
+    "fa": "خیلی"
+  },
+  "seid": {
+    "en": "are (plural)",
+    "fa": "هستید"
+  },
+  "seit": {
+    "en": "since",
+    "fa": "از (زمان)"
+  },
+  "sieben": {
+    "en": "seven",
+    "fa": "هفت"
+  },
+  "siehst": {
+    "en": "see (you)",
+    "fa": "می‌بینی"
+  },
+  "sieht": {
+    "en": "sees",
+    "fa": "می‌بیند"
+  },
+  "sind": {
+    "en": "are",
+    "fa": "هستند/هستیم"
+  },
+  "sitzen": {
+    "en": "to sit",
+    "fa": "نشستن"
+  },
+  "sofa": {
+    "en": "sofa",
+    "fa": "کاناپه"
+  },
+  "soll": {
+    "en": "should",
+    "fa": "باید"
+  },
+  "sollen": {
+    "en": "should (plural)",
+    "fa": "باید"
+  },
+  "sollst": {
+    "en": "should (you)",
+    "fa": "باید"
+  },
+  "sommer": {
+    "en": "summer",
+    "fa": "تابستان"
+  },
+  "sondern": {
+    "en": "but (rather)",
+    "fa": "بلکه"
+  },
+  "sonne": {
+    "en": "sun",
+    "fa": "خورشید"
+  },
+  "sonnig": {
+    "en": "sunny",
+    "fa": "آفتابی"
+  },
+  "sonntag": {
+    "en": "Sunday",
+    "fa": "یکشنبه"
+  },
+  "sonst": {
+    "en": "otherwise",
+    "fa": "وگرنه"
+  },
+  "speisekarte": {
+    "en": "menu",
+    "fa": "منوی غذا"
+  },
+  "spiele": {
+    "en": "play (I)",
+    "fa": "بازی می‌کنم"
+  },
+  "spielen": {
+    "en": "to play",
+    "fa": "بازی کردن"
+  },
+  "spielst": {
+    "en": "play (you)",
+    "fa": "بازی می‌کنی"
+  },
+  "sport": {
+    "en": "sport",
+    "fa": "ورزش"
+  },
+  "spreche": {
+    "en": "speak (I)",
+    "fa": "صحبت می‌کنم"
+  },
+  "sprechen": {
+    "en": "to speak",
+    "fa": "صحبت کردن"
+  },
+  "sprichst": {
+    "en": "speak (you)",
+    "fa": "صحبت می‌کنی"
+  },
+  "spät": {
+    "en": "late",
+    "fa": "دیر"
+  },
+  "später": {
+    "en": "later",
+    "fa": "بعداً"
+  },
+  "stadt": {
+    "en": "city",
+    "fa": "شهر"
+  },
+  "stadtzentrum": {
+    "en": "city center",
+    "fa": "مرکز شهر"
+  },
+  "stehe": {
+    "en": "stand/rise (I)",
+    "fa": "می‌ایستم"
+  },
+  "stehst": {
+    "en": "stand/rise (you)",
+    "fa": "می‌ایستی"
+  },
+  "steht": {
+    "en": "stands",
+    "fa": "می‌ایستد"
+  },
+  "stift": {
+    "en": "pen/pencil",
+    "fa": "قلم"
+  },
+  "straße": {
+    "en": "street",
+    "fa": "خیابان"
+  },
+  "student": {
+    "en": "student (male)",
+    "fa": "دانشجو"
+  },
+  "studenten": {
+    "en": "students",
+    "fa": "دانشجویان"
+  },
+  "studiere": {
+    "en": "study (I)",
+    "fa": "تحصیل می‌کنم"
+  },
+  "studiert": {
+    "en": "studies",
+    "fa": "تحصیل می‌کند"
+  },
+  "stuhl": {
+    "en": "chair",
+    "fa": "صندلی"
+  },
+  "stunden": {
+    "en": "hours",
+    "fa": "ساعات"
+  },
+  "stück": {
+    "en": "piece",
+    "fa": "قطعه/عدد"
+  },
+  "suche": {
+    "en": "search (I)",
+    "fa": "دنبال می‌گردم"
+  },
+  "supermarkt": {
+    "en": "supermarket",
+    "fa": "سوپرمارکت"
+  },
+  "tabletten": {
+    "en": "tablets/pills",
+    "fa": "قرص‌ها"
+  },
+  "tag": {
+    "en": "day",
+    "fa": "روز"
+  },
+  "tagen": {
+    "en": "days",
+    "fa": "روزها"
+  },
+  "tanzen": {
+    "en": "to dance",
+    "fa": "رقصیدن"
+  },
+  "tasche": {
+    "en": "bag/pocket",
+    "fa": "کیف"
+  },
+  "tee": {
+    "en": "tea",
+    "fa": "چای"
+  },
+  "telefonnummer": {
+    "en": "phone number",
+    "fa": "شماره تلفن"
+  },
+  "tisch": {
+    "en": "table",
+    "fa": "میز"
+  },
+  "toll": {
+    "en": "great",
+    "fa": "عالی"
+  },
+  "tomaten": {
+    "en": "tomatoes",
+    "fa": "گوجه‌فرنگی"
+  },
+  "tomatensuppe": {
+    "en": "tomato soup",
+    "fa": "سوپ گوجه"
+  },
+  "trage": {
+    "en": "wear/carry (I)",
+    "fa": "می‌پوشم"
+  },
+  "tragen": {
+    "en": "to wear/carry",
+    "fa": "پوشیدن"
+  },
+  "treffen": {
+    "en": "to meet",
+    "fa": "ملاقات کردن"
+  },
+  "treibst": {
+    "en": "do (sport)",
+    "fa": "انجام دادن ورزش"
+  },
+  "trinke": {
+    "en": "drink (I)",
+    "fa": "می‌نوشم"
+  },
+  "trinken": {
+    "en": "to drink",
+    "fa": "نوشیدن"
+  },
+  "trinkst": {
+    "en": "drink (you)",
+    "fa": "می‌نوشی"
+  },
+  "trägt": {
+    "en": "wears/carries",
+    "fa": "می‌پوشد"
+  },
+  "tut": {
+    "en": "does",
+    "fa": "انجام می‌دهد"
+  },
+  "tüte": {
+    "en": "bag",
+    "fa": "کیسه"
+  },
+  "uhr": {
+    "en": "clock/o'clock",
+    "fa": "ساعت"
+  },
+  "um": {
+    "en": "at/around",
+    "fa": "در (ساعت)"
+  },
+  "umkleidekabine": {
+    "en": "changing room",
+    "fa": "اتاق پرو"
+  },
+  "und": {
+    "en": "and",
+    "fa": "و"
+  },
+  "universität": {
+    "en": "university",
+    "fa": "دانشگاه"
+  },
+  "uns": {
+    "en": "us",
+    "fa": "ما را"
+  },
+  "unter": {
+    "en": "under",
+    "fa": "زیر"
+  },
+  "unterricht": {
+    "en": "lesson/class",
+    "fa": "کلاس درس"
+  },
+  "unterschied": {
+    "en": "difference",
+    "fa": "تفاوت"
+  },
+  "vater": {
+    "en": "father",
+    "fa": "پدر"
+  },
+  "verstehst": {
+    "en": "understand (you)",
+    "fa": "می‌فهمی"
+  },
+  "viel": {
+    "en": "much",
+    "fa": "زیاد"
+  },
+  "viele": {
+    "en": "many",
+    "fa": "بسیاری"
+  },
+  "vielen": {
+    "en": "many/much",
+    "fa": "بسیار"
+  },
+  "vier": {
+    "en": "four",
+    "fa": "چهار"
+  },
+  "viertel": {
+    "en": "quarter",
+    "fa": "ربع/یک‌چهارم"
+  },
+  "vom": {
+    "en": "from the",
+    "fa": "از"
+  },
+  "von": {
+    "en": "of/from",
+    "fa": "از"
+  },
+  "vor": {
+    "en": "before/in front of",
+    "fa": "قبل/جلو"
+  },
+  "vorname": {
+    "en": "first name",
+    "fa": "نام کوچک"
+  },
+  "vorspeise": {
+    "en": "appetizer",
+    "fa": "پیش‌غذا"
+  },
+  "warm": {
+    "en": "warm",
+    "fa": "گرم"
+  },
+  "warme": {
+    "en": "warm",
+    "fa": "گرم"
+  },
+  "warum": {
+    "en": "why",
+    "fa": "چرا"
+  },
+  "was": {
+    "en": "what",
+    "fa": "چه"
+  },
+  "wasser": {
+    "en": "water",
+    "fa": "آب"
+  },
+  "weh": {
+    "en": "hurt",
+    "fa": "درد"
+  },
+  "weil": {
+    "en": "because",
+    "fa": "چون"
+  },
+  "weit": {
+    "en": "far",
+    "fa": "دور"
+  },
+  "weiß": {
+    "en": "know (I)/white",
+    "fa": "می‌دانم/سفید"
+  },
+  "welche": {
+    "en": "which",
+    "fa": "کدام"
+  },
+  "welchem": {
+    "en": "which",
+    "fa": "کدام"
+  },
+  "welcher": {
+    "en": "which",
+    "fa": "کدام"
+  },
+  "weniger": {
+    "en": "less",
+    "fa": "کمتر"
+  },
+  "wer": {
+    "en": "who",
+    "fa": "چه کسی"
+  },
+  "wetter": {
+    "en": "weather",
+    "fa": "آب و هوا"
+  },
+  "wie": {
+    "en": "how",
+    "fa": "چطور"
+  },
+  "wiedersehen": {
+    "en": "see you again",
+    "fa": "دیدار دوباره"
+  },
+  "wiener": {
+    "en": "Viennese",
+    "fa": "وین"
+  },
+  "will": {
+    "en": "want (I)",
+    "fa": "می‌خواهم"
+  },
+  "willkommen": {
+    "en": "welcome",
+    "fa": "خوش آمدید"
+  },
+  "willst": {
+    "en": "want (you)",
+    "fa": "می‌خواهی"
+  },
+  "winter": {
+    "en": "winter",
+    "fa": "زمستان"
+  },
+  "wir": {
+    "en": "we",
+    "fa": "ما"
+  },
+  "wird": {
+    "en": "becomes/will",
+    "fa": "می‌شود"
+  },
+  "woche": {
+    "en": "week",
+    "fa": "هفته"
+  },
+  "wochenende": {
+    "en": "weekend",
+    "fa": "آخر هفته"
+  },
+  "woher": {
+    "en": "where from",
+    "fa": "از کجا"
+  },
+  "wohin": {
+    "en": "where to",
+    "fa": "به کجا"
+  },
+  "wohne": {
+    "en": "live (I)",
+    "fa": "زندگی می‌کنم"
+  },
+  "wohnen": {
+    "en": "to live",
+    "fa": "زندگی کردن"
+  },
+  "wohnst": {
+    "en": "live (you)",
+    "fa": "زندگی می‌کنی"
+  },
+  "wohnt": {
+    "en": "lives",
+    "fa": "زندگی می‌کند"
+  },
+  "wohnung": {
+    "en": "apartment",
+    "fa": "آپارتمان"
+  },
+  "wohnzimmer": {
+    "en": "living room",
+    "fa": "اتاق نشیمن"
+  },
+  "wort": {
+    "en": "word",
+    "fa": "کلمه"
+  },
+  "zahle": {
+    "en": "pay (I)",
+    "fa": "پرداخت می‌کنم"
+  },
+  "zahlst": {
+    "en": "pay (you)",
+    "fa": "پرداخت می‌کنی"
+  },
+  "zehn": {
+    "en": "ten",
+    "fa": "ده"
+  },
+  "zeit": {
+    "en": "time",
+    "fa": "زمان"
+  },
+  "zeitung": {
+    "en": "newspaper",
+    "fa": "روزنامه"
+  },
+  "ziehe": {
+    "en": "pull/move (I)",
+    "fa": "می‌کشم/اسباب‌کشی می‌کنم"
+  },
+  "zimmer": {
+    "en": "room",
+    "fa": "اتاق"
+  },
+  "zu": {
+    "en": "to/too",
+    "fa": "به/خیلی"
+  },
+  "zucker": {
+    "en": "sugar",
+    "fa": "شکر"
+  },
+  "zuerst": {
+    "en": "first of all",
+    "fa": "اول از همه"
+  },
+  "zug": {
+    "en": "train",
+    "fa": "قطار"
+  },
+  "zum": {
+    "en": "to the",
+    "fa": "به"
+  },
+  "zur": {
+    "en": "to the",
+    "fa": "به"
+  },
+  "zurück": {
+    "en": "back",
+    "fa": "عقب/بازگشت"
+  },
+  "zusammen": {
+    "en": "together",
+    "fa": "با هم"
+  },
+  "zwanzig": {
+    "en": "twenty",
+    "fa": "بیست"
+  },
+  "zwei": {
+    "en": "two",
+    "fa": "دو"
+  },
+  "zweite": {
+    "en": "second",
+    "fa": "دوم"
+  },
+  "zwischen": {
+    "en": "between",
+    "fa": "بین"
+  },
+  "zwölf": {
+    "en": "twelve",
+    "fa": "دوازده"
+  },
+  "äpfel": {
+    "en": "apples",
+    "fa": "سیب‌ها"
+  },
+  "ärztin": {
+    "en": "doctor (female)",
+    "fa": "خانم دکتر"
+  }
+}

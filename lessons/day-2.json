@@ -1,0 +1,120 @@
+{
+  "day": 2,
+  "title": "2: Introducing Yourself",
+  "titleFa": "معرفی خودتان",
+  "sentences": [
+    {
+      "id": 1,
+      "day": 2,
+      "role": "received",
+      "difficulty": "A1",
+      "translation": "Hello! I am Maria. I come from Berlin.",
+      "translationFa": "سلام! من ماریا هستم. من اهل برلین هستم.",
+      "audioText": "Hallo! Ich bin Maria. Ich komme aus Berlin."
+    },
+    {
+      "id": 2,
+      "day": 2,
+      "role": "sent",
+      "difficulty": "A1",
+      "translation": "Hello Maria! I am Reza. I come from Tehran.",
+      "translationFa": "سلام ماریا! من رضا هستم. من اهل تهران هستم.",
+      "targetText": "Hallo Maria! Ich bin Reza. Ich komme aus Teheran."
+    },
+    {
+      "id": 3,
+      "day": 2,
+      "role": "received",
+      "difficulty": "A1",
+      "translation": "How old are you, Reza?",
+      "translationFa": "رضا، چند سالته؟",
+      "audioText": "Wie alt bist du, Reza?"
+    },
+    {
+      "id": 4,
+      "day": 2,
+      "role": "sent",
+      "difficulty": "A1",
+      "translation": "I am twenty-five years old. And you?",
+      "translationFa": "من بیست و پنج سالمه. تو چی؟",
+      "targetText": "Ich bin fünfundzwanzig Jahre alt. Und du?"
+    },
+    {
+      "id": 5,
+      "day": 2,
+      "role": "received",
+      "difficulty": "A1",
+      "translation": "I am thirty. What do you do for a living?",
+      "translationFa": "من سی سالمه. شغلت چیه؟",
+      "audioText": "Ich bin dreißig. Was machst du beruflich?"
+    },
+    {
+      "id": 6,
+      "day": 2,
+      "role": "sent",
+      "difficulty": "A1",
+      "translation": "I am a student. I study computer science.",
+      "translationFa": "من دانشجو هستم. من کامپیوتر می‌خوانم.",
+      "targetText": "Ich bin Student. Ich studiere Informatik."
+    },
+    {
+      "id": 7,
+      "day": 2,
+      "role": "received",
+      "difficulty": "A1",
+      "translation": "Interesting! I am a teacher.",
+      "translationFa": "جالبه! من معلم هستم.",
+      "audioText": "Interessant! Ich bin Lehrerin."
+    },
+    {
+      "id": 8,
+      "day": 2,
+      "role": "sent",
+      "difficulty": "A1",
+      "translation": "Where do you live in Berlin?",
+      "translationFa": "کجای برلین زندگی می‌کنی؟",
+      "targetText": "Wo wohnst du in Berlin?"
+    },
+    {
+      "id": 9,
+      "day": 2,
+      "role": "received",
+      "difficulty": "A1",
+      "translation": "I live in Kreuzberg. And where do you live?",
+      "translationFa": "من در کرویتسبرگ زندگی می‌کنم. تو کجا زندگی می‌کنی؟",
+      "audioText": "Ich wohne in Kreuzberg. Und wo wohnst du?"
+    },
+    {
+      "id": 10,
+      "day": 2,
+      "role": "sent",
+      "difficulty": "A1",
+      "translation": "I live in Munich. The city is very beautiful.",
+      "translationFa": "من در مونیخ زندگی می‌کنم. شهر خیلی زیباست.",
+      "targetText": "Ich wohne in München. Die Stadt ist sehr schön."
+    },
+    {
+      "id": 11,
+      "day": 2,
+      "role": "received",
+      "difficulty": "A1",
+      "translation": "Do you speak English?",
+      "translationFa": "آیا انگلیسی صحبت می‌کنی؟",
+      "audioText": "Sprichst du Englisch?"
+    },
+    {
+      "id": 12,
+      "day": 2,
+      "role": "sent",
+      "difficulty": "A1",
+      "translation": "Yes, I speak English and Persian.",
+      "translationFa": "بله، من انگلیسی و فارسی صحبت می‌کنم.",
+      "targetText": "Ja, ich spreche Englisch und Persisch."
+    }
+  ],
+  "difficulty": "A1",
+  "grammarFocus": "Ich bin..., Ich heiße..., Ich komme aus...",
+  "grammarFocusFa": "من هستم... اسم من است... من اهل... هستم",
+  "description": "You're greeting different people throughout the day. Practice formal and informal ways to say hello and goodbye.",
+  "descriptionFa": "در طول روز با افراد مختلف روبرو می‌شید. روش‌های رسمی و غیررسمی سلام و خداحافظی رو تمرین کنید."
+}

@@ -1,0 +1,120 @@
+{
+  "day": 5,
+  "title": "5: At the Café",
+  "titleFa": "در کافه",
+  "sentences": [
+    {
+      "id": 1,
+      "day": 5,
+      "role": "received",
+      "difficulty": "A1",
+      "translation": "Welcome to the café! What would you like to order?",
+      "translationFa": "به کافه خوش آمدید! چه چیزی میل دارید؟",
+      "audioText": "Willkommen im Café! Was möchten Sie bestellen?"
+    },
+    {
+      "id": 2,
+      "day": 5,
+      "role": "sent",
+      "difficulty": "A1",
+      "translation": "I would like a coffee, please.",
+      "translationFa": "من یک قهوه می‌خواهم، لطفا.",
+      "targetText": "Ich möchte einen Kaffee, bitte."
+    },
+    {
+      "id": 3,
+      "day": 5,
+      "role": "received",
+      "difficulty": "A1",
+      "translation": "With milk and sugar?",
+      "translationFa": "با شیر و شکر؟",
+      "audioText": "Mit Milch und Zucker?"
+    },
+    {
+      "id": 4,
+      "day": 5,
+      "role": "sent",
+      "difficulty": "A1",
+      "translation": "Only with milk, please. Without sugar.",
+      "translationFa": "فقط با شیر، لطفا. بدون شکر.",
+      "targetText": "Nur mit Milch, bitte. Ohne Zucker."
+    },
+    {
+      "id": 5,
+      "day": 5,
+      "role": "received",
+      "difficulty": "A1",
+      "translation": "Would you also like something to eat?",
+      "translationFa": "چیزی هم برای خوردن میل دارید؟",
+      "audioText": "Möchten Sie auch etwas essen?"
+    },
+    {
+      "id": 6,
+      "day": 5,
+      "role": "sent",
+      "difficulty": "A1",
+      "translation": "Yes, I would like a piece of cake.",
+      "translationFa": "بله، یک تکه کیک می‌خواستم.",
+      "targetText": "Ja, ich hätte gern ein Stück Kuchen."
+    },
+    {
+      "id": 7,
+      "day": 5,
+      "role": "received",
+      "difficulty": "A1",
+      "translation": "We have chocolate cake and apple cake.",
+      "translationFa": "ما کیک شکلاتی و کیک سیب داریم.",
+      "audioText": "Wir haben Schokoladenkuchen und Apfelkuchen."
+    },
+    {
+      "id": 8,
+      "day": 5,
+      "role": "sent",
+      "difficulty": "A1",
+      "translation": "The apple cake, please.",
+      "translationFa": "کیک سیب، لطفا.",
+      "targetText": "Den Apfelkuchen, bitte."
+    },
+    {
+      "id": 9,
+      "day": 5,
+      "role": "received",
+      "difficulty": "A1",
+      "translation": "Would you like to sit inside or outside?",
+      "translationFa": "می‌خواهید داخل بنشینید یا بیرون؟",
+      "audioText": "Möchten Sie drinnen oder draußen sitzen?"
+    },
+    {
+      "id": 10,
+      "day": 5,
+      "role": "sent",
+      "difficulty": "A1",
+      "translation": "Outside, please. The weather is nice today.",
+      "translationFa": "بیرون، لطفا. هوا امروز خوب است.",
+      "targetText": "Draußen, bitte. Das Wetter ist schön heute."
+    },
+    {
+      "id": 11,
+      "day": 5,
+      "role": "received",
+      "difficulty": "A1",
+      "translation": "Here is your coffee and the cake. Enjoy!",
+      "translationFa": "بفرمایید قهوه و کیک شما. نوش جان!",
+      "audioText": "Hier ist Ihr Kaffee und der Kuchen. Guten Appetit!"
+    },
+    {
+      "id": 12,
+      "day": 5,
+      "role": "sent",
+      "difficulty": "A1",
+      "translation": "Thank you! Can I have the bill, please?",
+      "translationFa": "ممنونم! می‌توانم صورتحساب را داشته باشم؟",
+      "targetText": "Danke schön! Kann ich bitte die Rechnung haben?"
+    }
+  ],
+  "difficulty": "A1",
+  "grammarFocus": "Polite requests: Ich möchte..., Ich hätte gern...",
+  "grammarFocusFa": "درخواست مؤدبانه: من می‌خواهم...",
+  "description": "You're making plans and need to talk about days of the week, months, and important dates.",
+  "descriptionFa": "دارید برنامه‌ریزی می‌کنید و باید درباره روزهای هفته، ماه‌ها و تاریخ‌های مهم صحبت کنید."
+}

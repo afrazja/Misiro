@@ -1,0 +1,120 @@
+{
+  "day": 19,
+  "title": "19: Home & Rooms",
+  "titleFa": "خانه و اتاق‌ها",
+  "sentences": [
+    {
+      "id": 1,
+      "day": 19,
+      "role": "received",
+      "difficulty": "A1",
+      "translation": "How is your apartment?",
+      "translationFa": "آپارتمانت چطور است؟",
+      "audioText": "Wie ist deine Wohnung?"
+    },
+    {
+      "id": 2,
+      "day": 19,
+      "role": "sent",
+      "difficulty": "A1",
+      "translation": "My apartment has three rooms, a kitchen and a bathroom.",
+      "translationFa": "آپارتمانم سه اتاق، یک آشپزخانه و یک حمام دارد.",
+      "targetText": "Meine Wohnung hat drei Zimmer, eine Küche und ein Bad."
+    },
+    {
+      "id": 3,
+      "day": 19,
+      "role": "received",
+      "difficulty": "A1",
+      "translation": "Is there also a balcony?",
+      "translationFa": "بالکن هم دارد؟",
+      "audioText": "Gibt es auch einen Balkon?"
+    },
+    {
+      "id": 4,
+      "day": 19,
+      "role": "sent",
+      "difficulty": "A1",
+      "translation": "Yes, there is a small balcony.",
+      "translationFa": "بله، یک بالکن کوچک دارد.",
+      "targetText": "Ja, es gibt einen kleinen Balkon."
+    },
+    {
+      "id": 5,
+      "day": 19,
+      "role": "received",
+      "difficulty": "A1",
+      "translation": "What is in the living room?",
+      "translationFa": "توی اتاق نشیمن چی هست؟",
+      "audioText": "Was steht im Wohnzimmer?"
+    },
+    {
+      "id": 6,
+      "day": 19,
+      "role": "sent",
+      "difficulty": "A1",
+      "translation": "In the living room there is a sofa, a table and a TV.",
+      "translationFa": "در اتاق نشیمن یک مبل، یک میز و یک تلویزیون هست.",
+      "targetText": "Im Wohnzimmer gibt es ein Sofa, einen Tisch und einen Fernseher."
+    },
+    {
+      "id": 7,
+      "day": 19,
+      "role": "received",
+      "difficulty": "A1",
+      "translation": "And your bedroom?",
+      "translationFa": "و اتاق خوابت؟",
+      "audioText": "Und dein Schlafzimmer?"
+    },
+    {
+      "id": 8,
+      "day": 19,
+      "role": "sent",
+      "difficulty": "A1",
+      "translation": "In the bedroom there is a bed and a wardrobe.",
+      "translationFa": "در اتاق خواب یک تخت و یک کمد هست.",
+      "targetText": "Im Schlafzimmer steht ein Bett und ein Schrank."
+    },
+    {
+      "id": 9,
+      "day": 19,
+      "role": "received",
+      "difficulty": "A1",
+      "translation": "Is the kitchen big?",
+      "translationFa": "آشپزخانه بزرگ است؟",
+      "audioText": "Ist die Küche groß?"
+    },
+    {
+      "id": 10,
+      "day": 19,
+      "role": "sent",
+      "difficulty": "A1",
+      "translation": "No, the kitchen is small, but there is a stove and a fridge.",
+      "translationFa": "نه، آشپزخانه کوچک است ولی یک اجاق و یک یخچال دارد.",
+      "targetText": "Nein, die Küche ist klein, aber es gibt einen Herd und einen Kühlschrank."
+    },
+    {
+      "id": 11,
+      "day": 19,
+      "role": "received",
+      "difficulty": "A1",
+      "translation": "How much rent do you pay?",
+      "translationFa": "چقدر اجاره می‌دهی؟",
+      "audioText": "Wie viel Miete zahlst du?"
+    },
+    {
+      "id": 12,
+      "day": 19,
+      "role": "sent",
+      "difficulty": "A1",
+      "translation": "I pay five hundred euros per month.",
+      "translationFa": "ماهی پانصد یورو اجاره می‌دهم.",
+      "targetText": "Ich zahle fünfhundert Euro pro Monat."
+    }
+  ],
+  "difficulty": "A1",
+  "grammarFocus": "Es gibt... (There is/are...)",
+  "grammarFocusFa": "... وجود دارد / هست",
+  "description": "You're describing your daily morning routine to a language exchange partner.",
+  "descriptionFa": "دارید روتین صبحگاهی روزانه‌تون رو برای شریک تبادل زبانی توصیف می‌کنید."
+}

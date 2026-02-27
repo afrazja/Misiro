@@ -1,0 +1,102 @@
+{
+  "day": 54,
+  "title": "54: The Genitive Case",
+  "titleFa": "حالت اضافی",
+  "sentences": [
+    {
+      "id": 1,
+      "day": 54,
+      "role": "received",
+      "difficulty": "B1",
+      "translation": "Whose car is that?",
+      "translationFa": "ماشین مال کیست؟",
+      "audioText": "Wessen Auto ist das?"
+    },
+    {
+      "id": 2,
+      "day": 54,
+      "role": "sent",
+      "difficulty": "B1",
+      "translation": "That is my father's car.",
+      "translationFa": "ماشین پدرم است.",
+      "targetText": "Das ist das Auto meines Vaters."
+    },
+    {
+      "id": 3,
+      "day": 54,
+      "role": "received",
+      "difficulty": "B1",
+      "translation": "Because of the bad weather we are staying home.",
+      "translationFa": "به خاطر هوای بد خانه می‌مانیم.",
+      "audioText": "Wegen des schlechten Wetters bleiben wir zu Hause."
+    },
+    {
+      "id": 4,
+      "day": 54,
+      "role": "sent",
+      "difficulty": "B1",
+      "translation": "Despite the rain I would like to go for a walk.",
+      "translationFa": "با وجود باران دلم می‌خواهد پیاده‌روی کنم.",
+      "targetText": "Trotz des Regens möchte ich spazieren gehen."
+    },
+    {
+      "id": 5,
+      "day": 54,
+      "role": "received",
+      "difficulty": "B1",
+      "translation": "The opinion of the professor is very important.",
+      "translationFa": "نظر استاد خیلی مهم است.",
+      "audioText": "Die Meinung des Professors ist sehr wichtig."
+    },
+    {
+      "id": 6,
+      "day": 54,
+      "role": "sent",
+      "difficulty": "B1",
+      "translation": "Yes, and the results of the research are interesting.",
+      "translationFa": "بله، و نتایج تحقیقات جالب است.",
+      "targetText": "Ja, und die Ergebnisse der Forschung sind interessant."
+    },
+    {
+      "id": 7,
+      "day": 54,
+      "role": "received",
+      "difficulty": "B1",
+      "translation": "Within one year she learned a lot.",
+      "translationFa": "در عرض یک سال خیلی یاد گرفت.",
+      "audioText": "Innerhalb eines Jahres hat sie viel gelernt."
+    },
+    {
+      "id": 8,
+      "day": 54,
+      "role": "sent",
+      "difficulty": "B1",
+      "translation": "Yes, during the last semester she made great progress.",
+      "translationFa": "بله، طی ترم گذشته پیشرفت زیادی کرد.",
+      "targetText": "Ja, während des letzten Semesters hat sie große Fortschritte gemacht."
+    },
+    {
+      "id": 9,
+      "day": 54,
+      "role": "received",
+      "difficulty": "B1",
+      "translation": "Outside of the city there are beautiful hiking trails.",
+      "translationFa": "خارج از شهر مسیرهای پیاده‌روی زیبایی هست.",
+      "audioText": "Außerhalb der Stadt gibt es schöne Wanderwege."
+    },
+    {
+      "id": 10,
+      "day": 54,
+      "role": "sent",
+      "difficulty": "B1",
+      "translation": "At the end of the path there is a small lake.",
+      "translationFa": "انتهای مسیر یک دریاچه کوچک هست.",
+      "targetText": "Am Ende des Weges liegt ein kleiner See."
+    }
+  ],
+  "difficulty": "B1",
+  "grammarFocus": "des/der + noun, wegen, trotz",
+  "grammarFocusFa": "ملکی با des/der، به خاطر، با وجود",
+  "description": "You want to join a language school. Ask about the placement test, class sizes, timetable, and fees.",
+  "descriptionFa": "می‌خواید به یه آموزشگاه زبان بپیوندید. درباره آزمون تعیین سطح، اندازه کلاس، برنامه و هزینه بپرسید."
+}

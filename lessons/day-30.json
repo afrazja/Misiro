@@ -1,0 +1,120 @@
+{
+  "day": 30,
+  "title": "30: Modal Verbs Part 2",
+  "titleFa": "افعال کمکی بخش ۲",
+  "sentences": [
+    {
+      "id": 1,
+      "day": 30,
+      "role": "received",
+      "difficulty": "A2",
+      "translation": "May I smoke here?",
+      "translationFa": "اینجا اجازه سیگار کشیدن دارم؟",
+      "audioText": "Darf ich hier rauchen?"
+    },
+    {
+      "id": 2,
+      "day": 30,
+      "role": "sent",
+      "difficulty": "A2",
+      "translation": "No, you may not smoke here.",
+      "translationFa": "نه، اینجا اجازه سیگار کشیدن ندارید.",
+      "targetText": "Nein, hier dürfen Sie nicht rauchen."
+    },
+    {
+      "id": 3,
+      "day": 30,
+      "role": "received",
+      "difficulty": "A2",
+      "translation": "What should I give my brother for his birthday?",
+      "translationFa": "برای تولد برادرم چه هدیه‌ای بدهم؟",
+      "audioText": "Was soll ich meinem Bruder zum Geburtstag schenken?"
+    },
+    {
+      "id": 4,
+      "day": 30,
+      "role": "sent",
+      "difficulty": "A2",
+      "translation": "You should give him a book. He likes reading.",
+      "translationFa": "باید بهش کتاب هدیه بدهی. او کتاب خواندن را دوست دارد.",
+      "targetText": "Du sollst ihm ein Buch schenken. Er liest gern."
+    },
+    {
+      "id": 5,
+      "day": 30,
+      "role": "received",
+      "difficulty": "A2",
+      "translation": "Do you like chocolate?",
+      "translationFa": "شکلات دوست داری؟",
+      "audioText": "Magst du Schokolade?"
+    },
+    {
+      "id": 6,
+      "day": 30,
+      "role": "sent",
+      "difficulty": "A2",
+      "translation": "Yes, I like chocolate a lot, but I should eat less.",
+      "translationFa": "بله، شکلات خیلی دوست دارم ولی باید کمتر بخورم.",
+      "targetText": "Ja, ich mag Schokolade sehr, aber ich soll weniger essen."
+    },
+    {
+      "id": 7,
+      "day": 30,
+      "role": "received",
+      "difficulty": "A2",
+      "translation": "Are the children allowed to play in the park?",
+      "translationFa": "بچه‌ها اجازه دارند در پارک بازی کنند؟",
+      "audioText": "Dürfen die Kinder im Park spielen?"
+    },
+    {
+      "id": 8,
+      "day": 30,
+      "role": "sent",
+      "difficulty": "A2",
+      "translation": "Yes, the children may play outside until eight.",
+      "translationFa": "بله، بچه‌ها تا ساعت هشت اجازه دارند بیرون بازی کنند.",
+      "targetText": "Ja, die Kinder dürfen bis acht Uhr draußen spielen."
+    },
+    {
+      "id": 9,
+      "day": 30,
+      "role": "received",
+      "difficulty": "A2",
+      "translation": "Should I open the window?",
+      "translationFa": "پنجره را باز کنم؟",
+      "audioText": "Soll ich das Fenster aufmachen?"
+    },
+    {
+      "id": 10,
+      "day": 30,
+      "role": "sent",
+      "difficulty": "A2",
+      "translation": "Yes please, it is very warm in here.",
+      "translationFa": "بله لطفا، اینجا خیلی گرم است.",
+      "targetText": "Ja bitte, es ist sehr warm hier drin."
+    },
+    {
+      "id": 11,
+      "day": 30,
+      "role": "received",
+      "difficulty": "A2",
+      "translation": "Do you like Italian food?",
+      "translationFa": "غذای ایتالیایی دوست دارید؟",
+      "audioText": "Mögen Sie italienisches Essen?"
+    },
+    {
+      "id": 12,
+      "day": 30,
+      "role": "sent",
+      "difficulty": "A2",
+      "translation": "Yes, I really like pizza and pasta.",
+      "translationFa": "بله، پیتزا و پاستا خیلی دوست دارم.",
+      "targetText": "Ja, ich mag Pizza und Pasta sehr gern."
+    }
+  ],
+  "difficulty": "A2",
+  "grammarFocus": "dürfen, sollen, mögen",
+  "grammarFocusFa": "اجازه داشتن، بایستن، دوست داشتن",
+  "description": "You need a new laptop charger. Ask about availability, warranty, and payment options.",
+  "descriptionFa": "یه شارژر لپ‌تاپ جدید نیاز دارید. درباره موجودی، گارانتی و روش‌های پرداخت بپرسید."
+}

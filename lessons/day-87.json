@@ -1,0 +1,102 @@
+{
+  "day": 87,
+  "title": "87: Weather and Seasons",
+  "titleFa": "آب و هوا و فصل‌ها",
+  "sentences": [
+    {
+      "id": 1,
+      "day": 87,
+      "role": "received",
+      "difficulty": "A2",
+      "translation": "Which season do you like the most?",
+      "translationFa": "کدام فصل را بیشتر دوست داری؟",
+      "audioText": "Welche Jahreszeit magst du am liebsten?"
+    },
+    {
+      "id": 2,
+      "day": 87,
+      "role": "sent",
+      "difficulty": "A2",
+      "translation": "I like spring, when the flowers bloom.",
+      "translationFa": "بهار را دوست دارم، وقتی گل‌ها شکوفه می‌زنند.",
+      "targetText": "Ich mag den Frühling, wenn die Blumen blühen."
+    },
+    {
+      "id": 3,
+      "day": 87,
+      "role": "received",
+      "difficulty": "A2",
+      "translation": "In summer it's often very hot in Germany.",
+      "translationFa": "در تابستان اغلب خیلی گرم است در آلمان.",
+      "audioText": "Im Sommer ist es oft sehr heiß in Deutschland."
+    },
+    {
+      "id": 4,
+      "day": 87,
+      "role": "sent",
+      "difficulty": "A2",
+      "translation": "When it's hot, I like to go swimming.",
+      "translationFa": "وقتی هوا گرم باشد، دوست دارم شنا بروم.",
+      "targetText": "Wenn es heiß ist, gehe ich gern schwimmen."
+    },
+    {
+      "id": 5,
+      "day": 87,
+      "role": "received",
+      "difficulty": "A2",
+      "translation": "In autumn the leaves become colorful.",
+      "translationFa": "در پاییز برگ‌ها رنگارنگ می‌شوند.",
+      "audioText": "Im Herbst werden die Blätter bunt."
+    },
+    {
+      "id": 6,
+      "day": 87,
+      "role": "sent",
+      "difficulty": "A2",
+      "translation": "Yes, but it also rains often.",
+      "translationFa": "بله، ولی باران هم زیاد می‌بارد.",
+      "targetText": "Ja, aber es regnet auch oft."
+    },
+    {
+      "id": 7,
+      "day": 87,
+      "role": "received",
+      "difficulty": "A2",
+      "translation": "And in winter it sometimes snows.",
+      "translationFa": "و در زمستان گاهی برف می‌بارد.",
+      "audioText": "Und im Winter schneit es manchmal."
+    },
+    {
+      "id": 8,
+      "day": 87,
+      "role": "sent",
+      "difficulty": "A2",
+      "translation": "When it snows, I like to take a walk.",
+      "translationFa": "وقتی برف می‌بارد، دوست دارم پیاده‌روی کنم.",
+      "targetText": "Wenn es schneit, mache ich gern einen Spaziergang."
+    },
+    {
+      "id": 9,
+      "day": 87,
+      "role": "received",
+      "difficulty": "A2",
+      "translation": "Today it's fifteen degrees and cloudy.",
+      "translationFa": "امروز پانزده درجه و ابری است.",
+      "audioText": "Heute sind es fünfzehn Grad und bewölkt."
+    },
+    {
+      "id": 10,
+      "day": 87,
+      "role": "sent",
+      "difficulty": "A2",
+      "translation": "Then I need a jacket when I go out.",
+      "translationFa": "پس وقتی بیرون می‌روم به کاپشن نیاز دارم.",
+      "targetText": "Dann brauche ich eine Jacke, wenn ich rausgehe."
+    }
+  ],
+  "difficulty": "A2",
+  "grammarFocus": "wenn clauses; weather expressions",
+  "grammarFocusFa": "جملات با wenn؛ عبارات آب و هوا",
+  "description": "",
+  "descriptionFa": ""
+}

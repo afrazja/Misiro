@@ -1,0 +1,102 @@
+{
+  "day": 76,
+  "title": "76: Public Transport Problems",
+  "titleFa": "مشکلات حمل و نقل عمومی",
+  "sentences": [
+    {
+      "id": 1,
+      "day": 76,
+      "role": "received",
+      "difficulty": "A2",
+      "translation": "Excuse me, when does the next bus come?",
+      "translationFa": "ببخشید، اتوبوس بعدی کی می‌آید؟",
+      "audioText": "Entschuldigung, wann kommt der nächste Bus?"
+    },
+    {
+      "id": 2,
+      "day": 76,
+      "role": "sent",
+      "difficulty": "A2",
+      "translation": "The bus is delayed because there's an accident.",
+      "translationFa": "اتوبوس تأخیر دارد، چون تصادفی شده.",
+      "targetText": "Der Bus hat Verspätung, weil es einen Unfall gibt."
+    },
+    {
+      "id": 3,
+      "day": 76,
+      "role": "received",
+      "difficulty": "A2",
+      "translation": "Oh no! How long do I have to wait?",
+      "translationFa": "وای نه! چقدر باید صبر کنم؟",
+      "audioText": "Oh nein! Wie lange muss ich warten?"
+    },
+    {
+      "id": 4,
+      "day": 76,
+      "role": "sent",
+      "difficulty": "A2",
+      "translation": "About twenty minutes. Or you take the subway.",
+      "translationFa": "تقریباً بیست دقیقه. یا مترو بگیرید.",
+      "targetText": "Ungefähr zwanzig Minuten. Oder Sie nehmen die U-Bahn."
+    },
+    {
+      "id": 5,
+      "day": 76,
+      "role": "received",
+      "difficulty": "A2",
+      "translation": "Where is the nearest subway station?",
+      "translationFa": "نزدیک‌ترین ایستگاه مترو کجاست؟",
+      "audioText": "Wo ist die nächste U-Bahn-Station?"
+    },
+    {
+      "id": 6,
+      "day": 76,
+      "role": "sent",
+      "difficulty": "A2",
+      "translation": "Go straight and then left. It's five minutes.",
+      "translationFa": "مستقیم بروید و بعد بپیچید سمت چپ. پنج دقیقه راه است.",
+      "targetText": "Gehen Sie geradeaus und dann links. Es sind fünf Minuten."
+    },
+    {
+      "id": 7,
+      "day": 76,
+      "role": "received",
+      "difficulty": "A2",
+      "translation": "Which line goes to the main station?",
+      "translationFa": "کدام خط به ایستگاه مرکزی می‌رود؟",
+      "audioText": "Welche Linie fährt zum Hauptbahnhof?"
+    },
+    {
+      "id": 8,
+      "day": 76,
+      "role": "sent",
+      "difficulty": "A2",
+      "translation": "You need line three, direction center.",
+      "translationFa": "خط سه را باید بگیرید، جهت مرکز شهر.",
+      "targetText": "Sie brauchen die Linie drei, Richtung Zentrum."
+    },
+    {
+      "id": 9,
+      "day": 76,
+      "role": "received",
+      "difficulty": "A2",
+      "translation": "Do I have to transfer?",
+      "translationFa": "باید عوض کنم؟",
+      "audioText": "Muss ich umsteigen?"
+    },
+    {
+      "id": 10,
+      "day": 76,
+      "role": "sent",
+      "difficulty": "A2",
+      "translation": "No, it's direct. Four stations to the main station.",
+      "translationFa": "نه، مستقیم است. چهار ایستگاه تا ایستگاه مرکزی.",
+      "targetText": "Nein, es ist direkt. Vier Stationen bis zum Hauptbahnhof."
+    }
+  ],
+  "difficulty": "A2",
+  "grammarFocus": "weil clauses; transport vocabulary",
+  "grammarFocusFa": "جملات با weil؛ واژگان حمل و نقل",
+  "description": "",
+  "descriptionFa": ""
+}

@@ -1,0 +1,120 @@
+{
+  "day": 8,
+  "title": "8: Colors & Descriptions",
+  "titleFa": "رنگ‌ها و توصیفات",
+  "sentences": [
+    {
+      "id": 1,
+      "day": 8,
+      "role": "received",
+      "difficulty": "A1",
+      "translation": "What color is your car?",
+      "translationFa": "ماشینت چه رنگی است؟",
+      "audioText": "Welche Farbe hat dein Auto?"
+    },
+    {
+      "id": 2,
+      "day": 8,
+      "role": "sent",
+      "difficulty": "A1",
+      "translation": "My car is blue.",
+      "translationFa": "ماشینم آبی است.",
+      "targetText": "Mein Auto ist blau."
+    },
+    {
+      "id": 3,
+      "day": 8,
+      "role": "received",
+      "difficulty": "A1",
+      "translation": "And your house? Is it big?",
+      "translationFa": "و خانه‌ات؟ بزرگ است؟",
+      "audioText": "Und dein Haus? Ist es groß?"
+    },
+    {
+      "id": 4,
+      "day": 8,
+      "role": "sent",
+      "difficulty": "A1",
+      "translation": "Yes, my house is big and white.",
+      "translationFa": "بله، خانه‌ام بزرگ و سفید است.",
+      "targetText": "Ja, mein Haus ist groß und weiß."
+    },
+    {
+      "id": 5,
+      "day": 8,
+      "role": "received",
+      "difficulty": "A1",
+      "translation": "I like the color red. And you?",
+      "translationFa": "من رنگ قرمز را دوست دارم. تو چی؟",
+      "audioText": "Ich mag die Farbe Rot. Und du?"
+    },
+    {
+      "id": 6,
+      "day": 8,
+      "role": "sent",
+      "difficulty": "A1",
+      "translation": "I like green. Nature is green and beautiful.",
+      "translationFa": "من سبز را دوست دارم. طبیعت سبز و زیباست.",
+      "targetText": "Ich mag Grün. Die Natur ist grün und schön."
+    },
+    {
+      "id": 7,
+      "day": 8,
+      "role": "received",
+      "difficulty": "A1",
+      "translation": "What does the dress look like?",
+      "translationFa": "لباس چه شکلی است؟",
+      "audioText": "Wie sieht das Kleid aus?"
+    },
+    {
+      "id": 8,
+      "day": 8,
+      "role": "sent",
+      "difficulty": "A1",
+      "translation": "The dress is red and long.",
+      "translationFa": "لباس قرمز و بلند است.",
+      "targetText": "Das Kleid ist rot und lang."
+    },
+    {
+      "id": 9,
+      "day": 8,
+      "role": "received",
+      "difficulty": "A1",
+      "translation": "Is the dog big or small?",
+      "translationFa": "سگ بزرگ است یا کوچک؟",
+      "audioText": "Ist der Hund groß oder klein?"
+    },
+    {
+      "id": 10,
+      "day": 8,
+      "role": "sent",
+      "difficulty": "A1",
+      "translation": "The dog is small and brown.",
+      "translationFa": "سگ کوچک و قهوه‌ای است.",
+      "targetText": "Der Hund ist klein und braun."
+    },
+    {
+      "id": 11,
+      "day": 8,
+      "role": "received",
+      "difficulty": "A1",
+      "translation": "The sky is very blue today!",
+      "translationFa": "امروز آسمان خیلی آبی است!",
+      "audioText": "Der Himmel ist heute sehr blau!"
+    },
+    {
+      "id": 12,
+      "day": 8,
+      "role": "sent",
+      "difficulty": "A1",
+      "translation": "Yes, and the flowers are yellow and purple.",
+      "translationFa": "بله، و گل‌ها زرد و بنفش هستند.",
+      "targetText": "Ja, und die Blumen sind gelb und lila."
+    }
+  ],
+  "difficulty": "A1",
+  "grammarFocus": "Basic adjectives: groß, klein, schön",
+  "grammarFocusFa": "صفات پایه: بزرگ، کوچک، زیبا",
+  "description": "You're lost in an unfamiliar part of town. Stop someone and ask for help.",
+  "descriptionFa": "تو یه محله ناآشنا گم شدید. یه نفر رو متوقف کنید و کمک بخواید."
+}

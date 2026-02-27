@@ -1,0 +1,120 @@
+{
+  "day": 37,
+  "title": "37: Bank & Post Office",
+  "titleFa": "در بانک و پست",
+  "sentences": [
+    {
+      "id": 1,
+      "day": 37,
+      "role": "received",
+      "difficulty": "A2",
+      "translation": "Good day, how can I help you?",
+      "translationFa": "روز بخیر، چطور می‌توانم کمکتان کنم؟",
+      "audioText": "Guten Tag, wie kann ich Ihnen helfen?"
+    },
+    {
+      "id": 2,
+      "day": 37,
+      "role": "sent",
+      "difficulty": "A2",
+      "translation": "I would like to open an account, please.",
+      "translationFa": "می‌خواهم یک حساب باز کنم، لطفا.",
+      "targetText": "Ich möchte ein Konto eröffnen, bitte."
+    },
+    {
+      "id": 3,
+      "day": 37,
+      "role": "received",
+      "difficulty": "A2",
+      "translation": "Do you have your passport with you?",
+      "translationFa": "گذرنامه‌تان همراهتان هست؟",
+      "audioText": "Haben Sie Ihren Reisepass dabei?"
+    },
+    {
+      "id": 4,
+      "day": 37,
+      "role": "sent",
+      "difficulty": "A2",
+      "translation": "Yes, here is my passport and my registration certificate.",
+      "translationFa": "بله، بفرمایید گذرنامه و گواهی ثبت نام من.",
+      "targetText": "Ja, hier ist mein Reisepass und meine Meldebescheinigung."
+    },
+    {
+      "id": 5,
+      "day": 37,
+      "role": "received",
+      "difficulty": "A2",
+      "translation": "Would you also like a debit card?",
+      "translationFa": "کارت بانکی هم می‌خواهید؟",
+      "audioText": "Möchten Sie auch eine EC-Karte?"
+    },
+    {
+      "id": 6,
+      "day": 37,
+      "role": "sent",
+      "difficulty": "A2",
+      "translation": "Yes please, and how can I transfer money?",
+      "translationFa": "بله لطفا، و چطور می‌توانم پول حواله کنم؟",
+      "targetText": "Ja bitte, und wie kann ich Geld überweisen?"
+    },
+    {
+      "id": 7,
+      "day": 37,
+      "role": "received",
+      "difficulty": "A2",
+      "translation": "You can use online banking.",
+      "translationFa": "می‌توانید از بانکداری آنلاین استفاده کنید.",
+      "audioText": "Sie können Online-Banking benutzen."
+    },
+    {
+      "id": 8,
+      "day": 37,
+      "role": "sent",
+      "difficulty": "A2",
+      "translation": "Can I also send a package here?",
+      "translationFa": "بسته هم می‌توانم اینجا ارسال کنم؟",
+      "targetText": "Kann ich auch ein Paket hier aufgeben?"
+    },
+    {
+      "id": 9,
+      "day": 37,
+      "role": "received",
+      "difficulty": "A2",
+      "translation": "No, for that you have to go to the post office.",
+      "translationFa": "نه، برای آن باید به اداره پست بروید.",
+      "audioText": "Nein, dafür müssen Sie zur Post gehen."
+    },
+    {
+      "id": 10,
+      "day": 37,
+      "role": "sent",
+      "difficulty": "A2",
+      "translation": "Where is the nearest post office?",
+      "translationFa": "نزدیک‌ترین اداره پست کجاست؟",
+      "targetText": "Wo ist die nächste Post?"
+    },
+    {
+      "id": 11,
+      "day": 37,
+      "role": "received",
+      "difficulty": "A2",
+      "translation": "The post office is just around the corner.",
+      "translationFa": "اداره پست همین نبش است.",
+      "audioText": "Die Post ist gleich um die Ecke."
+    },
+    {
+      "id": 12,
+      "day": 37,
+      "role": "sent",
+      "difficulty": "A2",
+      "translation": "Thank you very much for your help!",
+      "translationFa": "خیلی ممنون از کمکتان!",
+      "targetText": "Vielen Dank für Ihre Hilfe!"
+    }
+  ],
+  "difficulty": "A2",
+  "grammarFocus": "Formal Sie register",
+  "grammarFocusFa": "سطح رسمی با Sie",
+  "description": "Something has come up and you need to reschedule a work meeting. Handle it professionally.",
+  "descriptionFa": "یه اتفاقی افتاده و باید یه جلسه کاری رو جابجا کنید. حرفه‌ای باهاش کنار بیاید."
+}

@@ -1,0 +1,120 @@
+{
+  "day": 7,
+  "title": "7: Days & Months",
+  "titleFa": "روزها و ماه‌ها",
+  "sentences": [
+    {
+      "id": 1,
+      "day": 7,
+      "role": "received",
+      "difficulty": "A1",
+      "translation": "What day is today?",
+      "translationFa": "امروز چه روزی است؟",
+      "audioText": "Welcher Tag ist heute?"
+    },
+    {
+      "id": 2,
+      "day": 7,
+      "role": "sent",
+      "difficulty": "A1",
+      "translation": "Today is Monday.",
+      "translationFa": "امروز دوشنبه است.",
+      "targetText": "Heute ist Montag."
+    },
+    {
+      "id": 3,
+      "day": 7,
+      "role": "received",
+      "difficulty": "A1",
+      "translation": "And tomorrow?",
+      "translationFa": "و فردا؟",
+      "audioText": "Und morgen?"
+    },
+    {
+      "id": 4,
+      "day": 7,
+      "role": "sent",
+      "difficulty": "A1",
+      "translation": "Tomorrow is Tuesday.",
+      "translationFa": "فردا سه‌شنبه است.",
+      "targetText": "Morgen ist Dienstag."
+    },
+    {
+      "id": 5,
+      "day": 7,
+      "role": "received",
+      "difficulty": "A1",
+      "translation": "When is your birthday?",
+      "translationFa": "تولدت کی هست؟",
+      "audioText": "Wann hast du Geburtstag?"
+    },
+    {
+      "id": 6,
+      "day": 7,
+      "role": "sent",
+      "difficulty": "A1",
+      "translation": "My birthday is on the fifth of March.",
+      "translationFa": "تولد من پنجم مارس است.",
+      "targetText": "Mein Geburtstag ist am fünften März."
+    },
+    {
+      "id": 7,
+      "day": 7,
+      "role": "received",
+      "difficulty": "A1",
+      "translation": "What month are we in now?",
+      "translationFa": "الان در چه ماهی هستیم؟",
+      "audioText": "In welchem Monat sind wir jetzt?"
+    },
+    {
+      "id": 8,
+      "day": 7,
+      "role": "sent",
+      "difficulty": "A1",
+      "translation": "We are now in January.",
+      "translationFa": "الان در ژانویه هستیم.",
+      "targetText": "Wir sind jetzt im Januar."
+    },
+    {
+      "id": 9,
+      "day": 7,
+      "role": "received",
+      "difficulty": "A1",
+      "translation": "Do you have time on Saturday?",
+      "translationFa": "شنبه وقت داری؟",
+      "audioText": "Hast du am Samstag Zeit?"
+    },
+    {
+      "id": 10,
+      "day": 7,
+      "role": "sent",
+      "difficulty": "A1",
+      "translation": "On Saturday I am free. And on Sunday too.",
+      "translationFa": "شنبه آزاد هستم. و یکشنبه هم.",
+      "targetText": "Am Samstag bin ich frei. Und am Sonntag auch."
+    },
+    {
+      "id": 11,
+      "day": 7,
+      "role": "received",
+      "difficulty": "A1",
+      "translation": "When does the German course start?",
+      "translationFa": "کلاس آلمانی کی شروع می‌شود؟",
+      "audioText": "Wann beginnt der Deutschkurs?"
+    },
+    {
+      "id": 12,
+      "day": 7,
+      "role": "sent",
+      "difficulty": "A1",
+      "translation": "The course starts on Wednesday, the first of February.",
+      "translationFa": "کلاس چهارشنبه، اول فوریه شروع می‌شود.",
+      "targetText": "Der Kurs beginnt am Mittwoch, den ersten Februar."
+    }
+  ],
+  "difficulty": "A1",
+  "grammarFocus": "Days of the week, months of the year",
+  "grammarFocusFa": "روزهای هفته، ماه‌های سال",
+  "description": "You walk into a cozy café in Berlin. Order a drink and settle in.",
+  "descriptionFa": "وارد یه کافه دنج در برلین می‌شید. یه نوشیدنی سفارش بدید و راحت بنشینید."
+}

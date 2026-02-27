@@ -1,0 +1,102 @@
+{
+  "day": 69,
+  "title": "69: Renting an Apartment",
+  "titleFa": "اجاره آپارتمان",
+  "sentences": [
+    {
+      "id": 1,
+      "day": 69,
+      "role": "received",
+      "difficulty": "B1",
+      "translation": "Good day, I am calling about the apartment ad.",
+      "translationFa": "روز بخیر، بابت آگهی آپارتمان تماس می‌گیرم.",
+      "audioText": "Guten Tag, ich rufe wegen der Wohnungsanzeige an."
+    },
+    {
+      "id": 2,
+      "day": 69,
+      "role": "sent",
+      "difficulty": "B1",
+      "translation": "How big is the apartment and how much is the rent?",
+      "translationFa": "آپارتمان چقدر بزرگ است و اجاره چقدر است؟",
+      "targetText": "Wie groß ist die Wohnung und wie viel kostet die Miete?"
+    },
+    {
+      "id": 3,
+      "day": 69,
+      "role": "received",
+      "difficulty": "B1",
+      "translation": "The apartment has 65 square meters and costs 750 euros warm.",
+      "translationFa": "آپارتمان ۶۵ متر مربع است و ۷۵۰ یورو با هزینه‌ها اجاره است.",
+      "audioText": "Die Wohnung hat 65 Quadratmeter und kostet 750 Euro warm."
+    },
+    {
+      "id": 4,
+      "day": 69,
+      "role": "sent",
+      "difficulty": "B1",
+      "translation": "If I could view the apartment, I would be very happy.",
+      "translationFa": "اگر بتوانم آپارتمان را ببینم خیلی خوشحال می‌شوم.",
+      "targetText": "Wenn ich die Wohnung besichtigen könnte, würde ich mich sehr freuen."
+    },
+    {
+      "id": 5,
+      "day": 69,
+      "role": "received",
+      "difficulty": "B1",
+      "translation": "You can come by tomorrow at 2 PM.",
+      "translationFa": "فردا ساعت ۲ بعدازظهر می‌توانید بیایید.",
+      "audioText": "Sie können morgen um 14 Uhr vorbeikommen."
+    },
+    {
+      "id": 6,
+      "day": 69,
+      "role": "sent",
+      "difficulty": "B1",
+      "translation": "Perfect! Do I need certain documents for the application?",
+      "translationFa": "عالی! مدارک خاصی برای درخواست لازم دارم؟",
+      "targetText": "Perfekt! Brauche ich bestimmte Unterlagen für die Bewerbung?"
+    },
+    {
+      "id": 7,
+      "day": 69,
+      "role": "received",
+      "difficulty": "B1",
+      "translation": "Yes, please bring a Schufa report and your last three pay slips.",
+      "translationFa": "بله، لطفا گزارش شوفا و سه فیش حقوقی آخرتان را بیاورید.",
+      "audioText": "Ja, bringen Sie bitte eine Schufa-Auskunft und Ihre letzten drei Gehaltsabrechnungen mit."
+    },
+    {
+      "id": 8,
+      "day": 69,
+      "role": "sent",
+      "difficulty": "B1",
+      "translation": "Are there pets in the building? I have a small cat.",
+      "translationFa": "حیوان خانگی در ساختمان هست؟ من یک گربه کوچک دارم.",
+      "targetText": "Gibt es Haustiere in dem Haus? Ich habe eine kleine Katze."
+    },
+    {
+      "id": 9,
+      "day": 69,
+      "role": "received",
+      "difficulty": "B1",
+      "translation": "Pets are allowed as long as they don't disturb the neighbors.",
+      "translationFa": "حیوانات خانگی مجاز هستند تا زمانی که مزاحم همسایه‌ها نشوند.",
+      "audioText": "Haustiere sind erlaubt, solange sie die Nachbarn nicht stören."
+    },
+    {
+      "id": 10,
+      "day": 69,
+      "role": "sent",
+      "difficulty": "B1",
+      "translation": "Wonderful! I look forward to the viewing appointment.",
+      "translationFa": "عالی! منتظر وقت بازدید هستم.",
+      "targetText": "Wunderbar! Ich freue mich auf den Besichtigungstermin."
+    }
+  ],
+  "difficulty": "B1",
+  "grammarFocus": "Conditional clauses: Wenn ich...würde",
+  "grammarFocusFa": "جملات شرطی: اگر من...",
+  "description": "Discuss your future goals and ambitions with a German friend. Talk about career plans, personal dreams, and New Year's resolutions.",
+  "descriptionFa": "اهداف و بلندپروازی‌های آینده‌تان را با یک دوست آلمانی بحث کنید. درباره برنامه‌های شغلی، رویاهای شخصی و تصمیمات سال جدید صحبت کنید."
+}

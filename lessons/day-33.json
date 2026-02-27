@@ -1,0 +1,120 @@
+{
+  "day": 33,
+  "title": "33: Two-Way Prepositions",
+  "titleFa": "حروف اضافه دوگانه",
+  "sentences": [
+    {
+      "id": 1,
+      "day": 33,
+      "role": "received",
+      "difficulty": "A2",
+      "translation": "Where is the cat?",
+      "translationFa": "گربه کجاست؟",
+      "audioText": "Wo ist die Katze?"
+    },
+    {
+      "id": 2,
+      "day": 33,
+      "role": "sent",
+      "difficulty": "A2",
+      "translation": "The cat is lying on the sofa.",
+      "translationFa": "گربه روی مبل خوابیده است.",
+      "targetText": "Die Katze liegt auf dem Sofa."
+    },
+    {
+      "id": 3,
+      "day": 33,
+      "role": "received",
+      "difficulty": "A2",
+      "translation": "Where are you putting the book?",
+      "translationFa": "کتاب را کجا می‌گذاری؟",
+      "audioText": "Wohin legst du das Buch?"
+    },
+    {
+      "id": 4,
+      "day": 33,
+      "role": "sent",
+      "difficulty": "A2",
+      "translation": "I am putting the book on the table.",
+      "translationFa": "کتاب را روی میز می‌گذارم.",
+      "targetText": "Ich lege das Buch auf den Tisch."
+    },
+    {
+      "id": 5,
+      "day": 33,
+      "role": "received",
+      "difficulty": "A2",
+      "translation": "Is the picture hanging on the wall?",
+      "translationFa": "عکس روی دیوار آویزان است؟",
+      "audioText": "Hängt das Bild an der Wand?"
+    },
+    {
+      "id": 6,
+      "day": 33,
+      "role": "sent",
+      "difficulty": "A2",
+      "translation": "No, I am hanging the picture on the wall now.",
+      "translationFa": "نه، الان عکس را به دیوار آویزان می‌کنم.",
+      "targetText": "Nein, ich hänge das Bild jetzt an die Wand."
+    },
+    {
+      "id": 7,
+      "day": 33,
+      "role": "received",
+      "difficulty": "A2",
+      "translation": "Are you sitting in the garden or in the living room?",
+      "translationFa": "توی باغ نشسته‌ای یا توی اتاق نشیمن؟",
+      "audioText": "Sitzt du im Garten oder im Wohnzimmer?"
+    },
+    {
+      "id": 8,
+      "day": 33,
+      "role": "sent",
+      "difficulty": "A2",
+      "translation": "I am sitting in the garden. The weather is so nice!",
+      "translationFa": "توی باغ نشسته‌ام. هوا خیلی خوب است!",
+      "targetText": "Ich sitze im Garten. Das Wetter ist so schön!"
+    },
+    {
+      "id": 9,
+      "day": 33,
+      "role": "received",
+      "difficulty": "A2",
+      "translation": "Put the flowers on the table!",
+      "translationFa": "گل‌ها را روی میز بگذار!",
+      "audioText": "Stell die Blumen auf den Tisch!"
+    },
+    {
+      "id": 10,
+      "day": 33,
+      "role": "sent",
+      "difficulty": "A2",
+      "translation": "The flowers are now on the table.",
+      "translationFa": "گل‌ها الان روی میز هستند.",
+      "targetText": "Die Blumen stehen jetzt auf dem Tisch."
+    },
+    {
+      "id": 11,
+      "day": 33,
+      "role": "received",
+      "difficulty": "A2",
+      "translation": "Are you going to the library?",
+      "translationFa": "کتابخانه می‌روی؟",
+      "audioText": "Gehst du in die Bibliothek?"
+    },
+    {
+      "id": 12,
+      "day": 33,
+      "role": "sent",
+      "difficulty": "A2",
+      "translation": "Yes, I am studying in the library today.",
+      "translationFa": "بله، امروز در کتابخانه درس می‌خوانم.",
+      "targetText": "Ja, ich lerne heute in der Bibliothek."
+    }
+  ],
+  "difficulty": "A2",
+  "grammarFocus": "Wechselpräpositionen: in, an, auf, über, unter",
+  "grammarFocusFa": "حروف اضافه دوگانه: در، در کنار، روی، بالای، زیر",
+  "description": "You need to speak to someone at a company. Call them, navigate the receptionist, and leave a message.",
+  "descriptionFa": "باید با یه نفر توی یه شرکت صحبت کنید. زنگ بزنید، از پذیرش عبور کنید و پیام بذارید."
+}

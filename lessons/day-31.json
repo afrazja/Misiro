@@ -1,0 +1,120 @@
+{
+  "day": 31,
+  "title": "31: The Dative Case",
+  "titleFa": "حالت مفعولی غیرمستقیم",
+  "sentences": [
+    {
+      "id": 1,
+      "day": 31,
+      "role": "received",
+      "difficulty": "A2",
+      "translation": "Who does this book belong to?",
+      "translationFa": "این کتاب مال کیست؟",
+      "audioText": "Wem gehört dieses Buch?"
+    },
+    {
+      "id": 2,
+      "day": 31,
+      "role": "sent",
+      "difficulty": "A2",
+      "translation": "The book belongs to my brother.",
+      "translationFa": "کتاب مال برادرم است.",
+      "targetText": "Das Buch gehört meinem Bruder."
+    },
+    {
+      "id": 3,
+      "day": 31,
+      "role": "received",
+      "difficulty": "A2",
+      "translation": "Who are you giving the gift to?",
+      "translationFa": "هدیه را به چه کسی می‌دهی؟",
+      "audioText": "Wem gibst du das Geschenk?"
+    },
+    {
+      "id": 4,
+      "day": 31,
+      "role": "sent",
+      "difficulty": "A2",
+      "translation": "I am giving the gift to my mother.",
+      "translationFa": "هدیه را به مادرم می‌دهم.",
+      "targetText": "Ich gebe das Geschenk meiner Mutter."
+    },
+    {
+      "id": 5,
+      "day": 31,
+      "role": "received",
+      "difficulty": "A2",
+      "translation": "Can you explain the way to me?",
+      "translationFa": "می‌توانید مسیر را به من توضیح دهید؟",
+      "audioText": "Können Sie mir den Weg erklären?"
+    },
+    {
+      "id": 6,
+      "day": 31,
+      "role": "sent",
+      "difficulty": "A2",
+      "translation": "Of course! I will show you the way on the map.",
+      "translationFa": "البته! مسیر را روی نقشه نشانتان می‌دهم.",
+      "targetText": "Natürlich! Ich zeige Ihnen den Weg auf der Karte."
+    },
+    {
+      "id": 7,
+      "day": 31,
+      "role": "received",
+      "difficulty": "A2",
+      "translation": "He gave the child a ball as a gift.",
+      "translationFa": "او به بچه یک توپ هدیه داد.",
+      "audioText": "Er hat dem Kind einen Ball geschenkt."
+    },
+    {
+      "id": 8,
+      "day": 31,
+      "role": "sent",
+      "difficulty": "A2",
+      "translation": "The child was very happy.",
+      "translationFa": "بچه خیلی خوشحال شد.",
+      "targetText": "Das Kind hat sich sehr gefreut."
+    },
+    {
+      "id": 9,
+      "day": 31,
+      "role": "received",
+      "difficulty": "A2",
+      "translation": "What are you writing to your girlfriend?",
+      "translationFa": "به دوست دخترت چه می‌نویسی؟",
+      "audioText": "Was schreibst du deiner Freundin?"
+    },
+    {
+      "id": 10,
+      "day": 31,
+      "role": "sent",
+      "difficulty": "A2",
+      "translation": "I am writing her a message.",
+      "translationFa": "برایش یک پیام می‌نویسم.",
+      "targetText": "Ich schreibe ihr eine Nachricht."
+    },
+    {
+      "id": 11,
+      "day": 31,
+      "role": "received",
+      "difficulty": "A2",
+      "translation": "Does the food taste good to you?",
+      "translationFa": "غذا به مزاقت خوش است؟",
+      "audioText": "Schmeckt dir das Essen?"
+    },
+    {
+      "id": 12,
+      "day": 31,
+      "role": "sent",
+      "difficulty": "A2",
+      "translation": "Yes, the food tastes very good to me!",
+      "translationFa": "بله، غذا خیلی خوشمزه است!",
+      "targetText": "Ja, das Essen schmeckt mir sehr gut!"
+    }
+  ],
+  "difficulty": "A2",
+  "grammarFocus": "Dative articles: dem, der, den",
+  "grammarFocusFa": "حروف تعریف مفعول غیرمستقیم: dem, der, den",
+  "description": "You're in a shop and can't quite decide between two items. Think out loud and finally choose.",
+  "descriptionFa": "تو یه مغازه هستید و بین دو چیز نمی‌تونید تصمیم بگیرید. با خودتون فکر کنید و انتخاب کنید."
+}

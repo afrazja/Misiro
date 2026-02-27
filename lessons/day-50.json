@@ -1,0 +1,102 @@
+{
+  "day": 50,
+  "title": "50: Coordinating Conjunctions",
+  "titleFa": "حروف ربط هم‌پایه",
+  "sentences": [
+    {
+      "id": 1,
+      "day": 50,
+      "role": "received",
+      "difficulty": "A2",
+      "translation": "Would you like tea or coffee?",
+      "translationFa": "چای می‌خواهی یا قهوه؟",
+      "audioText": "Möchtest du Tee oder Kaffee?"
+    },
+    {
+      "id": 2,
+      "day": 50,
+      "role": "sent",
+      "difficulty": "B1",
+      "translation": "I would like tea, because I don't like coffee that much.",
+      "translationFa": "چای می‌خواهم، چون قهوه زیاد دوست ندارم.",
+      "targetText": "Ich möchte Tee, denn Kaffee trinke ich nicht so gern."
+    },
+    {
+      "id": 3,
+      "day": 50,
+      "role": "received",
+      "difficulty": "A2",
+      "translation": "Are you going to the gym today?",
+      "translationFa": "امروز باشگاه می‌روی؟",
+      "audioText": "Gehst du heute ins Fitnessstudio?"
+    },
+    {
+      "id": 4,
+      "day": 50,
+      "role": "sent",
+      "difficulty": "A2",
+      "translation": "I would like to go, but I don't have time.",
+      "translationFa": "دلم می‌خواهد بروم اما وقت ندارم.",
+      "targetText": "Ich möchte gehen, aber ich habe keine Zeit."
+    },
+    {
+      "id": 5,
+      "day": 50,
+      "role": "received",
+      "difficulty": "A2",
+      "translation": "Is he sick?",
+      "translationFa": "مریض است؟",
+      "audioText": "Ist er krank?"
+    },
+    {
+      "id": 6,
+      "day": 50,
+      "role": "sent",
+      "difficulty": "B1",
+      "translation": "He is not sick, but rather he is just tired.",
+      "translationFa": "مریض نیست بلکه فقط خسته است.",
+      "targetText": "Er ist nicht krank, sondern er ist nur müde."
+    },
+    {
+      "id": 7,
+      "day": 50,
+      "role": "received",
+      "difficulty": "A2",
+      "translation": "What are you doing today?",
+      "translationFa": "امروز چه کار می‌کنی؟",
+      "audioText": "Was machst du heute?"
+    },
+    {
+      "id": 8,
+      "day": 50,
+      "role": "sent",
+      "difficulty": "A2",
+      "translation": "I am going shopping and then I am visiting my friends.",
+      "translationFa": "خرید می‌روم و بعد به دوستانم سر می‌زنم.",
+      "targetText": "Ich gehe einkaufen und dann besuche ich meine Freunde."
+    },
+    {
+      "id": 9,
+      "day": 50,
+      "role": "received",
+      "difficulty": "A2",
+      "translation": "Do you like reading novels?",
+      "translationFa": "رمان خواندن دوست داری؟",
+      "audioText": "Liest du gern Romane?"
+    },
+    {
+      "id": 10,
+      "day": 50,
+      "role": "sent",
+      "difficulty": "B1",
+      "translation": "Yes, I like reading novels, but unfortunately I have little time for it.",
+      "translationFa": "بله، رمان خواندن دوست دارم ولی متاسفانه وقت کمی دارم.",
+      "targetText": "Ja, ich lese gern Romane, aber ich habe leider wenig Zeit dafür."
+    }
+  ],
+  "difficulty": "B1",
+  "grammarFocus": "und, aber, oder, denn, sondern",
+  "grammarFocusFa": "و، اما، یا، زیرا، بلکه",
+  "description": "You're calling a hotel in Munich to book a room for a business trip next week.",
+  "descriptionFa": "دارید به یه هتل در مونیخ زنگ می‌زنید تا اتاقی برای سفر کاری هفته آینده رزرو کنید."
+}

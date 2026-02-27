@@ -1,0 +1,102 @@
+{
+  "day": 35,
+  "title": "35: Superlatives",
+  "titleFa": "صفات عالی",
+  "sentences": [
+    {
+      "id": 1,
+      "day": 35,
+      "role": "received",
+      "difficulty": "A2",
+      "translation": "What is the biggest city in Germany?",
+      "translationFa": "بزرگ‌ترین شهر آلمان کدام است؟",
+      "audioText": "Was ist die größte Stadt in Deutschland?"
+    },
+    {
+      "id": 2,
+      "day": 35,
+      "role": "sent",
+      "difficulty": "A2",
+      "translation": "Berlin is the biggest city in Germany.",
+      "translationFa": "برلین بزرگ‌ترین شهر آلمان است.",
+      "targetText": "Berlin ist die größte Stadt in Deutschland."
+    },
+    {
+      "id": 3,
+      "day": 35,
+      "role": "received",
+      "difficulty": "A2",
+      "translation": "Which subject do you like best?",
+      "translationFa": "کدام درس را بیشتر دوست داری؟",
+      "audioText": "Welches Fach magst du am liebsten?"
+    },
+    {
+      "id": 4,
+      "day": 35,
+      "role": "sent",
+      "difficulty": "A2",
+      "translation": "I like mathematics best.",
+      "translationFa": "ریاضیات را بیشتر از همه دوست دارم.",
+      "targetText": "Ich mag Mathematik am liebsten."
+    },
+    {
+      "id": 5,
+      "day": 35,
+      "role": "received",
+      "difficulty": "A2",
+      "translation": "Who is the best player?",
+      "translationFa": "بهترین بازیکن کیست؟",
+      "audioText": "Wer ist der beste Spieler?"
+    },
+    {
+      "id": 6,
+      "day": 35,
+      "role": "sent",
+      "difficulty": "A2",
+      "translation": "In my opinion he is the best player.",
+      "translationFa": "به نظر من او بهترین بازیکن است.",
+      "targetText": "Meiner Meinung nach ist er der beste Spieler."
+    },
+    {
+      "id": 7,
+      "day": 35,
+      "role": "received",
+      "difficulty": "A2",
+      "translation": "What is the most expensive restaurant here?",
+      "translationFa": "گران‌ترین رستوران اینجا کدام است؟",
+      "audioText": "Was ist das teuerste Restaurant hier?"
+    },
+    {
+      "id": 8,
+      "day": 35,
+      "role": "sent",
+      "difficulty": "A2",
+      "translation": "The restaurant at the market square is the most expensive.",
+      "translationFa": "رستوران میدان بازار گران‌ترین است.",
+      "targetText": "Das Restaurant am Marktplatz ist am teuersten."
+    },
+    {
+      "id": 9,
+      "day": 35,
+      "role": "received",
+      "difficulty": "A2",
+      "translation": "Which month is the coldest?",
+      "translationFa": "کدام ماه سردترین است؟",
+      "audioText": "Welcher Monat ist am kältesten?"
+    },
+    {
+      "id": 10,
+      "day": 35,
+      "role": "sent",
+      "difficulty": "A2",
+      "translation": "January is usually the coldest.",
+      "translationFa": "معمولا ژانویه سردترین ماه است.",
+      "targetText": "Der Januar ist meistens am kältesten."
+    }
+  ],
+  "difficulty": "A2",
+  "grammarFocus": "am größten, der/die/das beste",
+  "grammarFocusFa": "بزرگ‌ترین، بهترین",
+  "description": "You're at a new restaurant with a friend. Share opinions about the food and atmosphere.",
+  "descriptionFa": "با یه دوست تو یه رستوران جدید هستید. نظرتون درباره غذا و فضا رو بگید."
+}

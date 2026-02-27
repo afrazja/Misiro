@@ -1,0 +1,102 @@
+{
+  "day": 96,
+  "title": "96: Health and Wellness",
+  "titleFa": "سلامت و تندرستی",
+  "sentences": [
+    {
+      "id": 1,
+      "day": 96,
+      "role": "received",
+      "difficulty": "B1",
+      "translation": "How do you stay healthy?",
+      "translationFa": "چطور سالم می‌مانی؟",
+      "audioText": "Wie bleibst du gesund?"
+    },
+    {
+      "id": 2,
+      "day": 96,
+      "role": "sent",
+      "difficulty": "B1",
+      "translation": "I try to exercise regularly to stay fit.",
+      "translationFa": "سعی می‌کنم مرتب ورزش کنم تا سرحال بمانم.",
+      "targetText": "Ich versuche, regelmäßig Sport zu treiben, um fit zu bleiben."
+    },
+    {
+      "id": 3,
+      "day": 96,
+      "role": "received",
+      "difficulty": "B1",
+      "translation": "Do you also pay attention to your diet?",
+      "translationFa": "به تغذیه‌ات هم توجه می‌کنی؟",
+      "audioText": "Achtest du auch auf deine Ernährung?"
+    },
+    {
+      "id": 4,
+      "day": 96,
+      "role": "sent",
+      "difficulty": "B1",
+      "translation": "Yes, I eat a lot of vegetables and fruit to get enough vitamins.",
+      "translationFa": "بله، زیاد سبزیجات و میوه می‌خورم تا ویتامین کافی بگیرم.",
+      "targetText": "Ja, ich esse viel Gemüse und Obst, um genug Vitamine zu bekommen."
+    },
+    {
+      "id": 5,
+      "day": 96,
+      "role": "received",
+      "difficulty": "B1",
+      "translation": "What do you do to reduce stress?",
+      "translationFa": "برای کاهش استرس چه می‌کنی؟",
+      "audioText": "Was machst du, um Stress abzubauen?"
+    },
+    {
+      "id": 6,
+      "day": 96,
+      "role": "sent",
+      "difficulty": "B1",
+      "translation": "I do yoga and meditate to relax.",
+      "translationFa": "یوگا و مدیتیشن انجام می‌دهم تا آرام شوم.",
+      "targetText": "Ich mache Yoga und meditiere, um mich zu entspannen."
+    },
+    {
+      "id": 7,
+      "day": 96,
+      "role": "received",
+      "difficulty": "B1",
+      "translation": "Do you sleep enough?",
+      "translationFa": "خوابت کافی‌ه؟",
+      "audioText": "Schläfst du genug?"
+    },
+    {
+      "id": 8,
+      "day": 96,
+      "role": "sent",
+      "difficulty": "B1",
+      "translation": "I try to sleep eight hours to wake up rested.",
+      "translationFa": "سعی می‌کنم هشت ساعت بخوابم تا سرحال بیدار شوم.",
+      "targetText": "Ich versuche, acht Stunden zu schlafen, um erholt aufzuwachen."
+    },
+    {
+      "id": 9,
+      "day": 96,
+      "role": "received",
+      "difficulty": "B1",
+      "translation": "That's important. Do you also go to the doctor regularly?",
+      "translationFa": "مهمه. مرتب هم پیش دکتر می‌روی؟",
+      "audioText": "Das ist wichtig. Gehst du auch regelmäßig zum Arzt?"
+    },
+    {
+      "id": 10,
+      "day": 96,
+      "role": "sent",
+      "difficulty": "B1",
+      "translation": "Yes, once a year to get examined.",
+      "translationFa": "بله، سالی یکبار برای معاینه.",
+      "targetText": "Ja, einmal im Jahr, um mich untersuchen zu lassen."
+    }
+  ],
+  "difficulty": "B1",
+  "grammarFocus": "um...zu + infinitive; health vocabulary",
+  "grammarFocusFa": "um...zu + مصدر؛ واژگان سلامتی",
+  "description": "",
+  "descriptionFa": ""
+}

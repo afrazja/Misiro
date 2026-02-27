@@ -1,0 +1,102 @@
+{
+  "day": 91,
+  "title": "91: Giving Advice",
+  "titleFa": "نصیحت کردن",
+  "sentences": [
+    {
+      "id": 1,
+      "day": 91,
+      "role": "received",
+      "difficulty": "B1",
+      "translation": "I have problems with my landlord. What should I do?",
+      "translationFa": "با صاحبخانه‌ام مشکل دارم. چه کار کنم؟",
+      "audioText": "Ich habe Probleme mit meinem Vermieter. Was sollte ich tun?"
+    },
+    {
+      "id": 2,
+      "day": 91,
+      "role": "sent",
+      "difficulty": "B1",
+      "translation": "You should first speak calmly with him.",
+      "translationFa": "اول باید با آرامش باهاش صحبت کنی.",
+      "targetText": "Du solltest zuerst ruhig mit ihm sprechen."
+    },
+    {
+      "id": 3,
+      "day": 91,
+      "role": "received",
+      "difficulty": "B1",
+      "translation": "I tried, but he doesn't listen.",
+      "translationFa": "امتحان کردم، ولی گوش نمی‌دهد.",
+      "audioText": "Ich habe es versucht, aber er hört nicht zu."
+    },
+    {
+      "id": 4,
+      "day": 91,
+      "role": "sent",
+      "difficulty": "B1",
+      "translation": "In your place I would document everything in writing.",
+      "translationFa": "جای تو بودم همه چیز را کتبی مستند می‌کردم.",
+      "targetText": "An deiner Stelle würde ich alles schriftlich dokumentieren."
+    },
+    {
+      "id": 5,
+      "day": 91,
+      "role": "received",
+      "difficulty": "B1",
+      "translation": "That's good advice. Should I also go to the tenants' association?",
+      "translationFa": "نصیحت خوبی‌ه. به انجمن مستأجران هم بروم؟",
+      "audioText": "Das ist ein guter Rat. Sollte ich auch zum Mieterverein gehen?"
+    },
+    {
+      "id": 6,
+      "day": 91,
+      "role": "sent",
+      "difficulty": "B1",
+      "translation": "Yes, I would recommend that to you. They can help you legally.",
+      "translationFa": "بله، توصیه‌ام همین است. می‌توانند از نظر حقوقی کمکت کنند.",
+      "targetText": "Ja, das würde ich dir empfehlen. Sie können dir rechtlich helfen."
+    },
+    {
+      "id": 7,
+      "day": 91,
+      "role": "received",
+      "difficulty": "B1",
+      "translation": "What would you do if the heating doesn't work?",
+      "translationFa": "اگر بخاری کار نکند چه می‌کردی؟",
+      "audioText": "Was würdest du machen, wenn die Heizung nicht funktioniert?"
+    },
+    {
+      "id": 8,
+      "day": 91,
+      "role": "sent",
+      "difficulty": "B1",
+      "translation": "I would immediately inform the landlord and set a deadline.",
+      "translationFa": "فوراً به صاحبخانه اطلاع می‌دادم و مهلت تعیین می‌کردم.",
+      "targetText": "Ich würde sofort den Vermieter informieren und eine Frist setzen."
+    },
+    {
+      "id": 9,
+      "day": 91,
+      "role": "received",
+      "difficulty": "B1",
+      "translation": "You know your stuff about such topics!",
+      "translationFa": "خوب از این موضوعات سر در می‌آوری!",
+      "audioText": "Du kennst dich gut aus mit solchen Themen!"
+    },
+    {
+      "id": 10,
+      "day": 91,
+      "role": "sent",
+      "difficulty": "B1",
+      "translation": "I've had similar experiences myself.",
+      "translationFa": "خودم تجربه‌های مشابهی داشته‌ام.",
+      "targetText": "Ich habe selbst ähnliche Erfahrungen gemacht."
+    }
+  ],
+  "difficulty": "B1",
+  "grammarFocus": "Konjunktiv II (sollte/würde); advice phrases",
+  "grammarFocusFa": "التزامی دوم (sollte/würde)؛ عبارات نصیحت",
+  "description": "",
+  "descriptionFa": ""
+}

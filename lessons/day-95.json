@@ -1,0 +1,102 @@
+{
+  "day": 95,
+  "title": "95: At the Restaurant - Advanced",
+  "titleFa": "در رستوران - پیشرفته",
+  "sentences": [
+    {
+      "id": 1,
+      "day": 95,
+      "role": "received",
+      "difficulty": "B1",
+      "translation": "Good evening! Have you reserved?",
+      "translationFa": "عصر بخیر! رزرو کرده‌اید؟",
+      "audioText": "Guten Abend! Haben Sie reserviert?"
+    },
+    {
+      "id": 2,
+      "day": 95,
+      "role": "sent",
+      "difficulty": "B1",
+      "translation": "Yes, I wanted to ask if the table by the window is free.",
+      "translationFa": "بله، می‌خواستم بپرسم آیا میز کنار پنجره خالی است.",
+      "targetText": "Ja, ich wollte fragen, ob der Tisch am Fenster frei ist."
+    },
+    {
+      "id": 3,
+      "day": 95,
+      "role": "received",
+      "difficulty": "B1",
+      "translation": "Of course. Can I bring you the menu?",
+      "translationFa": "البته. منو بیاورم؟",
+      "audioText": "Natürlich. Kann ich Ihnen die Speisekarte bringen?"
+    },
+    {
+      "id": 4,
+      "day": 95,
+      "role": "sent",
+      "difficulty": "B1",
+      "translation": "Yes, please. Can you tell me what you recommend today?",
+      "translationFa": "بله، لطفاً. می‌توانید بگویید امروز چه چیزی پیشنهاد می‌کنید؟",
+      "targetText": "Ja, bitte. Können Sie mir sagen, was Sie heute empfehlen?"
+    },
+    {
+      "id": 5,
+      "day": 95,
+      "role": "received",
+      "difficulty": "B1",
+      "translation": "I recommend the Wiener Schnitzel. It's our specialty.",
+      "translationFa": "شنیتسل وینی را پیشنهاد می‌کنم. غذای مخصوص ما است.",
+      "audioText": "Ich empfehle das Wiener Schnitzel. Es ist unser Spezialität."
+    },
+    {
+      "id": 6,
+      "day": 95,
+      "role": "sent",
+      "difficulty": "B1",
+      "translation": "I would like to know if there are also vegetarian dishes.",
+      "translationFa": "می‌خواستم بدانم آیا غذاهای گیاهی هم دارید.",
+      "targetText": "Ich wüsste gern, ob es auch vegetarische Gerichte gibt."
+    },
+    {
+      "id": 7,
+      "day": 95,
+      "role": "received",
+      "difficulty": "B1",
+      "translation": "Yes, we have vegetable lasagna and a large salad.",
+      "translationFa": "بله، لازانیای سبزیجات و سالاد بزرگ داریم.",
+      "audioText": "Ja, wir haben Gemüselasagne und einen großen Salat."
+    },
+    {
+      "id": 8,
+      "day": 95,
+      "role": "sent",
+      "difficulty": "B1",
+      "translation": "Can you tell me how long the preparation takes?",
+      "translationFa": "می‌توانید بگویید آماده شدنش چقدر طول می‌کشد؟",
+      "targetText": "Können Sie mir sagen, wie lange die Zubereitung dauert?"
+    },
+    {
+      "id": 9,
+      "day": 95,
+      "role": "received",
+      "difficulty": "A2",
+      "translation": "About twenty minutes.",
+      "translationFa": "حدود بیست دقیقه.",
+      "audioText": "Ungefähr zwanzig Minuten."
+    },
+    {
+      "id": 10,
+      "day": 95,
+      "role": "sent",
+      "difficulty": "B1",
+      "translation": "Perfect. I would like the vegetable lasagna and a water, please.",
+      "translationFa": "عالی. لطفاً لازانیای سبزیجات و یک آب.",
+      "targetText": "Perfekt. Ich hätte gern die Gemüselasagne und ein Wasser, bitte."
+    }
+  ],
+  "difficulty": "B1",
+  "grammarFocus": "Indirect questions; restaurant vocabulary",
+  "grammarFocusFa": "سؤالات غیرمستقیم؛ واژگان رستوران",
+  "description": "",
+  "descriptionFa": ""
+}

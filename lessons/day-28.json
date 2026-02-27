@@ -1,0 +1,120 @@
+{
+  "day": 28,
+  "title": "28: Separable Verbs",
+  "titleFa": "افعال جداشدنی",
+  "sentences": [
+    {
+      "id": 1,
+      "day": 28,
+      "role": "received",
+      "difficulty": "A2",
+      "translation": "When do you normally get up?",
+      "translationFa": "معمولا کی بیدار می‌شوی؟",
+      "audioText": "Wann stehst du normalerweise auf?"
+    },
+    {
+      "id": 2,
+      "day": 28,
+      "role": "sent",
+      "difficulty": "A2",
+      "translation": "I get up at six during the week.",
+      "translationFa": "روزهای هفته ساعت شش بیدار می‌شوم.",
+      "targetText": "Ich stehe unter der Woche um sechs Uhr auf."
+    },
+    {
+      "id": 3,
+      "day": 28,
+      "role": "received",
+      "difficulty": "A2",
+      "translation": "Are you shopping today?",
+      "translationFa": "امروز خرید می‌کنی؟",
+      "audioText": "Kaufst du heute ein?"
+    },
+    {
+      "id": 4,
+      "day": 28,
+      "role": "sent",
+      "difficulty": "A2",
+      "translation": "Yes, I am shopping at the supermarket after work.",
+      "translationFa": "بله، بعد از کار در سوپرمارکت خرید می‌کنم.",
+      "targetText": "Ja, ich kaufe nach der Arbeit im Supermarkt ein."
+    },
+    {
+      "id": 5,
+      "day": 28,
+      "role": "received",
+      "difficulty": "A2",
+      "translation": "When does the course start?",
+      "translationFa": "کلاس کی شروع می‌شود؟",
+      "audioText": "Wann fängt der Kurs an?"
+    },
+    {
+      "id": 6,
+      "day": 28,
+      "role": "sent",
+      "difficulty": "A2",
+      "translation": "The course starts at nine o'clock.",
+      "translationFa": "کلاس ساعت نه شروع می‌شود.",
+      "targetText": "Der Kurs fängt um neun Uhr an."
+    },
+    {
+      "id": 7,
+      "day": 28,
+      "role": "received",
+      "difficulty": "A2",
+      "translation": "Are you coming along this evening?",
+      "translationFa": "امشب می‌آیی؟",
+      "audioText": "Kommst du heute Abend mit?"
+    },
+    {
+      "id": 8,
+      "day": 28,
+      "role": "sent",
+      "difficulty": "A2",
+      "translation": "Yes, I would love to come. When do we meet?",
+      "translationFa": "بله، با کمال میل. کی قرار می‌گذاریم؟",
+      "targetText": "Ja, ich komme gern mit. Wann treffen wir uns?"
+    },
+    {
+      "id": 9,
+      "day": 28,
+      "role": "received",
+      "difficulty": "A2",
+      "translation": "Will you call me later?",
+      "translationFa": "بعدا بهم زنگ می‌زنی؟",
+      "audioText": "Rufst du mich später an?"
+    },
+    {
+      "id": 10,
+      "day": 28,
+      "role": "sent",
+      "difficulty": "A2",
+      "translation": "Yes, I will call you at five o'clock.",
+      "translationFa": "بله، ساعت پنج بهت زنگ می‌زنم.",
+      "targetText": "Ja, ich rufe dich um fünf Uhr an."
+    },
+    {
+      "id": 11,
+      "day": 28,
+      "role": "received",
+      "difficulty": "A2",
+      "translation": "When will you return the book?",
+      "translationFa": "کی کتاب را پس می‌دهی؟",
+      "audioText": "Wann gibst du das Buch zurück?"
+    },
+    {
+      "id": 12,
+      "day": 28,
+      "role": "sent",
+      "difficulty": "A2",
+      "translation": "I will return it next week.",
+      "translationFa": "هفته آینده پسش می‌دهم.",
+      "targetText": "Ich gebe es nächste Woche zurück."
+    }
+  ],
+  "difficulty": "A2",
+  "grammarFocus": "aufstehen, einkaufen, anfangen, mitkommen",
+  "grammarFocusFa": "بلند شدن، خرید کردن، شروع کردن، همراهی کردن",
+  "description": "It's Saturday morning and you're at the weekly farmers' market. Buy some fresh bread and pastries.",
+  "descriptionFa": "صبح شنبه‌ست و تو بازار هفتگی هستید. کمی نان تازه و شیرینی بخرید."
+}

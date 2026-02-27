@@ -1,0 +1,102 @@
+{
+  "day": 34,
+  "title": "34: Comparatives",
+  "titleFa": "صفات تفضیلی",
+  "sentences": [
+    {
+      "id": 1,
+      "day": 34,
+      "role": "received",
+      "difficulty": "A2",
+      "translation": "Which city is bigger, Berlin or Munich?",
+      "translationFa": "کدام شهر بزرگ‌تر است، برلین یا مونیخ؟",
+      "audioText": "Welche Stadt ist größer, Berlin oder München?"
+    },
+    {
+      "id": 2,
+      "day": 34,
+      "role": "sent",
+      "difficulty": "A2",
+      "translation": "Berlin is bigger than Munich.",
+      "translationFa": "برلین بزرگ‌تر از مونیخ است.",
+      "targetText": "Berlin ist größer als München."
+    },
+    {
+      "id": 3,
+      "day": 34,
+      "role": "received",
+      "difficulty": "A2",
+      "translation": "Do you prefer traveling by train or by car?",
+      "translationFa": "ترجیح می‌دهی با قطار بروی یا با ماشین؟",
+      "audioText": "Fährst du lieber mit dem Zug oder mit dem Auto?"
+    },
+    {
+      "id": 4,
+      "day": 34,
+      "role": "sent",
+      "difficulty": "A2",
+      "translation": "I prefer the train. It is faster than the car.",
+      "translationFa": "ترجیح می‌دهم با قطار بروم. سریع‌تر از ماشین است.",
+      "targetText": "Ich fahre lieber mit dem Zug. Er ist schneller als das Auto."
+    },
+    {
+      "id": 5,
+      "day": 34,
+      "role": "received",
+      "difficulty": "A2",
+      "translation": "Is German harder than English?",
+      "translationFa": "آلمانی سخت‌تر از انگلیسی است؟",
+      "audioText": "Ist Deutsch schwerer als Englisch?"
+    },
+    {
+      "id": 6,
+      "day": 34,
+      "role": "sent",
+      "difficulty": "A2",
+      "translation": "Yes, I find German harder than English.",
+      "translationFa": "بله، به نظر من آلمانی سخت‌تر از انگلیسی است.",
+      "targetText": "Ja, ich finde Deutsch schwerer als Englisch."
+    },
+    {
+      "id": 7,
+      "day": 34,
+      "role": "received",
+      "difficulty": "A2",
+      "translation": "Who cooks better, you or your mother?",
+      "translationFa": "چه کسی بهتر آشپزی می‌کند، تو یا مادرت؟",
+      "audioText": "Wer kocht besser, du oder deine Mutter?"
+    },
+    {
+      "id": 8,
+      "day": 34,
+      "role": "sent",
+      "difficulty": "A2",
+      "translation": "My mother cooks much better than me!",
+      "translationFa": "مادرم خیلی بهتر از من آشپزی می‌کند!",
+      "targetText": "Meine Mutter kocht viel besser als ich!"
+    },
+    {
+      "id": 9,
+      "day": 34,
+      "role": "received",
+      "difficulty": "A2",
+      "translation": "In summer the days are longer than in winter.",
+      "translationFa": "در تابستان روزها بلندتر از زمستان هستند.",
+      "audioText": "Im Sommer sind die Tage länger als im Winter."
+    },
+    {
+      "id": 10,
+      "day": 34,
+      "role": "sent",
+      "difficulty": "A2",
+      "translation": "Yes, and it also gets dark later.",
+      "translationFa": "بله، و دیرتر هم تاریک می‌شود.",
+      "targetText": "Ja, und es wird auch später dunkel."
+    }
+  ],
+  "difficulty": "A2",
+  "grammarFocus": "größer als, besser als, mehr als",
+  "grammarFocusFa": "بزرگ‌تر از، بهتر از، بیشتر از",
+  "description": "You need to write a professional email to a business contact. Compose a polite, formal message.",
+  "descriptionFa": "باید یه ایمیل حرفه‌ای به یه مخاطب تجاری بنویسید. یه پیام مودبانه و رسمی بنویسید."
+}

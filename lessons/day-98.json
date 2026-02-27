@@ -1,0 +1,102 @@
+{
+  "day": 98,
+  "title": "98: German Customs",
+  "titleFa": "آداب و رسوم آلمانی",
+  "sentences": [
+    {
+      "id": 1,
+      "day": 98,
+      "role": "received",
+      "difficulty": "B1",
+      "translation": "Are there special rules in Germany that one should follow?",
+      "translationFa": "در آلمان قوانین خاصی وجود دارد که باید رعایت کرد؟",
+      "audioText": "Gibt es in Deutschland besondere Regeln, die man beachten sollte?"
+    },
+    {
+      "id": 2,
+      "day": 98,
+      "role": "sent",
+      "difficulty": "B1",
+      "translation": "Yes, for example you should always be punctual.",
+      "translationFa": "بله، مثلاً باید همیشه به موقع باشی.",
+      "targetText": "Ja, man sollte zum Beispiel immer pünktlich sein."
+    },
+    {
+      "id": 3,
+      "day": 98,
+      "role": "received",
+      "difficulty": "B1",
+      "translation": "What happens if you're late?",
+      "translationFa": "اگر دیر برسی چه می‌شود؟",
+      "audioText": "Was passiert, wenn man sich verspätet?"
+    },
+    {
+      "id": 4,
+      "day": 98,
+      "role": "sent",
+      "difficulty": "B1",
+      "translation": "You should definitely call beforehand and let them know.",
+      "translationFa": "حتماً باید قبلش زنگ بزنی و خبر بدهی.",
+      "targetText": "Man sollte auf jeden Fall vorher anrufen und Bescheid sagen."
+    },
+    {
+      "id": 5,
+      "day": 98,
+      "role": "received",
+      "difficulty": "B1",
+      "translation": "Is it true that in Germany you take off your shoes?",
+      "translationFa": "راست است که در آلمان کفش‌ها را درمی‌آورند؟",
+      "audioText": "Stimmt es, dass man in Deutschland die Schuhe auszieht?"
+    },
+    {
+      "id": 6,
+      "day": 98,
+      "role": "sent",
+      "difficulty": "B1",
+      "translation": "Yes, when you visit someone at home, you should take off your shoes.",
+      "translationFa": "بله، وقتی به خانه کسی می‌روی باید کفش‌هایت را دربیاوری.",
+      "targetText": "Ja, wenn man jemanden zu Hause besucht, sollte man die Schuhe ausziehen."
+    },
+    {
+      "id": 7,
+      "day": 98,
+      "role": "received",
+      "difficulty": "B1",
+      "translation": "And you shouldn't mow the lawn on Sunday, right?",
+      "translationFa": "و یکشنبه‌ها نباید چمن زد، درسته؟",
+      "audioText": "Und man sollte nicht am Sonntag den Rasen mähen, oder?"
+    },
+    {
+      "id": 8,
+      "day": 98,
+      "role": "sent",
+      "difficulty": "B1",
+      "translation": "Exactly, on Sunday you shouldn't make noise. That's a rest day.",
+      "translationFa": "دقیقاً، یکشنبه نباید سروصدا کرد. روز استراحت است.",
+      "targetText": "Genau, am Sonntag sollte man keinen Lärm machen. Das ist Ruhetag."
+    },
+    {
+      "id": 9,
+      "day": 98,
+      "role": "received",
+      "difficulty": "B1",
+      "translation": "That's very different from my home country.",
+      "translationFa": "خیلی فرق دارد با کشورم.",
+      "audioText": "Das ist sehr anders als in meinem Heimatland."
+    },
+    {
+      "id": 10,
+      "day": 98,
+      "role": "sent",
+      "difficulty": "B1",
+      "translation": "Every country has its own traditions. You get used to it.",
+      "translationFa": "هر کشوری سنت‌های خودش را دارد. عادت می‌کنی.",
+      "targetText": "Jedes Land hat seine eigenen Traditionen. Man gewöhnt sich daran."
+    }
+  ],
+  "difficulty": "B1",
+  "grammarFocus": "man sollte; cultural customs",
+  "grammarFocusFa": "man sollte؛ آداب فرهنگی",
+  "description": "",
+  "descriptionFa": ""
+}

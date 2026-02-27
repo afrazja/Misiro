@@ -1,0 +1,102 @@
+{
+  "day": 77,
+  "title": "77: At the Market",
+  "titleFa": "در بازار",
+  "sentences": [
+    {
+      "id": 1,
+      "day": 77,
+      "role": "received",
+      "difficulty": "A2",
+      "translation": "Good morning! What can I get you?",
+      "translationFa": "صبح بخیر! چه میل دارید؟",
+      "audioText": "Guten Morgen! Was darf es sein?"
+    },
+    {
+      "id": 2,
+      "day": 77,
+      "role": "sent",
+      "difficulty": "A2",
+      "translation": "I would like one kilo of apples, please.",
+      "translationFa": "لطفاً یک کیلو سیب می‌خواهم.",
+      "targetText": "Ich hätte gern ein Kilo Äpfel, bitte."
+    },
+    {
+      "id": 3,
+      "day": 77,
+      "role": "received",
+      "difficulty": "A2",
+      "translation": "Gladly. Would you like anything else?",
+      "translationFa": "حتماً. چیز دیگری می‌خواهید؟",
+      "audioText": "Gerne. Möchten Sie noch etwas?"
+    },
+    {
+      "id": 4,
+      "day": 77,
+      "role": "sent",
+      "difficulty": "A2",
+      "translation": "Yes, half a kilo of tomatoes and a cucumber.",
+      "translationFa": "بله، نیم کیلو گوجه و یک خیار.",
+      "targetText": "Ja, ein halbes Kilo Tomaten und eine Gurke."
+    },
+    {
+      "id": 5,
+      "day": 77,
+      "role": "received",
+      "difficulty": "A2",
+      "translation": "The tomatoes are especially fresh today.",
+      "translationFa": "گوجه‌ها امروز خیلی تازه هستند.",
+      "audioText": "Die Tomaten sind heute besonders frisch."
+    },
+    {
+      "id": 6,
+      "day": 77,
+      "role": "sent",
+      "difficulty": "A2",
+      "translation": "Wonderful. What does it all cost together?",
+      "translationFa": "عالی. همه با هم چقدر می‌شود؟",
+      "targetText": "Wunderbar. Was kostet das alles zusammen?"
+    },
+    {
+      "id": 7,
+      "day": 77,
+      "role": "received",
+      "difficulty": "A2",
+      "translation": "That's five euros fifty.",
+      "translationFa": "پنج یورو و پنجاه سنت می‌شود.",
+      "audioText": "Das macht fünf Euro fünfzig."
+    },
+    {
+      "id": 8,
+      "day": 77,
+      "role": "sent",
+      "difficulty": "A2",
+      "translation": "Here are six euros. Keep the change.",
+      "translationFa": "بفرمایید شش یورو. بقیه‌اش مال شما.",
+      "targetText": "Hier sind sechs Euro. Stimmt so."
+    },
+    {
+      "id": 9,
+      "day": 77,
+      "role": "received",
+      "difficulty": "A2",
+      "translation": "Thank you! Will you come again next week?",
+      "translationFa": "خیلی ممنون! هفته بعد هم می‌آیید؟",
+      "audioText": "Vielen Dank! Kommen Sie nächste Woche wieder?"
+    },
+    {
+      "id": 10,
+      "day": 77,
+      "role": "sent",
+      "difficulty": "A2",
+      "translation": "Of course! I always shop here.",
+      "translationFa": "البته! من همیشه اینجا خرید می‌کنم.",
+      "targetText": "Natürlich! Ich kaufe immer hier ein."
+    }
+  ],
+  "difficulty": "A2",
+  "grammarFocus": "Quantities and measurements; polite requests",
+  "grammarFocusFa": "مقادیر و اندازه‌ها؛ درخواست مؤدبانه",
+  "description": "",
+  "descriptionFa": ""
+}

@@ -1,0 +1,102 @@
+{
+  "day": 72,
+  "title": "72: Cooking Together",
+  "titleFa": "آشپزی با هم",
+  "sentences": [
+    {
+      "id": 1,
+      "day": 72,
+      "role": "received",
+      "difficulty": "A2",
+      "translation": "Let's cook together today!",
+      "translationFa": "بیا امروز با هم آشپزی کنیم!",
+      "audioText": "Lass uns heute zusammen kochen!"
+    },
+    {
+      "id": 2,
+      "day": 72,
+      "role": "sent",
+      "difficulty": "A2",
+      "translation": "Good idea! What should we cook?",
+      "translationFa": "ایده خوبی! چی بپزیم؟",
+      "targetText": "Gute Idee! Was sollen wir kochen?"
+    },
+    {
+      "id": 3,
+      "day": 72,
+      "role": "received",
+      "difficulty": "A2",
+      "translation": "How about spaghetti Bolognese?",
+      "translationFa": "اسپاگتی بولونز چطوره؟",
+      "audioText": "Wie wäre es mit Spaghetti Bolognese?"
+    },
+    {
+      "id": 4,
+      "day": 72,
+      "role": "sent",
+      "difficulty": "A2",
+      "translation": "Perfect! I'll buy the ingredients.",
+      "translationFa": "عالی! من مواد اولیه را می‌خرم.",
+      "targetText": "Perfekt! Ich kaufe die Zutaten."
+    },
+    {
+      "id": 5,
+      "day": 72,
+      "role": "received",
+      "difficulty": "A2",
+      "translation": "We need tomatoes, minced meat, and pasta.",
+      "translationFa": "ما گوجه، گوشت چرخ‌کرده و ماکارونی نیاز داریم.",
+      "audioText": "Wir brauchen Tomaten, Hackfleisch und Nudeln."
+    },
+    {
+      "id": 6,
+      "day": 72,
+      "role": "sent",
+      "difficulty": "A2",
+      "translation": "Should I also bring cheese and bread?",
+      "translationFa": "پنیر و نان هم بیاورم؟",
+      "targetText": "Soll ich auch Käse und Brot mitbringen?"
+    },
+    {
+      "id": 7,
+      "day": 72,
+      "role": "received",
+      "difficulty": "A2",
+      "translation": "Yes, please. And don't forget the olive oil!",
+      "translationFa": "بله، لطفاً. و روغن زیتون را فراموش نکن!",
+      "audioText": "Ja, bitte. Und vergiss das Olivenöl nicht!"
+    },
+    {
+      "id": 8,
+      "day": 72,
+      "role": "sent",
+      "difficulty": "A2",
+      "translation": "No worries, I won't forget anything.",
+      "translationFa": "نگران نباش، چیزی فراموش نمی‌کنم.",
+      "targetText": "Keine Sorge, ich vergesse nichts."
+    },
+    {
+      "id": 9,
+      "day": 72,
+      "role": "received",
+      "difficulty": "A2",
+      "translation": "Please cut the onions small.",
+      "translationFa": "لطفاً پیازها را ریز خرد کن.",
+      "audioText": "Schneide bitte die Zwiebeln klein."
+    },
+    {
+      "id": 10,
+      "day": 72,
+      "role": "sent",
+      "difficulty": "A2",
+      "translation": "Alright. The food already smells good!",
+      "translationFa": "باشه. غذا بوی خوبی می‌دهد!",
+      "targetText": "In Ordnung. Das Essen riecht schon gut!"
+    }
+  ],
+  "difficulty": "A2",
+  "grammarFocus": "Imperative; food vocabulary",
+  "grammarFocusFa": "امری؛ واژگان غذا",
+  "description": "",
+  "descriptionFa": ""
+}

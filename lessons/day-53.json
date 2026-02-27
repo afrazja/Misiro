@@ -1,0 +1,102 @@
+{
+  "day": 53,
+  "title": "53: Relative Clauses",
+  "titleFa": "جملات موصولی",
+  "sentences": [
+    {
+      "id": 1,
+      "day": 53,
+      "role": "received",
+      "difficulty": "B1",
+      "translation": "Do you know the man who is standing there?",
+      "translationFa": "مردی که آنجا ایستاده را می‌شناسی؟",
+      "audioText": "Kennst du den Mann, der dort steht?"
+    },
+    {
+      "id": 2,
+      "day": 53,
+      "role": "sent",
+      "difficulty": "B1",
+      "translation": "Yes, that is the teacher who teaches us German.",
+      "translationFa": "بله، او معلمی است که به ما آلمانی درس می‌دهد.",
+      "targetText": "Ja, das ist der Lehrer, der uns Deutsch unterrichtet."
+    },
+    {
+      "id": 3,
+      "day": 53,
+      "role": "received",
+      "difficulty": "B1",
+      "translation": "Where is the book that I lent you?",
+      "translationFa": "کتابی که بهت قرض دادم کجاست؟",
+      "audioText": "Wo ist das Buch, das ich dir geliehen habe?"
+    },
+    {
+      "id": 4,
+      "day": 53,
+      "role": "sent",
+      "difficulty": "B1",
+      "translation": "The book that you lent me is on the desk.",
+      "translationFa": "کتابی که بهم قرض دادی روی میز تحریر است.",
+      "targetText": "Das Buch, das du mir geliehen hast, liegt auf dem Schreibtisch."
+    },
+    {
+      "id": 5,
+      "day": 53,
+      "role": "received",
+      "difficulty": "B1",
+      "translation": "The woman who sits next to me comes from Japan.",
+      "translationFa": "زنی که کنار من نشسته اهل ژاپن است.",
+      "audioText": "Die Frau, die neben mir sitzt, kommt aus Japan."
+    },
+    {
+      "id": 6,
+      "day": 53,
+      "role": "sent",
+      "difficulty": "B1",
+      "translation": "Interesting! Do you also know the students who come from Brazil?",
+      "translationFa": "جالب! دانشجویانی که از برزیل آمده‌اند را هم می‌شناسی؟",
+      "targetText": "Interessant! Kennst du auch die Studenten, die aus Brasilien kommen?"
+    },
+    {
+      "id": 7,
+      "day": 53,
+      "role": "received",
+      "difficulty": "B1",
+      "translation": "The city in which I grew up is very small.",
+      "translationFa": "شهری که در آن بزرگ شدم خیلی کوچک است.",
+      "audioText": "Die Stadt, in der ich aufgewachsen bin, ist sehr klein."
+    },
+    {
+      "id": 8,
+      "day": 53,
+      "role": "sent",
+      "difficulty": "B1",
+      "translation": "I come from a city that is by the sea.",
+      "translationFa": "من از شهری می‌آیم که کنار دریاست.",
+      "targetText": "Ich komme aus einer Stadt, die am Meer liegt."
+    },
+    {
+      "id": 9,
+      "day": 53,
+      "role": "received",
+      "difficulty": "B1",
+      "translation": "The restaurant that we visited yesterday was excellent.",
+      "translationFa": "رستورانی که دیروز رفتیم عالی بود.",
+      "audioText": "Das Restaurant, das wir gestern besucht haben, war ausgezeichnet."
+    },
+    {
+      "id": 10,
+      "day": 53,
+      "role": "sent",
+      "difficulty": "B1",
+      "translation": "Yes, the food that we ordered was fantastic.",
+      "translationFa": "بله، غذایی که سفارش دادیم فوق‌العاده بود.",
+      "targetText": "Ja, das Essen, das wir bestellt haben, war fantastisch."
+    }
+  ],
+  "difficulty": "B1",
+  "grammarFocus": "der/die/das as relative pronouns",
+  "grammarFocusFa": "که/کسی که به عنوان ضمیر موصولی",
+  "description": "You're at a car rental counter at the airport. Choose a vehicle class and sort out insurance.",
+  "descriptionFa": "تو باجه اجاره خودرو در فرودگاه هستید. کلاس خودرو رو انتخاب کنید و بیمه رو مرتب کنید."
+}

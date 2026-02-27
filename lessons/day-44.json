@@ -1,0 +1,102 @@
+{
+  "day": 44,
+  "title": "44: Subordinate Clauses: wenn/als",
+  "titleFa": "جملات وابسته: وقتی",
+  "sentences": [
+    {
+      "id": 1,
+      "day": 44,
+      "role": "received",
+      "difficulty": "A2",
+      "translation": "What do you do when it rains?",
+      "translationFa": "وقتی باران می‌بارد چه کار می‌کنی؟",
+      "audioText": "Was machst du, wenn es regnet?"
+    },
+    {
+      "id": 2,
+      "day": 44,
+      "role": "sent",
+      "difficulty": "A2",
+      "translation": "When it rains, I stay home and read a book.",
+      "translationFa": "وقتی باران می‌بارد، خانه می‌مانم و کتاب می‌خوانم.",
+      "targetText": "Wenn es regnet, bleibe ich zu Hause und lese ein Buch."
+    },
+    {
+      "id": 3,
+      "day": 44,
+      "role": "received",
+      "difficulty": "B1",
+      "translation": "What did you do when you were a child?",
+      "translationFa": "وقتی بچه بودی چه کار می‌کردی؟",
+      "audioText": "Was hast du gemacht, als du ein Kind warst?"
+    },
+    {
+      "id": 4,
+      "day": 44,
+      "role": "sent",
+      "difficulty": "B1",
+      "translation": "When I was a child, I played outside a lot.",
+      "translationFa": "وقتی بچه بودم، زیاد بیرون بازی می‌کردم.",
+      "targetText": "Als ich ein Kind war, habe ich viel draußen gespielt."
+    },
+    {
+      "id": 5,
+      "day": 44,
+      "role": "received",
+      "difficulty": "A2",
+      "translation": "Will you call me when you arrive?",
+      "translationFa": "وقتی رسیدی بهم زنگ می‌زنی؟",
+      "audioText": "Rufst du mich an, wenn du ankommst?"
+    },
+    {
+      "id": 6,
+      "day": 44,
+      "role": "sent",
+      "difficulty": "A2",
+      "translation": "Yes, I will call you when I am there.",
+      "translationFa": "بله، وقتی رسیدم بهت زنگ می‌زنم.",
+      "targetText": "Ja, ich rufe dich an, wenn ich da bin."
+    },
+    {
+      "id": 7,
+      "day": 44,
+      "role": "received",
+      "difficulty": "B1",
+      "translation": "What happened when you came to Germany?",
+      "translationFa": "وقتی به آلمان آمدی چه اتفاقی افتاد؟",
+      "audioText": "Was ist passiert, als du nach Deutschland gekommen bist?"
+    },
+    {
+      "id": 8,
+      "day": 44,
+      "role": "sent",
+      "difficulty": "B1",
+      "translation": "When I came to Germany, I couldn't speak a word of German.",
+      "translationFa": "وقتی به آلمان آمدم، یک کلمه آلمانی بلد نبودم.",
+      "targetText": "Als ich nach Deutschland kam, konnte ich kein Wort Deutsch."
+    },
+    {
+      "id": 9,
+      "day": 44,
+      "role": "received",
+      "difficulty": "A2",
+      "translation": "If you have time, we can cook together.",
+      "translationFa": "اگر وقت داری، می‌توانیم با هم آشپزی کنیم.",
+      "audioText": "Wenn du Zeit hast, können wir zusammen kochen."
+    },
+    {
+      "id": 10,
+      "day": 44,
+      "role": "sent",
+      "difficulty": "A2",
+      "translation": "Yes, gladly! If I am free tomorrow, I will come by.",
+      "translationFa": "بله با کمال میل! اگر فردا آزاد باشم، سر می‌زنم.",
+      "targetText": "Ja gern! Wenn ich morgen frei habe, komme ich vorbei."
+    }
+  ],
+  "difficulty": "A2",
+  "grammarFocus": "wenn (repeated) vs. als (one-time past)",
+  "grammarFocusFa": "wenn (تکراری) در مقابل als (یکبار در گذشته)",
+  "description": "You've booked a table at a nice restaurant. Order food, ask for the chef's recommendations, and pay.",
+  "descriptionFa": "میز تو یه رستوران خوب رزرو کردید. غذا سفارش بدید، پیشنهاد سرآشپز رو بپرسید و حساب کنید."
+}

@@ -1,0 +1,102 @@
+{
+  "day": 62,
+  "title": "62: Konjunktiv II: hätte/wäre",
+  "titleFa": "وجه التزامی: داشتن/بودن",
+  "sentences": [
+    {
+      "id": 1,
+      "day": 62,
+      "role": "received",
+      "difficulty": "B1",
+      "translation": "If I had more time, I would learn an instrument.",
+      "translationFa": "اگر وقت بیشتری داشتم یک ساز یاد می‌گرفتم.",
+      "audioText": "Wenn ich mehr Zeit hätte, würde ich ein Instrument lernen."
+    },
+    {
+      "id": 2,
+      "day": 62,
+      "role": "sent",
+      "difficulty": "B1",
+      "translation": "I would be happy if I could speak better German.",
+      "translationFa": "خوشحال بودم اگر بهتر آلمانی بلد بودم.",
+      "targetText": "Ich wäre froh, wenn ich besser Deutsch könnte."
+    },
+    {
+      "id": 3,
+      "day": 62,
+      "role": "received",
+      "difficulty": "B1",
+      "translation": "Would you like to go for a walk?",
+      "translationFa": "حوصله پیاده‌روی داری؟",
+      "audioText": "Hättest du Lust auf einen Spaziergang?"
+    },
+    {
+      "id": 4,
+      "day": 62,
+      "role": "sent",
+      "difficulty": "B1",
+      "translation": "Yes, that would be nice! If it weren't raining.",
+      "translationFa": "بله، خوب بود! اگر باران نمی‌بارید.",
+      "targetText": "Ja, das wäre schön! Wenn es nicht regnen würde."
+    },
+    {
+      "id": 5,
+      "day": 62,
+      "role": "received",
+      "difficulty": "B1",
+      "translation": "In your place I would be more careful.",
+      "translationFa": "جای تو بودم مواظب‌تر بودم.",
+      "audioText": "An deiner Stelle wäre ich vorsichtiger."
+    },
+    {
+      "id": 6,
+      "day": 62,
+      "role": "sent",
+      "difficulty": "B1",
+      "translation": "You are right. I shouldn't have driven so fast.",
+      "translationFa": "حق با توست. نباید اینقدر تند رانندگی می‌کردم.",
+      "targetText": "Du hast Recht. Ich hätte nicht so schnell fahren sollen."
+    },
+    {
+      "id": 7,
+      "day": 62,
+      "role": "received",
+      "difficulty": "B1",
+      "translation": "Could you help me with the homework?",
+      "translationFa": "می‌توانستی با تکالیفم کمکم کنی؟",
+      "audioText": "Könntest du mir bei den Hausaufgaben helfen?"
+    },
+    {
+      "id": 8,
+      "day": 62,
+      "role": "sent",
+      "difficulty": "B1",
+      "translation": "Sure! I would have time now. What would you need to do?",
+      "translationFa": "البته! الان وقت دارم. چه کاری باید بکنی؟",
+      "targetText": "Klar! Ich hätte jetzt Zeit. Was müsstest du machen?"
+    },
+    {
+      "id": 9,
+      "day": 62,
+      "role": "received",
+      "difficulty": "B1",
+      "translation": "If we had started earlier, we would be finished now.",
+      "translationFa": "اگر زودتر شروع کرده بودیم الان تمام شده بود.",
+      "audioText": "Wenn wir früher angefangen hätten, wären wir jetzt fertig."
+    },
+    {
+      "id": 10,
+      "day": 62,
+      "role": "sent",
+      "difficulty": "B1",
+      "translation": "Yes, that's true. Next time we should start earlier.",
+      "translationFa": "بله، درسته. دفعه بعد باید زودتر شروع کنیم.",
+      "targetText": "Ja, das stimmt. Nächstes Mal sollten wir früher anfangen."
+    }
+  ],
+  "difficulty": "B1",
+  "grammarFocus": "hätte, wäre, könnte, müsste",
+  "grammarFocusFa": "داشتم، بودم، می‌توانستم، مجبور بودم",
+  "description": "Compare life today with the past. Talk about how technology, travel, and daily habits have changed over the decades.",
+  "descriptionFa": "زندگی امروز رو با گذشته مقایسه کنید. درباره اینکه چطور فناوری، سفر و عادات روزانه در طول دهه‌ها تغییر کرده صحبت کنید."
+}

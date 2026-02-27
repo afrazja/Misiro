@@ -1,0 +1,102 @@
+{
+  "day": 75,
+  "title": "75: Moving to a New City",
+  "titleFa": "نقل مکان به شهر جدید",
+  "sentences": [
+    {
+      "id": 1,
+      "day": 75,
+      "role": "received",
+      "difficulty": "B1",
+      "translation": "I heard that you're moving to Hamburg.",
+      "translationFa": "شنیدم که داری به هامبورگ نقل مکان می‌کنی.",
+      "audioText": "Ich habe gehört, dass du nach Hamburg ziehst."
+    },
+    {
+      "id": 2,
+      "day": 75,
+      "role": "sent",
+      "difficulty": "B1",
+      "translation": "Yes, because I found a new job there.",
+      "translationFa": "بله، چون آنجا یک کار جدید پیدا کرده‌ام.",
+      "targetText": "Ja, weil ich dort eine neue Arbeit gefunden habe."
+    },
+    {
+      "id": 3,
+      "day": 75,
+      "role": "received",
+      "difficulty": "B1",
+      "translation": "That's exciting! Do you already have an apartment?",
+      "translationFa": "هیجان‌انگیزه! آپارتمان پیدا کرده‌ای؟",
+      "audioText": "Das ist aufregend! Hast du schon eine Wohnung?"
+    },
+    {
+      "id": 4,
+      "day": 75,
+      "role": "sent",
+      "difficulty": "B1",
+      "translation": "Not yet. I'm looking for a two-room apartment in the city center.",
+      "translationFa": "هنوز نه. دنبال یک آپارتمان دو اتاقه در مرکز شهر می‌گردم.",
+      "targetText": "Noch nicht. Ich suche eine Zweizimmerwohnung in der Stadtmitte."
+    },
+    {
+      "id": 5,
+      "day": 75,
+      "role": "received",
+      "difficulty": "B1",
+      "translation": "In Hamburg the rents are unfortunately quite high.",
+      "translationFa": "متأسفانه اجاره در هامبورگ خیلی بالاست.",
+      "audioText": "In Hamburg sind die Mieten leider ziemlich hoch."
+    },
+    {
+      "id": 6,
+      "day": 75,
+      "role": "sent",
+      "difficulty": "B1",
+      "translation": "I know that it's expensive, but my salary is also better.",
+      "translationFa": "می‌دانم که گران است، ولی حقوقم هم بهتر شده.",
+      "targetText": "Ich weiß, dass es teuer ist, aber mein Gehalt ist auch besser."
+    },
+    {
+      "id": 7,
+      "day": 75,
+      "role": "received",
+      "difficulty": "B1",
+      "translation": "Do you already know anyone there?",
+      "translationFa": "آنجا کسی را می‌شناسی؟",
+      "audioText": "Kennst du dort schon jemanden?"
+    },
+    {
+      "id": 8,
+      "day": 75,
+      "role": "sent",
+      "difficulty": "B1",
+      "translation": "Yes, an old friend of mine lives there.",
+      "translationFa": "بله، یک دوست قدیمی‌ام آنجا زندگی می‌کند.",
+      "targetText": "Ja, ein alter Freund von mir wohnt dort."
+    },
+    {
+      "id": 9,
+      "day": 75,
+      "role": "received",
+      "difficulty": "B1",
+      "translation": "That's good, then you're not completely alone.",
+      "translationFa": "خوبه، پس کاملاً تنها نیستی.",
+      "audioText": "Das ist gut, dann bist du nicht ganz allein."
+    },
+    {
+      "id": 10,
+      "day": 75,
+      "role": "sent",
+      "difficulty": "B1",
+      "translation": "Exactly. I'm looking forward to the new beginning.",
+      "translationFa": "دقیقاً. از شروع جدید خوشحالم.",
+      "targetText": "Genau. Ich freue mich auf den Neuanfang."
+    }
+  ],
+  "difficulty": "B1",
+  "grammarFocus": "weil/dass clauses; city vocabulary",
+  "grammarFocusFa": "جملات با weil/dass؛ واژگان شهری",
+  "description": "",
+  "descriptionFa": ""
+}

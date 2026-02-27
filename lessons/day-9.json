@@ -1,0 +1,120 @@
+{
+  "day": 9,
+  "title": "9: Present Tense Regular Verbs",
+  "titleFa": "زمان حال افعال باقاعده",
+  "sentences": [
+    {
+      "id": 1,
+      "day": 9,
+      "role": "received",
+      "difficulty": "A1",
+      "translation": "What are you doing today?",
+      "translationFa": "امروز چه کار می‌کنی؟",
+      "audioText": "Was machst du heute?"
+    },
+    {
+      "id": 2,
+      "day": 9,
+      "role": "sent",
+      "difficulty": "A1",
+      "translation": "I am learning German and then I play football.",
+      "translationFa": "آلمانی یاد می‌گیرم و بعد فوتبال بازی می‌کنم.",
+      "targetText": "Ich lerne Deutsch und dann spiele ich Fußball."
+    },
+    {
+      "id": 3,
+      "day": 9,
+      "role": "received",
+      "difficulty": "A1",
+      "translation": "Do you like playing football?",
+      "translationFa": "فوتبال بازی کردن رو دوست داری؟",
+      "audioText": "Spielst du gern Fußball?"
+    },
+    {
+      "id": 4,
+      "day": 9,
+      "role": "sent",
+      "difficulty": "A1",
+      "translation": "Yes, I really like playing football.",
+      "translationFa": "بله، خیلی فوتبال بازی کردن رو دوست دارم.",
+      "targetText": "Ja, ich spiele sehr gern Fußball."
+    },
+    {
+      "id": 5,
+      "day": 9,
+      "role": "received",
+      "difficulty": "A1",
+      "translation": "When do you learn German?",
+      "translationFa": "کی آلمانی یاد می‌گیری؟",
+      "audioText": "Wann lernst du Deutsch?"
+    },
+    {
+      "id": 6,
+      "day": 9,
+      "role": "sent",
+      "difficulty": "A1",
+      "translation": "I learn two hours every day.",
+      "translationFa": "هر روز دو ساعت یاد می‌گیرم.",
+      "targetText": "Ich lerne jeden Tag zwei Stunden."
+    },
+    {
+      "id": 7,
+      "day": 9,
+      "role": "received",
+      "difficulty": "A1",
+      "translation": "What does your brother do on the weekend?",
+      "translationFa": "برادرت آخر هفته چه کار می‌کنه؟",
+      "audioText": "Was macht dein Bruder am Wochenende?"
+    },
+    {
+      "id": 8,
+      "day": 9,
+      "role": "sent",
+      "difficulty": "A1",
+      "translation": "He works on Saturday and rests on Sunday.",
+      "translationFa": "او شنبه کار می‌کند و یکشنبه استراحت می‌کند.",
+      "targetText": "Er arbeitet am Samstag und ruht am Sonntag."
+    },
+    {
+      "id": 9,
+      "day": 9,
+      "role": "received",
+      "difficulty": "A1",
+      "translation": "Do you like cooking?",
+      "translationFa": "آشپزی کردن رو دوست دارید؟",
+      "audioText": "Kochen Sie gern?"
+    },
+    {
+      "id": 10,
+      "day": 9,
+      "role": "sent",
+      "difficulty": "A1",
+      "translation": "Yes, I like cooking Persian food.",
+      "translationFa": "بله، آشپزی غذای ایرانی رو دوست دارم.",
+      "targetText": "Ja, ich koche gern persisches Essen."
+    },
+    {
+      "id": 11,
+      "day": 9,
+      "role": "received",
+      "difficulty": "A1",
+      "translation": "We are dancing tonight. Are you coming?",
+      "translationFa": "امشب می‌رقصیم. تو هم می‌آیی؟",
+      "audioText": "Wir tanzen heute Abend. Kommst du mit?"
+    },
+    {
+      "id": 12,
+      "day": 9,
+      "role": "sent",
+      "difficulty": "A1",
+      "translation": "Yes, I would love to come!",
+      "translationFa": "بله، با کمال میل می‌آیم!",
+      "targetText": "Ja, ich komme gern mit!"
+    }
+  ],
+  "difficulty": "A1",
+  "grammarFocus": "Conjugation: machen, spielen, lernen",
+  "grammarFocusFa": "صرف فعل: انجام دادن، بازی کردن، یاد گرفتن",
+  "description": "Someone is speaking too fast for you to understand. Ask them to slow down and repeat.",
+  "descriptionFa": "یه نفر خیلی سریع صحبت می‌کنه. ازشون بخواید کندتر بگن و تکرار کنن."
+}

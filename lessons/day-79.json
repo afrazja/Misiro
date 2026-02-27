@@ -1,0 +1,102 @@
+{
+  "day": 79,
+  "title": "79: Job Search",
+  "titleFa": "جستجوی کار",
+  "sentences": [
+    {
+      "id": 1,
+      "day": 79,
+      "role": "received",
+      "difficulty": "B1",
+      "translation": "Have you found a new job yet?",
+      "translationFa": "کار جدید پیدا کرده‌ای؟",
+      "audioText": "Hast du schon eine neue Stelle gefunden?"
+    },
+    {
+      "id": 2,
+      "day": 79,
+      "role": "sent",
+      "difficulty": "B1",
+      "translation": "Not yet, but I've applied at three companies.",
+      "translationFa": "هنوز نه، ولی در سه شرکت درخواست داده‌ام.",
+      "targetText": "Noch nicht, aber ich habe mich bei drei Firmen beworben."
+    },
+    {
+      "id": 3,
+      "day": 79,
+      "role": "received",
+      "difficulty": "B1",
+      "translation": "What kind of job are you looking for exactly?",
+      "translationFa": "دقیقاً دنبال چه شغلی هستی؟",
+      "audioText": "Was für eine Stelle suchst du genau?"
+    },
+    {
+      "id": 4,
+      "day": 79,
+      "role": "sent",
+      "difficulty": "B1",
+      "translation": "I'm looking for something in marketing or communication.",
+      "translationFa": "دنبال چیزی در حوزه بازاریابی یا ارتباطات می‌گردم.",
+      "targetText": "Ich suche etwas im Bereich Marketing oder Kommunikation."
+    },
+    {
+      "id": 5,
+      "day": 79,
+      "role": "received",
+      "difficulty": "B1",
+      "translation": "Have you updated your resume?",
+      "translationFa": "رزومه‌ات را به‌روز کرده‌ای؟",
+      "audioText": "Hast du deinen Lebenslauf aktualisiert?"
+    },
+    {
+      "id": 6,
+      "day": 79,
+      "role": "sent",
+      "difficulty": "B1",
+      "translation": "Yes, I completely revised it last week.",
+      "translationFa": "بله، هفته پیش کاملاً بازنویسی کردم.",
+      "targetText": "Ja, ich habe ihn letzte Woche komplett überarbeitet."
+    },
+    {
+      "id": 7,
+      "day": 79,
+      "role": "received",
+      "difficulty": "B1",
+      "translation": "Have you also written a cover letter?",
+      "translationFa": "نامه‌ی همراه هم نوشته‌ای؟",
+      "audioText": "Hast du auch ein Anschreiben geschrieben?"
+    },
+    {
+      "id": 8,
+      "day": 79,
+      "role": "sent",
+      "difficulty": "B1",
+      "translation": "Yes, an individual cover letter for each company.",
+      "translationFa": "بله، برای هر شرکت یک نامه جداگانه.",
+      "targetText": "Ja, für jede Firma ein individuelles Anschreiben."
+    },
+    {
+      "id": 9,
+      "day": 79,
+      "role": "received",
+      "difficulty": "B1",
+      "translation": "That's important. When do you have the interview?",
+      "translationFa": "مهمه. کی مصاحبه داری؟",
+      "audioText": "Das ist wichtig. Wann hast du das Vorstellungsgespräch?"
+    },
+    {
+      "id": 10,
+      "day": 79,
+      "role": "sent",
+      "difficulty": "B1",
+      "translation": "On Wednesday at ten o'clock. I'm a little nervous.",
+      "translationFa": "چهارشنبه ساعت ده. کمی استرس دارم.",
+      "targetText": "Am Mittwoch um zehn Uhr. Ich bin ein bisschen nervös."
+    }
+  ],
+  "difficulty": "B1",
+  "grammarFocus": "Perfekt tense review; work vocabulary",
+  "grammarFocusFa": "مرور زمان گذشته؛ واژگان کاری",
+  "description": "",
+  "descriptionFa": ""
+}

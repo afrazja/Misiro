@@ -1,0 +1,102 @@
+{
+  "day": 89,
+  "title": "89: Pets and Animals",
+  "titleFa": "حیوانات خانگی",
+  "sentences": [
+    {
+      "id": 1,
+      "day": 89,
+      "role": "received",
+      "difficulty": "A2",
+      "translation": "Do you have a pet?",
+      "translationFa": "حیوان خانگی داری؟",
+      "audioText": "Hast du ein Haustier?"
+    },
+    {
+      "id": 2,
+      "day": 89,
+      "role": "sent",
+      "difficulty": "A2",
+      "translation": "Yes, I have a cat. Her name is Luna.",
+      "translationFa": "بله، یک گربه دارم. اسمش لونا است.",
+      "targetText": "Ja, ich habe eine Katze. Sie heißt Luna."
+    },
+    {
+      "id": 3,
+      "day": 89,
+      "role": "received",
+      "difficulty": "A2",
+      "translation": "How old is your cat?",
+      "translationFa": "گربه‌ات چند ساله است؟",
+      "audioText": "Wie alt ist deine Katze?"
+    },
+    {
+      "id": 4,
+      "day": 89,
+      "role": "sent",
+      "difficulty": "A2",
+      "translation": "My cat is three years old.",
+      "translationFa": "گربه‌ام سه ساله است.",
+      "targetText": "Meine Katze ist drei Jahre alt."
+    },
+    {
+      "id": 5,
+      "day": 89,
+      "role": "received",
+      "difficulty": "A2",
+      "translation": "I have a dog. His name is Max.",
+      "translationFa": "من یک سگ دارم. اسمش مکس است.",
+      "audioText": "Ich habe einen Hund. Sein Name ist Max."
+    },
+    {
+      "id": 6,
+      "day": 89,
+      "role": "sent",
+      "difficulty": "A2",
+      "translation": "How cute! Do you walk him every day?",
+      "translationFa": "چه بامزه! هر روز باهاش پیاده‌روی می‌کنی؟",
+      "targetText": "Wie süß! Gehst du jeden Tag mit ihm spazieren?"
+    },
+    {
+      "id": 7,
+      "day": 89,
+      "role": "received",
+      "difficulty": "A2",
+      "translation": "Yes, our dog needs a lot of exercise.",
+      "translationFa": "بله، سگ ما به حرکت زیاد نیاز دارد.",
+      "audioText": "Ja, unser Hund braucht viel Bewegung."
+    },
+    {
+      "id": 8,
+      "day": 89,
+      "role": "sent",
+      "difficulty": "A2",
+      "translation": "My cat sleeps the whole day on her pillow.",
+      "translationFa": "گربه‌ام تمام روز روی بالشتش می‌خوابد.",
+      "targetText": "Meine Katze schläft den ganzen Tag auf ihrem Kissen."
+    },
+    {
+      "id": 9,
+      "day": 89,
+      "role": "received",
+      "difficulty": "A2",
+      "translation": "Would you also like to have a dog?",
+      "translationFa": "دوست داری سگ هم داشته باشی؟",
+      "audioText": "Möchtest du auch einen Hund haben?"
+    },
+    {
+      "id": 10,
+      "day": 89,
+      "role": "sent",
+      "difficulty": "A2",
+      "translation": "Maybe later. Now my apartment is too small for a dog.",
+      "translationFa": "شاید بعداً. الان آپارتمانم برای سگ خیلی کوچک است.",
+      "targetText": "Vielleicht später. Jetzt ist meine Wohnung zu klein für einen Hund."
+    }
+  ],
+  "difficulty": "A2",
+  "grammarFocus": "Possessive pronouns review; animal vocabulary",
+  "grammarFocusFa": "مرور ضمایر ملکی؛ واژگان حیوانات",
+  "description": "",
+  "descriptionFa": ""
+}

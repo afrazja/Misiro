@@ -1,0 +1,120 @@
+{
+  "day": 15,
+  "title": "15: At the Restaurant",
+  "titleFa": "در رستوران",
+  "sentences": [
+    {
+      "id": 1,
+      "day": 15,
+      "role": "received",
+      "difficulty": "A1",
+      "translation": "Good evening! Have you reserved?",
+      "translationFa": "عصر بخیر! رزرو کرده‌اید؟",
+      "audioText": "Guten Abend! Haben Sie reserviert?"
+    },
+    {
+      "id": 2,
+      "day": 15,
+      "role": "sent",
+      "difficulty": "A1",
+      "translation": "Yes, under the name Ahmadi for two people.",
+      "translationFa": "بله، به نام احمدی برای دو نفر.",
+      "targetText": "Ja, auf den Namen Ahmadi für zwei Personen."
+    },
+    {
+      "id": 3,
+      "day": 15,
+      "role": "received",
+      "difficulty": "A1",
+      "translation": "Here you go, here is your menu.",
+      "translationFa": "بفرمایید، اینم منوی شما.",
+      "audioText": "Bitte sehr, hier ist Ihre Speisekarte."
+    },
+    {
+      "id": 4,
+      "day": 15,
+      "role": "sent",
+      "difficulty": "A1",
+      "translation": "Thanks. What do you recommend?",
+      "translationFa": "ممنون. چه پیشنهادی دارید؟",
+      "targetText": "Danke. Was empfehlen Sie?"
+    },
+    {
+      "id": 5,
+      "day": 15,
+      "role": "received",
+      "difficulty": "A1",
+      "translation": "The Wiener Schnitzel is very good today.",
+      "translationFa": "شنیتسل وینی امروز خیلی خوب است.",
+      "audioText": "Das Wiener Schnitzel ist heute sehr gut."
+    },
+    {
+      "id": 6,
+      "day": 15,
+      "role": "sent",
+      "difficulty": "A1",
+      "translation": "Good, I will take the schnitzel with fries.",
+      "translationFa": "خوب، من شنیتسل با سیب‌زمینی سرخ‌شده می‌خواهم.",
+      "targetText": "Gut, ich nehme das Schnitzel mit Pommes."
+    },
+    {
+      "id": 7,
+      "day": 15,
+      "role": "received",
+      "difficulty": "A1",
+      "translation": "And what would you like to drink?",
+      "translationFa": "و چه نوشیدنی میل دارید؟",
+      "audioText": "Und was möchten Sie trinken?"
+    },
+    {
+      "id": 8,
+      "day": 15,
+      "role": "sent",
+      "difficulty": "A1",
+      "translation": "I will take a water and an apple juice.",
+      "translationFa": "یک آب و یک آب سیب می‌خواهم.",
+      "targetText": "Ich nehme ein Wasser und einen Apfelsaft."
+    },
+    {
+      "id": 9,
+      "day": 15,
+      "role": "received",
+      "difficulty": "A1",
+      "translation": "Would you also like a starter?",
+      "translationFa": "پیش‌غذا هم میل دارید؟",
+      "audioText": "Möchten Sie auch eine Vorspeise?"
+    },
+    {
+      "id": 10,
+      "day": 15,
+      "role": "sent",
+      "difficulty": "A1",
+      "translation": "Yes, I will take the tomato soup.",
+      "translationFa": "بله، سوپ گوجه می‌خواهم.",
+      "targetText": "Ja, ich nehme die Tomatensuppe."
+    },
+    {
+      "id": 11,
+      "day": 15,
+      "role": "received",
+      "difficulty": "A1",
+      "translation": "Did you enjoy it?",
+      "translationFa": "خوشتان آمد؟",
+      "audioText": "Hat es Ihnen geschmeckt?"
+    },
+    {
+      "id": 12,
+      "day": 15,
+      "role": "sent",
+      "difficulty": "A1",
+      "translation": "Yes, very tasty! The bill, please.",
+      "translationFa": "بله، خیلی خوشمزه بود! صورتحساب، لطفا.",
+      "targetText": "Ja, sehr lecker! Die Rechnung, bitte."
+    }
+  ],
+  "difficulty": "A1",
+  "grammarFocus": "Accusative case basics: Ich nehme den/die/das",
+  "grammarFocusFa": "حالت مفعولی پایه: من ... را می‌گیرم",
+  "description": "You're at a bus stop and need to find your connection. Ask about departure times and routes.",
+  "descriptionFa": "تو ایستگاه اتوبوس هستید و باید مسیر اتصالی رو پیدا کنید. درباره زمان حرکت و مسیر بپرسید."
+}

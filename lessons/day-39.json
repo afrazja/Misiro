@@ -1,0 +1,120 @@
+{
+  "day": 39,
+  "title": "39: Travel & Transportation",
+  "titleFa": "سفر و حمل و نقل",
+  "sentences": [
+    {
+      "id": 1,
+      "day": 39,
+      "role": "received",
+      "difficulty": "A2",
+      "translation": "Where are you going on vacation?",
+      "translationFa": "کجا به تعطیلات می‌روی؟",
+      "audioText": "Wohin fährst du in den Urlaub?"
+    },
+    {
+      "id": 2,
+      "day": 39,
+      "role": "sent",
+      "difficulty": "A2",
+      "translation": "I am going to Austria, to Lake Constance.",
+      "translationFa": "به اتریش می‌روم، کنار دریاچه بودن‌زه.",
+      "targetText": "Ich fahre nach Österreich, an den Bodensee."
+    },
+    {
+      "id": 3,
+      "day": 39,
+      "role": "received",
+      "difficulty": "A2",
+      "translation": "How do you get there?",
+      "translationFa": "چطور می‌روی آنجا؟",
+      "audioText": "Wie kommst du dorthin?"
+    },
+    {
+      "id": 4,
+      "day": 39,
+      "role": "sent",
+      "difficulty": "A2",
+      "translation": "I fly to Vienna and then I take the train.",
+      "translationFa": "به وین پرواز می‌کنم و بعد قطار می‌گیرم.",
+      "targetText": "Ich fliege nach Wien und dann nehme ich den Zug."
+    },
+    {
+      "id": 5,
+      "day": 39,
+      "role": "received",
+      "difficulty": "A2",
+      "translation": "When does the next train to Hamburg leave?",
+      "translationFa": "قطار بعدی به هامبورگ کی حرکت می‌کند؟",
+      "audioText": "Wann fährt der nächste Zug nach Hamburg?"
+    },
+    {
+      "id": 6,
+      "day": 39,
+      "role": "sent",
+      "difficulty": "A2",
+      "translation": "The next train leaves at two PM from platform three.",
+      "translationFa": "قطار بعدی ساعت دو از سکوی سه حرکت می‌کند.",
+      "targetText": "Der nächste Zug fährt um vierzehn Uhr von Gleis drei."
+    },
+    {
+      "id": 7,
+      "day": 39,
+      "role": "received",
+      "difficulty": "A2",
+      "translation": "Do I have to change trains?",
+      "translationFa": "باید قطار عوض کنم؟",
+      "audioText": "Muss ich umsteigen?"
+    },
+    {
+      "id": 8,
+      "day": 39,
+      "role": "sent",
+      "difficulty": "A2",
+      "translation": "Yes, you have to change in Hannover.",
+      "translationFa": "بله، باید در هانوفر عوض کنید.",
+      "targetText": "Ja, Sie müssen in Hannover umsteigen."
+    },
+    {
+      "id": 9,
+      "day": 39,
+      "role": "received",
+      "difficulty": "A2",
+      "translation": "How long does the journey take?",
+      "translationFa": "مسیر چقدر طول می‌کشد؟",
+      "audioText": "Wie lange dauert die Fahrt?"
+    },
+    {
+      "id": 10,
+      "day": 39,
+      "role": "sent",
+      "difficulty": "A2",
+      "translation": "The journey takes about four hours.",
+      "translationFa": "مسیر حدود چهار ساعت طول می‌کشد.",
+      "targetText": "Die Fahrt dauert etwa vier Stunden."
+    },
+    {
+      "id": 11,
+      "day": 39,
+      "role": "received",
+      "difficulty": "A2",
+      "translation": "I would like to buy a ticket to Munich.",
+      "translationFa": "می‌خواهم یک بلیط به مونیخ بخرم.",
+      "audioText": "Ich möchte eine Fahrkarte nach München kaufen."
+    },
+    {
+      "id": 12,
+      "day": 39,
+      "role": "sent",
+      "difficulty": "A2",
+      "translation": "Single or return?",
+      "translationFa": "یک‌طرفه یا رفت و برگشت؟",
+      "targetText": "Einfach oder hin und zurück?"
+    }
+  ],
+  "difficulty": "A2",
+  "grammarFocus": "Prepositions of direction: nach, in, an",
+  "grammarFocusFa": "حروف اضافه جهت: به، در، کنار",
+  "description": "You have an appointment with your GP. Describe your symptoms and receive medical advice.",
+  "descriptionFa": "نوبت پزشک عمومی دارید. علائمتون رو توصیف کنید و توصیه پزشکی بگیرید."
+}

@@ -1,0 +1,120 @@
+{
+  "day": 18,
+  "title": "18: Clothes & Shopping",
+  "titleFa": "لباس و خرید",
+  "sentences": [
+    {
+      "id": 1,
+      "day": 18,
+      "role": "received",
+      "difficulty": "A1",
+      "translation": "Can I help you?",
+      "translationFa": "می‌توانم کمکتان کنم؟",
+      "audioText": "Kann ich Ihnen helfen?"
+    },
+    {
+      "id": 2,
+      "day": 18,
+      "role": "sent",
+      "difficulty": "A1",
+      "translation": "Yes, I am looking for a warm jacket.",
+      "translationFa": "بله، دنبال یک ژاکت گرم می‌گردم.",
+      "targetText": "Ja, ich suche eine warme Jacke."
+    },
+    {
+      "id": 3,
+      "day": 18,
+      "role": "received",
+      "difficulty": "A1",
+      "translation": "What size do you wear?",
+      "translationFa": "چه سایزی می‌پوشید؟",
+      "audioText": "Welche Größe tragen Sie?"
+    },
+    {
+      "id": 4,
+      "day": 18,
+      "role": "sent",
+      "difficulty": "A1",
+      "translation": "I wear size M.",
+      "translationFa": "سایز ام می‌پوشم.",
+      "targetText": "Ich trage Größe M."
+    },
+    {
+      "id": 5,
+      "day": 18,
+      "role": "received",
+      "difficulty": "A1",
+      "translation": "This blue jacket is very nice.",
+      "translationFa": "این ژاکت آبی خیلی قشنگ است.",
+      "audioText": "Diese blaue Jacke ist sehr schön."
+    },
+    {
+      "id": 6,
+      "day": 18,
+      "role": "sent",
+      "difficulty": "A1",
+      "translation": "Can I try it on?",
+      "translationFa": "می‌توانم امتحانش کنم؟",
+      "targetText": "Kann ich sie anprobieren?"
+    },
+    {
+      "id": 7,
+      "day": 18,
+      "role": "received",
+      "difficulty": "A1",
+      "translation": "Of course! The fitting room is there.",
+      "translationFa": "البته! اتاق پرو آنجاست.",
+      "audioText": "Natürlich! Die Umkleidekabine ist dort."
+    },
+    {
+      "id": 8,
+      "day": 18,
+      "role": "sent",
+      "difficulty": "A1",
+      "translation": "The jacket fits well. How much does it cost?",
+      "translationFa": "ژاکت خوب اندازه است. چقدر قیمتش است؟",
+      "targetText": "Die Jacke passt gut. Wie viel kostet sie?"
+    },
+    {
+      "id": 9,
+      "day": 18,
+      "role": "received",
+      "difficulty": "A1",
+      "translation": "It costs seventy-nine euros.",
+      "translationFa": "هفتاد و نه یورو است.",
+      "audioText": "Sie kostet neunundsiebzig Euro."
+    },
+    {
+      "id": 10,
+      "day": 18,
+      "role": "sent",
+      "difficulty": "A1",
+      "translation": "Do you also have black shoes?",
+      "translationFa": "کفش مشکی هم دارید؟",
+      "targetText": "Haben Sie auch schwarze Schuhe?"
+    },
+    {
+      "id": 11,
+      "day": 18,
+      "role": "received",
+      "difficulty": "A1",
+      "translation": "Yes, we have these black shoes in size 42.",
+      "translationFa": "بله، این کفش‌های مشکی را در سایز ۴۲ داریم.",
+      "audioText": "Ja, wir haben diese schwarzen Schuhe in Größe 42."
+    },
+    {
+      "id": 12,
+      "day": 18,
+      "role": "sent",
+      "difficulty": "A1",
+      "translation": "I will take the jacket and the shoes.",
+      "translationFa": "ژاکت و کفش‌ها را می‌خواهم.",
+      "targetText": "Ich nehme die Jacke und die Schuhe."
+    }
+  ],
+  "difficulty": "A1",
+  "grammarFocus": "Adjective + noun agreement basics",
+  "grammarFocusFa": "تطابق صفت و اسم پایه",
+  "description": "You're chatting with a neighbor about today's weather and plans for the week ahead.",
+  "descriptionFa": "با یه همسایه درباره آب‌وهوای امروز و برنامه‌های هفته پیش رو صحبت می‌کنید."
+}

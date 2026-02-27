@@ -1,0 +1,120 @@
+{
+  "day": 32,
+  "title": "32: Dative Prepositions",
+  "titleFa": "حروف اضافه با مفعول غیرمستقیم",
+  "sentences": [
+    {
+      "id": 1,
+      "day": 32,
+      "role": "received",
+      "difficulty": "A2",
+      "translation": "Who are you going to the cinema with?",
+      "translationFa": "با چه کسی سینما می‌روی؟",
+      "audioText": "Mit wem gehst du ins Kino?"
+    },
+    {
+      "id": 2,
+      "day": 32,
+      "role": "sent",
+      "difficulty": "A2",
+      "translation": "I am going to the cinema with my friend.",
+      "translationFa": "با دوستم سینما می‌روم.",
+      "targetText": "Ich gehe mit meinem Freund ins Kino."
+    },
+    {
+      "id": 3,
+      "day": 32,
+      "role": "received",
+      "difficulty": "A2",
+      "translation": "Do you live with your parents?",
+      "translationFa": "پیش پدر و مادرت زندگی می‌کنی؟",
+      "audioText": "Wohnst du bei deinen Eltern?"
+    },
+    {
+      "id": 4,
+      "day": 32,
+      "role": "sent",
+      "difficulty": "A2",
+      "translation": "No, I have been living alone for a year.",
+      "translationFa": "نه، یک سال است که تنها زندگی می‌کنم.",
+      "targetText": "Nein, ich wohne seit einem Jahr allein."
+    },
+    {
+      "id": 5,
+      "day": 32,
+      "role": "received",
+      "difficulty": "A2",
+      "translation": "Where are you coming from right now?",
+      "translationFa": "الان از کجا می‌آیی؟",
+      "audioText": "Woher kommst du gerade?"
+    },
+    {
+      "id": 6,
+      "day": 32,
+      "role": "sent",
+      "difficulty": "A2",
+      "translation": "I am coming from work right now.",
+      "translationFa": "الان از سر کار می‌آیم.",
+      "targetText": "Ich komme gerade von der Arbeit."
+    },
+    {
+      "id": 7,
+      "day": 32,
+      "role": "received",
+      "difficulty": "A2",
+      "translation": "Are you going home after class?",
+      "translationFa": "بعد از کلاس می‌روی خانه؟",
+      "audioText": "Gehst du nach dem Unterricht nach Hause?"
+    },
+    {
+      "id": 8,
+      "day": 32,
+      "role": "sent",
+      "difficulty": "A2",
+      "translation": "No, after class I am going to the doctor.",
+      "translationFa": "نه، بعد از کلاس می‌روم پیش دکتر.",
+      "targetText": "Nein, nach dem Unterricht gehe ich zum Arzt."
+    },
+    {
+      "id": 9,
+      "day": 32,
+      "role": "received",
+      "difficulty": "A2",
+      "translation": "What country is your neighbor from?",
+      "translationFa": "همسایه‌ات اهل چه کشوری است؟",
+      "audioText": "Aus welchem Land kommt dein Nachbar?"
+    },
+    {
+      "id": 10,
+      "day": 32,
+      "role": "sent",
+      "difficulty": "A2",
+      "translation": "He comes from Turkey and has lived here for three years.",
+      "translationFa": "اهل ترکیه است و سه سال است اینجا زندگی می‌کند.",
+      "targetText": "Er kommt aus der Türkei und wohnt seit drei Jahren hier."
+    },
+    {
+      "id": 11,
+      "day": 32,
+      "role": "received",
+      "difficulty": "A2",
+      "translation": "Do you go by bus or by bike?",
+      "translationFa": "با اتوبوس می‌روی یا با دوچرخه؟",
+      "audioText": "Fährst du mit dem Bus oder mit dem Fahrrad?"
+    },
+    {
+      "id": 12,
+      "day": 32,
+      "role": "sent",
+      "difficulty": "A2",
+      "translation": "I ride my bike when the weather is nice.",
+      "translationFa": "وقتی هوا خوب باشد با دوچرخه می‌روم.",
+      "targetText": "Ich fahre bei schönem Wetter mit dem Fahrrad."
+    }
+  ],
+  "difficulty": "A2",
+  "grammarFocus": "mit, bei, nach, von, zu, aus, seit",
+  "grammarFocusFa": "با، نزد، بعد از، از، به سوی، از، از زمان",
+  "description": "It's Monday morning at the office. Catch up with a colleague about tasks and pending messages.",
+  "descriptionFa": "صبح دوشنبه‌ست تو اداره. با یه همکار درباره وظایف و پیام‌های در انتظار صحبت کنید."
+}

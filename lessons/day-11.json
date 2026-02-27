@@ -1,0 +1,120 @@
+{
+  "day": 11,
+  "title": "11: Food & Groceries",
+  "titleFa": "غذا و خواربار",
+  "sentences": [
+    {
+      "id": 1,
+      "day": 11,
+      "role": "received",
+      "difficulty": "A1",
+      "translation": "Good day! What would you like?",
+      "translationFa": "روز بخیر! چه چیزی میل دارید؟",
+      "audioText": "Guten Tag! Was hätten Sie gern?"
+    },
+    {
+      "id": 2,
+      "day": 11,
+      "role": "sent",
+      "difficulty": "A1",
+      "translation": "I would like a kilo of apples.",
+      "translationFa": "یک کیلو سیب می‌خواستم.",
+      "targetText": "Ich hätte gern ein Kilo Äpfel."
+    },
+    {
+      "id": 3,
+      "day": 11,
+      "role": "received",
+      "difficulty": "A1",
+      "translation": "Anything else?",
+      "translationFa": "چیز دیگه‌ای؟",
+      "audioText": "Sonst noch etwas?"
+    },
+    {
+      "id": 4,
+      "day": 11,
+      "role": "sent",
+      "difficulty": "A1",
+      "translation": "Yes, I also need bread and butter.",
+      "translationFa": "بله، نان و کره هم لازم دارم.",
+      "targetText": "Ja, ich brauche auch Brot und Butter."
+    },
+    {
+      "id": 5,
+      "day": 11,
+      "role": "received",
+      "difficulty": "A1",
+      "translation": "The bread costs two euros fifty.",
+      "translationFa": "نان دو یورو و پنجاه سنت است.",
+      "audioText": "Das Brot kostet zwei Euro fünfzig."
+    },
+    {
+      "id": 6,
+      "day": 11,
+      "role": "sent",
+      "difficulty": "A1",
+      "translation": "Do you also have fresh tomatoes?",
+      "translationFa": "گوجه فرنگی تازه هم دارید؟",
+      "targetText": "Haben Sie auch frische Tomaten?"
+    },
+    {
+      "id": 7,
+      "day": 11,
+      "role": "received",
+      "difficulty": "A1",
+      "translation": "Yes, the tomatoes are very fresh today.",
+      "translationFa": "بله، گوجه‌ها امروز خیلی تازه هستند.",
+      "audioText": "Ja, die Tomaten sind sehr frisch heute."
+    },
+    {
+      "id": 8,
+      "day": 11,
+      "role": "sent",
+      "difficulty": "A1",
+      "translation": "Good, I will take half a kilo.",
+      "translationFa": "خوب، نیم کیلو می‌خواهم.",
+      "targetText": "Gut, ich nehme ein halbes Kilo."
+    },
+    {
+      "id": 9,
+      "day": 11,
+      "role": "received",
+      "difficulty": "A1",
+      "translation": "Would you like a bag?",
+      "translationFa": "کیسه می‌خواهید؟",
+      "audioText": "Möchten Sie eine Tüte?"
+    },
+    {
+      "id": 10,
+      "day": 11,
+      "role": "sent",
+      "difficulty": "A1",
+      "translation": "No thanks, I have a bag.",
+      "translationFa": "نه ممنون، کیف دارم.",
+      "targetText": "Nein danke, ich habe eine Tasche."
+    },
+    {
+      "id": 11,
+      "day": 11,
+      "role": "received",
+      "difficulty": "A1",
+      "translation": "That comes to seven euros twenty altogether.",
+      "translationFa": "مجموعا هفت یورو و بیست سنت می‌شود.",
+      "audioText": "Das macht zusammen sieben Euro zwanzig."
+    },
+    {
+      "id": 12,
+      "day": 11,
+      "role": "sent",
+      "difficulty": "A1",
+      "translation": "Here you go. Thank you very much!",
+      "translationFa": "بفرمایید. خیلی ممنون!",
+      "targetText": "Hier bitte. Vielen Dank!"
+    }
+  ],
+  "difficulty": "A1",
+  "grammarFocus": "Ich hätte gern... (I would like...)",
+  "grammarFocusFa": "من می‌خواستم...",
+  "description": "You've just met an interesting person at an event. Ask questions to learn more about them.",
+  "descriptionFa": "تو یه رویداد با یه نفر جالب آشنا شدید. سوال بپرسید تا بیشتر بشناسیدشون."
+}

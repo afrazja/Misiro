@@ -1,0 +1,102 @@
+{
+  "day": 58,
+  "title": "58: Health & Lifestyle",
+  "titleFa": "سلامت و سبک زندگی",
+  "sentences": [
+    {
+      "id": 1,
+      "day": 58,
+      "role": "received",
+      "difficulty": "B1",
+      "translation": "How do you stay fit and healthy?",
+      "translationFa": "چطور سالم و سرحال می‌مانی؟",
+      "audioText": "Wie bleibst du fit und gesund?"
+    },
+    {
+      "id": 2,
+      "day": 58,
+      "role": "sent",
+      "difficulty": "B1",
+      "translation": "I try to exercise every day without overdoing it.",
+      "translationFa": "سعی می‌کنم هر روز ورزش کنم بدون اینکه زیاده‌روی کنم.",
+      "targetText": "Ich versuche, jeden Tag Sport zu treiben, ohne es zu übertreiben."
+    },
+    {
+      "id": 3,
+      "day": 58,
+      "role": "received",
+      "difficulty": "B1",
+      "translation": "Do you eat healthy?",
+      "translationFa": "غذای سالم می‌خوری؟",
+      "audioText": "Isst du gesund?"
+    },
+    {
+      "id": 4,
+      "day": 58,
+      "role": "sent",
+      "difficulty": "B1",
+      "translation": "I eat a lot of fruit and vegetables instead of eating fast food.",
+      "translationFa": "میوه و سبزیجات زیاد می‌خورم به جای اینکه فست‌فود بخورم.",
+      "targetText": "Ich esse viel Obst und Gemüse, statt Fastfood zu essen."
+    },
+    {
+      "id": 5,
+      "day": 58,
+      "role": "received",
+      "difficulty": "B1",
+      "translation": "Do you sleep enough?",
+      "translationFa": "به اندازه کافی می‌خوابی؟",
+      "audioText": "Schläfst du genug?"
+    },
+    {
+      "id": 6,
+      "day": 58,
+      "role": "sent",
+      "difficulty": "B1",
+      "translation": "I try to sleep eight hours without using the alarm clock.",
+      "translationFa": "سعی می‌کنم هشت ساعت بخوابم بدون اینکه از زنگ ساعت استفاده کنم.",
+      "targetText": "Ich versuche acht Stunden zu schlafen, ohne den Wecker zu benutzen."
+    },
+    {
+      "id": 7,
+      "day": 58,
+      "role": "received",
+      "difficulty": "A2",
+      "translation": "Do you smoke?",
+      "translationFa": "سیگار می‌کشی؟",
+      "audioText": "Rauchst du?"
+    },
+    {
+      "id": 8,
+      "day": 58,
+      "role": "sent",
+      "difficulty": "B1",
+      "translation": "No, I stopped smoking a year ago.",
+      "translationFa": "نه، یک سال پیش سیگار را ترک کردم.",
+      "targetText": "Nein, ich habe vor einem Jahr aufgehört zu rauchen."
+    },
+    {
+      "id": 9,
+      "day": 58,
+      "role": "received",
+      "difficulty": "B1",
+      "translation": "Stress is bad for health.",
+      "translationFa": "استرس برای سلامتی ضرر دارد.",
+      "audioText": "Stress ist schlecht für die Gesundheit."
+    },
+    {
+      "id": 10,
+      "day": 58,
+      "role": "sent",
+      "difficulty": "B1",
+      "translation": "Yes, instead of stressing, one should take breaks and relax.",
+      "translationFa": "بله، به جای استرس داشتن باید استراحت کرد و آرامش یافت.",
+      "targetText": "Ja, statt sich zu stressen, sollte man Pausen machen und sich entspannen."
+    }
+  ],
+  "difficulty": "B1",
+  "grammarFocus": "Infinitive clauses: ohne...zu, statt...zu",
+  "grammarFocusFa": "جملات مصدری: بدون اینکه...، به جای اینکه...",
+  "description": "At the station you realise you've missed your train and your flight is delayed. Get help from the information desk.",
+  "descriptionFa": "تو ایستگاه متوجه می‌شید قطارتون رو از دست دادید و پروازتون تأخیر داره. از باجه اطلاعات کمک بگیرید."
+}

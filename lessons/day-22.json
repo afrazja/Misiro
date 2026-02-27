@@ -1,0 +1,120 @@
+{
+  "day": 22,
+  "title": "22: Negation",
+  "titleFa": "منفی‌سازی",
+  "sentences": [
+    {
+      "id": 1,
+      "day": 22,
+      "role": "received",
+      "difficulty": "A1",
+      "translation": "Do you drink coffee?",
+      "translationFa": "قهوه می‌نوشی؟",
+      "audioText": "Trinkst du Kaffee?"
+    },
+    {
+      "id": 2,
+      "day": 22,
+      "role": "sent",
+      "difficulty": "A1",
+      "translation": "No, I don't drink coffee. I prefer tea.",
+      "translationFa": "نه، قهوه نمی‌نوشم. ترجیح می‌دهم چای بنوشم.",
+      "targetText": "Nein, ich trinke keinen Kaffee. Ich trinke lieber Tee."
+    },
+    {
+      "id": 3,
+      "day": 22,
+      "role": "received",
+      "difficulty": "A1",
+      "translation": "Do you have a car?",
+      "translationFa": "ماشین داری؟",
+      "audioText": "Hast du ein Auto?"
+    },
+    {
+      "id": 4,
+      "day": 22,
+      "role": "sent",
+      "difficulty": "A1",
+      "translation": "No, I don't have a car. I go by bus.",
+      "translationFa": "نه، ماشین ندارم. با اتوبوس می‌روم.",
+      "targetText": "Nein, ich habe kein Auto. Ich fahre mit dem Bus."
+    },
+    {
+      "id": 5,
+      "day": 22,
+      "role": "received",
+      "difficulty": "A1",
+      "translation": "Do you come from Germany?",
+      "translationFa": "اهل آلمان هستی؟",
+      "audioText": "Kommst du aus Deutschland?"
+    },
+    {
+      "id": 6,
+      "day": 22,
+      "role": "sent",
+      "difficulty": "A1",
+      "translation": "No, I don't come from Germany. I come from Iran.",
+      "translationFa": "نه، اهل آلمان نیستم. من اهل ایران هستم.",
+      "targetText": "Nein, ich komme nicht aus Deutschland. Ich komme aus dem Iran."
+    },
+    {
+      "id": 7,
+      "day": 22,
+      "role": "received",
+      "difficulty": "A1",
+      "translation": "Do you understand the word?",
+      "translationFa": "این کلمه را می‌فهمی؟",
+      "audioText": "Verstehst du das Wort?"
+    },
+    {
+      "id": 8,
+      "day": 22,
+      "role": "sent",
+      "difficulty": "A1",
+      "translation": "No, I don't understand the word. What does it mean?",
+      "translationFa": "نه، کلمه را نمی‌فهمم. معنی‌اش چیه؟",
+      "targetText": "Nein, ich verstehe das Wort nicht. Was bedeutet es?"
+    },
+    {
+      "id": 9,
+      "day": 22,
+      "role": "received",
+      "difficulty": "A1",
+      "translation": "Is there a restaurant here?",
+      "translationFa": "اینجا رستوران هست؟",
+      "audioText": "Gibt es hier ein Restaurant?"
+    },
+    {
+      "id": 10,
+      "day": 22,
+      "role": "sent",
+      "difficulty": "A1",
+      "translation": "No, there is no restaurant here, but there is a café.",
+      "translationFa": "نه، اینجا رستوران نیست، ولی یک کافه هست.",
+      "targetText": "Nein, hier gibt es kein Restaurant, aber es gibt ein Café."
+    },
+    {
+      "id": 11,
+      "day": 22,
+      "role": "received",
+      "difficulty": "A1",
+      "translation": "Is the weather nice?",
+      "translationFa": "هوا خوب است؟",
+      "audioText": "Ist das Wetter schön?"
+    },
+    {
+      "id": 12,
+      "day": 22,
+      "role": "sent",
+      "difficulty": "A1",
+      "translation": "No, the weather is not nice. It is raining.",
+      "translationFa": "نه، هوا خوب نیست. باران می‌بارد.",
+      "targetText": "Nein, das Wetter ist nicht schön. Es regnet."
+    }
+  ],
+  "difficulty": "A1",
+  "grammarFocus": "nicht vs. kein/keine",
+  "grammarFocusFa": "nicht در مقابل kein/keine",
+  "description": "You're trying to schedule a meeting with a colleague. Agree on a time that works for both.",
+  "descriptionFa": "دارید سعی می‌کنید با یه همکار قرار ملاقات بگذارید. یه زمان مناسب برای هر دوتون پیدا کنید."
+}

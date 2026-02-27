@@ -1,0 +1,102 @@
+{
+  "day": 94,
+  "title": "94: Sports and Hobbies",
+  "titleFa": "ورزش و سرگرمی",
+  "sentences": [
+    {
+      "id": 1,
+      "day": 94,
+      "role": "received",
+      "difficulty": "B1",
+      "translation": "Do you exercise regularly?",
+      "translationFa": "مرتب ورزش می‌کنی؟",
+      "audioText": "Treibst du regelmäßig Sport?"
+    },
+    {
+      "id": 2,
+      "day": 94,
+      "role": "sent",
+      "difficulty": "B1",
+      "translation": "Yes, I've been playing tennis for two years.",
+      "translationFa": "بله، دو سال است تنیس بازی می‌کنم.",
+      "targetText": "Ja, ich spiele seit zwei Jahren Tennis."
+    },
+    {
+      "id": 3,
+      "day": 94,
+      "role": "received",
+      "difficulty": "B1",
+      "translation": "That's great! Do you also have other hobbies?",
+      "translationFa": "عالیه! سرگرمی‌های دیگری هم داری؟",
+      "audioText": "Das ist toll! Hast du auch andere Hobbys?"
+    },
+    {
+      "id": 4,
+      "day": 94,
+      "role": "sent",
+      "difficulty": "B1",
+      "translation": "Since last year I've been learning to play guitar.",
+      "translationFa": "از سال گذشته دارم گیتار یاد می‌گیرم.",
+      "targetText": "Seit letztem Jahr lerne ich Gitarre spielen."
+    },
+    {
+      "id": 5,
+      "day": 94,
+      "role": "received",
+      "difficulty": "B1",
+      "translation": "How often do you practice guitar?",
+      "translationFa": "چند وقت یکبار گیتار تمرین می‌کنی؟",
+      "audioText": "Wie oft übst du Gitarre?"
+    },
+    {
+      "id": 6,
+      "day": 94,
+      "role": "sent",
+      "difficulty": "B1",
+      "translation": "I practice every evening for half an hour.",
+      "translationFa": "هر شب نیم ساعت تمرین می‌کنم.",
+      "targetText": "Ich übe jeden Abend eine halbe Stunde."
+    },
+    {
+      "id": 7,
+      "day": 94,
+      "role": "received",
+      "difficulty": "B1",
+      "translation": "Since when have you been interested in music?",
+      "translationFa": "از کی به موسیقی علاقه‌مند شده‌ای؟",
+      "audioText": "Seit wann interessierst du dich für Musik?"
+    },
+    {
+      "id": 8,
+      "day": 94,
+      "role": "sent",
+      "difficulty": "B1",
+      "translation": "Since my childhood. My father also played guitar.",
+      "translationFa": "از کودکی. پدرم هم گیتار می‌زد.",
+      "targetText": "Seit meiner Kindheit. Mein Vater hat auch Gitarre gespielt."
+    },
+    {
+      "id": 9,
+      "day": 94,
+      "role": "received",
+      "difficulty": "B1",
+      "translation": "Do you also play in a band?",
+      "translationFa": "در گروه موسیقی هم می‌زنی؟",
+      "audioText": "Spielst du auch in einer Band?"
+    },
+    {
+      "id": 10,
+      "day": 94,
+      "role": "sent",
+      "difficulty": "B1",
+      "translation": "Not yet, but for a few weeks I've been looking for a group.",
+      "translationFa": "هنوز نه، ولی چند هفته‌ای هست دنبال یک گروه می‌گردم.",
+      "targetText": "Noch nicht, aber seit ein paar Wochen suche ich eine Gruppe."
+    }
+  ],
+  "difficulty": "B1",
+  "grammarFocus": "seit + present tense; hobby vocabulary",
+  "grammarFocusFa": "seit + حال ساده؛ واژگان سرگرمی",
+  "description": "",
+  "descriptionFa": ""
+}

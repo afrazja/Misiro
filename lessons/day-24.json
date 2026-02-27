@@ -1,0 +1,120 @@
+{
+  "day": 24,
+  "title": "24: W-Questions",
+  "titleFa": "سوالات با کلمه پرسشی",
+  "sentences": [
+    {
+      "id": 1,
+      "day": 24,
+      "role": "received",
+      "difficulty": "A1",
+      "translation": "Who is that in the photo?",
+      "translationFa": "آن کیست در عکس؟",
+      "audioText": "Wer ist das auf dem Foto?"
+    },
+    {
+      "id": 2,
+      "day": 24,
+      "role": "sent",
+      "difficulty": "A1",
+      "translation": "That is my friend Hassan.",
+      "translationFa": "این دوستم حسن است.",
+      "targetText": "Das ist mein Freund Hassan."
+    },
+    {
+      "id": 3,
+      "day": 24,
+      "role": "received",
+      "difficulty": "A1",
+      "translation": "What does he study?",
+      "translationFa": "چه رشته‌ای می‌خواند؟",
+      "audioText": "Was studiert er?"
+    },
+    {
+      "id": 4,
+      "day": 24,
+      "role": "sent",
+      "difficulty": "A1",
+      "translation": "He studies medicine in Hamburg.",
+      "translationFa": "او در هامبورگ پزشکی می‌خواند.",
+      "targetText": "Er studiert Medizin in Hamburg."
+    },
+    {
+      "id": 5,
+      "day": 24,
+      "role": "received",
+      "difficulty": "A1",
+      "translation": "Where exactly does he live?",
+      "translationFa": "دقیقا کجا زندگی می‌کند؟",
+      "audioText": "Wo wohnt er genau?"
+    },
+    {
+      "id": 6,
+      "day": 24,
+      "role": "sent",
+      "difficulty": "A1",
+      "translation": "He lives in the city center, near the harbor.",
+      "translationFa": "در مرکز شهر، نزدیک بندر زندگی می‌کند.",
+      "targetText": "Er wohnt im Stadtzentrum, in der Nähe vom Hafen."
+    },
+    {
+      "id": 7,
+      "day": 24,
+      "role": "received",
+      "difficulty": "A1",
+      "translation": "When did you meet each other?",
+      "translationFa": "کی با هم آشنا شدید؟",
+      "audioText": "Wann habt ihr euch kennengelernt?"
+    },
+    {
+      "id": 8,
+      "day": 24,
+      "role": "sent",
+      "difficulty": "A2",
+      "translation": "We met three years ago.",
+      "translationFa": "سه سال پیش با هم آشنا شدیم.",
+      "targetText": "Wir haben uns vor drei Jahren kennengelernt."
+    },
+    {
+      "id": 9,
+      "day": 24,
+      "role": "received",
+      "difficulty": "A1",
+      "translation": "Why are you learning German?",
+      "translationFa": "چرا آلمانی یاد می‌گیری؟",
+      "audioText": "Warum lernst du Deutsch?"
+    },
+    {
+      "id": 10,
+      "day": 24,
+      "role": "sent",
+      "difficulty": "A1",
+      "translation": "Because I want to work in Germany.",
+      "translationFa": "چون می‌خواهم در آلمان کار کنم.",
+      "targetText": "Weil ich in Deutschland arbeiten möchte."
+    },
+    {
+      "id": 11,
+      "day": 24,
+      "role": "received",
+      "difficulty": "A1",
+      "translation": "How long have you been learning German?",
+      "translationFa": "چه مدت است که آلمانی یاد می‌گیری؟",
+      "audioText": "Wie lange lernst du schon Deutsch?"
+    },
+    {
+      "id": 12,
+      "day": 24,
+      "role": "sent",
+      "difficulty": "A1",
+      "translation": "I have been learning German for six months.",
+      "translationFa": "شش ماه است که آلمانی یاد می‌گیرم.",
+      "targetText": "Ich lerne seit sechs Monaten Deutsch."
+    }
+  ],
+  "difficulty": "A1",
+  "grammarFocus": "Wer, was, wo, wann, warum, wie",
+  "grammarFocusFa": "چه کسی، چه، کجا، کی، چرا، چگونه",
+  "description": "You're getting to know a new colleague over coffee. Talk about hobbies and free time.",
+  "descriptionFa": "دارید با یه همکار جدید سر قهوه آشنا می‌شید. درباره سرگرمی‌ها و اوقات فراغت صحبت کنید."
+}

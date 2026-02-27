@@ -1,0 +1,102 @@
+{
+  "day": 55,
+  "title": "55: Indirect Questions",
+  "titleFa": "سوالات غیرمستقیم",
+  "sentences": [
+    {
+      "id": 1,
+      "day": 55,
+      "role": "received",
+      "difficulty": "B1",
+      "translation": "Can you tell me where the train station is?",
+      "translationFa": "می‌توانید بگویید ایستگاه قطار کجاست؟",
+      "audioText": "Können Sie mir sagen, wo der Bahnhof ist?"
+    },
+    {
+      "id": 2,
+      "day": 55,
+      "role": "sent",
+      "difficulty": "B1",
+      "translation": "Unfortunately I don't know exactly where the station is.",
+      "translationFa": "متاسفانه نمی‌دانم ایستگاه دقیقا کجاست.",
+      "targetText": "Ich weiß leider nicht, wo der Bahnhof genau ist."
+    },
+    {
+      "id": 3,
+      "day": 55,
+      "role": "received",
+      "difficulty": "B1",
+      "translation": "Do you know if the shop is open today?",
+      "translationFa": "می‌دانی مغازه امروز باز است؟",
+      "audioText": "Weißt du, ob der Laden heute geöffnet hat?"
+    },
+    {
+      "id": 4,
+      "day": 55,
+      "role": "sent",
+      "difficulty": "B1",
+      "translation": "I am not sure if it is open today.",
+      "translationFa": "مطمئن نیستم که امروز باز باشد.",
+      "targetText": "Ich bin nicht sicher, ob er heute auf hat."
+    },
+    {
+      "id": 5,
+      "day": 55,
+      "role": "received",
+      "difficulty": "B1",
+      "translation": "Can you explain to me how to buy a ticket?",
+      "translationFa": "می‌توانید توضیح دهید چطور بلیط بخرم؟",
+      "audioText": "Können Sie mir erklären, wie man ein Ticket kauft?"
+    },
+    {
+      "id": 6,
+      "day": 55,
+      "role": "sent",
+      "difficulty": "B1",
+      "translation": "I will show you how the machine works.",
+      "translationFa": "نشانتان می‌دهم دستگاه چطور کار می‌کند.",
+      "targetText": "Ich zeige Ihnen, wie der Automat funktioniert."
+    },
+    {
+      "id": 7,
+      "day": 55,
+      "role": "received",
+      "difficulty": "B1",
+      "translation": "I would like to know when the next course starts.",
+      "translationFa": "می‌خواهم بدانم کلاس بعدی کی شروع می‌شود.",
+      "audioText": "Ich möchte wissen, wann der nächste Kurs beginnt."
+    },
+    {
+      "id": 8,
+      "day": 55,
+      "role": "sent",
+      "difficulty": "B1",
+      "translation": "I will ask when exactly the course starts.",
+      "translationFa": "می‌پرسم دقیقا کی کلاس شروع می‌شود.",
+      "targetText": "Ich frage nach, wann genau der Kurs anfängt."
+    },
+    {
+      "id": 9,
+      "day": 55,
+      "role": "received",
+      "difficulty": "B1",
+      "translation": "Did he say why he can't come?",
+      "translationFa": "گفت چرا نمی‌تواند بیاید؟",
+      "audioText": "Hat er gesagt, warum er nicht kommen kann?"
+    },
+    {
+      "id": 10,
+      "day": 55,
+      "role": "sent",
+      "difficulty": "B1",
+      "translation": "No, he didn't say why he had to cancel.",
+      "translationFa": "نه، نگفت چرا مجبور شد لغو کند.",
+      "targetText": "Nein, er hat nicht gesagt, warum er absagen musste."
+    }
+  ],
+  "difficulty": "B1",
+  "grammarFocus": "ob, wann, wie, wo in indirect speech",
+  "grammarFocusFa": "آیا، کی، چگونه، کجا در نقل‌قول غیرمستقیم",
+  "description": "A busy day of mixed situations. You'll revisit key phrases and structures from the first 54 lessons.",
+  "descriptionFa": "یه روز پر از موقعیت‌های مختلف. عبارات و ساختارهای کلیدی از ۵۴ درس اول رو مرور می‌کنید."
+}

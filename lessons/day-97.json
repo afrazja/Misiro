@@ -1,0 +1,102 @@
+{
+  "day": 97,
+  "title": "97: Email and Letters",
+  "titleFa": "ایمیل و نامه",
+  "sentences": [
+    {
+      "id": 1,
+      "day": 97,
+      "role": "received",
+      "difficulty": "A2",
+      "translation": "Do you often have to write emails in German?",
+      "translationFa": "زیاد باید ایمیل آلمانی بنویسی؟",
+      "audioText": "Musst du oft E-Mails auf Deutsch schreiben?"
+    },
+    {
+      "id": 2,
+      "day": 97,
+      "role": "sent",
+      "difficulty": "A2",
+      "translation": "Yes, for work I write emails every day.",
+      "translationFa": "بله، برای کار هر روز ایمیل می‌نویسم.",
+      "targetText": "Ja, für die Arbeit schreibe ich jeden Tag E-Mails."
+    },
+    {
+      "id": 3,
+      "day": 97,
+      "role": "received",
+      "difficulty": "A2",
+      "translation": "Do you know how to start a formal email?",
+      "translationFa": "می‌دانی چطور یک ایمیل رسمی را شروع کنی؟",
+      "audioText": "Weißt du, wie man eine formelle E-Mail beginnt?"
+    },
+    {
+      "id": 4,
+      "day": 97,
+      "role": "sent",
+      "difficulty": "A2",
+      "translation": "Yes, you write: Dear ladies and gentlemen.",
+      "translationFa": "بله، می‌نویسی: خانم‌ها و آقایان محترم.",
+      "targetText": "Ja, man schreibt: Sehr geehrte Damen und Herren."
+    },
+    {
+      "id": 5,
+      "day": 97,
+      "role": "received",
+      "difficulty": "A2",
+      "translation": "And how do you end a formal email?",
+      "translationFa": "و چطور یک ایمیل رسمی را تمام می‌کنی؟",
+      "audioText": "Und wie beendet man eine formelle E-Mail?"
+    },
+    {
+      "id": 6,
+      "day": 97,
+      "role": "sent",
+      "difficulty": "A2",
+      "translation": "With kind regards and then the name.",
+      "translationFa": "با احترام و بعد اسم.",
+      "targetText": "Mit freundlichen Grüßen und dann der Name."
+    },
+    {
+      "id": 7,
+      "day": 97,
+      "role": "received",
+      "difficulty": "A2",
+      "translation": "And with friends? How do you write then?",
+      "translationFa": "و به دوستان؟ چطور می‌نویسی؟",
+      "audioText": "Und bei Freunden? Wie schreibst du da?"
+    },
+    {
+      "id": 8,
+      "day": 97,
+      "role": "sent",
+      "difficulty": "A2",
+      "translation": "With friends I write: Dear Tom or Dear Anna.",
+      "translationFa": "به دوستان می‌نویسم: تام عزیز یا آنا عزیز.",
+      "targetText": "Bei Freunden schreibe ich: Lieber Tom oder Liebe Anna."
+    },
+    {
+      "id": 9,
+      "day": 97,
+      "role": "received",
+      "difficulty": "A2",
+      "translation": "And at the end?",
+      "translationFa": "و آخرش؟",
+      "audioText": "Und am Ende?"
+    },
+    {
+      "id": 10,
+      "day": 97,
+      "role": "sent",
+      "difficulty": "A2",
+      "translation": "Many greetings or love greetings and my name.",
+      "translationFa": "با مهر و بعد اسمم.",
+      "targetText": "Viele Grüße oder Liebe Grüße und mein Name."
+    }
+  ],
+  "difficulty": "A2",
+  "grammarFocus": "Formal vs informal; writing phrases",
+  "grammarFocusFa": "رسمی در مقابل غیررسمی؛ عبارات نوشتاری",
+  "description": "",
+  "descriptionFa": ""
+}

@@ -1,0 +1,102 @@
+{
+  "day": 51,
+  "title": "51: Simple Past: Präteritum",
+  "titleFa": "گذشته ساده",
+  "sentences": [
+    {
+      "id": 1,
+      "day": 51,
+      "role": "received",
+      "difficulty": "B1",
+      "translation": "How was your weekend?",
+      "translationFa": "آخر هفته‌ات چطور بود؟",
+      "audioText": "Wie war dein Wochenende?"
+    },
+    {
+      "id": 2,
+      "day": 51,
+      "role": "sent",
+      "difficulty": "B1",
+      "translation": "It was very nice. I was at the museum on Saturday.",
+      "translationFa": "خیلی خوب بود. شنبه در موزه بودم.",
+      "targetText": "Es war sehr schön. Ich war am Samstag im Museum."
+    },
+    {
+      "id": 3,
+      "day": 51,
+      "role": "received",
+      "difficulty": "B1",
+      "translation": "Did you have class yesterday?",
+      "translationFa": "دیروز کلاس داشتی؟",
+      "audioText": "Hattest du gestern Unterricht?"
+    },
+    {
+      "id": 4,
+      "day": 51,
+      "role": "sent",
+      "difficulty": "B1",
+      "translation": "No, I had the day off yesterday. There was no class.",
+      "translationFa": "نه، دیروز تعطیل بودم. کلاسی نبود.",
+      "targetText": "Nein, ich hatte gestern frei. Es gab keinen Unterricht."
+    },
+    {
+      "id": 5,
+      "day": 51,
+      "role": "received",
+      "difficulty": "B1",
+      "translation": "Could you swim as a child?",
+      "translationFa": "وقتی بچه بودی شنا بلد بودی؟",
+      "audioText": "Konntest du als Kind schwimmen?"
+    },
+    {
+      "id": 6,
+      "day": 51,
+      "role": "sent",
+      "difficulty": "B1",
+      "translation": "No, I could only swim from the age of ten.",
+      "translationFa": "نه، از ده سالگی تازه شنا یاد گرفتم.",
+      "targetText": "Nein, ich konnte erst mit zehn Jahren schwimmen."
+    },
+    {
+      "id": 7,
+      "day": 51,
+      "role": "received",
+      "difficulty": "B1",
+      "translation": "Once upon a time there was a king who lived in a big castle.",
+      "translationFa": "یکی بود یکی نبود، پادشاهی بود که در قلعه بزرگی زندگی می‌کرد.",
+      "audioText": "Es war einmal ein König, der in einem großen Schloss lebte."
+    },
+    {
+      "id": 8,
+      "day": 51,
+      "role": "sent",
+      "difficulty": "B1",
+      "translation": "The story sounds interesting! What happened then?",
+      "translationFa": "داستان جالب به نظر می‌رسد! بعد چه شد؟",
+      "targetText": "Die Geschichte klingt interessant! Was passierte dann?"
+    },
+    {
+      "id": 9,
+      "day": 51,
+      "role": "received",
+      "difficulty": "B1",
+      "translation": "The king wanted peace, but his enemies were strong.",
+      "translationFa": "پادشاه صلح می‌خواست اما دشمنانش قوی بودند.",
+      "audioText": "Der König wollte Frieden, aber seine Feinde waren stark."
+    },
+    {
+      "id": 10,
+      "day": 51,
+      "role": "sent",
+      "difficulty": "B1",
+      "translation": "Did he have to fight or could he negotiate?",
+      "translationFa": "مجبور بود بجنگد یا توانست مذاکره کند؟",
+      "targetText": "Musste er kämpfen oder konnte er verhandeln?"
+    }
+  ],
+  "difficulty": "B1",
+  "grammarFocus": "war, hatte, konnte, musste",
+  "grammarFocusFa": "بود، داشت، توانست، باید",
+  "description": "You need to open a current account at a German bank. Ask all the right questions and fill in the forms.",
+  "descriptionFa": "باید یه حساب جاری در یه بانک آلمانی باز کنید. سوالات لازم رو بپرسید و فرم‌ها رو پر کنید."
+}

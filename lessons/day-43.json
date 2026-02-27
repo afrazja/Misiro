@@ -1,0 +1,120 @@
+{
+  "day": 43,
+  "title": "43: Subordinate Clauses: dass",
+  "titleFa": "جملات وابسته: که",
+  "sentences": [
+    {
+      "id": 1,
+      "day": 43,
+      "role": "received",
+      "difficulty": "A2",
+      "translation": "What do you think about the new teacher?",
+      "translationFa": "درباره معلم جدید چه فکر می‌کنی؟",
+      "audioText": "Was denkst du über den neuen Lehrer?"
+    },
+    {
+      "id": 2,
+      "day": 43,
+      "role": "sent",
+      "difficulty": "A2",
+      "translation": "I think that he explains very well.",
+      "translationFa": "فکر می‌کنم که خیلی خوب توضیح می‌دهد.",
+      "targetText": "Ich denke, dass er sehr gut erklärt."
+    },
+    {
+      "id": 3,
+      "day": 43,
+      "role": "received",
+      "difficulty": "A2",
+      "translation": "Do you know that tomorrow is a holiday?",
+      "translationFa": "می‌دانی فردا تعطیل است؟",
+      "audioText": "Weißt du, dass morgen ein Feiertag ist?"
+    },
+    {
+      "id": 4,
+      "day": 43,
+      "role": "sent",
+      "difficulty": "A2",
+      "translation": "No, I didn't know that! That's great!",
+      "translationFa": "نه، نمی‌دانستم! عالیه!",
+      "targetText": "Nein, das wusste ich nicht! Das ist ja toll!"
+    },
+    {
+      "id": 5,
+      "day": 43,
+      "role": "received",
+      "difficulty": "A2",
+      "translation": "Do you think that it will rain tomorrow?",
+      "translationFa": "فکر می‌کنی فردا باران می‌بارد؟",
+      "audioText": "Glaubst du, dass es morgen regnet?"
+    },
+    {
+      "id": 6,
+      "day": 43,
+      "role": "sent",
+      "difficulty": "A2",
+      "translation": "Yes, I think that it will rain tomorrow.",
+      "translationFa": "بله، فکر می‌کنم فردا باران می‌بارد.",
+      "targetText": "Ja, ich glaube, dass es morgen regnet."
+    },
+    {
+      "id": 7,
+      "day": 43,
+      "role": "received",
+      "difficulty": "A2",
+      "translation": "It is important that you come on time.",
+      "translationFa": "مهم است که سر وقت بیایی.",
+      "audioText": "Es ist wichtig, dass du pünktlich kommst."
+    },
+    {
+      "id": 8,
+      "day": 43,
+      "role": "sent",
+      "difficulty": "A2",
+      "translation": "I know that punctuality is very important in Germany.",
+      "translationFa": "می‌دانم که وقت‌شناسی در آلمان خیلی مهم است.",
+      "targetText": "Ich weiß, dass Pünktlichkeit in Deutschland sehr wichtig ist."
+    },
+    {
+      "id": 9,
+      "day": 43,
+      "role": "received",
+      "difficulty": "A2",
+      "translation": "I hope that you pass the exam.",
+      "translationFa": "امیدوارم که امتحان را قبول شوی.",
+      "audioText": "Ich hoffe, dass du die Prüfung bestehst."
+    },
+    {
+      "id": 10,
+      "day": 43,
+      "role": "sent",
+      "difficulty": "A2",
+      "translation": "Thanks! I am sure that I am well prepared.",
+      "translationFa": "ممنون! مطمئنم که خوب آماده هستم.",
+      "targetText": "Danke! Ich bin sicher, dass ich gut vorbereitet bin."
+    },
+    {
+      "id": 11,
+      "day": 43,
+      "role": "received",
+      "difficulty": "B1",
+      "translation": "They say that German is a difficult language.",
+      "translationFa": "می‌گویند که آلمانی زبان سختی است.",
+      "audioText": "Man sagt, dass Deutsch eine schwere Sprache ist."
+    },
+    {
+      "id": 12,
+      "day": 43,
+      "role": "sent",
+      "difficulty": "B1",
+      "translation": "I find that German is not so hard when you practice.",
+      "translationFa": "به نظرم آلمانی اگر تمرین کنی آنقدر سخت نیست.",
+      "targetText": "Ich finde, dass Deutsch nicht so schwer ist, wenn man übt."
+    }
+  ],
+  "difficulty": "A2",
+  "grammarFocus": "Verb-final position with dass",
+  "grammarFocusFa": "فعل در انتهای جمله با dass",
+  "description": "You're at a restaurant with dietary restrictions. Make sure the waiter fully understands your needs.",
+  "descriptionFa": "تو رستوران هستید و محدودیت غذایی دارید. مطمئن بشید که گارسون کاملاً نیازهاتون رو می‌فهمه."
+}

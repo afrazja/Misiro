@@ -1,0 +1,120 @@
+{
+  "day": 41,
+  "title": "41: Reflexive Verbs",
+  "titleFa": "افعال انعکاسی",
+  "sentences": [
+    {
+      "id": 1,
+      "day": 41,
+      "role": "received",
+      "difficulty": "A2",
+      "translation": "What are you interested in?",
+      "translationFa": "به چه چیزی علاقه‌مندی؟",
+      "audioText": "Wofür interessierst du dich?"
+    },
+    {
+      "id": 2,
+      "day": 41,
+      "role": "sent",
+      "difficulty": "A2",
+      "translation": "I am interested in art and music.",
+      "translationFa": "به هنر و موسیقی علاقه‌مندم.",
+      "targetText": "Ich interessiere mich für Kunst und Musik."
+    },
+    {
+      "id": 3,
+      "day": 41,
+      "role": "received",
+      "difficulty": "A2",
+      "translation": "Do you remember our first German class?",
+      "translationFa": "کلاس اول آلمانی‌مان یادت هست؟",
+      "audioText": "Erinnerst du dich an unseren ersten Deutschkurs?"
+    },
+    {
+      "id": 4,
+      "day": 41,
+      "role": "sent",
+      "difficulty": "A2",
+      "translation": "Yes, I remember it well. We were so nervous!",
+      "translationFa": "بله، خوب یادم است. خیلی استرس داشتیم!",
+      "targetText": "Ja, ich erinnere mich gut daran. Wir waren so nervös!"
+    },
+    {
+      "id": 5,
+      "day": 41,
+      "role": "received",
+      "difficulty": "A2",
+      "translation": "Are you looking forward to the vacation?",
+      "translationFa": "از تعطیلات ذوق‌زده‌ای؟",
+      "audioText": "Freust du dich auf den Urlaub?"
+    },
+    {
+      "id": 6,
+      "day": 41,
+      "role": "sent",
+      "difficulty": "A2",
+      "translation": "Yes, I am very excited about the vacation in Spain.",
+      "translationFa": "بله، خیلی از تعطیلات در اسپانیا ذوق‌زده‌ام.",
+      "targetText": "Ja, ich freue mich sehr auf den Urlaub in Spanien."
+    },
+    {
+      "id": 7,
+      "day": 41,
+      "role": "received",
+      "difficulty": "A2",
+      "translation": "You have to hurry! The bus is coming soon.",
+      "translationFa": "باید عجله کنی! اتوبوس الان می‌آید.",
+      "audioText": "Du musst dich beeilen! Der Bus kommt gleich."
+    },
+    {
+      "id": 8,
+      "day": 41,
+      "role": "sent",
+      "difficulty": "A2",
+      "translation": "I will get dressed quickly and then we will go.",
+      "translationFa": "سریع لباس می‌پوشم و بعد می‌رویم.",
+      "targetText": "Ich ziehe mich schnell an und dann gehen wir."
+    },
+    {
+      "id": 9,
+      "day": 41,
+      "role": "received",
+      "difficulty": "A2",
+      "translation": "Have you registered for the course?",
+      "translationFa": "برای کلاس ثبت‌نام کرده‌ای؟",
+      "audioText": "Hast du dich für den Kurs angemeldet?"
+    },
+    {
+      "id": 10,
+      "day": 41,
+      "role": "sent",
+      "difficulty": "A2",
+      "translation": "Yes, I registered online yesterday.",
+      "translationFa": "بله، دیروز آنلاین ثبت‌نام کردم.",
+      "targetText": "Ja, ich habe mich gestern online angemeldet."
+    },
+    {
+      "id": 11,
+      "day": 41,
+      "role": "received",
+      "difficulty": "A2",
+      "translation": "We are meeting tomorrow at three in front of the cinema.",
+      "translationFa": "فردا ساعت سه جلوی سینما قرار می‌گذاریم.",
+      "audioText": "Wir treffen uns morgen um drei vor dem Kino."
+    },
+    {
+      "id": 12,
+      "day": 41,
+      "role": "sent",
+      "difficulty": "A2",
+      "translation": "Good, I am looking forward to it! See you tomorrow!",
+      "translationFa": "خوب، منتظرش هستم! تا فردا!",
+      "targetText": "Gut, ich freue mich darauf! Bis morgen!"
+    }
+  ],
+  "difficulty": "A2",
+  "grammarFocus": "sich freuen, sich erinnern, sich interessieren",
+  "grammarFocusFa": "خوشحال شدن، به یاد آوردن، علاقه‌مند بودن",
+  "description": "Your tooth has been hurting for two days. Call the dentist, describe the pain, and make an appointment.",
+  "descriptionFa": "دندونتون دو روزه درد می‌کنه. به دندونپزشک زنگ بزنید، درد رو توصیف کنید و نوبت بگیرید."
+}

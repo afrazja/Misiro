@@ -1,0 +1,102 @@
+{
+  "day": 67,
+  "title": "67: Formal Letter Writing",
+  "titleFa": "نامه‌نگاری رسمی",
+  "sentences": [
+    {
+      "id": 1,
+      "day": 67,
+      "role": "received",
+      "difficulty": "B1",
+      "translation": "Have you already written the application?",
+      "translationFa": "رزومه را نوشته‌ای؟",
+      "audioText": "Hast du schon die Bewerbung geschrieben?"
+    },
+    {
+      "id": 2,
+      "day": 67,
+      "role": "sent",
+      "difficulty": "B1",
+      "translation": "Yes, I begin with: Dear Sir or Madam.",
+      "translationFa": "بله، شروع می‌کنم با: خانم‌ها و آقایان محترم.",
+      "targetText": "Ja, ich beginne mit: Sehr geehrte Damen und Herren."
+    },
+    {
+      "id": 3,
+      "day": 67,
+      "role": "received",
+      "difficulty": "B1",
+      "translation": "How do you close a formal letter?",
+      "translationFa": "نامه رسمی را چطور تمام می‌کنند؟",
+      "audioText": "Wie schließt man einen formellen Brief ab?"
+    },
+    {
+      "id": 4,
+      "day": 67,
+      "role": "sent",
+      "difficulty": "B1",
+      "translation": "You write: With kind regards, and then the name.",
+      "translationFa": "می‌نویسیم: با احترام، و سپس نام.",
+      "targetText": "Man schreibt: Mit freundlichen Grüßen, und dann den Namen."
+    },
+    {
+      "id": 5,
+      "day": 67,
+      "role": "received",
+      "difficulty": "B1",
+      "translation": "I would like to complain about the bad service.",
+      "translationFa": "می‌خواهم درباره سرویس بد شکایت کنم.",
+      "audioText": "Ich möchte mich über den schlechten Service beschweren."
+    },
+    {
+      "id": 6,
+      "day": 67,
+      "role": "sent",
+      "difficulty": "B1",
+      "translation": "You could write: Hereby I would like to complain about the poor service.",
+      "translationFa": "می‌توانید بنویسید: بدینوسیله مایلم از خدمات نامناسب شکایت کنم.",
+      "targetText": "Sie könnten schreiben: Hiermit möchte ich mich über den mangelhaften Service beschweren."
+    },
+    {
+      "id": 7,
+      "day": 67,
+      "role": "received",
+      "difficulty": "B1",
+      "translation": "How does one politely ask for a reply?",
+      "translationFa": "چطور مؤدبانه درخواست پاسخ می‌کنند؟",
+      "audioText": "Wie bittet man höflich um eine Antwort?"
+    },
+    {
+      "id": 8,
+      "day": 67,
+      "role": "sent",
+      "difficulty": "B1",
+      "translation": "One can write: I would be happy about a prompt response.",
+      "translationFa": "می‌توان نوشت: از پاسخ سریع شما خوشحال می‌شوم.",
+      "targetText": "Man kann schreiben: Ich würde mich über eine baldige Rückmeldung freuen."
+    },
+    {
+      "id": 9,
+      "day": 67,
+      "role": "received",
+      "difficulty": "B1",
+      "translation": "Should I send the letter by post or by email?",
+      "translationFa": "نامه را پستی بفرستم یا ایمیل؟",
+      "audioText": "Soll ich den Brief per Post oder per E-Mail schicken?"
+    },
+    {
+      "id": 10,
+      "day": 67,
+      "role": "sent",
+      "difficulty": "B1",
+      "translation": "Nowadays communication is mostly done by email.",
+      "translationFa": "امروزه بیشتر از طریق ایمیل ارتباط برقرار می‌شود.",
+      "targetText": "Heutzutage wird meistens per E-Mail kommuniziert."
+    }
+  ],
+  "difficulty": "B1",
+  "grammarFocus": "Formal register: Sehr geehrte/r",
+  "grammarFocusFa": "سطح رسمی: محترم",
+  "description": "Navigate German bureaucracy — visit the Bürgeramt, apply for permits, and deal with official paperwork and government letters.",
+  "descriptionFa": "با بروکراسی آلمان کنار بیایید — به اداره امور شهروندان بروید، برای مجوزها درخواست دهید و با کاغذبازی و نامه‌های رسمی سروکار داشته باشید."
+}

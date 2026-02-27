@@ -1,0 +1,120 @@
+{
+  "day": 6,
+  "title": "6: Family Members",
+  "titleFa": "اعضای خانواده",
+  "sentences": [
+    {
+      "id": 1,
+      "day": 6,
+      "role": "received",
+      "difficulty": "A1",
+      "translation": "Do you have siblings?",
+      "translationFa": "خواهر و برادر داری؟",
+      "audioText": "Hast du Geschwister?"
+    },
+    {
+      "id": 2,
+      "day": 6,
+      "role": "sent",
+      "difficulty": "A1",
+      "translation": "Yes, I have a brother and a sister.",
+      "translationFa": "بله، یک برادر و یک خواهر دارم.",
+      "targetText": "Ja, ich habe einen Bruder und eine Schwester."
+    },
+    {
+      "id": 3,
+      "day": 6,
+      "role": "received",
+      "difficulty": "A1",
+      "translation": "What is your brother called?",
+      "translationFa": "اسم برادرت چیه؟",
+      "audioText": "Wie heißt dein Bruder?"
+    },
+    {
+      "id": 4,
+      "day": 6,
+      "role": "sent",
+      "difficulty": "A1",
+      "translation": "My brother is called Amir. He is twenty years old.",
+      "translationFa": "برادرم اسمش امیر است. او بیست ساله است.",
+      "targetText": "Mein Bruder heißt Amir. Er ist zwanzig Jahre alt."
+    },
+    {
+      "id": 5,
+      "day": 6,
+      "role": "received",
+      "difficulty": "A1",
+      "translation": "And your sister?",
+      "translationFa": "و خواهرت؟",
+      "audioText": "Und deine Schwester?"
+    },
+    {
+      "id": 6,
+      "day": 6,
+      "role": "sent",
+      "difficulty": "A1",
+      "translation": "My sister is called Sara. She is eighteen.",
+      "translationFa": "خواهرم اسمش سارا است. او هجده ساله است.",
+      "targetText": "Meine Schwester heißt Sara. Sie ist achtzehn."
+    },
+    {
+      "id": 7,
+      "day": 6,
+      "role": "received",
+      "difficulty": "A1",
+      "translation": "Are your parents also in Germany?",
+      "translationFa": "پدر و مادرت هم در آلمان هستند؟",
+      "audioText": "Sind deine Eltern auch in Deutschland?"
+    },
+    {
+      "id": 8,
+      "day": 6,
+      "role": "sent",
+      "difficulty": "A1",
+      "translation": "No, my parents live in Iran.",
+      "translationFa": "نه، پدر و مادرم در ایران زندگی می‌کنند.",
+      "targetText": "Nein, meine Eltern wohnen im Iran."
+    },
+    {
+      "id": 9,
+      "day": 6,
+      "role": "received",
+      "difficulty": "A1",
+      "translation": "What does your father do for work?",
+      "translationFa": "شغل پدرت چیه؟",
+      "audioText": "Was macht dein Vater beruflich?"
+    },
+    {
+      "id": 10,
+      "day": 6,
+      "role": "sent",
+      "difficulty": "A1",
+      "translation": "My father is an engineer. My mother is a doctor.",
+      "translationFa": "پدرم مهندس است. مادرم پزشک است.",
+      "targetText": "Mein Vater ist Ingenieur. Meine Mutter ist Ärztin."
+    },
+    {
+      "id": 11,
+      "day": 6,
+      "role": "received",
+      "difficulty": "A1",
+      "translation": "That is a big family!",
+      "translationFa": "خانواده بزرگی داری!",
+      "audioText": "Das ist eine große Familie!"
+    },
+    {
+      "id": 12,
+      "day": 6,
+      "role": "sent",
+      "difficulty": "A1",
+      "translation": "Yes, and my grandfather also lives with us.",
+      "translationFa": "بله، و پدربزرگم هم پیش ما زندگی می‌کند.",
+      "targetText": "Ja, und mein Großvater wohnt auch bei uns."
+    }
+  ],
+  "difficulty": "A1",
+  "grammarFocus": "Possessive articles: mein/meine",
+  "grammarFocusFa": "ضمایر ملکی: مال من",
+  "description": "A new friend asks about your family. Describe who you live with and your family situation.",
+  "descriptionFa": "یه دوست جدید درباره خانواده‌تون می‌پرسه. توصیف کنید با چه کسی زندگی می‌کنید."
+}

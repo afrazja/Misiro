@@ -1,0 +1,102 @@
+{
+  "day": 47,
+  "title": "47: Work & Professions",
+  "titleFa": "کار و حرفه‌ها",
+  "sentences": [
+    {
+      "id": 1,
+      "day": 47,
+      "role": "received",
+      "difficulty": "A2",
+      "translation": "What is your profession?",
+      "translationFa": "شغل شما چیست؟",
+      "audioText": "Was sind Sie von Beruf?"
+    },
+    {
+      "id": 2,
+      "day": 47,
+      "role": "sent",
+      "difficulty": "B1",
+      "translation": "I work as a software developer at a large company.",
+      "translationFa": "به عنوان توسعه‌دهنده نرم‌افزار در یک شرکت بزرگ کار می‌کنم.",
+      "targetText": "Ich arbeite als Softwareentwickler bei einer großen Firma."
+    },
+    {
+      "id": 3,
+      "day": 47,
+      "role": "received",
+      "difficulty": "A2",
+      "translation": "How long have you been working there?",
+      "translationFa": "چه مدت آنجا کار می‌کنید؟",
+      "audioText": "Wie lange arbeiten Sie schon dort?"
+    },
+    {
+      "id": 4,
+      "day": 47,
+      "role": "sent",
+      "difficulty": "A2",
+      "translation": "I have been working at this company for two years.",
+      "translationFa": "دو سال است که در این شرکت کار می‌کنم.",
+      "targetText": "Ich arbeite seit zwei Jahren bei dieser Firma."
+    },
+    {
+      "id": 5,
+      "day": 47,
+      "role": "received",
+      "difficulty": "A2",
+      "translation": "Do you like the work?",
+      "translationFa": "از کارتان راضی هستید؟",
+      "audioText": "Gefällt Ihnen die Arbeit?"
+    },
+    {
+      "id": 6,
+      "day": 47,
+      "role": "sent",
+      "difficulty": "B1",
+      "translation": "Yes, I like the work because it is varied.",
+      "translationFa": "بله، از کارم راضی هستم چون متنوع است.",
+      "targetText": "Ja, die Arbeit gefällt mir, weil sie abwechslungsreich ist."
+    },
+    {
+      "id": 7,
+      "day": 47,
+      "role": "received",
+      "difficulty": "A2",
+      "translation": "What did your father do for work?",
+      "translationFa": "پدرتان چه شغلی داشت؟",
+      "audioText": "Was hat Ihr Vater beruflich gemacht?"
+    },
+    {
+      "id": 8,
+      "day": 47,
+      "role": "sent",
+      "difficulty": "B1",
+      "translation": "My father worked as a teacher and my mother as a nurse.",
+      "translationFa": "پدرم معلم بود و مادرم پرستار.",
+      "targetText": "Mein Vater hat als Lehrer gearbeitet und meine Mutter als Krankenschwester."
+    },
+    {
+      "id": 9,
+      "day": 47,
+      "role": "received",
+      "difficulty": "B1",
+      "translation": "What do you want to do professionally in the future?",
+      "translationFa": "در آینده می‌خواهی چه شغلی داشته باشی؟",
+      "audioText": "Was möchtest du in Zukunft beruflich machen?"
+    },
+    {
+      "id": 10,
+      "day": 47,
+      "role": "sent",
+      "difficulty": "B1",
+      "translation": "I want to work as an engineer in the automotive industry.",
+      "translationFa": "می‌خواهم به عنوان مهندس در صنعت خودرو کار کنم.",
+      "targetText": "Ich möchte als Ingenieur in der Automobilindustrie arbeiten."
+    }
+  ],
+  "difficulty": "B1",
+  "grammarFocus": "als + profession: Ich arbeite als...",
+  "grammarFocusFa": "به عنوان + شغل: من کار می‌کنم به عنوان...",
+  "description": "You're buying cinema tickets for tonight's showing. Choose a film and get the best available seats.",
+  "descriptionFa": "دارید بلیت سینما برای نمایش امشب می‌خرید. یه فیلم انتخاب کنید و بهترین صندلی‌های موجود رو بگیرید."
+}

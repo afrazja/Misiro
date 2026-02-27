@@ -1,0 +1,102 @@
+{
+  "day": 93,
+  "title": "93: Phone Conversation",
+  "titleFa": "مکالمه تلفنی",
+  "sentences": [
+    {
+      "id": 1,
+      "day": 93,
+      "role": "received",
+      "difficulty": "A2",
+      "translation": "Hello, this is Dr. Müller's office. What can I do for you?",
+      "translationFa": "سلام، مطب دکتر مولر. چه کمکی می‌توانم بکنم؟",
+      "audioText": "Hallo, hier ist die Praxis von Dr. Müller. Was kann ich für Sie tun?"
+    },
+    {
+      "id": 2,
+      "day": 93,
+      "role": "sent",
+      "difficulty": "A2",
+      "translation": "Good day, I would like to make an appointment.",
+      "translationFa": "روز بخیر، می‌خواهم یک وقت بگیرم.",
+      "targetText": "Guten Tag, ich möchte gern einen Termin machen."
+    },
+    {
+      "id": 3,
+      "day": 93,
+      "role": "received",
+      "difficulty": "A2",
+      "translation": "When suits you?",
+      "translationFa": "کی برایتان مناسب است؟",
+      "audioText": "Wann passt es Ihnen?"
+    },
+    {
+      "id": 4,
+      "day": 93,
+      "role": "sent",
+      "difficulty": "A2",
+      "translation": "Could you give me an appointment on Thursday?",
+      "translationFa": "می‌توانید پنجشنبه وقت بدهید؟",
+      "targetText": "Könnten Sie mir einen Termin am Donnerstag geben?"
+    },
+    {
+      "id": 5,
+      "day": 93,
+      "role": "received",
+      "difficulty": "A2",
+      "translation": "On Thursday we have a free slot at eleven o'clock.",
+      "translationFa": "پنجشنبه ساعت یازده وقت خالی داریم.",
+      "audioText": "Am Donnerstag haben wir um elf Uhr einen freien Termin."
+    },
+    {
+      "id": 6,
+      "day": 93,
+      "role": "sent",
+      "difficulty": "A2",
+      "translation": "That works well. Can you please note my name?",
+      "translationFa": "خوبه. می‌توانید لطفاً اسمم را یادداشت کنید؟",
+      "targetText": "Das passt gut. Können Sie bitte meinen Namen notieren?"
+    },
+    {
+      "id": 7,
+      "day": 93,
+      "role": "received",
+      "difficulty": "A2",
+      "translation": "Of course, what is your name?",
+      "translationFa": "البته، اسمتان چیست؟",
+      "audioText": "Natürlich, wie ist Ihr Name?"
+    },
+    {
+      "id": 8,
+      "day": 93,
+      "role": "sent",
+      "difficulty": "A2",
+      "translation": "My name is Ahmadi. A-H-M-A-D-I.",
+      "translationFa": "اسمم احمدی است. A-H-M-A-D-I.",
+      "targetText": "Mein Name ist Ahmadi. A-H-M-A-D-I."
+    },
+    {
+      "id": 9,
+      "day": 93,
+      "role": "received",
+      "difficulty": "A2",
+      "translation": "All clear, Mr. Ahmadi. Thursday at eleven o'clock.",
+      "translationFa": "بسیار خب، آقای احمدی. پنجشنبه ساعت یازده.",
+      "audioText": "Alles klar, Herr Ahmadi. Donnerstag um elf Uhr."
+    },
+    {
+      "id": 10,
+      "day": 93,
+      "role": "sent",
+      "difficulty": "A2",
+      "translation": "Thank you very much! Goodbye (on phone).",
+      "translationFa": "خیلی ممنون! خداحافظ.",
+      "targetText": "Vielen Dank! Auf Wiederhören."
+    }
+  ],
+  "difficulty": "A2",
+  "grammarFocus": "Could you...?; telephone phrases",
+  "grammarFocusFa": "آیا می‌توانید...؟؛ عبارات تلفنی",
+  "description": "",
+  "descriptionFa": ""
+}

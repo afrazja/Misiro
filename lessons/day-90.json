@@ -1,0 +1,102 @@
+{
+  "day": 90,
+  "title": "90: German Festivals",
+  "titleFa": "جشن‌های آلمانی",
+  "sentences": [
+    {
+      "id": 1,
+      "day": 90,
+      "role": "received",
+      "difficulty": "B1",
+      "translation": "Have you ever been to a German folk festival?",
+      "translationFa": "تا حالا در یک جشن سنتی آلمانی بوده‌ای؟",
+      "audioText": "Warst du schon mal auf einem deutschen Volksfest?"
+    },
+    {
+      "id": 2,
+      "day": 90,
+      "role": "sent",
+      "difficulty": "B1",
+      "translation": "No, not yet. But I've heard that Oktoberfest is very famous.",
+      "translationFa": "نه، هنوز نه. ولی شنیده‌ام که اکتبرفست خیلی معروف است.",
+      "targetText": "Nein, noch nicht. Aber ich habe gehört, dass das Oktoberfest sehr bekannt ist."
+    },
+    {
+      "id": 3,
+      "day": 90,
+      "role": "received",
+      "difficulty": "B1",
+      "translation": "Yes, it's celebrated every year in Munich.",
+      "translationFa": "بله، هر سال در مونیخ جشن گرفته می‌شود.",
+      "audioText": "Ja, es wird jedes Jahr in München gefeiert."
+    },
+    {
+      "id": 4,
+      "day": 90,
+      "role": "sent",
+      "difficulty": "B1",
+      "translation": "When does it take place?",
+      "translationFa": "کی برگزار می‌شود؟",
+      "targetText": "Wann findet es statt?"
+    },
+    {
+      "id": 5,
+      "day": 90,
+      "role": "received",
+      "difficulty": "B1",
+      "translation": "It's celebrated from end of September to beginning of October.",
+      "translationFa": "از آخر سپتامبر تا اول اکتبر جشن گرفته می‌شود.",
+      "audioText": "Es wird von Ende September bis Anfang Oktober gefeiert."
+    },
+    {
+      "id": 6,
+      "day": 90,
+      "role": "sent",
+      "difficulty": "B1",
+      "translation": "What is done there?",
+      "translationFa": "آنجا چه کار می‌شود؟",
+      "targetText": "Was wird dort gemacht?"
+    },
+    {
+      "id": 7,
+      "day": 90,
+      "role": "received",
+      "difficulty": "B1",
+      "translation": "A lot of eating, drinking, and dancing is done.",
+      "translationFa": "خیلی خورده، نوشیده و رقصیده می‌شود.",
+      "audioText": "Es wird viel gegessen, getrunken und getanzt."
+    },
+    {
+      "id": 8,
+      "day": 90,
+      "role": "sent",
+      "difficulty": "B1",
+      "translation": "Christmas markets are also very nice, right?",
+      "translationFa": "بازارهای کریسمس هم خیلی قشنگ هستند، نه؟",
+      "targetText": "Auch Weihnachtsmärkte sind sehr schön, oder?"
+    },
+    {
+      "id": 9,
+      "day": 90,
+      "role": "received",
+      "difficulty": "B1",
+      "translation": "Yes, in December Christmas markets are organized everywhere.",
+      "translationFa": "بله، در دسامبر همه جا بازارهای کریسمس برگزار می‌شوند.",
+      "audioText": "Ja, im Dezember werden überall Weihnachtsmärkte organisiert."
+    },
+    {
+      "id": 10,
+      "day": 90,
+      "role": "sent",
+      "difficulty": "B1",
+      "translation": "Mulled wine is also sold there. I want to try that!",
+      "translationFa": "آنجا شراب داغ هم فروخته می‌شود. می‌خواهم امتحانش کنم!",
+      "targetText": "Dort wird auch Glühwein verkauft. Den möchte ich probieren!"
+    }
+  ],
+  "difficulty": "B1",
+  "grammarFocus": "Passive present; culture vocabulary",
+  "grammarFocusFa": "مجهول حال؛ واژگان فرهنگی",
+  "description": "",
+  "descriptionFa": ""
+}

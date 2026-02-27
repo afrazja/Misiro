@@ -1,0 +1,102 @@
+{
+  "day": 56,
+  "title": "56: Environment & Nature",
+  "titleFa": "محیط زیست و طبیعت",
+  "sentences": [
+    {
+      "id": 1,
+      "day": 56,
+      "role": "received",
+      "difficulty": "B1",
+      "translation": "What can one do for the environment?",
+      "translationFa": "چه کاری می‌توان برای محیط زیست انجام داد؟",
+      "audioText": "Was kann man für die Umwelt tun?"
+    },
+    {
+      "id": 2,
+      "day": 56,
+      "role": "sent",
+      "difficulty": "B1",
+      "translation": "One can drive less and use more public transportation.",
+      "translationFa": "می‌توان کمتر ماشین سوار شد و بیشتر از حمل‌ونقل عمومی استفاده کرد.",
+      "targetText": "Man kann weniger Auto fahren und mehr öffentliche Verkehrsmittel benutzen."
+    },
+    {
+      "id": 3,
+      "day": 56,
+      "role": "received",
+      "difficulty": "B1",
+      "translation": "Is the climate really getting warmer?",
+      "translationFa": "آب و هوا واقعا گرم‌تر می‌شود؟",
+      "audioText": "Wird das Klima wirklich wärmer?"
+    },
+    {
+      "id": 4,
+      "day": 56,
+      "role": "sent",
+      "difficulty": "B1",
+      "translation": "Yes, one can clearly see the changes.",
+      "translationFa": "بله، تغییرات را به وضوح می‌توان دید.",
+      "targetText": "Ja, man kann die Veränderungen deutlich sehen."
+    },
+    {
+      "id": 5,
+      "day": 56,
+      "role": "received",
+      "difficulty": "B1",
+      "translation": "Do you separate your waste?",
+      "translationFa": "زباله‌هایت را جدا می‌کنی؟",
+      "audioText": "Trennst du deinen Müll?"
+    },
+    {
+      "id": 6,
+      "day": 56,
+      "role": "sent",
+      "difficulty": "B1",
+      "translation": "Yes, in Germany one has to separate waste into different bins.",
+      "translationFa": "بله، در آلمان باید زباله را در سطل‌های مختلف جدا کرد.",
+      "targetText": "Ja, in Deutschland muss man den Müll in verschiedene Tonnen trennen."
+    },
+    {
+      "id": 7,
+      "day": 56,
+      "role": "received",
+      "difficulty": "B1",
+      "translation": "How can one save energy?",
+      "translationFa": "چطور می‌توان انرژی صرفه‌جویی کرد؟",
+      "audioText": "Wie kann man Energie sparen?"
+    },
+    {
+      "id": 8,
+      "day": 56,
+      "role": "sent",
+      "difficulty": "B1",
+      "translation": "One should turn off lights and heat less.",
+      "translationFa": "باید چراغ‌ها را خاموش کرد و کمتر بخاری روشن کرد.",
+      "targetText": "Man sollte das Licht ausschalten und weniger heizen."
+    },
+    {
+      "id": 9,
+      "day": 56,
+      "role": "received",
+      "difficulty": "B1",
+      "translation": "In my city there are many parks and green spaces.",
+      "translationFa": "در شهر من پارک‌ها و فضای سبز زیادی هست.",
+      "audioText": "In meiner Stadt gibt es viele Parks und Grünflächen."
+    },
+    {
+      "id": 10,
+      "day": 56,
+      "role": "sent",
+      "difficulty": "B1",
+      "translation": "That is nice. Nature is important for quality of life.",
+      "translationFa": "عالیه. طبیعت برای کیفیت زندگی مهم است.",
+      "targetText": "Das ist schön. Die Natur ist wichtig für die Lebensqualität."
+    }
+  ],
+  "difficulty": "B1",
+  "grammarFocus": "man + passive alternatives",
+  "grammarFocusFa": "ساختار man + جایگزین مجهول",
+  "description": "You've found a flat you like online. Visit the apartment and negotiate the rental terms with the landlord.",
+  "descriptionFa": "یه آپارتمان آنلاین پیدا کردید. از آپارتمان بازدید کنید و با صاحبخانه درباره شرایط اجاره مذاکره کنید."
+}

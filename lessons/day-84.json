@@ -1,0 +1,102 @@
+{
+  "day": 84,
+  "title": "84: Talking About Movies",
+  "titleFa": "صحبت درباره فیلم",
+  "sentences": [
+    {
+      "id": 1,
+      "day": 84,
+      "role": "received",
+      "difficulty": "B1",
+      "translation": "Have you seen the new film by this German director?",
+      "translationFa": "فیلم جدید آن کارگردان آلمانی را دیده‌ای؟",
+      "audioText": "Hast du den neuen Film von diesem deutschen Regisseur gesehen?"
+    },
+    {
+      "id": 2,
+      "day": 84,
+      "role": "sent",
+      "difficulty": "B1",
+      "translation": "Yes, I think that the film was very exciting.",
+      "translationFa": "بله، فکر می‌کنم فیلم خیلی هیجان‌انگیز بود.",
+      "targetText": "Ja, ich finde, dass der Film sehr spannend war."
+    },
+    {
+      "id": 3,
+      "day": 84,
+      "role": "received",
+      "difficulty": "B1",
+      "translation": "What was the film about?",
+      "translationFa": "فیلم درباره چه بود؟",
+      "audioText": "Worum ging es in dem Film?"
+    },
+    {
+      "id": 4,
+      "day": 84,
+      "role": "sent",
+      "difficulty": "B1",
+      "translation": "It was about a family that emigrated to Germany.",
+      "translationFa": "درباره خانواده‌ای بود که به آلمان مهاجرت کرده بود.",
+      "targetText": "Es ging um eine Familie, die nach Deutschland ausgewandert ist."
+    },
+    {
+      "id": 5,
+      "day": 84,
+      "role": "received",
+      "difficulty": "B1",
+      "translation": "I read that the actors were very good.",
+      "translationFa": "خوانده‌ام که بازیگران خیلی خوب بودند.",
+      "audioText": "Ich habe gelesen, dass die Schauspieler sehr gut waren."
+    },
+    {
+      "id": 6,
+      "day": 84,
+      "role": "sent",
+      "difficulty": "B1",
+      "translation": "True, especially the lead actress was magnificent.",
+      "translationFa": "درسته، مخصوصاً بازیگر اصلی زن فوق‌العاده بود.",
+      "targetText": "Stimmt, besonders die Hauptdarstellerin war großartig."
+    },
+    {
+      "id": 7,
+      "day": 84,
+      "role": "received",
+      "difficulty": "B1",
+      "translation": "Do you think that it will win a prize?",
+      "translationFa": "فکر می‌کنی جایزه‌ای بگیرد؟",
+      "audioText": "Glaubst du, dass er einen Preis gewinnen wird?"
+    },
+    {
+      "id": 8,
+      "day": 84,
+      "role": "sent",
+      "difficulty": "B1",
+      "translation": "I'm sure that it will be nominated.",
+      "translationFa": "مطمئنم که نامزد خواهد شد.",
+      "targetText": "Ich bin mir sicher, dass er nominiert wird."
+    },
+    {
+      "id": 9,
+      "day": 84,
+      "role": "received",
+      "difficulty": "B1",
+      "translation": "Should we go to the cinema together next week?",
+      "translationFa": "هفته بعد با هم بریم سینما؟",
+      "audioText": "Sollen wir nächste Woche zusammen ins Kino gehen?"
+    },
+    {
+      "id": 10,
+      "day": 84,
+      "role": "sent",
+      "difficulty": "B1",
+      "translation": "Gladly! I suggest that we take Friday evening.",
+      "translationFa": "با کمال میل! پیشنهاد می‌کنم جمعه شب برویم.",
+      "targetText": "Gerne! Ich schlage vor, dass wir den Freitagabend nehmen."
+    }
+  ],
+  "difficulty": "B1",
+  "grammarFocus": "dass clauses; opinion expressions",
+  "grammarFocusFa": "جملات با dass؛ بیان نظر",
+  "description": "",
+  "descriptionFa": ""
+}

@@ -1,0 +1,102 @@
+{
+  "day": 4,
+  "title": "4: The Alphabet & Spelling",
+  "titleFa": "الفبا و املا",
+  "sentences": [
+    {
+      "id": 1,
+      "day": 4,
+      "role": "received",
+      "difficulty": "A1",
+      "translation": "Good day! What is your name, please?",
+      "translationFa": "روز بخیر! اسم شما چیست، لطفا؟",
+      "audioText": "Guten Tag! Wie ist Ihr Name, bitte?"
+    },
+    {
+      "id": 2,
+      "day": 4,
+      "role": "sent",
+      "difficulty": "A1",
+      "translation": "My name is Müller.",
+      "translationFa": "اسم من مولر است.",
+      "targetText": "Mein Name ist Müller."
+    },
+    {
+      "id": 3,
+      "day": 4,
+      "role": "received",
+      "difficulty": "A1",
+      "translation": "Can you please spell that?",
+      "translationFa": "می‌توانید لطفا آن را هجی کنید؟",
+      "audioText": "Können Sie das bitte buchstabieren?"
+    },
+    {
+      "id": 4,
+      "day": 4,
+      "role": "sent",
+      "difficulty": "A1",
+      "translation": "M-Ü-L-L-E-R. Müller.",
+      "translationFa": "ام-اوو-ال-ال-ا-ار. مولر.",
+      "targetText": "M-Ü-L-L-E-R. Müller."
+    },
+    {
+      "id": 5,
+      "day": 4,
+      "role": "received",
+      "difficulty": "A1",
+      "translation": "Thanks! And your first name?",
+      "translationFa": "ممنون! و نام کوچک شما؟",
+      "audioText": "Danke! Und Ihr Vorname?"
+    },
+    {
+      "id": 6,
+      "day": 4,
+      "role": "sent",
+      "difficulty": "A1",
+      "translation": "My first name is Jürgen.",
+      "translationFa": "نام کوچک من یورگن است.",
+      "targetText": "Mein Vorname ist Jürgen."
+    },
+    {
+      "id": 7,
+      "day": 4,
+      "role": "received",
+      "difficulty": "A1",
+      "translation": "How do you write Straße?",
+      "translationFa": "کلمه خیابان را چگونه می‌نویسند؟",
+      "audioText": "Wie schreibt man Straße?"
+    },
+    {
+      "id": 8,
+      "day": 4,
+      "role": "sent",
+      "difficulty": "A1",
+      "translation": "S-T-R-A-ß-E. The ß is like a double S.",
+      "translationFa": "حرف ß مثل دو تا اس است.",
+      "targetText": "S-T-R-A-ß-E. Das ß ist wie ein doppeltes S."
+    },
+    {
+      "id": 9,
+      "day": 4,
+      "role": "received",
+      "difficulty": "A1",
+      "translation": "What is the difference between u and ü?",
+      "translationFa": "تفاوت بین u و ü چیست؟",
+      "audioText": "Was ist der Unterschied zwischen u und ü?"
+    },
+    {
+      "id": 10,
+      "day": 4,
+      "role": "sent",
+      "difficulty": "A1",
+      "translation": "The Ü has two dots on top.",
+      "translationFa": "حرف Ü دو نقطه بالا دارد.",
+      "targetText": "Das Ü hat zwei Punkte oben."
+    }
+  ],
+  "difficulty": "A1",
+  "grammarFocus": "German pronunciation: ä, ö, ü, ß",
+  "grammarFocusFa": "تلفظ آلمانی: ä، ö، ü، ß",
+  "description": "You're filling out a form and chatting about ages and phone numbers.",
+  "descriptionFa": "دارید یه فرم پر می‌کنید و درباره سن و شماره تلفن صحبت می‌کنید."
+}

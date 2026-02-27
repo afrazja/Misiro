@@ -1,0 +1,102 @@
+{
+  "day": 52,
+  "title": "52: Passive Voice: Present",
+  "titleFa": "مجهول: حال",
+  "sentences": [
+    {
+      "id": 1,
+      "day": 52,
+      "role": "received",
+      "difficulty": "B1",
+      "translation": "How is bread made in Germany?",
+      "translationFa": "نان در آلمان چگونه تهیه می‌شود؟",
+      "audioText": "Wie wird Brot in Deutschland hergestellt?"
+    },
+    {
+      "id": 2,
+      "day": 52,
+      "role": "sent",
+      "difficulty": "B1",
+      "translation": "Bread is baked from flour, water and yeast.",
+      "translationFa": "نان از آرد، آب و مخمر پخته می‌شود.",
+      "targetText": "Das Brot wird aus Mehl, Wasser und Hefe gebacken."
+    },
+    {
+      "id": 3,
+      "day": 52,
+      "role": "received",
+      "difficulty": "B1",
+      "translation": "Is there a lot of recycling in Germany?",
+      "translationFa": "در آلمان زیاد بازیافت می‌شود؟",
+      "audioText": "Wird in Deutschland viel recycelt?"
+    },
+    {
+      "id": 4,
+      "day": 52,
+      "role": "sent",
+      "difficulty": "B1",
+      "translation": "Yes, in Germany waste is separated very carefully.",
+      "translationFa": "بله، در آلمان زباله خیلی با دقت جدا می‌شود.",
+      "targetText": "Ja, in Deutschland wird der Müll sehr sorgfältig getrennt."
+    },
+    {
+      "id": 5,
+      "day": 52,
+      "role": "received",
+      "difficulty": "B1",
+      "translation": "When is the new building being opened?",
+      "translationFa": "ساختمان جدید کی افتتاح می‌شود؟",
+      "audioText": "Wann wird das neue Gebäude eröffnet?"
+    },
+    {
+      "id": 6,
+      "day": 52,
+      "role": "sent",
+      "difficulty": "B1",
+      "translation": "It will be officially opened next month.",
+      "translationFa": "ماه آینده رسما افتتاح می‌شود.",
+      "targetText": "Es wird nächsten Monat offiziell eröffnet."
+    },
+    {
+      "id": 7,
+      "day": 52,
+      "role": "received",
+      "difficulty": "B1",
+      "translation": "Is German also spoken in Austria?",
+      "translationFa": "در اتریش هم آلمانی صحبت می‌شود؟",
+      "audioText": "Wird Deutsch auch in Österreich gesprochen?"
+    },
+    {
+      "id": 8,
+      "day": 52,
+      "role": "sent",
+      "difficulty": "B1",
+      "translation": "Yes, German is spoken in Germany, Austria and Switzerland.",
+      "translationFa": "بله، آلمانی در آلمان، اتریش و سوئیس صحبت می‌شود.",
+      "targetText": "Ja, Deutsch wird in Deutschland, Österreich und der Schweiz gesprochen."
+    },
+    {
+      "id": 9,
+      "day": 52,
+      "role": "received",
+      "difficulty": "B1",
+      "translation": "Are the students being tested today?",
+      "translationFa": "امروز دانش‌آموزان امتحان می‌شوند؟",
+      "audioText": "Werden die Schüler heute geprüft?"
+    },
+    {
+      "id": 10,
+      "day": 52,
+      "role": "sent",
+      "difficulty": "B1",
+      "translation": "Yes, today all students are being tested in mathematics.",
+      "translationFa": "بله، امروز همه دانش‌آموزان در ریاضی امتحان می‌شوند.",
+      "targetText": "Ja, heute werden alle Schüler in Mathematik geprüft."
+    }
+  ],
+  "difficulty": "B1",
+  "grammarFocus": "werden + Partizip II",
+  "grammarFocusFa": "شدن + اسم مفعول",
+  "description": "You need to send a parcel to Iran. Weigh it, fill in the customs form, and choose a delivery option.",
+  "descriptionFa": "باید یه بسته به ایران بفرستید. وزن کنید، فرم گمرک پر کنید و گزینه ارسال رو انتخاب کنید."
+}

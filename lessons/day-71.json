@@ -1,0 +1,102 @@
+{
+  "day": 71,
+  "title": "71: Weekend Plans",
+  "titleFa": "برنامه آخر هفته",
+  "sentences": [
+    {
+      "id": 1,
+      "day": 71,
+      "role": "received",
+      "difficulty": "A2",
+      "translation": "What are you doing on the weekend?",
+      "translationFa": "آخر هفته چه کار می‌کنی؟",
+      "audioText": "Was machst du am Wochenende?"
+    },
+    {
+      "id": 2,
+      "day": 71,
+      "role": "sent",
+      "difficulty": "A2",
+      "translation": "I will go to the cinema on Saturday.",
+      "translationFa": "شنبه به سینما خواهم رفت.",
+      "targetText": "Ich werde am Samstag ins Kino gehen."
+    },
+    {
+      "id": 3,
+      "day": 71,
+      "role": "received",
+      "difficulty": "A2",
+      "translation": "Which movie would you like to see?",
+      "translationFa": "کدام فیلم را می‌خواهی ببینی؟",
+      "audioText": "Welchen Film möchtest du sehen?"
+    },
+    {
+      "id": 4,
+      "day": 71,
+      "role": "sent",
+      "difficulty": "A2",
+      "translation": "I want to see the new German film.",
+      "translationFa": "می‌خواهم فیلم جدید آلمانی را ببینم.",
+      "targetText": "Ich möchte den neuen deutschen Film sehen."
+    },
+    {
+      "id": 5,
+      "day": 71,
+      "role": "received",
+      "difficulty": "A2",
+      "translation": "And on Sunday? Do you also have plans?",
+      "translationFa": "و یکشنبه؟ برنامه‌ای هم داری؟",
+      "audioText": "Und am Sonntag? Hast du auch Pläne?"
+    },
+    {
+      "id": 6,
+      "day": 71,
+      "role": "sent",
+      "difficulty": "A2",
+      "translation": "On Sunday I will visit my grandparents.",
+      "translationFa": "یکشنبه به دیدن پدربزرگ و مادربزرگم خواهم رفت.",
+      "targetText": "Am Sonntag werde ich meine Großeltern besuchen."
+    },
+    {
+      "id": 7,
+      "day": 71,
+      "role": "received",
+      "difficulty": "A2",
+      "translation": "That sounds nice. Do they live far away?",
+      "translationFa": "قشنگ به نظر می‌رسد. دور زندگی می‌کنند؟",
+      "audioText": "Das klingt schön. Wohnen sie weit weg?"
+    },
+    {
+      "id": 8,
+      "day": 71,
+      "role": "sent",
+      "difficulty": "A2",
+      "translation": "No, they live only thirty minutes away.",
+      "translationFa": "نه، فقط سی دقیقه فاصله دارند.",
+      "targetText": "Nein, sie wohnen nur dreißig Minuten entfernt."
+    },
+    {
+      "id": 9,
+      "day": 71,
+      "role": "received",
+      "difficulty": "A2",
+      "translation": "Then I wish you a nice weekend!",
+      "translationFa": "پس آخر هفته خوبی برایت آرزو می‌کنم!",
+      "audioText": "Dann wünsche ich dir ein schönes Wochenende!"
+    },
+    {
+      "id": 10,
+      "day": 71,
+      "role": "sent",
+      "difficulty": "A2",
+      "translation": "Thanks, you too! See you Monday.",
+      "translationFa": "ممنون، تو هم همینطور! تا دوشنبه.",
+      "targetText": "Danke, dir auch! Bis Montag."
+    }
+  ],
+  "difficulty": "A2",
+  "grammarFocus": "Future with werden; time expressions",
+  "grammarFocusFa": "آینده با werden؛ عبارات زمانی",
+  "description": "",
+  "descriptionFa": ""
+}

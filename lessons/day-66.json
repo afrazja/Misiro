@@ -1,0 +1,102 @@
+{
+  "day": 66,
+  "title": "66: Advanced Adjective Declension",
+  "titleFa": "صرف پیشرفته صفت",
+  "sentences": [
+    {
+      "id": 1,
+      "day": 66,
+      "role": "received",
+      "difficulty": "B1",
+      "translation": "Would you like cold water or warm tea?",
+      "translationFa": "آب سرد می‌خواهید یا چای گرم؟",
+      "audioText": "Möchten Sie kaltes Wasser oder warmen Tee?"
+    },
+    {
+      "id": 2,
+      "day": 66,
+      "role": "sent",
+      "difficulty": "B1",
+      "translation": "Cold water, please. In hot weather I prefer drinking water.",
+      "translationFa": "آب سرد، لطفا. در هوای گرم ترجیح می‌دهم آب بنوشم.",
+      "targetText": "Kaltes Wasser, bitte. Bei heißem Wetter trinke ich lieber Wasser."
+    },
+    {
+      "id": 3,
+      "day": 66,
+      "role": "received",
+      "difficulty": "B1",
+      "translation": "At the market there is fresh fruit and fresh vegetables.",
+      "translationFa": "در بازار میوه تازه و سبزیجات تازه هست.",
+      "audioText": "Auf dem Markt gibt es frisches Obst und frisches Gemüse."
+    },
+    {
+      "id": 4,
+      "day": 66,
+      "role": "sent",
+      "difficulty": "B1",
+      "translation": "I like to buy fresh bread from the baker.",
+      "translationFa": "از نانوایی نان تازه می‌خرم.",
+      "targetText": "Ich kaufe gern frisches Brot vom Bäcker."
+    },
+    {
+      "id": 5,
+      "day": 66,
+      "role": "received",
+      "difficulty": "B1",
+      "translation": "With great pleasure I invite you to the celebration.",
+      "translationFa": "با کمال خوشحالی شما را به جشن دعوت می‌کنم.",
+      "audioText": "Mit großer Freude lade ich Sie zur Feier ein."
+    },
+    {
+      "id": 6,
+      "day": 66,
+      "role": "sent",
+      "difficulty": "B1",
+      "translation": "Thank you! I come with great interest.",
+      "translationFa": "خیلی ممنون! با علاقه زیاد می‌آیم.",
+      "targetText": "Vielen Dank! Ich komme mit großem Interesse."
+    },
+    {
+      "id": 7,
+      "day": 66,
+      "role": "received",
+      "difficulty": "B1",
+      "translation": "After long deliberation I have decided.",
+      "translationFa": "بعد از فکر زیاد تصمیم گرفتم.",
+      "audioText": "Nach langem Überlegen habe ich mich entschieden."
+    },
+    {
+      "id": 8,
+      "day": 66,
+      "role": "sent",
+      "difficulty": "B1",
+      "translation": "Good! Despite bad weather we are going hiking.",
+      "translationFa": "خوب! با وجود هوای بد پیاده‌روی می‌رویم.",
+      "targetText": "Gut! Trotz schlechten Wetters gehen wir wandern."
+    },
+    {
+      "id": 9,
+      "day": 66,
+      "role": "received",
+      "difficulty": "B1",
+      "translation": "German wine is world-famous.",
+      "translationFa": "شراب آلمانی در جهان مشهور است.",
+      "audioText": "Deutscher Wein ist weltbekannt."
+    },
+    {
+      "id": 10,
+      "day": 66,
+      "role": "sent",
+      "difficulty": "B1",
+      "translation": "Yes, especially white wine from the Rhine valley.",
+      "translationFa": "بله، مخصوصا شراب سفید از دره راین.",
+      "targetText": "Ja, besonders weißer Wein aus dem Rheintal."
+    }
+  ],
+  "difficulty": "B1",
+  "grammarFocus": "Adjectives without articles",
+  "grammarFocusFa": "صفات بدون حرف تعریف",
+  "description": "Describe people's personalities and character traits to a German friend. Talk about strengths, weaknesses, and what you value in others.",
+  "descriptionFa": "شخصیت و خصوصیات اخلاقی افراد را برای یک دوست آلمانی توصیف کنید. درباره نقاط قوت، ضعف‌ها و آنچه در دیگران ارزش می‌گذارید صحبت کنید."
+}

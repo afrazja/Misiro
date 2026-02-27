@@ -1,0 +1,120 @@
+{
+  "day": 20,
+  "title": "20: Daily Routine",
+  "titleFa": "برنامه روزانه",
+  "sentences": [
+    {
+      "id": 1,
+      "day": 20,
+      "role": "received",
+      "difficulty": "A1",
+      "translation": "When do you get up in the morning?",
+      "translationFa": "صبح‌ها کی بیدار می‌شوی؟",
+      "audioText": "Wann stehst du morgens auf?"
+    },
+    {
+      "id": 2,
+      "day": 20,
+      "role": "sent",
+      "difficulty": "A1",
+      "translation": "I get up at six o'clock.",
+      "translationFa": "ساعت شش بیدار می‌شوم.",
+      "targetText": "Ich stehe um sechs Uhr auf."
+    },
+    {
+      "id": 3,
+      "day": 20,
+      "role": "received",
+      "difficulty": "A1",
+      "translation": "What do you do then?",
+      "translationFa": "بعد چه کار می‌کنی؟",
+      "audioText": "Was machst du dann?"
+    },
+    {
+      "id": 4,
+      "day": 20,
+      "role": "sent",
+      "difficulty": "A1",
+      "translation": "First I shower and then I get dressed.",
+      "translationFa": "اول دوش می‌گیرم و بعد لباس می‌پوشم.",
+      "targetText": "Zuerst dusche ich mich und dann ziehe ich mich an."
+    },
+    {
+      "id": 5,
+      "day": 20,
+      "role": "received",
+      "difficulty": "A1",
+      "translation": "When do you eat breakfast?",
+      "translationFa": "کی صبحانه می‌خوری؟",
+      "audioText": "Wann frühstückst du?"
+    },
+    {
+      "id": 6,
+      "day": 20,
+      "role": "sent",
+      "difficulty": "A1",
+      "translation": "I eat breakfast at half past six.",
+      "translationFa": "ساعت شش و نیم صبحانه می‌خورم.",
+      "targetText": "Ich frühstücke um halb sieben."
+    },
+    {
+      "id": 7,
+      "day": 20,
+      "role": "received",
+      "difficulty": "A1",
+      "translation": "What do you eat for breakfast?",
+      "translationFa": "صبحانه چی می‌خوری؟",
+      "audioText": "Was isst du zum Frühstück?"
+    },
+    {
+      "id": 8,
+      "day": 20,
+      "role": "sent",
+      "difficulty": "A1",
+      "translation": "I eat bread with cheese and drink tea.",
+      "translationFa": "نان با پنیر می‌خورم و چای می‌نوشم.",
+      "targetText": "Ich esse Brot mit Käse und trinke Tee."
+    },
+    {
+      "id": 9,
+      "day": 20,
+      "role": "received",
+      "difficulty": "A1",
+      "translation": "When do you go to work?",
+      "translationFa": "کی می‌روی سر کار؟",
+      "audioText": "Wann gehst du zur Arbeit?"
+    },
+    {
+      "id": 10,
+      "day": 20,
+      "role": "sent",
+      "difficulty": "A1",
+      "translation": "I go to work by bus at eight o'clock.",
+      "translationFa": "ساعت هشت با اتوبوس می‌روم سر کار.",
+      "targetText": "Ich fahre um acht Uhr mit dem Bus zur Arbeit."
+    },
+    {
+      "id": 11,
+      "day": 20,
+      "role": "received",
+      "difficulty": "A1",
+      "translation": "What do you do in the evening?",
+      "translationFa": "شب‌ها چه کار می‌کنی؟",
+      "audioText": "Was machst du am Abend?"
+    },
+    {
+      "id": 12,
+      "day": 20,
+      "role": "sent",
+      "difficulty": "A1",
+      "translation": "In the evening I cook, watch TV and go to sleep at eleven.",
+      "translationFa": "شب‌ها آشپزی می‌کنم، تلویزیون می‌بینم و ساعت یازده می‌خوابم.",
+      "targetText": "Abends koche ich, sehe fern und gehe um elf Uhr schlafen."
+    }
+  ],
+  "difficulty": "A1",
+  "grammarFocus": "Reflexive verbs basics: sich waschen, sich anziehen",
+  "grammarFocusFa": "افعال انعکاسی پایه: خود را شستن، لباس پوشیدن",
+  "description": "A friend is visiting your apartment for the first time. Show them around the rooms.",
+  "descriptionFa": "یه دوست برای اولین بار به آپارتمانتون می‌آد. خونه رو بهشون نشون بدید."
+}

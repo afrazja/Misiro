@@ -1,0 +1,102 @@
+{
+  "day": 70,
+  "title": "70: Social Issues",
+  "titleFa": "مسائل اجتماعی",
+  "sentences": [
+    {
+      "id": 1,
+      "day": 70,
+      "role": "received",
+      "difficulty": "B1",
+      "translation": "What do you think about the integration of foreigners?",
+      "translationFa": "درباره ادغام خارجی‌ها چه فکر می‌کنی؟",
+      "audioText": "Was denkst du über die Integration von Ausländern?"
+    },
+    {
+      "id": 2,
+      "day": 70,
+      "role": "sent",
+      "difficulty": "B1",
+      "translation": "Although there are challenges, I believe that integration is possible.",
+      "translationFa": "با وجود چالش‌ها، معتقدم ادغام ممکن است.",
+      "targetText": "Obwohl es Herausforderungen gibt, glaube ich, dass Integration möglich ist."
+    },
+    {
+      "id": 3,
+      "day": 70,
+      "role": "received",
+      "difficulty": "B1",
+      "translation": "Many migrants have difficulty finding work.",
+      "translationFa": "خیلی از مهاجران سخت کار پیدا می‌کنند.",
+      "audioText": "Viele Migranten finden schwer Arbeit."
+    },
+    {
+      "id": 4,
+      "day": 70,
+      "role": "sent",
+      "difficulty": "B1",
+      "translation": "Nevertheless many don't give up and learn the language.",
+      "translationFa": "با این حال خیلی‌ها تسلیم نمی‌شوند و زبان یاد می‌گیرند.",
+      "targetText": "Trotzdem geben viele nicht auf und lernen die Sprache."
+    },
+    {
+      "id": 5,
+      "day": 70,
+      "role": "received",
+      "difficulty": "B1",
+      "translation": "Although he has lived here for ten years, he sometimes feels foreign.",
+      "translationFa": "با وجود اینکه ده سال است اینجا زندگی می‌کند، گاهی احساس غربت می‌کند.",
+      "audioText": "Obwohl er seit zehn Jahren hier lebt, fühlt er sich manchmal fremd."
+    },
+    {
+      "id": 6,
+      "day": 70,
+      "role": "sent",
+      "difficulty": "B1",
+      "translation": "I understand that. Nevertheless Germany has become his home.",
+      "translationFa": "درکش می‌کنم. با این حال آلمان خانه‌اش شده.",
+      "targetText": "Das verstehe ich. Trotzdem ist Deutschland sein Zuhause geworden."
+    },
+    {
+      "id": 7,
+      "day": 70,
+      "role": "received",
+      "difficulty": "B1",
+      "translation": "Society should be more open to other cultures.",
+      "translationFa": "جامعه باید نسبت به فرهنگ‌های دیگر بازتر باشد.",
+      "audioText": "Die Gesellschaft sollte offener für andere Kulturen sein."
+    },
+    {
+      "id": 8,
+      "day": 70,
+      "role": "sent",
+      "difficulty": "B1",
+      "translation": "I agree. Although there is progress, much still needs to be done.",
+      "translationFa": "موافقم. با وجود پیشرفت‌ها هنوز کارهای زیادی باید انجام شود.",
+      "targetText": "Ich stimme zu. Obwohl es Fortschritte gibt, muss noch viel getan werden."
+    },
+    {
+      "id": 9,
+      "day": 70,
+      "role": "received",
+      "difficulty": "B1",
+      "translation": "Equal opportunity is an important topic.",
+      "translationFa": "برابری فرصت‌ها موضوع مهمی است.",
+      "audioText": "Chancengleichheit ist ein wichtiges Thema."
+    },
+    {
+      "id": 10,
+      "day": 70,
+      "role": "sent",
+      "difficulty": "B1",
+      "translation": "Yes, despite all difficulties we should fight for equal rights.",
+      "translationFa": "بله، با وجود همه مشکلات باید برای برابری حقوق تلاش کنیم.",
+      "targetText": "Ja, trotz aller Schwierigkeiten sollten wir für Gleichberechtigung kämpfen."
+    }
+  ],
+  "difficulty": "B1",
+  "grammarFocus": "Concessive clauses: obwohl, trotzdem",
+  "grammarFocusFa": "جملات تقابلی: با وجود اینکه، با این حال",
+  "description": "Discuss your favourite films, books and TV shows with a German friend. Share opinions, make recommendations, and plan a cinema trip.",
+  "descriptionFa": "فیلم‌ها، کتاب‌ها و سریال‌های مورد علاقه‌تان را با یک دوست آلمانی بحث کنید. نظر بدهید، پیشنهاد دهید و برای رفتن به سینما برنامه‌ریزی کنید."
+}

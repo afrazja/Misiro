@@ -1,0 +1,102 @@
+{
+  "day": 45,
+  "title": "45: Adjective Declension: Nominative",
+  "titleFa": "صرف صفت: فاعلی",
+  "sentences": [
+    {
+      "id": 1,
+      "day": 45,
+      "role": "received",
+      "difficulty": "A2",
+      "translation": "Who is the tall man there?",
+      "translationFa": "آن مرد قدبلند آنجا کیست؟",
+      "audioText": "Wer ist der große Mann dort?"
+    },
+    {
+      "id": 2,
+      "day": 45,
+      "role": "sent",
+      "difficulty": "A2",
+      "translation": "That is my new neighbor. He is very nice.",
+      "translationFa": "همسایه جدیدم است. خیلی مهربان است.",
+      "targetText": "Das ist mein neuer Nachbar. Er ist sehr nett."
+    },
+    {
+      "id": 3,
+      "day": 45,
+      "role": "received",
+      "difficulty": "A2",
+      "translation": "Have you seen the little girl?",
+      "translationFa": "دختر کوچک را دیده‌ای؟",
+      "audioText": "Hast du das kleine Mädchen gesehen?"
+    },
+    {
+      "id": 4,
+      "day": 45,
+      "role": "sent",
+      "difficulty": "A2",
+      "translation": "Yes, the little girl is playing in the park.",
+      "translationFa": "بله، دختر کوچک در پارک بازی می‌کند.",
+      "targetText": "Ja, das kleine Mädchen spielt im Park."
+    },
+    {
+      "id": 5,
+      "day": 45,
+      "role": "received",
+      "difficulty": "A2",
+      "translation": "How is your new phone?",
+      "translationFa": "گوشی جدیدت چطور است؟",
+      "audioText": "Wie ist dein neues Handy?"
+    },
+    {
+      "id": 6,
+      "day": 45,
+      "role": "sent",
+      "difficulty": "A2",
+      "translation": "My new phone is fast and has a good camera.",
+      "translationFa": "گوشی جدیدم سریع است و دوربین خوبی دارد.",
+      "targetText": "Mein neues Handy ist schnell und hat eine gute Kamera."
+    },
+    {
+      "id": 7,
+      "day": 45,
+      "role": "received",
+      "difficulty": "A2",
+      "translation": "Is that a German car?",
+      "translationFa": "آن ماشین آلمانی است؟",
+      "audioText": "Ist das ein deutsches Auto?"
+    },
+    {
+      "id": 8,
+      "day": 45,
+      "role": "sent",
+      "difficulty": "A2",
+      "translation": "Yes, that is a German car. It is very reliable.",
+      "translationFa": "بله، ماشین آلمانی است. خیلی قابل اعتماد است.",
+      "targetText": "Ja, das ist ein deutsches Auto. Es ist sehr zuverlässig."
+    },
+    {
+      "id": 9,
+      "day": 45,
+      "role": "received",
+      "difficulty": "A2",
+      "translation": "The red shoes are beautiful!",
+      "translationFa": "کفش‌های قرمز قشنگ هستند!",
+      "audioText": "Die roten Schuhe sind schön!"
+    },
+    {
+      "id": 10,
+      "day": 45,
+      "role": "sent",
+      "difficulty": "A2",
+      "translation": "Yes, but I like the black shoes better.",
+      "translationFa": "بله، ولی کفش‌های مشکی بیشتر خوشم می‌آید.",
+      "targetText": "Ja, aber die schwarzen Schuhe gefallen mir besser."
+    }
+  ],
+  "difficulty": "A2",
+  "grammarFocus": "der große Mann, eine kleine Frau",
+  "grammarFocusFa": "مرد بزرگ، یک زن کوچک",
+  "description": "You're settling in at a café to work for a couple of hours. Order, ask about Wi-Fi, and get comfortable.",
+  "descriptionFa": "دارید تو یه کافه مستقر می‌شید تا چند ساعت کار کنید. سفارش بدید، درباره وای‌فای بپرسید و راحت باشید."
+}

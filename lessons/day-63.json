@@ -1,0 +1,102 @@
+{
+  "day": 63,
+  "title": "63: Passive Voice: Past",
+  "titleFa": "مجهول: گذشته",
+  "sentences": [
+    {
+      "id": 1,
+      "day": 63,
+      "role": "received",
+      "difficulty": "B1",
+      "translation": "When was this church built?",
+      "translationFa": "این کلیسا کی ساخته شد؟",
+      "audioText": "Wann wurde diese Kirche gebaut?"
+    },
+    {
+      "id": 2,
+      "day": 63,
+      "role": "sent",
+      "difficulty": "B1",
+      "translation": "This church was built in the 15th century.",
+      "translationFa": "این کلیسا در قرن پانزدهم ساخته شد.",
+      "targetText": "Diese Kirche wurde im 15. Jahrhundert gebaut."
+    },
+    {
+      "id": 3,
+      "day": 63,
+      "role": "received",
+      "difficulty": "B1",
+      "translation": "Was the thief caught?",
+      "translationFa": "دزد دستگیر شد؟",
+      "audioText": "Wurde der Dieb gefasst?"
+    },
+    {
+      "id": 4,
+      "day": 63,
+      "role": "sent",
+      "difficulty": "B1",
+      "translation": "Yes, he was arrested by the police yesterday.",
+      "translationFa": "بله، دیروز توسط پلیس بازداشت شد.",
+      "targetText": "Ja, er wurde gestern von der Polizei verhaftet."
+    },
+    {
+      "id": 5,
+      "day": 63,
+      "role": "received",
+      "difficulty": "B1",
+      "translation": "The book was translated into many languages.",
+      "translationFa": "کتاب به زبان‌های زیادی ترجمه شد.",
+      "audioText": "Das Buch wurde in viele Sprachen übersetzt."
+    },
+    {
+      "id": 6,
+      "day": 63,
+      "role": "sent",
+      "difficulty": "B1",
+      "translation": "Yes, it has also been translated into Persian.",
+      "translationFa": "بله، به فارسی هم ترجمه شده است.",
+      "targetText": "Ja, es ist auch ins Persische übersetzt worden."
+    },
+    {
+      "id": 7,
+      "day": 63,
+      "role": "received",
+      "difficulty": "B1",
+      "translation": "When was the Brandenburg Gate erected?",
+      "translationFa": "دروازه براندنبورگ کی ساخته شد؟",
+      "audioText": "Wann wurde das Brandenburger Tor errichtet?"
+    },
+    {
+      "id": 8,
+      "day": 63,
+      "role": "sent",
+      "difficulty": "B1",
+      "translation": "It was erected at the end of the 18th century.",
+      "translationFa": "اواخر قرن هجدهم ساخته شد.",
+      "targetText": "Es wurde Ende des 18. Jahrhunderts errichtet."
+    },
+    {
+      "id": 9,
+      "day": 63,
+      "role": "received",
+      "difficulty": "B1",
+      "translation": "The street is being repaired right now.",
+      "translationFa": "خیابان در حال تعمیر است.",
+      "audioText": "Die Straße wird gerade repariert."
+    },
+    {
+      "id": 10,
+      "day": 63,
+      "role": "sent",
+      "difficulty": "B1",
+      "translation": "Yes, it was closed last week and will be opened again next week.",
+      "translationFa": "بله، هفته پیش بسته شد و هفته آینده دوباره باز می‌شود.",
+      "targetText": "Ja, sie wurde letzte Woche gesperrt und wird nächste Woche wieder geöffnet."
+    }
+  ],
+  "difficulty": "B1",
+  "grammarFocus": "wurde + Partizip II, ist...worden",
+  "grammarFocusFa": "شد + اسم مفعول",
+  "description": "Ask a friend for advice on a personal problem. Learn to give and receive suggestions using polite conditional forms.",
+  "descriptionFa": "از یک دوست درباره یک مشکل شخصی مشورت بخواهید. یاد بگیرید با استفاده از اشکال شرطی مودبانه پیشنهاد بدید و دریافت کنید."
+}

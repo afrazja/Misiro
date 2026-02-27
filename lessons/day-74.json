@@ -1,0 +1,102 @@
+{
+  "day": 74,
+  "title": "74: Visiting Friends",
+  "titleFa": "دیدار دوستان",
+  "sentences": [
+    {
+      "id": 1,
+      "day": 74,
+      "role": "received",
+      "difficulty": "B1",
+      "translation": "Nice that you came! Come in.",
+      "translationFa": "خوشحالم که آمدی! بیا تو.",
+      "audioText": "Schön, dass du gekommen bist! Komm rein."
+    },
+    {
+      "id": 2,
+      "day": 74,
+      "role": "sent",
+      "difficulty": "B1",
+      "translation": "Thanks for the invitation! I brought a cake.",
+      "translationFa": "ممنون برای دعوت! یک کیک آورده‌ام.",
+      "targetText": "Danke für die Einladung! Ich habe einen Kuchen mitgebracht."
+    },
+    {
+      "id": 3,
+      "day": 74,
+      "role": "received",
+      "difficulty": "B1",
+      "translation": "Oh, how nice! Please sit down. Would you like something to drink?",
+      "translationFa": "اوه، چه لطف! لطفاً بنشین. چیزی می‌خواهی بنوشی؟",
+      "audioText": "Oh, wie nett! Setz dich bitte. Möchtest du etwas trinken?"
+    },
+    {
+      "id": 4,
+      "day": 74,
+      "role": "sent",
+      "difficulty": "B1",
+      "translation": "Gladly, a tea would be nice.",
+      "translationFa": "با کمال میل، یک چای خوب می‌شد.",
+      "targetText": "Gerne, ein Tee wäre schön."
+    },
+    {
+      "id": 5,
+      "day": 74,
+      "role": "received",
+      "difficulty": "B1",
+      "translation": "Tell me, how was your vacation in Italy?",
+      "translationFa": "بگو ببینم، تعطیلاتت در ایتالیا چطور بود؟",
+      "audioText": "Erzähl mal, wie war dein Urlaub in Italien?"
+    },
+    {
+      "id": 6,
+      "day": 74,
+      "role": "sent",
+      "difficulty": "B1",
+      "translation": "It was wonderful! We hiked a lot and ate delicious food.",
+      "translationFa": "فوق‌العاده بود! خیلی پیاده‌روی کردیم و غذاهای خوشمزه خوردیم.",
+      "targetText": "Es war wunderbar! Wir sind viel gewandert und haben lecker gegessen."
+    },
+    {
+      "id": 7,
+      "day": 74,
+      "role": "received",
+      "difficulty": "B1",
+      "translation": "Did you also go to Rome?",
+      "translationFa": "به رم هم رفتید؟",
+      "audioText": "Seid ihr auch nach Rom gefahren?"
+    },
+    {
+      "id": 8,
+      "day": 74,
+      "role": "sent",
+      "difficulty": "B1",
+      "translation": "Yes, we stayed three days in Rome. The city is incredible.",
+      "translationFa": "بله، سه روز در رم ماندیم. شهر باورنکردنی است.",
+      "targetText": "Ja, wir sind drei Tage in Rom geblieben. Die Stadt ist unglaublich."
+    },
+    {
+      "id": 9,
+      "day": 74,
+      "role": "received",
+      "difficulty": "B1",
+      "translation": "That sounds great! I would also like to travel to Italy sometime.",
+      "translationFa": "عالی به نظر می‌رسد! من هم دوست دارم یه بار به ایتالیا سفر کنم.",
+      "audioText": "Das klingt toll! Ich möchte auch mal nach Italien reisen."
+    },
+    {
+      "id": 10,
+      "day": 74,
+      "role": "sent",
+      "difficulty": "B1",
+      "translation": "You should definitely go! I can give you tips.",
+      "translationFa": "حتماً باید بروی! می‌توانم بهت راهنمایی بدهم.",
+      "targetText": "Du solltest unbedingt gehen! Ich kann dir Tipps geben."
+    }
+  ],
+  "difficulty": "B1",
+  "grammarFocus": "Perfekt with sein; social vocabulary",
+  "grammarFocusFa": "گذشته با sein؛ واژگان اجتماعی",
+  "description": "",
+  "descriptionFa": ""
+}

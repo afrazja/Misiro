@@ -1,0 +1,102 @@
+{
+  "day": 92,
+  "title": "92: Travel Planning",
+  "titleFa": "برنامه‌ریزی سفر",
+  "sentences": [
+    {
+      "id": 1,
+      "day": 92,
+      "role": "received",
+      "difficulty": "A2",
+      "translation": "Where are you going for summer vacation?",
+      "translationFa": "تعطیلات تابستان کجا می‌روی؟",
+      "audioText": "Wohin fährst du in den Sommerferien?"
+    },
+    {
+      "id": 2,
+      "day": 92,
+      "role": "sent",
+      "difficulty": "A2",
+      "translation": "I will go to Austria.",
+      "translationFa": "به اتریش خواهم رفت.",
+      "targetText": "Ich werde nach Österreich fahren."
+    },
+    {
+      "id": 3,
+      "day": 92,
+      "role": "received",
+      "difficulty": "A2",
+      "translation": "Nice! Will you go by train or car?",
+      "translationFa": "عالی! با قطار می‌روی یا ماشین؟",
+      "audioText": "Schön! Wirst du mit dem Zug oder dem Auto fahren?"
+    },
+    {
+      "id": 4,
+      "day": 92,
+      "role": "sent",
+      "difficulty": "A2",
+      "translation": "I will take the train. It's more comfortable.",
+      "translationFa": "قطار می‌گیرم. راحت‌تر است.",
+      "targetText": "Ich werde den Zug nehmen. Es ist bequemer."
+    },
+    {
+      "id": 5,
+      "day": 92,
+      "role": "received",
+      "difficulty": "A2",
+      "translation": "How long will you stay there?",
+      "translationFa": "چه مدت آنجا می‌مانی؟",
+      "audioText": "Wie lange wirst du dort bleiben?"
+    },
+    {
+      "id": 6,
+      "day": 92,
+      "role": "sent",
+      "difficulty": "A2",
+      "translation": "I will stay one week in Vienna.",
+      "translationFa": "یک هفته در وین می‌مانم.",
+      "targetText": "Ich werde eine Woche in Wien bleiben."
+    },
+    {
+      "id": 7,
+      "day": 92,
+      "role": "received",
+      "difficulty": "A2",
+      "translation": "Have you already booked a hotel?",
+      "translationFa": "هتل رزرو کرده‌ای؟",
+      "audioText": "Hast du schon ein Hotel gebucht?"
+    },
+    {
+      "id": 8,
+      "day": 92,
+      "role": "sent",
+      "difficulty": "A2",
+      "translation": "Yes, a small hotel in the city center.",
+      "translationFa": "بله، یک هتل کوچک در مرکز شهر.",
+      "targetText": "Ja, ein kleines Hotel in der Stadtmitte."
+    },
+    {
+      "id": 9,
+      "day": 92,
+      "role": "received",
+      "difficulty": "A2",
+      "translation": "What will you do there?",
+      "translationFa": "آنجا چه کار خواهی کرد؟",
+      "audioText": "Was wirst du dort machen?"
+    },
+    {
+      "id": 10,
+      "day": 92,
+      "role": "sent",
+      "difficulty": "A2",
+      "translation": "I will visit museums and explore the city.",
+      "translationFa": "از موزه‌ها بازدید می‌کنم و شهر را کشف می‌کنم.",
+      "targetText": "Ich werde Museen besuchen und die Stadt erkunden."
+    }
+  ],
+  "difficulty": "A2",
+  "grammarFocus": "Future with werden; travel vocabulary",
+  "grammarFocusFa": "آینده با werden؛ واژگان سفر",
+  "description": "",
+  "descriptionFa": ""
+}

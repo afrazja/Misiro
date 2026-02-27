@@ -1,0 +1,102 @@
+{
+  "day": 78,
+  "title": "78: Birthday Party Planning",
+  "titleFa": "برنامه‌ریزی جشن تولد",
+  "sentences": [
+    {
+      "id": 1,
+      "day": 78,
+      "role": "received",
+      "difficulty": "B1",
+      "translation": "My birthday is next Saturday. I'm having a party!",
+      "translationFa": "تولدم شنبه آینده است. مهمانی می‌گیرم!",
+      "audioText": "Mein Geburtstag ist nächsten Samstag. Ich mache eine Party!"
+    },
+    {
+      "id": 2,
+      "day": 78,
+      "role": "sent",
+      "difficulty": "B1",
+      "translation": "Great! If you want, I can help with cooking.",
+      "translationFa": "عالی! اگر بخواهی، می‌توانم در آشپزی کمک کنم.",
+      "targetText": "Toll! Wenn du möchtest, kann ich beim Kochen helfen."
+    },
+    {
+      "id": 3,
+      "day": 78,
+      "role": "received",
+      "difficulty": "B1",
+      "translation": "That would be great! Can you make a salad?",
+      "translationFa": "عالی می‌شد! می‌توانی سالاد درست کنی؟",
+      "audioText": "Das wäre super! Kannst du einen Salat machen?"
+    },
+    {
+      "id": 4,
+      "day": 78,
+      "role": "sent",
+      "difficulty": "B1",
+      "translation": "Sure! And if you want, I'll also bring drinks.",
+      "translationFa": "حتماً! و اگر بخواهی، نوشیدنی هم می‌آورم.",
+      "targetText": "Klar! Und wenn du willst, bringe ich auch Getränke mit."
+    },
+    {
+      "id": 5,
+      "day": 78,
+      "role": "received",
+      "difficulty": "B1",
+      "translation": "How many people are coming approximately?",
+      "translationFa": "تقریباً چند نفر می‌آیند؟",
+      "audioText": "Wie viele Leute kommen ungefähr?"
+    },
+    {
+      "id": 6,
+      "day": 78,
+      "role": "sent",
+      "difficulty": "B1",
+      "translation": "If everyone says yes, it's about fifteen people.",
+      "translationFa": "اگر همه قبول کنند، حدود پانزده نفر می‌شوند.",
+      "targetText": "Wenn alle zusagen, sind es etwa fünfzehn Personen."
+    },
+    {
+      "id": 7,
+      "day": 78,
+      "role": "received",
+      "difficulty": "B1",
+      "translation": "Should we organize music or get a DJ?",
+      "translationFa": "موسیقی ترتیب بدهیم یا دی‌جی بیاوریم؟",
+      "audioText": "Sollen wir Musik organisieren oder einen DJ holen?"
+    },
+    {
+      "id": 8,
+      "day": 78,
+      "role": "sent",
+      "difficulty": "B1",
+      "translation": "I think a playlist is enough. If the weather is good, we can celebrate in the garden.",
+      "translationFa": "فکر می‌کنم یک پلی‌لیست کافی باشد. اگر هوا خوب باشد، می‌توانیم در باغ جشن بگیریم.",
+      "targetText": "Ich denke, eine Playlist reicht. Wenn das Wetter gut ist, können wir im Garten feiern."
+    },
+    {
+      "id": 9,
+      "day": 78,
+      "role": "received",
+      "difficulty": "B1",
+      "translation": "Good idea! And if it rains?",
+      "translationFa": "ایده خوبیه! و اگر باران ببارد؟",
+      "audioText": "Gute Idee! Und wenn es regnet?"
+    },
+    {
+      "id": 10,
+      "day": 78,
+      "role": "sent",
+      "difficulty": "B1",
+      "translation": "Then we celebrate inside. It will be fun in any case!",
+      "translationFa": "آنوقت داخل جشن می‌گیریم. به هر حال سرگرم‌کننده می‌شود!",
+      "targetText": "Dann feiern wir drinnen. Es wird auf jeden Fall lustig!"
+    }
+  ],
+  "difficulty": "B1",
+  "grammarFocus": "Conditional wenn; party vocabulary",
+  "grammarFocusFa": "شرطی با wenn؛ واژگان مهمانی",
+  "description": "",
+  "descriptionFa": ""
+}

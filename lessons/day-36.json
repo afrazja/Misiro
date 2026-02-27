@@ -1,0 +1,120 @@
+{
+  "day": 36,
+  "title": "36: At the Doctor",
+  "titleFa": "نزد پزشک",
+  "sentences": [
+    {
+      "id": 1,
+      "day": 36,
+      "role": "received",
+      "difficulty": "A2",
+      "translation": "Good day, what can I do for you?",
+      "translationFa": "روز بخیر، چه کاری می‌توانم برایتان انجام دهم؟",
+      "audioText": "Guten Tag, was kann ich für Sie tun?"
+    },
+    {
+      "id": 2,
+      "day": 36,
+      "role": "sent",
+      "difficulty": "A2",
+      "translation": "I have had strong headaches for three days.",
+      "translationFa": "سه روز است سردرد شدید دارم.",
+      "targetText": "Ich habe seit drei Tagen starke Kopfschmerzen."
+    },
+    {
+      "id": 3,
+      "day": 36,
+      "role": "received",
+      "difficulty": "A2",
+      "translation": "Do you have any other complaints?",
+      "translationFa": "شکایت دیگری هم دارید؟",
+      "audioText": "Haben Sie sonst noch Beschwerden?"
+    },
+    {
+      "id": 4,
+      "day": 36,
+      "role": "sent",
+      "difficulty": "A2",
+      "translation": "Yes, I am also dizzy and I feel weak.",
+      "translationFa": "بله، سرگیجه هم دارم و احساس ضعف می‌کنم.",
+      "targetText": "Ja, mir ist auch schwindelig und ich fühle mich schwach."
+    },
+    {
+      "id": 5,
+      "day": 36,
+      "role": "received",
+      "difficulty": "A2",
+      "translation": "Do you take medication regularly?",
+      "translationFa": "به طور منظم دارو مصرف می‌کنید؟",
+      "audioText": "Nehmen Sie regelmäßig Medikamente?"
+    },
+    {
+      "id": 6,
+      "day": 36,
+      "role": "sent",
+      "difficulty": "A2",
+      "translation": "No, I don't take any medication.",
+      "translationFa": "نه، دارویی مصرف نمی‌کنم.",
+      "targetText": "Nein, ich nehme keine Medikamente."
+    },
+    {
+      "id": 7,
+      "day": 36,
+      "role": "received",
+      "difficulty": "A2",
+      "translation": "I will first measure your blood pressure.",
+      "translationFa": "اول فشار خونتان را اندازه می‌گیرم.",
+      "audioText": "Ich messe zuerst Ihren Blutdruck."
+    },
+    {
+      "id": 8,
+      "day": 36,
+      "role": "sent",
+      "difficulty": "A2",
+      "translation": "Is my blood pressure okay?",
+      "translationFa": "فشار خونم خوب است؟",
+      "targetText": "Ist mein Blutdruck in Ordnung?"
+    },
+    {
+      "id": 9,
+      "day": 36,
+      "role": "received",
+      "difficulty": "A2",
+      "translation": "Your blood pressure is a bit high. You should rest more.",
+      "translationFa": "فشار خونتان کمی بالاست. باید بیشتر استراحت کنید.",
+      "audioText": "Ihr Blutdruck ist etwas hoch. Sie sollen sich mehr ausruhen."
+    },
+    {
+      "id": 10,
+      "day": 36,
+      "role": "sent",
+      "difficulty": "A2",
+      "translation": "Should I take tablets?",
+      "translationFa": "قرص بخورم؟",
+      "targetText": "Soll ich Tabletten nehmen?"
+    },
+    {
+      "id": 11,
+      "day": 36,
+      "role": "received",
+      "difficulty": "A2",
+      "translation": "Yes, take these tablets twice a day after meals.",
+      "translationFa": "بله، این قرص‌ها را روزی دو بار بعد از غذا بخورید.",
+      "audioText": "Ja, nehmen Sie diese Tabletten zweimal am Tag nach dem Essen."
+    },
+    {
+      "id": 12,
+      "day": 36,
+      "role": "sent",
+      "difficulty": "A2",
+      "translation": "When should I come back?",
+      "translationFa": "کی دوباره بیایم؟",
+      "targetText": "Wann soll ich wieder kommen?"
+    }
+  ],
+  "difficulty": "A2",
+  "grammarFocus": "Describing symptoms: Ich habe Schmerzen",
+  "grammarFocusFa": "توصیف علائم: درد دارم",
+  "description": "You want to join a German language school. Ask about levels, schedules, and how to enroll.",
+  "descriptionFa": "می‌خواید به یه آموزشگاه زبان آلمانی بپیوندید. درباره سطوح، برنامه‌ها و نحوه ثبت‌نام بپرسید."
+}

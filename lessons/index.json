@@ -1,0 +1,705 @@
+{
+  "lessons": [
+    {
+      "day": 1,
+      "file": "day-1.json",
+      "title": "1: Greetings & Introductions",
+      "titleFa": "احوالپرسی و معرفی",
+      "group": "basics"
+    },
+    {
+      "day": 2,
+      "file": "day-2.json",
+      "title": "2: Introducing Yourself",
+      "titleFa": "معرفی خودتان",
+      "group": "basics"
+    },
+    {
+      "day": 3,
+      "file": "day-3.json",
+      "title": "3: Numbers 1-20",
+      "titleFa": "اعداد ۱ تا ۲۰",
+      "group": "basics"
+    },
+    {
+      "day": 4,
+      "file": "day-4.json",
+      "title": "4: The Alphabet & Spelling",
+      "titleFa": "الفبا و املا",
+      "group": "basics"
+    },
+    {
+      "day": 5,
+      "file": "day-5.json",
+      "title": "5: At the Café",
+      "titleFa": "در کافه",
+      "group": "basics"
+    },
+    {
+      "day": 6,
+      "file": "day-6.json",
+      "title": "6: Family Members",
+      "titleFa": "اعضای خانواده",
+      "group": "basics"
+    },
+    {
+      "day": 7,
+      "file": "day-7.json",
+      "title": "7: Days & Months",
+      "titleFa": "روزها و ماه‌ها",
+      "group": "basics"
+    },
+    {
+      "day": 8,
+      "file": "day-8.json",
+      "title": "8: Colors & Descriptions",
+      "titleFa": "رنگ‌ها و توصیفات",
+      "group": "basics"
+    },
+    {
+      "day": 9,
+      "file": "day-9.json",
+      "title": "9: Present Tense Regular Verbs",
+      "titleFa": "زمان حال افعال باقاعده",
+      "group": "basics"
+    },
+    {
+      "day": 10,
+      "file": "day-10.json",
+      "title": "10: Articles: der, die, das",
+      "titleFa": "حروف تعریف",
+      "group": "basics"
+    },
+    {
+      "day": 11,
+      "file": "day-11.json",
+      "title": "11: Food & Groceries",
+      "titleFa": "غذا و خواربار",
+      "group": "basics"
+    },
+    {
+      "day": 12,
+      "file": "day-12.json",
+      "title": "12: Telling Time",
+      "titleFa": "ساعت",
+      "group": "basics"
+    },
+    {
+      "day": 13,
+      "file": "day-13.json",
+      "title": "13: Weather",
+      "titleFa": "آب و هوا",
+      "group": "basics"
+    },
+    {
+      "day": 14,
+      "file": "day-14.json",
+      "title": "14: Hobbies & Free Time",
+      "titleFa": "سرگرمی‌ها و اوقات فراغت",
+      "group": "basics"
+    },
+    {
+      "day": 15,
+      "file": "day-15.json",
+      "title": "15: At the Restaurant",
+      "titleFa": "در رستوران",
+      "group": "basics"
+    },
+    {
+      "day": 16,
+      "file": "day-16.json",
+      "title": "16: Directions",
+      "titleFa": "مسیریابی",
+      "group": "survival"
+    },
+    {
+      "day": 17,
+      "file": "day-17.json",
+      "title": "17: Body Parts & Health",
+      "titleFa": "اعضای بدن و سلامت",
+      "group": "survival"
+    },
+    {
+      "day": 18,
+      "file": "day-18.json",
+      "title": "18: Clothes & Shopping",
+      "titleFa": "لباس و خرید",
+      "group": "survival"
+    },
+    {
+      "day": 19,
+      "file": "day-19.json",
+      "title": "19: Home & Rooms",
+      "titleFa": "خانه و اتاق‌ها",
+      "group": "survival"
+    },
+    {
+      "day": 20,
+      "file": "day-20.json",
+      "title": "20: Daily Routine",
+      "titleFa": "برنامه روزانه",
+      "group": "survival"
+    },
+    {
+      "day": 21,
+      "file": "day-21.json",
+      "title": "21: Irregular Verbs: sein & haben",
+      "titleFa": "افعال بی‌قاعده: بودن و داشتن",
+      "group": "survival"
+    },
+    {
+      "day": 22,
+      "file": "day-22.json",
+      "title": "22: Negation",
+      "titleFa": "منفی‌سازی",
+      "group": "survival"
+    },
+    {
+      "day": 23,
+      "file": "day-23.json",
+      "title": "23: Yes/No Questions",
+      "titleFa": "سوالات بله/خیر",
+      "group": "survival"
+    },
+    {
+      "day": 24,
+      "file": "day-24.json",
+      "title": "24: W-Questions",
+      "titleFa": "سوالات با کلمه پرسشی",
+      "group": "survival"
+    },
+    {
+      "day": 25,
+      "file": "day-25.json",
+      "title": "25: Personal Pronouns & Cases",
+      "titleFa": "ضمایر شخصی و حالت‌ها",
+      "group": "survival"
+    },
+    {
+      "day": 26,
+      "file": "day-26.json",
+      "title": "26: Perfect Tense Part 1",
+      "titleFa": "زمان گذشته بخش ۱",
+      "group": "survival"
+    },
+    {
+      "day": 27,
+      "file": "day-27.json",
+      "title": "27: Perfect Tense Part 2",
+      "titleFa": "زمان گذشته بخش ۲",
+      "group": "survival"
+    },
+    {
+      "day": 28,
+      "file": "day-28.json",
+      "title": "28: Separable Verbs",
+      "titleFa": "افعال جداشدنی",
+      "group": "survival"
+    },
+    {
+      "day": 29,
+      "file": "day-29.json",
+      "title": "29: Modal Verbs Part 1",
+      "titleFa": "افعال کمکی بخش ۱",
+      "group": "survival"
+    },
+    {
+      "day": 30,
+      "file": "day-30.json",
+      "title": "30: Modal Verbs Part 2",
+      "titleFa": "افعال کمکی بخش ۲",
+      "group": "survival"
+    },
+    {
+      "day": 31,
+      "file": "day-31.json",
+      "title": "31: The Dative Case",
+      "titleFa": "حالت مفعولی غیرمستقیم",
+      "group": "survival"
+    },
+    {
+      "day": 32,
+      "file": "day-32.json",
+      "title": "32: Dative Prepositions",
+      "titleFa": "حروف اضافه با مفعول غیرمستقیم",
+      "group": "survival"
+    },
+    {
+      "day": 33,
+      "file": "day-33.json",
+      "title": "33: Two-Way Prepositions",
+      "titleFa": "حروف اضافه دوگانه",
+      "group": "survival"
+    },
+    {
+      "day": 34,
+      "file": "day-34.json",
+      "title": "34: Comparatives",
+      "titleFa": "صفات تفضیلی",
+      "group": "survival"
+    },
+    {
+      "day": 35,
+      "file": "day-35.json",
+      "title": "35: Superlatives",
+      "titleFa": "صفات عالی",
+      "group": "survival"
+    },
+    {
+      "day": 36,
+      "file": "day-36.json",
+      "title": "36: At the Doctor",
+      "titleFa": "نزد پزشک",
+      "group": "survival"
+    },
+    {
+      "day": 37,
+      "file": "day-37.json",
+      "title": "37: Bank & Post Office",
+      "titleFa": "در بانک و پست",
+      "group": "survival"
+    },
+    {
+      "day": 38,
+      "file": "day-38.json",
+      "title": "38: Making Appointments",
+      "titleFa": "گرفتن وقت ملاقات",
+      "group": "survival"
+    },
+    {
+      "day": 39,
+      "file": "day-39.json",
+      "title": "39: Travel & Transportation",
+      "titleFa": "سفر و حمل و نقل",
+      "group": "survival"
+    },
+    {
+      "day": 40,
+      "file": "day-40.json",
+      "title": "40: Hotel & Accommodation",
+      "titleFa": "هتل و اقامت",
+      "group": "survival"
+    },
+    {
+      "day": 41,
+      "file": "day-41.json",
+      "title": "41: Reflexive Verbs",
+      "titleFa": "افعال انعکاسی",
+      "group": "survival"
+    },
+    {
+      "day": 42,
+      "file": "day-42.json",
+      "title": "42: Subordinate Clauses: weil",
+      "titleFa": "جملات وابسته: زیرا",
+      "group": "survival"
+    },
+    {
+      "day": 43,
+      "file": "day-43.json",
+      "title": "43: Subordinate Clauses: dass",
+      "titleFa": "جملات وابسته: که",
+      "group": "survival"
+    },
+    {
+      "day": 44,
+      "file": "day-44.json",
+      "title": "44: Subordinate Clauses: wenn/als",
+      "titleFa": "جملات وابسته: وقتی",
+      "group": "survival"
+    },
+    {
+      "day": 45,
+      "file": "day-45.json",
+      "title": "45: Adjective Declension: Nominative",
+      "titleFa": "صرف صفت: فاعلی",
+      "group": "survival"
+    },
+    {
+      "day": 46,
+      "file": "day-46.json",
+      "title": "46: Adjective Declension: Acc/Dat",
+      "titleFa": "صرف صفت: مفعولی",
+      "group": "scenarios"
+    },
+    {
+      "day": 47,
+      "file": "day-47.json",
+      "title": "47: Work & Professions",
+      "titleFa": "کار و حرفه‌ها",
+      "group": "scenarios"
+    },
+    {
+      "day": 48,
+      "file": "day-48.json",
+      "title": "48: Education & School",
+      "titleFa": "آموزش و مدرسه",
+      "group": "scenarios"
+    },
+    {
+      "day": 49,
+      "file": "day-49.json",
+      "title": "49: Technology & Internet",
+      "titleFa": "فناوری و اینترنت",
+      "group": "scenarios"
+    },
+    {
+      "day": 50,
+      "file": "day-50.json",
+      "title": "50: Coordinating Conjunctions",
+      "titleFa": "حروف ربط هم‌پایه",
+      "group": "scenarios"
+    },
+    {
+      "day": 51,
+      "file": "day-51.json",
+      "title": "51: Simple Past: Präteritum",
+      "titleFa": "گذشته ساده",
+      "group": "scenarios"
+    },
+    {
+      "day": 52,
+      "file": "day-52.json",
+      "title": "52: Passive Voice: Present",
+      "titleFa": "مجهول: حال",
+      "group": "scenarios"
+    },
+    {
+      "day": 53,
+      "file": "day-53.json",
+      "title": "53: Relative Clauses",
+      "titleFa": "جملات موصولی",
+      "group": "scenarios"
+    },
+    {
+      "day": 54,
+      "file": "day-54.json",
+      "title": "54: The Genitive Case",
+      "titleFa": "حالت اضافی",
+      "group": "scenarios"
+    },
+    {
+      "day": 55,
+      "file": "day-55.json",
+      "title": "55: Indirect Questions",
+      "titleFa": "سوالات غیرمستقیم",
+      "group": "scenarios"
+    },
+    {
+      "day": 56,
+      "file": "day-56.json",
+      "title": "56: Environment & Nature",
+      "titleFa": "محیط زیست و طبیعت",
+      "group": "scenarios"
+    },
+    {
+      "day": 57,
+      "file": "day-57.json",
+      "title": "57: Media & News",
+      "titleFa": "رسانه و اخبار",
+      "group": "scenarios"
+    },
+    {
+      "day": 58,
+      "file": "day-58.json",
+      "title": "58: Health & Lifestyle",
+      "titleFa": "سلامت و سبک زندگی",
+      "group": "scenarios"
+    },
+    {
+      "day": 59,
+      "file": "day-59.json",
+      "title": "59: Expressing Opinions",
+      "titleFa": "بیان نظر",
+      "group": "scenarios"
+    },
+    {
+      "day": 60,
+      "file": "day-60.json",
+      "title": "60: Cultural Differences",
+      "titleFa": "تفاوت‌های فرهنگی",
+      "group": "scenarios"
+    },
+    {
+      "day": 61,
+      "file": "day-61.json",
+      "title": "61: Konjunktiv II: würde + Infinitiv",
+      "titleFa": "وجه التزامی: فرضی",
+      "group": "scenarios"
+    },
+    {
+      "day": 62,
+      "file": "day-62.json",
+      "title": "62: Konjunktiv II: hätte/wäre",
+      "titleFa": "وجه التزامی: داشتن/بودن",
+      "group": "scenarios"
+    },
+    {
+      "day": 63,
+      "file": "day-63.json",
+      "title": "63: Passive Voice: Past",
+      "titleFa": "مجهول: گذشته",
+      "group": "scenarios"
+    },
+    {
+      "day": 64,
+      "file": "day-64.json",
+      "title": "64: N-Declension",
+      "titleFa": "تصریف نون",
+      "group": "scenarios"
+    },
+    {
+      "day": 65,
+      "file": "day-65.json",
+      "title": "65: Double Infinitive",
+      "titleFa": "مصدر دوگانه",
+      "group": "scenarios"
+    },
+    {
+      "day": 66,
+      "file": "day-66.json",
+      "title": "66: Advanced Adjective Declension",
+      "titleFa": "صرف پیشرفته صفت",
+      "group": "scenarios"
+    },
+    {
+      "day": 67,
+      "file": "day-67.json",
+      "title": "67: Formal Letter Writing",
+      "titleFa": "نامه‌نگاری رسمی",
+      "group": "scenarios"
+    },
+    {
+      "day": 68,
+      "file": "day-68.json",
+      "title": "68: Job Interview",
+      "titleFa": "مصاحبه شغلی",
+      "group": "scenarios"
+    },
+    {
+      "day": 69,
+      "file": "day-69.json",
+      "title": "69: Renting an Apartment",
+      "titleFa": "اجاره آپارتمان",
+      "group": "scenarios"
+    },
+    {
+      "day": 70,
+      "file": "day-70.json",
+      "title": "70: Social Issues",
+      "titleFa": "مسائل اجتماعی",
+      "group": "scenarios"
+    },
+    {
+      "day": 71,
+      "file": "day-71.json",
+      "title": "71: Weekend Plans",
+      "titleFa": "برنامه آخر هفته",
+      "group": "scenarios"
+    },
+    {
+      "day": 72,
+      "file": "day-72.json",
+      "title": "72: Cooking Together",
+      "titleFa": "آشپزی با هم",
+      "group": "scenarios"
+    },
+    {
+      "day": 73,
+      "file": "day-73.json",
+      "title": "73: At the Gym",
+      "titleFa": "در باشگاه ورزشی",
+      "group": "scenarios"
+    },
+    {
+      "day": 74,
+      "file": "day-74.json",
+      "title": "74: Visiting Friends",
+      "titleFa": "دیدار دوستان",
+      "group": "scenarios"
+    },
+    {
+      "day": 75,
+      "file": "day-75.json",
+      "title": "75: Moving to a New City",
+      "titleFa": "نقل مکان به شهر جدید",
+      "group": "scenarios"
+    },
+    {
+      "day": 76,
+      "file": "day-76.json",
+      "title": "76: Public Transport Problems",
+      "titleFa": "مشکلات حمل و نقل عمومی",
+      "group": "advanced"
+    },
+    {
+      "day": 77,
+      "file": "day-77.json",
+      "title": "77: At the Market",
+      "titleFa": "در بازار",
+      "group": "advanced"
+    },
+    {
+      "day": 78,
+      "file": "day-78.json",
+      "title": "78: Birthday Party Planning",
+      "titleFa": "برنامه‌ریزی جشن تولد",
+      "group": "advanced"
+    },
+    {
+      "day": 79,
+      "file": "day-79.json",
+      "title": "79: Job Search",
+      "titleFa": "جستجوی کار",
+      "group": "advanced"
+    },
+    {
+      "day": 80,
+      "file": "day-80.json",
+      "title": "80: Describing Your Home",
+      "titleFa": "توصیف خانه",
+      "group": "advanced"
+    },
+    {
+      "day": 81,
+      "file": "day-81.json",
+      "title": "81: Childhood Memories",
+      "titleFa": "خاطرات کودکی",
+      "group": "advanced"
+    },
+    {
+      "day": 82,
+      "file": "day-82.json",
+      "title": "82: Online Shopping",
+      "titleFa": "خرید آنلاین",
+      "group": "advanced"
+    },
+    {
+      "day": 83,
+      "file": "day-83.json",
+      "title": "83: At the Hairdresser",
+      "titleFa": "در آرایشگاه",
+      "group": "advanced"
+    },
+    {
+      "day": 84,
+      "file": "day-84.json",
+      "title": "84: Talking About Movies",
+      "titleFa": "صحبت درباره فیلم",
+      "group": "advanced"
+    },
+    {
+      "day": 85,
+      "file": "day-85.json",
+      "title": "85: Recycling and Environment",
+      "titleFa": "بازیافت و محیط زیست",
+      "group": "advanced"
+    },
+    {
+      "day": 86,
+      "file": "day-86.json",
+      "title": "86: Learning a Language",
+      "titleFa": "یادگیری یک زبان",
+      "group": "advanced"
+    },
+    {
+      "day": 87,
+      "file": "day-87.json",
+      "title": "87: Weather and Seasons",
+      "titleFa": "آب و هوا و فصل‌ها",
+      "group": "advanced"
+    },
+    {
+      "day": 88,
+      "file": "day-88.json",
+      "title": "88: Neighbors",
+      "titleFa": "همسایه‌ها",
+      "group": "advanced"
+    },
+    {
+      "day": 89,
+      "file": "day-89.json",
+      "title": "89: Pets and Animals",
+      "titleFa": "حیوانات خانگی",
+      "group": "advanced"
+    },
+    {
+      "day": 90,
+      "file": "day-90.json",
+      "title": "90: German Festivals",
+      "titleFa": "جشن‌های آلمانی",
+      "group": "advanced"
+    },
+    {
+      "day": 91,
+      "file": "day-91.json",
+      "title": "91: Giving Advice",
+      "titleFa": "نصیحت کردن",
+      "group": "advanced"
+    },
+    {
+      "day": 92,
+      "file": "day-92.json",
+      "title": "92: Travel Planning",
+      "titleFa": "برنامه‌ریزی سفر",
+      "group": "advanced"
+    },
+    {
+      "day": 93,
+      "file": "day-93.json",
+      "title": "93: Phone Conversation",
+      "titleFa": "مکالمه تلفنی",
+      "group": "advanced"
+    },
+    {
+      "day": 94,
+      "file": "day-94.json",
+      "title": "94: Sports and Hobbies",
+      "titleFa": "ورزش و سرگرمی",
+      "group": "advanced"
+    },
+    {
+      "day": 95,
+      "file": "day-95.json",
+      "title": "95: At the Restaurant - Advanced",
+      "titleFa": "در رستوران - پیشرفته",
+      "group": "advanced"
+    },
+    {
+      "day": 96,
+      "file": "day-96.json",
+      "title": "96: Health and Wellness",
+      "titleFa": "سلامت و تندرستی",
+      "group": "advanced"
+    },
+    {
+      "day": 97,
+      "file": "day-97.json",
+      "title": "97: Email and Letters",
+      "titleFa": "ایمیل و نامه",
+      "group": "advanced"
+    },
+    {
+      "day": 98,
+      "file": "day-98.json",
+      "title": "98: German Customs",
+      "titleFa": "آداب و رسوم آلمانی",
+      "group": "advanced"
+    },
+    {
+      "day": 99,
+      "file": "day-99.json",
+      "title": "99: Looking Back on Learning",
+      "titleFa": "نگاه به گذشته یادگیری",
+      "group": "advanced"
+    },
+    {
+      "day": 100,
+      "file": "day-100.json",
+      "title": "100: Celebration and Future Goals",
+      "titleFa": "جشن و اهداف آینده",
+      "group": "advanced"
+    }
+  ],
+  "glossaryFile": "glossary.json"
+}

@@ -1,0 +1,102 @@
+{
+  "day": 65,
+  "title": "65: Double Infinitive",
+  "titleFa": "مصدر دوگانه",
+  "sentences": [
+    {
+      "id": 1,
+      "day": 65,
+      "role": "received",
+      "difficulty": "B1",
+      "translation": "Why didn't you come yesterday?",
+      "translationFa": "چرا دیروز نیامدی؟",
+      "audioText": "Warum bist du gestern nicht gekommen?"
+    },
+    {
+      "id": 2,
+      "day": 65,
+      "role": "sent",
+      "difficulty": "B1",
+      "translation": "Unfortunately I was not able to come because I was sick.",
+      "translationFa": "متاسفانه نتوانستم بیایم چون مریض بودم.",
+      "targetText": "Ich habe leider nicht kommen können, weil ich krank war."
+    },
+    {
+      "id": 3,
+      "day": 65,
+      "role": "received",
+      "difficulty": "B1",
+      "translation": "Did Maria have to do the project alone?",
+      "translationFa": "ماریا مجبور شد پروژه را تنها انجام بدهد؟",
+      "audioText": "Hat Maria das Projekt allein machen müssen?"
+    },
+    {
+      "id": 4,
+      "day": 65,
+      "role": "sent",
+      "difficulty": "B1",
+      "translation": "Yes, she had to do it alone because nobody helped her.",
+      "translationFa": "بله، مجبور شد تنها انجام بدهد چون کسی کمکش نکرد.",
+      "targetText": "Ja, sie hat es allein machen müssen, weil niemand ihr geholfen hat."
+    },
+    {
+      "id": 5,
+      "day": 65,
+      "role": "received",
+      "difficulty": "B1",
+      "translation": "Did you want to see the movie?",
+      "translationFa": "خواستی فیلم را ببینی؟",
+      "audioText": "Hast du den Film sehen wollen?"
+    },
+    {
+      "id": 6,
+      "day": 65,
+      "role": "sent",
+      "difficulty": "B1",
+      "translation": "Yes, I wanted to see it but I couldn't get tickets.",
+      "translationFa": "بله، می‌خواستم ببینم ولی نتوانستم بلیط بگیرم.",
+      "targetText": "Ja, ich habe ihn sehen wollen, aber ich habe keine Karten bekommen können."
+    },
+    {
+      "id": 7,
+      "day": 65,
+      "role": "received",
+      "difficulty": "B1",
+      "translation": "She was not allowed to come along.",
+      "translationFa": "اجازه نداشت بیاید.",
+      "audioText": "Sie hat nicht mitkommen dürfen."
+    },
+    {
+      "id": 8,
+      "day": 65,
+      "role": "sent",
+      "difficulty": "B1",
+      "translation": "Too bad! She certainly would have liked to come along.",
+      "translationFa": "حیف! حتما دوست داشت بیاید.",
+      "targetText": "Schade! Sie hätte bestimmt gern mitkommen wollen."
+    },
+    {
+      "id": 9,
+      "day": 65,
+      "role": "received",
+      "difficulty": "B1",
+      "translation": "He was not able to understand the assignment.",
+      "translationFa": "نتوانست تکلیف را بفهمد.",
+      "audioText": "Er hat die Aufgabe nicht verstehen können."
+    },
+    {
+      "id": 10,
+      "day": 65,
+      "role": "sent",
+      "difficulty": "B1",
+      "translation": "I should have helped him, but I didn't know.",
+      "translationFa": "باید کمکش می‌کردم ولی نمی‌دانستم.",
+      "targetText": "Ich hätte ihm helfen sollen, aber ich habe es nicht gewusst."
+    }
+  ],
+  "difficulty": "B1",
+  "grammarFocus": "hat kommen können, hat machen wollen",
+  "grammarFocusFa": "توانست بیاید، خواست انجام دهد",
+  "description": "Discuss current events and the news with a German speaker. Share your sources, opinions, and reactions to what's happening in the world.",
+  "descriptionFa": "رویدادهای جاری و اخبار را با یک آلمانی‌زبان بحث کنید. منابع، نظرات و واکنش‌های خود را نسبت به اتفاقاتی که در دنیا می‌افتد به اشتراک بگذارید."
+}

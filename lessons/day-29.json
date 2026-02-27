@@ -1,0 +1,120 @@
+{
+  "day": 29,
+  "title": "29: Modal Verbs Part 1",
+  "titleFa": "افعال کمکی بخش ۱",
+  "sentences": [
+    {
+      "id": 1,
+      "day": 29,
+      "role": "received",
+      "difficulty": "A2",
+      "translation": "Can you drive a car?",
+      "translationFa": "می‌توانی رانندگی کنی؟",
+      "audioText": "Kannst du Auto fahren?"
+    },
+    {
+      "id": 2,
+      "day": 29,
+      "role": "sent",
+      "difficulty": "A2",
+      "translation": "Yes, I can drive, but I don't have a car.",
+      "translationFa": "بله، رانندگی بلدم ولی ماشین ندارم.",
+      "targetText": "Ja, ich kann Auto fahren, aber ich habe kein Auto."
+    },
+    {
+      "id": 3,
+      "day": 29,
+      "role": "received",
+      "difficulty": "A2",
+      "translation": "Do you have to work today?",
+      "translationFa": "امروز باید کار کنی؟",
+      "audioText": "Musst du heute arbeiten?"
+    },
+    {
+      "id": 4,
+      "day": 29,
+      "role": "sent",
+      "difficulty": "A2",
+      "translation": "Yes, I have to work until six o'clock.",
+      "translationFa": "بله، باید تا ساعت شش کار کنم.",
+      "targetText": "Ja, ich muss bis sechs Uhr arbeiten."
+    },
+    {
+      "id": 5,
+      "day": 29,
+      "role": "received",
+      "difficulty": "A2",
+      "translation": "What do you want to do on the weekend?",
+      "translationFa": "آخر هفته چه کار می‌خواهی بکنی؟",
+      "audioText": "Was willst du am Wochenende machen?"
+    },
+    {
+      "id": 6,
+      "day": 29,
+      "role": "sent",
+      "difficulty": "A2",
+      "translation": "I want to go to the cinema and then go eat.",
+      "translationFa": "می‌خواهم سینما بروم و بعد غذا بخورم.",
+      "targetText": "Ich will ins Kino gehen und dann essen gehen."
+    },
+    {
+      "id": 7,
+      "day": 29,
+      "role": "received",
+      "difficulty": "A2",
+      "translation": "Can you help me?",
+      "translationFa": "می‌توانید کمکم کنید؟",
+      "audioText": "Können Sie mir helfen?"
+    },
+    {
+      "id": 8,
+      "day": 29,
+      "role": "sent",
+      "difficulty": "A2",
+      "translation": "Of course I can help you. What do you need?",
+      "translationFa": "البته می‌توانم کمکتان کنم. چه چیزی لازم دارید؟",
+      "targetText": "Natürlich kann ich Ihnen helfen. Was brauchen Sie?"
+    },
+    {
+      "id": 9,
+      "day": 29,
+      "role": "received",
+      "difficulty": "A2",
+      "translation": "Do we have to hand in the homework today?",
+      "translationFa": "امروز باید تکالیف را تحویل بدهیم؟",
+      "audioText": "Müssen wir die Hausaufgaben heute abgeben?"
+    },
+    {
+      "id": 10,
+      "day": 29,
+      "role": "sent",
+      "difficulty": "A2",
+      "translation": "Yes, we have to hand them in by tomorrow.",
+      "translationFa": "بله، باید تا فردا تحویل بدهیم.",
+      "targetText": "Ja, wir müssen sie bis morgen abgeben."
+    },
+    {
+      "id": 11,
+      "day": 29,
+      "role": "received",
+      "difficulty": "A2",
+      "translation": "He doesn't want to come along.",
+      "translationFa": "او نمی‌خواهد بیاید.",
+      "audioText": "Er will nicht mitkommen."
+    },
+    {
+      "id": 12,
+      "day": 29,
+      "role": "sent",
+      "difficulty": "A2",
+      "translation": "Too bad! Then we will go without him.",
+      "translationFa": "حیف! پس بدون او می‌رویم.",
+      "targetText": "Schade! Dann gehen wir ohne ihn."
+    }
+  ],
+  "difficulty": "A2",
+  "grammarFocus": "können, müssen, wollen",
+  "grammarFocusFa": "توانستن، باید، خواستن",
+  "description": "You're in a clothing store and want to try something on. Talk to the sales assistant.",
+  "descriptionFa": "تو یه مغازه لباس هستید و می‌خواید چیزی رو امتحان کنید. با فروشنده صحبت کنید."
+}

@@ -1,0 +1,102 @@
+{
+  "day": 81,
+  "title": "81: Childhood Memories",
+  "titleFa": "خاطرات کودکی",
+  "sentences": [
+    {
+      "id": 1,
+      "day": 81,
+      "role": "received",
+      "difficulty": "B1",
+      "translation": "Where did you grow up?",
+      "translationFa": "کجا بزرگ شده‌ای؟",
+      "audioText": "Wo bist du aufgewachsen?"
+    },
+    {
+      "id": 2,
+      "day": 81,
+      "role": "sent",
+      "difficulty": "B1",
+      "translation": "I grew up in a small town, but as a child I always wanted to live in a big city.",
+      "translationFa": "در یک شهر کوچک بزرگ شدم، ولی وقتی بچه بودم همیشه می‌خواستم در شهر بزرگ زندگی کنم.",
+      "targetText": "Ich bin in einer kleinen Stadt aufgewachsen, aber als Kind wollte ich immer in einer großen Stadt leben."
+    },
+    {
+      "id": 3,
+      "day": 81,
+      "role": "received",
+      "difficulty": "B1",
+      "translation": "Did you have many friends?",
+      "translationFa": "دوستان زیادی داشتی؟",
+      "audioText": "Hattest du viele Freunde?"
+    },
+    {
+      "id": 4,
+      "day": 81,
+      "role": "sent",
+      "difficulty": "B1",
+      "translation": "Yes, we played together in the park every day.",
+      "translationFa": "بله، هر روز با هم در پارک بازی می‌کردیم.",
+      "targetText": "Ja, wir spielten jeden Tag zusammen im Park."
+    },
+    {
+      "id": 5,
+      "day": 81,
+      "role": "received",
+      "difficulty": "B1",
+      "translation": "What was your favorite game?",
+      "translationFa": "بازی مورد علاقه‌ات چه بود؟",
+      "audioText": "Was war dein Lieblingsspiel?"
+    },
+    {
+      "id": 6,
+      "day": 81,
+      "role": "sent",
+      "difficulty": "B1",
+      "translation": "When I was small, I liked playing football the most.",
+      "translationFa": "وقتی کوچک بودم، بیشتر از همه فوتبال بازی می‌کردم.",
+      "targetText": "Als ich klein war, spielte ich am liebsten Fußball."
+    },
+    {
+      "id": 7,
+      "day": 81,
+      "role": "received",
+      "difficulty": "B1",
+      "translation": "Do you have siblings?",
+      "translationFa": "خواهر و برادر داری؟",
+      "audioText": "Hast du Geschwister?"
+    },
+    {
+      "id": 8,
+      "day": 81,
+      "role": "sent",
+      "difficulty": "B1",
+      "translation": "Yes, I have an older sister. She always helped me with homework.",
+      "translationFa": "بله، یک خواهر بزرگ‌تر دارم. همیشه در تکالیف کمکم می‌کرد.",
+      "targetText": "Ja, ich habe eine ältere Schwester. Sie half mir immer bei den Hausaufgaben."
+    },
+    {
+      "id": 9,
+      "day": 81,
+      "role": "received",
+      "difficulty": "B1",
+      "translation": "That's nice. Do you miss your hometown?",
+      "translationFa": "قشنگه. دلت برای شهرت تنگ می‌شود؟",
+      "audioText": "Das ist schön. Vermisst du deine Heimatstadt?"
+    },
+    {
+      "id": 10,
+      "day": 81,
+      "role": "sent",
+      "difficulty": "B1",
+      "translation": "Sometimes, especially when I moved here.",
+      "translationFa": "گاهی اوقات، مخصوصاً وقتی به اینجا نقل مکان کردم.",
+      "targetText": "Manchmal, besonders als ich hierher gezogen bin."
+    }
+  ],
+  "difficulty": "B1",
+  "grammarFocus": "Präteritum (simple past); als clauses",
+  "grammarFocusFa": "گذشته ساده؛ جملات با als",
+  "description": "",
+  "descriptionFa": ""
+}

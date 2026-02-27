@@ -1,0 +1,120 @@
+{
+  "day": 3,
+  "title": "3: Numbers 1-20",
+  "titleFa": "اعداد ۱ تا ۲۰",
+  "sentences": [
+    {
+      "id": 1,
+      "day": 3,
+      "role": "received",
+      "difficulty": "A1",
+      "translation": "Good day! How much does the coffee cost?",
+      "translationFa": "روز بخیر! قهوه چقدر است؟",
+      "audioText": "Guten Tag! Wie viel kostet der Kaffee?"
+    },
+    {
+      "id": 2,
+      "day": 3,
+      "role": "sent",
+      "difficulty": "A1",
+      "translation": "The coffee costs three euros.",
+      "translationFa": "قهوه سه یورو است.",
+      "targetText": "Der Kaffee kostet drei Euro."
+    },
+    {
+      "id": 3,
+      "day": 3,
+      "role": "received",
+      "difficulty": "A1",
+      "translation": "And the bread roll? How much does that cost?",
+      "translationFa": "و نان؟ قیمتش چقدر است؟",
+      "audioText": "Und das Brötchen? Wie viel kostet das?"
+    },
+    {
+      "id": 4,
+      "day": 3,
+      "role": "sent",
+      "difficulty": "A1",
+      "translation": "The bread roll costs one fifty.",
+      "translationFa": "نان یک یورو و پنجاه سنت است.",
+      "targetText": "Das Brötchen kostet eins fünfzig."
+    },
+    {
+      "id": 5,
+      "day": 3,
+      "role": "received",
+      "difficulty": "A1",
+      "translation": "I will take two coffees and three bread rolls.",
+      "translationFa": "من دو تا قهوه و سه تا نان می‌خواهم.",
+      "audioText": "Ich nehme zwei Kaffees und drei Brötchen."
+    },
+    {
+      "id": 6,
+      "day": 3,
+      "role": "sent",
+      "difficulty": "A1",
+      "translation": "That comes to ten euros fifty altogether.",
+      "translationFa": "مجموعا ده یورو و پنجاه سنت می‌شود.",
+      "targetText": "Das macht zusammen zehn Euro fünfzig."
+    },
+    {
+      "id": 7,
+      "day": 3,
+      "role": "received",
+      "difficulty": "A1",
+      "translation": "What is your phone number?",
+      "translationFa": "شماره تلفن شما چیست؟",
+      "audioText": "Wie ist Ihre Telefonnummer?"
+    },
+    {
+      "id": 8,
+      "day": 3,
+      "role": "sent",
+      "difficulty": "A1",
+      "translation": "My number is zero one seven two, five eight nine three.",
+      "translationFa": "شماره من صفر یک هفت دو، پنج هشت نه سه است.",
+      "targetText": "Meine Nummer ist null eins sieben zwei, fünf acht neun drei."
+    },
+    {
+      "id": 9,
+      "day": 3,
+      "role": "received",
+      "difficulty": "A1",
+      "translation": "Can you please repeat that?",
+      "translationFa": "می‌توانید لطفا تکرار کنید؟",
+      "audioText": "Können Sie das bitte wiederholen?"
+    },
+    {
+      "id": 10,
+      "day": 3,
+      "role": "sent",
+      "difficulty": "A1",
+      "translation": "Of course! Zero one seven two, five eight nine three.",
+      "translationFa": "البته! صفر یک هفت دو، پنج هشت نه سه.",
+      "targetText": "Natürlich! Null eins sieben zwei, fünf acht neun drei."
+    },
+    {
+      "id": 11,
+      "day": 3,
+      "role": "received",
+      "difficulty": "A1",
+      "translation": "How many people are you?",
+      "translationFa": "چند نفر هستید؟",
+      "audioText": "Wie viele Personen sind Sie?"
+    },
+    {
+      "id": 12,
+      "day": 3,
+      "role": "sent",
+      "difficulty": "A1",
+      "translation": "We are four people.",
+      "translationFa": "ما چهار نفر هستیم.",
+      "targetText": "Wir sind vier Personen."
+    }
+  ],
+  "difficulty": "A1",
+  "grammarFocus": "Cardinal numbers: eins, zwei, drei... zwanzig",
+  "grammarFocusFa": "اعداد اصلی: یک، دو، سه... بیست",
+  "description": "A neighbor stops you on the street. Exchange pleasantries and ask how they're doing.",
+  "descriptionFa": "یه همسایه تو خیابون جلوتون رو می‌گیره. احوال‌پرسی کنید و بپرسید حالشون چطوره."
+}

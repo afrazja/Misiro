@@ -1,0 +1,120 @@
+{
+  "day": 27,
+  "title": "27: Perfect Tense Part 2",
+  "titleFa": "زمان گذشته بخش ۲",
+  "sentences": [
+    {
+      "id": 1,
+      "day": 27,
+      "role": "received",
+      "difficulty": "A2",
+      "translation": "Where did you travel?",
+      "translationFa": "کجا سفر کردی؟",
+      "audioText": "Wohin bist du gereist?"
+    },
+    {
+      "id": 2,
+      "day": 27,
+      "role": "sent",
+      "difficulty": "A2",
+      "translation": "I went to Berlin.",
+      "translationFa": "به برلین رفتم.",
+      "targetText": "Ich bin nach Berlin gefahren."
+    },
+    {
+      "id": 3,
+      "day": 27,
+      "role": "received",
+      "difficulty": "A2",
+      "translation": "How did you get there?",
+      "translationFa": "چطور رسیدی آنجا؟",
+      "audioText": "Wie bist du dorthin gekommen?"
+    },
+    {
+      "id": 4,
+      "day": 27,
+      "role": "sent",
+      "difficulty": "A2",
+      "translation": "I went by train.",
+      "translationFa": "با قطار رفتم.",
+      "targetText": "Ich bin mit dem Zug gefahren."
+    },
+    {
+      "id": 5,
+      "day": 27,
+      "role": "received",
+      "difficulty": "A2",
+      "translation": "When did you arrive?",
+      "translationFa": "کی رسیدی؟",
+      "audioText": "Wann bist du angekommen?"
+    },
+    {
+      "id": 6,
+      "day": 27,
+      "role": "sent",
+      "difficulty": "A2",
+      "translation": "I arrived at three o'clock.",
+      "translationFa": "ساعت سه رسیدم.",
+      "targetText": "Ich bin um drei Uhr angekommen."
+    },
+    {
+      "id": 7,
+      "day": 27,
+      "role": "received",
+      "difficulty": "A2",
+      "translation": "Did you also go to the museum?",
+      "translationFa": "به موزه هم رفتی؟",
+      "audioText": "Bist du auch in das Museum gegangen?"
+    },
+    {
+      "id": 8,
+      "day": 27,
+      "role": "sent",
+      "difficulty": "A2",
+      "translation": "Yes, I went to the German Museum.",
+      "translationFa": "بله، به موزه آلمان رفتم.",
+      "targetText": "Ja, ich bin ins Deutsche Museum gegangen."
+    },
+    {
+      "id": 9,
+      "day": 27,
+      "role": "received",
+      "difficulty": "A2",
+      "translation": "What happened?",
+      "translationFa": "چه اتفاقی افتاد؟",
+      "audioText": "Was ist passiert?"
+    },
+    {
+      "id": 10,
+      "day": 27,
+      "role": "sent",
+      "difficulty": "A2",
+      "translation": "I fell on the street.",
+      "translationFa": "توی خیابان افتادم.",
+      "targetText": "Ich bin auf der Straße gefallen."
+    },
+    {
+      "id": 11,
+      "day": 27,
+      "role": "received",
+      "difficulty": "A2",
+      "translation": "Did you stay alone or with friends?",
+      "translationFa": "تنها ماندی یا با دوستان؟",
+      "audioText": "Bist du allein geblieben oder mit Freunden?"
+    },
+    {
+      "id": 12,
+      "day": 27,
+      "role": "sent",
+      "difficulty": "A2",
+      "translation": "I stayed at my friend's place.",
+      "translationFa": "پیش دوستم ماندم.",
+      "targetText": "Ich bin bei meinem Freund geblieben."
+    }
+  ],
+  "difficulty": "A2",
+  "grammarFocus": "Perfekt with sein (movement/state change)",
+  "grammarFocusFa": "ماضی نقلی با sein (حرکت/تغییر حالت)",
+  "description": "You're at the supermarket but can't find what you need. Ask a staff member for help.",
+  "descriptionFa": "تو سوپرمارکت هستید ولی چیزی که نیاز دارید رو پیدا نمی‌کنید. از یه کارمند کمک بخواید."
+}

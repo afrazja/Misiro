@@ -1,0 +1,102 @@
+{
+  "day": 83,
+  "title": "83: At the Hairdresser",
+  "titleFa": "در آرایشگاه",
+  "sentences": [
+    {
+      "id": 1,
+      "day": 83,
+      "role": "received",
+      "difficulty": "A2",
+      "translation": "Good day! Do you have an appointment?",
+      "translationFa": "روز بخیر! وقت قبلی دارید؟",
+      "audioText": "Guten Tag! Haben Sie einen Termin?"
+    },
+    {
+      "id": 2,
+      "day": 83,
+      "role": "sent",
+      "difficulty": "A2",
+      "translation": "Yes, at two o'clock. My name is Mina.",
+      "translationFa": "بله، ساعت دو. اسمم مینا است.",
+      "targetText": "Ja, um vierzehn Uhr. Mein Name ist Mina."
+    },
+    {
+      "id": 3,
+      "day": 83,
+      "role": "received",
+      "difficulty": "A2",
+      "translation": "What would you like to have done today?",
+      "translationFa": "امروز چه کاری می‌خواهید انجام دهید؟",
+      "audioText": "Was möchten Sie heute machen lassen?"
+    },
+    {
+      "id": 4,
+      "day": 83,
+      "role": "sent",
+      "difficulty": "A2",
+      "translation": "I would like to have my hair cut shorter.",
+      "translationFa": "می‌خواهم موهایم را کوتاه‌تر کنم.",
+      "targetText": "Ich möchte die Haare kürzer schneiden lassen."
+    },
+    {
+      "id": 5,
+      "day": 83,
+      "role": "received",
+      "difficulty": "A2",
+      "translation": "How short? Should I just trim the ends?",
+      "translationFa": "چقدر کوتاه؟ فقط نوکشان را بزنم؟",
+      "audioText": "Wie kurz? Soll ich nur die Spitzen schneiden?"
+    },
+    {
+      "id": 6,
+      "day": 83,
+      "role": "sent",
+      "difficulty": "A2",
+      "translation": "No, please about five centimeters shorter.",
+      "translationFa": "نه، لطفاً حدود پنج سانتی‌متر کوتاه‌تر.",
+      "targetText": "Nein, bitte etwa fünf Zentimeter kürzer."
+    },
+    {
+      "id": 7,
+      "day": 83,
+      "role": "received",
+      "difficulty": "A2",
+      "translation": "Would you also like your hair washed?",
+      "translationFa": "می‌خواهید موها را هم بشویم؟",
+      "audioText": "Möchten Sie auch die Haare waschen?"
+    },
+    {
+      "id": 8,
+      "day": 83,
+      "role": "sent",
+      "difficulty": "A2",
+      "translation": "Yes, please. And blow-dry them too.",
+      "translationFa": "بله، لطفاً. و سشوار هم بکشید.",
+      "targetText": "Ja, bitte. Und föhnen Sie sie auch."
+    },
+    {
+      "id": 9,
+      "day": 83,
+      "role": "received",
+      "difficulty": "A2",
+      "translation": "That looks very good! Do you like it?",
+      "translationFa": "خیلی خوب شده! خوشتان آمد؟",
+      "audioText": "Das sieht sehr gut aus! Gefällt es Ihnen?"
+    },
+    {
+      "id": 10,
+      "day": 83,
+      "role": "sent",
+      "difficulty": "A2",
+      "translation": "Yes, very nice! What do I have to pay?",
+      "translationFa": "بله، خیلی قشنگ شده! چقدر باید بپردازم؟",
+      "targetText": "Ja, sehr schön! Was muss ich bezahlen?"
+    }
+  ],
+  "difficulty": "A2",
+  "grammarFocus": "Adjective endings; appearance vocabulary",
+  "grammarFocusFa": "پایانه‌های صفت؛ واژگان ظاهر",
+  "description": "",
+  "descriptionFa": ""
+}

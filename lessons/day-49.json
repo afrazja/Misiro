@@ -1,0 +1,102 @@
+{
+  "day": 49,
+  "title": "49: Technology & Internet",
+  "titleFa": "فناوری و اینترنت",
+  "sentences": [
+    {
+      "id": 1,
+      "day": 49,
+      "role": "received",
+      "difficulty": "A2",
+      "translation": "Do you use the internet often?",
+      "translationFa": "زیاد از اینترنت استفاده می‌کنی؟",
+      "audioText": "Benutzt du oft das Internet?"
+    },
+    {
+      "id": 2,
+      "day": 49,
+      "role": "sent",
+      "difficulty": "B1",
+      "translation": "Yes, I use the internet daily for work and studying.",
+      "translationFa": "بله، هر روز برای کار و درس از اینترنت استفاده می‌کنم.",
+      "targetText": "Ja, ich benutze das Internet täglich für die Arbeit und zum Lernen."
+    },
+    {
+      "id": 3,
+      "day": 49,
+      "role": "received",
+      "difficulty": "B1",
+      "translation": "Which search engine do you use most often?",
+      "translationFa": "کدام موتور جستجو را بیشتر استفاده می‌کنی؟",
+      "audioText": "Welche Suchmaschine benutzt du am häufigsten?"
+    },
+    {
+      "id": 4,
+      "day": 49,
+      "role": "sent",
+      "difficulty": "B1",
+      "translation": "I mostly use Google, but sometimes also other search engines.",
+      "translationFa": "بیشتر از گوگل استفاده می‌کنم ولی گاهی هم از موتورهای دیگر.",
+      "targetText": "Ich benutze meistens Google, aber manchmal auch andere Suchmaschinen."
+    },
+    {
+      "id": 5,
+      "day": 49,
+      "role": "received",
+      "difficulty": "B1",
+      "translation": "Do you have a favorite app on your smartphone?",
+      "translationFa": "اپلیکیشن مورد علاقه‌ای روی گوشیت داری؟",
+      "audioText": "Hast du eine Lieblingsapp auf deinem Smartphone?"
+    },
+    {
+      "id": 6,
+      "day": 49,
+      "role": "sent",
+      "difficulty": "B1",
+      "translation": "Yes, I use a language learning app to improve my German.",
+      "translationFa": "بله، از یک اپلیکیشن زبان‌آموزی استفاده می‌کنم تا آلمانی‌ام را بهتر کنم.",
+      "targetText": "Ja, ich benutze eine Sprachlern-App, um mein Deutsch zu verbessern."
+    },
+    {
+      "id": 7,
+      "day": 49,
+      "role": "received",
+      "difficulty": "A2",
+      "translation": "Do you play computer games?",
+      "translationFa": "بازی کامپیوتری بازی می‌کنی؟",
+      "audioText": "Spielst du Computerspiele?"
+    },
+    {
+      "id": 8,
+      "day": 49,
+      "role": "sent",
+      "difficulty": "B1",
+      "translation": "No, but I like watching online videos and listening to podcasts.",
+      "translationFa": "نه، ولی ویدیوهای آنلاین می‌بینم و پادکست گوش می‌دهم.",
+      "targetText": "Nein, aber ich schaue gern Onlinevideos und höre Podcasts."
+    },
+    {
+      "id": 9,
+      "day": 49,
+      "role": "received",
+      "difficulty": "B1",
+      "translation": "How do you protect your data on the internet?",
+      "translationFa": "چطور اطلاعاتت را در اینترنت محافظت می‌کنی؟",
+      "audioText": "Wie schützt du deine Daten im Internet?"
+    },
+    {
+      "id": 10,
+      "day": 49,
+      "role": "sent",
+      "difficulty": "B1",
+      "translation": "I use strong passwords and regularly update my software.",
+      "translationFa": "رمزهای قوی استفاده می‌کنم و مرتب نرم‌افزارم را بروزرسانی می‌کنم.",
+      "targetText": "Ich benutze starke Passwörter und aktualisiere regelmäßig meine Software."
+    }
+  ],
+  "difficulty": "B1",
+  "grammarFocus": "Compound nouns: Computerspiel, Handynummer",
+  "grammarFocusFa": "اسامی مرکب: بازی کامپیوتری، شماره موبایل",
+  "description": "It's Friday afternoon. Chat with a friend about what you're both doing this weekend.",
+  "descriptionFa": "بعدازظهر جمعه‌ست. با یه دوست درباره برنامه‌های آخر هفته‌تون صحبت کنید."
+}

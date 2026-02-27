@@ -1,0 +1,120 @@
+{
+  "day": 16,
+  "title": "16: Directions",
+  "titleFa": "مسیریابی",
+  "sentences": [
+    {
+      "id": 1,
+      "day": 16,
+      "role": "received",
+      "difficulty": "A1",
+      "translation": "Excuse me, where is the train station?",
+      "translationFa": "ببخشید، ایستگاه قطار کجاست؟",
+      "audioText": "Entschuldigung, wo ist der Bahnhof?"
+    },
+    {
+      "id": 2,
+      "day": 16,
+      "role": "sent",
+      "difficulty": "A1",
+      "translation": "Go straight ahead and then left.",
+      "translationFa": "مستقیم بروید و بعد بپیچید چپ.",
+      "targetText": "Gehen Sie geradeaus und dann links."
+    },
+    {
+      "id": 3,
+      "day": 16,
+      "role": "received",
+      "difficulty": "A1",
+      "translation": "Is it far from here?",
+      "translationFa": "از اینجا دور است؟",
+      "audioText": "Ist es weit von hier?"
+    },
+    {
+      "id": 4,
+      "day": 16,
+      "role": "sent",
+      "difficulty": "A1",
+      "translation": "No, it is only five minutes on foot.",
+      "translationFa": "نه، فقط پنج دقیقه پیاده است.",
+      "targetText": "Nein, es ist nur fünf Minuten zu Fuß."
+    },
+    {
+      "id": 5,
+      "day": 16,
+      "role": "received",
+      "difficulty": "A1",
+      "translation": "And where is the nearest pharmacy?",
+      "translationFa": "و نزدیک‌ترین داروخانه کجاست؟",
+      "audioText": "Und wo ist die nächste Apotheke?"
+    },
+    {
+      "id": 6,
+      "day": 16,
+      "role": "sent",
+      "difficulty": "A1",
+      "translation": "Turn right at the traffic light.",
+      "translationFa": "سر چراغ راهنمایی بپیچید راست.",
+      "targetText": "Biegen Sie an der Ampel rechts ab."
+    },
+    {
+      "id": 7,
+      "day": 16,
+      "role": "received",
+      "difficulty": "A1",
+      "translation": "Is there a supermarket nearby?",
+      "translationFa": "اینجا نزدیکی سوپرمارکت هست؟",
+      "audioText": "Gibt es hier in der Nähe einen Supermarkt?"
+    },
+    {
+      "id": 8,
+      "day": 16,
+      "role": "sent",
+      "difficulty": "A1",
+      "translation": "Yes, the supermarket is opposite the park.",
+      "translationFa": "بله، سوپرمارکت روبروی پارک است.",
+      "targetText": "Ja, der Supermarkt ist gegenüber vom Park."
+    },
+    {
+      "id": 9,
+      "day": 16,
+      "role": "received",
+      "difficulty": "A1",
+      "translation": "How do I get to the hospital?",
+      "translationFa": "چطور به بیمارستان بروم؟",
+      "audioText": "Wie komme ich zum Krankenhaus?"
+    },
+    {
+      "id": 10,
+      "day": 16,
+      "role": "sent",
+      "difficulty": "A1",
+      "translation": "Take the second street on the right.",
+      "translationFa": "خیابان دوم سمت راست را بگیرید.",
+      "targetText": "Nehmen Sie die zweite Straße rechts."
+    },
+    {
+      "id": 11,
+      "day": 16,
+      "role": "received",
+      "difficulty": "A1",
+      "translation": "Can I also take the bus?",
+      "translationFa": "اتوبوس هم می‌توانم بگیرم؟",
+      "audioText": "Kann ich auch den Bus nehmen?"
+    },
+    {
+      "id": 12,
+      "day": 16,
+      "role": "sent",
+      "difficulty": "A1",
+      "translation": "Yes, the bus stop is over there.",
+      "translationFa": "بله، ایستگاه اتوبوس آن‌طرف است.",
+      "targetText": "Ja, die Bushaltestelle ist dort drüben."
+    }
+  ],
+  "difficulty": "A1",
+  "grammarFocus": "Imperative basics: Gehen Sie..., Biegen Sie ab...",
+  "grammarFocusFa": "امری پایه: بروید...، بپیچید...",
+  "description": "You've just arrived at the airport and need to get to your hotel. Hail a taxi and discuss the fare.",
+  "descriptionFa": "تازه وارد فرودگاه شدید و باید به هتل برسید. تاکسی بگیرید و درباره کرایه صحبت کنید."
+}

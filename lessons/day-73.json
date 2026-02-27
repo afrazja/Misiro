@@ -1,0 +1,102 @@
+{
+  "day": 73,
+  "title": "73: At the Gym",
+  "titleFa": "در باشگاه ورزشی",
+  "sentences": [
+    {
+      "id": 1,
+      "day": 73,
+      "role": "received",
+      "difficulty": "A2",
+      "translation": "Good day! Would you like to register?",
+      "translationFa": "روز بخیر! می‌خواهید ثبت‌نام کنید؟",
+      "audioText": "Guten Tag! Möchten Sie sich anmelden?"
+    },
+    {
+      "id": 2,
+      "day": 73,
+      "role": "sent",
+      "difficulty": "A2",
+      "translation": "Yes, I would like to become a member.",
+      "translationFa": "بله، می‌خواهم عضو شوم.",
+      "targetText": "Ja, ich möchte gern Mitglied werden."
+    },
+    {
+      "id": 3,
+      "day": 73,
+      "role": "received",
+      "difficulty": "A2",
+      "translation": "We have different offers. How often would you like to train?",
+      "translationFa": "ما پیشنهادات مختلفی داریم. چند وقت یکبار می‌خواهید تمرین کنید؟",
+      "audioText": "Wir haben verschiedene Angebote. Wie oft möchten Sie trainieren?"
+    },
+    {
+      "id": 4,
+      "day": 73,
+      "role": "sent",
+      "difficulty": "A2",
+      "translation": "I want to come three times per week.",
+      "translationFa": "می‌خواهم هفته‌ای سه بار بیایم.",
+      "targetText": "Ich möchte dreimal pro Woche kommen."
+    },
+    {
+      "id": 5,
+      "day": 73,
+      "role": "received",
+      "difficulty": "A2",
+      "translation": "Then I recommend the standard package for forty euros per month.",
+      "translationFa": "پس بسته استاندارد را برای چهل یورو در ماه پیشنهاد می‌کنم.",
+      "audioText": "Dann empfehle ich das Standardpaket für vierzig Euro im Monat."
+    },
+    {
+      "id": 6,
+      "day": 73,
+      "role": "sent",
+      "difficulty": "A2",
+      "translation": "Can I also participate in classes?",
+      "translationFa": "آیا می‌توانم در کلاس‌ها هم شرکت کنم؟",
+      "targetText": "Kann ich auch an Kursen teilnehmen?"
+    },
+    {
+      "id": 7,
+      "day": 73,
+      "role": "received",
+      "difficulty": "A2",
+      "translation": "Yes, yoga and spinning are included.",
+      "translationFa": "بله، یوگا و اسپینینگ شامل می‌شود.",
+      "audioText": "Ja, Yoga und Spinning sind inklusive."
+    },
+    {
+      "id": 8,
+      "day": 73,
+      "role": "sent",
+      "difficulty": "A2",
+      "translation": "That sounds good. Where can I change?",
+      "translationFa": "خوب به نظر می‌رسد. کجا می‌توانم لباس عوض کنم؟",
+      "targetText": "Das klingt gut. Wo kann ich mich umziehen?"
+    },
+    {
+      "id": 9,
+      "day": 73,
+      "role": "received",
+      "difficulty": "A2",
+      "translation": "The changing rooms are back there on the left.",
+      "translationFa": "رختکن‌ها آنجا سمت چپ هستند.",
+      "audioText": "Die Umkleidekabinen sind dort hinten links."
+    },
+    {
+      "id": 10,
+      "day": 73,
+      "role": "sent",
+      "difficulty": "A2",
+      "translation": "Thank you! I'll start right away.",
+      "translationFa": "خیلی ممنون! الان شروع می‌کنم.",
+      "targetText": "Vielen Dank! Ich fange gleich an."
+    }
+  ],
+  "difficulty": "A2",
+  "grammarFocus": "Modal verbs review; body and fitness",
+  "grammarFocusFa": "مرور افعال کمکی؛ بدن و تناسب اندام",
+  "description": "",
+  "descriptionFa": ""
+}
