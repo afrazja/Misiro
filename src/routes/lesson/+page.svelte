@@ -169,15 +169,14 @@
 		const clean = word.replace(/[.,!?]/g, "");
 		playAudioPromise(clean, 0.8, "de-DE");
 
-		// Show tooltip — always show English translation
-		{
+		// Show tooltip
+		if (meaning) {
 			if (tooltipTimer) clearTimeout(tooltipTimer);
 			const target = event.currentTarget as HTMLElement;
 			const rect = target.getBoundingClientRect();
-			const tooltipText = meaning || currentTeachStep?.englishTranslation || clean;
 			wordTooltip = {
 				word,
-				meaning: tooltipText,
+				meaning,
 				x: rect.left + rect.width / 2,
 				y: rect.top,
 			};
