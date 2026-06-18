@@ -354,6 +354,83 @@ describe('loadGlossary', () => {
 	});
 });
 
+describe('offline caching (localStorage)', () => {
+	beforeEach(() => {
+		invalidateLessonCache();
+		vi.clearAllMocks();
+	});
+
+	it('mirrors the lesson index to localStorage on a successful fetch', async () => {
+		const raw = [{ day: 1, title: 'The Café', title_fa: 'کافه', group: 'beginner', sort_order: 1 }];
+		vi.mocked(getSupabaseBrowserClient).mockReturnValue(
+			mockSbFor('lessons', { data: raw, error: null }) as any
+		);
+
+		await getLessonIndex();
+
+		const stored = JSON.parse(localStorage.getItem('mirifer_lesson_index')!);
+		expect(stored).toHaveLength(1);
+		expect(stored[0].title).toBe('The Café');
+	});
+
+	it('falls back to the cached index when Supabase fails (offline)', async () => {
+		// Seed a prior offline cache, then simulate an offline fetch failure.
+		const cached = [{ day: 1, file: 'day-1.json', title: 'Cached Café', titleFa: '', group: 'beginner' }];
+		localStorage.setItem('mirifer_lesson_index', JSON.stringify(cached));
+		vi.mocked(getSupabaseBrowserClient).mockReturnValue(
+			mockSbFor('lessons', { data: null, error: { message: 'network down' } }) as any
+		);
+
+		const index = await getLessonIndex();
+		expect(index).toHaveLength(1);
+		expect(index[0].title).toBe('Cached Café');
+	});
+
+	it('mirrors a loaded lesson to localStorage on a successful fetch', async () => {
+		const sb = mockSbForTables({
+			lessons: { data: { id: 'a1b2c3d4-e5f6-7890-abcd-ef1234567890', title: 'The Café', title_fa: '' }, error: null },
+			sentences: { data: [{ sentence_order: 0, role: 'received', audio_text: 'Hallo', target_text: null, translation: 'Hello', translation_fa: '' }], error: null }
+		});
+		vi.mocked(getSupabaseBrowserClient).mockReturnValue(sb as any);
+
+		await loadLesson(7);
+
+		const stored = JSON.parse(localStorage.getItem('mirifer_lesson_7')!);
+		expect(stored.title).toBe('The Café');
+		expect(stored.sentences).toHaveLength(1);
+	});
+
+	it('falls back to the cached lesson when Supabase fails (offline)', async () => {
+		const cachedLesson = { title: 'Offline Café', sentences: [{ id: 1, role: 'received', translation: 'Hi' }] };
+		localStorage.setItem('mirifer_lesson_3', JSON.stringify(cachedLesson));
+		const sb = mockSbForTables({ lessons: { data: null, error: { message: 'network down' } } });
+		vi.mocked(getSupabaseBrowserClient).mockReturnValue(sb as any);
+
+		const lesson = await loadLesson(3);
+		expect(lesson).not.toBeNull();
+		expect(lesson!.title).toBe('Offline Café');
+	});
+
+	it('getLesson reads from localStorage when not in the in-memory cache', () => {
+		const cachedLesson = { title: 'Synced Café', sentences: [] };
+		localStorage.setItem('mirifer_lesson_9', JSON.stringify(cachedLesson));
+
+		expect(getLesson(9)!.title).toBe('Synced Café');
+	});
+
+	it('invalidateLessonCache clears the localStorage copies too', async () => {
+		const raw = [{ day: 1, title: 'Day 1', title_fa: '', group: 'g', sort_order: 1 }];
+		vi.mocked(getSupabaseBrowserClient).mockReturnValue(
+			mockSbFor('lessons', { data: raw, error: null }) as any
+		);
+		await getLessonIndex();
+		expect(localStorage.getItem('mirifer_lesson_index')).not.toBeNull();
+
+		invalidateLessonCache();
+		expect(localStorage.getItem('mirifer_lesson_index')).toBeNull();
+	});
+});
+
 describe('getGlossaryMeaning', () => {
 	beforeEach(() => {
 		invalidateLessonCache();

@@ -29,6 +29,33 @@ const lessonCache: Record<number, Lesson> = {};
 let indexCache: LessonMeta[] | null = null;
 let glossaryCache: Record<string, { en: string; fa: string }> | null = null;
 
+// ─── Offline cache (localStorage) ───────────────────────────────────────────
+// Every successful Supabase fetch is mirrored to localStorage so lessons keep
+// working offline / after a reload. localStorage is read only as a fallback
+// when the network fetch fails — online users always get fresh data.
+const LS_INDEX_KEY = 'mirifer_lesson_index';
+const LS_GLOSSARY_KEY = 'mirifer_glossary';
+const lsLessonKey = (day: number) => `mirifer_lesson_${day}`;
+
+function readLS<T>(key: string): T | null {
+	if (typeof localStorage === 'undefined') return null;
+	try {
+		const raw = localStorage.getItem(key);
+		return raw ? (JSON.parse(raw) as T) : null;
+	} catch {
+		return null;
+	}
+}
+
+function writeLS(key: string, value: unknown): void {
+	if (typeof localStorage === 'undefined') return;
+	try {
+		localStorage.setItem(key, JSON.stringify(value));
+	} catch {
+		// Quota exceeded or storage unavailable — caching is best-effort.
+	}
+}
+
 /**
  * Get all available lesson metadata from the lessons table.
  * Now async — fetches from Supabase.
@@ -44,6 +71,13 @@ export async function getLessonIndex(): Promise<LessonMeta[]> {
 
 	if (error || !data) {
 		logError('lesson-loader:getLessonIndex', error?.message ?? 'No data returned');
+		// Offline / fetch failed — fall back to the last cached index.
+		const cached = readLS<LessonMeta[]>(LS_INDEX_KEY);
+		if (cached && cached.length) {
+			logWarn('lesson-loader:getLessonIndex', 'Using offline cached lesson index');
+			indexCache = cached;
+			return cached;
+		}
 		indexCache = [];
 		return [];
 	}
@@ -71,6 +105,7 @@ export async function getLessonIndex(): Promise<LessonMeta[]> {
 		difficulty: r.difficulty ?? undefined
 	}));
 
+	writeLS(LS_INDEX_KEY, indexCache); // mirror to offline cache
 	return indexCache;
 }
 
@@ -78,6 +113,7 @@ export async function getLessonIndex(): Promise<LessonMeta[]> {
  * Get the total number of lessons available (from cache).
  */
 export function getTotalLessons(): number {
+	if (!indexCache) indexCache = readLS<LessonMeta[]>(LS_INDEX_KEY);
 	return indexCache?.length ?? 0;
 }
 
@@ -86,6 +122,18 @@ export function getTotalLessons(): number {
  */
 export async function loadLesson(day: number): Promise<Lesson | null> {
 	if (lessonCache[day]) return lessonCache[day];
+
+	// Offline fallback: serve the last cached copy of this lesson if the
+	// network fetch can't complete or returns bad data.
+	const offlineFallback = (): Lesson | null => {
+		const cached = readLS<Lesson>(lsLessonKey(day));
+		if (cached) {
+			logWarn('lesson-loader:loadLesson', `Using offline cached lesson for day ${day}`);
+			lessonCache[day] = cached;
+			return cached;
+		}
+		return null;
+	};
 
 	const sb = getSupabaseBrowserClient();
 
@@ -98,7 +146,7 @@ export async function loadLesson(day: number): Promise<Lesson | null> {
 
 	if (lessonErr || !lessonRow) {
 		logWarn('lesson-loader:loadLesson', `No lesson found for day ${day}`);
-		return null;
+		return offlineFallback();
 	}
 
 	const lessonValidation = LessonDetailRowSchema.safeParse(lessonRow);
@@ -107,7 +155,7 @@ export async function loadLesson(day: number): Promise<Lesson | null> {
 			'lesson-loader:loadLesson',
 			`Lesson row for day ${day} failed validation: ${lessonValidation.error.message}`
 		);
-		return null;
+		return offlineFallback();
 	}
 	const validatedLesson = lessonValidation.data;
 
@@ -120,7 +168,7 @@ export async function loadLesson(day: number): Promise<Lesson | null> {
 
 	if (sentErr) {
 		logError('lesson-loader:loadLesson', `Failed to fetch sentences for day ${day}: ${sentErr.message}`);
-		return null;
+		return offlineFallback();
 	}
 
 	const validatedSentences = (sentenceRows ?? [])
@@ -159,6 +207,7 @@ export async function loadLesson(day: number): Promise<Lesson | null> {
 	};
 
 	lessonCache[day] = lesson;
+	writeLS(lsLessonKey(day), lesson); // mirror to offline cache
 	return lesson;
 }
 
@@ -173,7 +222,13 @@ export async function loadLessons(days: number[]): Promise<void> {
  * Get a lesson from the cache (must be loaded first)
  */
 export function getLesson(day: number): Lesson | null {
-	return lessonCache[day] || null;
+	if (lessonCache[day]) return lessonCache[day];
+	const cached = readLS<Lesson>(lsLessonKey(day));
+	if (cached) {
+		lessonCache[day] = cached;
+		return cached;
+	}
+	return null;
 }
 
 /**
@@ -194,6 +249,13 @@ export async function loadGlossary(): Promise<Record<string, { en: string; fa: s
 
 	if (error) {
 		logError('lesson-loader:loadGlossary', error.message);
+		// Offline fallback: serve the last cached glossary so word tooltips work.
+		const cached = readLS<Record<string, { en: string; fa: string }>>(LS_GLOSSARY_KEY);
+		if (cached) {
+			logWarn('lesson-loader:loadGlossary', 'Using offline cached glossary');
+			glossaryCache = cached;
+			return cached;
+		}
 		return {};
 	}
 
@@ -210,20 +272,41 @@ export async function loadGlossary(): Promise<Record<string, { en: string; fa: s
 		glossaryCache[result.data.word] = { en: result.data.en, fa: result.data.fa };
 	}
 
+	writeLS(LS_GLOSSARY_KEY, glossaryCache); // mirror to offline cache
 	return glossaryCache;
 }
 
 /**
- * Get glossary meaning for a word based on current language
+ * Get glossary meaning for a word based on current language.
+ * Tries exact match first, then strips common German suffixes
+ * to find base forms (e.g. "arbeitet" → "arbeiten").
  */
 export function getGlossaryMeaning(word: string, language: Language): string | null {
 	if (!glossaryCache) return null;
 
-	const entry = glossaryCache[word.toLowerCase()];
-	if (!entry) return null;
+	const key = word.toLowerCase();
+	const pick = (e: { en: string; fa: string } | string) =>
+		typeof e === 'string' ? e : language === 'fa' ? e.fa : e.en;
 
-	if (typeof entry === 'string') return entry;
-	return language === 'fa' ? entry.fa : entry.en;
+	// 1. Exact match
+	const exact = glossaryCache[key];
+	if (exact) return pick(exact);
+
+	// 2. Suffix stripping — try removing common German inflections
+	const suffixes = ['en', 'st', 'est', 'et', 'te', 'tet', 'er', 'es', 'em', 'e', 'n', 't', 's'];
+	for (const suf of suffixes) {
+		if (key.length > suf.length + 2) {
+			const stem = key.slice(0, -suf.length);
+			// Check stem directly
+			if (glossaryCache[stem]) return pick(glossaryCache[stem]);
+			// Check stem + common infinitive endings
+			if (glossaryCache[stem + 'en']) return pick(glossaryCache[stem + 'en']);
+			if (glossaryCache[stem + 'e']) return pick(glossaryCache[stem + 'e']);
+			if (glossaryCache[stem + 'n']) return pick(glossaryCache[stem + 'n']);
+		}
+	}
+
+	return null;
 }
 
 /**
@@ -231,6 +314,7 @@ export function getGlossaryMeaning(word: string, language: Language): string | n
  * Returns false if the index has not been loaded yet.
  */
 export function hasLesson(day: number): boolean {
+	if (!indexCache) indexCache = readLS<LessonMeta[]>(LS_INDEX_KEY);
 	if (!indexCache) return false;
 	return indexCache.some((m) => m.day === day);
 }
@@ -241,9 +325,28 @@ export function hasLesson(day: number): boolean {
 export function invalidateLessonCache(day?: number): void {
 	if (day !== undefined) {
 		delete lessonCache[day];
+		if (typeof localStorage !== 'undefined') {
+			try {
+				localStorage.removeItem(lsLessonKey(day));
+			} catch {
+				/* ignore */
+			}
+		}
 	} else {
 		Object.keys(lessonCache).forEach((k) => delete lessonCache[+k]);
 		indexCache = null;
 		glossaryCache = null;
+		if (typeof localStorage !== 'undefined') {
+			try {
+				// Remove every cached lesson plus the index and glossary.
+				for (const key of Object.keys(localStorage)) {
+					if (key.startsWith('mirifer_lesson_')) localStorage.removeItem(key);
+				}
+				localStorage.removeItem(LS_INDEX_KEY);
+				localStorage.removeItem(LS_GLOSSARY_KEY);
+			} catch {
+				/* ignore */
+			}
+		}
 	}
 }
