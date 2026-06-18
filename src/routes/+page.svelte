@@ -424,7 +424,7 @@
 			<span class="grad-text">The Way You'd Learn It on the Street</span>
 		</h1>
 		<p class="hero-sub">
-			Speak real German from day one — not after months of grammar drills.
+			Speak German from day one — not after months of grammar drills.
 		</p>
 		<div class="hero-actions">
 			{#if isAuthenticated}
