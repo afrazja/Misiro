@@ -193,7 +193,7 @@
 	>
 	<meta
 		name="description"
-		content="Learn German free with 90+ daily lessons, native audio, and voice practice. No grammar drills — just real conversations. Start today, no credit card needed."
+		content="Learn German free with 90+ daily lessons, natural audio, and voice practice. No grammar drills — just real conversations. Start today, no credit card needed."
 	/>
 	<link rel="canonical" href="https://www.mirifer.com/" />
 
@@ -260,7 +260,7 @@
 				name: "How is Mirifer different from Duolingo?",
 				acceptedAnswer: {
 					"@type": "Answer",
-					text: "While Duolingo uses gamified drills with isolated words, Mirifer teaches through real-life conversations. Every lesson is a scenario you'd actually face in Germany — ordering food, asking for directions, making small talk. Mirifer also includes voice recognition for pronunciation practice and word-level feedback.",
+					text: "While Duolingo uses gamified drills with isolated words, Mirifer teaches through real-life conversations. Every lesson is a scenario you'd actually face in Germany — ordering food, asking for directions, making small talk. Mirifer also includes voice recognition so you practise speaking out loud, with instant word-by-word feedback on what you said.",
 				},
 			},
 			{
@@ -508,10 +508,11 @@
 			<div class="step-card">
 				<span class="step-num">01</span>
 				<span class="step-emoji">🎧</span>
-				<h3>Hear Native Audio</h3>
+				<h3>Hear Natural Audio</h3>
 				<p>
-					Every sentence is read aloud at a natural pace — so you hear
-					how German actually sounds, not exaggerated slow speech.
+					Every sentence is read aloud by a lifelike AI voice at a
+					natural pace — so you hear how German actually sounds, not
+					exaggerated slow speech.
 				</p>
 			</div>
 			<div class="step-arrow">→</div>
@@ -521,7 +522,8 @@
 				<h3>Say It Out Loud</h3>
 				<p>
 					Your mic captures what you say and checks it against the
-					target. Get instant, word-level pronunciation feedback.
+					target. Get instant feedback on which words you nailed —
+					and which to try again.
 				</p>
 			</div>
 			<div class="step-arrow">→</div>
@@ -786,7 +788,8 @@
 					lesson is a scenario you'd actually face in Germany —
 					ordering food, asking for directions, making small talk.
 					Mirifer also includes voice recognition so you practise
-					speaking out loud, with word-level pronunciation feedback.
+					speaking out loud, with instant word-by-word feedback on
+					what you said.
 				</p>
 			</details>
 			<details class="faq-item">
