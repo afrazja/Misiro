@@ -1,10 +1,66 @@
 /**
- * TTS Proxy — proxies Google Translate TTS requests to avoid referer blocking.
- * Ported from api/tts.js (Vercel serverless function).
+ * TTS Proxy.
  * Usage: GET /proxy/tts?q=Hallo&tl=de
+ *
+ * Strategy:
+ * - German (tl=de): try ElevenLabs first (if ELEVENLABS_API_KEY is set) for a
+ *   more natural voice, then fall back to Google Translate TTS if ElevenLabs
+ *   fails or its quota is exhausted.
+ * - All other languages: Google Translate TTS (avoids burning the ElevenLabs
+ *   free-tier character quota on translation audio).
+ *
+ * Responses are cached aggressively (immutable, 1 year) — the audio for a given
+ * sentence never changes, so repeat plays hit the browser/CDN cache instead of
+ * re-spending ElevenLabs characters.
  */
 
 import type { RequestHandler } from './$types';
+import { env } from '$env/dynamic/private';
+
+// Default free-tier voice "Daniel — Steady Broadcaster". Override via env to
+// swap in a native German library voice once on a paid (Creator+) plan.
+const ELEVEN_VOICE_ID = env.ELEVENLABS_VOICE_ID || 'onwK4e9ZLuTAKqWW03F9';
+const ELEVEN_MODEL_ID = env.ELEVENLABS_MODEL_ID || 'eleven_multilingual_v2';
+
+/** Long-lived immutable cache — same sentence always produces the same audio. */
+const AUDIO_CACHE_CONTROL = 'public, max-age=31536000, immutable';
+
+/**
+ * Generate German audio via ElevenLabs. Returns the audio bytes, or null on any
+ * failure (missing key, quota exceeded, timeout) so the caller falls back.
+ */
+async function tryElevenLabs(text: string): Promise<ArrayBuffer | null> {
+	if (!env.ELEVENLABS_API_KEY) return null;
+
+	const controller = new AbortController();
+	const timeoutId = setTimeout(() => controller.abort(), 8000);
+	try {
+		const response = await fetch(
+			`https://api.elevenlabs.io/v1/text-to-speech/${ELEVEN_VOICE_ID}?output_format=mp3_44100_128`,
+			{
+				method: 'POST',
+				headers: {
+					'xi-api-key': env.ELEVENLABS_API_KEY,
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify({ text, model_id: ELEVEN_MODEL_ID }),
+				signal: controller.signal
+			}
+		);
+		clearTimeout(timeoutId);
+		if (!response.ok) {
+			// 401 (scope), 402 (quota/plan), 429 (rate limit) → fall back to Google.
+			console.error(`ElevenLabs TTS failed: ${response.status}`);
+			return null;
+		}
+		const audio = await response.arrayBuffer();
+		return audio.byteLength > 100 ? audio : null;
+	} catch (err) {
+		clearTimeout(timeoutId);
+		console.error(`ElevenLabs TTS error: ${(err as Error).message}`);
+		return null;
+	}
+}
 
 const ALLOWED_ORIGINS = [
 	'https://mirifer.vercel.app',
@@ -59,6 +115,24 @@ export const GET: RequestHandler = async ({ url, request }) => {
 		});
 	}
 
+	// German → try ElevenLabs first for a more natural voice.
+	if (lang === 'de') {
+		const elevenAudio = await tryElevenLabs(text);
+		if (elevenAudio) {
+			return new Response(elevenAudio, {
+				status: 200,
+				headers: {
+					'Content-Type': 'audio/mpeg',
+					'Content-Length': elevenAudio.byteLength.toString(),
+					'Cache-Control': AUDIO_CACHE_CONTROL,
+					'X-TTS-Source': 'elevenlabs',
+					...corsHeaders(origin)
+				}
+			});
+		}
+		// else: fall through to Google (quota exhausted, no key, or error)
+	}
+
 	// Try multiple Google TTS URL patterns (they rotate blocking)
 	const attempts: Array<{ url: string; headers: Record<string, string> }> = [
 		{
@@ -103,6 +177,7 @@ export const GET: RequestHandler = async ({ url, request }) => {
 					'Content-Type': 'audio/mpeg',
 					'Content-Length': audioData.byteLength.toString(),
 					'Cache-Control': 'public, max-age=86400',
+					'X-TTS-Source': 'google',
 					...corsHeaders(origin)
 				}
 			});

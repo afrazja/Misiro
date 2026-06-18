@@ -31,3 +31,6 @@ Thumbs.db
 build/
 .vercel/
 .vercel
+
+# Local TTS voice samples (not for repo)
+voice-samples/
