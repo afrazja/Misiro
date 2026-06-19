@@ -61,14 +61,18 @@ FROM activity;
 -- ─────────────────────────────────────────────────────────────────────────────
 -- 2) SIGNUPS PER DAY (last 30 days) — growth trend
 -- ─────────────────────────────────────────────────────────────────────────────
+WITH daily AS (
+  SELECT date_trunc('day', created_at)::date AS day, count(*) AS signups
+  FROM auth.users
+  WHERE created_at >= now() - interval '30 days'
+  GROUP BY 1
+)
 SELECT
-  date_trunc('day', created_at)::date AS day,
-  count(*)                            AS signups,
-  sum(count(*)) OVER (ORDER BY date_trunc('day', created_at)) AS cumulative_users
-FROM auth.users
-WHERE created_at >= now() - interval '30 days'
-GROUP BY 1
-ORDER BY 1;
+  day,
+  signups,
+  sum(signups) OVER (ORDER BY day) AS cumulative_users
+FROM daily
+ORDER BY day;
 
 
 -- ─────────────────────────────────────────────────────────────────────────────
