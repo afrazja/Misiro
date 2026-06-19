@@ -1758,7 +1758,7 @@
 			background 0.2s,
 			color 0.2s;
 		display: inline; /* inline keeps natural word spacing */
-		font-weight: normal; /* base words are light so the read word stands out */
+		font-weight: 600; /* solid base; the read word goes heavier + darker */
 	}
 
 	.interactive-word:hover {
@@ -1776,9 +1776,10 @@
 		color: #e53935;
 	}
 
-	/* Karaoke — the German word currently being read aloud goes bold. */
+	/* Karaoke — the word currently being read goes heavier and darker. */
 	.interactive-word.reading {
-		font-weight: 800;
+		font-weight: 900;
+		color: #000;
 	}
 
 	.btn-inline-next {
