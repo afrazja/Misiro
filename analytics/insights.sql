@@ -223,3 +223,66 @@ LEFT JOIN LATERAL (
 ) sr ON TRUE
 ORDER BY last_active DESC
 LIMIT 50;
+
+
+-- ════════════════════════════════════════════════════════════════════════════
+--  PART B — EVENTS-BASED (precise)   ⚠ requires supabase-events-setup.sql + a
+--  deploy that writes events. These are accurate (true timestamps), not proxies.
+-- ════════════════════════════════════════════════════════════════════════════
+
+
+-- ─────────────────────────────────────────────────────────────────────────────
+-- 9) DAILY ACTIVE USERS (last 30 days) — real DAU from the event log
+-- ─────────────────────────────────────────────────────────────────────────────
+SELECT
+  date_trunc('day', created_at)::date AS day,
+  count(DISTINCT user_id)             AS active_users,
+  count(*)                            AS total_events
+FROM public.events
+WHERE created_at >= now() - interval '30 days'
+GROUP BY 1
+ORDER BY 1;
+
+
+-- ─────────────────────────────────────────────────────────────────────────────
+-- 10) TRUE RETENTION by weekly cohort — "came back at least N days after signup"
+--     Uses real events, so unlike query #4 this isn't an approximation.
+-- ─────────────────────────────────────────────────────────────────────────────
+WITH u AS (
+  SELECT id, created_at AS signup_at, date_trunc('week', created_at)::date AS cohort_week
+  FROM auth.users
+),
+last_ev AS (
+  SELECT user_id, max(created_at) AS last_event_at
+  FROM public.events GROUP BY user_id
+)
+SELECT
+  u.cohort_week,
+  count(*) AS cohort_size,
+  round(100.0 * count(*) FILTER (WHERE le.last_event_at >= u.signup_at + interval '1 day')
+        / NULLIF(count(*), 0), 0) AS d1_pct,
+  round(100.0 * count(*) FILTER (WHERE le.last_event_at >= u.signup_at + interval '7 days')
+        / NULLIF(count(*), 0), 0) AS d7_pct,
+  round(100.0 * count(*) FILTER (WHERE le.last_event_at >= u.signup_at + interval '30 days')
+        / NULLIF(count(*), 0), 0) AS d30_pct
+FROM u
+LEFT JOIN last_ev le ON le.user_id = u.id
+GROUP BY u.cohort_week
+ORDER BY u.cohort_week DESC;
+
+
+-- ─────────────────────────────────────────────────────────────────────────────
+-- 11) PER-LESSON COMPLETION RATE — of users who START each day, how many FINISH
+--     it. The lowest completion rates flag your hardest / most boring lessons.
+-- ─────────────────────────────────────────────────────────────────────────────
+SELECT
+  day AS lesson_day,
+  count(DISTINCT user_id) FILTER (WHERE event_name = 'lesson_started')   AS users_started,
+  count(DISTINCT user_id) FILTER (WHERE event_name = 'lesson_completed') AS users_completed,
+  round(100.0 * count(DISTINCT user_id) FILTER (WHERE event_name = 'lesson_completed')
+        / NULLIF(count(DISTINCT user_id) FILTER (WHERE event_name = 'lesson_started'), 0), 1)
+        AS completion_rate_pct
+FROM public.events
+WHERE day IS NOT NULL
+GROUP BY day
+ORDER BY day;

@@ -26,6 +26,7 @@ import {
 import { getLanguage, getVoiceSpeed, getCompletedLessons, getProgress, saveProgress, saveCompletedLessons } from '$services/data-layer';
 import { recordSRAttempt, getDueReviewItems, removeFromReview } from '$services/spaced-repetition';
 import { removeBookmark } from '$services/data-layer';
+import { trackEvent } from '$services/analytics';
 import { playAudioPromise, stopAllAudio } from '$services/tts';
 import { playTone } from '$services/audio-context';
 import { matchVoiceInput } from '$utils/text-matching';
@@ -197,6 +198,9 @@ export async function initLesson(): Promise<void> {
 			glossary: glossary || {},
 			isLoading: false
 		}));
+
+		// Analytics: a lesson session opened (fire-and-forget).
+		void trackEvent('lesson_started', { day: currentDay });
 	} catch (e) {
 		logError('lesson-controller:initLesson', e);
 		lessonStore.update((s) => ({ ...s, isLoading: false }));
@@ -285,6 +289,14 @@ async function handleLessonCompletion(
 	appStore.update((s) => ({ ...s, completedLessons: updatedCompleted, xp: app.xp }));
 	await saveProgress(app.currentDay, app.currentSentenceIndex, app.xp);
 	await saveCompletedLessons(updatedCompleted);
+
+	// Analytics: only count the first time a lesson is completed.
+	if (!wasAlreadyCompleted) {
+		void trackEvent('lesson_completed', {
+			day: app.currentDay,
+			metadata: { sentenceCount: lesson.sentences.length }
+		});
+	}
 
 	// Determine next day
 	const nextDay = app.currentDay + 1;
