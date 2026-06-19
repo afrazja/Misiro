@@ -27,6 +27,7 @@ import { getLanguage, getVoiceSpeed, getCompletedLessons, getProgress, saveProgr
 import { recordSRAttempt, getDueReviewItems, removeFromReview } from '$services/spaced-repetition';
 import { removeBookmark } from '$services/data-layer';
 import { trackEvent } from '$services/analytics';
+import { makeWordHighlighter } from '$utils/word-timing';
 import { playAudioPromise, stopAllAudio } from '$services/tts';
 import { playTone } from '$services/audio-context';
 import { matchVoiceInput } from '$utils/text-matching';
@@ -51,6 +52,8 @@ export interface LessonCallbacks {
 	onSystemMessage: (text: string) => void;
 	onClearChat: () => void;
 	onVoiceResult: (result: VoiceResultData) => void;
+	/** Index of the German word currently being spoken (-1 = none). */
+	onSpokenWord?: (index: number) => void;
 }
 
 export interface TeachStepData {
@@ -254,7 +257,9 @@ export async function processNextStep(skipAudio = false): Promise<void> {
 		await wait(300);
 		if (getSessionID() !== mySessionID) return;
 
-		await playAudioPromise(germanText, 0.8, 'de-DE');
+		const highlight = makeWordHighlighter(germanText, (i) => callbacks?.onSpokenWord?.(i));
+		await playAudioPromise(germanText, 0.8, 'de-DE', highlight);
+		callbacks?.onSpokenWord?.(-1); // clear highlight when audio finishes
 		if (getSessionID() !== mySessionID) return;
 	}
 

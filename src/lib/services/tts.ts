@@ -71,8 +71,15 @@ function _browserTTS(text: string, lang: string, rate?: number): Promise<void> {
 	});
 }
 
-/** Play via same-origin Vercel serverless TTS proxy */
-function playWebAudio(text: string, lang: string, rate: number = 1.0): Promise<void> {
+/** Play via same-origin Vercel serverless TTS proxy.
+ *  `onTime` (if given) is called with (currentTime, duration) on each animation
+ *  frame during playback — used to drive karaoke-style word highlighting. */
+function playWebAudio(
+	text: string,
+	lang: string,
+	rate: number = 1.0,
+	onTime?: (currentTime: number, duration: number) => void
+): Promise<void> {
 	const shortLang = lang.split('-')[0];
 	const url = `/proxy/tts?q=${encodeURIComponent(text)}&tl=${shortLang}`;
 	const myGen = ttsGeneration; // snapshot — if it changes, we were cancelled
@@ -88,14 +95,23 @@ function playWebAudio(text: string, lang: string, rate: number = 1.0): Promise<v
 		if (myGen !== ttsGeneration) { resolve(); return; }
 
 		let done = false;
+		let rafId = 0;
+		const stopTick = () => {
+			if (rafId) {
+				cancelAnimationFrame(rafId);
+				rafId = 0;
+			}
+		};
 		const finish = () => {
 			if (!done) {
 				done = true;
+				stopTick();
 				resolve();
 			}
 		};
 		const fallback = () => {
 			if (done) return;
+			stopTick();
 			// If cancelled while waiting, don't start browser TTS
 			if (myGen !== ttsGeneration) { done = true; resolve(); return; }
 			done = true;
@@ -111,10 +127,27 @@ function playWebAudio(text: string, lang: string, rate: number = 1.0): Promise<v
 		audio.playbackRate = safeRate;
 		currentAudio = audio;
 		audio.onerror = fallback;
+
+		// Per-frame progress loop for word highlighting (only if a hook is given).
+		const tick = () => {
+			if (myGen !== ttsGeneration || audio.paused || audio.ended) {
+				stopTick();
+				return;
+			}
+			if (onTime && audio.duration) onTime(audio.currentTime, audio.duration);
+			rafId = requestAnimationFrame(tick);
+		};
+
 		// Timeout is for load failures only — clear it once audio starts playing
 		// so slow playback (low playbackRate) doesn't trigger a false fallback
 		const timeout = setTimeout(fallback, 4000);
-		audio.onplay = () => clearTimeout(timeout);
+		audio.onplay = () => {
+			clearTimeout(timeout);
+			if (onTime) {
+				stopTick();
+				rafId = requestAnimationFrame(tick);
+			}
+		};
 		audio.onended = () => {
 			clearTimeout(timeout);
 			finish();
@@ -131,7 +164,12 @@ function playWebAudio(text: string, lang: string, rate: number = 1.0): Promise<v
  * @param rate - Playback rate multiplier (before voice speed preference)
  * @param lang - BCP-47 language code (e.g. 'de-DE', 'en-US', 'fa-IR')
  */
-export function playAudioPromise(text: string, rate: number = 1.0, lang: string = 'de-DE'): Promise<void> {
+export function playAudioPromise(
+	text: string,
+	rate: number = 1.0,
+	lang: string = 'de-DE',
+	onTime?: (currentTime: number, duration: number) => void
+): Promise<void> {
 	ttsIsPlaying.set(true);
 	const _p = new Promise<void>((resolve) => {
 		// Don't call stopAllAudio here — callers manage stop/cancel themselves
@@ -143,13 +181,13 @@ export function playAudioPromise(text: string, rate: number = 1.0, lang: string 
 
 		// On mobile: ALL languages → proxy
 		if (isMobile()) {
-			playWebAudio(text, lang, effectiveRate).then(resolve);
+			playWebAudio(text, lang, effectiveRate, onTime).then(resolve);
 			return;
 		}
 
 		// Desktop: German & Farsi → proxy
 		if (lang.startsWith('de') || lang.startsWith('fa')) {
-			playWebAudio(text, lang, effectiveRate).then(resolve);
+			playWebAudio(text, lang, effectiveRate, onTime).then(resolve);
 			return;
 		}
 

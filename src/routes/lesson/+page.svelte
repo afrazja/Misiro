@@ -56,6 +56,7 @@
 	} from "$services/spaced-repetition";
 	import { loadGlossary } from "$services/lesson-loader";
 	import { getTranslation, getTranslationLang } from "$utils/i18n";
+	import { makeWordHighlighter } from "$utils/word-timing";
 	import { initSyncListeners } from "$services/sync-queue";
 
 	// ============ STATE ============
@@ -66,6 +67,7 @@
 		'<span class="placeholder-text">Tap words to reply...</span>',
 	);
 	let currentTeachStep: TeachStepData | null = $state(null);
+	let spokenWordIndex = $state(-1); // karaoke: German word currently being read
 	let showHint = $state(false);
 	let completionData: CompletionCardData | null = $state(null);
 	let examQuestionData: ExamQuestionData | null = $state(null);
@@ -263,6 +265,7 @@
 		setCallbacks({
 			onTeachStep(data) {
 				currentTeachStep = data;
+				spokenWordIndex = -1; // reset karaoke highlight for the new sentence
 				showHint = false;
 				completionData = null;
 				examQuestionData = null;
@@ -271,6 +274,9 @@
 				_listenerSeq++; // invalidate any pending listener timers
 				isSpeaking = true; // audio is about to play
 				updateScript();
+			},
+			onSpokenWord(index) {
+				spokenWordIndex = index;
 			},
 			onCompletionCard(data) {
 				currentTeachStep = null;
@@ -289,7 +295,12 @@
 				if (_listenerSeq !== mySeq || !listenerMode) return;
 				// Play German a second time at 0.75x speed (rate 0.6 = 0.8 x 0.75)
 				stopAllAudio();
-				await playAudioPromise(germanText, 0.6, "de-DE");
+				const highlight = makeWordHighlighter(
+					germanText,
+					(i) => (spokenWordIndex = i),
+				);
+				await playAudioPromise(germanText, 0.6, "de-DE", highlight);
+				spokenWordIndex = -1;
 				await new Promise<void>((r) => setTimeout(r, 600));
 				if (_listenerSeq !== mySeq || !listenerMode) return;
 				manualNext();
@@ -419,14 +430,22 @@
 			incrementSession();
 			stopAllAudio();
 			isSpeaking = false;
+			spokenWordIndex = -1;
 			return;
 		}
 		if ($appStore.isListening) stopListening();
 		stopAllAudio();
 		isSpeaking = true;
-		playAudioPromise(currentTeachStep.germanText, 0.8, "de-DE").then(() => {
-			isSpeaking = false;
-		});
+		const highlight = makeWordHighlighter(
+			currentTeachStep.germanText,
+			(i) => (spokenWordIndex = i),
+		);
+		playAudioPromise(currentTeachStep.germanText, 0.8, "de-DE", highlight).then(
+			() => {
+				isSpeaking = false;
+				spokenWordIndex = -1;
+			},
+		);
 	}
 
 	async function handleListenerToggle() {
@@ -436,17 +455,28 @@
 		if (!listenerMode || !currentTeachStep || isSpeaking || exam.isExamMode)
 			return;
 		const mySeq = _listenerSeq;
+		const germanText = currentTeachStep.germanText;
+		const highlight = makeWordHighlighter(
+			germanText,
+			(i) => (spokenWordIndex = i),
+		);
 		// Normal-speed play
 		isSpeaking = true;
-		await playAudioPromise(currentTeachStep.germanText, 0.8, "de-DE");
+		await playAudioPromise(germanText, 0.8, "de-DE", highlight);
 		isSpeaking = false;
+		spokenWordIndex = -1;
 		await new Promise<void>((r) => setTimeout(r, 600));
 		if (_listenerSeq !== mySeq || !listenerMode) return;
 		// Slow play (0.75x)
 		stopAllAudio();
 		isSpeaking = true;
-		await playAudioPromise(currentTeachStep.germanText, 0.6, "de-DE");
+		const highlightSlow = makeWordHighlighter(
+			germanText,
+			(i) => (spokenWordIndex = i),
+		);
+		await playAudioPromise(germanText, 0.6, "de-DE", highlightSlow);
 		isSpeaking = false;
+		spokenWordIndex = -1;
 		await new Promise<void>((r) => setTimeout(r, 600));
 		if (_listenerSeq !== mySeq || !listenerMode) return;
 		manualNext();
@@ -824,6 +854,8 @@
 												<!-- svelte-ignore a11y_interactive_supports_focus -->
 												<span
 													class="interactive-word"
+													class:reading={i ===
+														spokenWordIndex}
 													class:success={voiceResult &&
 														voiceResult
 															.matchedWordIndices?.[
@@ -1741,6 +1773,13 @@
 	.interactive-word.error {
 		background: rgba(244, 67, 54, 0.2);
 		color: #e53935;
+	}
+
+	/* Karaoke highlight — the German word currently being read aloud. */
+	.interactive-word.reading {
+		background: #ffd95a;
+		color: #1a1a2e;
+		font-weight: 600;
 	}
 
 	.btn-inline-next {
