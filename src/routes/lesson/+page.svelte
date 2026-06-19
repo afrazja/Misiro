@@ -1775,11 +1775,9 @@
 		color: #e53935;
 	}
 
-	/* Karaoke highlight — the German word currently being read aloud. */
+	/* Karaoke — the German word currently being read aloud just goes bolder. */
 	.interactive-word.reading {
-		background: #ffd95a;
-		color: #1a1a2e;
-		font-weight: 600;
+		font-weight: 700;
 	}
 
 	.btn-inline-next {
