@@ -19,6 +19,9 @@
 	// Confirmation toast
 	let showConfirmToast = $state(false);
 
+	// After signup with email confirmation on: show a "check your email" view
+	let signupEmailSent = $state(false);
+
 	// Profile
 	let displayName = $state("Learner");
 	let avatarUrl = $state<string | null>(null);
@@ -43,6 +46,7 @@
 		authMode = "signup";
 		showAuthModal = true;
 		authError = "";
+		signupEmailSent = false;
 		setTimeout(() => emailInput?.focus(), 100);
 	}
 
@@ -50,18 +54,21 @@
 		authMode = "signin";
 		showAuthModal = true;
 		authError = "";
+		signupEmailSent = false;
 		setTimeout(() => emailInput?.focus(), 100);
 	}
 
 	function toggleAuthModal() {
 		showAuthModal = !showAuthModal;
 		authError = "";
+		signupEmailSent = false;
 		if (showAuthModal) setTimeout(() => emailInput?.focus(), 100);
 	}
 
 	function toggleAuthMode() {
 		authMode = authMode === "signin" ? "signup" : "signin";
 		authError = "";
+		signupEmailSent = false;
 	}
 
 	async function submitAuth() {
@@ -84,6 +91,13 @@
 			}
 			if (result.error) {
 				authError = result.error;
+			} else if (
+				authMode === "signup" &&
+				!(await auth.getSession())
+			) {
+				// Email confirmation is required: signUp returns a user but no
+				// active session. Don't redirect — tell them to check their inbox.
+				signupEmailSent = true;
 			} else {
 				showAuthModal = false;
 				authEmail = "";
@@ -306,6 +320,27 @@
 					style="width: 44px; height: 44px; border-radius: 8px;"
 				/>
 			</div>
+
+			{#if signupEmailSent}
+				<div class="auth-check-email">
+					<div class="auth-check-icon">✉️</div>
+					<h2 id="auth-title">Check your email</h2>
+					<p class="auth-subtitle">
+						We sent a confirmation link to <strong
+							>{authEmail}</strong
+						>. Click it to activate your account, then come back and
+						sign in.
+					</p>
+					<button
+						class="auth-submit"
+						onclick={() => {
+							signupEmailSent = false;
+							authMode = "signin";
+							authPassword = "";
+						}}>Back to sign in</button
+					>
+				</div>
+			{:else}
 			<h2 id="auth-title">
 				{authMode === "signin" ? "Welcome Back" : "Start Your Journey"}
 			</h2>
@@ -378,6 +413,7 @@
 					}}>{authMode === "signin" ? " Sign Up Free" : " Sign In"}</a
 				>
 			</p>
+			{/if}
 		</div>
 	</div>
 {/if}
@@ -1091,6 +1127,15 @@
 		color: #888;
 		font-size: 0.92rem;
 		margin-bottom: 24px;
+	}
+
+	.auth-check-email {
+		text-align: center;
+	}
+
+	.auth-check-icon {
+		font-size: 48px;
+		margin-bottom: 8px;
 	}
 
 	.auth-error {
