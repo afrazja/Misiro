@@ -1313,7 +1313,7 @@
 	.blob-2 {
 		width: 420px;
 		height: 420px;
-		background: #34D399;
+		background: #A78BFA;
 		bottom: -80px;
 		left: 35%;
 		animation: blobDrift 11s ease-in-out infinite reverse;
@@ -1322,7 +1322,7 @@
 	.blob-3 {
 		width: 320px;
 		height: 320px;
-		background: #34D399;
+		background: #FBBF24;
 		top: 35%;
 		left: -80px;
 		animation: blobDrift 14s ease-in-out infinite;
@@ -1672,13 +1672,13 @@
 	}
 
 	.j-dot.blue {
-		background: #34D399;
-		box-shadow: 0 0 10px rgba(52, 211, 153, 0.5);
+		background: #FBBF24;
+		box-shadow: 0 0 10px rgba(251, 191, 36, 0.5);
 	}
 
 	.j-dot.purple {
-		background: #5E7A6E;
-		box-shadow: 0 0 10px rgba(94, 122, 110, 0.5);
+		background: #A78BFA;
+		box-shadow: 0 0 10px rgba(167, 139, 250, 0.5);
 	}
 
 	.journey-list li strong {

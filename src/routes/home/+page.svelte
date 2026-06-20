@@ -987,6 +987,14 @@
 		background: rgba(255, 255, 255, 0.1);
 	}
 
+	.nav-stat.xp {
+		color: #FBBF24;
+	}
+
+	.nav-stat.streak {
+		color: #FB923C;
+	}
+
 	.ns-icon {
 		font-size: 1.1rem;
 	}
@@ -1131,7 +1139,7 @@
 	.nav-card.basics .card-glow {
 		background: radial-gradient(
 			circle at 50% 0%,
-			rgba(52, 211, 153, 0.18),
+			rgba(167, 139, 250, 0.18),
 			transparent 70%
 		);
 	}
@@ -1160,14 +1168,14 @@
 	.nav-card.basics {
 		background: linear-gradient(
 			145deg,
-			rgba(52, 211, 153, 0.18),
-			rgba(52, 211, 153, 0.04)
+			rgba(167, 139, 250, 0.18),
+			rgba(167, 139, 250, 0.04)
 		);
 	}
 
 	.nav-card.basics:hover {
-		border-color: #34D399;
-		box-shadow: 0 20px 60px rgba(52, 211, 153, 0.28);
+		border-color: #A78BFA;
+		box-shadow: 0 20px 60px rgba(167, 139, 250, 0.28);
 	}
 
 	.nav-card .icon {
@@ -1209,8 +1217,8 @@
 	}
 
 	.card-meta.basics-meta {
-		background: rgba(52, 211, 153, 0.2);
-		color: #A7F3D0;
+		background: rgba(167, 139, 250, 0.2);
+		color: #C4B5FD;
 	}
 
 	/* Clickable stat card for due reviews */
@@ -1220,34 +1228,34 @@
 	}
 
 	.stat-card-link.has-due {
-		border-color: rgba(52, 211, 153, 0.3);
-		background: rgba(52, 211, 153, 0.07);
+		border-color: rgba(56, 189, 248, 0.3);
+		background: rgba(56, 189, 248, 0.07);
 	}
 
 	.stat-card-link.has-due:hover {
-		border-color: rgba(52, 211, 153, 0.6);
-		box-shadow: 0 8px 24px rgba(52, 211, 153, 0.2);
+		border-color: rgba(56, 189, 248, 0.6);
+		box-shadow: 0 8px 24px rgba(56, 189, 248, 0.2);
 	}
 
 	.stat-card-link.has-words {
-		border-color: rgba(94, 122, 110, 0.3);
-		background: rgba(94, 122, 110, 0.07);
+		border-color: rgba(251, 191, 36, 0.3);
+		background: rgba(251, 191, 36, 0.07);
 	}
 
 	.stat-card-link.has-words:hover {
-		border-color: rgba(94, 122, 110, 0.6);
-		box-shadow: 0 8px 24px rgba(94, 122, 110, 0.2);
+		border-color: rgba(251, 191, 36, 0.6);
+		box-shadow: 0 8px 24px rgba(251, 191, 36, 0.2);
 	}
 
 	.stat-cta {
 		font-size: 0.72rem;
-		color: #34D399;
+		color: #38BDF8;
 		font-weight: 700;
 		margin-top: 2px;
 	}
 
 	.stat-cta.vocab-cta {
-		color: #5E7A6E;
+		color: #FBBF24;
 	}
 
 	/* ── Card Progress Bar ── */
