@@ -788,7 +788,7 @@
 									</div>
 									<div
 										class="sub-text"
-										style="font-size:0.8em; color:#8A8F99;"
+										style="font-size:0.8em; color:#7E8F87;"
 									>
 										{examQuestionData.language === "fa"
 											? `سوال ${examQuestionData.questionNumber} از ${examQuestionData.totalQuestions}`
@@ -842,7 +842,7 @@
 									<span class="teach-text">
 										{#if prefs.blindMode}
 											<span
-												style="color:#8A8F99; font-weight:normal;"
+												style="color:#7E8F87; font-weight:normal;"
 											>
 												{currentTeachStep.language ===
 												"fa"
@@ -990,7 +990,7 @@
 											? "\u0622\u0641\u0631\u06CC\u0646!"
 											: "Well Done!"}
 									</h2>
-									<p style="color:#B4B8C0; margin:0 0 8px;">
+									<p style="color:#9FB0A8; margin:0 0 8px;">
 										{completionData.language === "fa"
 											? `\u0631\u0648\u0632 ${app.currentDay} \u0631\u0627 \u062A\u0645\u0627\u0645 \u06A9\u0631\u062F\u06CC\u062F!`
 											: `Day ${app.currentDay} complete!`}
@@ -1055,7 +1055,7 @@
 								style="background:{examResultsData.percentage >=
 								80
 									? '#e8f5e9'
-									: '#2A2418'}; padding:20px; border-radius:15px;"
+									: '#1E2A20'}; padding:20px; border-radius:15px;"
 							>
 								<div class="text" style="text-align:center">
 									<h2 style="margin:0">
@@ -1088,7 +1088,7 @@
 
 									{#if examResultsData.wrongAnswers.length > 0}
 										<div
-											style="text-align:left; margin-top:15px; padding-top:15px; border-top:1px solid #2A2E37;"
+											style="text-align:left; margin-top:15px; padding-top:15px; border-top:1px solid #243029;"
 										>
 											<b
 												>{examResultsData.language ===
@@ -1098,15 +1098,15 @@
 											>
 											{#each examResultsData.wrongAnswers as w}
 												<div
-													style="padding:6px 0; border-bottom:1px solid #2A2E37;"
+													style="padding:6px 0; border-bottom:1px solid #243029;"
 												>
 													<div
-														style="color:#ECEDF0; font-weight:bold;"
+														style="color:#E6EDE9; font-weight:bold;"
 													>
 														{w.question.targetText}
 													</div>
 													<div
-														style="color:#8A8F99; font-size:0.85em;"
+														style="color:#7E8F87; font-size:0.85em;"
 													>
 														{w.question.translation}
 													</div>
@@ -1279,7 +1279,7 @@
 		justify-content: center;
 		align-items: center;
 		flex-direction: column;
-		color: #ECEDF0;
+		color: #E6EDE9;
 	}
 
 	.start-overlay h1 {
@@ -1296,7 +1296,7 @@
 		padding: 15px 40px;
 		font-size: 1.5em;
 		background: #4caf50;
-		color: #ECEDF0;
+		color: #E6EDE9;
 		border: none;
 		border-radius: 50px;
 		cursor: pointer;
@@ -1323,7 +1323,7 @@
 	.overlay-title {
 		font-size: 1.2rem;
 		font-weight: 700;
-		color: #ECEDF0;
+		color: #E6EDE9;
 		margin: 0 0 6px;
 	}
 
@@ -1381,7 +1381,7 @@
 
 	.comp-stat {
 		font-size: 0.85rem;
-		color: #8A8F99;
+		color: #7E8F87;
 		font-weight: 600;
 	}
 
@@ -1397,7 +1397,7 @@
 	}
 
 	.script-empty p {
-		color: #B4B8C0;
+		color: #9FB0A8;
 		font-size: 0.88rem;
 		line-height: 1.5;
 	}
@@ -1420,8 +1420,8 @@
 		align-items: center;
 		gap: 10px;
 		padding: 8px 15px;
-		background: #1A1D24;
-		color: #ECEDF0;
+		background: #15211C;
+		color: #E6EDE9;
 		flex-wrap: wrap;
 		z-index: 100;
 	}
@@ -1439,7 +1439,7 @@
 		padding: 8px 15px;
 		background: rgba(255, 255, 255, 0.18);
 		border-radius: 20px;
-		color: #ECEDF0;
+		color: #E6EDE9;
 		text-decoration: none;
 		font-weight: 600;
 		transition: all 0.3s ease;
@@ -1466,9 +1466,9 @@
 
 	.header select,
 	.header input[type="checkbox"] {
-		color: #ECEDF0;
-		background: #1A1D24;
-		border: 2px solid #2A2E37;
+		color: #E6EDE9;
+		background: #15211C;
+		border: 2px solid #243029;
 		border-radius: 8px;
 		padding: 5px 10px;
 		font-weight: 600;
@@ -1491,7 +1491,7 @@
 		border-radius: 20px;
 		border: 2px solid rgba(255, 255, 255, 0.4);
 		background: rgba(255, 255, 255, 0.15);
-		color: #ECEDF0;
+		color: #E6EDE9;
 		font-size: 0.82rem;
 		font-weight: 600;
 		cursor: pointer;
@@ -1506,7 +1506,7 @@
 	.listener-mode-btn.active {
 		background: #22c55e;
 		border-color: #16a34a;
-		color: #ECEDF0;
+		color: #E6EDE9;
 	}
 
 	.header label {
@@ -1558,8 +1558,8 @@
 		align-items: center;
 		gap: 12px;
 		padding: 12px 16px;
-		background: #1A1D24;
-		color: #ECEDF0;
+		background: #15211C;
+		color: #E6EDE9;
 	}
 
 	/* Scenario dropdown bar */
@@ -1568,8 +1568,8 @@
 		align-items: center;
 		justify-content: space-between;
 		padding: 8px 14px;
-		background: #1A1D24;
-		color: #ECEDF0;
+		background: #15211C;
+		color: #E6EDE9;
 		cursor: pointer;
 		user-select: none;
 		border-bottom: 1px solid rgba(255, 255, 255, 0.1);
@@ -1632,7 +1632,7 @@
 	.scenario-drop-grammar {
 		margin: 0;
 		font-size: 0.78rem;
-		color: #E8C97A;
+		color: #A7F3D0;
 	}
 
 	.avatar-circle {
@@ -1656,7 +1656,7 @@
 		flex: 1;
 		overflow-y: auto;
 		padding: 24px 20px;
-		background: #0F1115;
+		background: #0C1512;
 		background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23262a33' fill-opacity='0.4'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
 		display: flex;
 		flex-direction: column;
@@ -1672,7 +1672,7 @@
 
 	.date-divider {
 		text-align: center;
-		color: #8A8F99;
+		color: #7E8F87;
 		font-size: 0.8rem;
 		padding: 8px;
 		margin: 10px 0;
@@ -1690,20 +1690,20 @@
 	}
 
 	.message.received {
-		background: #1A1D24;
-		color: #ECEDF0;
+		background: #15211C;
+		color: #E6EDE9;
 		border-top-left-radius: 0;
 	}
 
 	.message.sent {
-		background: #232730;
-		color: #ECEDF0;
+		background: #1B2C24;
+		color: #E6EDE9;
 		border-top-right-radius: 0;
 		align-self: flex-end;
 	}
 
 	.message.system {
-		background: #2A2418;
+		background: #1E2A20;
 		max-width: 95%;
 		width: 95%;
 		align-self: center;
@@ -1714,7 +1714,7 @@
 	}
 
 	.message.instruction {
-		background: #1A1D24;
+		background: #15211C;
 		max-width: 540px;
 		width: 100%;
 		align-self: center;
@@ -1727,14 +1727,14 @@
 
 	.translation-line {
 		font-size: 1.2em;
-		color: #ECEDF0;
+		color: #E6EDE9;
 		margin-bottom: 5px;
 	}
 
 	.german-line {
 		font-weight: bold;
 		font-size: 1.1em;
-		color: #B4B8C0;
+		color: #9FB0A8;
 		display: flex;
 		align-items: center;
 		gap: 10px;
@@ -1787,7 +1787,7 @@
 		border-radius: 20px;
 		border: none;
 		background: #4caf50;
-		color: #ECEDF0;
+		color: #E6EDE9;
 		cursor: pointer;
 		font-weight: bold;
 		font-size: 0.95em;
@@ -1812,7 +1812,7 @@
 		border-radius: 30px;
 		border: none;
 		background: linear-gradient(90deg, #2196f3, #42a5f5);
-		color: #ECEDF0;
+		color: #E6EDE9;
 		cursor: pointer;
 		font-size: 1.05rem;
 		font-weight: 600;
@@ -1828,7 +1828,7 @@
 	/* Exam Progress */
 	.exam-progress-bar {
 		width: calc(100% - 20px);
-		background: #2A2E37;
+		background: #243029;
 		border-radius: 10px;
 		height: 8px;
 		margin: 5px 10px;
@@ -1847,8 +1847,8 @@
 		align-items: center;
 		gap: 10px;
 		padding: 10px 15px;
-		background: #1A1D24;
-		border-top: 1px solid #2A2E37;
+		background: #15211C;
+		border-top: 1px solid #243029;
 	}
 
 	.message-composer {
@@ -1862,7 +1862,7 @@
 	}
 
 	:global(.message-composer .placeholder-text) {
-		color: #8A8F99;
+		color: #7E8F87;
 		font-size: 0.9rem;
 	}
 
@@ -1871,7 +1871,7 @@
 		height: 48px;
 		border-radius: 50%;
 		border: none;
-		color: #ECEDF0;
+		color: #E6EDE9;
 		font-size: 24px;
 		cursor: pointer;
 		display: flex;
@@ -1946,9 +1946,9 @@
 	.btn-replay {
 		padding: 6px 16px;
 		border-radius: 20px;
-		border: 2px solid #E0A82E;
+		border: 2px solid #34D399;
 		background: transparent;
-		color: #E0A82E;
+		color: #34D399;
 		cursor: pointer;
 		font-weight: bold;
 		font-size: 0.95em;
@@ -1957,12 +1957,12 @@
 	}
 
 	.btn-replay:hover {
-		background: #E0A82E;
-		color: #ECEDF0;
+		background: #34D399;
+		color: #E6EDE9;
 	}
 
 	.btn-replay.speaking {
-		border-color: #E0A82E;
+		border-color: #34D399;
 	}
 
 	.audio-wave {
@@ -1976,7 +1976,7 @@
 		display: block;
 		width: 3px;
 		height: 100%;
-		background: #E0A82E;
+		background: #34D399;
 		border-radius: 2px;
 		transform-origin: center;
 		animation: wave-bar 0.7s ease-in-out infinite;
@@ -2023,7 +2023,7 @@
 
 	.btn-hint:hover {
 		background: #f57c00;
-		color: #ECEDF0;
+		color: #E6EDE9;
 	}
 
 	/* Bookmark button - Star */
@@ -2034,7 +2034,7 @@
 		font-size: 1.8rem;
 		background: transparent;
 		border: none;
-		color: #8A8F99;
+		color: #7E8F87;
 		cursor: pointer;
 		padding: 4px;
 		transition:
@@ -2071,7 +2071,7 @@
 
 	.btn-remove-review:hover {
 		background: #e74c3c;
-		color: #ECEDF0;
+		color: #E6EDE9;
 	}
 
 	.hint-text {
@@ -2088,12 +2088,12 @@
 	/* Scenario description */
 	.scenario-description {
 		background: rgba(7, 94, 84, 0.08);
-		border-left: 3px solid #E0A82E;
+		border-left: 3px solid #34D399;
 		border-radius: 8px;
 		padding: 10px 14px;
 		margin: 0 0 8px;
 		font-size: 0.85rem;
-		color: #ECEDF0;
+		color: #E6EDE9;
 		line-height: 1.5;
 		max-width: 540px;
 		width: 100%;
@@ -2116,7 +2116,7 @@
 		font-size: 0.7rem;
 		font-weight: bold;
 		letter-spacing: 0.5px;
-		color: #ECEDF0;
+		color: #E6EDE9;
 	}
 
 	/* CEFR level colours */
@@ -2145,7 +2145,7 @@
 		border-radius: 10px;
 		font-size: 0.7rem;
 		background: rgba(255, 255, 255, 0.2);
-		color: #ECEDF0;
+		color: #E6EDE9;
 		max-width: 220px;
 		white-space: nowrap;
 		overflow: hidden;
@@ -2156,7 +2156,7 @@
 	.script-view {
 		height: 28vh;
 		background: #141428;
-		color: #ECEDF0;
+		color: #E6EDE9;
 		display: flex;
 		flex-direction: column;
 		border-top: 2px solid rgba(46, 204, 113, 0.3);
@@ -2182,7 +2182,7 @@
 
 	.script-count {
 		font-size: 0.75rem;
-		color: #E8C97A;
+		color: #A7F3D0;
 		font-weight: 600;
 	}
 
@@ -2238,13 +2238,13 @@
 
 	.script-item.active .script-num {
 		background: #2ecc71;
-		color: #ECEDF0;
+		color: #E6EDE9;
 		font-size: 0.7rem;
 	}
 
 	.script-item.done .script-num {
 		background: rgba(255, 255, 255, 0.08);
-		color: #8A8F99;
+		color: #7E8F87;
 	}
 
 	.script-text {
@@ -2267,11 +2267,11 @@
 	}
 
 	.script-item.active .german {
-		color: #1A1D24;
+		color: #15211C;
 	}
 
 	.script-item.active .translation {
-		color: #1A1D24;
+		color: #15211C;
 	}
 
 	/* Word Tooltip */
@@ -2279,7 +2279,7 @@
 		position: fixed;
 		transform: translateX(-50%) translateY(-100%);
 		background: rgba(0, 0, 0, 0.9);
-		color: #ECEDF0;
+		color: #E6EDE9;
 		padding: 6px 12px;
 		border-radius: 8px;
 		font-size: 0.85em;
@@ -2294,7 +2294,7 @@
 	}
 
 	.tooltip-bookmark {
-		color: #8A8F99;
+		color: #7E8F87;
 		font-size: 1.1rem;
 		cursor: pointer;
 		padding: 0 2px;
@@ -2336,7 +2336,7 @@
 		display: none; /* shown only on mobile via media query */
 		background: none;
 		border: none;
-		color: #E8C97A;
+		color: #A7F3D0;
 		font-size: 1rem;
 		cursor: pointer;
 		padding: 2px 6px;
@@ -2427,10 +2427,10 @@
 			justify-content: center;
 			gap: 8px;
 			width: 100%;
-			background: #1A1D24;
-			color: #E0A82E;
+			background: #15211C;
+			color: #34D399;
 			border: none;
-			border-bottom: 1.5px solid rgba(224, 168, 46, 0.35);
+			border-bottom: 1.5px solid rgba(52, 211, 153, 0.35);
 			border-radius: 0;
 			padding: 9px 16px;
 			font-size: 0.85rem;
