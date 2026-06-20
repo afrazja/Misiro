@@ -788,7 +788,7 @@
 									</div>
 									<div
 										class="sub-text"
-										style="font-size:0.8em; color:#767676;"
+										style="font-size:0.8em; color:#666;"
 									>
 										{examQuestionData.language === "fa"
 											? `سوال ${examQuestionData.questionNumber} از ${examQuestionData.totalQuestions}`
@@ -842,7 +842,7 @@
 									<span class="teach-text">
 										{#if prefs.blindMode}
 											<span
-												style="color:#767676; font-weight:normal;"
+												style="color:#ccc; font-weight:normal;"
 											>
 												{currentTeachStep.language ===
 												"fa"
@@ -990,7 +990,7 @@
 											? "\u0622\u0641\u0631\u06CC\u0646!"
 											: "Well Done!"}
 									</h2>
-									<p style="color:#5A5A5A; margin:0 0 8px;">
+									<p style="color:#555; margin:0 0 8px;">
 										{completionData.language === "fa"
 											? `\u0631\u0648\u0632 ${app.currentDay} \u0631\u0627 \u062A\u0645\u0627\u0645 \u06A9\u0631\u062F\u06CC\u062F!`
 											: `Day ${app.currentDay} complete!`}
@@ -1055,7 +1055,7 @@
 								style="background:{examResultsData.percentage >=
 								80
 									? '#e8f5e9'
-									: '#F1F5F2'}; padding:20px; border-radius:15px;"
+									: '#fff3e0'}; padding:20px; border-radius:15px;"
 							>
 								<div class="text" style="text-align:center">
 									<h2 style="margin:0">
@@ -1088,7 +1088,7 @@
 
 									{#if examResultsData.wrongAnswers.length > 0}
 										<div
-											style="text-align:left; margin-top:15px; padding-top:15px; border-top:1px solid #E2E8E3;"
+											style="text-align:left; margin-top:15px; padding-top:15px; border-top:1px solid #ddd;"
 										>
 											<b
 												>{examResultsData.language ===
@@ -1098,15 +1098,15 @@
 											>
 											{#each examResultsData.wrongAnswers as w}
 												<div
-													style="padding:6px 0; border-bottom:1px solid #E2E8E3;"
+													style="padding:6px 0; border-bottom:1px solid #eee;"
 												>
 													<div
-														style="color:#1A1A1A; font-weight:bold;"
+														style="color:#333; font-weight:bold;"
 													>
 														{w.question.targetText}
 													</div>
 													<div
-														style="color:#767676; font-size:0.85em;"
+														style="color:#888; font-size:0.85em;"
 													>
 														{w.question.translation}
 													</div>
@@ -1279,7 +1279,7 @@
 		justify-content: center;
 		align-items: center;
 		flex-direction: column;
-		color: #1A1A1A;
+		color: white;
 	}
 
 	.start-overlay h1 {
@@ -1296,7 +1296,7 @@
 		padding: 15px 40px;
 		font-size: 1.5em;
 		background: #4caf50;
-		color: #1A1A1A;
+		color: white;
 		border: none;
 		border-radius: 50px;
 		cursor: pointer;
@@ -1323,13 +1323,13 @@
 	.overlay-title {
 		font-size: 1.2rem;
 		font-weight: 700;
-		color: #1A1A1A;
+		color: #fff;
 		margin: 0 0 6px;
 	}
 
 	.overlay-desc {
 		font-size: 0.9rem;
-		color: rgba(27, 67, 50, 0.55);
+		color: rgba(255, 255, 255, 0.55);
 		margin: 0 0 10px;
 		line-height: 1.4;
 	}
@@ -1346,8 +1346,8 @@
 		font-weight: 600;
 		padding: 3px 10px;
 		border-radius: 12px;
-		background: rgba(27, 67, 50, 0.1);
-		color: rgba(27, 67, 50, 0.6);
+		background: rgba(255, 255, 255, 0.1);
+		color: rgba(255, 255, 255, 0.6);
 	}
 
 	.overlay-badge.difficulty-A1 {
@@ -1381,7 +1381,7 @@
 
 	.comp-stat {
 		font-size: 0.85rem;
-		color: #767676;
+		color: #888;
 		font-weight: 600;
 	}
 
@@ -1397,7 +1397,7 @@
 	}
 
 	.script-empty p {
-		color: #5A5A5A;
+		color: #555;
 		font-size: 0.88rem;
 		line-height: 1.5;
 	}
@@ -1420,8 +1420,8 @@
 		align-items: center;
 		gap: 10px;
 		padding: 8px 15px;
-		background: #1B4332;
-		color: #FFFFFF;
+		background: #075e54;
+		color: white;
 		flex-wrap: wrap;
 		z-index: 100;
 	}
@@ -1437,17 +1437,17 @@
 		align-items: center;
 		gap: 5px;
 		padding: 8px 15px;
-		background: rgba(27, 67, 50, 0.18);
+		background: #4caf50;
 		border-radius: 20px;
-		color: #1A1A1A;
+		color: #fff;
 		text-decoration: none;
 		font-weight: 600;
 		transition: all 0.3s ease;
-		box-shadow: 0 2px 5px rgba(0, 0, 0, 0.12);
+		box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 	}
 
 	.home-btn:hover {
-		background: rgba(27, 67, 50, 0.3);
+		background: #45a049;
 	}
 
 	.header h1 {
@@ -1466,9 +1466,9 @@
 
 	.header select,
 	.header input[type="checkbox"] {
-		color: #1A1A1A;
-		background: #F1F5F2;
-		border: 2px solid #E2E8E3;
+		color: #333;
+		background: #fff;
+		border: 2px solid #ddd;
 		border-radius: 8px;
 		padding: 5px 10px;
 		font-weight: 600;
@@ -1489,9 +1489,9 @@
 	.listener-mode-btn {
 		padding: 6px 12px;
 		border-radius: 20px;
-		border: 2px solid rgba(27, 67, 50, 0.4);
-		background: rgba(27, 67, 50, 0.15);
-		color: #1A1A1A;
+		border: 2px solid rgba(255, 255, 255, 0.4);
+		background: rgba(255, 255, 255, 0.15);
+		color: #fff;
 		font-size: 0.82rem;
 		font-weight: 600;
 		cursor: pointer;
@@ -1501,12 +1501,12 @@
 			border-color 0.2s;
 	}
 	.listener-mode-btn:hover {
-		background: rgba(27, 67, 50, 0.28);
+		background: rgba(255, 255, 255, 0.28);
 	}
 	.listener-mode-btn.active {
 		background: #22c55e;
 		border-color: #16a34a;
-		color: #1A1A1A;
+		color: #fff;
 	}
 
 	.header label {
@@ -1558,8 +1558,8 @@
 		align-items: center;
 		gap: 12px;
 		padding: 12px 16px;
-		background: #1B4332;
-		color: #FFFFFF;
+		background: #075e54;
+		color: white;
 	}
 
 	/* Scenario dropdown bar */
@@ -1568,16 +1568,16 @@
 		align-items: center;
 		justify-content: space-between;
 		padding: 8px 14px;
-		background: #1B4332;
-		color: #FFFFFF;
+		background: #075e54;
+		color: white;
 		cursor: pointer;
 		user-select: none;
-		border-bottom: 1px solid rgba(27, 67, 50, 0.1);
+		border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 		gap: 8px;
 	}
 
 	.scenario-bar:hover {
-		background: #3A2D12;
+		background: #086b60;
 	}
 
 	.scenario-bar-title {
@@ -1605,9 +1605,9 @@
 	}
 
 	.scenario-dropdown {
-		background: #322611;
+		background: #064d45;
 		padding: 10px 14px;
-		border-bottom: 1px solid rgba(27, 67, 50, 0.08);
+		border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 		animation: dropIn 0.18s ease-out;
 	}
 
@@ -1625,21 +1625,21 @@
 	.scenario-drop-desc {
 		margin: 0 0 6px;
 		font-size: 0.82rem;
-		color: rgba(27, 67, 50, 0.85);
+		color: rgba(255, 255, 255, 0.85);
 		line-height: 1.5;
 	}
 
 	.scenario-drop-grammar {
 		margin: 0;
 		font-size: 0.78rem;
-		color: #2D6A4F;
+		color: #a0e0b8;
 	}
 
 	.avatar-circle {
 		width: 40px;
 		height: 40px;
 		border-radius: 50%;
-		background: rgba(27, 67, 50, 0.2);
+		background: rgba(255, 255, 255, 0.2);
 		display: flex;
 		align-items: center;
 		justify-content: center;
@@ -1656,8 +1656,8 @@
 		flex: 1;
 		overflow-y: auto;
 		padding: 24px 20px;
-		background: #FFFFFF;
-		background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23262a33' fill-opacity='0.4'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+		background: #e5ddd5;
+		background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23d4cfc5' fill-opacity='0.4'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
 		display: flex;
 		flex-direction: column;
 		justify-content: center;
@@ -1672,7 +1672,7 @@
 
 	.date-divider {
 		text-align: center;
-		color: #767676;
+		color: #888;
 		font-size: 0.8rem;
 		padding: 8px;
 		margin: 10px 0;
@@ -1690,20 +1690,20 @@
 	}
 
 	.message.received {
-		background: #F1F5F2;
-		color: #1A1A1A;
+		background: #fff;
+		color: #333;
 		border-top-left-radius: 0;
 	}
 
 	.message.sent {
-		background: #EAF1EC;
-		color: #1A1A1A;
+		background: #dcf8c6;
+		color: #333;
 		border-top-right-radius: 0;
 		align-self: flex-end;
 	}
 
 	.message.system {
-		background: #F1F5F2;
+		background: #fff3e0;
 		max-width: 95%;
 		width: 95%;
 		align-self: center;
@@ -1714,7 +1714,7 @@
 	}
 
 	.message.instruction {
-		background: #F1F5F2;
+		background: #fff;
 		max-width: 540px;
 		width: 100%;
 		align-self: center;
@@ -1727,14 +1727,14 @@
 
 	.translation-line {
 		font-size: 1.2em;
-		color: #1A1A1A;
+		color: #333;
 		margin-bottom: 5px;
 	}
 
 	.german-line {
 		font-weight: bold;
 		font-size: 1.1em;
-		color: #5A5A5A;
+		color: #555;
 		display: flex;
 		align-items: center;
 		gap: 10px;
@@ -1787,7 +1787,7 @@
 		border-radius: 20px;
 		border: none;
 		background: #4caf50;
-		color: #1A1A1A;
+		color: white;
 		cursor: pointer;
 		font-weight: bold;
 		font-size: 0.95em;
@@ -1812,7 +1812,7 @@
 		border-radius: 30px;
 		border: none;
 		background: linear-gradient(90deg, #2196f3, #42a5f5);
-		color: #1A1A1A;
+		color: white;
 		cursor: pointer;
 		font-size: 1.05rem;
 		font-weight: 600;
@@ -1828,7 +1828,7 @@
 	/* Exam Progress */
 	.exam-progress-bar {
 		width: calc(100% - 20px);
-		background: #E2E8E3;
+		background: #e0e0e0;
 		border-radius: 10px;
 		height: 8px;
 		margin: 5px 10px;
@@ -1847,8 +1847,8 @@
 		align-items: center;
 		gap: 10px;
 		padding: 10px 15px;
-		background: #F1F5F2;
-		border-top: 1px solid #E2E8E3;
+		background: #f0f0f0;
+		border-top: 1px solid #ddd;
 	}
 
 	.message-composer {
@@ -1862,7 +1862,7 @@
 	}
 
 	:global(.message-composer .placeholder-text) {
-		color: #767676;
+		color: #999;
 		font-size: 0.9rem;
 	}
 
@@ -1871,7 +1871,7 @@
 		height: 48px;
 		border-radius: 50%;
 		border: none;
-		color: #1A1A1A;
+		color: white;
 		font-size: 24px;
 		cursor: pointer;
 		display: flex;
@@ -1899,7 +1899,7 @@
 	.lesson-progress {
 		position: relative;
 		height: 4px;
-		background: rgba(27, 67, 50, 0.2);
+		background: rgba(255, 255, 255, 0.2);
 		overflow: visible;
 		display: flex;
 		align-items: center;
@@ -1916,7 +1916,7 @@
 		position: absolute;
 		right: 10px;
 		font-size: 0.7rem;
-		color: rgba(27, 67, 50, 0.8);
+		color: rgba(255, 255, 255, 0.8);
 		font-weight: 600;
 		white-space: nowrap;
 	}
@@ -1946,9 +1946,9 @@
 	.btn-replay {
 		padding: 6px 16px;
 		border-radius: 20px;
-		border: 2px solid #1B4332;
+		border: 2px solid #075e54;
 		background: transparent;
-		color: #1B4332;
+		color: #075e54;
 		cursor: pointer;
 		font-weight: bold;
 		font-size: 0.95em;
@@ -1957,12 +1957,12 @@
 	}
 
 	.btn-replay:hover {
-		background: #1B4332;
-		color: #1A1A1A;
+		background: #075e54;
+		color: white;
 	}
 
 	.btn-replay.speaking {
-		border-color: #1B4332;
+		border-color: #075e54;
 	}
 
 	.audio-wave {
@@ -1976,7 +1976,7 @@
 		display: block;
 		width: 3px;
 		height: 100%;
-		background: #1B4332;
+		background: #075e54;
 		border-radius: 2px;
 		transform-origin: center;
 		animation: wave-bar 0.7s ease-in-out infinite;
@@ -2023,7 +2023,7 @@
 
 	.btn-hint:hover {
 		background: #f57c00;
-		color: #1A1A1A;
+		color: white;
 	}
 
 	/* Bookmark button - Star */
@@ -2034,7 +2034,7 @@
 		font-size: 1.8rem;
 		background: transparent;
 		border: none;
-		color: #767676;
+		color: #ccc;
 		cursor: pointer;
 		padding: 4px;
 		transition:
@@ -2071,7 +2071,7 @@
 
 	.btn-remove-review:hover {
 		background: #e74c3c;
-		color: #1A1A1A;
+		color: white;
 	}
 
 	.hint-text {
@@ -2088,12 +2088,12 @@
 	/* Scenario description */
 	.scenario-description {
 		background: rgba(7, 94, 84, 0.08);
-		border-left: 3px solid #1B4332;
+		border-left: 3px solid #075e54;
 		border-radius: 8px;
 		padding: 10px 14px;
 		margin: 0 0 8px;
 		font-size: 0.85rem;
-		color: #1A1A1A;
+		color: #333;
 		line-height: 1.5;
 		max-width: 540px;
 		width: 100%;
@@ -2116,7 +2116,7 @@
 		font-size: 0.7rem;
 		font-weight: bold;
 		letter-spacing: 0.5px;
-		color: #1A1A1A;
+		color: white;
 	}
 
 	/* CEFR level colours */
@@ -2144,8 +2144,8 @@
 		padding: 2px 10px;
 		border-radius: 10px;
 		font-size: 0.7rem;
-		background: rgba(27, 67, 50, 0.2);
-		color: #1A1A1A;
+		background: rgba(255, 255, 255, 0.2);
+		color: white;
 		max-width: 220px;
 		white-space: nowrap;
 		overflow: hidden;
@@ -2156,7 +2156,7 @@
 	.script-view {
 		height: 28vh;
 		background: #141428;
-		color: #1A1A1A;
+		color: #fff;
 		display: flex;
 		flex-direction: column;
 		border-top: 2px solid rgba(46, 204, 113, 0.3);
@@ -2168,7 +2168,7 @@
 		align-items: center;
 		justify-content: space-between;
 		background: rgba(0, 0, 0, 0.25);
-		border-bottom: 1px solid rgba(27, 67, 50, 0.08);
+		border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 		flex-shrink: 0;
 	}
 
@@ -2182,7 +2182,7 @@
 
 	.script-count {
 		font-size: 0.75rem;
-		color: #2D6A4F;
+		color: #a0e0b8;
 		font-weight: 600;
 	}
 
@@ -2207,7 +2207,7 @@
 	}
 
 	.script-item:hover {
-		background: rgba(27, 67, 50, 0.06);
+		background: rgba(255, 255, 255, 0.06);
 	}
 
 	.script-item.active {
@@ -2238,13 +2238,13 @@
 
 	.script-item.active .script-num {
 		background: #2ecc71;
-		color: #1A1A1A;
+		color: #fff;
 		font-size: 0.7rem;
 	}
 
 	.script-item.done .script-num {
-		background: rgba(27, 67, 50, 0.08);
-		color: #767676;
+		background: rgba(255, 255, 255, 0.08);
+		color: #aaa;
 	}
 
 	.script-text {
@@ -2267,11 +2267,11 @@
 	}
 
 	.script-item.active .german {
-		color: #F1F5F2;
+		color: #ffffff;
 	}
 
 	.script-item.active .translation {
-		color: #F1F5F2;
+		color: #ffffff;
 	}
 
 	/* Word Tooltip */
@@ -2279,7 +2279,7 @@
 		position: fixed;
 		transform: translateX(-50%) translateY(-100%);
 		background: rgba(0, 0, 0, 0.9);
-		color: #1A1A1A;
+		color: #fff;
 		padding: 6px 12px;
 		border-radius: 8px;
 		font-size: 0.85em;
@@ -2294,7 +2294,7 @@
 	}
 
 	.tooltip-bookmark {
-		color: #767676;
+		color: #888;
 		font-size: 1.1rem;
 		cursor: pointer;
 		padding: 0 2px;
@@ -2336,7 +2336,7 @@
 		display: none; /* shown only on mobile via media query */
 		background: none;
 		border: none;
-		color: #2D6A4F;
+		color: #a0e0b8;
 		font-size: 1rem;
 		cursor: pointer;
 		padding: 2px 6px;
@@ -2427,10 +2427,10 @@
 			justify-content: center;
 			gap: 8px;
 			width: 100%;
-			background: #F1F5F2;
-			color: #1B4332;
+			background: #1a1a2e;
+			color: #2ecc71;
 			border: none;
-			border-bottom: 1.5px solid rgba(27, 67, 50, 0.35);
+			border-bottom: 1.5px solid rgba(46, 204, 113, 0.35);
 			border-radius: 0;
 			padding: 9px 16px;
 			font-size: 0.85rem;
