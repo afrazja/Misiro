@@ -1420,7 +1420,7 @@
 		align-items: center;
 		gap: 10px;
 		padding: 8px 15px;
-		background: #075e54;
+		background: #2F6FED;
 		color: white;
 		flex-wrap: wrap;
 		z-index: 100;
@@ -1437,17 +1437,17 @@
 		align-items: center;
 		gap: 5px;
 		padding: 8px 15px;
-		background: #4caf50;
+		background: rgba(255, 255, 255, 0.18);
 		border-radius: 20px;
 		color: #fff;
 		text-decoration: none;
 		font-weight: 600;
 		transition: all 0.3s ease;
-		box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+		box-shadow: 0 2px 5px rgba(0, 0, 0, 0.12);
 	}
 
 	.home-btn:hover {
-		background: #45a049;
+		background: rgba(255, 255, 255, 0.3);
 	}
 
 	.header h1 {
@@ -1558,7 +1558,7 @@
 		align-items: center;
 		gap: 12px;
 		padding: 12px 16px;
-		background: #075e54;
+		background: #2F6FED;
 		color: white;
 	}
 
@@ -1568,7 +1568,7 @@
 		align-items: center;
 		justify-content: space-between;
 		padding: 8px 14px;
-		background: #075e54;
+		background: #2F6FED;
 		color: white;
 		cursor: pointer;
 		user-select: none;
@@ -1577,7 +1577,7 @@
 	}
 
 	.scenario-bar:hover {
-		background: #086b60;
+		background: #2563D8;
 	}
 
 	.scenario-bar-title {
@@ -1605,7 +1605,7 @@
 	}
 
 	.scenario-dropdown {
-		background: #064d45;
+		background: #1E5AD0;
 		padding: 10px 14px;
 		border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 		animation: dropIn 0.18s ease-out;
@@ -1632,7 +1632,7 @@
 	.scenario-drop-grammar {
 		margin: 0;
 		font-size: 0.78rem;
-		color: #a0e0b8;
+		color: #BBD3F8;
 	}
 
 	.avatar-circle {
@@ -1656,8 +1656,8 @@
 		flex: 1;
 		overflow-y: auto;
 		padding: 24px 20px;
-		background: #e5ddd5;
-		background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23d4cfc5' fill-opacity='0.4'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+		background: #ECEFF3;
+		background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23d4d7dd' fill-opacity='0.4'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
 		display: flex;
 		flex-direction: column;
 		justify-content: center;
@@ -1696,7 +1696,7 @@
 	}
 
 	.message.sent {
-		background: #dcf8c6;
+		background: #DCEAFD;
 		color: #333;
 		border-top-right-radius: 0;
 		align-self: flex-end;
@@ -1946,9 +1946,9 @@
 	.btn-replay {
 		padding: 6px 16px;
 		border-radius: 20px;
-		border: 2px solid #075e54;
+		border: 2px solid #2F6FED;
 		background: transparent;
-		color: #075e54;
+		color: #2F6FED;
 		cursor: pointer;
 		font-weight: bold;
 		font-size: 0.95em;
@@ -1957,12 +1957,12 @@
 	}
 
 	.btn-replay:hover {
-		background: #075e54;
+		background: #2F6FED;
 		color: white;
 	}
 
 	.btn-replay.speaking {
-		border-color: #075e54;
+		border-color: #2F6FED;
 	}
 
 	.audio-wave {
@@ -1976,7 +1976,7 @@
 		display: block;
 		width: 3px;
 		height: 100%;
-		background: #075e54;
+		background: #2F6FED;
 		border-radius: 2px;
 		transform-origin: center;
 		animation: wave-bar 0.7s ease-in-out infinite;
@@ -2088,7 +2088,7 @@
 	/* Scenario description */
 	.scenario-description {
 		background: rgba(7, 94, 84, 0.08);
-		border-left: 3px solid #075e54;
+		border-left: 3px solid #2F6FED;
 		border-radius: 8px;
 		padding: 10px 14px;
 		margin: 0 0 8px;
@@ -2182,7 +2182,7 @@
 
 	.script-count {
 		font-size: 0.75rem;
-		color: #a0e0b8;
+		color: #BBD3F8;
 		font-weight: 600;
 	}
 
@@ -2336,7 +2336,7 @@
 		display: none; /* shown only on mobile via media query */
 		background: none;
 		border: none;
-		color: #a0e0b8;
+		color: #BBD3F8;
 		font-size: 1rem;
 		cursor: pointer;
 		padding: 2px 6px;
@@ -2427,10 +2427,10 @@
 			justify-content: center;
 			gap: 8px;
 			width: 100%;
-			background: #1a1a2e;
-			color: #2ecc71;
+			background: #2F6FED;
+			color: #fff;
 			border: none;
-			border-bottom: 1.5px solid rgba(46, 204, 113, 0.35);
+			border-bottom: 1.5px solid rgba(30, 90, 208, 0.5);
 			border-radius: 0;
 			padding: 9px 16px;
 			font-size: 0.85rem;
