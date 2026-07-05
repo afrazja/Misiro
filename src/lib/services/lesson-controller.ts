@@ -54,6 +54,13 @@ export interface LessonCallbacks {
 	onVoiceResult: (result: VoiceResultData) => void;
 	/** Index of the German word currently being spoken (-1 = none). */
 	onSpokenWord?: (index: number) => void;
+	/** Conversation mode: reply choices for the user's turn (null = hide). */
+	onConversationOptions?: (options: ConvOption[] | null) => void;
+}
+
+export interface ConvOption {
+	german: string;
+	translation: string;
 }
 
 export interface TeachStepData {
@@ -120,6 +127,8 @@ function getSessionID(): number {
 
 /** Increment session ID to abort running async sequences */
 export function incrementSession(): void {
+	// Any mode switch ends a running conversation.
+	deactivateConversation();
 	appStore.update((s) => ({ ...s, sessionID: s.sessionID + 1 }));
 }
 
@@ -134,6 +143,7 @@ export function isDayUnlocked(day: number): boolean {
 // ============ INITIALIZATION ============
 
 export async function initLesson(): Promise<void> {
+	deactivateConversation(); // stale state from a previous page visit
 	try {
 		// Load saved language preference
 		const savedLang = await getLanguage();
@@ -430,6 +440,12 @@ export async function changeLanguage(lang: Language): Promise<void> {
 // ============ VOICE INPUT ============
 
 export async function handleVoiceInput(transcript: string): Promise<void> {
+	// Conversation mode has its own multi-target matching.
+	if (convState?.active) {
+		await handleConversationVoice(transcript);
+		return;
+	}
+
 	const app = get(appStore);
 	const prefs = get(preferencesStore);
 	const exam = get(examStore);
@@ -649,6 +665,7 @@ export async function startExam(week: number): Promise<void> {
 }
 
 export async function startReviewMode(maxItems = 15): Promise<void> {
+	deactivateConversation();
 	const prefs = get(preferencesStore);
 	const dueItems = (await getDueReviewItems()).slice(0, maxItems);
 	const isFa = prefs.language === 'fa';
@@ -906,6 +923,263 @@ async function finishExam(): Promise<void> {
 		wrongAnswers: exam.examWrongAnswers,
 		examWeek: exam.examWeek
 	});
+}
+
+// ============ CONVERSATION MODE (Week Talk) ============
+// A scripted-but-branching conversation built from the week's dialogues:
+// the partner speaks a line, the user chooses one of two valid replies and
+// says it out loud — whichever they say, the thread follows their choice.
+
+interface ConvPair {
+	day: number;
+	sentenceId: number; // id of the user's (sent) line, for SR tracking
+	question: { german: string; translation: string };
+	answer: { german: string; translation: string };
+}
+
+interface ConvRuntimeOption extends ConvOption {
+	pairIndex: number;
+	day: number;
+	sentenceId: number;
+}
+
+let convState: {
+	active: boolean;
+	week: number;
+	pairs: ConvPair[];
+	pointer: number;
+	exchanges: number;
+	maxExchanges: number;
+	options: ConvRuntimeOption[];
+	failCount: number;
+} | null = null;
+
+function deactivateConversation(): void {
+	if (!convState) return;
+	convState = null;
+	callbacks?.onConversationOptions?.(null);
+}
+
+export async function startConversation(week: number): Promise<void> {
+	const prefs = get(preferencesStore);
+	const isFa = prefs.language === 'fa';
+	incrementSession();
+	stopAllAudio();
+	deactivateConversation();
+	examStore.update((s) => ({ ...s, isExamMode: false, isReviewMode: false }));
+
+	const startDay = (week - 1) * 7 + 1;
+	const endDay = week * 7;
+	const daysToLoad: number[] = [];
+	for (let d = startDay; d <= endDay; d++) {
+		if (hasLesson(d)) daysToLoad.push(d);
+	}
+	await loadLessons(daysToLoad);
+
+	// Adjacent received→sent pairs keep each exchange coherent.
+	const pairs: ConvPair[] = [];
+	for (const d of daysToLoad) {
+		const lesson = getLesson(d);
+		if (!lesson) continue;
+		for (let i = 0; i < lesson.sentences.length - 1; i++) {
+			const q = lesson.sentences[i];
+			const a = lesson.sentences[i + 1];
+			if (q.role !== 'received' || a.role !== 'sent') continue;
+			if (!q.audioText || !a.targetText) continue;
+			pairs.push({
+				day: d,
+				sentenceId: a.id,
+				question: {
+					german: q.audioText,
+					translation: isFa ? q.translationFa || q.translation : q.translation
+				},
+				answer: {
+					german: a.targetText,
+					translation: isFa ? a.translationFa || a.translation : a.translation
+				}
+			});
+		}
+	}
+
+	if (pairs.length < 2) {
+		callbacks?.onSystemMessage(
+			isFa
+				? 'برای گفتگو، دیالوگ کافی در این هفته نیست.'
+				: 'Not enough dialogue material in this week for a conversation.'
+		);
+		return;
+	}
+
+	convState = {
+		active: true,
+		week,
+		pairs,
+		pointer: 0,
+		exchanges: 0,
+		maxExchanges: Math.min(8, pairs.length),
+		options: [],
+		failCount: 0
+	};
+
+	callbacks?.onClearChat();
+	callbacks?.onSystemMessage(isFa ? `💬 گفتگوی هفته ${week}` : `💬 Week ${week} Conversation`);
+	void trackEvent('conversation_started', { day: get(appStore).currentDay, metadata: { week } });
+	await presentConvTurn();
+}
+
+async function presentConvTurn(): Promise<void> {
+	const st = convState;
+	if (!st?.active) return;
+	if (st.exchanges >= st.maxExchanges || st.pointer >= st.pairs.length) {
+		finishConversation();
+		return;
+	}
+
+	const prefs = get(preferencesStore);
+	const isFa = prefs.language === 'fa';
+	const pair = st.pairs[st.pointer];
+
+	// Partner line: bubble + audio (conversation-partner voice)
+	callbacks?.onMessageBubble({
+		id: -1,
+		role: 'received',
+		audioText: pair.question.german,
+		translation: pair.question.translation
+	});
+	await playAudioPromise(pair.question.german, 0.8, 'de-DE', undefined, 'b');
+	if (!convState?.active) return; // mode ended while audio played
+
+	// Two valid replies: this pair's answer + one from another exchange.
+	const altIndices = st.pairs
+		.map((_, i) => i)
+		.filter((i) => i !== st.pointer && st.pairs[i].answer.german !== pair.answer.german);
+	const correctOpt: ConvRuntimeOption = {
+		german: pair.answer.german,
+		translation: pair.answer.translation,
+		pairIndex: st.pointer,
+		day: pair.day,
+		sentenceId: pair.sentenceId
+	};
+	let options = [correctOpt];
+	if (altIndices.length > 0) {
+		const altIdx = altIndices[Math.floor(Math.random() * altIndices.length)];
+		const alt = st.pairs[altIdx];
+		options.push({
+			german: alt.answer.german,
+			translation: alt.answer.translation,
+			pairIndex: altIdx,
+			day: alt.day,
+			sentenceId: alt.sentenceId
+		});
+		options = options.sort(() => Math.random() - 0.5);
+	}
+	st.options = options;
+	st.failCount = 0;
+
+	callbacks?.onConversationOptions?.(
+		options.map((o) => ({ german: o.german, translation: o.translation }))
+	);
+	callbacks?.onAnswerPrompt(
+		isFa ? '🎙️ یکی از پاسخ‌ها را بگو' : '🎙️ Say one of the replies out loud'
+	);
+}
+
+async function handleConversationVoice(transcript: string): Promise<void> {
+	const st = convState;
+	if (!st?.active || st.options.length === 0) return;
+	const prefs = get(preferencesStore);
+	const isFa = prefs.language === 'fa';
+
+	// Match against every offered reply; the best match wins.
+	let best = st.options[0];
+	let bestResult = matchVoiceInput(transcript, best.german, 0.8);
+	for (const opt of st.options.slice(1)) {
+		const r = matchVoiceInput(transcript, opt.german, 0.8);
+		if (r.matchPercentage > bestResult.matchPercentage) {
+			best = opt;
+			bestResult = r;
+		}
+	}
+
+	callbacks?.onVoiceResult({
+		isCorrect: bestResult.isMatch,
+		transcript,
+		matchPercentage: bestResult.matchPercentage,
+		matchedWordIndices: bestResult.targetWords.map((tw) =>
+			bestResult.userWords.some((uw) => uw === tw || uw.includes(tw) || tw.includes(uw))
+		)
+	});
+
+	if (bestResult.isMatch) {
+		playTone('success');
+		await recordSRAttempt(best.day, best.sentenceId, true);
+		callbacks?.onConversationOptions?.(null);
+		callbacks?.onMessageBubble({
+			id: -1,
+			role: 'sent',
+			targetText: best.german,
+			translation: best.translation
+		});
+		st.exchanges++;
+		st.pointer = best.pairIndex + 1; // follow the thread the user chose
+		callbacks?.onAnswerPrompt('');
+		await wait(700);
+		await presentConvTurn();
+		return;
+	}
+
+	playTone('error');
+	st.failCount++;
+	if (st.failCount < 2) {
+		const retryMsg = isFa ? 'یکبار دیگه تلاش کن...' : 'Try once more...';
+		callbacks?.onAnswerPrompt(
+			`<span style="color:orange">${retryMsg}</span> <span style="color:#888">"${transcript}"</span>`
+		);
+		return;
+	}
+
+	// Two misses → reveal the natural reply and carry on.
+	const intended = st.options.find((o) => o.pairIndex === st.pointer) ?? st.options[0];
+	await recordSRAttempt(intended.day, intended.sentenceId, false);
+	callbacks?.onConversationOptions?.(null);
+	callbacks?.onMessageBubble({
+		id: -1,
+		role: 'sent',
+		targetText: intended.german,
+		translation: intended.translation
+	});
+	st.exchanges++;
+	st.pointer = intended.pairIndex + 1;
+	callbacks?.onAnswerPrompt('');
+	await wait(700);
+	await presentConvTurn();
+}
+
+function finishConversation(): void {
+	const st = convState;
+	if (!st) return;
+	convState = null;
+	const prefs = get(preferencesStore);
+	const isFa = prefs.language === 'fa';
+
+	callbacks?.onConversationOptions?.(null);
+
+	// Small XP reward for completing the weekly conversation.
+	const app = get(appStore);
+	const newXp = app.xp + 30;
+	appStore.update((s) => ({ ...s, xp: newXp }));
+	void saveProgress(app.currentDay, app.currentSentenceIndex, newXp);
+	void trackEvent('conversation_completed', {
+		day: app.currentDay,
+		metadata: { week: st.week, exchanges: st.exchanges }
+	});
+
+	callbacks?.onSystemMessage(
+		isFa
+			? `🎉 گفتگو تمام شد! ${st.exchanges} تبادل · +۳۰ امتیاز`
+			: `🎉 Conversation complete! ${st.exchanges} exchanges · +30 XP`
+	);
+	callbacks?.onAnswerPrompt('');
 }
 
 // ============ DUE COUNT ============

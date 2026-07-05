@@ -17,6 +17,7 @@
 		startExam,
 		answerExamChoice,
 		startReviewMode,
+		startConversation,
 		getDueCount,
 		incrementSession,
 		skipAndRemoveReviewItem,
@@ -25,6 +26,7 @@
 		type ExamQuestionData,
 		type ExamResultsData,
 		type VoiceResultData,
+		type ConvOption,
 	} from "$services/lesson-controller";
 	import {
 		getLessonIndex,
@@ -86,6 +88,8 @@
 	let warmupThenLesson = $state(false);
 	// Tap-based exam questions: index the user picked (-1 = not yet answered)
 	let choiceAnswered = $state(-1);
+	// Conversation mode: reply choices for the user's current turn
+	let convOptions = $state<ConvOption[] | null>(null);
 
 	function examTypeLabel(t: string, fa: boolean): string {
 		if (t === "listen") return fa ? "🎧 گوش کن و تکرار کن" : "🎧 Listen & Repeat";
@@ -409,12 +413,16 @@
 				examQuestionData = null;
 				examResultsData = null;
 				voiceResult = null;
+				convOptions = null;
 				systemMessages = [];
 				answerLineHtml = "";
 				updateScript();
 			},
 			onVoiceResult(result) {
 				voiceResult = result;
+			},
+			onConversationOptions(options) {
+				convOptions = options;
 			},
 		});
 	}
@@ -451,13 +459,16 @@
 
 	function handleDaySelectChange(e: Event) {
 		const val = (e.target as HTMLSelectElement).value;
-		if (val.startsWith("exam")) {
-			// The exam starts immediately — dismiss the start overlay if it's
-			// still up (e.g. exam picked straight from the day dropdown).
+		if (val.startsWith("exam") || val.startsWith("talk")) {
+			// Exams/conversations start immediately — dismiss the start
+			// overlay if it's still up (picked straight from the dropdown).
 			showOverlay = false;
 			unlockAudioContext();
-			const week = parseInt(val.replace("exam", ""));
-			startExam(week);
+			if (val.startsWith("exam")) {
+				startExam(parseInt(val.replace("exam", "")));
+			} else {
+				startConversation(parseInt(val.replace("talk", "")));
+			}
 		} else {
 			changeDay(parseInt(val));
 		}
@@ -727,6 +738,9 @@
 							<option value="exam{weekNum}">
 								Week {weekNum} Exam
 							</option>
+							<option value="talk{weekNum}">
+								💬 Week {weekNum} Talk
+							</option>
 						{/if}
 					</optgroup>
 				{/each}
@@ -927,6 +941,33 @@
 										</button>
 									{/if}
 								</div>
+							</div>
+						{/if}
+
+						<!-- Conversation: your turn — pick a reply and say it -->
+						{#if convOptions}
+							<div class="conv-panel">
+								<div class="conv-title">
+									{prefs.language === "fa"
+										? "🎙️ نوبت توست — یکی را انتخاب کن و بگو:"
+										: "🎙️ Your turn — say one of these:"}
+								</div>
+								{#each convOptions as opt}
+									<div class="conv-option">
+										<div class="conv-german">
+											{opt.german}
+										</div>
+										<div
+											class="conv-translation"
+											style="direction:{prefs.language ===
+											'fa'
+												? 'rtl'
+												: 'ltr'};"
+										>
+											{opt.translation}
+										</div>
+									</div>
+								{/each}
 							</div>
 						{/if}
 
@@ -2261,6 +2302,46 @@
 		border: 1px solid #ffd54f;
 		border-radius: 20px;
 		font-weight: bold;
+	}
+
+	/* ── Conversation mode (Week Talk) ── */
+	.conv-panel {
+		align-self: flex-end;
+		max-width: 75%;
+		background: #fff;
+		border: 2px dashed #075e54;
+		border-radius: 15px;
+		padding: 14px 16px;
+		margin: 8px 0;
+	}
+
+	.conv-title {
+		font-size: 0.85em;
+		font-weight: bold;
+		color: #075e54;
+		margin-bottom: 10px;
+	}
+
+	.conv-option {
+		padding: 8px 12px;
+		border: 1px solid #e0e0e0;
+		border-radius: 10px;
+		background: #f7faf9;
+	}
+
+	.conv-option + .conv-option {
+		margin-top: 8px;
+	}
+
+	.conv-german {
+		font-weight: bold;
+		color: #222;
+	}
+
+	.conv-translation {
+		font-size: 0.85em;
+		color: #777;
+		margin-top: 2px;
 	}
 
 	.btn-remove-review {

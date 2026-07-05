@@ -20,7 +20,9 @@ export type AnalyticsEvent =
 	| 'lesson_started'
 	| 'lesson_completed'
 	| 'exam_completed'
-	| 'review_started';
+	| 'review_started'
+	| 'conversation_started'
+	| 'conversation_completed';
 
 interface TrackOptions {
 	/** Optional lesson day the event relates to. */
