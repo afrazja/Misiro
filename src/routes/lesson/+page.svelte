@@ -861,6 +861,26 @@
 							</div>
 						{/if}
 
+						<!-- Chat bubbles (conversation mode dialogue history) -->
+						{#each chatMessages as msg (msg.id)}
+							{#if msg.type === "system"}
+								<div class="message system">{msg.text}</div>
+							{:else}
+								<div
+									class="message {msg.type}"
+									role="button"
+									tabindex="0"
+									onclick={() =>
+										handleMessageBubbleClick(msg.text)}
+									onkeydown={(e) =>
+										e.key === "Enter" &&
+										handleMessageBubbleClick(msg.text)}
+								>
+									{msg.text}
+								</div>
+							{/if}
+						{/each}
+
 						<!-- Exam Question -->
 						{#if examQuestionData}
 							<div
