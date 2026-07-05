@@ -678,7 +678,7 @@
 	<div class="lp-inner">
 		<p class="eyebrow">Why German?</p>
 		<h2 class="section-h2">
-			Why Learn German <span class="grad-text">in 2025?</span>
+			Why Learn German <span class="grad-text">in {new Date().getFullYear()}?</span>
 		</h2>
 		<p class="section-lead">
 			German is the most spoken native language in Europe and opens doors
@@ -1577,7 +1577,7 @@
 	/* ── Features grid ────────────────────────────────── */
 	.feat-grid {
 		display: grid;
-		grid-template-columns: repeat(3, 1fr);
+		grid-template-columns: repeat(2, 1fr);
 		gap: 22px;
 		margin-top: 60px;
 		text-align: left;
