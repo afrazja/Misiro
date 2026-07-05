@@ -583,9 +583,9 @@ export async function startExam(week: number): Promise<void> {
 	processNextExamQuestion();
 }
 
-export async function startReviewMode(): Promise<void> {
+export async function startReviewMode(maxItems = 15): Promise<void> {
 	const prefs = get(preferencesStore);
-	const dueItems = (await getDueReviewItems()).slice(0, 15);
+	const dueItems = (await getDueReviewItems()).slice(0, maxItems);
 	const isFa = prefs.language === 'fa';
 
 	console.log('[Review] Due items:', dueItems.length, dueItems.map(i => `day${i.day}:s${i.sentenceId}`));

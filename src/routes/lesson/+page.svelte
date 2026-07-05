@@ -16,6 +16,7 @@
 		handleVoiceInput as controllerHandleVoice,
 		startExam,
 		startReviewMode,
+		getDueCount,
 		incrementSession,
 		skipAndRemoveReviewItem,
 		type TeachStepData,
@@ -78,6 +79,10 @@
 	let voiceResult: VoiceResultData | null = $state(null);
 	let listenerMode = $state(false);
 	let _listenerSeq = 0;
+	// Review-first flow: due SR items become a warm-up before the day's lesson.
+	const WARMUP_CAP = 8;
+	let dueWarmupCount = $state(0);
+	let warmupThenLesson = $state(false);
 
 	interface ChatMessage {
 		id: number;
@@ -354,6 +359,17 @@
 				examQuestionData = null;
 				voiceResult = null;
 				examResultsData = data;
+				// Warm-up finished → show the result briefly, then flow into
+				// today's lesson automatically.
+				if (warmupThenLesson && data.wasReview) {
+					warmupThenLesson = false;
+					dueWarmupCount = 0;
+					setTimeout(() => {
+						examResultsData = null;
+						systemMessages = [];
+						processNextStep();
+					}, 2500);
+				}
 			},
 			onExamProgress(current, total) {
 				examProgressCurrent = current;
@@ -384,6 +400,19 @@
 		showOverlay = false;
 		unlockAudioContext();
 		if (isReady) {
+			processNextStep();
+		}
+	}
+
+	async function handleStartWithWarmup() {
+		showOverlay = false;
+		unlockAudioContext();
+		if (!isReady) return;
+		warmupThenLesson = true;
+		await startReviewMode(WARMUP_CAP);
+		// Queue emptied since page load → nothing to warm up, go straight in.
+		if (!exam.isExamMode) {
+			warmupThenLesson = false;
 			processNextStep();
 		}
 	}
@@ -556,6 +585,11 @@
 			return;
 		}
 
+		// Review-first: check for due SR items to offer as a warm-up
+		getDueCount()
+			.then((c) => (dueWarmupCount = c))
+			.catch(() => (dueWarmupCount = 0));
+
 		// If no overlay needed (already clicked), start
 		if (!showOverlay) {
 			processNextStep();
@@ -598,9 +632,37 @@
 		{:else}
 			<p>Loading lesson details...</p>
 		{/if}
-		<button class="start-btn" onclick={handleStart} disabled={!isReady}>
-			{isReady ? "▶ Start Lesson" : "⏳ Loading..."}
-		</button>
+		{#if dueWarmupCount > 0}
+			<p class="warmup-note">
+				{prefs.language === "fa"
+					? `🔄 ${Math.min(dueWarmupCount, WARMUP_CAP)} جمله برای مرور آماده است — اول با مرور گرم می‌شوید.`
+					: `🔄 ${Math.min(dueWarmupCount, WARMUP_CAP)} sentence${Math.min(dueWarmupCount, WARMUP_CAP) === 1 ? "" : "s"} due for review — you'll warm up first.`}
+			</p>
+			<button
+				class="start-btn"
+				onclick={handleStartWithWarmup}
+				disabled={!isReady}
+			>
+				{isReady
+					? prefs.language === "fa"
+						? "▶ مرور + درس"
+						: "▶ Warm-up + Lesson"
+					: "⏳ Loading..."}
+			</button>
+			<button
+				class="skip-warmup-link"
+				onclick={handleStart}
+				disabled={!isReady}
+			>
+				{prefs.language === "fa"
+					? "رد شدن از مرور ←"
+					: "Skip warm-up →"}
+			</button>
+		{:else}
+			<button class="start-btn" onclick={handleStart} disabled={!isReady}>
+				{isReady ? "▶ Start Lesson" : "⏳ Loading..."}
+			</button>
+		{/if}
 	</div>
 {/if}
 
@@ -1316,6 +1378,33 @@
 
 	.start-btn:disabled {
 		opacity: 0.6;
+		cursor: wait;
+	}
+
+	.warmup-note {
+		margin: 0 0 14px;
+		font-size: 1.05em;
+		color: #ffd54f;
+	}
+
+	.skip-warmup-link {
+		display: block;
+		margin: 14px auto 0;
+		background: none;
+		border: none;
+		color: rgba(255, 255, 255, 0.65);
+		font-size: 0.95em;
+		cursor: pointer;
+		text-decoration: underline;
+		transition: color 0.2s;
+	}
+
+	.skip-warmup-link:hover {
+		color: #fff;
+	}
+
+	.skip-warmup-link:disabled {
+		opacity: 0.5;
 		cursor: wait;
 	}
 
