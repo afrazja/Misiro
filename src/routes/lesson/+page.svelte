@@ -452,6 +452,10 @@
 	function handleDaySelectChange(e: Event) {
 		const val = (e.target as HTMLSelectElement).value;
 		if (val.startsWith("exam")) {
+			// The exam starts immediately — dismiss the start overlay if it's
+			// still up (e.g. exam picked straight from the day dropdown).
+			showOverlay = false;
+			unlockAudioContext();
 			const week = parseInt(val.replace("exam", ""));
 			startExam(week);
 		} else {
