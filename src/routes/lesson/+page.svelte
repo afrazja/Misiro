@@ -290,6 +290,7 @@
 					return;
 				const mySeq = _listenerSeq;
 				const germanText = currentTeachStep.germanText;
+				const ttsVoice = currentTeachStep.role === "received" ? "b" : "a";
 				// Brief pause after the normal-speed audio that just finished
 				await new Promise<void>((r) => setTimeout(r, 800));
 				if (_listenerSeq !== mySeq || !listenerMode) return;
@@ -299,7 +300,7 @@
 					germanText,
 					(i) => (spokenWordIndex = i),
 				);
-				await playAudioPromise(germanText, 0.6, "de-DE", highlight);
+				await playAudioPromise(germanText, 0.6, "de-DE", highlight, ttsVoice);
 				spokenWordIndex = -1;
 				await new Promise<void>((r) => setTimeout(r, 600));
 				if (_listenerSeq !== mySeq || !listenerMode) return;
@@ -440,12 +441,16 @@
 			currentTeachStep.germanText,
 			(i) => (spokenWordIndex = i),
 		);
-		playAudioPromise(currentTeachStep.germanText, 0.8, "de-DE", highlight).then(
-			() => {
-				isSpeaking = false;
-				spokenWordIndex = -1;
-			},
-		);
+		playAudioPromise(
+			currentTeachStep.germanText,
+			0.8,
+			"de-DE",
+			highlight,
+			currentTeachStep.role === "received" ? "b" : "a",
+		).then(() => {
+			isSpeaking = false;
+			spokenWordIndex = -1;
+		});
 	}
 
 	async function handleListenerToggle() {
@@ -456,13 +461,14 @@
 			return;
 		const mySeq = _listenerSeq;
 		const germanText = currentTeachStep.germanText;
+		const ttsVoice = currentTeachStep.role === "received" ? "b" : "a";
 		const highlight = makeWordHighlighter(
 			germanText,
 			(i) => (spokenWordIndex = i),
 		);
 		// Normal-speed play
 		isSpeaking = true;
-		await playAudioPromise(germanText, 0.8, "de-DE", highlight);
+		await playAudioPromise(germanText, 0.8, "de-DE", highlight, ttsVoice);
 		isSpeaking = false;
 		spokenWordIndex = -1;
 		await new Promise<void>((r) => setTimeout(r, 600));
@@ -474,7 +480,7 @@
 			germanText,
 			(i) => (spokenWordIndex = i),
 		);
-		await playAudioPromise(germanText, 0.6, "de-DE", highlightSlow);
+		await playAudioPromise(germanText, 0.6, "de-DE", highlightSlow, ttsVoice);
 		isSpeaking = false;
 		spokenWordIndex = -1;
 		await new Promise<void>((r) => setTimeout(r, 600));

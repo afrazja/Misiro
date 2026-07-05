@@ -11,6 +11,9 @@ import { isMobile } from '$utils/device';
 import { get, writable } from 'svelte/store';
 import { preferencesStore } from '$stores/preferences';
 
+/** Dialogue voice: 'a' = learner side (sent), 'b' = conversation partner (received). */
+export type TTSVoice = 'a' | 'b';
+
 let currentAudio: HTMLAudioElement | null = null;
 let ttsGeneration = 0; // incremented on stop — lets in-flight calls know they're stale
 /** Reactive flag — true while any TTS audio is playing */
@@ -78,10 +81,13 @@ function playWebAudio(
 	text: string,
 	lang: string,
 	rate: number = 1.0,
-	onTime?: (currentTime: number, duration: number) => void
+	onTime?: (currentTime: number, duration: number) => void,
+	voice: TTSVoice = 'a'
 ): Promise<void> {
 	const shortLang = lang.split('-')[0];
-	const url = `/proxy/tts?q=${encodeURIComponent(text)}&tl=${shortLang}`;
+	// voice param only applies to German (ElevenLabs); keep other URLs stable.
+	const voiceParam = shortLang === 'de' ? `&voice=${voice}` : '';
+	const url = `/proxy/tts?q=${encodeURIComponent(text)}&tl=${shortLang}${voiceParam}`;
 	const myGen = ttsGeneration; // snapshot — if it changes, we were cancelled
 	const safeRate = isFinite(rate) && rate > 0 ? rate : 1.0;
 
@@ -168,7 +174,8 @@ export function playAudioPromise(
 	text: string,
 	rate: number = 1.0,
 	lang: string = 'de-DE',
-	onTime?: (currentTime: number, duration: number) => void
+	onTime?: (currentTime: number, duration: number) => void,
+	voice: TTSVoice = 'a'
 ): Promise<void> {
 	ttsIsPlaying.set(true);
 	const _p = new Promise<void>((resolve) => {
@@ -181,13 +188,13 @@ export function playAudioPromise(
 
 		// On mobile: ALL languages → proxy
 		if (isMobile()) {
-			playWebAudio(text, lang, effectiveRate, onTime).then(resolve);
+			playWebAudio(text, lang, effectiveRate, onTime, voice).then(resolve);
 			return;
 		}
 
 		// Desktop: German & Farsi → proxy
 		if (lang.startsWith('de') || lang.startsWith('fa')) {
-			playWebAudio(text, lang, effectiveRate, onTime).then(resolve);
+			playWebAudio(text, lang, effectiveRate, onTime, voice).then(resolve);
 			return;
 		}
 

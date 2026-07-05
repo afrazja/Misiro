@@ -1,6 +1,9 @@
 /**
  * TTS Proxy.
- * Usage: GET /proxy/tts?q=Hallo&tl=de
+ * Usage: GET /proxy/tts?q=Hallo&tl=de[&voice=a|b]
+ *
+ * voice=a (default) → learner-side voice; voice=b → conversation partner.
+ * The param is part of the URL, so switching voices also busts old cached audio.
  *
  * Strategy:
  * - German (tl=de): try ElevenLabs first (if ELEVENLABS_API_KEY is set) for a
@@ -17,9 +20,13 @@
 import type { RequestHandler } from './$types';
 import { env } from '$env/dynamic/private';
 
-// Default free-tier voice "Daniel — Steady Broadcaster". Override via env to
-// swap in a native German library voice once on a paid (Creator+) plan.
-const ELEVEN_VOICE_ID = env.ELEVENLABS_VOICE_ID || 'onwK4e9ZLuTAKqWW03F9';
+// Two-voice dialogue: voice A reads the learner's lines ("sent"), voice B the
+// conversation partner's ("received"). Defaults are premade voices — the only
+// kind the ElevenLabs free tier allows via API. On a paid plan, override via
+// env with native German library voices (e.g. Otto FTNCalFNG5bRnkkaP5Ug /
+// Mila dCnu06FiOZma2KVNUoPZ, already added to this account's My Voices).
+const ELEVEN_VOICE_A = env.ELEVENLABS_VOICE_ID || 'JBFqnCBsd6RMkjVDRZzb'; // George — warm male
+const ELEVEN_VOICE_B = env.ELEVENLABS_VOICE_ID_B || 'EXAVITQu4vr4xnSDxMaL'; // Sarah — reassuring female
 const ELEVEN_MODEL_ID = env.ELEVENLABS_MODEL_ID || 'eleven_multilingual_v2';
 
 /** Long-lived immutable cache — same sentence always produces the same audio. */
@@ -29,21 +36,32 @@ const AUDIO_CACHE_CONTROL = 'public, max-age=31536000, immutable';
  * Generate German audio via ElevenLabs. Returns the audio bytes, or null on any
  * failure (missing key, quota exceeded, timeout) so the caller falls back.
  */
-async function tryElevenLabs(text: string): Promise<ArrayBuffer | null> {
+async function tryElevenLabs(text: string, voiceId: string): Promise<ArrayBuffer | null> {
 	if (!env.ELEVENLABS_API_KEY) return null;
 
 	const controller = new AbortController();
 	const timeoutId = setTimeout(() => controller.abort(), 8000);
 	try {
 		const response = await fetch(
-			`https://api.elevenlabs.io/v1/text-to-speech/${ELEVEN_VOICE_ID}?output_format=mp3_44100_128`,
+			`https://api.elevenlabs.io/v1/text-to-speech/${voiceId}?output_format=mp3_44100_128`,
 			{
 				method: 'POST',
 				headers: {
 					'xi-api-key': env.ELEVENLABS_API_KEY,
 					'Content-Type': 'application/json'
 				},
-				body: JSON.stringify({ text, model_id: ELEVEN_MODEL_ID }),
+				body: JSON.stringify({
+					text,
+					model_id: ELEVEN_MODEL_ID,
+					// Slightly lower stability + some style for a livelier, less
+					// monotone delivery — still consistent enough for learning.
+					voice_settings: {
+						stability: 0.5,
+						similarity_boost: 0.75,
+						style: 0.3,
+						use_speaker_boost: true
+					}
+				}),
 				signal: controller.signal
 			}
 		);
@@ -117,7 +135,8 @@ export const GET: RequestHandler = async ({ url, request }) => {
 
 	// German → try ElevenLabs first for a more natural voice.
 	if (lang === 'de') {
-		const elevenAudio = await tryElevenLabs(text);
+		const voiceId = url.searchParams.get('voice') === 'b' ? ELEVEN_VOICE_B : ELEVEN_VOICE_A;
+		const elevenAudio = await tryElevenLabs(text, voiceId);
 		if (elevenAudio) {
 			return new Response(elevenAudio, {
 				status: 200,

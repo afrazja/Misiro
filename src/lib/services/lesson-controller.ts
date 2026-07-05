@@ -258,7 +258,13 @@ export async function processNextStep(skipAudio = false): Promise<void> {
 		if (getSessionID() !== mySessionID) return;
 
 		const highlight = makeWordHighlighter(germanText, (i) => callbacks?.onSpokenWord?.(i));
-		await playAudioPromise(germanText, 0.8, 'de-DE', highlight);
+		await playAudioPromise(
+			germanText,
+			0.8,
+			'de-DE',
+			highlight,
+			currentStep.role === 'received' ? 'b' : 'a'
+		);
 		callbacks?.onSpokenWord?.(-1); // clear highlight when audio finishes
 		if (getSessionID() !== mySessionID) return;
 	}
