@@ -1,13 +1,18 @@
 import { writable } from 'svelte/store';
 
 export interface ExamQuestion {
-	type: 'listen' | 'speak';
+	type: 'listen' | 'speak' | 'meaning' | 'gap';
 	day: number;
 	sentenceId: number;
 	audioText: string;
 	targetText: string;
 	translation: string;
 	translationFa?: string;
+	/** 'meaning': the German sentence; 'gap': the sentence with ___ for the missing word. */
+	promptText?: string;
+	/** 'meaning' / 'gap': shuffled tap options and the index of the right one. */
+	options?: string[];
+	correctIndex?: number;
 }
 
 export interface WrongAnswer {

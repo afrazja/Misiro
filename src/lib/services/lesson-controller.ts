@@ -76,13 +76,16 @@ export interface CompletionCardData {
 }
 
 export interface ExamQuestionData {
-	type: 'listen' | 'speak';
+	type: 'listen' | 'speak' | 'meaning' | 'gap';
 	prompt: string;
 	target: string;
 	translation?: string;
 	questionNumber: number;
 	totalQuestions: number;
 	language: Language;
+	/** Tap-to-answer questions ('meaning' / 'gap'). */
+	options?: string[];
+	correctIndex?: number;
 }
 
 export interface ExamResultsData {
@@ -438,6 +441,8 @@ export async function handleVoiceInput(transcript: string): Promise<void> {
 
 	if (exam.isExamMode) {
 		const examQ = exam.examQuestions[exam.currentExamIndex];
+		// Tap-based questions ignore voice input entirely.
+		if (examQ?.options) return;
 		targetGerman = examQ ? examQ.targetText : '';
 	} else {
 		if (!currentStep) return;
@@ -530,38 +535,98 @@ export async function startExam(week: number): Promise<void> {
 	}
 	await loadLessons(daysToLoad);
 
-	const pool: ExamQuestion[] = [];
+	// Collect the week's sentences once; question builders draw from this.
+	const weekSentences: Array<{ day: number; s: Sentence; german: string; loc: string }> = [];
 	for (let d = startDay; d <= endDay; d++) {
 		const lesson = getLesson(d);
 		if (!lesson) continue;
-
-		lesson.sentences.forEach((s) => {
-			if (s.role === 'sent') {
-				pool.push({
-					type: 'speak',
-					day: d,
-					sentenceId: s.id,
-					audioText: s.targetText || '',
-					targetText: s.targetText || '',
-					translation: prefs.language === 'fa' ? (s.translationFa || s.translation) : s.translation,
-					translationFa: s.translationFa
-				});
-			} else if (s.role === 'received') {
-				pool.push({
-					type: 'listen',
-					day: d,
-					sentenceId: s.id,
-					audioText: s.audioText || '',
-					targetText: s.audioText || '',
-					translation: prefs.language === 'fa' ? (s.translationFa || s.translation) : s.translation,
-					translationFa: s.translationFa
-				});
-			}
-		});
+		for (const s of lesson.sentences) {
+			const german = (s.role === 'received' ? s.audioText : s.targetText) || '';
+			if (!german) continue;
+			const loc = prefs.language === 'fa' ? (s.translationFa || s.translation) : s.translation;
+			weekSentences.push({ day: d, s, german, loc });
+		}
 	}
 
-	// Shuffle and pick up to 20
-	const shuffled = pool.sort(() => Math.random() - 0.5).slice(0, 20);
+	const shuffleArr = <T,>(arr: T[]): T[] => [...arr].sort(() => Math.random() - 0.5);
+	const base = ({ day, s, german, loc }: (typeof weekSentences)[number]) => ({
+		day,
+		sentenceId: s.id,
+		audioText: german,
+		targetText: german,
+		translation: loc,
+		translationFa: s.translationFa
+	});
+
+	// Speak / listen pools (mic-based, as before)
+	const speakPool: ExamQuestion[] = weekSentences
+		.filter((w) => w.s.role === 'sent')
+		.map((w) => ({ type: 'speak', ...base(w) }));
+	const listenPool: ExamQuestion[] = weekSentences
+		.filter((w) => w.s.role === 'received')
+		.map((w) => ({ type: 'listen', ...base(w) }));
+
+	// Meaning pool (tap-based): hear/read German → pick the right translation.
+	const meaningPool: ExamQuestion[] = weekSentences
+		.map((w): ExamQuestion | null => {
+			const distractors = shuffleArr(
+				[...new Set(weekSentences.map((o) => o.loc))].filter((t) => t !== w.loc)
+			).slice(0, 2);
+			if (distractors.length < 2) return null;
+			const options = shuffleArr([w.loc, ...distractors]);
+			return {
+				type: 'meaning' as const,
+				...base(w),
+				promptText: w.german,
+				options,
+				correctIndex: options.indexOf(w.loc)
+			};
+		})
+		.filter((q): q is ExamQuestion => q !== null);
+
+	// Gap pool (tap-based): the sentence with one word blanked → pick the word.
+	const stripPunct = (word: string) => word.replace(/[.,!?;:„“”"']/g, '');
+	const gapWords = (text: string) =>
+		text.split(/\s+/).map(stripPunct).filter((word) => word.length >= 4);
+	const allGapWords = [...new Set(weekSentences.flatMap((w) => gapWords(w.german)))];
+	const gapPool: ExamQuestion[] = weekSentences
+		.filter((w) => w.s.role === 'sent')
+		.map((w): ExamQuestion | null => {
+			const candidates = gapWords(w.german);
+			if (!candidates.length) return null;
+			const word = candidates[Math.floor(Math.random() * candidates.length)];
+			const distractors = shuffleArr(
+				allGapWords.filter((g) => g.toLowerCase() !== word.toLowerCase())
+			).slice(0, 2);
+			if (distractors.length < 2) return null;
+			const options = shuffleArr([word, ...distractors]);
+			return {
+				type: 'gap' as const,
+				...base(w),
+				promptText: w.german.replace(word, '___'),
+				options,
+				correctIndex: options.indexOf(word)
+			};
+		})
+		.filter((q): q is ExamQuestion => q !== null);
+
+	// Mix: ~8 speak, 4 listen, 4 meaning, 4 gap — backfill with speak, cap 20.
+	const picked = [
+		...shuffleArr(speakPool).slice(0, 8),
+		...shuffleArr(listenPool).slice(0, 4),
+		...shuffleArr(meaningPool).slice(0, 4),
+		...shuffleArr(gapPool).slice(0, 4)
+	];
+	const usedIds = new Set(picked.map((q) => `${q.type}-${q.day}-${q.sentenceId}`));
+	for (const q of shuffleArr(speakPool)) {
+		if (picked.length >= 20) break;
+		const id = `${q.type}-${q.day}-${q.sentenceId}`;
+		if (!usedIds.has(id)) {
+			usedIds.add(id);
+			picked.push(q);
+		}
+	}
+	const shuffled = shuffleArr(picked).slice(0, 20);
 
 	examStore.set({
 		isExamMode: true,
@@ -679,18 +744,65 @@ function processNextExamQuestion(): void {
 	const q = exam.examQuestions[exam.currentExamIndex];
 	callbacks?.onExamQuestion({
 		type: q.type,
-		prompt: q.type === 'listen' ? q.translation : (prefs.language === 'fa' ? (q.translationFa || q.translation) : q.translation),
+		prompt: q.promptText ?? (q.type === 'listen' ? q.translation : (prefs.language === 'fa' ? (q.translationFa || q.translation) : q.translation)),
 		target: q.targetText,
 		translation: q.translation,
 		questionNumber: exam.currentExamIndex + 1,
 		totalQuestions: exam.examQuestions.length,
-		language: prefs.language
+		language: prefs.language,
+		options: q.options,
+		correctIndex: q.correctIndex
 	});
+
+	// Listening-based questions actually play the German out loud.
+	// ('gap' stays silent — the audio would give the missing word away.)
+	if (q.type === 'listen' || q.type === 'meaning') {
+		playAudioPromise(q.audioText, 0.8, 'de-DE', undefined, 'b');
+	}
 
 	// Show the initial prompt for the user to answer
 	const isFa = prefs.language === 'fa';
-	const speakMsg = isFa ? 'آلمانی بگو...' : 'Speak in German...';
-	callbacks?.onAnswerPrompt(`🎙️ ${speakMsg}`);
+	const promptMsg = q.options
+		? isFa
+			? '👆 پاسخ درست را انتخاب کن'
+			: '👆 Tap the correct answer'
+		: `🎙️ ${isFa ? 'آلمانی بگو...' : 'Speak in German...'}`;
+	callbacks?.onAnswerPrompt(promptMsg);
+}
+
+/**
+ * Answer a tap-based exam question ('meaning' / 'gap'). Single attempt:
+ * a wrong tap records the miss and moves on (no voice-style retry).
+ */
+export async function answerExamChoice(index: number): Promise<void> {
+	const exam = get(examStore);
+	if (!exam.isExamMode) return;
+	const q = exam.examQuestions[exam.currentExamIndex];
+	if (!q?.options || typeof q.correctIndex !== 'number') return;
+
+	if (index === q.correctIndex) {
+		playTone('success');
+		await handleExamCorrect(q.options[index]);
+		return;
+	}
+
+	playTone('error');
+	if (q.day && q.sentenceId) {
+		await recordSRAttempt(q.day, q.sentenceId, false);
+	}
+	examStore.update((s) => ({
+		...s,
+		examWrongAnswers: [...s.examWrongAnswers, { question: q, heard: q.options![index] }]
+	}));
+
+	const isFa = get(preferencesStore).language === 'fa';
+	const nextMsg = isFa ? 'سوال بعدی...' : 'Moving to next...';
+	callbacks?.onAnswerPrompt(`<span style="color:red">${nextMsg}</span>`);
+
+	setTimeout(() => {
+		examStore.update((s) => ({ ...s, currentExamIndex: s.currentExamIndex + 1 }));
+		processNextExamQuestion();
+	}, 1500);
 }
 
 async function handleExamCorrect(transcript: string): Promise<void> {

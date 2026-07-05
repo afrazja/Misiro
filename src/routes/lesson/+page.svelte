@@ -15,6 +15,7 @@
 		changeLanguage,
 		handleVoiceInput as controllerHandleVoice,
 		startExam,
+		answerExamChoice,
 		startReviewMode,
 		getDueCount,
 		incrementSession,
@@ -83,6 +84,28 @@
 	const WARMUP_CAP = 8;
 	let dueWarmupCount = $state(0);
 	let warmupThenLesson = $state(false);
+	// Tap-based exam questions: index the user picked (-1 = not yet answered)
+	let choiceAnswered = $state(-1);
+
+	function examTypeLabel(t: string, fa: boolean): string {
+		if (t === "listen") return fa ? "🎧 گوش کن و تکرار کن" : "🎧 Listen & Repeat";
+		if (t === "meaning") return fa ? "🔊 یعنی چه؟" : "🔊 What does it mean?";
+		if (t === "gap") return fa ? "✍️ جای خالی را پر کن" : "✍️ Fill the blank";
+		return fa ? "🗣️ به آلمانی بگو" : "🗣️ Say in German";
+	}
+
+	function examTypeColor(t: string): string {
+		if (t === "listen") return "#FF9800";
+		if (t === "meaning") return "#9C27B0";
+		if (t === "gap") return "#4CAF50";
+		return "#2196F3";
+	}
+
+	function handleChoiceTap(i: number) {
+		if (choiceAnswered !== -1) return;
+		choiceAnswered = i;
+		answerExamChoice(i);
+	}
 
 	interface ChatMessage {
 		id: number;
@@ -351,6 +374,7 @@
 				completionData = null;
 				examResultsData = null;
 				voiceResult = null;
+				choiceAnswered = -1;
 				examQuestionData = data;
 			},
 			onExamFinished(data) {
@@ -823,37 +847,63 @@
 						{#if examQuestionData}
 							<div
 								class="message received"
-								style="border-left: 4px solid {examQuestionData.type ===
-								'listen'
-									? '#FF9800'
-									: '#2196F3'}"
+								style="border-left: 4px solid {examTypeColor(
+									examQuestionData.type,
+								)}"
 							>
 								<div class="avatar">🎓</div>
 								<div class="content">
 									<div
 										class="sub-text"
-										style="font-size:0.75em; color:{examQuestionData.type ===
-										'listen'
-											? '#FF9800'
-											: '#2196F3'}; font-weight:bold; margin-bottom:4px;"
+										style="font-size:0.75em; color:{examTypeColor(
+											examQuestionData.type,
+										)}; font-weight:bold; margin-bottom:4px;"
 									>
-										{examQuestionData.type === "listen"
-											? examQuestionData.language === "fa"
-												? "🎧 گوش کن و تکرار کن"
-												: "🎧 Listen & Repeat"
-											: examQuestionData.language === "fa"
-												? "🗣️ به آلمانی بگو"
-												: "🗣️ Say in German"}
+										{examTypeLabel(
+											examQuestionData.type,
+											examQuestionData.language === "fa",
+										)}
 									</div>
 									<div
 										class="text"
 										style={examQuestionData.language ===
-										"fa"
+											"fa" &&
+										(examQuestionData.type === "speak" ||
+											examQuestionData.type === "listen")
 											? "direction:rtl;"
 											: ""}
 									>
 										{examQuestionData.prompt}
 									</div>
+									{#if examQuestionData.options}
+										<div class="choice-options">
+											{#each examQuestionData.options as opt, i}
+												<button
+													class="choice-btn"
+													class:correct={choiceAnswered !==
+														-1 &&
+														i ===
+															examQuestionData.correctIndex}
+													class:wrong={choiceAnswered ===
+														i &&
+														i !==
+															examQuestionData.correctIndex}
+													disabled={choiceAnswered !==
+														-1}
+													style={examQuestionData.type ===
+														"meaning" &&
+													examQuestionData.language ===
+														"fa"
+														? "direction:rtl; text-align:right;"
+														: ""}
+													onclick={() =>
+														handleChoiceTap(i)}
+												>
+													{opt}
+												</button>
+											{/each}
+										</div>
+									{/if}
 									<div
 										class="sub-text"
 										style="font-size:0.8em; color:#666;"
@@ -1153,6 +1203,14 @@
 										{examResultsData.score} / {examResultsData.total}
 									</div>
 									<p>{examResultsData.percentage}%</p>
+									{#if !examResultsData.wasReview && examResultsData.percentage >= 80}
+										<div class="exam-badge">
+											🏅
+											{examResultsData.language === "fa"
+												? `آزمون هفته ${examResultsData.examWeek} را قبول شدی!`
+												: `Week ${examResultsData.examWeek} Exam passed!`}
+										</div>
+									{/if}
 
 									{#if examResultsData.wrongAnswers.length > 0}
 										<div
@@ -2152,6 +2210,55 @@
 	}
 
 	/* Remove from review button */
+	.choice-options {
+		display: flex;
+		flex-direction: column;
+		gap: 8px;
+		margin: 10px 0;
+	}
+
+	.choice-btn {
+		padding: 10px 14px;
+		border: 2px solid #ddd;
+		border-radius: 10px;
+		background: #fff;
+		cursor: pointer;
+		text-align: left;
+		font-size: 0.95em;
+		font-family: inherit;
+		transition: all 0.2s ease;
+	}
+
+	.choice-btn:hover:not(:disabled) {
+		border-color: #2196f3;
+		background: #f5faff;
+	}
+
+	.choice-btn:disabled {
+		cursor: default;
+	}
+
+	.choice-btn.correct {
+		border-color: #4caf50;
+		background: #e8f5e9;
+		font-weight: bold;
+	}
+
+	.choice-btn.wrong {
+		border-color: #f44336;
+		background: #ffebee;
+	}
+
+	.exam-badge {
+		display: inline-block;
+		padding: 8px 18px;
+		margin-top: 8px;
+		background: #fff8e1;
+		border: 1px solid #ffd54f;
+		border-radius: 20px;
+		font-weight: bold;
+	}
+
 	.btn-remove-review {
 		padding: 5px 14px;
 		border-radius: 20px;
