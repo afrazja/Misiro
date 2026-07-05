@@ -8,7 +8,7 @@
 	import * as dataLayer from "$services/data-layer";
 	import { getDueCount } from "$services/spaced-repetition";
 	import { initSyncListeners } from "$services/sync-queue";
-	import { getLessonIndex } from "$services/lesson-loader";
+	import { getLessonIndex, type LessonMeta } from "$services/lesson-loader";
 	import Heatmap from "$lib/components/Heatmap.svelte";
 	import TrophyCabinet from "$lib/components/TrophyCabinet.svelte";
 
@@ -43,6 +43,13 @@
 	let completedLessons = $state<
 		Record<number, { completedAt: number; sentenceCount: number }>
 	>({});
+	let lessonMetaIndex = $state<LessonMeta[]>([]);
+	let progressLoaded = $state(false);
+
+	// Today's-session hero: what one tap on /lesson will run
+	const todayTitle = $derived(
+		lessonMetaIndex.find((m) => m.day === currentDay)?.title ?? "",
+	);
 
 	// Badges & Calendar expansion
 	let showCalendar = $state(false);
@@ -235,12 +242,14 @@
 		// Fetch actual lesson count from database
 		const index = await getLessonIndex();
 		totalLessons = index.length;
+		lessonMetaIndex = index;
 
 		try {
 			dueReviews = await getDueCount();
 		} catch {
 			dueReviews = 0;
 		}
+		progressLoaded = true;
 
 		try {
 			savedWordCount = dataLayer.getVocabularyCount();
@@ -729,6 +738,41 @@
 		</div>
 	</div>
 
+	<!-- ── Today's Session (primary daily action) ──────── -->
+	{#if isAuthenticated}
+		<a href="/lesson" class="today-session" title="Start today's session">
+			<div class="today-info">
+				<span class="today-label">
+					{language === "fa" ? "جلسه امروز" : "TODAY'S SESSION"}
+				</span>
+				{#if progressLoaded}
+					<span class="today-title">
+						{#if dueReviews > 0}
+							🔄 {Math.min(dueReviews, 8)}
+							{language === "fa" ? "مرور" : "reviews"} &nbsp;+&nbsp;
+						{/if}
+						📚 {language === "fa" ? "روز" : "Day"}
+						{todayTitle || currentDay}
+					</span>
+					<span class="today-sub">
+						{language === "fa"
+							? "حدود ۱۰ تا ۱۵ دقیقه"
+							: "~10–15 minutes"}
+					</span>
+				{:else}
+					<span class="today-title today-loading">
+						{language === "fa" ? "در حال بارگذاری…" : "Loading…"}
+					</span>
+				{/if}
+			</div>
+			<span class="today-btn">
+				▶ {language === "fa"
+					? "شروع جلسه امروز"
+					: "Start Today's Session"}
+			</span>
+		</a>
+	{/if}
+
 	<!-- ── Progress Stats ──────────────────────────────── -->
 	{#if isAuthenticated}
 		<div class="stats-row action-row">
@@ -947,6 +991,80 @@
 		align-items: center;
 		gap: 20px;
 		flex: 1;
+	}
+
+	/* ── Today's Session hero ── */
+	.today-session {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 20px;
+		padding: 24px 30px;
+		border-radius: 20px;
+		background: linear-gradient(135deg, #e94560, #ff6b6b);
+		text-decoration: none;
+		color: #fff;
+		box-shadow: 0 14px 40px rgba(233, 69, 96, 0.35);
+		transition:
+			transform 0.25s ease,
+			box-shadow 0.25s ease;
+	}
+
+	.today-session:hover {
+		transform: translateY(-3px);
+		box-shadow: 0 20px 50px rgba(233, 69, 96, 0.45);
+	}
+
+	.today-info {
+		display: flex;
+		flex-direction: column;
+		gap: 4px;
+		min-width: 0;
+	}
+
+	.today-label {
+		font-size: 0.72rem;
+		font-weight: 700;
+		letter-spacing: 2px;
+		opacity: 0.85;
+	}
+
+	.today-title {
+		font-size: 1.25rem;
+		font-weight: 700;
+		line-height: 1.35;
+	}
+
+	.today-loading {
+		opacity: 0.7;
+	}
+
+	.today-sub {
+		font-size: 0.85rem;
+		opacity: 0.8;
+	}
+
+	.today-btn {
+		flex-shrink: 0;
+		background: #fff;
+		color: #e94560;
+		font-weight: 700;
+		font-size: 1rem;
+		padding: 14px 26px;
+		border-radius: 50px;
+		white-space: nowrap;
+	}
+
+	@media (max-width: 640px) {
+		.today-session {
+			flex-direction: column;
+			align-items: flex-start;
+		}
+
+		.today-btn {
+			align-self: stretch;
+			text-align: center;
+		}
 	}
 
 	.welcome-header-row {
