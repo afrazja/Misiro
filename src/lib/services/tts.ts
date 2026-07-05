@@ -85,11 +85,21 @@ function playWebAudio(
 	voice: TTSVoice = 'a'
 ): Promise<void> {
 	const shortLang = lang.split('-')[0];
-	// voice param only applies to German (ElevenLabs); keep other URLs stable.
-	const voiceParam = shortLang === 'de' ? `&voice=${voice}` : '';
-	const url = `/proxy/tts?q=${encodeURIComponent(text)}&tl=${shortLang}${voiceParam}`;
+	const requestedRate = isFinite(rate) && rate > 0 ? rate : 1.0;
+	let safeRate = requestedRate;
+	// voice/rate params only apply to German (ElevenLabs); keep other URLs stable.
+	let deParams = '';
+	if (shortLang === 'de') {
+		// Ask the TTS engine to actually speak slower (natural slow articulation)
+		// instead of time-stretching the audio client-side, which mostly widens
+		// the gaps between words. ElevenLabs supports 0.7–1.2; any remainder
+		// outside that range is still applied via playbackRate.
+		const engineSpeed = Math.round(Math.min(1.2, Math.max(0.7, requestedRate)) * 100) / 100;
+		deParams = `&voice=${voice}&rate=${engineSpeed}`;
+		safeRate = requestedRate / engineSpeed;
+	}
+	const url = `/proxy/tts?q=${encodeURIComponent(text)}&tl=${shortLang}${deParams}`;
 	const myGen = ttsGeneration; // snapshot — if it changes, we were cancelled
-	const safeRate = isFinite(rate) && rate > 0 ? rate : 1.0;
 
 	return new Promise((resolve) => {
 		if (currentAudio) {
@@ -126,7 +136,9 @@ function playWebAudio(
 				currentAudio.pause();
 				currentAudio = null;
 			}
-			_browserTTS(text, lang, safeRate).then(resolve);
+			// Browser TTS does its own rate handling — give it the full
+			// requested rate, not the residual left over after engine speed.
+			_browserTTS(text, lang, requestedRate).then(resolve);
 		};
 
 		const audio = new Audio(url);

@@ -1,9 +1,12 @@
 /**
  * TTS Proxy.
- * Usage: GET /proxy/tts?q=Hallo&tl=de[&voice=a|b]
+ * Usage: GET /proxy/tts?q=Hallo&tl=de[&voice=a|b][&rate=0.7..1.2]
  *
  * voice=a (default) → learner-side voice; voice=b → conversation partner.
- * The param is part of the URL, so switching voices also busts old cached audio.
+ * rate → ElevenLabs native speaking speed: the voice articulates slower,
+ * instead of the client time-stretching the audio (which mostly lengthens
+ * the gaps between words). Clamped to the supported 0.7–1.2 range.
+ * Both params are part of the URL, so changes also bust old cached audio.
  *
  * Strategy:
  * - German (tl=de): try ElevenLabs first (if ELEVENLABS_API_KEY is set) for a
@@ -36,7 +39,11 @@ const AUDIO_CACHE_CONTROL = 'public, max-age=31536000, immutable';
  * Generate German audio via ElevenLabs. Returns the audio bytes, or null on any
  * failure (missing key, quota exceeded, timeout) so the caller falls back.
  */
-async function tryElevenLabs(text: string, voiceId: string): Promise<ArrayBuffer | null> {
+async function tryElevenLabs(
+	text: string,
+	voiceId: string,
+	speed: number
+): Promise<ArrayBuffer | null> {
 	if (!env.ELEVENLABS_API_KEY) return null;
 
 	const controller = new AbortController();
@@ -59,7 +66,8 @@ async function tryElevenLabs(text: string, voiceId: string): Promise<ArrayBuffer
 						stability: 0.5,
 						similarity_boost: 0.75,
 						style: 0.3,
-						use_speaker_boost: true
+						use_speaker_boost: true,
+						speed
 					}
 				}),
 				signal: controller.signal
@@ -136,7 +144,13 @@ export const GET: RequestHandler = async ({ url, request }) => {
 	// German → try ElevenLabs first for a more natural voice.
 	if (lang === 'de') {
 		const voiceId = url.searchParams.get('voice') === 'b' ? ELEVEN_VOICE_B : ELEVEN_VOICE_A;
-		const elevenAudio = await tryElevenLabs(text, voiceId);
+		// Native speaking speed — clamp to the supported range and quantize to
+		// 2 decimals so cache variants stay bounded.
+		const rawRate = parseFloat(url.searchParams.get('rate') || '1');
+		const speed = isFinite(rawRate)
+			? Math.round(Math.min(1.2, Math.max(0.7, rawRate)) * 100) / 100
+			: 1;
+		const elevenAudio = await tryElevenLabs(text, voiceId, speed);
 		if (elevenAudio) {
 			return new Response(elevenAudio, {
 				status: 200,
