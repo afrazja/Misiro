@@ -207,7 +207,7 @@
 	>
 	<meta
 		name="description"
-		content="Learn German free with 90+ daily lessons, natural audio, and voice practice. No grammar drills — just real conversations. Start today, no credit card needed."
+		content="Learn German free with 100+ daily lessons, natural audio, and voice practice. No grammar drills — just real conversations. Start today, no credit card needed."
 	/>
 	<link rel="canonical" href="https://www.mirifer.com/" />
 
@@ -218,7 +218,7 @@
 	/>
 	<meta
 		property="og:description"
-		content="Master German with voice recognition, spaced repetition, and 90+ real-life daily lessons. Free to start — no grammar drills."
+		content="Master German with voice recognition, spaced repetition, and 100+ real-life daily lessons. Free to start — no grammar drills."
 	/>
 	<meta property="og:image" content="https://www.mirifer.com/og-image.jpg" />
 	<meta property="og:url" content="https://www.mirifer.com/" />
@@ -233,7 +233,7 @@
 	/>
 	<meta
 		name="twitter:description"
-		content="90+ daily lessons. Voice practice. Spaced repetition. Free access."
+		content="100+ daily lessons. Voice practice. Spaced repetition. Free access."
 	/>
 	<meta name="twitter:image" content="https://www.mirifer.com/og-image.jpg" />
 
@@ -258,7 +258,7 @@
 				name: "How long does it take to learn German with Mirifer?",
 				acceptedAnswer: {
 					"@type": "Answer",
-					text: "Mirifer's 90+ lessons take you from complete beginner (A1) to intermediate (B1+). Spending 15–20 minutes a day, most learners complete the full path in about 3 months. Because every lesson uses real conversations, you'll start speaking from day one.",
+					text: "Mirifer's 100+ lessons take you from complete beginner (A1) to intermediate (B1+). Spending 15–20 minutes a day, most learners complete the full path in about 3 months. Because every lesson uses real conversations, you'll start speaking from day one.",
 				},
 			},
 			{
@@ -266,7 +266,7 @@
 				name: "Can I learn German for free?",
 				acceptedAnswer: {
 					"@type": "Answer",
-					text: "Yes. Mirifer is completely free during early access — no credit card, no trial period, no hidden fees. You get full access to all 90+ lessons, voice practice, and spaced repetition flashcards.",
+					text: "Yes. Mirifer is completely free during early access — no credit card, no trial period, no hidden fees. You get full access to all 100+ lessons, voice practice, and spaced repetition flashcards.",
 				},
 			},
 			{
@@ -501,7 +501,7 @@
 	<h2 class="stats-header">What's Inside Mirifer</h2>
 	<div class="stats-inner">
 		<div class="stat-item">
-			<span class="stat-num">{totalLessons || 90}+</span>
+			<span class="stat-num">{totalLessons || 100}+</span>
 			<span class="stat-lbl">Lessons</span>
 		</div>
 		<div class="stat-sep"></div>
@@ -619,7 +619,7 @@
 	<div class="lp-inner">
 		<p class="eyebrow">Your Learning Path</p>
 		<h2 class="section-h2">
-			Your 90-Day Path from <span class="grad-text">Zero to Fluent</span>
+			Your 100-Day Path from <span class="grad-text">Zero to Fluent</span>
 		</h2>
 		<p class="section-lead">
 			No more wondering "what should I study today?" Each day has a theme,
@@ -631,7 +631,7 @@
 			<li>
 				<span class="j-dot green"></span>
 				<div>
-					<strong>Days 1–{stageOneEnd || 30} · A1</strong>
+					<strong>Days 1–{stageOneEnd || 33} · A1</strong>
 					<span
 						>Greetings, numbers, colours, essential daily phrases</span
 					>
@@ -641,7 +641,7 @@
 				<span class="j-dot blue"></span>
 				<div>
 					<strong
-						>Days {(stageOneEnd || 30) + 1}–{stageTwoEnd || 60} · A2</strong
+						>Days {(stageOneEnd || 33) + 1}–{stageTwoEnd || 67} · A2</strong
 					>
 					<span>Shopping, travel, work, and social situations</span>
 				</div>
@@ -650,7 +650,7 @@
 				<span class="j-dot purple"></span>
 				<div>
 					<strong
-						>Days {(stageTwoEnd || 60) + 1}–{stageThreeEnd || 90} · B1+</strong
+						>Days {(stageTwoEnd || 67) + 1}–{stageThreeEnd || 100} · B1+</strong
 					>
 					<span
 						>Opinions, storytelling, and complex conversations</span
@@ -800,7 +800,7 @@
 					>How long does it take to learn German with Mirifer?</summary
 				>
 				<p>
-					Mirifer's 90+ lessons take you from complete beginner (A1)
+					Mirifer's 100+ lessons take you from complete beginner (A1)
 					to intermediate (B1+). Spending 15–20 minutes a day, most
 					learners complete the full path in about 3 months. Because
 					every lesson uses real conversations, you'll start speaking
@@ -812,7 +812,7 @@
 				<p>
 					Yes! Mirifer is completely free during early access — no
 					credit card, no trial period, no hidden fees. You get full
-					access to all 90+ lessons, voice practice, and spaced
+					access to all 100+ lessons, voice practice, and spaced
 					repetition flashcards.
 				</p>
 			</details>
