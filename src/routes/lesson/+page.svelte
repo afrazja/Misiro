@@ -1922,6 +1922,8 @@
 
 	.message.system {
 		background: #fff3e0;
+		color: #6d4c41; /* dark warm brown — readable on the cream background */
+		font-weight: 600;
 		max-width: 95%;
 		width: 95%;
 		align-self: center;
