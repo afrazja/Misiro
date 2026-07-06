@@ -1,10 +1,67 @@
 /**
  * Text Matching — word-based matching for voice recognition evaluation.
  * Uses Levenshtein distance for accurate character-level comparison.
+ *
+ * Both sides are normalized German-aware before comparison so that
+ * recognizer quirks don't mark a correct answer wrong:
+ *  - umlauts/ß fold to their transliterations (ä→ae, ß→ss, …)
+ *  - digit tokens become German number words ("500" → "fünfhundert")
+ *  - punctuation (incl. „“ ‚' quotes and dashes) is stripped
  */
 
 /** Minimum similarity (0–1) for two words to be considered a match. */
 const WORD_SIMILARITY_THRESHOLD = 0.8;
+
+const PUNCT_RE = /[.,!?;:„“”"'’‚«»()\-–—]/g;
+
+// Number words in already-transliterated form (matching happens post-fold).
+const UNITS = [
+	'null', 'ein', 'zwei', 'drei', 'vier', 'fuenf', 'sechs', 'sieben', 'acht', 'neun',
+	'zehn', 'elf', 'zwoelf', 'dreizehn', 'vierzehn', 'fuenfzehn', 'sechzehn',
+	'siebzehn', 'achtzehn', 'neunzehn'
+];
+const TENS = ['', '', 'zwanzig', 'dreissig', 'vierzig', 'fuenfzig', 'sechzig', 'siebzig', 'achtzig', 'neunzig'];
+
+/** Spell a number the way it's spoken in German (transliterated). */
+function germanNumberWord(n: number): string {
+	if (n === 0) return 'null';
+	if (n === 1) return 'eins';
+	if (n < 20) return UNITS[n];
+	if (n < 100) {
+		const u = n % 10;
+		return (u ? (u === 1 ? 'ein' : UNITS[u]) + 'und' : '') + TENS[Math.floor(n / 10)];
+	}
+	if (n < 1000) {
+		const rest = n % 100;
+		return UNITS[Math.floor(n / 100)] + 'hundert' + (rest ? germanNumberWord(rest) : '');
+	}
+	if (n < 10000) {
+		const rest = n % 1000;
+		return UNITS[Math.floor(n / 1000)] + 'tausend' + (rest ? germanNumberWord(rest) : '');
+	}
+	return String(n);
+}
+
+/** Normalize a single word for comparison (lowercase, punctuation-free,
+ *  umlauts folded, digits spelled out). */
+function normalizeWord(word: string): string {
+	let s = word.toLowerCase().replace(PUNCT_RE, '');
+	if (/^\d+$/.test(s)) {
+		const n = parseInt(s, 10);
+		if (n <= 9999) s = germanNumberWord(n);
+	}
+	return s
+		.replace(/ä/g, 'ae')
+		.replace(/ö/g, 'oe')
+		.replace(/ü/g, 'ue')
+		.replace(/ß/g, 'ss');
+}
+
+/** Split text into normalized words (empty tokens removed). */
+function normalizeWords(text: string): string[] {
+	const words = text.split(/\s+/).map(normalizeWord).filter((w) => w.length > 0);
+	return words.length > 0 ? words : [''];
+}
 
 /**
  * Compute Levenshtein-based similarity between two strings.
@@ -61,11 +118,10 @@ export function matchVoiceInput(
 	userWords: string[];
 	targetWords: string[];
 } {
-	const cleanUser = userText.toLowerCase().replace(/[.,!?]/g, '').trim();
-	const cleanTarget = targetText.toLowerCase().replace(/[.,!?]/g, '').trim();
-
-	const targetWords = cleanTarget.split(/\s+/);
-	const userWords = cleanUser.split(/\s+/);
+	const targetWords = normalizeWords(targetText);
+	const userWords = normalizeWords(userText);
+	const cleanUser = userWords.join(' ');
+	const cleanTarget = targetWords.join(' ');
 
 	// ── Single-word targets (flashcards): stricter full-string comparison ──
 	if (targetWords.length === 1) {
@@ -117,14 +173,37 @@ export function getWordMatchStatus(
 	userText: string,
 	words: string[]
 ): Map<string, boolean> {
-	const cleanUser = userText.toLowerCase().replace(/[.,!?]/g, '').trim();
-	const userWords = cleanUser.split(/\s+/);
+	const userWords = normalizeWords(userText);
 	const result = new Map<string, boolean>();
 
 	words.forEach((word) => {
-		const cleanWord = word.toLowerCase().replace(/[.,!?]/g, '').trim();
+		const cleanWord = normalizeWord(word);
 		result.set(word, userWords.some((uw) => isWordMatch(uw, cleanWord)));
 	});
 
 	return result;
+}
+
+/**
+ * Evaluate several candidate transcripts (e.g. recognition alternatives)
+ * against a target and return the best result. Reduces false negatives:
+ * the recognizer's 2nd or 3rd guess is often the one the learner said.
+ */
+export function bestVoiceMatch(
+	transcripts: string[],
+	targetText: string,
+	threshold: number = 0.8
+): { transcript: string; result: ReturnType<typeof matchVoiceInput> } {
+	const unique = [...new Set(transcripts.filter((t) => t && t.trim().length > 0))];
+	if (unique.length === 0) {
+		return { transcript: '', result: matchVoiceInput('', targetText, threshold) };
+	}
+	let best = { transcript: unique[0], result: matchVoiceInput(unique[0], targetText, threshold) };
+	for (const t of unique.slice(1)) {
+		const r = matchVoiceInput(t, targetText, threshold);
+		if (r.matchPercentage > best.result.matchPercentage) {
+			best = { transcript: t, result: r };
+		}
+	}
+	return best;
 }

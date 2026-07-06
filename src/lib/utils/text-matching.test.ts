@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { matchVoiceInput, getWordMatchStatus } from './text-matching';
+import { matchVoiceInput, bestVoiceMatch, getWordMatchStatus } from './text-matching';
 
 describe('matchVoiceInput', () => {
 	it('returns isMatch=true for an exact match', () => {
@@ -81,6 +81,38 @@ describe('matchVoiceInput', () => {
 		expect(result.matchedWords).toBe(1);
 	});
 
+	// ── German-aware normalization ──
+
+	it('treats ß and ss as equal (Straße = Strasse)', () => {
+		const result = matchVoiceInput('Die Strasse ist lang', 'Die Straße ist lang');
+		expect(result.isMatch).toBe(true);
+		expect(result.matchedWords).toBe(4);
+	});
+
+	it('treats umlauts and transliterations as equal (für = fuer)', () => {
+		const result = matchVoiceInput('fuer', 'für');
+		expect(result.isMatch).toBe(true);
+	});
+
+	it('matches digits against spoken German numbers (500 = fünfhundert)', () => {
+		const result = matchVoiceInput(
+			'Ich bezahle 500 Euro pro Monat',
+			'Ich bezahle fünfhundert Euro pro Monat'
+		);
+		expect(result.isMatch).toBe(true);
+		expect(result.matchedWords).toBe(6);
+	});
+
+	it('matches small digits too (5 = fünf, 21 = einundzwanzig)', () => {
+		expect(matchVoiceInput('5', 'fünf').isMatch).toBe(true);
+		expect(matchVoiceInput('21', 'einundzwanzig').isMatch).toBe(true);
+	});
+
+	it('strips German quotation marks and dashes', () => {
+		const result = matchVoiceInput('Guten Morgen', '„Guten Morgen“ –');
+		expect(result.isMatch).toBe(true);
+	});
+
 	it('returns isMatch=true when match is exactly at threshold (4/5 = 0.8)', () => {
 		// 4 out of 5 target words match
 		const result = matchVoiceInput('Ich hätte gerne einen Kaffee', 'Ich hätte gerne einen Tee', 0.8);
@@ -154,5 +186,34 @@ describe('getWordMatchStatus', () => {
 	it('handles an empty words array', () => {
 		const status = getWordMatchStatus('Guten Morgen', []);
 		expect(status.size).toBe(0);
+	});
+});
+
+// ── bestVoiceMatch ────────────────────────────────────────────────────────────
+
+describe('bestVoiceMatch', () => {
+	it('picks the alternative that best matches the target', () => {
+		const { transcript, result } = bestVoiceMatch(
+			['gut und morgen', 'Guten Morgen', 'guten margen'],
+			'Guten Morgen'
+		);
+		expect(transcript).toBe('Guten Morgen');
+		expect(result.isMatch).toBe(true);
+	});
+
+	it('falls back to the primary transcript when nothing matches', () => {
+		const { result } = bestVoiceMatch(['völlig falsch'], 'Guten Morgen');
+		expect(result.isMatch).toBe(false);
+	});
+
+	it('handles an empty candidate list safely', () => {
+		const { transcript, result } = bestVoiceMatch([], 'Guten Morgen');
+		expect(transcript).toBe('');
+		expect(result.isMatch).toBe(false);
+	});
+
+	it('dedupes and ignores blank candidates', () => {
+		const { result } = bestVoiceMatch(['', '  ', 'Guten Morgen', 'Guten Morgen'], 'Guten Morgen');
+		expect(result.isMatch).toBe(true);
 	});
 });

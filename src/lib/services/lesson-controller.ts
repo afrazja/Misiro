@@ -30,7 +30,8 @@ import { trackEvent } from '$services/analytics';
 import { makeWordHighlighter } from '$utils/word-timing';
 import { playAudioPromise, stopAllAudio } from '$services/tts';
 import { playTone } from '$services/audio-context';
-import { matchVoiceInput } from '$utils/text-matching';
+import { matchVoiceInput, bestVoiceMatch } from '$utils/text-matching';
+import { getLastVoiceAlternatives } from '$services/speech';
 import { getTranslation, getTranslationLang } from '$utils/i18n';
 import { wait } from '$utils/wait';
 import { saveExamResult } from '$services/data-layer';
@@ -465,7 +466,12 @@ export async function handleVoiceInput(transcript: string): Promise<void> {
 		targetGerman = currentStep.role === 'received' ? currentStep.audioText! : currentStep.targetText!;
 	}
 
-	const result = matchVoiceInput(transcript, targetGerman, 0.8);
+	// Evaluate the primary transcript AND the recognizer's alternative
+	// hypotheses — the 2nd/3rd guess is often what the learner actually said.
+	const candidates = [transcript, ...getLastVoiceAlternatives()];
+	const best = bestVoiceMatch(candidates, targetGerman, 0.8);
+	const result = best.result;
+	transcript = best.transcript || transcript;
 
 	callbacks?.onVoiceResult({
 		isCorrect: result.isMatch,
@@ -1098,11 +1104,13 @@ async function handleConversationVoice(transcript: string): Promise<void> {
 	const prefs = get(preferencesStore);
 	const isFa = prefs.language === 'fa';
 
-	// Match against every offered reply; the best match wins.
+	// Match every offered reply against the transcript AND the recognizer's
+	// alternative hypotheses; the best (option, transcript) pair wins.
+	const candidates = [transcript, ...getLastVoiceAlternatives()];
 	let best = st.options[0];
-	let bestResult = matchVoiceInput(transcript, best.german, 0.8);
+	let bestResult = bestVoiceMatch(candidates, best.german, 0.8).result;
 	for (const opt of st.options.slice(1)) {
-		const r = matchVoiceInput(transcript, opt.german, 0.8);
+		const r = bestVoiceMatch(candidates, opt.german, 0.8).result;
 		if (r.matchPercentage > bestResult.matchPercentage) {
 			best = opt;
 			bestResult = r;
