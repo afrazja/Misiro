@@ -643,6 +643,10 @@
 </div>
 
 <style>
+	:global(body) {
+		background: var(--paper);
+	}
+
 	.category-container {
 		max-width: 900px;
 		margin: 0 auto;
@@ -662,17 +666,17 @@
 		align-items: center;
 		gap: 8px;
 		padding: 10px 20px;
-		background: rgba(255, 255, 255, 0.1);
-		border: 1px solid rgba(255, 255, 255, 0.2);
+		background: var(--paper-sunken);
+		border: 1px solid var(--line);
 		border-radius: 25px;
-		color: #fff;
+		color: var(--ink);
 		text-decoration: none;
 		font-weight: 600;
 		transition: all 0.3s ease;
 	}
 
 	.back-btn:hover {
-		background: rgba(255, 255, 255, 0.2);
+		background: var(--accent-wash);
 		transform: translateX(-5px);
 	}
 
@@ -685,6 +689,8 @@
 		display: flex;
 		align-items: center;
 		gap: 15px;
+		color: var(--ink);
+		font-family: var(--font-display);
 	}
 
 	.header-title h1 .icon {
@@ -692,7 +698,7 @@
 	}
 
 	.header-title p {
-		color: #a0a0a0;
+		color: var(--ink-soft);
 		margin-top: 5px;
 	}
 
@@ -705,15 +711,16 @@
 	.controls select {
 		padding: 8px 16px;
 		border-radius: 20px;
-		border: 1px solid rgba(255, 255, 255, 0.2);
-		background: rgba(255, 255, 255, 0.1);
-		color: #fff;
+		border: 1px solid var(--line);
+		background: var(--paper-sunken);
+		color: var(--ink);
 		font-size: 0.9rem;
 		cursor: pointer;
 	}
 
 	.controls select option {
-		background: #1a1a2e;
+		background: var(--paper-raised);
+		color: var(--ink);
 	}
 
 	.section-block {
@@ -721,11 +728,12 @@
 	}
 
 	.section-heading {
-		color: #2ecc71;
+		color: var(--leaf);
+		font-family: var(--font-display);
 		font-size: 1.2rem;
 		margin-bottom: 15px;
 		padding-bottom: 8px;
-		border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+		border-bottom: 1px solid var(--line);
 	}
 
 	/* Word Grid */
@@ -737,13 +745,14 @@
 	}
 
 	.word-card {
-		background: linear-gradient(145deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
+		background: var(--paper-raised);
 		border-radius: 16px;
 		padding: 20px;
 		text-align: center;
 		cursor: pointer;
 		transition: all 0.3s ease;
-		border: 1px solid rgba(255, 255, 255, 0.1);
+		border: 1px solid var(--line);
+		box-shadow: var(--paper-shadow);
 		min-height: 140px;
 		display: flex;
 		flex-direction: column;
@@ -751,9 +760,9 @@
 
 	.word-card:hover {
 		transform: translateY(-5px);
-		background: rgba(46, 204, 113, 0.2);
-		border-color: #2ecc71;
-		box-shadow: 0 10px 30px rgba(46, 204, 113, 0.25);
+		background: var(--leaf-wash);
+		border-color: var(--leaf);
+		box-shadow: 0 10px 30px rgba(47, 111, 79, 0.15);
 	}
 
 	.word-card:active {
@@ -764,7 +773,7 @@
 		font-size: clamp(1rem, 4vw, 1.6rem);
 		font-weight: 700;
 		margin-bottom: 10px;
-		color: #2ecc71;
+		color: var(--leaf);
 		word-wrap: break-word;
 		overflow-wrap: break-word;
 		hyphens: auto;
@@ -773,23 +782,23 @@
 
 	.word-translation {
 		font-size: 1rem;
-		color: #ccc;
+		color: var(--ink-soft);
 		margin-bottom: 8px;
 	}
 
 	.word-example {
 		font-size: 0.85rem;
-		color: #888;
+		color: var(--ink-soft);
 		font-style: italic;
 		margin-top: 10px;
 		padding-top: 10px;
-		border-top: 1px solid rgba(255, 255, 255, 0.1);
+		border-top: 1px solid var(--line);
 		cursor: pointer;
 		transition: color 0.3s;
 	}
 
 	.word-example:hover {
-		color: #2ecc71;
+		color: var(--leaf);
 	}
 
 	.example-speaker {
@@ -834,20 +843,21 @@
 		gap: 15px;
 		padding: 18px 20px;
 		border-radius: 12px;
-		background: rgba(255, 255, 255, 0.05);
+		background: var(--paper-raised);
+		border: 1px solid var(--line);
 		cursor: pointer;
 		transition: all 0.3s ease;
 		align-items: center;
 	}
 
 	.pronoun-row:hover {
-		background: rgba(46, 204, 113, 0.15);
+		background: var(--leaf-wash);
 		transform: translateX(5px);
 	}
 
 	.pronoun-german {
 		font-weight: 700;
-		color: #2ecc71;
+		color: var(--leaf);
 		font-size: 1.4rem;
 	}
 
@@ -857,14 +867,14 @@
 	}
 
 	.pronoun-example {
-		color: #888;
+		color: var(--ink-soft);
 		font-size: 0.95rem;
 	}
 
 	/* Conjugation */
 	.verb-infinitive-banner {
-		background: linear-gradient(145deg, rgba(46, 204, 113, 0.15), rgba(46, 204, 113, 0.05));
-		border: 1px solid rgba(46, 204, 113, 0.2);
+		background: var(--leaf-wash);
+		border: 1px solid var(--leaf);
 		border-radius: 16px;
 		padding: 20px 25px;
 		margin-bottom: 25px;
@@ -876,20 +886,20 @@
 	}
 
 	.verb-infinitive-banner:hover {
-		background: rgba(46, 204, 113, 0.2);
+		background: var(--leaf-wash);
 		transform: translateY(-2px);
-		box-shadow: 0 8px 25px rgba(46, 204, 113, 0.2);
+		box-shadow: 0 8px 25px rgba(47, 111, 79, 0.15);
 	}
 
 	.verb-main {
 		font-size: 1.8rem;
 		font-weight: 700;
-		color: #2ecc71;
+		color: var(--leaf);
 	}
 
 	.verb-meaning {
 		font-size: 1.1rem;
-		color: #a0a0a0;
+		color: var(--ink-soft);
 		margin-left: 15px;
 	}
 
@@ -909,10 +919,11 @@
 
 	.conjugation-section h3 {
 		font-size: 1.2rem;
-		color: #2ecc71;
+		color: var(--leaf);
+		font-family: var(--font-display);
 		margin-bottom: 15px;
 		padding-bottom: 8px;
-		border-bottom: 2px solid rgba(46, 204, 113, 0.3);
+		border-bottom: 2px solid var(--leaf);
 	}
 
 	.conjugation-table {
@@ -921,8 +932,8 @@
 		border-spacing: 0;
 		border-radius: 12px;
 		overflow: hidden;
-		background: rgba(255, 255, 255, 0.03);
-		border: 1px solid rgba(255, 255, 255, 0.08);
+		background: var(--paper-raised);
+		border: 1px solid var(--line);
 	}
 
 	.conjugation-table th {
@@ -932,14 +943,14 @@
 		font-size: 0.85rem;
 		text-transform: uppercase;
 		letter-spacing: 0.5px;
-		color: #a0a0a0;
-		background: rgba(255, 255, 255, 0.05);
-		border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+		color: var(--ink-soft);
+		background: var(--paper-sunken);
+		border-bottom: 1px solid var(--line);
 	}
 
 	.conjugation-table td {
 		padding: 14px 18px;
-		border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+		border-bottom: 1px solid var(--line);
 		transition: all 0.2s ease;
 	}
 
@@ -949,11 +960,11 @@
 	}
 
 	.conjugation-table tbody tr:hover {
-		background: rgba(46, 204, 113, 0.1);
+		background: var(--leaf-wash);
 	}
 
 	.conjugation-table tbody tr:hover td {
-		color: #fff;
+		color: var(--ink);
 	}
 
 	.conjugation-table tbody tr:last-child td {
@@ -961,13 +972,13 @@
 	}
 
 	.pronoun-cell {
-		color: #888;
+		color: var(--ink-soft);
 		font-size: 0.95rem;
 		width: 100px;
 	}
 
 	.verb-cell {
-		color: #2ecc71;
+		color: var(--leaf);
 		font-weight: 700;
 		font-size: 1.1rem;
 	}
@@ -978,7 +989,7 @@
 	}
 
 	.example-cell {
-		color: #888;
+		color: var(--ink-soft);
 		font-size: 0.85rem;
 		font-style: italic;
 	}
@@ -1019,8 +1030,8 @@
 		border-spacing: 0;
 		border-radius: 12px;
 		overflow: hidden;
-		background: rgba(255, 255, 255, 0.03);
-		border: 1px solid rgba(255, 255, 255, 0.08);
+		background: var(--paper-raised);
+		border: 1px solid var(--line);
 		min-width: 400px;
 	}
 
@@ -1031,9 +1042,9 @@
 		font-size: 0.85rem;
 		text-transform: uppercase;
 		letter-spacing: 0.5px;
-		color: #a0a0a0;
-		background: rgba(255, 255, 255, 0.05);
-		border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+		color: var(--ink-soft);
+		background: var(--paper-sunken);
+		border-bottom: 1px solid var(--line);
 	}
 
 	.declension-table .corner-cell {
@@ -1042,21 +1053,21 @@
 
 	.declension-table td {
 		padding: 14px 18px;
-		border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+		border-bottom: 1px solid var(--line);
 		text-align: center;
 		transition: all 0.2s ease;
 	}
 
 	.declension-table .case-label {
 		text-align: left;
-		color: #2ecc71;
+		color: var(--leaf);
 		font-weight: 700;
 		font-size: 0.95rem;
 		white-space: nowrap;
 	}
 
 	.declension-table .case-form {
-		color: #fff;
+		color: var(--ink);
 		font-weight: 600;
 		font-size: 1.1rem;
 		cursor: pointer;
@@ -1064,26 +1075,26 @@
 	}
 
 	.declension-table .case-form:hover {
-		background: rgba(46, 204, 113, 0.15);
-		color: #2ecc71;
+		background: var(--leaf-wash);
+		color: var(--leaf);
 	}
 
 	.declension-table .example-row td {
 		padding: 6px 18px 14px;
-		border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-		background: rgba(255, 255, 255, 0.02);
+		border-bottom: 1px solid var(--line);
+		background: var(--paper-sunken);
 	}
 
 	.dec-example {
 		font-size: 0.85rem;
-		color: #888;
+		color: var(--ink-soft);
 		font-style: italic;
 		cursor: pointer;
 		transition: color 0.2s;
 	}
 
 	.dec-example:hover {
-		color: #2ecc71;
+		color: var(--leaf);
 	}
 
 	.dec-speaker {
@@ -1168,10 +1179,10 @@
 	/* ══════ Practice Button ══════ */
 	.practice-btn {
 		padding: 8px 18px;
-		background: linear-gradient(135deg, #9b59b6, #8e44ad);
+		background: var(--accent-deep);
 		border: none;
 		border-radius: 20px;
-		color: #fff;
+		color: #fff8f0;
 		font-size: 0.85rem;
 		font-weight: 700;
 		cursor: pointer;
@@ -1202,7 +1213,7 @@
 	.quiz-back {
 		background: none;
 		border: none;
-		color: #e94560;
+		color: var(--accent-deep);
 		font-size: 0.95rem;
 		font-weight: 600;
 		cursor: pointer;
@@ -1212,15 +1223,16 @@
 	.quiz-counter {
 		font-size: 0.95rem;
 		font-weight: 700;
-		color: rgba(255, 255, 255, 0.5);
+		color: var(--ink-soft);
 	}
 
 	.quiz-card {
 		width: 100%;
 		max-width: 420px;
 		min-height: 280px;
-		background: rgba(255, 255, 255, 0.05);
-		border: 1px solid rgba(255, 255, 255, 0.1);
+		background: var(--paper-raised);
+		border: 1px solid var(--line);
+		box-shadow: var(--paper-shadow);
 		border-radius: 20px;
 		display: flex;
 		flex-direction: column;
@@ -1233,53 +1245,55 @@
 	}
 
 	.quiz-card.result {
-		border-color: rgba(155, 89, 182, 0.4);
-		background: rgba(155, 89, 182, 0.06);
+		border-color: var(--accent);
+		background: var(--accent-wash);
 	}
 
 	.quiz-card.wrong-flash {
 		animation: flash-red 1s ease forwards;
 		transition: none;
-		border-color: #e74c3c;
-		box-shadow: 0 0 24px rgba(231, 76, 60, 0.5);
+		border-color: #b23c2b;
+		box-shadow: 0 0 24px rgba(178, 60, 43, 0.35);
 	}
 
 	@keyframes flash-red {
-		0% { border-color: #e74c3c; box-shadow: 0 0 24px rgba(231, 76, 60, 0.6); background: rgba(231, 76, 60, 0.1); }
-		60% { border-color: #e74c3c; box-shadow: 0 0 16px rgba(231, 76, 60, 0.3); background: rgba(231, 76, 60, 0.05); }
-		100% { border-color: rgba(255, 255, 255, 0.1); box-shadow: none; background: rgba(255, 255, 255, 0.05); }
+		0% { border-color: #b23c2b; box-shadow: 0 0 24px rgba(178, 60, 43, 0.4); background: rgba(178, 60, 43, 0.08); }
+		60% { border-color: #b23c2b; box-shadow: 0 0 16px rgba(178, 60, 43, 0.2); background: rgba(178, 60, 43, 0.04); }
+		100% { border-color: var(--line); box-shadow: none; background: var(--paper-raised); }
 	}
 
 	.quiz-word {
 		font-size: 2rem;
-		font-weight: 900;
-		color: #fff;
+		font-weight: 700;
+		font-family: var(--font-display);
+		color: var(--ink);
 		text-align: center;
 	}
 
 	.quiz-meaning-prompt {
 		font-size: 2rem;
-		font-weight: 800;
-		color: #bb86fc;
+		font-weight: 700;
+		font-family: var(--font-display);
+		color: var(--accent-deep);
 		text-align: center;
 		line-height: 1.3;
 	}
 
 	.quiz-hint {
 		font-size: 0.85rem;
-		color: rgba(255, 255, 255, 0.3);
+		color: var(--ink-faint);
 	}
 
 	.quiz-divider {
 		width: 60px;
 		height: 2px;
-		background: rgba(155, 89, 182, 0.3);
+		background: var(--accent-wash);
 		border-radius: 1px;
 	}
 
 	.quiz-meaning {
 		font-size: 1.2rem;
-		color: rgba(255, 255, 255, 0.7);
+		color: var(--ink-soft);
 		text-align: center;
 	}
 
@@ -1296,18 +1310,18 @@
 	}
 
 	.voice-feedback.correct {
-		background: rgba(46, 204, 113, 0.12);
-		border: 1px solid rgba(46, 204, 113, 0.3);
+		background: var(--leaf-wash);
+		border: 1px solid var(--leaf);
 	}
 
 	.voice-feedback.wrong {
-		background: rgba(231, 76, 60, 0.12);
-		border: 1px solid rgba(231, 76, 60, 0.3);
+		background: rgba(178, 60, 43, 0.08);
+		border: 1px solid rgba(178, 60, 43, 0.35);
 	}
 
 	.voice-feedback.skipped {
-		background: rgba(255, 255, 255, 0.06);
-		border: 1px solid rgba(255, 255, 255, 0.12);
+		background: var(--paper-sunken);
+		border: 1px solid var(--line);
 	}
 
 	.vf-icon {
@@ -1316,12 +1330,12 @@
 
 	.vf-label {
 		font-weight: 700;
-		color: rgba(255, 255, 255, 0.85);
+		color: var(--ink);
 	}
 
 	.vf-transcript {
 		font-size: 0.8rem;
-		color: rgba(255, 255, 255, 0.45);
+		color: var(--ink-soft);
 		font-style: italic;
 	}
 
@@ -1349,9 +1363,9 @@
 	.quiz-btn:active { opacity: 0.8; }
 
 	.quiz-btn.still-learning {
-		background: rgba(231, 76, 60, 0.15);
-		color: #e74c3c;
-		border: 1px solid rgba(231, 76, 60, 0.3);
+		background: rgba(178, 60, 43, 0.08);
+		color: #b23c2b;
+		border: 1px solid rgba(178, 60, 43, 0.35);
 	}
 
 	.quiz-btn.retry-btn {
@@ -1361,9 +1375,9 @@
 	}
 
 	.quiz-btn.got-it {
-		background: rgba(46, 204, 113, 0.15);
-		color: #2ecc71;
-		border: 1px solid rgba(46, 204, 113, 0.3);
+		background: var(--leaf-wash);
+		color: var(--leaf);
+		border: 1px solid var(--leaf);
 	}
 
 	/* Mic button */
@@ -1371,8 +1385,8 @@
 		width: 64px;
 		height: 64px;
 		border-radius: 50%;
-		border: 2px solid rgba(46, 204, 113, 0.4);
-		background: rgba(46, 204, 113, 0.12);
+		border: 2px solid var(--leaf);
+		background: var(--leaf-wash);
 		font-size: 1.6rem;
 		cursor: pointer;
 		transition: all 0.2s;
@@ -1383,25 +1397,25 @@
 	}
 
 	.quiz-mic-btn:hover {
-		background: rgba(46, 204, 113, 0.2);
-		border-color: rgba(46, 204, 113, 0.6);
+		background: var(--leaf-wash);
+		border-color: var(--leaf);
 	}
 
 	.quiz-mic-btn.pulse {
-		border-color: #e94560;
-		background: rgba(233, 69, 96, 0.15);
+		border-color: var(--accent);
+		background: var(--accent-wash);
 		animation: mic-pulse 1.2s ease-in-out infinite;
 	}
 
 	@keyframes mic-pulse {
-		0%, 100% { box-shadow: 0 0 0 0 rgba(233, 69, 96, 0.3); }
-		50% { box-shadow: 0 0 0 12px rgba(233, 69, 96, 0); }
+		0%, 100% { box-shadow: 0 0 0 0 rgba(194, 87, 27, 0.3); }
+		50% { box-shadow: 0 0 0 12px rgba(194, 87, 27, 0); }
 	}
 
 	.quiz-skip-btn {
 		background: none;
 		border: none;
-		color: rgba(255, 255, 255, 0.4);
+		color: var(--ink-soft);
 		font-size: 0.85rem;
 		font-weight: 600;
 		cursor: pointer;
@@ -1410,14 +1424,14 @@
 	}
 
 	.quiz-skip-btn:hover {
-		color: rgba(255, 255, 255, 0.7);
+		color: var(--ink);
 	}
 
 	.quiz-progress-bar {
 		width: 100%;
 		max-width: 420px;
 		height: 4px;
-		background: rgba(255, 255, 255, 0.08);
+		background: var(--paper-sunken);
 		border-radius: 2px;
 		margin-top: 32px;
 		overflow: hidden;
@@ -1425,7 +1439,7 @@
 
 	.quiz-progress-fill {
 		height: 4px;
-		background: linear-gradient(90deg, #9b59b6, #bb86fc);
+		background: var(--accent-deep);
 		border-radius: 2px;
 		transition: width 0.3s ease;
 	}
@@ -1446,12 +1460,13 @@
 
 	.quiz-done h2 {
 		font-size: 1.5rem;
-		font-weight: 900;
-		color: #fff;
+		font-weight: 700;
+		font-family: var(--font-display);
+		color: var(--ink);
 	}
 
 	.quiz-done p {
-		color: rgba(255, 255, 255, 0.5);
+		color: var(--ink-soft);
 		font-size: 0.95rem;
 	}
 
@@ -1466,8 +1481,8 @@
 		font-weight: 700;
 	}
 
-	.quiz-stat.got-it { color: #2ecc71; }
-	.quiz-stat.still-learning { color: #e74c3c; }
+	.quiz-stat.got-it { color: var(--leaf); }
+	.quiz-stat.still-learning { color: #b23c2b; }
 
 	.quiz-done-actions {
 		display: flex;
@@ -1485,12 +1500,12 @@
 	}
 
 	.quiz-action-btn.primary {
-		background: linear-gradient(135deg, #9b59b6, #8e44ad);
-		color: #fff;
+		background: var(--accent-deep);
+		color: #fff8f0;
 	}
 
 	.quiz-action-btn.secondary {
-		background: rgba(255, 255, 255, 0.08);
-		color: rgba(255, 255, 255, 0.7);
+		background: var(--paper-sunken);
+		color: var(--ink);
 	}
 </style>

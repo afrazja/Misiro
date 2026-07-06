@@ -446,18 +446,24 @@
 {/if}
 
 <style>
+	:global(body) {
+		background: var(--paper);
+	}
+
 	.settings-container {
 		max-width: 600px;
 		margin: 0 auto;
 		padding: 40px 20px;
 		min-height: 100vh;
+		font-family: var(--font-body);
+		color: var(--ink);
 	}
 
 	.back-link {
 		display: inline-flex;
 		align-items: center;
 		gap: 8px;
-		color: #a0a0a0;
+		color: var(--ink-soft);
 		text-decoration: none;
 		font-size: 1rem;
 		margin-bottom: 30px;
@@ -465,34 +471,30 @@
 	}
 
 	.back-link:hover {
-		color: #e94560;
+		color: var(--accent-deep);
 	}
 
 	.settings-title {
+		font-family: var(--font-display);
 		font-size: 2rem;
-		background: linear-gradient(90deg, #e94560, #ff6b6b);
-		-webkit-background-clip: text;
-		-webkit-text-fill-color: transparent;
-		background-clip: text;
+		color: var(--ink);
 		margin-bottom: 30px;
 	}
 
 	.settings-section {
-		background: linear-gradient(
-			145deg,
-			rgba(255, 255, 255, 0.1),
-			rgba(255, 255, 255, 0.05)
-		);
-		border-radius: 20px;
+		background: var(--paper-raised);
+		border-radius: 18px;
+		box-shadow: var(--paper-shadow);
 		padding: 30px;
 		margin-bottom: 20px;
-		border: 1px solid rgba(255, 255, 255, 0.1);
+		border: 1px solid var(--line);
 	}
 
 	.settings-section h3 {
+		font-family: var(--font-display);
 		font-size: 1.2rem;
 		margin-bottom: 20px;
-		color: #e94560;
+		color: var(--accent-deep);
 		display: flex;
 		align-items: center;
 		gap: 10px;
@@ -510,7 +512,7 @@
 	.form-group .fake-label {
 		display: block;
 		font-size: 0.9rem;
-		color: #a0a0a0;
+		color: var(--ink-soft);
 		margin-bottom: 6px;
 	}
 
@@ -519,24 +521,24 @@
 		width: 100%;
 		padding: 12px;
 		border-radius: 10px;
-		border: 1px solid rgba(255, 255, 255, 0.2);
-		background: rgba(255, 255, 255, 0.05);
-		color: #fff;
+		border: 1px solid var(--line);
+		background: var(--paper-sunken);
+		color: var(--ink);
 		font-size: 1rem;
 		transition: border-color 0.3s ease;
 	}
 
 	.form-group input:focus {
 		outline: none;
-		border-color: #e94560;
+		border-color: var(--accent);
 	}
 
 	.btn-primary {
 		padding: 10px 24px;
 		border-radius: 10px;
 		border: none;
-		background: linear-gradient(90deg, #e94560, #ff6b6b);
-		color: #fff;
+		background: var(--accent);
+		color: #fff8f0;
 		font-size: 0.95rem;
 		font-weight: 600;
 		cursor: pointer;
@@ -545,39 +547,39 @@
 
 	.btn-primary:hover {
 		transform: translateY(-2px);
-		box-shadow: 0 5px 20px rgba(233, 69, 96, 0.4);
+		box-shadow: 0 5px 18px rgba(156, 69, 20, 0.3);
 	}
 
 	.btn-secondary {
 		padding: 10px 24px;
 		border-radius: 10px;
-		border: 1px solid rgba(255, 255, 255, 0.3);
+		border: 1px solid var(--line);
 		background: transparent;
-		color: #fff;
+		color: var(--ink);
 		font-size: 0.95rem;
 		cursor: pointer;
 		transition: all 0.3s ease;
 	}
 
 	.btn-secondary:hover {
-		border-color: #e94560;
-		background: rgba(233, 69, 96, 0.2);
+		border-color: var(--accent);
+		background: var(--accent-wash);
 	}
 
 	.btn-danger {
 		padding: 10px 24px;
 		border-radius: 10px;
-		border: 1px solid rgba(255, 100, 100, 0.4);
-		background: rgba(255, 50, 50, 0.1);
-		color: #ff6b6b;
+		border: 1px solid rgba(178, 60, 43, 0.4);
+		background: rgba(178, 60, 43, 0.07);
+		color: #b23c2b;
 		font-size: 0.95rem;
 		cursor: pointer;
 		transition: all 0.3s ease;
 	}
 
 	.btn-danger:hover {
-		background: rgba(255, 50, 50, 0.3);
-		border-color: #ff6b6b;
+		background: rgba(178, 60, 43, 0.16);
+		border-color: #b23c2b;
 	}
 
 	.avatar-section {
@@ -591,14 +593,14 @@
 		width: 100px;
 		height: 100px;
 		border-radius: 50%;
-		background: linear-gradient(135deg, #e94560, #ff6b6b);
+		background: var(--accent);
 		display: flex;
 		align-items: center;
 		justify-content: center;
 		font-size: 2.5rem;
 		font-weight: 700;
-		color: #fff;
-		border: 4px solid rgba(255, 255, 255, 0.2);
+		color: #fff8f0;
+		border: 4px solid var(--line);
 		overflow: hidden;
 		flex-shrink: 0;
 	}
@@ -623,15 +625,15 @@
 	}
 
 	.status-msg.success {
-		background: rgba(46, 204, 113, 0.2);
-		color: #2ecc71;
-		border: 1px solid rgba(46, 204, 113, 0.3);
+		background: var(--leaf-wash);
+		color: var(--leaf);
+		border: 1px solid var(--leaf);
 	}
 
 	.status-msg.error {
-		background: rgba(233, 69, 96, 0.2);
-		color: #ff6b6b;
-		border: 1px solid rgba(233, 69, 96, 0.3);
+		background: rgba(178, 60, 43, 0.08);
+		color: #b23c2b;
+		border: 1px solid rgba(178, 60, 43, 0.35);
 	}
 
 	.pref-row {
@@ -639,7 +641,7 @@
 		align-items: center;
 		justify-content: space-between;
 		padding: 12px 0;
-		border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+		border-bottom: 1px solid var(--line);
 	}
 
 	.pref-row:last-child {
@@ -648,22 +650,22 @@
 
 	.pref-row label {
 		font-size: 1rem;
-		color: #fff;
+		color: var(--ink);
 	}
 
 	.pref-row select {
 		padding: 8px 16px;
 		border-radius: 10px;
-		border: 1px solid rgba(255, 255, 255, 0.2);
-		background: rgba(255, 255, 255, 0.1);
-		color: #fff;
+		border: 1px solid var(--line);
+		background: var(--paper-sunken);
+		color: var(--ink);
 		font-size: 0.95rem;
 		cursor: pointer;
 	}
 
 	.pref-row select option {
-		background: #1a1a2e;
-		color: #fff;
+		background: var(--paper-raised);
+		color: var(--ink);
 	}
 
 	.speed-control {
@@ -674,12 +676,12 @@
 
 	.speed-control input[type="range"] {
 		width: 120px;
-		accent-color: #e94560;
+		accent-color: var(--accent);
 	}
 
 	.speed-value {
 		font-size: 0.9rem;
-		color: #e94560;
+		color: var(--accent-deep);
 		font-weight: 600;
 		min-width: 40px;
 		text-align: center;
@@ -693,9 +695,9 @@
 	.target-btn {
 		padding: 7px 14px;
 		border-radius: 10px;
-		border: 1px solid rgba(255, 255, 255, 0.2);
-		background: rgba(255, 255, 255, 0.06);
-		color: #fff;
+		border: 1px solid var(--line);
+		background: var(--paper-sunken);
+		color: var(--ink);
 		font-size: 0.9rem;
 		cursor: pointer;
 		transition: all 0.2s ease;
@@ -705,8 +707,8 @@
 	}
 
 	.target-btn.active {
-		border-color: #e94560;
-		background: rgba(233, 69, 96, 0.18);
+		border-color: var(--accent);
+		background: var(--accent-wash);
 	}
 
 	.target-btn.disabled,
@@ -719,18 +721,18 @@
 		font-size: 0.6rem;
 		font-weight: 700;
 		text-transform: uppercase;
-		background: rgba(255, 215, 0, 0.15);
-		border: 1px solid rgba(255, 215, 0, 0.3);
-		color: #ffd700;
+		background: var(--accent-wash);
+		border: 1px solid var(--accent);
+		color: var(--accent-deep);
 		border-radius: 4px;
 		padding: 1px 5px;
 	}
 
 	.account-email {
 		font-size: 1rem;
-		color: #a0a0a0;
+		color: var(--ink-soft);
 		padding: 12px;
-		background: rgba(255, 255, 255, 0.05);
+		background: var(--paper-sunken);
 		border-radius: 10px;
 		margin-bottom: 15px;
 		word-break: break-all;

@@ -213,10 +213,14 @@
 </div>
 
 <style>
+	:global(body) {
+		background: var(--paper);
+	}
+
 	.review-page {
 		min-height: 100vh;
 		min-height: 100dvh;
-		background: #e5ddd5;
+		background: var(--paper);
 		display: flex;
 		flex-direction: column;
 	}
@@ -227,14 +231,16 @@
 		align-items: center;
 		gap: 12px;
 		padding: 10px 16px;
-		background: #075e54;
-		color: white;
+		background: var(--paper-raised);
+		color: var(--ink);
+		border-bottom: 1px solid var(--line);
 	}
 
 	.review-header h1 {
 		font-size: 1.15rem;
 		margin: 0;
 		flex: 1;
+		font-family: var(--font-display);
 	}
 
 	.home-btn {
@@ -242,19 +248,19 @@
 		align-items: center;
 		gap: 5px;
 		padding: 8px 15px;
-		background: #4caf50;
+		background: var(--leaf);
 		border-radius: 20px;
 		color: #fff;
 		text-decoration: none;
 		font-weight: 600;
 		transition: all 0.3s ease;
-		box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+		box-shadow: 0 2px 5px rgba(0, 0, 0, 0.08);
 		white-space: nowrap;
 		font-size: 0.85rem;
 	}
 
 	.home-btn:hover {
-		background: #45a049;
+		background: var(--leaf);
 	}
 
 	.header-right {
@@ -265,16 +271,16 @@
 	.lang-select {
 		padding: 4px 8px;
 		border-radius: 8px;
-		border: 1px solid rgba(255, 255, 255, 0.3);
-		background: rgba(255, 255, 255, 0.15);
-		color: white;
+		border: 1px solid var(--line);
+		background: var(--paper-sunken);
+		color: var(--ink);
 		font-size: 0.85rem;
 		cursor: pointer;
 	}
 
 	.lang-select option {
-		color: #333;
-		background: white;
+		color: var(--ink);
+		background: var(--paper-raised);
 	}
 
 	/* Content */
@@ -290,7 +296,7 @@
 	.empty-state {
 		text-align: center;
 		padding: 60px 20px;
-		color: #555;
+		color: var(--ink-faint);
 	}
 
 	.empty-icon {
@@ -300,20 +306,21 @@
 
 	.empty-state h2 {
 		margin: 0 0 8px;
-		color: #333;
+		color: var(--ink);
 		font-size: 1.2rem;
+		font-family: var(--font-display);
 	}
 
 	.empty-state p {
 		margin: 0 0 20px;
-		color: #888;
+		color: var(--ink-soft);
 		font-size: 0.9rem;
 	}
 
 	.back-to-lessons {
 		display: inline-block;
 		padding: 10px 24px;
-		background: #075e54;
+		background: var(--leaf);
 		color: white;
 		border-radius: 24px;
 		text-decoration: none;
@@ -322,7 +329,7 @@
 	}
 
 	.back-to-lessons:hover {
-		background: #064e46;
+		background: var(--leaf);
 		transform: translateY(-1px);
 	}
 
@@ -333,14 +340,15 @@
 		align-items: center;
 		margin-bottom: 12px;
 		padding: 12px 16px;
-		background: white;
+		background: var(--paper-raised);
+		border: 1px solid var(--line);
 		border-radius: 12px;
-		box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+		box-shadow: var(--paper-shadow);
 	}
 
 	.review-count {
 		font-size: 0.9rem;
-		color: #666;
+		color: var(--ink-faint);
 		font-weight: 600;
 	}
 
@@ -353,7 +361,7 @@
 		padding: 8px 18px;
 		border-radius: 20px;
 		border: none;
-		background: #4caf50;
+		background: var(--leaf);
 		color: white;
 		font-size: 0.85rem;
 		font-weight: 600;
@@ -363,16 +371,16 @@
 	}
 
 	.btn-quiz:hover {
-		background: #43a047;
+		background: var(--leaf);
 		transform: translateY(-1px);
 	}
 
 	.btn-clear {
 		padding: 8px 18px;
 		border-radius: 20px;
-		border: 2px solid #e74c3c;
+		border: 2px solid #b23c2b;
 		background: transparent;
-		color: #e74c3c;
+		color: #b23c2b;
 		font-size: 0.85rem;
 		font-weight: 600;
 		cursor: pointer;
@@ -381,7 +389,7 @@
 	}
 
 	.btn-clear:hover {
-		background: #e74c3c;
+		background: #b23c2b;
 		color: white;
 	}
 
@@ -397,14 +405,15 @@
 		align-items: center;
 		justify-content: space-between;
 		padding: 12px 14px;
-		background: white;
+		background: var(--paper-raised);
+		border: 1px solid var(--line);
 		border-radius: 12px;
-		box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+		box-shadow: var(--paper-shadow);
 		transition: all 0.2s;
 	}
 
 	.review-item:hover {
-		box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+		box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
 	}
 
 	.item-content {
@@ -416,7 +425,7 @@
 		display: inline-block;
 		font-size: 0.65rem;
 		color: white;
-		background: #075e54;
+		background: var(--leaf);
 		padding: 2px 8px;
 		border-radius: 10px;
 		font-weight: 600;
@@ -427,7 +436,7 @@
 
 	.item-german {
 		font-size: 1rem;
-		color: #222;
+		color: var(--ink);
 		font-weight: 500;
 		margin: 3px 0;
 		line-height: 1.4;
@@ -435,7 +444,7 @@
 
 	.item-translation {
 		font-size: 0.85rem;
-		color: #888;
+		color: var(--ink-soft);
 		line-height: 1.3;
 	}
 
@@ -446,7 +455,7 @@
 		border-radius: 50%;
 		border: none;
 		background: transparent;
-		color: #ccc;
+		color: var(--ink-soft);
 		font-size: 1.1rem;
 		cursor: pointer;
 		display: flex;
@@ -457,8 +466,8 @@
 	}
 
 	.item-remove:hover {
-		background: #fdecea;
-		color: #e74c3c;
+		background: rgba(178, 60, 43, 0.08);
+		color: #b23c2b;
 	}
 
 	/* Mobile */

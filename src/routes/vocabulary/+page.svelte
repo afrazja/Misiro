@@ -408,11 +408,15 @@
 </div>
 
 <style>
+	:global(body) {
+		background: var(--paper);
+	}
+
 	.vocab-page {
 		min-height: 100vh;
 		min-height: 100dvh;
-		background: #0f0f0f;
-		color: #e0e0e0;
+		background: var(--paper);
+		color: var(--ink);
 		display: flex;
 		flex-direction: column;
 		max-width: 600px;
@@ -429,14 +433,14 @@
 		gap: 12px;
 		position: sticky;
 		top: 0;
-		background: #0f0f0f;
+		background: var(--paper);
 		z-index: 10;
 	}
 
 	.nav-back {
 		background: none;
 		border: none;
-		color: #e94560;
+		color: var(--accent-deep);
 		font-size: 0.95rem;
 		font-weight: 600;
 		cursor: pointer;
@@ -446,16 +450,17 @@
 
 	.nav-title {
 		font-size: 1.15rem;
-		font-weight: 800;
-		color: #fff;
+		font-weight: 700;
+		font-family: var(--font-display);
+		color: var(--ink);
 		text-align: center;
 		flex: 1;
 	}
 
 	.nav-practice {
-		background: linear-gradient(135deg, #9b59b6, #8e44ad);
+		background: var(--accent-deep);
 		border: none;
-		color: #fff;
+		color: #fff8f0;
 		font-size: 0.85rem;
 		font-weight: 700;
 		padding: 8px 16px;
@@ -482,8 +487,8 @@
 	.spinner {
 		width: 32px;
 		height: 32px;
-		border: 3px solid rgba(255, 255, 255, 0.1);
-		border-top-color: #9b59b6;
+		border: 3px solid var(--line);
+		border-top-color: var(--accent-deep);
 		border-radius: 50%;
 		animation: spin 0.8s linear infinite;
 	}
@@ -512,12 +517,13 @@
 
 	.empty-state h2 {
 		font-size: 1.3rem;
-		color: #fff;
-		font-weight: 800;
+		color: var(--ink);
+		font-weight: 700;
+		font-family: var(--font-display);
 	}
 
 	.empty-state p {
-		color: rgba(255, 255, 255, 0.5);
+		color: var(--ink-soft);
 		font-size: 0.95rem;
 		line-height: 1.5;
 		max-width: 300px;
@@ -525,7 +531,7 @@
 
 	.empty-cta {
 		margin-top: 12px;
-		color: #e94560;
+		color: var(--accent-deep);
 		font-weight: 700;
 		text-decoration: none;
 		font-size: 0.95rem;
@@ -539,21 +545,21 @@
 	.search-input {
 		width: 100%;
 		padding: 12px 16px;
-		background: rgba(255, 255, 255, 0.06);
-		border: 1px solid rgba(255, 255, 255, 0.1);
+		background: var(--paper-sunken);
+		border: 1px solid var(--line);
 		border-radius: 12px;
-		color: #fff;
+		color: var(--ink);
 		font-size: 0.95rem;
 		outline: none;
 		box-sizing: border-box;
 	}
 
 	.search-input:focus {
-		border-color: rgba(155, 89, 182, 0.5);
+		border-color: var(--accent);
 	}
 
 	.search-input::placeholder {
-		color: rgba(255, 255, 255, 0.3);
+		color: var(--ink-faint);
 	}
 
 	/* ── Filter Tabs ── */
@@ -566,10 +572,10 @@
 	.filter-tab {
 		flex: 1;
 		padding: 8px 12px;
-		border: 1px solid rgba(255, 255, 255, 0.1);
+		border: 1px solid var(--line);
 		border-radius: 10px;
-		background: rgba(255, 255, 255, 0.04);
-		color: rgba(255, 255, 255, 0.5);
+		background: var(--paper-sunken);
+		color: var(--ink-soft);
 		font-size: 0.8rem;
 		font-weight: 600;
 		cursor: pointer;
@@ -578,9 +584,9 @@
 	}
 
 	.filter-tab.active {
-		background: rgba(155, 89, 182, 0.15);
-		border-color: rgba(155, 89, 182, 0.4);
-		color: #bb86fc;
+		background: var(--accent-wash);
+		border-color: var(--accent);
+		color: var(--accent-deep);
 	}
 
 	/* ── Word List ── */
@@ -595,14 +601,14 @@
 		align-items: center;
 		gap: 12px;
 		padding: 14px 16px;
-		background: rgba(255, 255, 255, 0.04);
-		border: 1px solid rgba(255, 255, 255, 0.08);
+		background: var(--paper-raised);
+		border: 1px solid var(--line);
 		border-radius: 14px;
 		transition: border-color 0.2s;
 	}
 
 	.word-card.known {
-		border-color: rgba(46, 204, 113, 0.2);
+		border-color: var(--leaf);
 	}
 
 	.word-main {
@@ -616,12 +622,12 @@
 	.word-german {
 		font-size: 1.05rem;
 		font-weight: 700;
-		color: #fff;
+		color: var(--ink);
 	}
 
 	.word-meaning {
 		font-size: 0.85rem;
-		color: rgba(255, 255, 255, 0.5);
+		color: var(--ink-soft);
 		white-space: nowrap;
 		overflow: hidden;
 		text-overflow: ellipsis;
@@ -637,9 +643,9 @@
 		width: 34px;
 		height: 34px;
 		border-radius: 50%;
-		border: 1px solid rgba(255, 255, 255, 0.12);
-		background: rgba(255, 255, 255, 0.05);
-		color: rgba(255, 255, 255, 0.4);
+		border: 1px solid var(--line);
+		background: var(--paper-sunken);
+		color: var(--ink-soft);
 		font-size: 0.85rem;
 		cursor: pointer;
 		display: flex;
@@ -651,9 +657,9 @@
 	.known-pill {
 		padding: 4px 10px;
 		border-radius: 20px;
-		border: 1px solid rgba(255, 255, 255, 0.12);
-		background: rgba(255, 255, 255, 0.05);
-		color: rgba(255, 255, 255, 0.4);
+		border: 1px solid var(--line);
+		background: var(--paper-sunken);
+		color: var(--ink-soft);
 		font-size: 0.72rem;
 		font-weight: 600;
 		cursor: pointer;
@@ -662,21 +668,21 @@
 	}
 
 	.known-pill.is-known {
-		background: rgba(46, 204, 113, 0.15);
-		border-color: rgba(46, 204, 113, 0.4);
-		color: #2ecc71;
+		background: var(--leaf-wash);
+		border-color: var(--leaf);
+		color: var(--leaf);
 	}
 
 	.delete-btn:hover {
-		background: rgba(231, 76, 60, 0.15);
-		border-color: rgba(231, 76, 60, 0.4);
-		color: #e74c3c;
+		background: rgba(178, 60, 43, 0.08);
+		border-color: #b23c2b;
+		color: #b23c2b;
 	}
 
 	.no-results {
 		text-align: center;
 		padding: 40px 0;
-		color: rgba(255, 255, 255, 0.35);
+		color: var(--ink-faint);
 	}
 
 	/* ══════ FLASHCARD MODE ══════ */
@@ -693,8 +699,9 @@
 	.flashcard {
 		width: 100%;
 		min-height: 280px;
-		background: rgba(255, 255, 255, 0.05);
-		border: 1px solid rgba(255, 255, 255, 0.1);
+		background: var(--paper-raised);
+		border: 1px solid var(--line);
+		box-shadow: var(--paper-shadow);
 		border-radius: 20px;
 		display: flex;
 		flex-direction: column;
@@ -707,53 +714,55 @@
 	}
 
 	.flashcard.result {
-		border-color: rgba(155, 89, 182, 0.4);
-		background: rgba(155, 89, 182, 0.06);
+		border-color: var(--accent);
+		background: var(--accent-wash);
 	}
 
 	.flashcard.wrong-flash {
 		animation: flash-red 1s ease forwards;
 		transition: none;
-		border-color: #e74c3c;
-		box-shadow: 0 0 24px rgba(231, 76, 60, 0.5);
+		border-color: #b23c2b;
+		box-shadow: 0 0 24px rgba(178, 60, 43, 0.35);
 	}
 
 	@keyframes flash-red {
-		0% { border-color: #e74c3c; box-shadow: 0 0 24px rgba(231, 76, 60, 0.6); background: rgba(231, 76, 60, 0.1); }
-		60% { border-color: #e74c3c; box-shadow: 0 0 16px rgba(231, 76, 60, 0.3); background: rgba(231, 76, 60, 0.05); }
-		100% { border-color: rgba(255, 255, 255, 0.1); box-shadow: none; background: rgba(255, 255, 255, 0.05); }
+		0% { border-color: #b23c2b; box-shadow: 0 0 24px rgba(178, 60, 43, 0.4); background: rgba(178, 60, 43, 0.08); }
+		60% { border-color: #b23c2b; box-shadow: 0 0 16px rgba(178, 60, 43, 0.2); background: rgba(178, 60, 43, 0.04); }
+		100% { border-color: var(--line); box-shadow: none; background: var(--paper-raised); }
 	}
 
 	.flashcard-word {
 		font-size: 2rem;
-		font-weight: 900;
-		color: #fff;
+		font-weight: 700;
+		font-family: var(--font-display);
+		color: var(--ink);
 		text-align: center;
 	}
 
 	.flashcard-meaning-prompt {
 		font-size: 1.6rem;
-		font-weight: 800;
-		color: #bb86fc;
+		font-weight: 700;
+		font-family: var(--font-display);
+		color: var(--accent-deep);
 		text-align: center;
 		line-height: 1.3;
 	}
 
 	.flashcard-hint {
 		font-size: 0.85rem;
-		color: rgba(255, 255, 255, 0.3);
+		color: var(--ink-faint);
 	}
 
 	.flashcard-divider {
 		width: 60px;
 		height: 2px;
-		background: rgba(155, 89, 182, 0.3);
+		background: var(--accent-wash);
 		border-radius: 1px;
 	}
 
 	.flashcard-meaning {
 		font-size: 1.2rem;
-		color: rgba(255, 255, 255, 0.7);
+		color: var(--ink-soft);
 		text-align: center;
 	}
 
@@ -770,18 +779,18 @@
 	}
 
 	.voice-feedback.correct {
-		background: rgba(46, 204, 113, 0.12);
-		border: 1px solid rgba(46, 204, 113, 0.3);
+		background: var(--leaf-wash);
+		border: 1px solid var(--leaf);
 	}
 
 	.voice-feedback.wrong {
-		background: rgba(231, 76, 60, 0.12);
-		border: 1px solid rgba(231, 76, 60, 0.3);
+		background: rgba(178, 60, 43, 0.08);
+		border: 1px solid rgba(178, 60, 43, 0.35);
 	}
 
 	.voice-feedback.skipped {
-		background: rgba(255, 255, 255, 0.06);
-		border: 1px solid rgba(255, 255, 255, 0.12);
+		background: var(--paper-sunken);
+		border: 1px solid var(--line);
 	}
 
 	.vf-icon {
@@ -790,12 +799,12 @@
 
 	.vf-label {
 		font-weight: 700;
-		color: rgba(255, 255, 255, 0.85);
+		color: var(--ink);
 	}
 
 	.vf-transcript {
 		font-size: 0.8rem;
-		color: rgba(255, 255, 255, 0.45);
+		color: var(--ink-soft);
 		font-style: italic;
 	}
 
@@ -824,9 +833,9 @@
 	}
 
 	.learning-btn {
-		background: rgba(231, 76, 60, 0.15);
-		color: #e74c3c;
-		border: 1px solid rgba(231, 76, 60, 0.3);
+		background: rgba(178, 60, 43, 0.08);
+		color: #b23c2b;
+		border: 1px solid rgba(178, 60, 43, 0.35);
 	}
 
 	.retry-btn {
@@ -836,9 +845,9 @@
 	}
 
 	.known-btn-fc {
-		background: rgba(46, 204, 113, 0.15);
-		color: #2ecc71;
-		border: 1px solid rgba(46, 204, 113, 0.3);
+		background: var(--leaf-wash);
+		color: var(--leaf);
+		border: 1px solid var(--leaf);
 	}
 
 	/* Mic button */
@@ -846,8 +855,8 @@
 		width: 64px;
 		height: 64px;
 		border-radius: 50%;
-		border: 2px solid rgba(46, 204, 113, 0.4);
-		background: rgba(46, 204, 113, 0.12);
+		border: 2px solid var(--leaf);
+		background: var(--leaf-wash);
 		font-size: 1.6rem;
 		cursor: pointer;
 		transition: all 0.2s;
@@ -858,25 +867,25 @@
 	}
 
 	.fc-mic-btn:hover {
-		background: rgba(46, 204, 113, 0.2);
-		border-color: rgba(46, 204, 113, 0.6);
+		background: var(--leaf-wash);
+		border-color: var(--leaf);
 	}
 
 	.fc-mic-btn.pulse {
-		border-color: #e94560;
-		background: rgba(233, 69, 96, 0.15);
+		border-color: var(--accent);
+		background: var(--accent-wash);
 		animation: mic-pulse 1.2s ease-in-out infinite;
 	}
 
 	@keyframes mic-pulse {
-		0%, 100% { box-shadow: 0 0 0 0 rgba(233, 69, 96, 0.3); }
-		50% { box-shadow: 0 0 0 12px rgba(233, 69, 96, 0); }
+		0%, 100% { box-shadow: 0 0 0 0 rgba(194, 87, 27, 0.3); }
+		50% { box-shadow: 0 0 0 12px rgba(194, 87, 27, 0); }
 	}
 
 	.fc-skip-btn {
 		background: none;
 		border: none;
-		color: rgba(255, 255, 255, 0.4);
+		color: var(--ink-soft);
 		font-size: 0.85rem;
 		font-weight: 600;
 		cursor: pointer;
@@ -885,14 +894,14 @@
 	}
 
 	.fc-skip-btn:hover {
-		color: rgba(255, 255, 255, 0.7);
+		color: var(--ink);
 	}
 
 	/* ── Progress Bar ── */
 	.progress-bar {
 		width: 100%;
 		height: 4px;
-		background: rgba(255, 255, 255, 0.08);
+		background: var(--paper-sunken);
 		border-radius: 2px;
 		margin-top: auto;
 		overflow: hidden;
@@ -900,7 +909,7 @@
 
 	.progress-fill {
 		height: 100%;
-		background: linear-gradient(90deg, #9b59b6, #bb86fc);
+		background: var(--accent-deep);
 		border-radius: 2px;
 		transition: width 0.3s ease;
 	}
@@ -923,12 +932,13 @@
 
 	.flashcard-done h2 {
 		font-size: 1.5rem;
-		font-weight: 900;
-		color: #fff;
+		font-weight: 700;
+		font-family: var(--font-display);
+		color: var(--ink);
 	}
 
 	.flashcard-done p {
-		color: rgba(255, 255, 255, 0.5);
+		color: var(--ink-soft);
 		font-size: 0.95rem;
 	}
 
@@ -944,11 +954,11 @@
 	}
 
 	.known-stat {
-		color: #2ecc71;
+		color: var(--leaf);
 	}
 
 	.learning-stat {
-		color: #e74c3c;
+		color: #b23c2b;
 	}
 
 	.done-actions {
@@ -964,12 +974,12 @@
 		font-size: 0.95rem;
 		font-weight: 700;
 		cursor: pointer;
-		background: linear-gradient(135deg, #9b59b6, #8e44ad);
-		color: #fff;
+		background: var(--accent-deep);
+		color: #fff8f0;
 	}
 
 	.done-btn.secondary {
-		background: rgba(255, 255, 255, 0.08);
-		color: rgba(255, 255, 255, 0.7);
+		background: var(--paper-sunken);
+		color: var(--ink);
 	}
 </style>

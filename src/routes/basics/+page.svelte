@@ -87,6 +87,10 @@
 </div>
 
 <style>
+	:global(body) {
+		background: var(--paper);
+	}
+
 	.basics-container {
 		max-width: 900px;
 		margin: 0 auto;
@@ -106,17 +110,17 @@
 		align-items: center;
 		gap: 8px;
 		padding: 10px 20px;
-		background: rgba(255, 255, 255, 0.1);
-		border: 1px solid rgba(255, 255, 255, 0.2);
+		background: var(--paper-sunken);
+		border: 1px solid var(--line);
 		border-radius: 25px;
-		color: #fff;
+		color: var(--ink);
 		text-decoration: none;
 		font-weight: 600;
 		transition: all 0.3s ease;
 	}
 
 	.back-btn:hover {
-		background: rgba(255, 255, 255, 0.2);
+		background: var(--accent-wash);
 		transform: translateX(-5px);
 	}
 
@@ -126,29 +130,28 @@
 
 	.header-title h1 {
 		font-size: 2rem;
-		background: linear-gradient(90deg, #2ecc71, #27ae60);
-		-webkit-background-clip: text;
-		-webkit-text-fill-color: transparent;
-		background-clip: text;
+		color: var(--ink);
+		font-family: var(--font-display);
 	}
 
 	.header-title p {
-		color: #a0a0a0;
+		color: var(--ink-soft);
 		margin-top: 5px;
 	}
 
 	.controls select {
 		padding: 8px 16px;
 		border-radius: 20px;
-		border: 1px solid rgba(255, 255, 255, 0.2);
-		background: rgba(255, 255, 255, 0.1);
-		color: #fff;
+		border: 1px solid var(--line);
+		background: var(--paper-sunken);
+		color: var(--ink);
 		font-size: 0.9rem;
 		cursor: pointer;
 	}
 
 	.controls select option {
-		background: #1a1a2e;
+		background: var(--paper-raised);
+		color: var(--ink);
 	}
 
 	.categories-grid {
@@ -158,16 +161,13 @@
 	}
 
 	.category-card {
-		background: linear-gradient(
-			145deg,
-			rgba(255, 255, 255, 0.08),
-			rgba(255, 255, 255, 0.03)
-		);
+		background: var(--paper-raised);
 		border-radius: 20px;
 		padding: 25px;
 		text-decoration: none;
-		color: #fff;
-		border: 1px solid rgba(255, 255, 255, 0.1);
+		color: var(--ink);
+		border: 1px solid var(--line);
+		box-shadow: var(--paper-shadow);
 		transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 		display: flex;
 		flex-direction: column;
@@ -184,7 +184,7 @@
 		bottom: 0;
 		background: linear-gradient(
 			145deg,
-			rgba(46, 204, 113, 0.1),
+			var(--leaf-wash),
 			transparent
 		);
 		opacity: 0;
@@ -193,8 +193,8 @@
 
 	.category-card:hover {
 		transform: translateY(-8px) scale(1.02);
-		border-color: #2ecc71;
-		box-shadow: 0 15px 40px rgba(46, 204, 113, 0.25);
+		border-color: var(--leaf);
+		box-shadow: 0 15px 40px rgba(47, 111, 79, 0.18);
 	}
 
 	.category-card:hover::before {
@@ -204,19 +204,20 @@
 	.category-icon {
 		font-size: 2.5rem;
 		margin-bottom: 15px;
-		filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.3));
+		filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.12));
 	}
 
 	.category-title {
 		font-size: 1.3rem;
 		font-weight: 700;
+		font-family: var(--font-display);
 		margin-bottom: 8px;
 		position: relative;
 		z-index: 1;
 	}
 
 	.category-desc {
-		color: #888;
+		color: var(--ink-soft);
 		font-size: 0.9rem;
 		line-height: 1.5;
 		position: relative;
