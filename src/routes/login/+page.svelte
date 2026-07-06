@@ -169,16 +169,17 @@
 		gap: 18px;
 		padding: 24px 16px;
 		box-sizing: border-box;
-		background: linear-gradient(160deg, #1a1a2e 0%, #16213e 55%, #0f3460 100%);
-		font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+		background: var(--paper);
+		font-family: var(--font-body);
 	}
 
 	.login-card {
 		width: 100%;
 		max-width: 400px;
-		background: rgba(255, 255, 255, 0.06);
-		border: 1px solid rgba(255, 255, 255, 0.12);
-		border-radius: 22px;
+		background: var(--paper-raised);
+		border: 1px solid var(--line);
+		border-radius: 20px;
+		box-shadow: var(--paper-shadow);
 		padding: 34px 30px;
 		display: flex;
 		flex-direction: column;
@@ -199,20 +200,22 @@
 	}
 
 	.brand-name {
+		font-family: var(--font-display);
 		font-size: 1.25rem;
-		font-weight: 800;
-		color: #e94560;
+		font-weight: 700;
+		color: var(--accent-deep);
 	}
 
 	h1 {
+		font-family: var(--font-display);
 		margin: 0 0 6px;
-		font-size: 1.5rem;
-		color: #fff;
+		font-size: 1.55rem;
+		color: var(--ink);
 	}
 
 	.subtitle {
 		margin: 0 0 20px;
-		color: #9aa3b2;
+		color: var(--ink-soft);
 		font-size: 0.92rem;
 	}
 
@@ -228,30 +231,30 @@
 
 	label {
 		font-size: 0.78rem;
-		color: #9aa3b2;
+		color: var(--ink-soft);
 		margin: 10px 0 6px;
 	}
 
 	input {
-		background: rgba(255, 255, 255, 0.08);
-		border: 1px solid rgba(255, 255, 255, 0.15);
+		background: var(--paper-sunken);
+		border: 1px solid var(--line);
 		border-radius: 12px;
 		padding: 13px 15px;
-		color: #fff;
+		color: var(--ink);
 		font-size: 1rem;
 	}
 
 	input:focus {
 		outline: none;
-		border-color: #e94560;
+		border-color: var(--accent);
 	}
 
 	.submit-btn {
 		margin-top: 22px;
-		background: linear-gradient(135deg, #e94560, #ff6b6b);
-		color: #fff;
+		background: var(--accent);
+		color: #fff8f0;
 		border: none;
-		border-radius: 50px;
+		border-radius: 12px;
 		padding: 14px;
 		font-size: 1.02rem;
 		font-weight: 700;
@@ -272,14 +275,14 @@
 		margin-top: 14px;
 		background: none;
 		border: none;
-		color: #9aa3b2;
+		color: var(--ink-soft);
 		font-size: 0.88rem;
 		cursor: pointer;
 		text-decoration: underline;
 	}
 
 	.ghost-btn:hover {
-		color: #fff;
+		color: var(--accent-deep);
 	}
 
 	.email-sent {
@@ -292,18 +295,18 @@
 	}
 
 	.email-sent p {
-		color: #9aa3b2;
+		color: var(--ink-soft);
 		line-height: 1.6;
 		font-size: 0.92rem;
 	}
 
 	.site-link {
-		color: rgba(255, 255, 255, 0.45);
+		color: var(--ink-faint);
 		font-size: 0.85rem;
 		text-decoration: none;
 	}
 
 	.site-link:hover {
-		color: #fff;
+		color: var(--ink);
 	}
 </style>

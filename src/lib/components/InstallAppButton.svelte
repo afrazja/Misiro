@@ -82,10 +82,12 @@
 		display: inline-block;
 	}
 
+	/* Theme-adaptive via --install-* hooks (host page may override);
+	   defaults suit the dark landing page. */
 	.install-btn {
-		background: rgba(46, 204, 113, 0.12);
-		border: 1px solid rgba(46, 204, 113, 0.45);
-		color: #2ecc71;
+		background: var(--install-bg, rgba(46, 204, 113, 0.12));
+		border: 1px solid var(--install-border, rgba(46, 204, 113, 0.45));
+		color: var(--install-fg, #2ecc71);
 		border-radius: 50px;
 		padding: 8px 16px;
 		font-size: 0.85rem;
@@ -96,7 +98,7 @@
 	}
 
 	.install-btn:hover {
-		background: rgba(46, 204, 113, 0.25);
+		filter: brightness(1.06);
 		transform: translateY(-1px);
 	}
 

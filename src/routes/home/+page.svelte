@@ -13,6 +13,7 @@
 	import Heatmap from "$lib/components/Heatmap.svelte";
 	import TrophyCabinet from "$lib/components/TrophyCabinet.svelte";
 	import InstallAppButton from "$lib/components/InstallAppButton.svelte";
+	import Icon from "$lib/components/Icon.svelte";
 
 	// Auth modal state
 	let showAuthModal = $state(false);
@@ -669,7 +670,7 @@
 						onclick={() => (showBadges = true)}
 						title="View XP & Badges"
 					>
-						<span class="ns-icon">🌟</span>
+						<span class="ns-icon star"><Icon name="star" size={16} /></span>
 						<span class="ns-value">{totalXp}</span>
 					</button>
 					<button
@@ -677,12 +678,14 @@
 						onclick={() => (showCalendar = true)}
 						title="View Streak History"
 					>
-						<span class="ns-icon">🔥</span>
+						<span class="ns-icon flame"><Icon name="flame" size={16} /></span>
 						<span class="ns-value">{streakCount}</span>
 					</button>
 				</div>
 
-				<a href="/settings" class="nav-icon-btn" title="Settings">⚙️</a>
+				<a href="/settings" class="nav-icon-btn" title="Settings"
+					><Icon name="gear" size={19} /></a
+				>
 				<button class="nav-text-btn" onclick={handleSignOut}
 					>Sign Out</button
 				>
@@ -729,10 +732,10 @@
 				{#if progressLoaded}
 					<span class="today-title">
 						{#if dueReviews > 0}
-							🔄 {Math.min(dueReviews, 8)}
+							{Math.min(dueReviews, 8)}
 							{language === "fa" ? "مرور" : "reviews"} &nbsp;+&nbsp;
 						{/if}
-						📚 {language === "fa" ? "روز" : "Day"}
+						{language === "fa" ? "روز" : "Day"}
 						{todayTitle || currentDay}
 					</span>
 					<span class="today-sub">
@@ -763,7 +766,7 @@
 				class:has-due={dueReviews > 0}
 				title="Go to reviews"
 			>
-				<span class="stat-icon">🔄</span>
+				<span class="stat-icon leafy"><Icon name="refresh" size={26} /></span>
 				<div class="stat-content">
 					<span class="stat-value">{dueReviews}</span>
 					<span class="stat-label"
@@ -782,7 +785,7 @@
 				class:has-words={savedWordCount > 0}
 				title="View saved vocabulary"
 			>
-				<span class="stat-icon">📖</span>
+				<span class="stat-icon warm"><Icon name="bookmark" size={26} /></span>
 				<div class="stat-content">
 					<span class="stat-value">{savedWordCount}</span>
 					<span class="stat-label">Saved Words</span>
@@ -798,7 +801,7 @@
 	<div class="nav-cards" id="categories-grid">
 		<a href="/lesson" class="nav-card lessons">
 			<div class="card-glow"></div>
-			<div class="icon">📚</div>
+			<div class="icon"><Icon name="book" size={44} /></div>
 			<h2>{content.lessonsTitle}</h2>
 			<p>{content.lessonsDesc}</p>
 			{#if isAuthenticated}
@@ -835,7 +838,7 @@
 
 		<a href="/basics" class="nav-card basics">
 			<div class="card-glow"></div>
-			<div class="icon">🔤</div>
+			<div class="icon"><Icon name="letters" size={44} /></div>
 			<h2>{content.basicsTitle}</h2>
 			<p>{content.basicsDesc}</p>
 			<div class="card-meta basics-meta">
@@ -857,6 +860,10 @@
 		padding: 0;
 	}
 
+	:global(body) {
+		background: var(--paper);
+	}
+
 	.home-container {
 		max-width: 1100px;
 		margin: 0 auto;
@@ -865,8 +872,11 @@
 		display: flex;
 		flex-direction: column;
 		gap: 28px;
-		font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-		color: #fff;
+		font-family: var(--font-body);
+		color: var(--ink);
+		--install-bg: var(--leaf-wash);
+		--install-border: var(--leaf);
+		--install-fg: var(--leaf);
 	}
 
 	/* ── Top Nav ──────────────────────────────────────── */
@@ -925,24 +935,26 @@
 	/* Compact language picker */
 
 	.nav-icon-btn {
-		font-size: 1.2rem;
 		text-decoration: none;
-		padding: 4px;
+		padding: 6px;
 		border-radius: 8px;
-		transition: opacity 0.2s;
+		transition: all 0.2s;
 		line-height: 1;
+		color: var(--ink-soft);
+		display: inline-flex;
 	}
 
 	.nav-icon-btn:hover {
-		opacity: 0.7;
+		color: var(--ink);
+		background: var(--paper-sunken);
 	}
 
 	.nav-text-btn {
 		padding: 6px 16px;
 		border-radius: 20px;
-		border: 1px solid rgba(255, 255, 255, 0.2);
+		border: 1px solid var(--line);
 		background: transparent;
-		color: #ccc;
+		color: var(--ink-soft);
 		cursor: pointer;
 		font-size: 0.84rem;
 		font-family: inherit;
@@ -950,25 +962,26 @@
 	}
 
 	.nav-text-btn:hover {
-		border-color: #e94560;
-		color: #fff;
-		background: rgba(233, 69, 96, 0.12);
+		border-color: var(--accent);
+		color: var(--accent-deep);
+		background: var(--accent-wash);
 	}
 
 	/* ── Welcome Banner ───────────────────────────────── */
 	.welcome-banner {
-		background: linear-gradient(
-			135deg,
-			rgba(233, 69, 96, 0.12),
-			rgba(255, 107, 107, 0.06)
-		);
-		border: 1px solid rgba(233, 69, 96, 0.2);
-		border-radius: 20px;
+		background: var(--paper-raised);
+		border: 1px solid var(--line);
+		border-radius: 18px;
+		box-shadow: var(--paper-shadow);
 		padding: 28px 32px;
 		display: flex;
 		align-items: center;
 		justify-content: space-between;
 		gap: 20px;
+	}
+
+	.welcome-banner p {
+		color: var(--ink-soft);
 	}
 
 	.welcome-left {
@@ -985,11 +998,11 @@
 		justify-content: space-between;
 		gap: 20px;
 		padding: 24px 30px;
-		border-radius: 20px;
-		background: linear-gradient(135deg, #e94560, #ff6b6b);
+		border-radius: 18px;
+		background: var(--accent);
 		text-decoration: none;
-		color: #fff;
-		box-shadow: 0 14px 40px rgba(233, 69, 96, 0.35);
+		color: #fff8f0;
+		box-shadow: 0 10px 30px rgba(156, 69, 20, 0.28);
 		transition:
 			transform 0.25s ease,
 			box-shadow 0.25s ease;
@@ -1031,12 +1044,12 @@
 
 	.today-btn {
 		flex-shrink: 0;
-		background: #fff;
-		color: #e94560;
+		background: #fff8f0;
+		color: var(--accent-deep);
 		font-weight: 700;
 		font-size: 1rem;
 		padding: 14px 26px;
-		border-radius: 50px;
+		border-radius: 12px;
 		white-space: nowrap;
 	}
 
@@ -1082,11 +1095,23 @@
 		cursor: pointer;
 		transition: all 0.2s;
 		font-family: inherit;
-		color: #fff;
+		color: var(--ink);
 	}
 
 	.nav-stat:hover {
-		background: rgba(255, 255, 255, 0.1);
+		background: var(--paper-sunken);
+	}
+
+	.ns-icon {
+		display: inline-flex;
+	}
+
+	.ns-icon.star {
+		color: var(--accent);
+	}
+
+	.ns-icon.flame {
+		color: var(--accent-deep);
 	}
 
 	.ns-icon {
@@ -1099,14 +1124,11 @@
 	}
 
 	.welcome-left h1 {
-		font-size: 1.6rem;
-		font-weight: 800;
+		font-family: var(--font-display);
+		font-size: 1.7rem;
+		font-weight: 700;
 		margin: 0 0 6px;
-		color: #fff;
-		background: linear-gradient(90deg, #fff, #e94560);
-		-webkit-background-clip: text;
-		-webkit-text-fill-color: transparent;
-		background-clip: text;
+		color: var(--ink);
 	}
 
 	.welcome-left p {
@@ -1151,9 +1173,10 @@
 	}
 
 	.stat-card {
-		background: rgba(255, 255, 255, 0.05);
-		border: 1px solid rgba(255, 255, 255, 0.08);
-		border-radius: 16px;
+		background: var(--paper-raised);
+		border: 1px solid var(--line);
+		border-radius: 14px;
+		box-shadow: var(--paper-shadow);
 		padding: 20px 16px;
 		display: flex;
 		flex-direction: column;
@@ -1166,8 +1189,20 @@
 	}
 
 	.stat-card:hover {
-		transform: translateY(-4px);
-		border-color: rgba(233, 69, 96, 0.3);
+		transform: translateY(-3px);
+		border-color: var(--accent);
+	}
+
+	.stat-icon {
+		display: inline-flex;
+	}
+
+	.stat-icon.leafy {
+		color: var(--leaf);
+	}
+
+	.stat-icon.warm {
+		color: var(--accent);
 	}
 
 	.stat-icon {
@@ -1175,15 +1210,16 @@
 	}
 
 	.stat-value {
+		font-family: var(--font-display);
 		font-size: 1.8rem;
-		font-weight: 900;
-		color: #fff;
+		font-weight: 700;
+		color: var(--ink);
 		line-height: 1;
 	}
 
 	.stat-label {
 		font-size: 0.78rem;
-		color: #777;
+		color: var(--ink-soft);
 		font-weight: 500;
 	}
 
@@ -1195,17 +1231,14 @@
 	}
 
 	.nav-card {
-		background: linear-gradient(
-			145deg,
-			rgba(255, 255, 255, 0.08),
-			rgba(255, 255, 255, 0.04)
-		);
-		border-radius: 24px;
+		background: var(--paper-raised);
+		border-radius: 18px;
 		padding: 36px 32px;
 		text-decoration: none;
-		color: #fff;
-		border: 1px solid rgba(255, 255, 255, 0.08);
-		transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+		color: var(--ink);
+		border: 1px solid var(--line);
+		box-shadow: var(--paper-shadow);
+		transition: all 0.3s ease;
 		display: flex;
 		flex-direction: column;
 		align-items: center;
@@ -1225,7 +1258,7 @@
 	.nav-card.lessons .card-glow {
 		background: radial-gradient(
 			circle at 50% 0%,
-			rgba(52, 152, 219, 0.18),
+			var(--accent-wash),
 			transparent 70%
 		);
 	}
@@ -1233,7 +1266,7 @@
 	.nav-card.basics .card-glow {
 		background: radial-gradient(
 			circle at 50% 0%,
-			rgba(46, 204, 113, 0.18),
+			var(--leaf-wash),
 			transparent 70%
 		);
 	}
@@ -1243,51 +1276,41 @@
 	}
 
 	.nav-card:hover {
-		transform: translateY(-10px) scale(1.02);
-	}
-
-	.nav-card.lessons {
-		background: linear-gradient(
-			145deg,
-			rgba(52, 152, 219, 0.18),
-			rgba(52, 152, 219, 0.04)
-		);
+		transform: translateY(-6px);
 	}
 
 	.nav-card.lessons:hover {
-		border-color: #3498db;
-		box-shadow: 0 20px 60px rgba(52, 152, 219, 0.28);
-	}
-
-	.nav-card.basics {
-		background: linear-gradient(
-			145deg,
-			rgba(46, 204, 113, 0.18),
-			rgba(46, 204, 113, 0.04)
-		);
+		border-color: var(--accent);
 	}
 
 	.nav-card.basics:hover {
-		border-color: #2ecc71;
-		box-shadow: 0 20px 60px rgba(46, 204, 113, 0.28);
+		border-color: var(--leaf);
 	}
 
 	.nav-card .icon {
-		font-size: 3.6rem;
 		margin-bottom: 16px;
-		filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
+		z-index: 1;
+	}
+
+	.nav-card.lessons .icon {
+		color: var(--accent);
+	}
+
+	.nav-card.basics .icon {
+		color: var(--leaf);
 	}
 
 	.nav-card h2 {
-		font-size: 1.6rem;
-		font-weight: 800;
+		font-family: var(--font-display);
+		font-size: 1.55rem;
+		font-weight: 700;
 		margin-bottom: 12px;
 		position: relative;
 		z-index: 1;
 	}
 
 	.nav-card p {
-		color: #a0a0a0;
+		color: var(--ink-soft);
 		line-height: 1.6;
 		font-size: 0.92rem;
 		position: relative;
@@ -1297,22 +1320,22 @@
 	.card-meta {
 		margin-top: 14px;
 		padding: 5px 14px;
-		background: rgba(52, 152, 219, 0.2);
+		background: var(--accent-wash);
 		border-radius: 20px;
 		font-size: 0.8rem;
 		font-weight: 700;
-		color: #7fc8f8;
+		color: var(--accent-deep);
 		z-index: 1;
 	}
 
 	.card-meta.done {
-		background: rgba(46, 204, 113, 0.2);
-		color: #2ecc71;
+		background: var(--leaf-wash);
+		color: var(--leaf);
 	}
 
 	.card-meta.basics-meta {
-		background: rgba(46, 204, 113, 0.2);
-		color: #7fe8b0;
+		background: var(--leaf-wash);
+		color: var(--leaf);
 	}
 
 	/* Clickable stat card for due reviews */
@@ -1322,50 +1345,50 @@
 	}
 
 	.stat-card-link.has-due {
-		border-color: rgba(46, 204, 113, 0.3);
-		background: rgba(46, 204, 113, 0.07);
+		border-color: var(--leaf);
+		background: var(--leaf-wash);
 	}
 
 	.stat-card-link.has-due:hover {
-		border-color: rgba(46, 204, 113, 0.6);
-		box-shadow: 0 8px 24px rgba(46, 204, 113, 0.2);
+		border-color: var(--leaf);
+		box-shadow: 0 8px 24px rgba(47, 111, 79, 0.18);
 	}
 
 	.stat-card-link.has-words {
-		border-color: rgba(155, 89, 182, 0.3);
-		background: rgba(155, 89, 182, 0.07);
+		border-color: var(--line);
+		background: var(--accent-wash);
 	}
 
 	.stat-card-link.has-words:hover {
-		border-color: rgba(155, 89, 182, 0.6);
-		box-shadow: 0 8px 24px rgba(155, 89, 182, 0.2);
+		border-color: var(--accent);
+		box-shadow: 0 8px 24px rgba(156, 69, 20, 0.15);
 	}
 
 	.stat-cta {
 		font-size: 0.72rem;
-		color: #2ecc71;
+		color: var(--leaf);
 		font-weight: 700;
 		margin-top: 2px;
 	}
 
 	.stat-cta.vocab-cta {
-		color: #9b59b6;
+		color: var(--accent-deep);
 	}
 
 	/* ── Card Progress Bar ── */
 	.card-progress-bar {
 		width: 100%;
-		height: 4px;
-		background: rgba(255, 255, 255, 0.08);
-		border-radius: 2px;
+		height: 5px;
+		background: var(--paper-sunken);
+		border-radius: 3px;
 		margin-top: 10px;
 		overflow: hidden;
 	}
 
 	.card-progress-fill {
 		height: 100%;
-		background: linear-gradient(90deg, #e94560, #ff6b81);
-		border-radius: 2px;
+		background: var(--leaf);
+		border-radius: 3px;
 		transition: width 0.5s ease;
 	}
 
@@ -1388,8 +1411,8 @@
 	.home-footer {
 		text-align: center;
 		padding-top: 20px;
-		border-top: 1px solid rgba(255, 255, 255, 0.07);
-		color: #555;
+		border-top: 1px solid var(--line);
+		color: var(--ink-faint);
 		font-size: 0.88rem;
 		margin-top: auto;
 	}
