@@ -1,4 +1,8 @@
 <script lang="ts">
+	// Self-hosted brand fonts (no external font CDN — PWA/offline friendly):
+	// Fraunces = display serif; Vazirmatn = Latin+Persian harmonized body.
+	import '@fontsource-variable/fraunces';
+	import '@fontsource-variable/vazirmatn';
 	import '../app.css';
 	import { onMount } from 'svelte';
 	import { getSupabaseBrowserClient } from '$lib/supabase/client';

@@ -353,7 +353,7 @@
 	:global(body) {
 		margin: 0;
 		padding: 0;
-		background: #0d0d1a;
+		background: var(--paper);
 	}
 
 	.onboarding-bg {
@@ -362,7 +362,7 @@
 		left: 0;
 		width: 100%;
 		height: 100vh;
-		background: linear-gradient(135deg, #0d0d1a 0%, #16213e 100%);
+		background: var(--paper);
 		z-index: 1;
 		pointer-events: none;
 	}
@@ -382,14 +382,14 @@
 	.progress-bar {
 		width: 100%;
 		height: 6px;
-		background: rgba(255, 255, 255, 0.1);
+		background: var(--paper-sunken);
 		border-radius: 6px;
 		overflow: hidden;
 		margin-bottom: 30px;
 	}
 	.progress-fill {
 		height: 100%;
-		background: linear-gradient(90deg, #e94560, #ff6b6b);
+		background: var(--leaf);
 		border-radius: 6px;
 		transition: width 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
 	}
@@ -397,7 +397,7 @@
 	.back-btn {
 		background: none;
 		border: none;
-		color: #a0a0a0;
+		color: var(--ink-soft);
 		font-weight: 600;
 		font-size: 1rem;
 		cursor: pointer;
@@ -407,7 +407,7 @@
 		transition: color 0.2s;
 	}
 	.back-btn:hover {
-		color: #fff;
+		color: var(--ink);
 	}
 
 	.wizard-container {
@@ -423,8 +423,9 @@
 
 	.q-title {
 		font-size: clamp(2rem, 5vw, 2.6rem);
-		font-weight: 900;
-		color: #ffffff;
+		font-weight: 700;
+		font-family: var(--font-display);
+		color: var(--ink);
 		line-height: 1.15;
 		margin: 0 0 12px 0;
 		letter-spacing: -0.02em;
@@ -432,13 +433,13 @@
 
 	.q-sub {
 		font-size: 1.1rem;
-		color: #a0a0a0;
+		color: var(--ink-soft);
 		margin-bottom: 40px;
 	}
 
 	.helper-text {
 		font-size: 0.9rem;
-		color: #666;
+		color: var(--ink-faint);
 		margin-top: 24px;
 		text-align: center;
 	}
@@ -497,8 +498,8 @@
 	}
 
 	.choice-card {
-		background: rgba(255, 255, 255, 0.03);
-		border: 2px solid rgba(255, 255, 255, 0.08);
+		background: var(--paper-raised);
+		border: 2px solid var(--line);
 		border-radius: 16px;
 		padding: 24px;
 		text-align: center;
@@ -511,8 +512,8 @@
 	}
 
 	.choice-card:hover {
-		background: rgba(255, 255, 255, 0.08);
-		border-color: #3498db;
+		background: var(--accent-wash);
+		border-color: var(--accent);
 		transform: translateY(-2px);
 	}
 	.choice-card:active {
@@ -541,7 +542,7 @@
 	.lbl {
 		font-size: 1.4rem;
 		font-weight: 700;
-		color: #ffffff;
+		color: var(--ink);
 	}
 	.small-lbl {
 		padding: 20px;
@@ -553,7 +554,7 @@
 	.small-lbl span {
 		font-size: 1.1rem;
 		font-weight: 600;
-		color: #fff;
+		color: var(--ink);
 	}
 
 	.lbl-block {
@@ -563,11 +564,11 @@
 	}
 	.lbl-block strong {
 		font-size: 1.15rem;
-		color: #ffffff;
+		color: var(--ink);
 	}
 	.lbl-block span {
 		font-size: 0.95rem;
-		color: #a0a0a0;
+		color: var(--ink-soft);
 	}
 
 	/* Save state */
@@ -583,8 +584,8 @@
 	.spinner {
 		width: 48px;
 		height: 48px;
-		border: 4px solid rgba(255, 255, 255, 0.1);
-		border-left-color: #e94560;
+		border: 4px solid var(--line);
+		border-left-color: var(--accent);
 		border-radius: 50%;
 		animation: spin 1s linear infinite;
 		margin-bottom: 24px;
@@ -597,12 +598,12 @@
 
 	.save-title {
 		font-size: 1.8rem;
-		font-weight: 800;
-		color: #fff;
+		font-weight: 700;
+		color: var(--ink);
 		margin-bottom: 8px;
 	}
 	.save-subtitle {
-		color: #a0a0a0;
+		color: var(--ink-soft);
 		font-size: 1.1rem;
 	}
 </style>

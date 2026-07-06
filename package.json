@@ -38,6 +38,8 @@
     "workbox-window": "^7.4.0"
   },
   "dependencies": {
+    "@fontsource-variable/fraunces": "^5.2.9",
+    "@fontsource-variable/vazirmatn": "^5.2.8",
     "@supabase/ssr": "^0.6.0",
     "@supabase/supabase-js": "^2.49.0",
     "@vercel/analytics": "^1.6.1",
