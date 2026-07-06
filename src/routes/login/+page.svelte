@@ -1,0 +1,309 @@
+<script lang="ts">
+	import { goto } from "$app/navigation";
+	import * as auth from "$services/auth";
+	import * as dataLayer from "$services/data-layer";
+
+	let mode = $state<"signin" | "signup">("signin");
+	let email = $state("");
+	let password = $state("");
+	let name = $state("");
+	let error = $state("");
+	let loading = $state(false);
+	let emailSent = $state(false);
+
+	function toggleMode() {
+		mode = mode === "signin" ? "signup" : "signin";
+		error = "";
+		emailSent = false;
+	}
+
+	async function submit() {
+		error = "";
+		if (!email.trim() || !password) {
+			error = "Please enter email and password.";
+			return;
+		}
+		loading = true;
+		try {
+			let result;
+			if (mode === "signup") {
+				result = await auth.signUp(
+					email.trim(),
+					password,
+					name.trim() || "Learner",
+				);
+			} else {
+				result = await auth.signIn(email.trim(), password);
+			}
+			if (result.error) {
+				error = result.error;
+			} else if (mode === "signup" && !(await auth.getSession())) {
+				// Email confirmation required — no active session yet
+				emailSent = true;
+			} else {
+				const targetLang = result.user?.user_metadata?.target_language;
+				goto(
+					targetLang === "de" || targetLang === "fr"
+						? "/home"
+						: "/onboarding",
+				);
+				// Fire-and-forget after navigation
+				if (result.user) auth.ensureProfile(result.user);
+				dataLayer.syncOnLogin();
+			}
+		} catch (e: any) {
+			error = e.message || "An error occurred.";
+		} finally {
+			loading = false;
+		}
+	}
+
+	function handleKeydown(e: KeyboardEvent) {
+		if (e.key === "Enter") submit();
+	}
+</script>
+
+<svelte:head>
+	<title>Sign In – Mirifer</title>
+	<meta name="robots" content="noindex" />
+</svelte:head>
+
+<div class="login-page">
+	<div class="login-card">
+		<div class="brand">
+			<img src="/android-chrome-192x192.png" alt="" class="brand-icon" />
+			<span class="brand-name">Mirifer</span>
+		</div>
+
+		{#if emailSent}
+			<div class="email-sent">
+				<div class="email-sent-icon">📬</div>
+				<h1>Check your email</h1>
+				<p>
+					We sent a confirmation link to <b>{email}</b>. Tap it to
+					activate your account, then come back and sign in.
+				</p>
+				<button class="ghost-btn" onclick={toggleMode}>
+					← Back to sign in
+				</button>
+			</div>
+		{:else}
+			<h1>
+				{mode === "signin" ? "Welcome back" : "Create your account"}
+			</h1>
+			<p class="subtitle">
+				{mode === "signin"
+					? "Sign in to continue learning German."
+					: "Free during early access — no credit card."}
+			</p>
+
+			{#if error}
+				<div class="error">{error}</div>
+			{/if}
+
+			{#if mode === "signup"}
+				<label for="login-name">Name</label>
+				<input
+					id="login-name"
+					type="text"
+					bind:value={name}
+					placeholder="Your name"
+					autocomplete="name"
+					onkeydown={handleKeydown}
+				/>
+			{/if}
+
+			<label for="login-email">Email</label>
+			<input
+				id="login-email"
+				type="email"
+				bind:value={email}
+				placeholder="you@example.com"
+				autocomplete="username"
+				onkeydown={handleKeydown}
+			/>
+
+			<label for="login-password">Password</label>
+			<input
+				id="login-password"
+				type="password"
+				bind:value={password}
+				placeholder={mode === "signup" ? "Min. 6 characters" : "Password"}
+				autocomplete={mode === "signup"
+					? "new-password"
+					: "current-password"}
+				onkeydown={handleKeydown}
+			/>
+
+			<button class="submit-btn" onclick={submit} disabled={loading}>
+				{loading
+					? "…"
+					: mode === "signin"
+						? "Sign In"
+						: "Create Account"}
+			</button>
+
+			<button class="ghost-btn" onclick={toggleMode}>
+				{mode === "signin"
+					? "New here? Create a free account"
+					: "Already have an account? Sign in"}
+			</button>
+		{/if}
+	</div>
+
+	<a href="/" class="site-link">About Mirifer →</a>
+</div>
+
+<style>
+	:global(body) {
+		margin: 0;
+	}
+
+	.login-page {
+		min-height: 100vh;
+		min-height: 100dvh;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		gap: 18px;
+		padding: 24px 16px;
+		box-sizing: border-box;
+		background: linear-gradient(160deg, #1a1a2e 0%, #16213e 55%, #0f3460 100%);
+		font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+	}
+
+	.login-card {
+		width: 100%;
+		max-width: 400px;
+		background: rgba(255, 255, 255, 0.06);
+		border: 1px solid rgba(255, 255, 255, 0.12);
+		border-radius: 22px;
+		padding: 34px 30px;
+		display: flex;
+		flex-direction: column;
+		box-sizing: border-box;
+	}
+
+	.brand {
+		display: flex;
+		align-items: center;
+		gap: 10px;
+		margin-bottom: 22px;
+	}
+
+	.brand-icon {
+		width: 36px;
+		height: 36px;
+		border-radius: 9px;
+	}
+
+	.brand-name {
+		font-size: 1.25rem;
+		font-weight: 800;
+		color: #e94560;
+	}
+
+	h1 {
+		margin: 0 0 6px;
+		font-size: 1.5rem;
+		color: #fff;
+	}
+
+	.subtitle {
+		margin: 0 0 20px;
+		color: #9aa3b2;
+		font-size: 0.92rem;
+	}
+
+	.error {
+		background: rgba(233, 69, 96, 0.15);
+		border: 1px solid rgba(233, 69, 96, 0.5);
+		color: #ff8a9b;
+		border-radius: 10px;
+		padding: 10px 14px;
+		font-size: 0.87rem;
+		margin-bottom: 14px;
+	}
+
+	label {
+		font-size: 0.78rem;
+		color: #9aa3b2;
+		margin: 10px 0 6px;
+	}
+
+	input {
+		background: rgba(255, 255, 255, 0.08);
+		border: 1px solid rgba(255, 255, 255, 0.15);
+		border-radius: 12px;
+		padding: 13px 15px;
+		color: #fff;
+		font-size: 1rem;
+	}
+
+	input:focus {
+		outline: none;
+		border-color: #e94560;
+	}
+
+	.submit-btn {
+		margin-top: 22px;
+		background: linear-gradient(135deg, #e94560, #ff6b6b);
+		color: #fff;
+		border: none;
+		border-radius: 50px;
+		padding: 14px;
+		font-size: 1.02rem;
+		font-weight: 700;
+		cursor: pointer;
+		transition: filter 0.2s;
+	}
+
+	.submit-btn:hover:not(:disabled) {
+		filter: brightness(1.08);
+	}
+
+	.submit-btn:disabled {
+		opacity: 0.6;
+		cursor: wait;
+	}
+
+	.ghost-btn {
+		margin-top: 14px;
+		background: none;
+		border: none;
+		color: #9aa3b2;
+		font-size: 0.88rem;
+		cursor: pointer;
+		text-decoration: underline;
+	}
+
+	.ghost-btn:hover {
+		color: #fff;
+	}
+
+	.email-sent {
+		text-align: center;
+	}
+
+	.email-sent-icon {
+		font-size: 2.6rem;
+		margin-bottom: 8px;
+	}
+
+	.email-sent p {
+		color: #9aa3b2;
+		line-height: 1.6;
+		font-size: 0.92rem;
+	}
+
+	.site-link {
+		color: rgba(255, 255, 255, 0.45);
+		font-size: 0.85rem;
+		text-decoration: none;
+	}
+
+	.site-link:hover {
+		color: #fff;
+	}
+</style>
