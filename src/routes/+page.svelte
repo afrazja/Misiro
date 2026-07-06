@@ -6,6 +6,7 @@
 	import * as dataLayer from "$services/data-layer";
 	import { initSyncListeners } from "$services/sync-queue";
 	import { getLessonIndex, getTotalLessons } from "$services/lesson-loader";
+	import InstallAppButton from "$lib/components/InstallAppButton.svelte";
 
 	// Auth modal state
 	let showAuthModal = $state(false);
@@ -433,6 +434,7 @@
 	</a>
 
 	<div class="navbar-right">
+		<InstallAppButton />
 		{#if isAuthenticated}
 			<a href="/home" class="btn btn-primary">Open App &rarr;</a>
 		{:else}

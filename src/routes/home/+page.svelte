@@ -12,6 +12,7 @@
 	import { computeStreak } from "$utils/streak";
 	import Heatmap from "$lib/components/Heatmap.svelte";
 	import TrophyCabinet from "$lib/components/TrophyCabinet.svelte";
+	import InstallAppButton from "$lib/components/InstallAppButton.svelte";
 
 	// Auth modal state
 	let showAuthModal = $state(false);
@@ -660,6 +661,7 @@
 		</a>
 
 		<div class="nav-right">
+			<InstallAppButton />
 			{#if isAuthenticated}
 				<div class="nav-stats">
 					<button
