@@ -51,7 +51,7 @@
 			if (timeLeft > 0) {
 				timeLeft--;
 				if (timeLeft === 0) {
-					clearInterval(timerInterval);
+					if (timerInterval) clearInterval(timerInterval);
 					if (app.isListening) {
 						stopListening();
 					}

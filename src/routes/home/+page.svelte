@@ -9,6 +9,7 @@
 	import { getDueCount } from "$services/spaced-repetition";
 	import { initSyncListeners } from "$services/sync-queue";
 	import { getLessonIndex, type LessonMeta } from "$services/lesson-loader";
+	import { computeStreak } from "$utils/streak";
 	import Heatmap from "$lib/components/Heatmap.svelte";
 	import TrophyCabinet from "$lib/components/TrophyCabinet.svelte";
 
@@ -198,49 +199,27 @@
 				: "Essential building blocks: pronouns, articles, adverbs, numbers, colors, and days of the week.",
 	});
 
-	// Compute streak from completedLessons timestamps
-	function computeStreak(
-		completedLessons: Record<
-			number,
-			{ completedAt: number; sentenceCount: number }
-		>,
-	): number {
-		const entries = Object.values(completedLessons);
-		if (!entries.length) return 0;
-
-		// Group by calendar date (YYYY-MM-DD)
-		const days = new Set(
-			entries.map((e) => new Date(e.completedAt).toDateString()),
-		);
-
-		let streak = 0;
-		const today = new Date();
-		const check = new Date(today);
-
-		// Allow today or yesterday as the start (don't break streak if not done yet today)
-		if (!days.has(check.toDateString())) {
-			check.setDate(check.getDate() - 1);
-		}
-
-		while (days.has(check.toDateString())) {
-			streak++;
-			check.setDate(check.getDate() - 1);
-		}
-		return streak;
-	}
-
 	async function loadProgress() {
-		const completed = await dataLayer.getCompletedLessons();
+		// Fault-isolated: one failed fetch must not zero out the others.
+		const [completedRes, progressRes, indexRes] = await Promise.allSettled([
+			dataLayer.getCompletedLessons(),
+			dataLayer.getProgress(),
+			getLessonIndex(),
+		]);
+
+		const completed =
+			completedRes.status === "fulfilled" ? completedRes.value : {};
 		completedLessons = completed;
 		daysCompleted = Object.keys(completed).length;
 		streakCount = computeStreak(completed);
 
-		const progress = await dataLayer.getProgress();
+		const progress =
+			progressRes.status === "fulfilled" ? progressRes.value : null;
 		currentDay = progress?.currentDay ?? 1;
 		totalXp = progress?.xp ?? 0;
 
-		// Fetch actual lesson count from database
-		const index = await getLessonIndex();
+		// Actual lesson count from database
+		const index = indexRes.status === "fulfilled" ? indexRes.value : [];
 		totalLessons = index.length;
 		lessonMetaIndex = index;
 
@@ -833,7 +812,11 @@
 					</div>
 				{:else if daysCompleted > 0}
 					<div class="card-meta">
-						{daysCompleted} of {totalLessons} days · {progressPercent}%
+						{#if totalLessons > 0}
+							{daysCompleted} of {totalLessons} days · {progressPercent}%
+						{:else}
+							{daysCompleted} days done
+						{/if}
 					</div>
 					<div class="card-progress-bar">
 						<div
@@ -854,7 +837,7 @@
 			<h2>{content.basicsTitle}</h2>
 			<p>{content.basicsDesc}</p>
 			<div class="card-meta basics-meta">
-				8 topics · Pronouns, Articles &amp; more
+				12 topics · Pronouns, Articles &amp; more
 			</div>
 			<div class="arrow">→</div>
 		</a>

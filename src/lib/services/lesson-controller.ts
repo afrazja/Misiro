@@ -647,6 +647,7 @@ export async function startExam(week: number): Promise<void> {
 	examStore.set({
 		isExamMode: true,
 		isReviewMode: false,
+		isConversation: false,
 		examWeek: week,
 		examQuestions: shuffled,
 		currentExamIndex: 0,
@@ -730,6 +731,7 @@ export async function startReviewMode(maxItems = 15): Promise<void> {
 	examStore.set({
 		isExamMode: true,
 		isReviewMode: true,
+		isConversation: false,
 		examWeek: 0,
 		examQuestions: questions,
 		currentExamIndex: 0,
@@ -957,6 +959,7 @@ let convState: {
 function deactivateConversation(): void {
 	if (!convState) return;
 	convState = null;
+	examStore.update((s) => ({ ...s, isConversation: false }));
 	callbacks?.onConversationOptions?.(null);
 }
 
@@ -966,7 +969,12 @@ export async function startConversation(week: number): Promise<void> {
 	incrementSession();
 	stopAllAudio();
 	deactivateConversation();
-	examStore.update((s) => ({ ...s, isExamMode: false, isReviewMode: false }));
+	examStore.update((s) => ({
+		...s,
+		isExamMode: false,
+		isReviewMode: false,
+		isConversation: true
+	}));
 
 	const startDay = (week - 1) * 7 + 1;
 	const endDay = week * 7;
@@ -1159,6 +1167,7 @@ function finishConversation(): void {
 	const st = convState;
 	if (!st) return;
 	convState = null;
+	examStore.update((s) => ({ ...s, isConversation: false }));
 	const prefs = get(preferencesStore);
 	const isFa = prefs.language === 'fa';
 

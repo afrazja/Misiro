@@ -1,4 +1,4 @@
-import { vi } from 'vitest';
+import { vi, beforeEach } from 'vitest';
 
 // Web Speech API is browser-only; stub it so any module that imports it doesn't throw
 Object.assign(global, {

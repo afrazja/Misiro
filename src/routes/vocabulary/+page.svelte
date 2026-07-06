@@ -66,7 +66,8 @@
 
 	// ── Lifecycle ──
 	onMount(async () => {
-		language = (await getLanguage()) || 'en';
+		const savedLang = await getLanguage();
+		language = savedLang === 'fa' || savedLang === 'en' ? savedLang : 'en';
 		preferencesStore.update((s) => ({ ...s, language }));
 
 		speechSupported = initSpeechRecognition();

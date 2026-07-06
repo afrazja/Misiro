@@ -147,7 +147,7 @@ export async function getProgress(): Promise<Progress | null> {
 					const progress: Progress = {
 						currentDay: parsed.data.current_day,
 						currentSentenceIndex: parsed.data.current_sentence_index,
-						lastSaved: parsed.data.last_saved,
+						lastSaved: parsed.data.last_saved ?? 0,
 						xp: parsed.data.xp ?? 0,
 						achievements: parsed.data.achievements ?? []
 					};
@@ -689,7 +689,7 @@ export async function syncOnLogin(): Promise<void> {
 					JSON.stringify({
 						currentDay: p.current_day,
 						currentSentenceIndex: p.current_sentence_index,
-						lastSaved: p.last_saved,
+						lastSaved: p.last_saved ?? 0,
 						xp: p.xp ?? 0,
 						achievements: p.achievements ?? []
 					})

@@ -23,6 +23,8 @@ export interface WrongAnswer {
 export interface ExamState {
 	isExamMode: boolean;
 	isReviewMode: boolean;
+	/** Week Talk conversation in progress (uses its own flow, not exam Qs). */
+	isConversation: boolean;
 	examWeek: number;
 	examQuestions: ExamQuestion[];
 	currentExamIndex: number;
@@ -34,6 +36,7 @@ export interface ExamState {
 const initialState: ExamState = {
 	isExamMode: false,
 	isReviewMode: false,
+	isConversation: false,
 	examWeek: 0,
 	examQuestions: [],
 	currentExamIndex: 0,

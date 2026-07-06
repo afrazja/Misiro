@@ -73,13 +73,15 @@ function resetStores() {
 		currentSentenceIndex: 0,
 		sessionID: 0,
 		completedLessons: {},
-		isListening: false
+		isListening: false,
+		xp: 0
 	});
 	preferencesStore.set({ language: 'en', voiceSpeed: 1.0, blindMode: false, targetLanguage: 'de' });
 	lessonStore.set({ currentLesson: null, glossary: {}, isLoading: false });
 	examStore.set({
 		isExamMode: false,
 		isReviewMode: false,
+		isConversation: false,
 		examWeek: 0,
 		examQuestions: [],
 		currentExamIndex: 0,
@@ -274,7 +276,7 @@ describe('handleVoiceInput (lesson mode)', () => {
 	it('saves progress after a correct answer', async () => {
 		setCallbacks(makeCallbacks());
 		await handleVoiceInput('Guten Morgen');
-		expect(saveProgress).toHaveBeenCalledWith(1, 1);
+		expect(saveProgress).toHaveBeenCalledWith(1, 1, expect.any(Number));
 	});
 
 	it('calls onMessageBubble with the current step on correct answer', async () => {
@@ -328,6 +330,7 @@ describe('handleVoiceInput (exam mode)', () => {
 		examStore.set({
 			isExamMode: true,
 			isReviewMode: false,
+			isConversation: false,
 			examWeek: 1,
 			examQuestions: [
 				{
@@ -433,7 +436,7 @@ describe('manualNext', () => {
 	it('saves progress to the new index', async () => {
 		setCallbacks(makeCallbacks());
 		await manualNext();
-		expect(saveProgress).toHaveBeenCalledWith(1, 1);
+		expect(saveProgress).toHaveBeenCalledWith(1, 1, expect.any(Number));
 	});
 
 	it('returns early when there is no lesson', async () => {

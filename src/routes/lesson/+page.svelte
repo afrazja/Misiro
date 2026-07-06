@@ -61,6 +61,7 @@
 	import { loadGlossary } from "$services/lesson-loader";
 	import { getTranslation, getTranslationLang } from "$utils/i18n";
 	import { makeWordHighlighter } from "$utils/word-timing";
+	import { computeStreak } from "$utils/streak";
 	import { initSyncListeners } from "$services/sync-queue";
 
 	// ============ STATE ============
@@ -1191,13 +1192,21 @@
 										{/if}
 										{#if app.completedLessons}
 											<span class="comp-stat"
-												>🔥 {Object.keys(
+												>🔥 {computeStreak(
 													app.completedLessons,
-												)
-													.length}-{completionData.language ===
+												)}-{completionData.language ===
 												"fa"
 													? "روز"
 													: "day streak"}</span
+											>
+											<span class="comp-stat"
+												>📚 {Object.keys(
+													app.completedLessons,
+												).length}
+												{completionData.language ===
+												"fa"
+													? "روز کامل شده"
+													: "days done"}</span
 											>
 										{/if}
 									</div>
@@ -1349,7 +1358,7 @@
 								: "Lesson Script"}
 						</h3>
 						<div class="script-header-right">
-							{#if lesson.currentLesson}
+							{#if lesson.currentLesson && !exam.isExamMode && !exam.isConversation}
 								<span class="script-count"
 									>{Math.min(
 										app.currentSentenceIndex + 1,
@@ -1365,7 +1374,22 @@
 						</div>
 					</div>
 					<div class="script-container" bind:this={scriptContainerEl}>
-						{#if scriptItems.length === 0}
+						{#if exam.isExamMode || exam.isConversation}
+							<!-- The lesson script doesn't apply to exams or
+							     Week Talks — the previous lesson's script
+							     showing here was just confusing. -->
+							<div class="script-empty">
+								<p>
+									{exam.isConversation
+										? prefs.language === "fa"
+											? "💬 گفتگو در جریان است — از چت دنبال کن."
+											: "💬 Conversation in progress — follow the chat."
+										: prefs.language === "fa"
+											? "📝 آزمون در جریان است — متن درس پنهان است."
+											: "📝 Exam in progress — the script stays hidden."}
+								</p>
+							</div>
+						{:else if scriptItems.length === 0}
 							<div class="script-empty">
 								<p>
 									Lesson script will appear here once you
@@ -1373,7 +1397,7 @@
 								</p>
 							</div>
 						{/if}
-						{#each scriptItems as item, i}
+						{#each exam.isExamMode || exam.isConversation ? [] : scriptItems as item, i}
 							<!-- svelte-ignore a11y_interactive_supports_focus -->
 							<div
 								class="script-item"

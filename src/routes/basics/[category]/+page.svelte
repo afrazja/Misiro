@@ -8,8 +8,16 @@
 	import { appStore } from '$stores/app';
 	import type { Language } from "$stores/preferences";
 	import type { BasicWord, ConjugationTense, DeclensionTable } from "$lib/types/basics";
+	import type { PageData } from "./$types";
 
-	let { data } = $props();
+	// The server load's `let x = null` pattern defeats PageData inference;
+	// widen explicitly to what +page.server.ts actually returns.
+	type CategoryData = PageData & {
+		category?: Record<string, any> | null;
+		words?: BasicWord[] | null;
+		sections?: Array<Record<string, any>> | null;
+	};
+	let { data }: { data: CategoryData } = $props();
 
 	let currentLang = $state("en" as Language);
 	let voiceSpeed: number = $state(1.0);
@@ -225,7 +233,7 @@
 		wrongFlash = false;
 	}
 
-	const hasQuizWords = $derived(words.length > 0 || sections.some((s) => (s.words && s.words.length > 0) || (s.type === 'conjugation' && s.infinitive)));
+	const hasQuizWords = $derived(words.length > 0 || sections.some((s: { words?: unknown[]; type?: string; infinitive?: unknown }) => (s.words && s.words.length > 0) || (s.type === 'conjugation' && s.infinitive)));
 
 	onMount(async () => {
 		const savedLang = await getLanguage();

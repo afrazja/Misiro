@@ -391,7 +391,13 @@ describe('authenticated mode', () => {
 			});
 
 			const progress = await getProgress();
-			expect(progress).toEqual({ currentDay: 5, currentSentenceIndex: 2, lastSaved: 99999 });
+			expect(progress).toEqual({
+				currentDay: 5,
+				currentSentenceIndex: 2,
+				lastSaved: 99999,
+				xp: 0,
+				achievements: []
+			});
 			expect(JSON.parse(localStorage.getItem('mirifer_progress')!)).toEqual(progress);
 		});
 

@@ -124,7 +124,7 @@ export const POST: RequestHandler = async ({ params, url, request }) => {
 		const upstream = await fetch(fullUrl, {
 			method: 'POST',
 			headers: upstreamHeaders,
-			body: bodyData,
+			body: bodyData as BodyInit | undefined,
 		});
 
 		// Return response - handle no-body responses (204, etc.)

@@ -43,11 +43,12 @@ describe('matchVoiceInput', () => {
 		expect(result.isMatch).toBe(true);
 	});
 
-	it('handles substring matches — target word contains user word', () => {
-		// 'morgen'.includes('org') would be true, but user said 'morg' which is a prefix
+	it('rejects heavily truncated words — Levenshtein below threshold', () => {
+		// 'morg' vs 'morgen': similarity 1 - 2/6 ≈ 0.67 < 0.8 — not close enough.
+		// (The old substring matcher accepted any prefix; Levenshtein is stricter.)
 		const result = matchVoiceInput('Guten morg', 'Guten Morgen');
-		// 'guten' === 'guten' ✓, 'morgen'.includes('morg') ✓
-		expect(result.matchedWords).toBe(2);
+		// 'guten' === 'guten' ✓, 'morg' ≉ 'morgen' ✗
+		expect(result.matchedWords).toBe(1);
 	});
 
 	it('returns correct word arrays (lowercased, stripped)', () => {
@@ -56,22 +57,22 @@ describe('matchVoiceInput', () => {
 		expect(result.targetWords).toEqual(['ich', 'bin']);
 	});
 
-	it('handles empty user input — empty string is a substring of every word', () => {
-		// ''.split(/\s+/) yields [''] not [], so the empty "word" matches every
-		// target word via the substring check (every string includes '').
-		// Real voice input is never truly empty; this documents the edge-case behaviour.
+	it('handles empty user input — nothing matches', () => {
+		// levenshteinSimilarity('', word) is 0, so an empty transcript matches
+		// no target words (a silent/failed mic read must never score correct).
 		const result = matchVoiceInput('', 'Guten Morgen');
 		expect(result.userWords).toEqual(['']); // split artifact
-		expect(result.matchedWords).toBe(2); // '' is a substring of every target word
+		expect(result.matchedWords).toBe(0);
+		expect(result.isMatch).toBe(false);
 	});
 
-	it('handles empty target — splits to a single empty-string word', () => {
-		// ''.split(/\s+/) yields [''], not []. The lone empty-string target word
-		// is matched by any user word via substring, so totalWords=1, matchedWords=1.
-		// Real lesson targets are never empty; this documents the edge-case behaviour.
+	it('handles empty target — nothing to match against', () => {
+		// ''.split(/\s+/) yields [''], a single empty-string "word" that no
+		// real user word can be similar to. Real lesson targets are never empty.
 		const result = matchVoiceInput('anything', '');
 		expect(result.totalWords).toBe(1); // [''] — split artifact
-		expect(result.matchedWords).toBe(1);
+		expect(result.matchedWords).toBe(0);
+		expect(result.isMatch).toBe(false);
 	});
 
 	it('matches a single word exactly', () => {

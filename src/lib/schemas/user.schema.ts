@@ -28,11 +28,14 @@ export const UserProfileVoiceSpeedRowSchema = z.object({
 
 // ── user_progress table ───────────────────────────────────────────────────────
 
+// Tolerate null in optional columns — a single nullable field must degrade
+// gracefully, not fail the whole row (which silently zeroed the dashboard).
 export const UserProgressRowSchema = z.object({
 	current_day: z.number().int().positive(),
 	current_sentence_index: z.number().int().nonnegative(),
-	last_saved: z.number(),
-	xp: z.number().int().nonnegative().optional().default(0)
+	last_saved: z.number().nullable(),
+	xp: z.number().int().nonnegative().nullable().optional().default(0),
+	achievements: z.array(z.string()).nullable().optional()
 });
 
 export type UserProgressRow = z.infer<typeof UserProgressRowSchema>;
@@ -41,8 +44,9 @@ export type UserProgressRow = z.infer<typeof UserProgressRowSchema>;
 export const UserProgressFullRowSchema = z.object({
 	current_day: z.number().int().positive(),
 	current_sentence_index: z.number().int().nonnegative(),
-	last_saved: z.number(),
-	xp: z.number().int().nonnegative().optional().default(0),
+	last_saved: z.number().nullable(),
+	xp: z.number().int().nonnegative().nullable().optional().default(0),
+	achievements: z.array(z.string()).nullable().optional(),
 	completed_lessons: z.record(z.string(), z.unknown()).nullable().optional()
 });
 
