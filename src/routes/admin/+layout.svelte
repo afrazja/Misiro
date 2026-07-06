@@ -3,15 +3,17 @@
 </script>
 
 <div class="admin-shell">
-	<nav class="admin-nav">
-		<div class="admin-brand">⚙️ Mirifer Admin</div>
-		<div class="admin-user">👤 {data.adminUser.displayName}</div>
-		<a href="/admin" class="nav-link">📊 Dashboard</a>
-		<a href="/admin/lessons" class="nav-link">📚 Lessons</a>
-		<a href="/admin/basics" class="nav-link">🔤 Basics</a>
-		<a href="/admin/glossary" class="nav-link">📖 Glossary</a>
-		<a href="/" class="nav-link nav-back">← Back to App</a>
-	</nav>
+	{#if data.authorized}
+		<nav class="admin-nav">
+			<div class="admin-brand">⚙️ Mirifer Admin</div>
+			<div class="admin-user">👤 {data.adminUser.displayName}</div>
+			<a href="/admin" class="nav-link">📊 Dashboard</a>
+			<a href="/admin/lessons" class="nav-link">📚 Lessons</a>
+			<a href="/admin/basics" class="nav-link">🔤 Basics</a>
+			<a href="/admin/glossary" class="nav-link">📖 Glossary</a>
+			<a href="/" class="nav-link nav-back">← Back to App</a>
+		</nav>
+	{/if}
 	<main class="admin-main">
 		{@render children()}
 	</main>
