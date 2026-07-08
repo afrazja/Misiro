@@ -6,7 +6,9 @@
 -- so it never blocks or slows down the signup itself.
 --
 -- Prerequisites (do these first — see the steps in the chat):
---   1. A Resend account with mirifer.com verified (DNS records added).
+--   1. A Resend account (no domain verification needed — emails are sent from
+--      the built-in onboarding@resend.dev sender, which delivers only to the
+--      Resend account owner's email).
 --   2. A Resend API key stored in Supabase Vault under the name 'resend_api_key'.
 --
 -- Run this whole file once in the Supabase SQL Editor.
@@ -59,8 +61,12 @@ begin
                  'Authorization', 'Bearer ' || api_key,
                  'Content-Type',  'application/json'
                ),
+    -- 'from' uses Resend's built-in sender (no domain verification needed).
+    -- It can only deliver to the Resend account owner's own email — fine
+    -- here, since the recipient is the admin. If you'd rather send from an
+    -- already-verified domain, swap in e.g. 'Mirifer <noreply@poshkan.com>'.
     body    := jsonb_build_object(
-                 'from',    'Mirifer <noreply@mirifer.com>',
+                 'from',    'Mirifer <onboarding@resend.dev>',
                  'to',      array['afz.javan@gmail.com'],
                  'subject', 'New Mirifer signup: ' || new.email,
                  'html',    '<h2>🎉 New user registered</h2>'
