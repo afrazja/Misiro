@@ -8,3 +8,4 @@ export * from './user.schema';
 export * from './sr.schema';
 export * from './exam.schema';
 export * from './vocabulary.schema';
+export * from './mock-exam.schema';
