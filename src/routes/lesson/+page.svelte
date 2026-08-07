@@ -84,7 +84,10 @@
 	let listenerMode = $state(false);
 	let _listenerSeq = 0;
 	// Review-first flow: due SR items become a warm-up before the day's lesson.
-	const WARMUP_CAP = 8;
+	// Capped low on purpose — a big review wall before new material is the #1
+	// "open app, feel guilt, close app" churn loop. The backlog lives in the
+	// dedicated Review flow instead.
+	const WARMUP_CAP = 3;
 	let dueWarmupCount = $state(0);
 	let warmupThenLesson = $state(false);
 	// Tap-based exam questions: index the user picked (-1 = not yet answered)

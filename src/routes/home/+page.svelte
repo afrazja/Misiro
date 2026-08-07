@@ -678,14 +678,18 @@
 						<span class="ns-icon star"><Icon name="star" size={16} /></span>
 						<span class="ns-value">{totalXp}</span>
 					</button>
-					<button
-						class="nav-stat streak"
-						onclick={() => (showCalendar = true)}
-						title="View Streak History"
-					>
-						<span class="ns-icon flame"><Icon name="flame" size={16} /></span>
-						<span class="ns-value">{streakCount}</span>
-					</button>
+					{#if streakCount > 0}
+						<!-- A zeroed flame is a shame counter, not motivation —
+						     show the streak only once there is one. -->
+						<button
+							class="nav-stat streak"
+							onclick={() => (showCalendar = true)}
+							title="View Streak History"
+						>
+							<span class="ns-icon flame"><Icon name="flame" size={16} /></span>
+							<span class="ns-value">{streakCount}</span>
+						</button>
+					{/if}
 				</div>
 
 				<a href="/settings" class="nav-icon-btn" title="Settings"
@@ -737,16 +741,14 @@
 				{#if progressLoaded}
 					<span class="today-title">
 						{#if dueReviews > 0}
-							{Math.min(dueReviews, 8)}
+							{Math.min(dueReviews, 3)}
 							{language === "fa" ? "مرور" : "reviews"} &nbsp;+&nbsp;
 						{/if}
 						{language === "fa" ? "روز" : "Day"}
 						{todayTitle || currentDay}
 					</span>
 					<span class="today-sub">
-						{language === "fa"
-							? "حدود ۱۰ تا ۱۵ دقیقه"
-							: "~10–15 minutes"}
+						{language === "fa" ? "حدود ۵ تا ۱۰ دقیقه" : "~5–10 minutes"}
 					</span>
 				{:else}
 					<span class="today-title today-loading">
