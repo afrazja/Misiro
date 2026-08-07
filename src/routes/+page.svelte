@@ -468,11 +468,11 @@
 			{#if isAuthenticated}
 				<a href="/home" class="cta-btn primary">Go to My Lessons →</a>
 			{:else}
-				<button class="cta-btn primary" onclick={openSignUp}
-					>Start for Free</button
+				<a href="/try" class="cta-btn primary"
+					>🎙️ Try a Lesson Now — No Signup</a
 				>
-				<button class="cta-btn ghost" onclick={scrollToMethod}
-					>See how it works &darr;</button
+				<button class="cta-btn ghost" onclick={openSignUp}
+					>Start for Free</button
 				>
 			{/if}
 		</div>
@@ -1062,11 +1062,18 @@
 		font-weight: 600;
 		box-shadow: 0 10px 40px rgba(47, 111, 79, 0.35);
 		z-index: 2000;
-		transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+		/* visibility keeps the hidden toast out of screen readers, innerText
+		   and search snippets; the delay lets the slide-out finish first. */
+		visibility: hidden;
+		transition:
+			transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275),
+			visibility 0s 0.5s;
 	}
 
 	.confirm-toast.show {
 		transform: translateX(-50%) translateY(0);
+		visibility: visible;
+		transition-delay: 0s, 0s;
 	}
 
 	/* ── Auth modal ──────────────────────────────────── */

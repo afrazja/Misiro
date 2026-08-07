@@ -9,6 +9,7 @@
 	import { getDueCount } from "$services/spaced-repetition";
 	import { initSyncListeners } from "$services/sync-queue";
 	import { getLessonIndex, type LessonMeta } from "$services/lesson-loader";
+	import { resolveResumePoint } from "$services/lesson-controller";
 	import { computeStreak } from "$utils/streak";
 	import Heatmap from "$lib/components/Heatmap.svelte";
 	import TrophyCabinet from "$lib/components/TrophyCabinet.svelte";
@@ -217,13 +218,17 @@
 
 		const progress =
 			progressRes.status === "fulfilled" ? progressRes.value : null;
-		currentDay = progress?.currentDay ?? 1;
 		totalXp = progress?.xp ?? 0;
 
 		// Actual lesson count from database
 		const index = indexRes.status === "fulfilled" ? indexRes.value : [];
 		totalLessons = index.length;
 		lessonMetaIndex = index;
+
+		// "Today's session" — same rule the lesson page uses, so the card and
+		// the lesson always agree (mid-lesson resumes; otherwise the lowest
+		// not-yet-completed day, never a stale revisit).
+		currentDay = resolveResumePoint(progress, completed).day;
 
 		try {
 			dueReviews = await getDueCount();
@@ -1431,11 +1436,18 @@
 		font-weight: 600;
 		box-shadow: 0 10px 30px rgba(47, 111, 79, 0.35);
 		z-index: 2000;
-		transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+		/* visibility keeps the hidden toast out of screen readers, innerText
+		   and search snippets; the delay lets the slide-out finish first. */
+		visibility: hidden;
+		transition:
+			transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275),
+			visibility 0s 0.5s;
 	}
 
 	.confirm-toast.show {
 		transform: translateX(-50%) translateY(0);
+		visibility: visible;
+		transition-delay: 0s, 0s;
 	}
 
 	/* ── Auth Modal ───────────────────────────────────── */

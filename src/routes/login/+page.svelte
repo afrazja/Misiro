@@ -1,9 +1,17 @@
 <script lang="ts">
 	import { goto } from "$app/navigation";
+	import { onMount } from "svelte";
 	import * as auth from "$services/auth";
 	import * as dataLayer from "$services/data-layer";
 
 	let mode = $state<"signin" | "signup">("signin");
+
+	// Deep link from the guest demo win screen: /login?mode=signup
+	onMount(() => {
+		if (new URLSearchParams(location.search).get("mode") === "signup") {
+			mode = "signup";
+		}
+	});
 	let email = $state("");
 	let password = $state("");
 	let name = $state("");

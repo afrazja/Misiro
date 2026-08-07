@@ -21,6 +21,7 @@ import {
 	loadGlossary,
 	getLesson,
 	getLessonIndex,
+	getTotalLessons,
 	hasLesson
 } from '$services/lesson-loader';
 import { getLanguage, getVoiceSpeed, getCompletedLessons, getProgress, saveProgress, saveCompletedLessons } from '$services/data-layer';
@@ -143,6 +144,44 @@ export function isDayUnlocked(day: number): boolean {
 
 // ============ INITIALIZATION ============
 
+/**
+ * Resolve which day/sentence a returning user should be dropped into.
+ * Requires the lesson index cache to be populated (await getLessonIndex()).
+ *
+ * Rule: saved progress wins ONLY while it points at a genuinely unfinished
+ * lesson (mid-sentence and not completed). Otherwise the frontier wins — the
+ * lowest existing day that isn't completed yet. This stops a revisit to an
+ * old day (or a stale saved index) from hijacking "today's lesson" while the
+ * progress bar says something like 45/100.
+ */
+export function resolveResumePoint(
+	savedProgress: { currentDay: number; currentSentenceIndex: number } | null,
+	completedLessons: Record<string | number, unknown> | null | undefined
+): { day: number; sentenceIndex: number; allDone: boolean } {
+	const completed = completedLessons || {};
+
+	if (savedProgress && hasLesson(savedProgress.currentDay)) {
+		const d = savedProgress.currentDay;
+		const midLesson = (savedProgress.currentSentenceIndex ?? 0) > 0 && !completed[d];
+		if (midLesson) {
+			return { day: d, sentenceIndex: savedProgress.currentSentenceIndex, allDone: false };
+		}
+	}
+
+	// Frontier: lowest existing day not yet completed. Small buffer over the
+	// index length in case day numbering ever has gaps.
+	const maxScan = getTotalLessons() + 10;
+	let lastExisting = 1;
+	for (let d = 1; d <= maxScan; d++) {
+		if (!hasLesson(d)) continue;
+		lastExisting = d;
+		if (!completed[d]) return { day: d, sentenceIndex: 0, allDone: false };
+	}
+
+	// Every existing lesson is completed — park on the last one.
+	return { day: lastExisting, sentenceIndex: 0, allDone: true };
+}
+
 export async function initLesson(): Promise<void> {
 	deactivateConversation(); // stale state from a previous page visit
 	try {
@@ -166,35 +205,18 @@ export async function initLesson(): Promise<void> {
 			getCompletedLessons()
 		]);
 
-		// Determine current day and sentence index.
-		let currentDay = 1;
-		let currentSentenceIndex = 0;
-		let xp = 0;
+		// Determine current day and sentence index. Mid-lesson progress resumes
+		// exactly; otherwise the lowest not-yet-completed day wins (see
+		// resolveResumePoint for the rationale).
+		const resume = resolveResumePoint(savedProgress, completedLessons);
+		const currentDay = resume.day;
+		let currentSentenceIndex = resume.sentenceIndex;
+		const xp = savedProgress?.xp || 0;
 
-		if (savedProgress && hasLesson(savedProgress.currentDay)) {
-			// Primary: restore exactly where the user left off mid-lesson.
-			currentDay = savedProgress.currentDay;
-			currentSentenceIndex = savedProgress.currentSentenceIndex;
-			xp = savedProgress.xp || 0;
-		} else {
-			// Fallback: infer position from completed lessons (new user or missing progress).
-			const completedDays = Object.keys(completedLessons || {})
-				.map(Number)
-				.filter((d) => hasLesson(d));
-
-			if (completedDays.length > 0) {
-				const lastCompletedDay = Math.max(...completedDays);
-				const nextDay = lastCompletedDay + 1;
-				if (hasLesson(nextDay)) {
-					currentDay = nextDay;
-					currentSentenceIndex = 0;
-				} else {
-					currentDay = lastCompletedDay;
-					// Will show completion card
-					const lesson = getLesson(lastCompletedDay);
-					currentSentenceIndex = lesson ? lesson.sentences.length : 0;
-				}
-			}
+		if (resume.allDone) {
+			// Every lesson completed — show the completion card for the last day.
+			const lesson = getLesson(currentDay);
+			currentSentenceIndex = lesson ? lesson.sentences.length : 0;
 		}
 
 		appStore.update((s) => ({
