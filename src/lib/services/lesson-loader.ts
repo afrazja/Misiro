@@ -313,6 +313,47 @@ export function getGlossaryMeaning(word: string, language: Language): string | n
  * Check if a day number has a lesson available (sync, uses cache).
  * Returns false if the index has not been loaded yet.
  */
+/**
+ * Resolve which day/sentence a returning user should be dropped into.
+ * Requires the lesson index cache to be populated (await getLessonIndex()).
+ *
+ * Rule: saved progress wins ONLY while it points at a genuinely unfinished
+ * lesson (mid-sentence and not completed). Otherwise the frontier wins — the
+ * lowest existing day that isn't completed yet. This stops a revisit to an
+ * old day (or a stale saved index) from hijacking "today's lesson" while the
+ * progress bar says something like 45/100.
+ *
+ * Lives here (not lesson-controller) so light pages like /home can use it
+ * without dragging the whole controller module graph into their bundle.
+ */
+export function resolveResumePoint(
+	savedProgress: { currentDay: number; currentSentenceIndex: number } | null,
+	completedLessons: Record<string | number, unknown> | null | undefined
+): { day: number; sentenceIndex: number; allDone: boolean } {
+	const completed = completedLessons || {};
+
+	if (savedProgress && hasLesson(savedProgress.currentDay)) {
+		const d = savedProgress.currentDay;
+		const midLesson = (savedProgress.currentSentenceIndex ?? 0) > 0 && !completed[d];
+		if (midLesson) {
+			return { day: d, sentenceIndex: savedProgress.currentSentenceIndex, allDone: false };
+		}
+	}
+
+	// Frontier: lowest existing day not yet completed. Small buffer over the
+	// index length in case day numbering ever has gaps.
+	const maxScan = getTotalLessons() + 10;
+	let lastExisting = 1;
+	for (let d = 1; d <= maxScan; d++) {
+		if (!hasLesson(d)) continue;
+		lastExisting = d;
+		if (!completed[d]) return { day: d, sentenceIndex: 0, allDone: false };
+	}
+
+	// Every existing lesson is completed — park on the last one.
+	return { day: lastExisting, sentenceIndex: 0, allDone: true };
+}
+
 export function hasLesson(day: number): boolean {
 	if (!indexCache) indexCache = readLS<LessonMeta[]>(LS_INDEX_KEY);
 	if (!indexCache) return false;

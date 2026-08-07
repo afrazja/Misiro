@@ -8,8 +8,11 @@
 	import * as dataLayer from "$services/data-layer";
 	import { getDueCount } from "$services/spaced-repetition";
 	import { initSyncListeners } from "$services/sync-queue";
-	import { getLessonIndex, type LessonMeta } from "$services/lesson-loader";
-	import { resolveResumePoint } from "$services/lesson-controller";
+	import {
+		getLessonIndex,
+		resolveResumePoint,
+		type LessonMeta,
+	} from "$services/lesson-loader";
 	import { computeStreak } from "$utils/streak";
 	import Heatmap from "$lib/components/Heatmap.svelte";
 	import TrophyCabinet from "$lib/components/TrophyCabinet.svelte";
