@@ -4,7 +4,9 @@
  *
  * Strategy:
  * - Mobile: ALL languages → /proxy/tts proxy (speechSynthesis unreliable on phones)
- * - Desktop: German/Farsi → proxy; English → browser speechSynthesis with proxy fallback
+ * - Desktop: German/Farsi/English → proxy (neural voices); browser
+ *   speechSynthesis is only the error fallback and the path for any other
+ *   language.
  */
 
 import { isMobile } from '$utils/device';
@@ -88,9 +90,10 @@ function playWebAudio(
 	const requestedRate = isFinite(rate) && rate > 0 ? rate : 1.0;
 	let safeRate = requestedRate;
 	// voice/rate params only apply to engine-backed languages (German →
-	// ElevenLabs, Persian → Azure); keep other URLs stable.
+	// ElevenLabs/Edge, Persian → Azure/Edge, English → Edge); keep other URLs
+	// stable.
 	let deParams = '';
-	if (shortLang === 'de' || shortLang === 'fa') {
+	if (shortLang === 'de' || shortLang === 'fa' || shortLang === 'en') {
 		// Ask the TTS engine to actually speak slower (natural slow articulation)
 		// instead of time-stretching the audio client-side, which mostly widens
 		// the gaps between words. Both engines support 0.7–1.2; any remainder
@@ -205,8 +208,9 @@ export function playAudioPromise(
 			return;
 		}
 
-		// Desktop: German & Farsi → proxy
-		if (lang.startsWith('de') || lang.startsWith('fa')) {
+		// Desktop: German, Farsi & English → proxy (neural voices; the browser
+		// voices for these are noticeably robotic)
+		if (lang.startsWith('de') || lang.startsWith('fa') || lang.startsWith('en')) {
 			playWebAudio(text, lang, effectiveRate, onTime, voice).then(resolve);
 			return;
 		}

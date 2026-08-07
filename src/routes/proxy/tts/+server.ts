@@ -152,13 +152,22 @@ async function tryAzureFa(text: string, voiceName: string, rate: number): Promis
 	}
 }
 
+// Edge read-aloud voices per language. English: Andrew/Ava Multilingual are
+// Microsoft's most natural pair (browser speechSynthesis and the Google scrape
+// both sound robotic). German: Edge is the FALLBACK tier — used only when the
+// ElevenLabs quota is exhausted, still far better than the Google scrape.
+const EDGE_VOICE_EN_A = env.EDGE_TTS_VOICE_EN || 'en-US-AndrewMultilingualNeural';
+const EDGE_VOICE_EN_B = env.EDGE_TTS_VOICE_EN_B || 'en-US-AvaMultilingualNeural';
+const EDGE_VOICE_DE_A = env.EDGE_TTS_VOICE_DE || 'de-DE-FlorianMultilingualNeural';
+const EDGE_VOICE_DE_B = env.EDGE_TTS_VOICE_DE_B || 'de-DE-SeraphinaMultilingualNeural';
+
 /**
- * Generate Persian audio via Microsoft Edge's read-aloud service — the same
- * fa-IR neural voices as Azure (Dilara/Farid), no account or key required.
- * Unofficial endpoint (same category as the Google Translate fallback below),
- * so any failure returns null and the caller falls back down the chain.
+ * Generate audio via Microsoft Edge's read-aloud service — the same neural
+ * voices as Azure Speech, no account or key required. Unofficial endpoint
+ * (same category as the Google Translate fallback below), so any failure
+ * returns null and the caller falls back down the chain.
  */
-async function tryEdgeFa(text: string, voiceName: string, rate: number): Promise<ArrayBuffer | null> {
+async function tryEdge(text: string, voiceName: string, rate: number): Promise<ArrayBuffer | null> {
 	try {
 		const tts = new MsEdgeTTS();
 		await tts.setMetadata(voiceName, OUTPUT_FORMAT.AUDIO_24KHZ_96KBITRATE_MONO_MP3);
@@ -376,7 +385,51 @@ export const GET: RequestHandler = async ({ url, request }) => {
 				}
 			});
 		}
-		// else: fall through to Google (quota exhausted, no key, or error)
+		// ElevenLabs unavailable (no key / quota / error) → Edge neural German
+		// before the Google scrape.
+		const edgeDe = await tryEdge(
+			text,
+			url.searchParams.get('voice') === 'b' ? EDGE_VOICE_DE_B : EDGE_VOICE_DE_A,
+			speed
+		);
+		if (edgeDe) {
+			return new Response(edgeDe, {
+				status: 200,
+				headers: {
+					'Content-Type': 'audio/mpeg',
+					'Content-Length': edgeDe.byteLength.toString(),
+					'Cache-Control': AUDIO_CACHE_CONTROL,
+					'X-TTS-Source': 'edge',
+					...corsHeaders(origin)
+				}
+			});
+		}
+		// else: fall through to Google
+	}
+
+	// English → Edge neural voices. Both current English paths sound robotic
+	// (desktop browser speechSynthesis and the Google scrape on mobile).
+	if (lang === 'en') {
+		const rawRate = parseFloat(url.searchParams.get('rate') || '1');
+		const rate = isFinite(rawRate) ? rawRate : 1;
+		const edgeEn = await tryEdge(
+			text,
+			url.searchParams.get('voice') === 'b' ? EDGE_VOICE_EN_B : EDGE_VOICE_EN_A,
+			rate
+		);
+		if (edgeEn) {
+			return new Response(edgeEn, {
+				status: 200,
+				headers: {
+					'Content-Type': 'audio/mpeg',
+					'Content-Length': edgeEn.byteLength.toString(),
+					'Cache-Control': AUDIO_CACHE_CONTROL,
+					'X-TTS-Source': 'edge',
+					...corsHeaders(origin)
+				}
+			});
+		}
+		// else: fall through to Google
 	}
 
 	// Persian → Azure Speech, then AiVOOV (Google Translate TTS has no Persian
@@ -406,7 +459,7 @@ export const GET: RequestHandler = async ({ url, request }) => {
 		// 2) Edge read-aloud — same Microsoft voices, free, no account needed.
 		//    Reuses the AZURE_SPEECH_VOICE_FA* overrides since the voice names
 		//    are identical.
-		const edgeAudio = await tryEdgeFa(text, azureVoice, rate);
+		const edgeAudio = await tryEdge(text, azureVoice, rate);
 		if (edgeAudio) {
 			return new Response(edgeAudio, {
 				status: 200,
