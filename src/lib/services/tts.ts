@@ -87,12 +87,13 @@ function playWebAudio(
 	const shortLang = lang.split('-')[0];
 	const requestedRate = isFinite(rate) && rate > 0 ? rate : 1.0;
 	let safeRate = requestedRate;
-	// voice/rate params only apply to German (ElevenLabs); keep other URLs stable.
+	// voice/rate params only apply to engine-backed languages (German →
+	// ElevenLabs, Persian → Azure); keep other URLs stable.
 	let deParams = '';
-	if (shortLang === 'de') {
+	if (shortLang === 'de' || shortLang === 'fa') {
 		// Ask the TTS engine to actually speak slower (natural slow articulation)
 		// instead of time-stretching the audio client-side, which mostly widens
-		// the gaps between words. ElevenLabs supports 0.7–1.2; any remainder
+		// the gaps between words. Both engines support 0.7–1.2; any remainder
 		// outside that range is still applied via playbackRate.
 		const engineSpeed = Math.round(Math.min(1.2, Math.max(0.7, requestedRate)) * 100) / 100;
 		deParams = `&voice=${voice}&rate=${engineSpeed}`;
