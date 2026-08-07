@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { onMount } from "svelte";
+	import AppHeader from "$lib/components/AppHeader.svelte";
 	import { getLanguage, setLanguage } from "$services/data-layer";
 	import type { Language } from "$stores/preferences";
 
@@ -18,7 +19,7 @@
 	);
 
 	const pageTitle = $derived(
-		currentLang === "fa" ? "🔤 مبانی آلمانی" : "🔤 German Basics",
+		currentLang === "fa" ? "مبانی آلمانی" : "German Basics",
 	);
 	const pageSubtitle = $derived(
 		currentLang === "fa"
@@ -56,12 +57,7 @@
 <a href="#categories-container" class="skip-link">Skip to categories</a>
 
 <div class="basics-container">
-	<header class="basics-header">
-		<a href="/home" class="back-btn">&larr; {backText}</a>
-		<div class="header-title">
-			<h1>{pageTitle}</h1>
-			<p>{pageSubtitle}</p>
-		</div>
+	{#snippet headerActions()}
 		<div class="controls">
 			<select
 				aria-label="Select language"
@@ -72,7 +68,17 @@
 				<option value="en">English</option>
 			</select>
 		</div>
-	</header>
+	{/snippet}
+
+	<AppHeader
+		title={pageTitle}
+		subtitle={pageSubtitle}
+		icon="🔤"
+		backHref="/home"
+		backLabel={backText}
+		actions={headerActions}
+		direction={currentLang === "fa" ? "rtl" : "ltr"}
+	/>
 
 	<div class="categories-grid" id="categories-container">
 		{#each categories as cat (cat.key)}
@@ -97,48 +103,6 @@
 		padding: 30px 20px;
 	}
 
-	.basics-header {
-		display: flex;
-		align-items: center;
-		gap: 20px;
-		margin-bottom: 40px;
-		flex-wrap: wrap;
-	}
-
-	.back-btn {
-		display: flex;
-		align-items: center;
-		gap: 8px;
-		padding: 10px 20px;
-		background: var(--paper-sunken);
-		border: 1px solid var(--line);
-		border-radius: 25px;
-		color: var(--ink);
-		text-decoration: none;
-		font-weight: 600;
-		transition: all 0.3s ease;
-	}
-
-	.back-btn:hover {
-		background: var(--accent-wash);
-		transform: translateX(-5px);
-	}
-
-	.header-title {
-		flex: 1;
-	}
-
-	.header-title h1 {
-		font-size: 2rem;
-		color: var(--ink);
-		font-family: var(--font-display);
-	}
-
-	.header-title p {
-		color: var(--ink-soft);
-		margin-top: 5px;
-	}
-
 	.controls select {
 		padding: 8px 16px;
 		border-radius: 20px;
@@ -158,6 +122,7 @@
 		display: grid;
 		grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
 		gap: 20px;
+		margin-top: 28px;
 	}
 
 	.category-card {
@@ -241,15 +206,6 @@
 	}
 
 	@media (max-width: 600px) {
-		.basics-header {
-			flex-direction: column;
-			align-items: flex-start;
-		}
-
-		.header-title h1 {
-			font-size: 1.5rem;
-		}
-
 		.categories-grid {
 			grid-template-columns: 1fr;
 		}

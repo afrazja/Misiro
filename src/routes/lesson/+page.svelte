@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { onMount, onDestroy } from "svelte";
+	import AppHeader from "$lib/components/AppHeader.svelte";
 	import { appStore } from "$stores/app";
 	import { preferencesStore, type Language } from "$stores/preferences";
 	import { lessonStore, type Sentence } from "$stores/lesson";
@@ -709,14 +710,8 @@
 	</div>
 {/if}
 
-<div class="container" class:hidden={showOverlay}>
-	<!-- Header -->
-	<header class="header">
-		<div class="header-left">
-			<a href="/home" class="home-btn">&larr; Home</a>
-			<h1>{"🌍"} Mirifer</h1>
-		</div>
-
+{#snippet lessonHeaderActions()}
+	<div class="lesson-header-actions">
 		<div class="day-selection-control">
 			<label for="day-select">📅 Day:</label>
 			<select
@@ -809,7 +804,19 @@
 		>
 			🎧 {listenerMode ? "Listener ON" : "Listener"}
 		</button>
-	</header>
+	</div>
+{/snippet}
+
+<div class="container" class:hidden={showOverlay}>
+	<AppHeader
+		title="Daily Lessons"
+		icon="📖"
+		backHref="/home"
+		backLabel="Home"
+		actions={lessonHeaderActions}
+		sticky
+		stackActions
+	/>
 
 	<!-- Main Learning Area -->
 	<main class="learning-area">
@@ -1739,48 +1746,12 @@
 		overflow: hidden;
 	}
 
-	/* Header */
-	.header {
+	.lesson-header-actions {
 		display: flex;
 		align-items: center;
+		justify-content: flex-end;
 		gap: 10px;
-		padding: 8px 15px;
-		background: var(--paper-raised);
-		border-bottom: 1px solid var(--line);
-		color: var(--ink);
 		flex-wrap: wrap;
-		z-index: 100;
-	}
-
-	.header-left {
-		display: flex;
-		align-items: center;
-		gap: 10px;
-	}
-
-	.home-btn {
-		display: flex;
-		align-items: center;
-		gap: 5px;
-		padding: 8px 15px;
-		background: transparent;
-		border: 1px solid var(--line);
-		border-radius: 20px;
-		color: var(--ink);
-		text-decoration: none;
-		font-weight: 600;
-		transition: all 0.3s ease;
-		box-shadow: none;
-	}
-
-	.home-btn:hover {
-		background: var(--accent-wash);
-		border-color: var(--accent);
-	}
-
-	.header h1 {
-		font-size: 1.2rem;
-		margin: 0;
 	}
 
 	.day-selection-control,
@@ -1792,8 +1763,8 @@
 		gap: 5px;
 	}
 
-	.header select,
-	.header input[type="checkbox"] {
+	.lesson-header-actions select,
+	.lesson-header-actions input[type="checkbox"] {
 		color: var(--ink);
 		background: var(--paper-sunken);
 		border: 2px solid var(--line);
@@ -1803,7 +1774,7 @@
 		cursor: pointer;
 	}
 
-	.header select option {
+	.lesson-header-actions select option {
 		background: var(--paper-raised);
 		color: var(--ink);
 	}
@@ -1844,7 +1815,7 @@
 		color: #fff8f0;
 	}
 
-	.header label {
+	.lesson-header-actions label {
 		font-weight: 600;
 		cursor: pointer;
 		font-size: 0.9rem;
@@ -2899,18 +2870,9 @@
 
 	/* Responsive */
 	@media (max-width: 600px) {
-		.header {
-			padding: 6px 10px;
-			font-size: 0.85rem;
-		}
-
-		.header h1 {
-			font-size: 1rem;
-		}
-
-		.home-btn {
-			padding: 6px 10px;
-			font-size: 0.85rem;
+		.lesson-header-actions {
+			justify-content: stretch;
+			width: 100%;
 		}
 
 		.blind-mode-control,

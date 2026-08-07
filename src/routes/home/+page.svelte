@@ -25,6 +25,7 @@
 	import TrophyCabinet from "$lib/components/TrophyCabinet.svelte";
 	import InstallAppButton from "$lib/components/InstallAppButton.svelte";
 	import Icon from "$lib/components/Icon.svelte";
+	import AppHeader from "$lib/components/AppHeader.svelte";
 
 	// Auth modal state
 	let showAuthModal = $state(false);
@@ -752,8 +753,7 @@
 {/if}
 
 <div class="home-container">
-	<!-- ── Top Nav ─────────────────────────────────────── -->
-	<nav class="top-nav">
+	{#snippet profileLeading()}
 		<a href="/settings" class="nav-profile-brand" title="Profile Settings">
 			<div class="brand-avatar">
 				{#if avatarUrl}
@@ -764,7 +764,9 @@
 			</div>
 			<span class="brand-text">{displayName}</span>
 		</a>
+	{/snippet}
 
+	{#snippet homeHeaderActions()}
 		<div class="nav-right">
 			<InstallAppButton />
 			{#if isAuthenticated}
@@ -806,7 +808,9 @@
 				>
 			{/if}
 		</div>
-	</nav>
+	{/snippet}
+
+	<AppHeader leading={profileLeading} actions={homeHeaderActions} />
 
 	<!-- ── Welcome Banner ──────────────────────────────── -->
 	<div class="welcome-banner">
@@ -1194,14 +1198,6 @@
 		--install-bg: var(--leaf-wash);
 		--install-border: var(--leaf);
 		--install-fg: var(--leaf);
-	}
-
-	/* ── Top Nav ──────────────────────────────────────── */
-	.top-nav {
-		display: flex;
-		align-items: center;
-		justify-content: space-between;
-		gap: 16px;
 	}
 
 	.nav-profile-brand {

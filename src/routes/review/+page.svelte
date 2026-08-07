@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { onMount } from "svelte";
 	import { goto } from "$app/navigation";
+	import AppHeader from "$lib/components/AppHeader.svelte";
 	import { preferencesStore, type Language } from "$stores/preferences";
 	import {
 		getDueReviewItems,
@@ -114,11 +115,7 @@
 </svelte:head>
 
 <div class="review-page">
-	<header class="review-header">
-		<a href="/home" class="home-btn"
-			>&larr; {prefs.language === "fa" ? "خانه" : "Home"}</a
-		>
-		<h1>🔄 {prefs.language === "fa" ? "مرور" : "Review"}</h1>
+	{#snippet headerActions()}
 		<div class="header-right">
 			<select
 				class="lang-select"
@@ -129,7 +126,18 @@
 				<option value="en">English</option>
 			</select>
 		</div>
-	</header>
+	{/snippet}
+
+	<div class="header-shell">
+		<AppHeader
+			title={prefs.language === "fa" ? "مرور" : "Review"}
+			icon="🔄"
+			backHref="/home"
+			backLabel={prefs.language === "fa" ? "خانه" : "Home"}
+			actions={headerActions}
+			direction={prefs.language === "fa" ? "rtl" : "ltr"}
+		/>
+	</div>
 
 	<main class="review-content">
 		{#if isLoading}
@@ -225,42 +233,10 @@
 		flex-direction: column;
 	}
 
-	/* Header */
-	.review-header {
-		display: flex;
-		align-items: center;
-		gap: 12px;
-		padding: 10px 16px;
-		background: var(--paper-raised);
-		color: var(--ink);
-		border-bottom: 1px solid var(--line);
-	}
-
-	.review-header h1 {
-		font-size: 1.15rem;
-		margin: 0;
-		flex: 1;
-		font-family: var(--font-display);
-	}
-
-	.home-btn {
-		display: flex;
-		align-items: center;
-		gap: 5px;
-		padding: 8px 15px;
-		background: var(--leaf);
-		border-radius: 20px;
-		color: #fff;
-		text-decoration: none;
-		font-weight: 600;
-		transition: all 0.3s ease;
-		box-shadow: 0 2px 5px rgba(0, 0, 0, 0.08);
-		white-space: nowrap;
-		font-size: 0.85rem;
-	}
-
-	.home-btn:hover {
-		background: var(--leaf);
+	.header-shell {
+		width: min(100%, 1100px);
+		margin: 0 auto;
+		padding: 12px 16px 0;
 	}
 
 	.header-right {

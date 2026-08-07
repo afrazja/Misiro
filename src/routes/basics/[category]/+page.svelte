@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { onMount, onDestroy } from "svelte";
+	import AppHeader from "$lib/components/AppHeader.svelte";
 	import { getLanguage, setLanguage, getVoiceSpeed, setVoiceSpeed } from "$services/data-layer";
 	import { stopAllAudio, playAudioPromise } from "$services/tts";
 	import { initSpeechRecognition, setVoiceInputHandler, setMicStateChangeHandler, toggleMic, stopListening, destroySpeechRecognition } from '$services/speech';
@@ -268,16 +269,7 @@
 <a href="#content-container" class="skip-link">Skip to content</a>
 
 <div class="category-container">
-	{#if !quizMode}
-	<header class="category-header">
-		<a href="/basics" class="back-btn">&larr; {backText}</a>
-		<div class="header-title">
-			<h1>
-				<span class="icon">{catIcon}</span>
-				<span>{catTitle}</span>
-			</h1>
-			<p>{catDesc}</p>
-		</div>
+	{#snippet categoryHeaderActions()}
 		<div class="controls">
 			{#if hasQuizWords}
 				<button class="practice-btn" onclick={startQuiz}>Practice</button>
@@ -293,19 +285,34 @@
 				<option value="0.25">{'🐌 0.25x'}</option>
 			</select>
 		</div>
-	</header>
+	{/snippet}
+
+	{#if !quizMode}
+		<div class="category-header-shell">
+			<AppHeader
+				title={catTitle}
+				subtitle={catDesc}
+				icon={catIcon}
+				backHref="/basics"
+				backLabel={backText}
+				actions={categoryHeaderActions}
+				stackActions
+				direction={currentLang === "fa" ? "rtl" : "ltr"}
+			/>
+		</div>
 	{/if}
 
 	{#if quizMode}
 		<!-- ══════ FLASHCARD QUIZ MODE ══════ -->
 		<div class="quiz-area">
-			<div class="quiz-nav">
-				<button class="quiz-back" onclick={exitQuiz}>← Back</button>
-				{#if !quizDone}
-					<span class="quiz-counter">{quizIndex + 1} / {quizDeck.length}</span>
-				{:else}
-					<span class="quiz-counter">Done!</span>
-				{/if}
+			<div class="quiz-header-shell">
+				<AppHeader
+					title={quizDone ? "Done!" : `${quizIndex + 1} / ${quizDeck.length}`}
+					icon={catIcon}
+					onBack={exitQuiz}
+					backLabel={backText}
+					direction={currentLang === "fa" ? "rtl" : "ltr"}
+				/>
 			</div>
 
 			{#if quizDone}
@@ -653,53 +660,8 @@
 		padding: 30px 20px;
 	}
 
-	.category-header {
-		display: flex;
-		align-items: center;
-		gap: 20px;
+	.category-header-shell {
 		margin-bottom: 30px;
-		flex-wrap: wrap;
-	}
-
-	.back-btn {
-		display: flex;
-		align-items: center;
-		gap: 8px;
-		padding: 10px 20px;
-		background: var(--paper-sunken);
-		border: 1px solid var(--line);
-		border-radius: 25px;
-		color: var(--ink);
-		text-decoration: none;
-		font-weight: 600;
-		transition: all 0.3s ease;
-	}
-
-	.back-btn:hover {
-		background: var(--accent-wash);
-		transform: translateX(-5px);
-	}
-
-	.header-title {
-		flex: 1;
-	}
-
-	.header-title h1 {
-		font-size: 2rem;
-		display: flex;
-		align-items: center;
-		gap: 15px;
-		color: var(--ink);
-		font-family: var(--font-display);
-	}
-
-	.header-title h1 .icon {
-		font-size: 2.5rem;
-	}
-
-	.header-title p {
-		color: var(--ink-soft);
-		margin-top: 5px;
 	}
 
 	.controls {
@@ -1118,15 +1080,6 @@
 	}
 
 	@media (max-width: 600px) {
-		.category-header {
-			flex-direction: column;
-			align-items: flex-start;
-		}
-
-		.header-title h1 {
-			font-size: 1.5rem;
-		}
-
 		.word-grid {
 			grid-template-columns: repeat(2, 1fr);
 		}
@@ -1202,28 +1155,9 @@
 		padding: 16px 0;
 	}
 
-	.quiz-nav {
+	.quiz-header-shell {
 		width: 100%;
-		display: flex;
-		align-items: center;
-		justify-content: space-between;
 		margin-bottom: 32px;
-	}
-
-	.quiz-back {
-		background: none;
-		border: none;
-		color: var(--accent-deep);
-		font-size: 0.95rem;
-		font-weight: 600;
-		cursor: pointer;
-		padding: 8px 0;
-	}
-
-	.quiz-counter {
-		font-size: 0.95rem;
-		font-weight: 700;
-		color: var(--ink-soft);
 	}
 
 	.quiz-card {

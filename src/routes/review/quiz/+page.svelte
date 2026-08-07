@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { onMount, onDestroy } from "svelte";
 	import { goto } from "$app/navigation";
+	import AppHeader from "$lib/components/AppHeader.svelte";
 	import { appStore } from "$stores/app";
 	import { preferencesStore } from "$stores/preferences";
 	import { examStore } from "$stores/exam";
@@ -194,13 +195,14 @@
 {/if}
 
 <div class="container" class:hidden={showOverlay}>
-	<!-- Header -->
-	<header class="header">
-		<a href="/review" class="back-btn"
-			>&larr; {prefs.language === "fa" ? "بازگشت" : "Back"}</a
-		>
-		<h1>🔄 {prefs.language === "fa" ? "آزمون مرور" : "Review Quiz"}</h1>
-	</header>
+	<AppHeader
+		title={prefs.language === "fa" ? "آزمون مرور" : "Review Quiz"}
+		icon="🔄"
+		backHref="/review"
+		backLabel={prefs.language === "fa" ? "بازگشت" : "Back"}
+		direction={prefs.language === "fa" ? "rtl" : "ltr"}
+		sticky
+	/>
 
 	<!-- Main Learning Area -->
 	<main class="quiz-area">
@@ -466,36 +468,6 @@
 		flex-direction: column;
 		height: 100vh;
 		background: var(--paper);
-	}
-
-	.header {
-		display: flex;
-		align-items: center;
-		gap: 15px;
-		padding: 12px 20px;
-		background: var(--paper-raised);
-		color: var(--ink);
-		box-shadow: var(--paper-shadow);
-		border-bottom: 1px solid var(--line);
-	}
-	.back-btn {
-		background: var(--paper-sunken);
-		color: var(--ink);
-		padding: 6px 14px;
-		border-radius: 20px;
-		text-decoration: none;
-		font-weight: 600;
-		font-size: 0.9rem;
-		transition: background 0.2s;
-	}
-	.back-btn:hover {
-		background: var(--accent-wash);
-	}
-	.header h1 {
-		font-size: 1.2rem;
-		margin: 0;
-		font-weight: 600;
-		font-family: var(--font-display);
 	}
 
 	.quiz-area {

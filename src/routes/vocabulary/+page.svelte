@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { onMount, onDestroy } from 'svelte';
-	import { goto } from '$app/navigation';
+	import AppHeader from '$lib/components/AppHeader.svelte';
 	import { preferencesStore } from '$stores/preferences';
 	import type { Language } from '$stores/preferences';
 	import { getVocabulary, removeWord, updateWordKnown, getLanguage } from '$services/data-layer';
@@ -206,18 +206,22 @@
 	<title>My Vocabulary - Mirifer</title>
 </svelte:head>
 
+{#snippet listHeaderActions()}
+	{#if words.length > 0}
+		<button class="nav-practice" onclick={startFlashcards}>Practice</button>
+	{/if}
+{/snippet}
+
 <div class="vocab-page">
 	{#if mode === 'list'}
-		<!-- ── Top Nav ── -->
-		<nav class="vocab-nav">
-			<button class="nav-back" onclick={() => goto('/home')}>← Back</button>
-			<h1 class="nav-title">My Vocabulary</h1>
-			{#if words.length > 0}
-				<button class="nav-practice" onclick={startFlashcards}>Practice</button>
-			{:else}
-				<div class="nav-spacer"></div>
-			{/if}
-		</nav>
+		<AppHeader
+			title="My Vocabulary"
+			icon="Aa"
+			backHref="/home"
+			backLabel="Home"
+			actions={listHeaderActions}
+			sticky
+		/>
 
 		{#if loading}
 			<div class="loading-state">
@@ -302,15 +306,13 @@
 
 	{:else}
 		<!-- ══════ FLASHCARD MODE ══════ -->
-		<nav class="vocab-nav">
-			<button class="nav-back" onclick={exitFlashcards}>← Back</button>
-			{#if !flashcardDone}
-				<h1 class="nav-title">{flashcardIndex + 1} / {flashcardDeck.length}</h1>
-			{:else}
-				<h1 class="nav-title">Done!</h1>
-			{/if}
-			<div class="nav-spacer"></div>
-		</nav>
+		<AppHeader
+			title={flashcardDone ? 'Done!' : `${flashcardIndex + 1} / ${flashcardDeck.length}`}
+			icon="Aa"
+			onBack={exitFlashcards}
+			backLabel="Vocabulary"
+			sticky
+		/>
 
 		{#if flashcardDone}
 			<!-- ── All Done ── -->
@@ -424,39 +426,6 @@
 		padding: 0 16px 32px;
 	}
 
-	/* ── Nav ── */
-	.vocab-nav {
-		display: flex;
-		align-items: center;
-		justify-content: space-between;
-		padding: 16px 0;
-		gap: 12px;
-		position: sticky;
-		top: 0;
-		background: var(--paper);
-		z-index: 10;
-	}
-
-	.nav-back {
-		background: none;
-		border: none;
-		color: var(--accent-deep);
-		font-size: 0.95rem;
-		font-weight: 600;
-		cursor: pointer;
-		padding: 8px 0;
-		white-space: nowrap;
-	}
-
-	.nav-title {
-		font-size: 1.15rem;
-		font-weight: 700;
-		font-family: var(--font-display);
-		color: var(--ink);
-		text-align: center;
-		flex: 1;
-	}
-
 	.nav-practice {
 		background: var(--accent-deep);
 		border: none;
@@ -467,10 +436,6 @@
 		border-radius: 20px;
 		cursor: pointer;
 		white-space: nowrap;
-	}
-
-	.nav-spacer {
-		width: 70px;
 	}
 
 	/* ── Loading ── */

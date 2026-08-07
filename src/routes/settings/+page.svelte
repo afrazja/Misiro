@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { onMount } from "svelte";
 	import { goto } from "$app/navigation";
+	import AppHeader from "$lib/components/AppHeader.svelte";
 	import {
 		isAuthenticated,
 		getUser,
@@ -316,8 +317,9 @@
 
 {#if !isLoading}
 	<div class="settings-container">
-		<a href="/home" class="back-link">&larr; Back to Home</a>
-		<h1 class="settings-title">Settings</h1>
+		<div class="settings-header">
+			<AppHeader title="Settings" icon="⚙" backHref="/home" backLabel="Home" />
+		</div>
 
 		<!-- Profile Section -->
 		<div class="settings-section">
@@ -562,25 +564,7 @@
 		color: var(--ink);
 	}
 
-	.back-link {
-		display: inline-flex;
-		align-items: center;
-		gap: 8px;
-		color: var(--ink-soft);
-		text-decoration: none;
-		font-size: 1rem;
-		margin-bottom: 30px;
-		transition: color 0.3s ease;
-	}
-
-	.back-link:hover {
-		color: var(--accent-deep);
-	}
-
-	.settings-title {
-		font-family: var(--font-display);
-		font-size: 2rem;
-		color: var(--ink);
+	.settings-header {
 		margin-bottom: 30px;
 	}
 
@@ -857,10 +841,6 @@
 	}
 
 	@media (max-width: 600px) {
-		.settings-title {
-			font-size: 1.5rem;
-		}
-
 		.avatar-section {
 			flex-direction: column;
 			text-align: center;
