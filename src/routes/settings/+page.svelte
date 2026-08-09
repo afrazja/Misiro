@@ -17,6 +17,8 @@
 		setLanguage,
 		getVoiceSpeed,
 		setVoiceSpeed,
+		getExamSettings,
+		setExamSettings,
 		setAvatarUrl as setLocalAvatarUrl,
 		setDisplayName as setLocalDisplayName,
 	} from "$services/data-layer";
@@ -37,6 +39,17 @@
 	let langStatus = $state<{ text: string; type: "success" | "error" } | null>(
 		null,
 	);
+
+	// Goethe exam plan
+	let examGoal = $state<"scheduled" | "planned" | "none">("none");
+	let examDate = $state("");
+	let examStatus = $state<{ text: string; type: "success" | "error" } | null>(
+		null,
+	);
+	const toISO = (d: Date) =>
+		`${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
+	const minExamDate = toISO(new Date(Date.now() + 86400000));
+	const maxExamDate = toISO(new Date(Date.now() + 2 * 365 * 86400000));
 
 	// Password fields
 	let newPassword = $state("");
@@ -224,6 +237,24 @@
 		setVoiceSpeed(val);
 	}
 
+	// ============ GOETHE EXAM PLAN ============
+	async function handleExamSave() {
+		if (examGoal === "scheduled" && !examDate) {
+			showStatus(
+				(v) => (examStatus = v),
+				"Pick your exam date (or choose another option).",
+				"error",
+				false,
+			);
+			return;
+		}
+		await setExamSettings({
+			goal: examGoal,
+			examDate: examGoal === "scheduled" ? examDate : null,
+		});
+		showStatus((v) => (examStatus = v), "Exam plan saved!", "success");
+	}
+
 	// ============ SIGN OUT ============
 	async function handleSignOut() {
 		await signOut();
@@ -265,6 +296,12 @@
 
 		const savedSpeed = await getVoiceSpeed();
 		if (savedSpeed !== null && !isNaN(savedSpeed)) voiceSpeed = savedSpeed;
+
+		const savedExam = await getExamSettings();
+		if (savedExam) {
+			examGoal = savedExam.goal;
+			examDate = savedExam.examDate ?? "";
+		}
 
 		isLoading = false;
 	});
@@ -427,6 +464,57 @@
 			{#if langStatus}
 				<div class="status-msg {langStatus.type}">
 					{langStatus.text}
+				</div>
+			{/if}
+		</div>
+
+		<!-- Goethe Exam Section -->
+		<div class="settings-section">
+			<h3><span class="section-icon">🎓</span> Goethe A1 Exam</h3>
+
+			<div class="pref-row">
+				<label for="exam-goal">Your plan</label>
+				<div class="target-lang-select" id="exam-goal">
+					<button
+						class="target-btn {examGoal === 'scheduled' ? 'active' : ''}"
+						onclick={() => (examGoal = "scheduled")}
+						type="button">📅 Booked</button
+					>
+					<button
+						class="target-btn {examGoal === 'planned' ? 'active' : ''}"
+						onclick={() => (examGoal = "planned")}
+						type="button">🎯 Planning</button
+					>
+					<button
+						class="target-btn {examGoal === 'none' ? 'active' : ''}"
+						onclick={() => (examGoal = "none")}
+						type="button">🌱 No exam</button
+					>
+				</div>
+			</div>
+
+			{#if examGoal === "scheduled"}
+				<div class="pref-row">
+					<label for="exam-date-input">Exam date</label>
+					<input
+						id="exam-date-input"
+						class="exam-date-input"
+						type="date"
+						bind:value={examDate}
+						min={minExamDate}
+						max={maxExamDate}
+					/>
+				</div>
+			{/if}
+
+			<button
+				class="btn-primary"
+				onclick={handleExamSave}
+				style="margin-top:8px;">Save Exam Plan</button
+			>
+			{#if examStatus}
+				<div class="status-msg {examStatus.type}">
+					{examStatus.text}
 				</div>
 			{/if}
 		</div>
@@ -690,6 +778,21 @@
 	.target-lang-select {
 		display: flex;
 		gap: 8px;
+	}
+
+	.exam-date-input {
+		background: var(--paper-raised);
+		border: 1.5px solid var(--line);
+		border-radius: 10px;
+		padding: 9px 12px;
+		font-size: 0.95rem;
+		font-family: var(--font-body);
+		color: var(--ink);
+	}
+
+	.exam-date-input:focus {
+		border-color: var(--accent);
+		outline: none;
 	}
 
 	.target-btn {

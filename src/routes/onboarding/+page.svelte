@@ -8,28 +8,38 @@
 
 	// The flow steps
 	let step = $state(1);
-	let maxSteps = $state(5);
+	let maxSteps = $state(6);
 
 	// The collected data
 	let targetLanguage = $state<TargetLanguage>("de");
 	let interfaceLanguage = $state<"en" | "fa">("en");
 	let reason = $state("");
+	let examGoal = $state<"scheduled" | "planned" | "none">("none");
+	let examDate = $state("");
+	let showDatePicker = $state(false);
 	let skillLevel = $state("");
 	let dailyGoal = $state("");
 
 	let isSaving = $state(false);
 	let saveError = $state("");
 
+	// Date bounds for the exam picker: tomorrow … +2 years
+	const toISO = (d: Date) =>
+		`${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
+	const minExamDate = toISO(new Date(Date.now() + 86400000));
+	const maxExamDate = toISO(new Date(Date.now() + 2 * 365 * 86400000));
+
 	// Animations
 	let enterClass = $state("slide-in-right");
 
 	function nextStep(
 		val: any,
-		field: "target" | "interface" | "reason" | "skill" | "goal",
+		field: "target" | "interface" | "reason" | "examGoal" | "skill" | "goal",
 	) {
 		if (field === "target") targetLanguage = val;
 		if (field === "interface") interfaceLanguage = val;
 		if (field === "reason") reason = val;
+		if (field === "examGoal") examGoal = val;
 		if (field === "skill") skillLevel = val;
 		if (field === "goal") dailyGoal = val;
 
@@ -44,6 +54,7 @@
 	function prevStep() {
 		if (step > 1) {
 			enterClass = "slide-in-left";
+			showDatePicker = false;
 			step--;
 		}
 	}
@@ -69,6 +80,12 @@
 
 			// Local Data Layer updates
 			await dataLayer.setLanguage(interfaceLanguage);
+
+			// Goethe exam plan — drives the countdown + readiness on /home
+			await dataLayer.setExamSettings({
+				goal: examGoal,
+				examDate: examGoal === "scheduled" && examDate ? examDate : null,
+			});
 
 			// Optional: save the other onboarding data explicitly to the database
 			// (If you want to create a column for it later, or store it in user_metadata)
@@ -259,7 +276,78 @@
 				</div>
 			</div>
 		{:else if step === 4}
-			<!-- STEP 4: CURRENT LEVEL -->
+			<!-- STEP 4: GOETHE A1 EXAM -->
+			<div class="wizard-step {enterClass}">
+				<h2 class="q-title">
+					Are you preparing for the Goethe A1 exam?
+				</h2>
+				<p class="q-sub">
+					If you have a date, your daily plan counts down to it — and
+					shows exactly how ready you are.
+				</p>
+
+				{#if !showDatePicker}
+					<div class="options-grid cols-1">
+						<button
+							class="choice-card flex-row"
+							onclick={() => (showDatePicker = true)}
+						>
+							<span class="emoji">📅</span>
+							<div class="lbl-block">
+								<strong>Yes — my exam is booked</strong>
+								<span>Goethe-Zertifikat A1 (Start Deutsch 1)</span>
+							</div>
+						</button>
+						<button
+							class="choice-card flex-row"
+							onclick={() => nextStep("planned", "examGoal")}
+						>
+							<span class="emoji">🎯</span>
+							<div class="lbl-block">
+								<strong>Planning to take it</strong>
+								<span>No date booked yet.</span>
+							</div>
+						</button>
+						<button
+							class="choice-card flex-row"
+							onclick={() => nextStep("none", "examGoal")}
+						>
+							<span class="emoji">🌱</span>
+							<div class="lbl-block">
+								<strong>Not for an exam</strong>
+								<span>I'm learning German for daily life.</span>
+							</div>
+						</button>
+					</div>
+				{:else}
+					<div class="date-block">
+						<label class="date-label" for="exam-date"
+							>When is your exam?</label
+						>
+						<input
+							id="exam-date"
+							class="date-input"
+							type="date"
+							bind:value={examDate}
+							min={minExamDate}
+							max={maxExamDate}
+						/>
+						<button
+							class="date-continue"
+							disabled={!examDate}
+							onclick={() => nextStep("scheduled", "examGoal")}
+							>Continue →</button
+						>
+						<button
+							class="date-skip"
+							onclick={() => nextStep("planned", "examGoal")}
+							>I don't have a date yet</button
+						>
+					</div>
+				{/if}
+			</div>
+		{:else if step === 5}
+			<!-- STEP 5: CURRENT LEVEL -->
 			<div class="wizard-step {enterClass}">
 				<h2 class="q-title">
 					How much {targetLanguage === "de" ? "German" : "French"} do you
@@ -302,8 +390,8 @@
 					</button>
 				</div>
 			</div>
-		{:else if step === 5}
-			<!-- STEP 5: DAILY GOAL -->
+		{:else if step === 6}
+			<!-- STEP 6: DAILY GOAL -->
 			<div class="wizard-step {enterClass}">
 				<h2 class="q-title">What's your daily goal?</h2>
 				<p class="q-sub">
@@ -569,6 +657,61 @@
 	.lbl-block span {
 		font-size: 0.95rem;
 		color: var(--ink-soft);
+	}
+
+	/* Exam date picker */
+	.date-block {
+		display: flex;
+		flex-direction: column;
+		gap: 14px;
+		max-width: 420px;
+	}
+
+	.date-label {
+		font-weight: 600;
+		color: var(--ink);
+		font-size: 1.05rem;
+	}
+
+	.date-input {
+		background: var(--paper-raised);
+		border: 2px solid var(--line);
+		border-radius: 12px;
+		padding: 14px 16px;
+		font-size: 1.1rem;
+		font-family: var(--font-body);
+		color: var(--ink);
+	}
+
+	.date-input:focus {
+		border-color: var(--accent);
+		outline: none;
+	}
+
+	.date-continue {
+		background: var(--accent);
+		color: #fff8f0;
+		border: none;
+		border-radius: 12px;
+		padding: 14px 20px;
+		font-size: 1.05rem;
+		font-weight: 700;
+		cursor: pointer;
+	}
+
+	.date-continue:disabled {
+		opacity: 0.5;
+		cursor: default;
+	}
+
+	.date-skip {
+		background: none;
+		border: none;
+		color: var(--ink-faint);
+		text-decoration: underline;
+		cursor: pointer;
+		font-size: 0.95rem;
+		padding: 4px;
 	}
 
 	/* Save state */

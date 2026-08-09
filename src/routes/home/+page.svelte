@@ -13,6 +13,13 @@
 		resolveResumePoint,
 		type LessonMeta,
 	} from "$services/lesson-loader";
+	import {
+		computeReadiness,
+		READINESS_MODULES,
+		READINESS_LABELS,
+		type Readiness,
+	} from "$services/readiness";
+	import type { ExamSettings } from "$services/data-layer";
 	import { computeStreak } from "$utils/streak";
 	import Heatmap from "$lib/components/Heatmap.svelte";
 	import TrophyCabinet from "$lib/components/TrophyCabinet.svelte";
@@ -43,6 +50,11 @@
 	let daysCompleted = $state(0);
 	let currentDay = $state(1);
 	let streakCount = $state(0);
+
+	// Goethe hero
+	let readiness = $state<Readiness | null>(null);
+	let examSettings = $state<ExamSettings | null>(null);
+	let examDaysLeft = $state<number | null>(null);
 	let totalXp = $state(0);
 	let dueReviews = $state(0);
 	let savedWordCount = $state(0);
@@ -232,6 +244,16 @@
 		// the lesson always agree (mid-lesson resumes; otherwise the lowest
 		// not-yet-completed day, never a stale revisit).
 		currentDay = resolveResumePoint(progress, completed).day;
+
+		// Goethe hero — exam plan + readiness estimate. Failure just hides
+		// the hero; it must never take the dashboard down with it.
+		try {
+			examSettings = await dataLayer.getExamSettings();
+			examDaysLeft = dataLayer.daysUntilExam(examSettings);
+			readiness = await computeReadiness();
+		} catch {
+			readiness = null;
+		}
 
 		try {
 			dueReviews = await getDueCount();
@@ -733,6 +755,70 @@
 			</div>
 		</div>
 	</div>
+
+	<!-- ── Goethe A1 Readiness Hero ────────────────────── -->
+	{#if isAuthenticated && progressLoaded && readiness && examSettings?.goal !== "none"}
+		<div class="exam-hero">
+			<div class="exam-hero-top">
+				<span class="exam-hero-title"
+					>🎓
+					{language === "fa"
+						? "آمادگی آزمون گوته A1"
+						: "Goethe A1 Readiness"}</span
+				>
+				{#if examDaysLeft !== null && examDaysLeft >= 0}
+					<span class="exam-countdown">
+						{language === "fa"
+							? `${examDaysLeft} روز تا آزمون`
+							: `${examDaysLeft} days to exam`}
+					</span>
+				{:else}
+					<a class="exam-set-date" href="/settings">
+						{language === "fa" ? "تعیین تاریخ آزمون ←" : "Set exam date →"}
+					</a>
+				{/if}
+			</div>
+
+			<div class="exam-hero-main">
+				<div class="exam-score" class:good={readiness.onTrack}>
+					<strong>{readiness.overall}</strong><span>/100</span>
+				</div>
+				<div class="exam-bars">
+					{#each READINESS_MODULES as m (m)}
+						<div class="exam-bar-row">
+							<span class="exam-bar-label"
+								>{READINESS_LABELS[m][
+									language === "fa" ? "fa" : "en"
+								]}</span
+							>
+							<div class="exam-bar">
+								<div
+									class="exam-bar-fill"
+									class:trained={readiness.modules[m].trained}
+									style="width:{readiness.modules[m].score}%"
+								></div>
+							</div>
+							<span class="exam-bar-num">{readiness.modules[m].score}</span>
+						</div>
+					{/each}
+				</div>
+			</div>
+
+			{#if readiness.needsPlacement}
+				<a class="exam-placement-cta" href="/placement">
+					{language === "fa"
+						? "🎯 سطح واقعی‌ات را بسنج — تست تعیین سطح رایگان"
+						: "🎯 Check your real level — free placement test"}
+				</a>
+			{:else}
+				<p class="exam-hero-note">
+					{language === "fa"
+						? "نمره قبولی: ۶۰ از ۱۰۰"
+						: "Pass mark: 60 / 100"}
+				</p>
+			{/if}
+		</div>
+	{/if}
 
 	<!-- ── Today's Session (primary daily action) ──────── -->
 	{#if isAuthenticated}
@@ -1428,6 +1514,159 @@
 	}
 
 	/* ── Toast ────────────────────────────────────────── */
+	/* ── Goethe A1 Readiness Hero ─────────────────────── */
+	.exam-hero {
+		background: var(--paper-raised);
+		border: 1px solid var(--line);
+		border-radius: 18px;
+		box-shadow: var(--paper-shadow);
+		padding: 20px 24px;
+		margin-bottom: 16px;
+		display: flex;
+		flex-direction: column;
+		gap: 14px;
+	}
+
+	.exam-hero-top {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 10px;
+		flex-wrap: wrap;
+	}
+
+	.exam-hero-title {
+		font-weight: 700;
+		color: var(--ink);
+		font-size: 1.02rem;
+	}
+
+	.exam-countdown {
+		background: var(--accent-wash);
+		color: var(--accent-deep);
+		border-radius: 999px;
+		padding: 4px 14px;
+		font-weight: 700;
+		font-size: 0.9rem;
+	}
+
+	.exam-set-date {
+		color: var(--accent-deep);
+		font-weight: 600;
+		font-size: 0.9rem;
+		text-decoration: none;
+		border-bottom: 1px dotted var(--accent);
+	}
+
+	.exam-hero-main {
+		display: flex;
+		align-items: center;
+		gap: 22px;
+	}
+
+	.exam-score {
+		display: flex;
+		align-items: baseline;
+		color: var(--accent-deep);
+		min-width: 92px;
+	}
+
+	.exam-score.good {
+		color: var(--leaf);
+	}
+
+	.exam-score strong {
+		font-family: var(--font-display);
+		font-size: 2.6rem;
+		font-weight: 700;
+		line-height: 1;
+	}
+
+	.exam-score span {
+		color: var(--ink-faint);
+		font-size: 1rem;
+		margin-left: 2px;
+	}
+
+	.exam-bars {
+		flex: 1;
+		display: flex;
+		flex-direction: column;
+		gap: 7px;
+		min-width: 0;
+	}
+
+	.exam-bar-row {
+		display: grid;
+		grid-template-columns: 74px 1fr 30px;
+		align-items: center;
+		gap: 10px;
+	}
+
+	.exam-bar-label {
+		font-size: 0.82rem;
+		color: var(--ink-soft);
+		font-weight: 600;
+		white-space: nowrap;
+	}
+
+	.exam-bar {
+		height: 8px;
+		background: var(--paper-sunken);
+		border-radius: 6px;
+		overflow: hidden;
+	}
+
+	.exam-bar-fill {
+		height: 100%;
+		background: var(--accent);
+		border-radius: 6px;
+		transition: width 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+	}
+
+	.exam-bar-fill.trained {
+		background: var(--leaf);
+	}
+
+	.exam-bar-num {
+		font-size: 0.8rem;
+		color: var(--ink-faint);
+		text-align: right;
+		font-variant-numeric: tabular-nums;
+	}
+
+	.exam-placement-cta {
+		display: block;
+		text-align: center;
+		background: var(--leaf-wash);
+		color: var(--leaf);
+		border: 1.5px dashed var(--leaf);
+		border-radius: 12px;
+		padding: 11px 16px;
+		font-weight: 700;
+		font-size: 0.95rem;
+		text-decoration: none;
+	}
+
+	.exam-hero-note {
+		color: var(--ink-faint);
+		font-size: 0.82rem;
+		text-align: right;
+	}
+
+	@media (max-width: 640px) {
+		.exam-hero-main {
+			flex-direction: column;
+			align-items: stretch;
+			gap: 12px;
+		}
+
+		.exam-score {
+			justify-content: center;
+			min-width: 0;
+		}
+	}
+
 	.confirm-toast {
 		position: fixed;
 		top: 20px;

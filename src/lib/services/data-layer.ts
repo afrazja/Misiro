@@ -85,6 +85,67 @@ export async function setTargetLanguage(lang: string): Promise<void> {
 	}
 }
 
+// ========== GOETHE EXAM SETTINGS (auth metadata + localStorage mirror) ==========
+
+export interface ExamSettings {
+	/** 'scheduled' = has a booked date, 'planned' = intends to take it, 'none' = casual learning */
+	goal: 'scheduled' | 'planned' | 'none';
+	/** ISO date (YYYY-MM-DD); only meaningful when goal === 'scheduled' */
+	examDate: string | null;
+}
+
+const EXAM_SETTINGS_LS_KEY = 'mirifer_exam_settings';
+
+function parseExamSettings(raw: unknown): ExamSettings | null {
+	if (!raw || typeof raw !== 'object') return null;
+	const o = raw as Record<string, unknown>;
+	if (o.goal !== 'scheduled' && o.goal !== 'planned' && o.goal !== 'none') return null;
+	return {
+		goal: o.goal,
+		examDate: typeof o.examDate === 'string' ? o.examDate : null
+	};
+}
+
+export async function getExamSettings(): Promise<ExamSettings | null> {
+	if (await isAuthenticated()) {
+		try {
+			const user = await getUser();
+			const settings = parseExamSettings(user?.user_metadata?.exam_settings);
+			if (settings) {
+				localStorage.setItem(EXAM_SETTINGS_LS_KEY, JSON.stringify(settings));
+				return settings;
+			}
+		} catch (e) {
+			logError('data-layer:getExamSettings', e);
+		}
+	}
+	try {
+		return parseExamSettings(JSON.parse(localStorage.getItem(EXAM_SETTINGS_LS_KEY) || 'null'));
+	} catch {
+		return null;
+	}
+}
+
+export async function setExamSettings(settings: ExamSettings): Promise<void> {
+	localStorage.setItem(EXAM_SETTINGS_LS_KEY, JSON.stringify(settings));
+	try {
+		const client = getSupabaseBrowserClient();
+		await client.auth.updateUser({ data: { exam_settings: settings } });
+	} catch (e) {
+		logError('data-layer:setExamSettings', e);
+	}
+}
+
+/** Whole days until the exam (0 = today, negative = past). Null when no date set. */
+export function daysUntilExam(settings: ExamSettings | null): number | null {
+	if (!settings || settings.goal !== 'scheduled' || !settings.examDate) return null;
+	const exam = new Date(settings.examDate + 'T00:00:00');
+	if (isNaN(exam.getTime())) return null;
+	const now = new Date();
+	const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+	return Math.round((exam.getTime() - today.getTime()) / 86400000);
+}
+
 // ========== VOICE SPEED ==========
 
 export async function getVoiceSpeed(): Promise<number | null> {
