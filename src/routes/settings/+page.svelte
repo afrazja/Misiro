@@ -444,7 +444,7 @@
 			</div>
 
 			<div class="pref-row">
-				<label for="pref-speed">Voice Speed</label>
+				<label for="pref-speed">Voice Speed (German audio)</label>
 				<div class="speed-control">
 					<input
 						type="range"

@@ -198,9 +198,12 @@ export function playAudioPromise(
 		// Don't call stopAllAudio here — callers manage stop/cancel themselves
 		const myGen = ttsGeneration;
 
-		// Apply user's voice speed preference to all paths
+		// The voice-speed preference applies to GERMAN only — the study
+		// language, where slower articulation aids decoding. Narration and
+		// translations in the user's own language always play at natural
+		// pace (slowed native-language speech just sounds broken).
 		const prefs = get(preferencesStore);
-		const effectiveRate = rate * prefs.voiceSpeed;
+		const effectiveRate = lang.startsWith('de') ? rate * prefs.voiceSpeed : rate;
 
 		// On mobile: ALL languages → proxy
 		if (isMobile()) {
