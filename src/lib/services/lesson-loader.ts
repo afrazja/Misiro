@@ -12,7 +12,8 @@ import {
 	LessonRowSchema,
 	LessonDetailRowSchema,
 	SentenceRowSchema,
-	GlossaryRowSchema
+	GlossaryRowSchema,
+	GrammarNoteSchema
 } from '$lib/schemas';
 
 export interface LessonMeta {
@@ -137,12 +138,31 @@ export async function loadLesson(day: number): Promise<Lesson | null> {
 
 	const sb = getSupabaseBrowserClient();
 
-	// Fetch lesson metadata
-	const { data: lessonRow, error: lessonErr } = await sb
+	// Fetch lesson metadata. grammar_note is requested opportunistically: on a
+	// database where the column has not been added yet, Supabase rejects the
+	// whole select, so fall back to the column set that always exists rather
+	// than letting an optional feature break lesson loading.
+	const BASE_COLS =
+		'id, title, title_fa, description, description_fa, grammar_focus, grammar_focus_fa, difficulty';
+	let { data: lessonRow, error: lessonErr } = await sb
 		.from('lessons')
-		.select('id, title, title_fa, description, description_fa, grammar_focus, grammar_focus_fa, difficulty')
+		.select(`${BASE_COLS}, grammar_note`)
 		.eq('day', day)
 		.maybeSingle();
+
+	if (lessonErr) {
+		({ data: lessonRow, error: lessonErr } = await sb
+			.from('lessons')
+			.select(BASE_COLS)
+			.eq('day', day)
+			.maybeSingle());
+		if (!lessonErr) {
+			logWarn(
+				'lesson-loader:loadLesson',
+				'grammar_note column missing — run supabase-grammar-notes.sql to enable grammar moments'
+			);
+		}
+	}
 
 	if (lessonErr || !lessonRow) {
 		logWarn('lesson-loader:loadLesson', `No lesson found for day ${day}`);
@@ -185,6 +205,29 @@ export async function loadLesson(day: number): Promise<Lesson | null> {
 		})
 		.filter((s): s is NonNullable<typeof s> => s !== null);
 
+	// Grammar note is validated on its own so a malformed note degrades to
+	// "no grammar moment" instead of taking the whole lesson down.
+	let grammarNote: Lesson['grammarNote'];
+	if (validatedLesson.grammar_note) {
+		const noteResult = GrammarNoteSchema.safeParse(validatedLesson.grammar_note);
+		if (noteResult.success) {
+			const n = noteResult.data;
+			grammarNote = {
+				title: n.title,
+				titleFa: n.title_fa,
+				explanation: n.explanation,
+				explanationFa: n.explanation_fa,
+				examples: n.examples,
+				basicsKey: n.basics_key
+			};
+		} else {
+			logWarn(
+				'lesson-loader:loadLesson',
+				`Grammar note for day ${day} failed validation: ${noteResult.error.message}`
+			);
+		}
+	}
+
 	const lesson: Lesson = {
 		title: validatedLesson.title,
 		titleFa: validatedLesson.title_fa ?? undefined,
@@ -192,6 +235,7 @@ export async function loadLesson(day: number): Promise<Lesson | null> {
 		descriptionFa: validatedLesson.description_fa ?? undefined,
 		grammarFocus: validatedLesson.grammar_focus ?? undefined,
 		grammarFocusFa: validatedLesson.grammar_focus_fa ?? undefined,
+		grammarNote,
 		difficulty: validatedLesson.difficulty ?? undefined,
 		sentences: validatedSentences.map((s) => ({
 			id: s.sentence_order + 1, // 1-based to match original JSON format

@@ -44,6 +44,8 @@ import { logError } from '$utils/error';
 
 export interface LessonCallbacks {
 	onTeachStep: (step: TeachStepData) => void;
+	/** End-of-lesson grammar moment; null clears it. */
+	onGrammarMoment?: (data: GrammarMomentData | null) => void;
 	onCompletionCard: (data: CompletionCardData) => void;
 	onAnswerPrompt: (message: string) => void;
 	onMessageBubble: (step: Sentence) => void;
@@ -76,6 +78,15 @@ export interface TeachStepData {
 	hint?: string;
 	hintFa?: string;
 	difficulty?: string;
+}
+
+export interface GrammarMomentData {
+	language: Language;
+	title: string;
+	explanation: string;
+	examples: Array<{ de: string; gloss?: string }>;
+	/** Basics category to deep-link into, when the note names one. */
+	basicsKey?: string;
 }
 
 export interface CompletionCardData {
@@ -123,8 +134,24 @@ export interface VoiceResultData {
 
 let callbacks: LessonCallbacks | null = null;
 
+/** Guards the end-of-lesson grammar moment so it shows once per lesson visit. */
+let grammarMomentShown = false;
+
 export function setCallbacks(cb: LessonCallbacks) {
 	callbacks = cb;
+}
+
+/**
+ * Dismiss the grammar moment and fall through to the completion card.
+ * Called by the lesson page when the learner taps continue.
+ */
+export async function continueAfterGrammar(): Promise<void> {
+	callbacks?.onGrammarMoment?.(null);
+	const app = get(appStore);
+	const prefs = get(preferencesStore);
+	const lesson = get(lessonStore).currentLesson;
+	if (!lesson) return;
+	await handleLessonCompletion(lesson, app, prefs);
 }
 
 /** Get the current session ID for abort checking */
@@ -151,6 +178,7 @@ export function isDayUnlocked(day: number): boolean {
 
 export async function initLesson(): Promise<void> {
 	deactivateConversation(); // stale state from a previous page visit
+	grammarMomentShown = false;
 	try {
 		// Load saved language preference
 		const savedLang = await getLanguage();
@@ -229,6 +257,26 @@ export async function processNextStep(skipAudio = false): Promise<void> {
 
 	// Lesson complete?
 	if (app.currentSentenceIndex >= lesson.sentences.length) {
+		// Grammar moment first (once per visit): the learner has just used the
+		// pattern, so this consolidates rather than front-loads. Only when the
+		// lesson has a note and the page can render it.
+		if (lesson.grammarNote && !grammarMomentShown && callbacks?.onGrammarMoment) {
+			grammarMomentShown = true;
+			stopAllAudio();
+			const n = lesson.grammarNote;
+			const isFa = prefs.language === 'fa';
+			callbacks.onGrammarMoment({
+				language: prefs.language,
+				title: (isFa && n.titleFa) || n.title,
+				explanation: (isFa && n.explanationFa) || n.explanation,
+				examples: (n.examples || []).map((ex) => ({
+					de: ex.de,
+					gloss: (isFa ? ex.fa : ex.en) || ex.en || ex.fa
+				})),
+				basicsKey: n.basicsKey
+			});
+			return; // continueAfterGrammar() resumes into the completion card
+		}
 		await handleLessonCompletion(lesson, app, prefs);
 		return;
 	}
@@ -382,6 +430,7 @@ export async function manualNext(): Promise<void> {
 export async function goToNextDay(nextDay: number): Promise<void> {
 	incrementSession();
 	stopAllAudio();
+	grammarMomentShown = false; // each day gets its own grammar moment
 
 	appStore.update((s) => ({
 		...s,
@@ -417,6 +466,7 @@ export async function changeDay(day: number): Promise<void> {
 
 	incrementSession();
 	stopAllAudio();
+	grammarMomentShown = false; // each day gets its own grammar moment
 
 	examStore.update((s) => ({ ...s, isExamMode: false, isReviewMode: false }));
 

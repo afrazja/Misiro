@@ -22,6 +22,7 @@ vi.mock('$services/data-layer', () => ({
 	getVoiceSpeed: vi.fn().mockResolvedValue(null),
 	getProgress: vi.fn().mockResolvedValue(null),
 	getCompletedLessons: vi.fn().mockResolvedValue({}),
+	loadSRData: vi.fn().mockResolvedValue({}),
 	saveProgress: vi.fn().mockResolvedValue(undefined),
 	saveCompletedLessons: vi.fn().mockResolvedValue(undefined),
 	saveExamResult: vi.fn().mockResolvedValue(undefined)
@@ -58,6 +59,9 @@ import {
 	setCallbacks,
 	handleVoiceInput,
 	manualNext,
+	processNextStep,
+	continueAfterGrammar,
+	initLesson,
 	type LessonCallbacks
 } from './lesson-controller';
 import { playTone } from '$services/audio-context';
@@ -95,6 +99,7 @@ function resetStores() {
 function makeCallbacks(overrides: Partial<LessonCallbacks> = {}): LessonCallbacks {
 	return {
 		onTeachStep: vi.fn(),
+		onGrammarMoment: vi.fn(),
 		onCompletionCard: vi.fn(),
 		onAnswerPrompt: vi.fn(),
 		onMessageBubble: vi.fn(),
@@ -132,6 +137,106 @@ const sampleLesson = {
 		}
 	]
 };
+
+/** Lesson carrying an end-of-lesson grammar note. */
+const lessonWithGrammar = {
+	...sampleLesson,
+	grammarNote: {
+		title: 'Verb in position 2',
+		titleFa: 'فعل در جایگاه دوم',
+		explanation: 'In a German statement the conjugated verb is always the second element.',
+		explanationFa: 'در جملهٔ خبری آلمانی، فعل صرف‌شده همیشه عنصر دوم است.',
+		examples: [
+			{ de: 'Heute lerne ich Deutsch.', en: 'Today I learn German.', fa: 'امروز آلمانی یاد می‌گیرم.' }
+		],
+		basicsKey: 'pronounsAndSein'
+	}
+};
+
+// ─── Grammar moment ───────────────────────────────────────────────────────────
+
+describe('grammar moment', () => {
+	beforeEach(async () => {
+		resetStores();
+		vi.clearAllMocks();
+		// Clear the once-per-visit guard between tests.
+		await initLesson();
+		resetStores();
+	});
+
+	it('fires before the completion card when the lesson has a note', async () => {
+		const onGrammarMoment = vi.fn();
+		const onCompletionCard = vi.fn();
+		setCallbacks(makeCallbacks({ onGrammarMoment, onCompletionCard }));
+		lessonStore.set({ currentLesson: lessonWithGrammar, glossary: {}, isLoading: false });
+		appStore.update((s) => ({ ...s, currentSentenceIndex: lessonWithGrammar.sentences.length }));
+
+		await processNextStep();
+
+		expect(onGrammarMoment).toHaveBeenCalledTimes(1);
+		expect(onCompletionCard).not.toHaveBeenCalled();
+		const data = onGrammarMoment.mock.calls[0][0];
+		expect(data.title).toBe('Verb in position 2');
+		expect(data.examples[0].de).toBe('Heute lerne ich Deutsch.');
+		expect(data.basicsKey).toBe('pronounsAndSein');
+	});
+
+	it('uses Persian title/explanation when the interface is fa', async () => {
+		const onGrammarMoment = vi.fn();
+		setCallbacks(makeCallbacks({ onGrammarMoment }));
+		preferencesStore.update((s) => ({ ...s, language: 'fa' as const }));
+		lessonStore.set({ currentLesson: lessonWithGrammar, glossary: {}, isLoading: false });
+		appStore.update((s) => ({ ...s, currentSentenceIndex: lessonWithGrammar.sentences.length }));
+
+		await processNextStep();
+
+		const data = onGrammarMoment.mock.calls[0][0];
+		expect(data.title).toBe('فعل در جایگاه دوم');
+		expect(data.examples[0].gloss).toBe('امروز آلمانی یاد می‌گیرم.');
+	});
+
+	it('continueAfterGrammar clears the card and completes the lesson', async () => {
+		const onGrammarMoment = vi.fn();
+		const onCompletionCard = vi.fn();
+		setCallbacks(makeCallbacks({ onGrammarMoment, onCompletionCard }));
+		lessonStore.set({ currentLesson: lessonWithGrammar, glossary: {}, isLoading: false });
+		appStore.update((s) => ({ ...s, currentSentenceIndex: lessonWithGrammar.sentences.length }));
+
+		await processNextStep();
+		await continueAfterGrammar();
+
+		expect(onGrammarMoment).toHaveBeenLastCalledWith(null);
+		expect(onCompletionCard).toHaveBeenCalledTimes(1);
+	});
+
+	it('shows only once — a second pass goes straight to completion', async () => {
+		const onGrammarMoment = vi.fn();
+		const onCompletionCard = vi.fn();
+		setCallbacks(makeCallbacks({ onGrammarMoment, onCompletionCard }));
+		lessonStore.set({ currentLesson: lessonWithGrammar, glossary: {}, isLoading: false });
+		appStore.update((s) => ({ ...s, currentSentenceIndex: lessonWithGrammar.sentences.length }));
+
+		await processNextStep();
+		onGrammarMoment.mockClear();
+		await processNextStep();
+
+		expect(onGrammarMoment).not.toHaveBeenCalled();
+		expect(onCompletionCard).toHaveBeenCalledTimes(1);
+	});
+
+	it('lessons without a note go straight to the completion card', async () => {
+		const onGrammarMoment = vi.fn();
+		const onCompletionCard = vi.fn();
+		setCallbacks(makeCallbacks({ onGrammarMoment, onCompletionCard }));
+		lessonStore.set({ currentLesson: sampleLesson, glossary: {}, isLoading: false });
+		appStore.update((s) => ({ ...s, currentSentenceIndex: sampleLesson.sentences.length }));
+
+		await processNextStep();
+
+		expect(onGrammarMoment).not.toHaveBeenCalled();
+		expect(onCompletionCard).toHaveBeenCalledTimes(1);
+	});
+});
 
 // ─── isDayUnlocked ────────────────────────────────────────────────────────────
 

@@ -22,8 +22,10 @@
 		getDueCount,
 		incrementSession,
 		skipAndRemoveReviewItem,
+		continueAfterGrammar,
 		type TeachStepData,
 		type CompletionCardData,
+		type GrammarMomentData,
 		type ExamQuestionData,
 		type ExamResultsData,
 		type VoiceResultData,
@@ -76,6 +78,7 @@
 	let spokenWordIndex = $state(-1); // karaoke: German word currently being read
 	let showHint = $state(false);
 	let completionData: CompletionCardData | null = $state(null);
+	let grammarMoment: GrammarMomentData | null = $state(null);
 	let examQuestionData: ExamQuestionData | null = $state(null);
 	let examResultsData: ExamResultsData | null = $state(null);
 	let examProgressCurrent = $state(0);
@@ -305,6 +308,7 @@
 				spokenWordIndex = -1; // reset karaoke highlight for the new sentence
 				showHint = false;
 				completionData = null;
+				grammarMoment = null;
 				examQuestionData = null;
 				examResultsData = null;
 				voiceResult = null;
@@ -314,6 +318,14 @@
 			},
 			onSpokenWord(index) {
 				spokenWordIndex = index;
+			},
+			onGrammarMoment(data) {
+				grammarMoment = data;
+				if (data) {
+					currentTeachStep = null;
+					isSpeaking = false;
+					updateScript();
+				}
 			},
 			onCompletionCard(data) {
 				currentTeachStep = null;
@@ -381,6 +393,7 @@
 			onExamQuestion(data) {
 				currentTeachStep = null;
 				completionData = null;
+				grammarMoment = null;
 				examResultsData = null;
 				voiceResult = null;
 				choiceAnswered = -1;
@@ -389,6 +402,7 @@
 			onExamFinished(data) {
 				currentTeachStep = null;
 				completionData = null;
+				grammarMoment = null;
 				examQuestionData = null;
 				voiceResult = null;
 				examResultsData = data;
@@ -415,6 +429,7 @@
 				chatMessages = [];
 				currentTeachStep = null;
 				completionData = null;
+				grammarMoment = null;
 				examQuestionData = null;
 				examResultsData = null;
 				voiceResult = null;
@@ -1207,6 +1222,73 @@
 							</div>
 						{/if}
 
+						<!-- Grammar Moment (after the last sentence, before completion) -->
+						{#if grammarMoment}
+							<div class="message system grammar-moment">
+								<div class="text">
+									<div class="gm-head">
+										<span class="gm-badge"
+											>📘 {grammarMoment.language === "fa"
+												? "نکتهٔ گرامری"
+												: "Grammar moment"}</span
+										>
+									</div>
+									<h3 class="gm-title">{grammarMoment.title}</h3>
+									<p
+										class="gm-explanation"
+										dir={grammarMoment.language === "fa" ? "rtl" : "ltr"}
+									>
+										{grammarMoment.explanation}
+									</p>
+									{#if grammarMoment.examples.length}
+										<ul class="gm-examples">
+											{#each grammarMoment.examples as ex (ex.de)}
+												<li>
+													<button
+														class="gm-play"
+														onclick={() =>
+															playAudioPromise(ex.de, 0.85, "de-DE")}
+														aria-label="Play example"
+													>
+														🔊
+													</button>
+													<span class="gm-de">{ex.de}</span>
+													{#if ex.gloss}
+														<span
+															class="gm-gloss"
+															dir={grammarMoment.language === "fa"
+																? "rtl"
+																: "ltr"}>{ex.gloss}</span
+														>
+													{/if}
+												</li>
+											{/each}
+										</ul>
+									{/if}
+									<div class="gm-actions">
+										{#if grammarMoment.basicsKey}
+											<a
+												class="gm-basics"
+												href="/basics/{grammarMoment.basicsKey}"
+											>
+												{grammarMoment.language === "fa"
+													? "بیشتر در مبانی ←"
+													: "More in Basics →"}
+											</a>
+										{/if}
+										<button
+											class="gm-continue"
+											onclick={() => continueAfterGrammar()}
+										>
+											{grammarMoment.language === "fa"
+												? "فهمیدم ←"
+												: "Got it →"}
+										</button>
+									</div>
+								</div>
+							</div>
+						{/if}
+
 						<!-- Completion Card -->
 						{#if completionData}
 							<div class="message system completion-card">
@@ -1704,6 +1786,106 @@
 		font-size: 0.85rem;
 		color: var(--ink-soft);
 		font-weight: 600;
+	}
+
+	/* ── Grammar moment (end-of-lesson consolidation card) ── */
+	.grammar-moment .text {
+		text-align: start;
+		max-width: 560px;
+	}
+
+	.gm-head {
+		margin-bottom: 8px;
+	}
+
+	.gm-badge {
+		background: #e8ecf7;
+		color: #3a5390;
+		border-radius: 999px;
+		padding: 3px 12px;
+		font-size: 0.78rem;
+		font-weight: 800;
+		text-transform: uppercase;
+		letter-spacing: 0.04em;
+	}
+
+	.gm-title {
+		font-family: var(--font-display);
+		font-size: 1.15rem;
+		color: var(--ink);
+		margin: 0 0 6px;
+	}
+
+	.gm-explanation {
+		color: var(--ink-soft);
+		line-height: 1.7;
+		margin: 0 0 10px;
+	}
+
+	.gm-examples {
+		list-style: none;
+		padding: 0;
+		margin: 0 0 12px;
+		display: flex;
+		flex-direction: column;
+		gap: 6px;
+	}
+
+	.gm-examples li {
+		display: flex;
+		align-items: baseline;
+		gap: 8px;
+		flex-wrap: wrap;
+		background: var(--paper-sunken);
+		border-radius: 8px;
+		padding: 7px 11px;
+	}
+
+	.gm-play {
+		background: none;
+		border: none;
+		cursor: pointer;
+		font-size: 0.9rem;
+		padding: 0;
+		line-height: 1;
+	}
+
+	.gm-de {
+		font-weight: 700;
+		color: var(--ink);
+	}
+
+	.gm-gloss {
+		color: var(--ink-faint);
+		font-size: 0.88rem;
+	}
+
+	.gm-actions {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 10px;
+		flex-wrap: wrap;
+	}
+
+	.gm-basics {
+		color: var(--accent-deep);
+		font-weight: 600;
+		font-size: 0.9rem;
+		text-decoration: none;
+		border-bottom: 1px dotted var(--accent);
+	}
+
+	.gm-continue {
+		background: var(--accent);
+		color: #fff8f0;
+		border: none;
+		border-radius: 10px;
+		padding: 10px 20px;
+		font-size: 0.98rem;
+		font-weight: 700;
+		cursor: pointer;
+		margin-inline-start: auto;
 	}
 
 	/* Readiness delta on the completion card — the daily payoff moment. */

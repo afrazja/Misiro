@@ -9,10 +9,33 @@
 		translation_fa: string;
 	};
 
+	type GrammarExample = { de: string; en: string; fa: string };
+
+	/** Basics categories the grammar note can deep-link into. */
+	const BASICS_KEYS = [
+		"pronounsAndSein",
+		"articles",
+		"conjunctions",
+		"numbers",
+		"colors",
+		"days",
+		"months",
+		"prepositions",
+		"cases",
+	];
+
 	let title = $state("");
 	let title_fa = $state("");
 	let group = $state("");
 	let sentences = $state<Sentence[]>([]);
+
+	// Grammar moment (shown after the last sentence of the lesson)
+	let gTitle = $state("");
+	let gTitleFa = $state("");
+	let gExplanation = $state("");
+	let gExplanationFa = $state("");
+	let gBasicsKey = $state("");
+	let gExamples = $state<GrammarExample[]>([]);
 
 	$effect(() => {
 		title = data.lesson.title;
@@ -25,7 +48,38 @@
 			translation: s.translation ?? "",
 			translation_fa: s.translation_fa ?? "",
 		}));
+
+		const n = (data.lesson as any).grammar_note ?? null;
+		gTitle = n?.title ?? "";
+		gTitleFa = n?.title_fa ?? "";
+		gExplanation = n?.explanation ?? "";
+		gExplanationFa = n?.explanation_fa ?? "";
+		gBasicsKey = n?.basics_key ?? "";
+		gExamples = (n?.examples ?? []).map((ex: any) => ({
+			de: ex.de ?? "",
+			en: ex.en ?? "",
+			fa: ex.fa ?? "",
+		}));
 	});
+
+	function addGrammarExample() {
+		gExamples = [...gExamples, { de: "", en: "", fa: "" }];
+	}
+
+	function removeGrammarExample(i: number) {
+		gExamples = gExamples.filter((_, idx) => idx !== i);
+	}
+
+	/** Copy a lesson sentence into the examples list — the best examples are
+	 *  ones the learner just practised. */
+	function useSentenceAsExample(s: Sentence) {
+		const de = (s.target_text || s.audio_text || "").trim();
+		if (!de) return;
+		gExamples = [
+			...gExamples,
+			{ de, en: s.translation ?? "", fa: s.translation_fa ?? "" },
+		];
+	}
 
 	let saving = $state(false);
 	let saveMsg = $state("");
@@ -69,7 +123,20 @@
 			const res = await fetch(`/admin/lessons/${data.lesson.day}`, {
 				method: "POST",
 				headers: { "Content-Type": "application/json" },
-				body: JSON.stringify({ title, title_fa, group, sentences }),
+				body: JSON.stringify({
+					title,
+					title_fa,
+					group,
+					sentences,
+					grammar_note: {
+						title: gTitle,
+						title_fa: gTitleFa,
+						explanation: gExplanation,
+						explanation_fa: gExplanationFa,
+						basics_key: gBasicsKey,
+						examples: gExamples,
+					},
+				}),
 			});
 			if (!res.ok) {
 				const err = await res.json().catch(() => ({}));
@@ -123,6 +190,87 @@
 			</select>
 		</label>
 	</div>
+</div>
+
+<!-- Grammar moment -->
+<div class="meta-card">
+	<h2>
+		📘 Grammar Moment
+		<span class="gm-hint"
+			>shown after the last sentence · leave title + explanation empty for
+			none</span
+		>
+	</h2>
+	<div class="form-row">
+		<label>
+			Rule title (English)
+			<input
+				type="text"
+				bind:value={gTitle}
+				placeholder="Verb in position 2"
+			/>
+		</label>
+		<label>
+			Rule title (Persian)
+			<input type="text" bind:value={gTitleFa} dir="rtl" />
+		</label>
+		<label>
+			Basics link
+			<select bind:value={gBasicsKey}>
+				<option value="">— none —</option>
+				{#each BASICS_KEYS as key (key)}
+					<option value={key}>{key}</option>
+				{/each}
+			</select>
+		</label>
+	</div>
+	<div class="form-row">
+		<label>
+			Explanation (English)
+			<textarea
+				rows="2"
+				bind:value={gExplanation}
+				placeholder="One or two lines — what the learner just used."
+			></textarea>
+		</label>
+		<label>
+			Explanation (Persian)
+			<textarea rows="2" bind:value={gExplanationFa} dir="rtl"></textarea>
+		</label>
+	</div>
+
+	<div class="gm-examples-head">
+		<strong>Examples ({gExamples.length})</strong>
+		<button class="btn-add small" onclick={addGrammarExample}
+			>+ Add example</button
+		>
+	</div>
+	{#each gExamples as ex, i (i)}
+		<div class="gm-example-row">
+			<input type="text" bind:value={ex.de} placeholder="German" />
+			<input type="text" bind:value={ex.en} placeholder="English" />
+			<input type="text" bind:value={ex.fa} placeholder="Persian" dir="rtl" />
+			<button class="btn-del small" onclick={() => removeGrammarExample(i)}
+				>✕</button
+			>
+		</div>
+	{/each}
+	{#if sentences.length}
+		<details class="gm-pick">
+			<summary>Use a lesson sentence as an example</summary>
+			<div class="gm-pick-list">
+				{#each sentences as s, i (i)}
+					{@const de = s.target_text || s.audio_text}
+					{#if de}
+						<button class="gm-pick-item" onclick={() => useSentenceAsExample(s)}>
+							#{i + 1}
+							{de}
+						</button>
+					{/if}
+				{/each}
+			</div>
+		</details>
+	{/if}
 </div>
 
 <!-- Sentences -->
@@ -271,17 +419,85 @@
 		color: #aaa;
 	}
 	input,
-	select {
+	select,
+	textarea {
 		padding: 8px 12px;
 		background: rgba(255, 255, 255, 0.08);
 		border: 1px solid rgba(255, 255, 255, 0.15);
 		border-radius: 8px;
 		color: #fff;
 		font-size: 0.9rem;
+		font-family: inherit;
+		resize: vertical;
 	}
 	input:focus,
-	select:focus {
+	select:focus,
+	textarea:focus {
 		outline: none;
+		border-color: #2ecc71;
+	}
+
+	/* ── Grammar moment editor ── */
+	.gm-hint {
+		font-size: 0.72rem;
+		font-weight: 400;
+		color: #888;
+		margin-left: 8px;
+	}
+
+	.gm-examples-head {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		margin: 16px 0 8px;
+		color: #ccc;
+		font-size: 0.85rem;
+	}
+
+	.gm-example-row {
+		display: grid;
+		grid-template-columns: 1fr 1fr 1fr auto;
+		gap: 8px;
+		margin-bottom: 8px;
+	}
+
+	.btn-add.small,
+	.btn-del.small {
+		padding: 5px 10px;
+		font-size: 0.78rem;
+	}
+
+	.gm-pick {
+		margin-top: 10px;
+		font-size: 0.82rem;
+		color: #aaa;
+	}
+
+	.gm-pick summary {
+		cursor: pointer;
+	}
+
+	.gm-pick-list {
+		display: flex;
+		flex-direction: column;
+		gap: 4px;
+		margin-top: 8px;
+		max-height: 180px;
+		overflow-y: auto;
+	}
+
+	.gm-pick-item {
+		text-align: left;
+		background: rgba(255, 255, 255, 0.05);
+		border: 1px solid rgba(255, 255, 255, 0.1);
+		border-radius: 6px;
+		padding: 6px 10px;
+		color: #ddd;
+		font-size: 0.82rem;
+		cursor: pointer;
+	}
+
+	.gm-pick-item:hover {
 		border-color: #2ecc71;
 	}
 

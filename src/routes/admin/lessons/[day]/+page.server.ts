@@ -7,7 +7,7 @@ export const load: PageServerLoad = async ({ params, locals }) => {
 
 	const { data: lesson, error: lessonErr } = await locals.supabase
 		.from('lessons')
-		.select('id, day, title, title_fa, group, sort_order')
+		.select('id, day, title, title_fa, group, sort_order, grammar_note')
 		.eq('day', day)
 		.maybeSingle();
 

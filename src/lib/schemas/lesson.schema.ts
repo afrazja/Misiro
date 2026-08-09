@@ -18,6 +18,32 @@ export const LessonRowSchema = z.object({
 
 export type LessonRow = z.infer<typeof LessonRowSchema>;
 
+/**
+ * The "grammar moment" shown after the last sentence of a lesson —
+ * consolidation of the pattern the learner just practised, not a lecture
+ * before it. Stored as JSONB on `lessons.grammar_note` (same composite-
+ * content approach as `basics_sections`), so adding fields needs no
+ * migration. `basics_key` deep-links into an existing Basics category.
+ */
+export const GrammarNoteSchema = z.object({
+	title: z.string(),
+	title_fa: z.string().optional(),
+	explanation: z.string(),
+	explanation_fa: z.string().optional(),
+	examples: z
+		.array(
+			z.object({
+				de: z.string(),
+				en: z.string().optional(),
+				fa: z.string().optional()
+			})
+		)
+		.optional(),
+	basics_key: z.string().optional()
+});
+
+export type GrammarNoteRow = z.infer<typeof GrammarNoteSchema>;
+
 // Single lesson row (id + title + quality fields, used in loadLesson)
 export const LessonDetailRowSchema = z.object({
 	id: z.string().uuid(),
@@ -27,6 +53,9 @@ export const LessonDetailRowSchema = z.object({
 	description_fa: z.string().nullable().optional(),
 	grammar_focus: z.string().nullable().optional(),
 	grammar_focus_fa: z.string().nullable().optional(),
+	// Unparsed here on purpose: a malformed note must not invalidate the whole
+	// lesson row. loadLesson() validates it separately and drops it if bad.
+	grammar_note: z.unknown().nullable().optional(),
 	difficulty: z.string().nullable().optional()
 });
 
