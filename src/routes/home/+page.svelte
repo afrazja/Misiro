@@ -812,41 +812,6 @@
 
 	<AppHeader leading={profileLeading} actions={homeHeaderActions} />
 
-	<!-- ── Welcome Banner ──────────────────────────────── -->
-	<div class="welcome-banner">
-		<div class="welcome-left">
-			<div>
-				{#if isAuthenticated}
-					<div class="welcome-header-row">
-						<div>
-							<h1>
-								{language === "fa"
-									? `خوش برگشتی، ${displayName.split(" ")[0]}! 👋`
-									: `Welcome back, ${displayName.split(" ")[0]}! 👋`}
-							</h1>
-							<p>
-								{streakCount > 0
-									? language === "fa"
-										? `${streakCount} روز پشت‌سرهم تمرین کردی — همین‌طور ادامه بده!`
-										: `You're on a ${streakCount}-day streak — keep it going!`
-									: language === "fa"
-										? "از همان‌جا که بودی ادامه بده."
-										: "Pick up where you left off."}
-							</p>
-						</div>
-					</div>
-				{:else}
-					<h1>Mirifer</h1>
-					<p>
-						{language === "fa"
-							? "آلمانی را طبیعی یاد بگیر"
-							: "Learn German the Natural Way"}
-					</p>
-				{/if}
-			</div>
-		</div>
-	</div>
-
 	<!-- ── First Step (day-zero users): one door only ──── -->
 	{#if isNewUser}
 		<div class="first-step">
@@ -1280,30 +1245,6 @@
 		background: var(--accent-wash);
 	}
 
-	/* ── Welcome Banner ───────────────────────────────── */
-	.welcome-banner {
-		background: var(--paper-raised);
-		border: 1px solid var(--line);
-		border-radius: 18px;
-		box-shadow: var(--paper-shadow);
-		padding: 28px 32px;
-		display: flex;
-		align-items: center;
-		justify-content: space-between;
-		gap: 20px;
-	}
-
-	.welcome-banner p {
-		color: var(--ink-soft);
-	}
-
-	.welcome-left {
-		display: flex;
-		align-items: center;
-		gap: 20px;
-		flex: 1;
-	}
-
 	/* ── Today's Session hero ── */
 	.today-session {
 		display: flex;
@@ -1378,14 +1319,6 @@
 		}
 	}
 
-	.welcome-header-row {
-		display: flex;
-		justify-content: space-between;
-		align-items: flex-start;
-		width: 100%;
-		gap: 20px;
-	}
-
 	.nav-stats {
 		display: flex;
 		align-items: center;
@@ -1434,20 +1367,6 @@
 	.ns-value {
 		font-size: 0.9rem;
 		font-weight: 700;
-	}
-
-	.welcome-left h1 {
-		font-family: var(--font-display);
-		font-size: 1.7rem;
-		font-weight: 700;
-		margin: 0 0 6px;
-		color: var(--ink);
-	}
-
-	.welcome-left p {
-		margin: 0;
-		color: #a0a0a0;
-		font-size: 0.95rem;
 	}
 
 	/* ── Stats Row ────────────────────────────────────── */
@@ -2492,18 +2411,6 @@
 			grid-template-columns: 1fr;
 		}
 
-		.welcome-banner {
-			flex-direction: column;
-			align-items: stretch;
-			gap: 18px;
-			padding: 20px;
-		}
-
-		.welcome-header-row {
-			flex-direction: column;
-			gap: 12px;
-		}
-
 		.brand-text {
 			display: none;
 		}
@@ -2524,18 +2431,6 @@
 		.nav-text-btn {
 			padding: 4px 10px;
 			font-size: 0.75rem;
-		}
-
-		.welcome-left {
-			gap: 14px;
-		}
-
-		.welcome-left h1 {
-			font-size: 1.35rem;
-		}
-
-		.welcome-left p {
-			font-size: 0.88rem;
 		}
 
 		.mastery-grid {
