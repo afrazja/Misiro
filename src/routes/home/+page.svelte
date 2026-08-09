@@ -810,7 +810,7 @@
 		</div>
 	{/snippet}
 
-	<AppHeader leading={profileLeading} actions={homeHeaderActions} />
+	<AppHeader leading={profileLeading} actions={homeHeaderActions} variant="dark" />
 
 	<!-- ── First Step (day-zero users): one door only ──── -->
 	{#if isNewUser}
@@ -1405,7 +1405,7 @@
 
 	.stat-card {
 		background: var(--paper-raised);
-		border: 1px solid var(--line);
+		border: 1.5px solid var(--leaf);
 		border-radius: 14px;
 		box-shadow: var(--paper-shadow);
 		padding: 20px 16px;
@@ -1467,7 +1467,9 @@
 		padding: 36px 32px;
 		text-decoration: none;
 		color: var(--ink);
-		border: 1px solid var(--line);
+		/* Green outline so the cards carry brand colour instead of reading
+		   as plain white panels. */
+		border: 1.5px solid var(--leaf);
 		box-shadow: var(--paper-shadow);
 		transition: all 0.3s ease;
 		display: flex;

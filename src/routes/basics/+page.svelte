@@ -77,6 +77,7 @@
 		backHref="/home"
 		backLabel={backText}
 		actions={headerActions}
+		variant="dark"
 		direction={currentLang === "fa" ? "rtl" : "ltr"}
 	/>
 
@@ -131,7 +132,8 @@
 		padding: 25px;
 		text-decoration: none;
 		color: var(--ink);
-		border: 1px solid var(--line);
+		/* Green outline: the category grid was a wall of white panels. */
+		border: 1.5px solid var(--leaf);
 		box-shadow: var(--paper-shadow);
 		transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 		display: flex;

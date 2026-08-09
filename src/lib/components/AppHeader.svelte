@@ -29,13 +29,20 @@
 		secondaryLabel?: string;
 		sticky?: boolean;
 		direction?: "ltr" | "rtl";
-		/** "brand" paints the header as a solid green band with its controls
-		 *  inverted — the lesson chrome from the app screenshot. */
-		variant?: "plain" | "brand";
+		/** "brand" = solid green band (lesson chrome from the screenshot).
+		 *  "dark"  = near-black ribbon with green-outlined controls, for the
+		 *  dashboard and Basics where a pale header washed out. */
+		variant?: "plain" | "brand" | "dark";
 	} = $props();
 </script>
 
-<div class="header-stack" class:sticky class:brand-variant={variant === "brand"} dir={direction}>
+<div
+	class="header-stack"
+	class:sticky
+	class:brand-variant={variant === "brand"}
+	class:dark-variant={variant === "dark"}
+	dir={direction}
+>
 	<header class="app-header" class:connected={secondary}>
 		<div class="leading">
 			{#if leading}
@@ -296,6 +303,59 @@
 
 	.brand-variant .secondary-toolbar :global(label) {
 		color: var(--on-brand);
+	}
+
+	/* ── Dark variant: near-black ribbon, green-outlined controls ──
+	   Used where a pale header made the page look washed out. The green
+	   outline is what carries the brand here, since the band itself is
+	   neutral. */
+	.dark-variant .app-header,
+	.dark-variant .secondary-toolbar {
+		background: var(--strip);
+		border-color: rgba(255, 255, 255, 0.14);
+	}
+
+	.dark-variant :global(h1),
+	.dark-variant .title-icon {
+		color: var(--on-brand);
+	}
+
+	.dark-variant .identity p {
+		color: var(--on-brand-soft);
+	}
+
+	.dark-variant .back-control,
+	.dark-variant .brand,
+	.dark-variant .theme-toggle {
+		background: rgba(255, 255, 255, 0.06);
+		border: 1.5px solid var(--leaf);
+		color: var(--on-brand);
+		box-shadow:
+			inset 0 1px 0 rgba(255, 255, 255, 0.1),
+			0 2px 0 rgba(0, 0, 0, 0.45);
+	}
+
+	.dark-variant .back-control:hover,
+	.dark-variant .brand:hover,
+	.dark-variant .theme-toggle:hover {
+		background: var(--leaf);
+		border-color: var(--leaf);
+		color: var(--on-accent);
+	}
+
+	/* Page controls dropped into either slot keep a green outline. */
+	.dark-variant .actions :global(select),
+	.dark-variant .actions :global(button),
+	.dark-variant .actions :global(a),
+	.dark-variant .secondary-toolbar :global(select),
+	.dark-variant .secondary-toolbar :global(button) {
+		background: rgba(255, 255, 255, 0.06);
+		border: 1.5px solid var(--leaf);
+		color: var(--on-brand);
+	}
+
+	.dark-variant .secondary-toolbar :global(label) {
+		color: var(--on-brand-soft);
 	}
 
 	.theme-toggle {
