@@ -88,9 +88,14 @@
 	let progressLoaded = $state(false);
 
 	// Today's-session hero: what one tap on /lesson will run
-	const todayTitle = $derived(
-		lessonMetaIndex.find((m) => m.day === currentDay)?.title ?? "",
-	);
+	const todayTitle = $derived.by(() => {
+		const m = lessonMetaIndex.find((meta) => meta.day === currentDay);
+		if (!m) return "";
+		// titleFa is the bare topic ("خرید آنلاین"); title carries the
+		// "82: Online Shopping" prefix — compose fa to match that shape.
+		if (language === "fa" && m.titleFa) return `${m.day}: ${m.titleFa}`;
+		return m.title;
+	});
 
 	// Badges & Calendar expansion
 	let showCalendar = $state(false);

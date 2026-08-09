@@ -725,7 +725,11 @@
 				value={app.currentDay.toString()}
 			>
 				{#each Object.entries(weekGroups()) as [weekNum, days]}
-					<optgroup label="Week {weekNum}">
+					<optgroup
+						label={prefs.language === "fa"
+							? `هفته ${weekNum}`
+							: `Week ${weekNum}`}
+					>
 						{#each days as meta}
 							{@const isCompleted = !!(
 								app.completedLessons &&
@@ -735,15 +739,22 @@
 								value={meta.day.toString()}
 								selected={meta.day === app.currentDay}
 							>
-								{isCompleted ? "✅ " : ""}{meta.title}
+								{isCompleted ? "✅ " : ""}{prefs.language === "fa" &&
+								meta.titleFa
+									? `${meta.day}: ${meta.titleFa}`
+									: meta.title}
 							</option>
 						{/each}
 						{#if days.length === 7}
 							<option value="exam{weekNum}">
-								Week {weekNum} Exam
+								{prefs.language === "fa"
+									? `آزمون هفته ${weekNum}`
+									: `Week ${weekNum} Exam`}
 							</option>
 							<option value="talk{weekNum}">
-								💬 Week {weekNum} Talk
+								{prefs.language === "fa"
+									? `💬 گفتگوی هفته ${weekNum}`
+									: `💬 Week ${weekNum} Talk`}
 							</option>
 						{/if}
 					</optgroup>
