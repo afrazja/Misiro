@@ -32,59 +32,91 @@ COMMENT ON COLUMN lessons.grammar_note IS
 
 -- Day 1
 UPDATE lessons SET grammar_note = '{
-  "title": "du or Sie — two ways to say you",
-  "title_fa": "دو نوع «تو» در آلمانی",
+  "title": "Formal address (Siezen/Duzen): du or Sie",
+  "title_fa": "خطاب رسمی و خودمانی (Siezen/Duzen): du یا Sie",
   "explanation": "German has an informal you (du) for friends and family, and a formal you (Sie) for strangers, officials and older people. Sie is always capitalised.",
   "explanation_fa": "آلمانی دو شکل «تو» دارد: du برای دوستان و خانواده، و Sie برای غریبه‌ها و موقعیت‌های رسمی. Sie همیشه با حرف بزرگ نوشته می‌شود.",
   "examples": [
-    {"de": "Wie heißt du?", "en": "What is your name? (informal)", "fa": "اسمت چیه؟ (خودمانی)"},
-    {"de": "Wie heißen Sie?", "en": "What is your name? (formal)", "fa": "اسم شما چیست؟ (رسمی)"}
+    {
+      "de": "Wie heißt du?",
+      "en": "What is your name? (informal)",
+      "fa": "اسمت چیه؟ (خودمانی)"
+    },
+    {
+      "de": "Wie heißen Sie?",
+      "en": "What is your name? (formal)",
+      "fa": "اسم شما چیست؟ (رسمی)"
+    }
   ],
   "basics_key": "pronounsAndSein"
 }'::jsonb WHERE day = 1;
 
 -- Day 2
 UPDATE lessons SET grammar_note = '{
-  "title": "heißen and sein in the I-form",
-  "title_fa": "فعل‌های heißen و sein برای «من»",
+  "title": "Verb conjugation: heißen and sein",
+  "title_fa": "صرف فعل: heißen و sein",
   "explanation": "To introduce yourself you need two verbs: ich heiße (my name is) and ich bin (I am). Both are irregular, so learn the I-form by heart.",
   "explanation_fa": "برای معرفی خودت دو فعل لازم داری: ich heiße (اسم من … است) و ich bin (من … هستم). هر دو بی‌قاعده‌اند؛ شکل «من» را حفظ کن.",
   "examples": [
-    {"de": "Ich heiße Sara.", "en": "My name is Sara.", "fa": "اسم من سارا است."},
-    {"de": "Ich bin Studentin.", "en": "I am a student.", "fa": "من دانشجو هستم."}
+    {
+      "de": "Ich heiße Sara.",
+      "en": "My name is Sara.",
+      "fa": "اسم من سارا است."
+    },
+    {
+      "de": "Ich bin Studentin.",
+      "en": "I am a student.",
+      "fa": "من دانشجو هستم."
+    }
   ],
   "basics_key": "pronounsAndSein"
 }'::jsonb WHERE day = 2;
 
 -- Day 3
 UPDATE lessons SET grammar_note = '{
-  "title": "German numbers are one word",
-  "title_fa": "اعداد آلمانی یک کلمه‌اند",
+  "title": "Numbers (Zahlen): how compounds are built",
+  "title_fa": "اعداد (Zahlen): ساخت اعداد مرکب",
   "explanation": "From 13 up, German builds numbers as a single word and says the small digit first: einundzwanzig is literally one-and-twenty.",
   "explanation_fa": "از ۱۳ به بالا، عدد یک کلمهٔ سرِهم است و رقم یکان اول گفته می‌شود: einundzwanzig یعنی «یک‌وبیست» (۲۱).",
   "examples": [
-    {"de": "siebzehn", "en": "seventeen", "fa": "هفده"},
-    {"de": "einundzwanzig", "en": "twenty-one (one-and-twenty)", "fa": "بیست‌ویک"}
+    {
+      "de": "siebzehn",
+      "en": "seventeen",
+      "fa": "هفده"
+    },
+    {
+      "de": "einundzwanzig",
+      "en": "twenty-one (one-and-twenty)",
+      "fa": "بیست‌ویک"
+    }
   ],
   "basics_key": "numbers"
 }'::jsonb WHERE day = 3;
 
 -- Day 4
 UPDATE lessons SET grammar_note = '{
-  "title": "Umlauts and ß",
-  "title_fa": "حروف ویژه: اوملاوت و ß",
+  "title": "Spelling (Buchstabieren): umlauts and ß",
+  "title_fa": "هجی‌کردن (Buchstabieren): اوملاوت و ß",
   "explanation": "German adds ä, ö, ü and ß. When spelling aloud you say A-Umlaut for ä and Eszett for ß. Umlauts change meaning, so they are not decoration.",
   "explanation_fa": "آلمانی چهار حرف ویژه دارد: ä, ö, ü و ß. هنگام هجی‌کردن، ä را A-Umlaut و ß را Eszett می‌گویند. این نشانه‌ها معنی کلمه را عوض می‌کنند.",
   "examples": [
-    {"de": "Müller: M-U-Umlaut-L-L-E-R", "en": "spelling a name with ü", "fa": "هجی‌کردن نامی با ü"},
-    {"de": "Straße: S-T-R-A-Eszett-E", "en": "spelling a word with ß", "fa": "هجی‌کردن کلمه‌ای با ß"}
+    {
+      "de": "Müller: M-U-Umlaut-L-L-E-R",
+      "en": "spelling a name with ü",
+      "fa": "هجی‌کردن نامی با ü"
+    },
+    {
+      "de": "Straße: S-T-R-A-Eszett-E",
+      "en": "spelling a word with ß",
+      "fa": "هجی‌کردن کلمه‌ای با ß"
+    }
   ]
 }'::jsonb WHERE day = 4;
 
 -- Day 5
 UPDATE lessons SET grammar_note = '{
-  "title": "möchten — the polite I would like",
-  "title_fa": "möchten برای درخواست مؤدبانه",
+  "title": "Modal verbs (Modalverben): möchten",
+  "title_fa": "افعال کمکی (Modalverben): möchten",
   "explanation": "Use ich möchte to order politely. The thing you want comes after it, and a second verb (if any) goes to the very end.",
   "explanation_fa": "برای سفارش مؤدبانه از ich möchte استفاده کن. چیزی که می‌خواهی بعد از آن می‌آید و اگر فعل دومی باشد، به آخر جمله می‌رود.",
   "examples": [
@@ -104,34 +136,50 @@ UPDATE lessons SET grammar_note = '{
 
 -- Day 6
 UPDATE lessons SET grammar_note = '{
-  "title": "mein or meine — my",
-  "title_fa": "mein یا meine — «مالِ من»",
+  "title": "Possessive articles (Possessivartikel): mein and meine",
+  "title_fa": "ضمایر ملکی (Possessivartikel): mein و meine",
   "explanation": "Possessives copy the gender of the noun: mein Vater (masculine), meine Mutter (feminine), mein Kind (neuter), meine Eltern (plural).",
   "explanation_fa": "ضمیر ملکی از جنسیت اسم پیروی می‌کند: mein Vater (مذکر)، meine Mutter (مؤنث)، mein Kind (خنثی)، meine Eltern (جمع).",
   "examples": [
-    {"de": "Das ist mein Bruder.", "en": "This is my brother.", "fa": "این برادر من است."},
-    {"de": "Das ist meine Schwester.", "en": "This is my sister.", "fa": "این خواهر من است."}
+    {
+      "de": "Das ist mein Bruder.",
+      "en": "This is my brother.",
+      "fa": "این برادر من است."
+    },
+    {
+      "de": "Das ist meine Schwester.",
+      "en": "This is my sister.",
+      "fa": "این خواهر من است."
+    }
   ],
   "basics_key": "pronounsAndSein"
 }'::jsonb WHERE day = 6;
 
 -- Day 7
 UPDATE lessons SET grammar_note = '{
-  "title": "am for days, im for months",
-  "title_fa": "am برای روزها، im برای ماه‌ها",
+  "title": "Prepositions of time (Temporalpräpositionen): am and im",
+  "title_fa": "حروف اضافهٔ زمان (Temporalpräpositionen): am و im",
   "explanation": "Days take am (am Montag), months and seasons take im (im Mai, im Sommer). Both are short forms of an dem and in dem.",
   "explanation_fa": "برای روزها am می‌آید (am Montag) و برای ماه‌ها و فصل‌ها im (im Mai, im Sommer). این‌ها شکل کوتاه an dem و in dem هستند.",
   "examples": [
-    {"de": "Am Montag arbeite ich.", "en": "On Monday I work.", "fa": "دوشنبه کار می‌کنم."},
-    {"de": "Im Juli fahre ich nach Berlin.", "en": "In July I travel to Berlin.", "fa": "در ژوئیه به برلین می‌روم."}
+    {
+      "de": "Am Montag arbeite ich.",
+      "en": "On Monday I work.",
+      "fa": "دوشنبه کار می‌کنم."
+    },
+    {
+      "de": "Im Juli fahre ich nach Berlin.",
+      "en": "In July I travel to Berlin.",
+      "fa": "در ژوئیه به برلین می‌روم."
+    }
   ],
   "basics_key": "days"
 }'::jsonb WHERE day = 7;
 
 -- Day 8
 UPDATE lessons SET grammar_note = '{
-  "title": "Adjectives after sein never change",
-  "title_fa": "صفت بعد از sein تغییر نمی‌کند",
+  "title": "Adjectives (Adjektive): no ending after sein",
+  "title_fa": "صفت‌ها (Adjektive): بدون پسوند بعد از sein",
   "explanation": "When the adjective comes after sein, it takes no ending at all: Das Auto ist rot. Endings only appear when the adjective sits before the noun.",
   "explanation_fa": "وقتی صفت بعد از فعل sein بیاید، هیچ پسوندی نمی‌گیرد: Das Auto ist rot. پسوند فقط وقتی لازم است که صفت قبل از اسم بیاید.",
   "examples": [
@@ -151,8 +199,8 @@ UPDATE lessons SET grammar_note = '{
 
 -- Day 9
 UPDATE lessons SET grammar_note = '{
-  "title": "Present tense endings",
-  "title_fa": "پسوندهای زمان حال",
+  "title": "Present tense (Präsens): regular endings",
+  "title_fa": "زمان حال (Präsens): پسوندهای باقاعده",
   "explanation": "Regular verbs drop -en and add: ich -e, du -st, er/sie/es -t, wir -en, ihr -t, sie/Sie -en. Learn this pattern once and hundreds of verbs follow it.",
   "explanation_fa": "فعل‌های باقاعده -en را حذف می‌کنند و می‌گیرند: ich -e، du -st، er/sie/es -t، wir -en، ihr -t، sie/Sie -en. این الگو برای صدها فعل کار می‌کند.",
   "examples": [
@@ -172,34 +220,50 @@ UPDATE lessons SET grammar_note = '{
 
 -- Day 10
 UPDATE lessons SET grammar_note = '{
-  "title": "Three genders: der, die, das",
-  "title_fa": "سه جنسیت: der, die, das",
+  "title": "Articles and gender (Artikel): der, die, das",
+  "title_fa": "حروف تعریف و جنسیت (Artikel): der، die، das",
   "explanation": "Every German noun is masculine (der), feminine (die) or neuter (das), and the gender is rarely logical. Always learn the article together with the noun.",
   "explanation_fa": "هر اسم آلمانی مذکر (der)، مؤنث (die) یا خنثی (das) است و معمولاً منطق مشخصی ندارد. همیشه حرف تعریف را همراه خود اسم حفظ کن.",
   "examples": [
-    {"de": "der Tisch, die Lampe, das Fenster", "en": "the table, the lamp, the window", "fa": "میز، لامپ، پنجره"},
-    {"de": "Plural is always die: die Tische", "en": "plural always takes die", "fa": "جمع همیشه die می‌گیرد"}
+    {
+      "de": "der Tisch, die Lampe, das Fenster",
+      "en": "the table, the lamp, the window",
+      "fa": "میز، لامپ، پنجره"
+    },
+    {
+      "de": "Plural is always die: die Tische",
+      "en": "plural always takes die",
+      "fa": "جمع همیشه die می‌گیرد"
+    }
   ],
   "basics_key": "articles"
 }'::jsonb WHERE day = 10;
 
 -- Day 11
 UPDATE lessons SET grammar_note = '{
-  "title": "Accusative: der becomes den",
-  "title_fa": "حالت مفعولی: der به den تبدیل می‌شود",
+  "title": "Accusative case (Akkusativ): der becomes den",
+  "title_fa": "حالت مفعولی (Akkusativ): der به den",
   "explanation": "The object of a verb goes into the accusative. Only masculine changes visibly: der becomes den, ein becomes einen. Feminine and neuter look the same.",
   "explanation_fa": "مفعول مستقیم در حالت Akkusativ می‌آید. فقط مذکر تغییر دیده می‌شود: der به den و ein به einen. مؤنث و خنثی تغییری نمی‌کنند.",
   "examples": [
-    {"de": "Ich kaufe einen Apfel.", "en": "I buy an apple. (masculine)", "fa": "یک سیب می‌خرم. (مذکر)"},
-    {"de": "Ich kaufe eine Banane.", "en": "I buy a banana. (feminine, unchanged)", "fa": "یک موز می‌خرم. (مؤنث، بدون تغییر)"}
+    {
+      "de": "Ich kaufe einen Apfel.",
+      "en": "I buy an apple. (masculine)",
+      "fa": "یک سیب می‌خرم. (مذکر)"
+    },
+    {
+      "de": "Ich kaufe eine Banane.",
+      "en": "I buy a banana. (feminine, unchanged)",
+      "fa": "یک موز می‌خرم. (مؤنث، بدون تغییر)"
+    }
   ],
   "basics_key": "cases"
 }'::jsonb WHERE day = 11;
 
 -- Day 12
 UPDATE lessons SET grammar_note = '{
-  "title": "um for clock times, halb points forward",
-  "title_fa": "um برای ساعت، و معنی halb",
+  "title": "Telling the time (Uhrzeit): um and halb",
+  "title_fa": "بیان ساعت (Uhrzeit): um و halb",
   "explanation": "Use um for a point in time: um acht Uhr. Careful with halb — halb acht means seven thirty, because it counts toward eight.",
   "explanation_fa": "برای بیان ساعت از um استفاده کن: um acht Uhr. مراقب halb باش: halb acht یعنی ۷:۳۰، چون به سمت هشت می‌شمارد.",
   "examples": [
@@ -219,8 +283,8 @@ UPDATE lessons SET grammar_note = '{
 
 -- Day 13
 UPDATE lessons SET grammar_note = '{
-  "title": "Weather uses an empty es",
-  "title_fa": "برای هوا از es بی‌معنا استفاده می‌شود",
+  "title": "Impersonal es: talking about the weather",
+  "title_fa": "esِ غیرشخصی: صحبت دربارهٔ هوا",
   "explanation": "Weather sentences need a subject, so German inserts es even though it refers to nothing: es regnet, es ist kalt.",
   "explanation_fa": "جمله‌های آلمانی به فاعل نیاز دارند، پس برای هوا es می‌آید حتی وقتی به چیزی اشاره نمی‌کند: es regnet، es ist kalt.",
   "examples": [
@@ -240,32 +304,48 @@ UPDATE lessons SET grammar_note = '{
 
 -- Day 14
 UPDATE lessons SET grammar_note = '{
-  "title": "gern — how to say you like doing something",
-  "title_fa": "gern برای «دوست دارم انجام دهم»",
+  "title": "Expressing preference: gern",
+  "title_fa": "بیان علاقه: gern",
   "explanation": "German has no verb for to like doing. Add gern after the verb instead: Ich spiele gern Fußball means I like playing football.",
   "explanation_fa": "آلمانی فعلی برای «دوست داشتنِ انجام کاری» ندارد. به‌جایش gern را بعد از فعل می‌آورد: Ich spiele gern Fußball یعنی «فوتبال بازی کردن را دوست دارم».",
   "examples": [
-    {"de": "Ich lese gern.", "en": "I like reading.", "fa": "خواندن را دوست دارم."},
-    {"de": "Ich trinke nicht gern Kaffee.", "en": "I do not like drinking coffee.", "fa": "قهوه خوردن را دوست ندارم."}
+    {
+      "de": "Ich lese gern.",
+      "en": "I like reading.",
+      "fa": "خواندن را دوست دارم."
+    },
+    {
+      "de": "Ich trinke nicht gern Kaffee.",
+      "en": "I do not like drinking coffee.",
+      "fa": "قهوه خوردن را دوست ندارم."
+    }
   ]
 }'::jsonb WHERE day = 14;
 
 -- Day 15
 UPDATE lessons SET grammar_note = '{
-  "title": "Ordering: Ich nehme and Ich hätte gern",
-  "title_fa": "سفارش دادن: Ich nehme و Ich hätte gern",
+  "title": "Polite requests: Ich nehme and Ich hätte gern",
+  "title_fa": "درخواست مؤدبانه: Ich nehme و Ich hätte gern",
   "explanation": "Ich nehme is the everyday way to order. Ich hätte gern is softer and more polite — useful with waiters and shop staff.",
   "explanation_fa": "Ich nehme روش معمول سفارش دادن است. Ich hätte gern مؤدبانه‌تر است و در رستوران و مغازه بهتر جواب می‌دهد.",
   "examples": [
-    {"de": "Ich nehme die Suppe.", "en": "I will take the soup.", "fa": "سوپ می‌گیرم."},
-    {"de": "Ich hätte gern die Rechnung.", "en": "I would like the bill.", "fa": "لطفاً صورتحساب."}
+    {
+      "de": "Ich nehme die Suppe.",
+      "en": "I will take the soup.",
+      "fa": "سوپ می‌گیرم."
+    },
+    {
+      "de": "Ich hätte gern die Rechnung.",
+      "en": "I would like the bill.",
+      "fa": "لطفاً صورتحساب."
+    }
   ]
 }'::jsonb WHERE day = 15;
 
 -- Day 16
 UPDATE lessons SET grammar_note = '{
-  "title": "Imperative: the verb comes first",
-  "title_fa": "امری: فعل اول جمله",
+  "title": "Imperative (Imperativ): giving directions",
+  "title_fa": "وجه امری (Imperativ): مسیر دادن",
   "explanation": "For instructions the verb moves to position one. Formal keeps Sie: Gehen Sie geradeaus. Informal drops the pronoun: Geh geradeaus.",
   "explanation_fa": "در جملهٔ امری فعل به جایگاه اول می‌رود. شکل رسمی Sie را نگه می‌دارد: Gehen Sie geradeaus. شکل خودمانی ضمیر را حذف می‌کند: Geh geradeaus.",
   "examples": [
@@ -285,34 +365,50 @@ UPDATE lessons SET grammar_note = '{
 
 -- Day 17
 UPDATE lessons SET grammar_note = '{
-  "title": "Pain uses the dative: Mir tut ... weh",
-  "title_fa": "برای درد از حالت Dativ استفاده کن",
+  "title": "Dative case (Dativ): Mir tut ... weh",
+  "title_fa": "حالت به‌ای (Dativ): Mir tut … weh",
   "explanation": "To say something hurts, the person goes into the dative: Mir tut der Kopf weh. Literally: to me the head hurts.",
   "explanation_fa": "برای گفتن اینکه جایی درد می‌کند، شخص در حالت Dativ می‌آید: Mir tut der Kopf weh — یعنی «سرم درد می‌کند».",
   "examples": [
-    {"de": "Mir tut der Hals weh.", "en": "My throat hurts.", "fa": "گلویم درد می‌کند."},
-    {"de": "Ich habe Kopfschmerzen.", "en": "I have a headache.", "fa": "سردرد دارم."}
+    {
+      "de": "Mir tut der Hals weh.",
+      "en": "My throat hurts.",
+      "fa": "گلویم درد می‌کند."
+    },
+    {
+      "de": "Ich habe Kopfschmerzen.",
+      "en": "I have a headache.",
+      "fa": "سردرد دارم."
+    }
   ],
   "basics_key": "cases"
 }'::jsonb WHERE day = 17;
 
 -- Day 18
 UPDATE lessons SET grammar_note = '{
-  "title": "dieser, diese, dieses — this one",
-  "title_fa": "dieser, diese, dieses — «این یکی»",
+  "title": "Demonstratives (Demonstrativartikel): dieser, diese, dieses",
+  "title_fa": "صفات اشاره (Demonstrativartikel): dieser، diese، dieses",
   "explanation": "To point at a specific item, use dieser with the same endings as der/die/das: dieser Pullover, diese Jacke, dieses Hemd.",
   "explanation_fa": "برای اشاره به یک چیز مشخص از dieser استفاده کن که پسوندهایش مثل der/die/das است: dieser Pullover، diese Jacke، dieses Hemd.",
   "examples": [
-    {"de": "Ich nehme diesen Pullover.", "en": "I will take this sweater.", "fa": "این پلیور را می‌گیرم."},
-    {"de": "Diese Hose ist zu teuer.", "en": "These trousers are too expensive.", "fa": "این شلوار خیلی گران است."}
+    {
+      "de": "Ich nehme diesen Pullover.",
+      "en": "I will take this sweater.",
+      "fa": "این پلیور را می‌گیرم."
+    },
+    {
+      "de": "Diese Hose ist zu teuer.",
+      "en": "These trousers are too expensive.",
+      "fa": "این شلوار خیلی گران است."
+    }
   ],
   "basics_key": "articles"
 }'::jsonb WHERE day = 18;
 
 -- Day 19
 UPDATE lessons SET grammar_note = '{
-  "title": "es gibt — there is, there are",
-  "title_fa": "es gibt — «وجود دارد»",
+  "title": "Impersonal es gibt: saying what exists",
+  "title_fa": "ساختار es gibt: بیان وجود",
   "explanation": "es gibt never changes, and what follows it is always accusative: Es gibt einen Balkon. Use it for both singular and plural.",
   "explanation_fa": "عبارت es gibt هرگز تغییر نمی‌کند و آنچه بعدش می‌آید همیشه Akkusativ است: Es gibt einen Balkon. برای مفرد و جمع یکسان است.",
   "examples": [
@@ -332,8 +428,8 @@ UPDATE lessons SET grammar_note = '{
 
 -- Day 20
 UPDATE lessons SET grammar_note = '{
-  "title": "Time first? The verb still stays second",
-  "title_fa": "زمان اول بیاید، فعل باز هم دوم است",
+  "title": "Word order (Satzbau): verb in position 2",
+  "title_fa": "ترتیب کلمات (Satzbau): فعل در جایگاه دوم",
   "explanation": "You may start a sentence with a time expression, but the conjugated verb must remain the second element, so the subject moves behind it.",
   "explanation_fa": "می‌توانی جمله را با عبارت زمان شروع کنی، اما فعل صرف‌شده باید عنصر دوم بماند؛ پس فاعل بعد از فعل می‌آید.",
   "examples": [
@@ -353,21 +449,29 @@ UPDATE lessons SET grammar_note = '{
 
 -- Day 21
 UPDATE lessons SET grammar_note = '{
-  "title": "sein and haben — learn them cold",
-  "title_fa": "sein و haben را کامل حفظ کن",
+  "title": "Irregular verbs (unregelmäßige Verben): sein and haben",
+  "title_fa": "فعل‌های بی‌قاعده (unregelmäßige Verben): sein و haben",
   "explanation": "These two are the most common verbs in German and are fully irregular: ich bin, du bist, er ist — ich habe, du hast, er hat. They also build the perfect tense later.",
   "explanation_fa": "این دو پرکاربردترین فعل‌های آلمانی و کاملاً بی‌قاعده‌اند: ich bin, du bist, er ist — ich habe, du hast, er hat. بعداً زمان ماضی هم با همین‌ها ساخته می‌شود.",
   "examples": [
-    {"de": "Ich bin müde.", "en": "I am tired.", "fa": "خسته‌ام."},
-    {"de": "Wir haben Zeit.", "en": "We have time.", "fa": "وقت داریم."}
+    {
+      "de": "Ich bin müde.",
+      "en": "I am tired.",
+      "fa": "خسته‌ام."
+    },
+    {
+      "de": "Wir haben Zeit.",
+      "en": "We have time.",
+      "fa": "وقت داریم."
+    }
   ],
   "basics_key": "pronounsAndSein"
 }'::jsonb WHERE day = 21;
 
 -- Day 22
 UPDATE lessons SET grammar_note = '{
-  "title": "nicht or kein — two ways to say no",
-  "title_fa": "nicht یا kein — دو راه نفی",
+  "title": "Negation (Negation): nicht or kein",
+  "title_fa": "نفی (Negation): nicht یا kein",
   "explanation": "Use kein to negate a noun with ein or no article: Ich habe kein Auto. Use nicht for everything else — verbs, adjectives, and nouns with der/die/das.",
   "explanation_fa": "برای نفی اسمی که ein دارد یا بدون حرف تعریف است از kein استفاده کن: Ich habe kein Auto. برای بقیه موارد — فعل، صفت و اسم‌های با der/die/das — از nicht.",
   "examples": [
@@ -387,8 +491,8 @@ UPDATE lessons SET grammar_note = '{
 
 -- Day 23
 UPDATE lessons SET grammar_note = '{
-  "title": "Yes/no questions put the verb first",
-  "title_fa": "سؤال بله/خیر با فعل شروع می‌شود",
+  "title": "Questions (Fragesätze): yes/no questions",
+  "title_fa": "جمله‌های پرسشی (Fragesätze): پرسش بله یا خیر",
   "explanation": "Move the conjugated verb to position one and you have a question. No extra word is needed — German has nothing like do you.",
   "explanation_fa": "کافی است فعل صرف‌شده را به اول جمله ببری تا سؤال بسازی. آلمانی معادلی برای «آیا/do» لازم ندارد.",
   "examples": [
@@ -408,8 +512,8 @@ UPDATE lessons SET grammar_note = '{
 
 -- Day 24
 UPDATE lessons SET grammar_note = '{
-  "title": "W-questions: question word, then verb",
-  "title_fa": "سؤال با W: کلمهٔ پرسشی، بعد فعل",
+  "title": "Questions (Fragesätze): W-questions",
+  "title_fa": "جمله‌های پرسشی (Fragesätze): پرسش با کلمهٔ W",
   "explanation": "wer, was, wo, wann, wie, warum all take position one, and the verb follows immediately in position two.",
   "explanation_fa": "کلمه‌های پرسشی wer, was, wo, wann, wie, warum در جایگاه اول می‌آیند و بلافاصله فعل در جایگاه دوم قرار می‌گیرد.",
   "examples": [
@@ -429,21 +533,29 @@ UPDATE lessons SET grammar_note = '{
 
 -- Day 25
 UPDATE lessons SET grammar_note = '{
-  "title": "Pronouns change with the case",
-  "title_fa": "ضمیرها با حالت تغییر می‌کنند",
+  "title": "Personal pronouns (Personalpronomen): by case",
+  "title_fa": "ضمایر شخصی (Personalpronomen): بر اساس حالت",
   "explanation": "ich becomes mich in the accusative and mir in the dative; du becomes dich and dir. The case is decided by the verb or the preposition.",
   "explanation_fa": "ich در Akkusativ به mich و در Dativ به mir تبدیل می‌شود؛ du به dich و dir. اینکه کدام حالت لازم است را فعل یا حرف اضافه تعیین می‌کند.",
   "examples": [
-    {"de": "Kannst du mich hören?", "en": "Can you hear me? (accusative)", "fa": "صدایم را می‌شنوی؟ (مفعولی)"},
-    {"de": "Kannst du mir helfen?", "en": "Can you help me? (dative)", "fa": "می‌توانی کمکم کنی؟ (به‌ای)"}
+    {
+      "de": "Kannst du mich hören?",
+      "en": "Can you hear me? (accusative)",
+      "fa": "صدایم را می‌شنوی؟ (مفعولی)"
+    },
+    {
+      "de": "Kannst du mir helfen?",
+      "en": "Can you help me? (dative)",
+      "fa": "می‌توانی کمکم کنی؟ (به‌ای)"
+    }
   ],
   "basics_key": "cases"
 }'::jsonb WHERE day = 25;
 
 -- Day 26
 UPDATE lessons SET grammar_note = '{
-  "title": "Perfect tense with haben",
-  "title_fa": "ماضی نقلی با haben",
+  "title": "Perfect tense (Perfekt): with haben",
+  "title_fa": "ماضی نقلی (Perfekt): با haben",
   "explanation": "Most verbs build the past with haben plus the participle, and the participle jumps to the end: Ich habe Deutsch gelernt.",
   "explanation_fa": "بیشتر فعل‌ها گذشته را با haben و اسم مفعول می‌سازند و اسم مفعول به آخر جمله می‌رود: Ich habe Deutsch gelernt.",
   "examples": [
@@ -463,8 +575,8 @@ UPDATE lessons SET grammar_note = '{
 
 -- Day 27
 UPDATE lessons SET grammar_note = '{
-  "title": "Perfect tense with sein — movement and change",
-  "title_fa": "ماضی نقلی با sein — حرکت و تغییر",
+  "title": "Perfect tense (Perfekt): with sein",
+  "title_fa": "ماضی نقلی (Perfekt): با sein",
   "explanation": "Verbs of movement or change of state use sein instead of haben: gehen, fahren, kommen, bleiben, werden.",
   "explanation_fa": "فعل‌های حرکت یا تغییر حالت به‌جای haben از sein استفاده می‌کنند: gehen، fahren، kommen، bleiben، werden.",
   "examples": [
@@ -484,8 +596,8 @@ UPDATE lessons SET grammar_note = '{
 
 -- Day 28
 UPDATE lessons SET grammar_note = '{
-  "title": "Separable verbs split in two",
-  "title_fa": "فعل‌های جداشدنی به دو تکه می‌شکنند",
+  "title": "Separable verbs (trennbare Verben)",
+  "title_fa": "فعل‌های جداشدنی (trennbare Verben)",
   "explanation": "Verbs like aufstehen and einkaufen send their prefix to the end of the sentence: Ich stehe um sieben auf.",
   "explanation_fa": "فعل‌هایی مثل aufstehen و einkaufen پیشوندشان به آخر جمله می‌رود: Ich stehe um sieben auf.",
   "examples": [
@@ -505,8 +617,8 @@ UPDATE lessons SET grammar_note = '{
 
 -- Day 29
 UPDATE lessons SET grammar_note = '{
-  "title": "Modal verbs send the main verb to the end",
-  "title_fa": "فعل‌های کمکی، فعل اصلی را به آخر می‌فرستند",
+  "title": "Modal verbs (Modalverben): können, müssen, wollen",
+  "title_fa": "افعال کمکی (Modalverben): können، müssen، wollen",
   "explanation": "können, müssen and wollen are conjugated in position two, and the main verb stays in the infinitive at the very end.",
   "explanation_fa": "können، müssen و wollen در جایگاه دوم صرف می‌شوند و فعل اصلی به شکل مصدر در آخر جمله می‌ماند.",
   "examples": [
@@ -526,8 +638,8 @@ UPDATE lessons SET grammar_note = '{
 
 -- Day 30
 UPDATE lessons SET grammar_note = '{
-  "title": "dürfen, sollen, mögen",
-  "title_fa": "dürfen، sollen، mögen",
+  "title": "Modal verbs (Modalverben): dürfen, sollen, mögen",
+  "title_fa": "افعال کمکی (Modalverben): dürfen، sollen، mögen",
   "explanation": "dürfen is permission, sollen is an obligation someone else set, and mögen is liking. They follow the same end-position rule as other modals.",
   "explanation_fa": "dürfen یعنی اجازه، sollen یعنی وظیفه‌ای که دیگری تعیین کرده، و mögen یعنی دوست داشتن. همان قاعدهٔ «فعل اصلی در آخر» را دارند.",
   "examples": [
@@ -547,47 +659,71 @@ UPDATE lessons SET grammar_note = '{
 
 -- Day 31
 UPDATE lessons SET grammar_note = '{
-  "title": "The dative marks the receiver",
-  "title_fa": "حالت Dativ گیرنده را نشان می‌دهد",
+  "title": "Dative case (Dativ): the indirect object",
+  "title_fa": "حالت به‌ای (Dativ): مفعول غیرمستقیم",
   "explanation": "The person who receives something goes into the dative: der becomes dem, die becomes der, das becomes dem, plural becomes den plus -n.",
   "explanation_fa": "کسی که چیزی را دریافت می‌کند در Dativ می‌آید: der به dem، die به der، das به dem و جمع به den با -n اضافه.",
   "examples": [
-    {"de": "Ich gebe dem Kind ein Buch.", "en": "I give the child a book.", "fa": "به بچه یک کتاب می‌دهم."},
-    {"de": "Er hilft der Frau.", "en": "He helps the woman.", "fa": "او به آن خانم کمک می‌کند."}
+    {
+      "de": "Ich gebe dem Kind ein Buch.",
+      "en": "I give the child a book.",
+      "fa": "به بچه یک کتاب می‌دهم."
+    },
+    {
+      "de": "Er hilft der Frau.",
+      "en": "He helps the woman.",
+      "fa": "او به آن خانم کمک می‌کند."
+    }
   ],
   "basics_key": "cases"
 }'::jsonb WHERE day = 31;
 
 -- Day 32
 UPDATE lessons SET grammar_note = '{
-  "title": "Prepositions that always take dative",
-  "title_fa": "حروف اضافه‌ای که همیشه Dativ می‌گیرند",
+  "title": "Prepositions (Präpositionen): always with dative",
+  "title_fa": "حروف اضافه (Präpositionen): همیشه با Dativ",
   "explanation": "mit, nach, bei, seit, von, zu, aus are always followed by the dative. Memorise them as one block — they never change case.",
   "explanation_fa": "بعد از mit، nach، bei، seit، von، zu و aus همیشه Dativ می‌آید. این‌ها را یکجا حفظ کن؛ هرگز حالتشان عوض نمی‌شود.",
   "examples": [
-    {"de": "Ich fahre mit dem Bus.", "en": "I go by bus.", "fa": "با اتوبوس می‌روم."},
-    {"de": "Sie kommt aus der Türkei.", "en": "She comes from Turkey.", "fa": "او اهل ترکیه است."}
+    {
+      "de": "Ich fahre mit dem Bus.",
+      "en": "I go by bus.",
+      "fa": "با اتوبوس می‌روم."
+    },
+    {
+      "de": "Sie kommt aus der Türkei.",
+      "en": "She comes from Turkey.",
+      "fa": "او اهل ترکیه است."
+    }
   ],
   "basics_key": "prepositions"
 }'::jsonb WHERE day = 32;
 
 -- Day 33
 UPDATE lessons SET grammar_note = '{
-  "title": "Two-way prepositions: wo or wohin",
-  "title_fa": "حروف اضافهٔ دوحالته: wo یا wohin",
+  "title": "Two-way prepositions (Wechselpräpositionen): wo or wohin",
+  "title_fa": "حروف اضافهٔ دوحالته (Wechselpräpositionen): wo یا wohin",
   "explanation": "in, auf, an and others take dative for a location (wo) and accusative for a direction (wohin). Ask yourself: staying or moving?",
   "explanation_fa": "in، auf، an و چند حرف دیگر برای مکان (wo) حالت Dativ و برای جهت (wohin) حالت Akkusativ می‌گیرند. از خودت بپرس: ثابت است یا در حرکت؟",
   "examples": [
-    {"de": "Ich bin in der Stadt.", "en": "I am in the city. (location, dative)", "fa": "در شهر هستم. (مکان)"},
-    {"de": "Ich gehe in die Stadt.", "en": "I go into the city. (direction, accusative)", "fa": "به شهر می‌روم. (جهت)"}
+    {
+      "de": "Ich bin in der Stadt.",
+      "en": "I am in the city. (location, dative)",
+      "fa": "در شهر هستم. (مکان)"
+    },
+    {
+      "de": "Ich gehe in die Stadt.",
+      "en": "I go into the city. (direction, accusative)",
+      "fa": "به شهر می‌روم. (جهت)"
+    }
   ],
   "basics_key": "prepositions"
 }'::jsonb WHERE day = 33;
 
 -- Day 34
 UPDATE lessons SET grammar_note = '{
-  "title": "Comparatives: -er plus als",
-  "title_fa": "صفت تفضیلی: -er به‌همراه als",
+  "title": "Comparative (Komparativ): -er ... als",
+  "title_fa": "صفت تفضیلی (Komparativ): ‏-er … als",
   "explanation": "Add -er to the adjective and use als for than: schneller als. A few short adjectives also add an umlaut: alt becomes älter.",
   "explanation_fa": "به صفت -er اضافه کن و برای «از» از als استفاده کن: schneller als. چند صفت کوتاه اوملاوت هم می‌گیرند: alt به älter.",
   "examples": [
@@ -607,8 +743,8 @@ UPDATE lessons SET grammar_note = '{
 
 -- Day 35
 UPDATE lessons SET grammar_note = '{
-  "title": "Superlatives: am -sten",
-  "title_fa": "صفت عالی: am -sten",
+  "title": "Superlative (Superlativ): am ...-sten",
+  "title_fa": "صفت عالی (Superlativ): am …-sten",
   "explanation": "After a verb the superlative is am schnellsten. Before a noun it becomes der/die/das schnellste.",
   "explanation_fa": "بعد از فعل، صفت عالی به شکل am schnellsten می‌آید. قبل از اسم به شکل der/die/das schnellste.",
   "examples": [
@@ -628,21 +764,29 @@ UPDATE lessons SET grammar_note = '{
 
 -- Day 36
 UPDATE lessons SET grammar_note = '{
-  "title": "Mir geht es ... — how you feel",
-  "title_fa": "Mir geht es … — بیان حال",
+  "title": "Dative case (Dativ): Mir geht es ...",
+  "title_fa": "حالت به‌ای (Dativ): Mir geht es …",
   "explanation": "German expresses wellbeing with a dative person: Mir geht es gut. The same pattern works for others: Wie geht es Ihnen?",
   "explanation_fa": "آلمانی حال‌واحوال را با شخص در Dativ بیان می‌کند: Mir geht es gut. همین الگو برای دیگران هم هست: Wie geht es Ihnen؟",
   "examples": [
-    {"de": "Mir geht es nicht gut.", "en": "I am not feeling well.", "fa": "حالم خوب نیست."},
-    {"de": "Wie geht es Ihnen?", "en": "How are you? (formal)", "fa": "حال شما چطور است؟"}
+    {
+      "de": "Mir geht es nicht gut.",
+      "en": "I am not feeling well.",
+      "fa": "حالم خوب نیست."
+    },
+    {
+      "de": "Wie geht es Ihnen?",
+      "en": "How are you? (formal)",
+      "fa": "حال شما چطور است؟"
+    }
   ],
   "basics_key": "cases"
 }'::jsonb WHERE day = 36;
 
 -- Day 37
 UPDATE lessons SET grammar_note = '{
-  "title": "Ich möchte plus infinitive",
-  "title_fa": "Ich möchte به‌همراه مصدر",
+  "title": "Modal verbs (Modalverben): möchte + infinitive",
+  "title_fa": "افعال کمکی (Modalverben): möchte به‌همراه مصدر",
   "explanation": "At counters, state your business with möchte and put the action verb at the end: Ich möchte ein Konto eröffnen.",
   "explanation_fa": "پشت باجه، خواسته‌ات را با möchte بگو و فعل اصلی را به آخر ببر: Ich möchte ein Konto eröffnen.",
   "examples": [
@@ -662,8 +806,8 @@ UPDATE lessons SET grammar_note = '{
 
 -- Day 38
 UPDATE lessons SET grammar_note = '{
-  "title": "könnte and würde make requests softer",
-  "title_fa": "könnte و würde درخواست را نرم‌تر می‌کنند",
+  "title": "Konjunktiv II: making requests softer",
+  "title_fa": "وجه شرطی (Konjunktiv II): نرم‌کردن درخواست",
   "explanation": "For appointments, könnte and würde sound noticeably more polite than kann and will: Könnte ich einen Termin haben?",
   "explanation_fa": "برای گرفتن وقت، könnte و würde خیلی مؤدبانه‌تر از kann و will به‌نظر می‌رسند: Könnte ich einen Termin haben؟",
   "examples": [
@@ -683,34 +827,50 @@ UPDATE lessons SET grammar_note = '{
 
 -- Day 39
 UPDATE lessons SET grammar_note = '{
-  "title": "mit dem Zug — transport takes dative",
-  "title_fa": "mit dem Zug — وسیلهٔ نقلیه با Dativ",
+  "title": "Prepositions (Präpositionen): mit + dative for transport",
+  "title_fa": "حروف اضافه (Präpositionen): mit با Dativ برای وسیلهٔ نقلیه",
   "explanation": "Say how you travel with mit plus dative: mit dem Zug, mit der Bahn, mit dem Auto. On foot is the exception: zu Fuß.",
   "explanation_fa": "برای گفتن وسیلهٔ سفر از mit با Dativ استفاده کن: mit dem Zug، mit der Bahn، mit dem Auto. استثنا: پیاده یعنی zu Fuß.",
   "examples": [
-    {"de": "Ich fahre mit dem Zug nach Hamburg.", "en": "I travel to Hamburg by train.", "fa": "با قطار به هامبورگ می‌روم."},
-    {"de": "Wir gehen zu Fuß.", "en": "We go on foot.", "fa": "پیاده می‌رویم."}
+    {
+      "de": "Ich fahre mit dem Zug nach Hamburg.",
+      "en": "I travel to Hamburg by train.",
+      "fa": "با قطار به هامبورگ می‌روم."
+    },
+    {
+      "de": "Wir gehen zu Fuß.",
+      "en": "We go on foot.",
+      "fa": "پیاده می‌رویم."
+    }
   ],
   "basics_key": "prepositions"
 }'::jsonb WHERE day = 39;
 
 -- Day 40
 UPDATE lessons SET grammar_note = '{
-  "title": "für plus accusative for duration",
-  "title_fa": "für با Akkusativ برای مدت زمان",
+  "title": "Prepositions (Präpositionen): für + accusative for duration",
+  "title_fa": "حروف اضافه (Präpositionen): für با Akkusativ برای مدت",
   "explanation": "Booking a stay uses für with the accusative: für zwei Nächte, für eine Woche.",
   "explanation_fa": "برای رزرو مدت اقامت از für با Akkusativ استفاده کن: für zwei Nächte، für eine Woche.",
   "examples": [
-    {"de": "Ich brauche ein Zimmer für zwei Nächte.", "en": "I need a room for two nights.", "fa": "برای دو شب یک اتاق می‌خواهم."},
-    {"de": "Wir bleiben für eine Woche.", "en": "We are staying for one week.", "fa": "یک هفته می‌مانیم."}
+    {
+      "de": "Ich brauche ein Zimmer für zwei Nächte.",
+      "en": "I need a room for two nights.",
+      "fa": "برای دو شب یک اتاق می‌خواهم."
+    },
+    {
+      "de": "Wir bleiben für eine Woche.",
+      "en": "We are staying for one week.",
+      "fa": "یک هفته می‌مانیم."
+    }
   ],
   "basics_key": "prepositions"
 }'::jsonb WHERE day = 40;
 
 -- Day 41
 UPDATE lessons SET grammar_note = '{
-  "title": "Reflexive verbs need sich",
-  "title_fa": "فعل‌های انعکاسی به sich نیاز دارند",
+  "title": "Reflexive verbs (reflexive Verben): sich",
+  "title_fa": "فعل‌های انعکاسی (reflexive Verben): sich",
   "explanation": "Some verbs always carry a reflexive pronoun: ich freue mich, du freust dich. The pronoun changes with the subject.",
   "explanation_fa": "بعضی فعل‌ها همیشه ضمیر انعکاسی دارند: ich freue mich، du freust dich. این ضمیر با فاعل تغییر می‌کند.",
   "examples": [
@@ -730,8 +890,8 @@ UPDATE lessons SET grammar_note = '{
 
 -- Day 42
 UPDATE lessons SET grammar_note = '{
-  "title": "weil sends the verb to the end",
-  "title_fa": "weil فعل را به آخر می‌فرستد",
+  "title": "Subordinate clauses (Nebensatz): weil",
+  "title_fa": "جمله‌وارهٔ پیرو (Nebensatz): weil",
   "explanation": "After weil the conjugated verb moves to the very end of the clause: Ich lerne Deutsch, weil ich in Deutschland arbeiten will.",
   "explanation_fa": "بعد از weil فعل صرف‌شده به آخر جملهٔ پیرو می‌رود: Ich lerne Deutsch, weil ich in Deutschland arbeiten will.",
   "examples": [
@@ -751,8 +911,8 @@ UPDATE lessons SET grammar_note = '{
 
 -- Day 43
 UPDATE lessons SET grammar_note = '{
-  "title": "dass — same rule, reported content",
-  "title_fa": "dass — همان قاعده، برای نقل محتوا",
+  "title": "Subordinate clauses (Nebensatz): dass",
+  "title_fa": "جمله‌وارهٔ پیرو (Nebensatz): dass",
   "explanation": "dass introduces what someone thinks or says, and like weil it pushes the verb to the end.",
   "explanation_fa": "dass محتوای فکر یا گفتهٔ کسی را معرفی می‌کند و مثل weil فعل را به آخر می‌برد.",
   "examples": [
@@ -772,8 +932,8 @@ UPDATE lessons SET grammar_note = '{
 
 -- Day 44
 UPDATE lessons SET grammar_note = '{
-  "title": "wenn or als — which past?",
-  "title_fa": "wenn یا als — کدام گذشته؟",
+  "title": "Subordinate clauses (Nebensatz): wenn or als",
+  "title_fa": "جمله‌وارهٔ پیرو (Nebensatz): wenn یا als",
   "explanation": "Use als for a single completed event in the past, and wenn for repeated events or for the present and future.",
   "explanation_fa": "برای یک رویداد یکبارهٔ گذشته از als استفاده کن و برای رویدادهای تکراری یا حال و آینده از wenn.",
   "examples": [
@@ -793,8 +953,8 @@ UPDATE lessons SET grammar_note = '{
 
 -- Day 45
 UPDATE lessons SET grammar_note = '{
-  "title": "Adjective endings in the nominative",
-  "title_fa": "پسوند صفت در حالت فاعلی",
+  "title": "Adjective declension (Adjektivdeklination): nominative",
+  "title_fa": "صرف صفت (Adjektivdeklination): حالت فاعلی",
   "explanation": "After der/die/das the adjective takes -e; after ein it takes the gender ending: ein guter Mann, eine gute Frau, ein gutes Kind.",
   "explanation_fa": "بعد از der/die/das صفت پسوند -e می‌گیرد؛ بعد از ein پسوند جنسیتی: ein guter Mann، eine gute Frau، ein gutes Kind.",
   "examples": [
@@ -814,8 +974,8 @@ UPDATE lessons SET grammar_note = '{
 
 -- Day 46
 UPDATE lessons SET grammar_note = '{
-  "title": "Adjective endings in accusative and dative",
-  "title_fa": "پسوند صفت در Akkusativ و Dativ",
+  "title": "Adjective declension (Adjektivdeklination): accusative and dative",
+  "title_fa": "صرف صفت (Adjektivdeklination): حالت مفعولی و به‌ای",
   "explanation": "In the accusative only masculine changes (den guten Mann). In the dative nearly everything ends in -en: dem guten Mann, der guten Frau.",
   "explanation_fa": "در Akkusativ فقط مذکر تغییر می‌کند (den guten Mann). در Dativ تقریباً همه‌چیز به -en ختم می‌شود: dem guten Mann، der guten Frau.",
   "examples": [
@@ -835,8 +995,8 @@ UPDATE lessons SET grammar_note = '{
 
 -- Day 47
 UPDATE lessons SET grammar_note = '{
-  "title": "Professions take no article",
-  "title_fa": "شغل بدون حرف تعریف می‌آید",
+  "title": "Articles (Artikel): none with professions",
+  "title_fa": "حروف تعریف (Artikel): شغل بدون حرف تعریف",
   "explanation": "Unlike English, German drops the article with professions: Ich bin Lehrer, not ein Lehrer. With als it is the same: Ich arbeite als Ingenieur.",
   "explanation_fa": "برخلاف انگلیسی، آلمانی برای شغل حرف تعریف نمی‌آورد: Ich bin Lehrer نه ein Lehrer. با als هم همین‌طور: Ich arbeite als Ingenieur.",
   "examples": [
@@ -856,34 +1016,50 @@ UPDATE lessons SET grammar_note = '{
 
 -- Day 48
 UPDATE lessons SET grammar_note = '{
-  "title": "seit plus present tense",
-  "title_fa": "seit با زمان حال",
+  "title": "Prepositions (Präpositionen): seit with the present tense",
+  "title_fa": "حروف اضافه (Präpositionen): seit با زمان حال",
   "explanation": "For something that started in the past and still continues, German uses seit with the present tense — not the past as in English.",
   "explanation_fa": "برای کاری که در گذشته شروع شده و هنوز ادامه دارد، آلمانی seit را با زمان حال می‌آورد — نه گذشته مثل انگلیسی.",
   "examples": [
-    {"de": "Ich lerne seit zwei Jahren Deutsch.", "en": "I have been learning German for two years.", "fa": "دو سال است آلمانی می‌خوانم."},
-    {"de": "Er wohnt seit 2020 hier.", "en": "He has lived here since 2020.", "fa": "از سال ۲۰۲۰ اینجا زندگی می‌کند."}
+    {
+      "de": "Ich lerne seit zwei Jahren Deutsch.",
+      "en": "I have been learning German for two years.",
+      "fa": "دو سال است آلمانی می‌خوانم."
+    },
+    {
+      "de": "Er wohnt seit 2020 hier.",
+      "en": "He has lived here since 2020.",
+      "fa": "از سال ۲۰۲۰ اینجا زندگی می‌کند."
+    }
   ],
   "basics_key": "prepositions"
 }'::jsonb WHERE day = 48;
 
 -- Day 49
 UPDATE lessons SET grammar_note = '{
-  "title": "Compound nouns take the last gender",
-  "title_fa": "اسم مرکب جنسیت جزء آخر را می‌گیرد",
+  "title": "Compound nouns (Komposita): the last part sets the gender",
+  "title_fa": "اسم‌های مرکب (Komposita): جنسیت از جزء آخر",
   "explanation": "German glues nouns together and the final part decides the article: die Internetverbindung, because Verbindung is feminine.",
   "explanation_fa": "آلمانی اسم‌ها را به هم می‌چسباند و جزء آخر حرف تعریف را تعیین می‌کند: die Internetverbindung، چون Verbindung مؤنث است.",
   "examples": [
-    {"de": "das Handy + die Nummer = die Handynummer", "en": "the mobile number", "fa": "شمارهٔ موبایل"},
-    {"de": "der Computer + das Problem = das Computerproblem", "en": "the computer problem", "fa": "مشکل کامپیوتر"}
+    {
+      "de": "das Handy + die Nummer = die Handynummer",
+      "en": "the mobile number",
+      "fa": "شمارهٔ موبایل"
+    },
+    {
+      "de": "der Computer + das Problem = das Computerproblem",
+      "en": "the computer problem",
+      "fa": "مشکل کامپیوتر"
+    }
   ],
   "basics_key": "articles"
 }'::jsonb WHERE day = 49;
 
 -- Day 50
 UPDATE lessons SET grammar_note = '{
-  "title": "und, aber, oder, denn keep the verb second",
-  "title_fa": "und، aber، oder، denn جای فعل را عوض نمی‌کنند",
+  "title": "Coordinating conjunctions (Konjunktionen): und, aber, oder, denn",
+  "title_fa": "حروف ربط هم‌پایه (Konjunktionen): und، aber، oder، denn",
   "explanation": "These four connect two main clauses and do not count as an element, so the verb stays in second position — unlike weil.",
   "explanation_fa": "این چهار حرف ربط دو جملهٔ اصلی را وصل می‌کنند و خودشان جزء شمرده نمی‌شوند، پس فعل در جایگاه دوم می‌ماند — برخلاف weil.",
   "examples": [
@@ -903,8 +1079,8 @@ UPDATE lessons SET grammar_note = '{
 
 -- Day 51
 UPDATE lessons SET grammar_note = '{
-  "title": "Präteritum — the written past",
-  "title_fa": "Präteritum — گذشتهٔ نوشتاری",
+  "title": "Simple past (Präteritum)",
+  "title_fa": "گذشتهٔ ساده (Präteritum)",
   "explanation": "Written German and a few common verbs prefer the simple past: war, hatte, ging, kam. In speech, the perfect tense is more usual.",
   "explanation_fa": "در نوشتار و برای چند فعل پرکاربرد از گذشتهٔ ساده استفاده می‌شود: war، hatte، ging، kam. در گفتار معمولاً ماضی نقلی رایج‌تر است.",
   "examples": [
@@ -924,8 +1100,8 @@ UPDATE lessons SET grammar_note = '{
 
 -- Day 52
 UPDATE lessons SET grammar_note = '{
-  "title": "Present passive: werden plus participle",
-  "title_fa": "مجهول حال: werden به‌همراه اسم مفعول",
+  "title": "Passive voice (Passiv): present",
+  "title_fa": "ساختار مجهول (Passiv): زمان حال",
   "explanation": "When the doer does not matter, use werden plus the participle: Das Formular wird ausgefüllt.",
   "explanation_fa": "وقتی انجام‌دهنده مهم نیست، از werden با اسم مفعول استفاده کن: Das Formular wird ausgefüllt.",
   "examples": [
@@ -945,8 +1121,8 @@ UPDATE lessons SET grammar_note = '{
 
 -- Day 53
 UPDATE lessons SET grammar_note = '{
-  "title": "Relative clauses",
-  "title_fa": "جمله‌های موصولی",
+  "title": "Relative clauses (Relativsätze)",
+  "title_fa": "جمله‌های موصولی (Relativsätze)",
   "explanation": "The relative pronoun copies the gender of the noun it describes, and the verb goes to the end: der Mann, der dort steht.",
   "explanation_fa": "ضمیر موصولی جنسیت اسمی را می‌گیرد که توصیفش می‌کند و فعل به آخر می‌رود: der Mann, der dort steht.",
   "examples": [
@@ -966,21 +1142,29 @@ UPDATE lessons SET grammar_note = '{
 
 -- Day 54
 UPDATE lessons SET grammar_note = '{
-  "title": "The genitive shows possession",
-  "title_fa": "حالت Genitiv برای مالکیت",
+  "title": "Genitive case (Genitiv)",
+  "title_fa": "حالت اضافی (Genitiv)",
   "explanation": "Formal German marks possession with des/der plus -s on masculine and neuter nouns: das Auto des Mannes. In speech, von plus dative is common.",
   "explanation_fa": "آلمانی رسمی مالکیت را با des/der و افزودن -s به اسم مذکر و خنثی نشان می‌دهد: das Auto des Mannes. در گفتار معمولاً von با Dativ به‌کار می‌رود.",
   "examples": [
-    {"de": "das Haus meiner Eltern", "en": "my parents house", "fa": "خانهٔ والدینم"},
-    {"de": "das Auto von meinem Bruder", "en": "my brothers car (spoken)", "fa": "ماشین برادرم (گفتاری)"}
+    {
+      "de": "das Haus meiner Eltern",
+      "en": "my parents house",
+      "fa": "خانهٔ والدینم"
+    },
+    {
+      "de": "das Auto von meinem Bruder",
+      "en": "my brothers car (spoken)",
+      "fa": "ماشین برادرم (گفتاری)"
+    }
   ],
   "basics_key": "cases"
 }'::jsonb WHERE day = 54;
 
 -- Day 55
 UPDATE lessons SET grammar_note = '{
-  "title": "Indirect questions use ob or a w-word",
-  "title_fa": "سؤال غیرمستقیم با ob یا کلمهٔ پرسشی",
+  "title": "Indirect questions (indirekte Fragen): ob and W-words",
+  "title_fa": "پرسش غیرمستقیم (indirekte Fragen): ob و کلمهٔ پرسشی",
   "explanation": "Wrap a question inside a sentence with ob (whether) or the question word, and send the verb to the end.",
   "explanation_fa": "سؤال را داخل جمله با ob (آیا) یا کلمهٔ پرسشی بیاور و فعل را به آخر بفرست.",
   "examples": [
@@ -1000,8 +1184,8 @@ UPDATE lessons SET grammar_note = '{
 
 -- Day 56
 UPDATE lessons SET grammar_note = '{
-  "title": "man — people in general",
-  "title_fa": "man — «آدم» به‌طور کلی",
+  "title": "Impersonal pronoun man",
+  "title_fa": "ضمیر غیرشخصی man",
   "explanation": "man means people in general and always takes the er/sie/es verb form: Man muss Müll trennen.",
   "explanation_fa": "man یعنی «آدم/مردم» به‌طور کلی و همیشه فعل را مثل er/sie/es صرف می‌کند: Man muss Müll trennen.",
   "examples": [
@@ -1021,8 +1205,8 @@ UPDATE lessons SET grammar_note = '{
 
 -- Day 57
 UPDATE lessons SET grammar_note = '{
-  "title": "Reporting a source: laut and nach",
-  "title_fa": "ذکر منبع با laut و nach",
+  "title": "Prepositions (Präpositionen): laut and nach for sources",
+  "title_fa": "حروف اضافه (Präpositionen): laut و nach برای ذکر منبع",
   "explanation": "News language uses laut plus dative to attribute information: Laut der Zeitung ...",
   "explanation_fa": "زبان خبری با laut و Dativ منبع را ذکر می‌کند: Laut der Zeitung …",
   "examples": [
@@ -1042,8 +1226,8 @@ UPDATE lessons SET grammar_note = '{
 
 -- Day 58
 UPDATE lessons SET grammar_note = '{
-  "title": "sollte — advice, not orders",
-  "title_fa": "sollte — توصیه، نه دستور",
+  "title": "Modal verbs (Modalverben): sollte for advice",
+  "title_fa": "افعال کمکی (Modalverben): sollte برای توصیه",
   "explanation": "sollte is the softened form of sollen and is the normal way to give health advice: Du solltest mehr Wasser trinken.",
   "explanation_fa": "sollte شکل نرم‌شدهٔ sollen است و روش معمول توصیهٔ سلامتی: Du solltest mehr Wasser trinken.",
   "examples": [
@@ -1063,20 +1247,28 @@ UPDATE lessons SET grammar_note = '{
 
 -- Day 59
 UPDATE lessons SET grammar_note = '{
-  "title": "Opinion formulas",
-  "title_fa": "الگوهای بیان نظر",
+  "title": "Expressing opinion: Ich finde, dass ...",
+  "title_fa": "بیان نظر: Ich finde, dass …",
   "explanation": "Ich finde, dass ... and Meiner Meinung nach ... are the two safest ways to give an opinion. After dass the verb goes to the end.",
   "explanation_fa": "دو الگوی مطمئن برای بیان نظر: Ich finde, dass … و Meiner Meinung nach … . بعد از dass فعل به آخر می‌رود.",
   "examples": [
-    {"de": "Ich finde, dass das wichtig ist.", "en": "I think that this is important.", "fa": "فکر می‌کنم این مهم است."},
-    {"de": "Meiner Meinung nach ist das falsch.", "en": "In my opinion that is wrong.", "fa": "به نظر من این اشتباه است."}
+    {
+      "de": "Ich finde, dass das wichtig ist.",
+      "en": "I think that this is important.",
+      "fa": "فکر می‌کنم این مهم است."
+    },
+    {
+      "de": "Meiner Meinung nach ist das falsch.",
+      "en": "In my opinion that is wrong.",
+      "fa": "به نظر من این اشتباه است."
+    }
   ]
 }'::jsonb WHERE day = 59;
 
 -- Day 60
 UPDATE lessons SET grammar_note = '{
-  "title": "Comparing cultures: anders als",
-  "title_fa": "مقایسهٔ فرهنگ‌ها با anders als",
+  "title": "Comparison (Vergleich): anders als, genauso wie",
+  "title_fa": "مقایسه (Vergleich): anders als و genauso wie",
   "explanation": "Use anders als for different from and genauso wie for just like.",
   "explanation_fa": "برای «متفاوت از» از anders als و برای «درست مثل» از genauso wie استفاده کن.",
   "examples": [
@@ -1096,8 +1288,8 @@ UPDATE lessons SET grammar_note = '{
 
 -- Day 61
 UPDATE lessons SET grammar_note = '{
-  "title": "würde plus infinitive — the polite conditional",
-  "title_fa": "würde با مصدر — شرطی مؤدبانه",
+  "title": "Konjunktiv II: würde + infinitive",
+  "title_fa": "وجه شرطی (Konjunktiv II): würde به‌همراه مصدر",
   "explanation": "For hypothetical or very polite statements, use würde plus the infinitive at the end: Ich würde gern mitkommen.",
   "explanation_fa": "برای جمله‌های فرضی یا خیلی مؤدبانه از würde با مصدر در آخر استفاده کن: Ich würde gern mitkommen.",
   "examples": [
@@ -1117,8 +1309,8 @@ UPDATE lessons SET grammar_note = '{
 
 -- Day 62
 UPDATE lessons SET grammar_note = '{
-  "title": "hätte and wäre",
-  "title_fa": "hätte و wäre",
+  "title": "Konjunktiv II: hätte and wäre",
+  "title_fa": "وجه شرطی (Konjunktiv II): hätte و wäre",
   "explanation": "haben and sein have their own conditional forms and do not use würde: Ich hätte gern ..., Das wäre schön.",
   "explanation_fa": "فعل‌های haben و sein شکل شرطی خودشان را دارند و würde نمی‌گیرند: Ich hätte gern …، Das wäre schön.",
   "examples": [
@@ -1138,8 +1330,8 @@ UPDATE lessons SET grammar_note = '{
 
 -- Day 63
 UPDATE lessons SET grammar_note = '{
-  "title": "Past passive: wurde plus participle",
-  "title_fa": "مجهول گذشته: wurde با اسم مفعول",
+  "title": "Passive voice (Passiv): past",
+  "title_fa": "ساختار مجهول (Passiv): زمان گذشته",
   "explanation": "The past passive swaps wird for wurde: Das Haus wurde 1990 gebaut.",
   "explanation_fa": "در مجهول گذشته به‌جای wird از wurde استفاده می‌شود: Das Haus wurde 1990 gebaut.",
   "examples": [
@@ -1159,8 +1351,8 @@ UPDATE lessons SET grammar_note = '{
 
 -- Day 64
 UPDATE lessons SET grammar_note = '{
-  "title": "N-declension nouns",
-  "title_fa": "اسم‌های N-Deklination",
+  "title": "N-declension (N-Deklination)",
+  "title_fa": "صرف N (N-Deklination)",
   "explanation": "A group of masculine nouns adds -n or -en in every case except the nominative: der Student, but den Studenten.",
   "explanation_fa": "گروهی از اسم‌های مذکر در همهٔ حالت‌ها به‌جز فاعلی، -n یا -en می‌گیرند: der Student اما den Studenten.",
   "examples": [
@@ -1180,8 +1372,8 @@ UPDATE lessons SET grammar_note = '{
 
 -- Day 65
 UPDATE lessons SET grammar_note = '{
-  "title": "Double infinitive with modals",
-  "title_fa": "مصدر دوگانه با فعل‌های کمکی",
+  "title": "Modal verbs (Modalverben): double infinitive in the perfect",
+  "title_fa": "افعال کمکی (Modalverben): مصدر دوگانه در ماضی نقلی",
   "explanation": "In the perfect tense, modals do not use a participle. Two infinitives end the sentence instead: Ich habe arbeiten müssen.",
   "explanation_fa": "در ماضی نقلی، فعل‌های کمکی اسم مفعول نمی‌گیرند؛ به‌جایش دو مصدر آخر جمله می‌آیند: Ich habe arbeiten müssen.",
   "examples": [
@@ -1201,8 +1393,8 @@ UPDATE lessons SET grammar_note = '{
 
 -- Day 66
 UPDATE lessons SET grammar_note = '{
-  "title": "Adjectives with no article",
-  "title_fa": "صفت بدون حرف تعریف",
+  "title": "Adjective declension (Adjektivdeklination): with no article",
+  "title_fa": "صرف صفت (Adjektivdeklination): بدون حرف تعریف",
   "explanation": "With no article at all, the adjective itself carries the case ending: guter Kaffee, kaltes Wasser, mit gutem Wetter.",
   "explanation_fa": "وقتی هیچ حرف تعریفی نیست، خود صفت پسوند حالت را می‌گیرد: guter Kaffee، kaltes Wasser، mit gutem Wetter.",
   "examples": [
@@ -1222,32 +1414,48 @@ UPDATE lessons SET grammar_note = '{
 
 -- Day 67
 UPDATE lessons SET grammar_note = '{
-  "title": "Formal letter openings and closings",
-  "title_fa": "شروع و پایان نامهٔ رسمی",
+  "title": "Register (Register): formal letters",
+  "title_fa": "لحن (Register): نامهٔ رسمی",
   "explanation": "Formal letters open with Sehr geehrte Damen und Herren and close with Mit freundlichen Grüßen. Note the comma after the greeting and the small letter that follows.",
   "explanation_fa": "نامهٔ رسمی با Sehr geehrte Damen und Herren شروع و با Mit freundlichen Grüßen تمام می‌شود. بعد از سلام کاما می‌آید و جملهٔ بعد با حرف کوچک شروع می‌شود.",
   "examples": [
-    {"de": "Sehr geehrte Frau Müller,", "en": "Dear Ms Müller,", "fa": "خانم مولر گرامی،"},
-    {"de": "Mit freundlichen Grüßen", "en": "Kind regards", "fa": "با احترام"}
+    {
+      "de": "Sehr geehrte Frau Müller,",
+      "en": "Dear Ms Müller,",
+      "fa": "خانم مولر گرامی،"
+    },
+    {
+      "de": "Mit freundlichen Grüßen",
+      "en": "Kind regards",
+      "fa": "با احترام"
+    }
   ]
 }'::jsonb WHERE day = 67;
 
 -- Day 68
 UPDATE lessons SET grammar_note = '{
-  "title": "Interview register: Sie plus conditional",
-  "title_fa": "لحن مصاحبه: Sie به‌همراه شرطی",
+  "title": "Register (Register): job interviews",
+  "title_fa": "لحن (Register): مصاحبهٔ شغلی",
   "explanation": "In interviews combine Sie with könnte and würde, and describe experience with the perfect tense: Ich habe drei Jahre gearbeitet.",
   "explanation_fa": "در مصاحبه، Sie را با könnte و würde ترکیب کن و تجربه‌ات را با ماضی نقلی بگو: Ich habe drei Jahre gearbeitet.",
   "examples": [
-    {"de": "Ich habe drei Jahre als Verkäufer gearbeitet.", "en": "I worked as a salesperson for three years.", "fa": "سه سال فروشنده بودم."},
-    {"de": "Ich würde gern in Ihrem Team arbeiten.", "en": "I would like to work in your team.", "fa": "دوست دارم در تیم شما کار کنم."}
+    {
+      "de": "Ich habe drei Jahre als Verkäufer gearbeitet.",
+      "en": "I worked as a salesperson for three years.",
+      "fa": "سه سال فروشنده بودم."
+    },
+    {
+      "de": "Ich würde gern in Ihrem Team arbeiten.",
+      "en": "I would like to work in your team.",
+      "fa": "دوست دارم در تیم شما کار کنم."
+    }
   ]
 }'::jsonb WHERE day = 68;
 
 -- Day 69
 UPDATE lessons SET grammar_note = '{
-  "title": "Housing vocabulary is passive-heavy",
-  "title_fa": "زبان اجاره‌نامه پر از مجهول است",
+  "title": "Passive voice (Passiv): rental notices",
+  "title_fa": "ساختار مجهول (Passiv): آگهی و قرارداد اجاره",
   "explanation": "Rental adverts and contracts prefer the passive and nominalised forms: Die Wohnung wird ab Mai vermietet.",
   "explanation_fa": "آگهی و قرارداد اجاره معمولاً مجهول و اسم‌سازی دارد: Die Wohnung wird ab Mai vermietet.",
   "examples": [
@@ -1267,8 +1475,8 @@ UPDATE lessons SET grammar_note = '{
 
 -- Day 70
 UPDATE lessons SET grammar_note = '{
-  "title": "Turning verbs into nouns",
-  "title_fa": "تبدیل فعل به اسم",
+  "title": "Nominalization (Nominalisierung): das Rauchen",
+  "title_fa": "اسم‌سازی (Nominalisierung): das Rauchen",
   "explanation": "Any infinitive can become a neuter noun: das Rauchen, das Lernen. Discussion German uses this constantly.",
   "explanation_fa": "هر مصدری می‌تواند اسم خنثی شود: das Rauchen، das Lernen. در بحث‌های جدی این ساختار زیاد به‌کار می‌رود.",
   "examples": [
@@ -1288,8 +1496,8 @@ UPDATE lessons SET grammar_note = '{
 
 -- Day 71
 UPDATE lessons SET grammar_note = '{
-  "title": "Present tense for future plans",
-  "title_fa": "زمان حال برای برنامهٔ آینده",
+  "title": "Future (Futur): present tense for plans",
+  "title_fa": "آینده (Futur): زمان حال برای برنامه",
   "explanation": "With a time word, the present tense already means the future. No special tense is needed: Morgen gehe ich ins Kino.",
   "explanation_fa": "با یک قید زمان، همان زمان حال معنی آینده می‌دهد و نیازی به زمان ویژه نیست: Morgen gehe ich ins Kino.",
   "examples": [
@@ -1309,8 +1517,8 @@ UPDATE lessons SET grammar_note = '{
 
 -- Day 72
 UPDATE lessons SET grammar_note = '{
-  "title": "Informal imperative drops the ending",
-  "title_fa": "امری خودمانی بدون پسوند",
+  "title": "Imperative (Imperativ): the informal du form",
+  "title_fa": "وجه امری (Imperativ): شکل خودمانی du",
   "explanation": "The du-imperative uses the bare stem with no pronoun: Nimm, Gib, Komm. Recipes and cooking together are full of it.",
   "explanation_fa": "امری du فقط ریشهٔ فعل است، بدون ضمیر: Nimm، Gib، Komm. دستور پخت و آشپزی پر از این ساختار است.",
   "examples": [
@@ -1330,8 +1538,8 @@ UPDATE lessons SET grammar_note = '{
 
 -- Day 73
 UPDATE lessons SET grammar_note = '{
-  "title": "Reflexive verbs in daily routine",
-  "title_fa": "فعل‌های انعکاسی در برنامهٔ روزانه",
+  "title": "Reflexive verbs (reflexive Verben): daily routine",
+  "title_fa": "فعل‌های انعکاسی (reflexive Verben): برنامهٔ روزانه",
   "explanation": "Fitness talk is full of reflexives: sich anmelden, sich umziehen, sich aufwärmen. The pronoun follows the conjugated verb.",
   "explanation_fa": "زبان ورزش پر از فعل انعکاسی است: sich anmelden، sich umziehen، sich aufwärmen. ضمیر بعد از فعل صرف‌شده می‌آید.",
   "examples": [
@@ -1351,34 +1559,50 @@ UPDATE lessons SET grammar_note = '{
 
 -- Day 74
 UPDATE lessons SET grammar_note = '{
-  "title": "bei and zu with people",
-  "title_fa": "bei و zu دربارهٔ اشخاص",
+  "title": "Prepositions (Präpositionen): zu and bei with people",
+  "title_fa": "حروف اضافه (Präpositionen): zu و bei دربارهٔ اشخاص",
   "explanation": "zu plus dative means going to someone, bei plus dative means being at their place: Ich gehe zu Anna. Ich bin bei Anna.",
   "explanation_fa": "zu با Dativ یعنی رفتن پیش کسی و bei با Dativ یعنی بودن پیش کسی: Ich gehe zu Anna. Ich bin bei Anna.",
   "examples": [
-    {"de": "Ich gehe zu meinem Freund.", "en": "I am going to my friend.", "fa": "پیش دوستم می‌روم."},
-    {"de": "Ich bin bei meinen Eltern.", "en": "I am at my parents place.", "fa": "خانهٔ والدینم هستم."}
+    {
+      "de": "Ich gehe zu meinem Freund.",
+      "en": "I am going to my friend.",
+      "fa": "پیش دوستم می‌روم."
+    },
+    {
+      "de": "Ich bin bei meinen Eltern.",
+      "en": "I am at my parents place.",
+      "fa": "خانهٔ والدینم هستم."
+    }
   ],
   "basics_key": "prepositions"
 }'::jsonb WHERE day = 74;
 
 -- Day 75
 UPDATE lessons SET grammar_note = '{
-  "title": "nach or in for places",
-  "title_fa": "nach یا in برای مکان‌ها",
+  "title": "Prepositions (Präpositionen): nach or in with places",
+  "title_fa": "حروف اضافه (Präpositionen): nach یا in برای مکان‌ها",
   "explanation": "Use nach with cities and most countries: nach Berlin. Use in die/in den with countries that take an article: in die Türkei, in den Iran.",
   "explanation_fa": "برای شهرها و بیشتر کشورها nach می‌آید: nach Berlin. برای کشورهایی که حرف تعریف دارند in die/in den: in die Türkei، in den Iran.",
   "examples": [
-    {"de": "Ich ziehe nach München.", "en": "I am moving to Munich.", "fa": "به مونیخ نقل‌مکان می‌کنم."},
-    {"de": "Wir fliegen in die Türkei.", "en": "We are flying to Turkey.", "fa": "به ترکیه پرواز می‌کنیم."}
+    {
+      "de": "Ich ziehe nach München.",
+      "en": "I am moving to Munich.",
+      "fa": "به مونیخ نقل‌مکان می‌کنم."
+    },
+    {
+      "de": "Wir fliegen in die Türkei.",
+      "en": "We are flying to Turkey.",
+      "fa": "به ترکیه پرواز می‌کنیم."
+    }
   ],
   "basics_key": "prepositions"
 }'::jsonb WHERE day = 75;
 
 -- Day 76
 UPDATE lessons SET grammar_note = '{
-  "title": "Complaining in the perfect tense",
-  "title_fa": "شکایت با ماضی نقلی",
+  "title": "Perfect tense (Perfekt): reporting problems",
+  "title_fa": "ماضی نقلی (Perfekt): گزارش مشکل",
   "explanation": "Problems that just happened are reported in the perfect: Der Zug hat Verspätung gehabt. Ich habe den Anschluss verpasst.",
   "explanation_fa": "مشکلاتی که تازه رخ داده با ماضی نقلی گفته می‌شود: Der Zug hat Verspätung gehabt. Ich habe den Anschluss verpasst.",
   "examples": [
@@ -1398,20 +1622,28 @@ UPDATE lessons SET grammar_note = '{
 
 -- Day 77
 UPDATE lessons SET grammar_note = '{
-  "title": "Quantities need no of",
-  "title_fa": "برای مقدار، «از» لازم نیست",
+  "title": "Quantities (Mengenangaben): ein Kilo Tomaten",
+  "title_fa": "بیان مقدار (Mengenangaben): ein Kilo Tomaten",
   "explanation": "German puts the measure and the product side by side with nothing between: ein Kilo Tomaten, zwei Flaschen Wasser.",
   "explanation_fa": "آلمانی واحد و کالا را بدون هیچ کلمه‌ای کنار هم می‌گذارد: ein Kilo Tomaten، zwei Flaschen Wasser.",
   "examples": [
-    {"de": "Ich nehme ein Kilo Äpfel.", "en": "I will take a kilo of apples.", "fa": "یک کیلو سیب می‌گیرم."},
-    {"de": "Zwei Flaschen Wasser, bitte.", "en": "Two bottles of water, please.", "fa": "لطفاً دو بطری آب."}
+    {
+      "de": "Ich nehme ein Kilo Äpfel.",
+      "en": "I will take a kilo of apples.",
+      "fa": "یک کیلو سیب می‌گیرم."
+    },
+    {
+      "de": "Zwei Flaschen Wasser, bitte.",
+      "en": "Two bottles of water, please.",
+      "fa": "لطفاً دو بطری آب."
+    }
   ]
 }'::jsonb WHERE day = 77;
 
 -- Day 78
 UPDATE lessons SET grammar_note = '{
-  "title": "Futur I with werden",
-  "title_fa": "آیندهٔ صریح با werden",
+  "title": "Future (Futur I): werden + infinitive",
+  "title_fa": "آینده (Futur I): werden به‌همراه مصدر",
   "explanation": "werden plus an infinitive at the end states a firm intention or prediction: Wir werden eine Party machen.",
   "explanation_fa": "werden با مصدر در آخر جمله، قصد یا پیش‌بینی قاطع را نشان می‌دهد: Wir werden eine Party machen.",
   "examples": [
@@ -1431,8 +1663,8 @@ UPDATE lessons SET grammar_note = '{
 
 -- Day 79
 UPDATE lessons SET grammar_note = '{
-  "title": "Verbs that own a preposition",
-  "title_fa": "فعل‌هایی که حرف اضافهٔ ثابت دارند",
+  "title": "Verbs with a fixed preposition (Verben mit Präposition)",
+  "title_fa": "فعل‌های با حرف اضافهٔ ثابت (Verben mit Präposition)",
   "explanation": "Some verbs come welded to a preposition and you must learn them as a unit: sich bewerben um, warten auf, sich freuen über.",
   "explanation_fa": "بعضی فعل‌ها حرف اضافهٔ ثابتی دارند و باید یکجا حفظ شوند: sich bewerben um، warten auf، sich freuen über.",
   "examples": [
@@ -1452,8 +1684,8 @@ UPDATE lessons SET grammar_note = '{
 
 -- Day 80
 UPDATE lessons SET grammar_note = '{
-  "title": "Describing rooms with adjective endings",
-  "title_fa": "توصیف اتاق‌ها با پسوند صفت",
+  "title": "Adjective declension (Adjektivdeklination): describing a home",
+  "title_fa": "صرف صفت (Adjektivdeklination): توصیف خانه",
   "explanation": "Describing a home means adjectives before nouns, so the endings matter: ein großes Wohnzimmer, eine kleine Küche.",
   "explanation_fa": "توصیف خانه یعنی صفت قبل از اسم، پس پسوندها مهم می‌شوند: ein großes Wohnzimmer، eine kleine Küche.",
   "examples": [
@@ -1473,8 +1705,8 @@ UPDATE lessons SET grammar_note = '{
 
 -- Day 81
 UPDATE lessons SET grammar_note = '{
-  "title": "Präteritum for childhood stories",
-  "title_fa": "Präteritum برای خاطرات کودکی",
+  "title": "Simple past (Präteritum): telling a story",
+  "title_fa": "گذشتهٔ ساده (Präteritum): داستان‌گویی",
   "explanation": "When telling a longer story, German switches to the simple past — especially war, hatte, konnte, ging.",
   "explanation_fa": "برای تعریف داستان طولانی، آلمانی به گذشتهٔ ساده می‌رود — به‌ویژه war، hatte، konnte، ging.",
   "examples": [
@@ -1494,8 +1726,8 @@ UPDATE lessons SET grammar_note = '{
 
 -- Day 82
 UPDATE lessons SET grammar_note = '{
-  "title": "Online processes use the passive",
-  "title_fa": "فرایندهای آنلاین با ساختار مجهول",
+  "title": "Passive voice (Passiv): describing a process",
+  "title_fa": "ساختار مجهول (Passiv): بیان فرایند",
   "explanation": "Shops describe steps without naming a doer: Die Bestellung wird bearbeitet. Das Paket wird geliefert.",
   "explanation_fa": "فروشگاه‌ها مراحل را بدون ذکر انجام‌دهنده می‌گویند: Die Bestellung wird bearbeitet. Das Paket wird geliefert.",
   "examples": [
@@ -1515,8 +1747,8 @@ UPDATE lessons SET grammar_note = '{
 
 -- Day 83
 UPDATE lessons SET grammar_note = '{
-  "title": "lassen — having something done",
-  "title_fa": "lassen — «کاری را انجام دادن توسط دیگری»",
+  "title": "The verb lassen: having something done",
+  "title_fa": "فعل lassen: انجام کار توسط دیگری",
   "explanation": "lassen plus an infinitive means you have someone else do it: Ich lasse mir die Haare schneiden.",
   "explanation_fa": "lassen با مصدر یعنی کاری را دیگری برایت انجام می‌دهد: Ich lasse mir die Haare schneiden.",
   "examples": [
@@ -1536,8 +1768,8 @@ UPDATE lessons SET grammar_note = '{
 
 -- Day 84
 UPDATE lessons SET grammar_note = '{
-  "title": "Relative clauses when reviewing films",
-  "title_fa": "جملهٔ موصولی در نقد فیلم",
+  "title": "Relative clauses (Relativsätze): describing things",
+  "title_fa": "جمله‌های موصولی (Relativsätze): توصیف کردن",
   "explanation": "Talking about films naturally produces relative clauses: ein Film, der mich beeindruckt hat.",
   "explanation_fa": "صحبت دربارهٔ فیلم به‌طور طبیعی جملهٔ موصولی می‌سازد: ein Film, der mich beeindruckt hat.",
   "examples": [
@@ -1557,8 +1789,8 @@ UPDATE lessons SET grammar_note = '{
 
 -- Day 85
 UPDATE lessons SET grammar_note = '{
-  "title": "man plus modal for rules",
-  "title_fa": "man با فعل کمکی برای بیان قاعده",
+  "title": "Impersonal pronoun man: with modal verbs",
+  "title_fa": "ضمیر غیرشخصی man: همراه افعال کمکی",
   "explanation": "Rules and recommendations combine man with a modal: Man muss den Müll trennen. Man sollte weniger Plastik benutzen.",
   "explanation_fa": "قاعده‌ها و توصیه‌ها man را با فعل کمکی ترکیب می‌کنند: Man muss den Müll trennen. Man sollte weniger Plastik benutzen.",
   "examples": [
@@ -1578,34 +1810,50 @@ UPDATE lessons SET grammar_note = '{
 
 -- Day 86
 UPDATE lessons SET grammar_note = '{
-  "title": "seit for how long you have studied",
-  "title_fa": "seit برای مدت یادگیری",
+  "title": "Prepositions (Präpositionen): seit for duration",
+  "title_fa": "حروف اضافه (Präpositionen): seit برای مدت زمان",
   "explanation": "Say how long you have been learning with seit plus dative and the present tense: Ich lerne seit sechs Monaten Deutsch.",
   "explanation_fa": "مدت یادگیری را با seit و Dativ و زمان حال بگو: Ich lerne seit sechs Monaten Deutsch.",
   "examples": [
-    {"de": "Ich lerne seit einem Jahr Deutsch.", "en": "I have been learning German for a year.", "fa": "یک سال است آلمانی می‌خوانم."},
-    {"de": "Seit wann lernst du Deutsch?", "en": "How long have you been learning German?", "fa": "از کی آلمانی می‌خوانی؟"}
+    {
+      "de": "Ich lerne seit einem Jahr Deutsch.",
+      "en": "I have been learning German for a year.",
+      "fa": "یک سال است آلمانی می‌خوانم."
+    },
+    {
+      "de": "Seit wann lernst du Deutsch?",
+      "en": "How long have you been learning German?",
+      "fa": "از کی آلمانی می‌خوانی؟"
+    }
   ],
   "basics_key": "prepositions"
 }'::jsonb WHERE day = 86;
 
 -- Day 87
 UPDATE lessons SET grammar_note = '{
-  "title": "im for seasons",
-  "title_fa": "im برای فصل‌ها",
+  "title": "Prepositions of time (Temporalpräpositionen): im with seasons",
+  "title_fa": "حروف اضافهٔ زمان (Temporalpräpositionen): im برای فصل‌ها",
   "explanation": "Seasons take im: im Frühling, im Sommer, im Herbst, im Winter. The one exception is in der Nacht.",
   "explanation_fa": "فصل‌ها با im می‌آیند: im Frühling، im Sommer، im Herbst، im Winter. استثنا: in der Nacht.",
   "examples": [
-    {"de": "Im Winter schneit es oft.", "en": "In winter it often snows.", "fa": "زمستان‌ها اغلب برف می‌آید."},
-    {"de": "Im Sommer gehen wir schwimmen.", "en": "In summer we go swimming.", "fa": "تابستان‌ها شنا می‌رویم."}
+    {
+      "de": "Im Winter schneit es oft.",
+      "en": "In winter it often snows.",
+      "fa": "زمستان‌ها اغلب برف می‌آید."
+    },
+    {
+      "de": "Im Sommer gehen wir schwimmen.",
+      "en": "In summer we go swimming.",
+      "fa": "تابستان‌ها شنا می‌رویم."
+    }
   ],
   "basics_key": "months"
 }'::jsonb WHERE day = 87;
 
 -- Day 88
 UPDATE lessons SET grammar_note = '{
-  "title": "Polite complaints with könnten",
-  "title_fa": "شکایت مؤدبانه با könnten",
+  "title": "Konjunktiv II: polite complaints",
+  "title_fa": "وجه شرطی (Konjunktiv II): شکایت مؤدبانه",
   "explanation": "To complain without conflict, use könnten plus bitte: Könnten Sie bitte etwas leiser sein?",
   "explanation_fa": "برای شکایت بدون تنش از könnten به‌همراه bitte استفاده کن: Könnten Sie bitte etwas leiser sein؟",
   "examples": [
@@ -1625,21 +1873,29 @@ UPDATE lessons SET grammar_note = '{
 
 -- Day 89
 UPDATE lessons SET grammar_note = '{
-  "title": "Animal names and their articles",
-  "title_fa": "نام حیوانات و حرف تعریفشان",
+  "title": "Articles (Artikel): animal nouns",
+  "title_fa": "حروف تعریف (Artikel): نام حیوانات",
   "explanation": "Animals follow no gender logic either: der Hund, die Katze, das Pferd. Learn each with its article.",
   "explanation_fa": "نام حیوانات هم منطق جنسیتی ندارد: der Hund، die Katze، das Pferd. هرکدام را با حرف تعریفش یاد بگیر.",
   "examples": [
-    {"de": "Ich habe einen Hund.", "en": "I have a dog.", "fa": "یک سگ دارم."},
-    {"de": "Die Katze schläft auf dem Sofa.", "en": "The cat sleeps on the sofa.", "fa": "گربه روی مبل می‌خوابد."}
+    {
+      "de": "Ich habe einen Hund.",
+      "en": "I have a dog.",
+      "fa": "یک سگ دارم."
+    },
+    {
+      "de": "Die Katze schläft auf dem Sofa.",
+      "en": "The cat sleeps on the sofa.",
+      "fa": "گربه روی مبل می‌خوابد."
+    }
   ],
   "basics_key": "articles"
 }'::jsonb WHERE day = 89;
 
 -- Day 90
 UPDATE lessons SET grammar_note = '{
-  "title": "an and zu with festivals",
-  "title_fa": "an و zu برای مناسبت‌ها",
+  "title": "Prepositions (Präpositionen): an and zu with festivals",
+  "title_fa": "حروف اضافه (Präpositionen): an و zu برای مناسبت‌ها",
   "explanation": "Festivals take zu or an: zu Weihnachten, an Ostern. Both are followed by the dative.",
   "explanation_fa": "برای مناسبت‌ها zu یا an می‌آید: zu Weihnachten، an Ostern. بعد از هر دو Dativ می‌آید.",
   "examples": [
@@ -1659,8 +1915,8 @@ UPDATE lessons SET grammar_note = '{
 
 -- Day 91
 UPDATE lessons SET grammar_note = '{
-  "title": "An deiner Stelle würde ich ...",
-  "title_fa": "An deiner Stelle würde ich … — «جای تو بودم»",
+  "title": "Konjunktiv II: giving advice",
+  "title_fa": "وجه شرطی (Konjunktiv II): نصیحت کردن",
   "explanation": "The natural way to give advice: An deiner Stelle würde ich ... with the infinitive at the end.",
   "explanation_fa": "روش طبیعی نصیحت کردن: An deiner Stelle würde ich … و مصدر در آخر جمله.",
   "examples": [
@@ -1680,33 +1936,49 @@ UPDATE lessons SET grammar_note = '{
 
 -- Day 92
 UPDATE lessons SET grammar_note = '{
-  "title": "vor and nach for time",
-  "title_fa": "vor و nach برای زمان",
+  "title": "Prepositions (Präpositionen): vor and nach for time",
+  "title_fa": "حروف اضافه (Präpositionen): vor و nach برای زمان",
   "explanation": "vor means before or ago, nach means after — both with the dative: vor zwei Wochen, nach dem Frühstück.",
   "explanation_fa": "vor یعنی قبل یا «پیش» و nach یعنی بعد — هر دو با Dativ: vor zwei Wochen، nach dem Frühstück.",
   "examples": [
-    {"de": "Vor der Reise buche ich das Hotel.", "en": "Before the trip I book the hotel.", "fa": "قبل از سفر هتل رزرو می‌کنم."},
-    {"de": "Nach dem Flug nehmen wir ein Taxi.", "en": "After the flight we take a taxi.", "fa": "بعد از پرواز تاکسی می‌گیریم."}
+    {
+      "de": "Vor der Reise buche ich das Hotel.",
+      "en": "Before the trip I book the hotel.",
+      "fa": "قبل از سفر هتل رزرو می‌کنم."
+    },
+    {
+      "de": "Nach dem Flug nehmen wir ein Taxi.",
+      "en": "After the flight we take a taxi.",
+      "fa": "بعد از پرواز تاکسی می‌گیریم."
+    }
   ],
   "basics_key": "prepositions"
 }'::jsonb WHERE day = 92;
 
 -- Day 93
 UPDATE lessons SET grammar_note = '{
-  "title": "Telephone formulas",
-  "title_fa": "عبارت‌های تلفنی",
+  "title": "Register (Register): telephone conversations",
+  "title_fa": "لحن (Register): مکالمهٔ تلفنی",
   "explanation": "Phone German is formulaic: answer with your surname, then Hier spricht ... and Kann ich bitte mit ... sprechen?",
   "explanation_fa": "مکالمهٔ تلفنی آلمانی الگوی ثابت دارد: با نام خانوادگی جواب بده، بعد Hier spricht … و Kann ich bitte mit … sprechen؟",
   "examples": [
-    {"de": "Hier spricht Sara Ahmadi.", "en": "This is Sara Ahmadi speaking.", "fa": "سارا احمدی هستم."},
-    {"de": "Kann ich bitte mit Herrn Weber sprechen?", "en": "May I speak to Mr Weber please?", "fa": "می‌توانم با آقای وبر صحبت کنم؟"}
+    {
+      "de": "Hier spricht Sara Ahmadi.",
+      "en": "This is Sara Ahmadi speaking.",
+      "fa": "سارا احمدی هستم."
+    },
+    {
+      "de": "Kann ich bitte mit Herrn Weber sprechen?",
+      "en": "May I speak to Mr Weber please?",
+      "fa": "می‌توانم با آقای وبر صحبت کنم؟"
+    }
   ]
 }'::jsonb WHERE day = 93;
 
 -- Day 94
 UPDATE lessons SET grammar_note = '{
-  "title": "Sport verbs: spielen, machen, gehen",
-  "title_fa": "فعل‌های ورزشی: spielen، machen، gehen",
+  "title": "Verb choice: spielen, machen, gehen for sports",
+  "title_fa": "انتخاب فعل: spielen، machen و gehen برای ورزش",
   "explanation": "Ball sports take spielen, individual sports take machen, and activities ending in -en take gehen: schwimmen gehen.",
   "explanation_fa": "ورزش‌های توپی با spielen، ورزش‌های انفرادی با machen و فعالیت‌ها با gehen می‌آیند: schwimmen gehen.",
   "examples": [
@@ -1726,8 +1998,8 @@ UPDATE lessons SET grammar_note = '{
 
 -- Day 95
 UPDATE lessons SET grammar_note = '{
-  "title": "Restaurant requests in Konjunktiv II",
-  "title_fa": "درخواست در رستوران با Konjunktiv II",
+  "title": "Konjunktiv II: requests in a restaurant",
+  "title_fa": "وجه شرطی (Konjunktiv II): درخواست در رستوران",
   "explanation": "Advanced restaurant language leans on hätte, wäre and könnten: Wir hätten gern die Karte. Wäre es möglich ...?",
   "explanation_fa": "زبان پیشرفتهٔ رستوران بر hätte، wäre و könnten تکیه دارد: Wir hätten gern die Karte. Wäre es möglich …؟",
   "examples": [
@@ -1747,8 +2019,8 @@ UPDATE lessons SET grammar_note = '{
 
 -- Day 96
 UPDATE lessons SET grammar_note = '{
-  "title": "Purpose: um ... zu and damit",
-  "title_fa": "بیان هدف: um … zu و damit",
+  "title": "Purpose clauses (Finalsätze): um ... zu and damit",
+  "title_fa": "جمله‌های هدف (Finalsätze): um … zu و damit",
   "explanation": "Use um ... zu when both clauses share a subject, and damit when the subject changes.",
   "explanation_fa": "وقتی فاعل هر دو جمله یکی است um … zu بیاور و وقتی فاعل عوض می‌شود damit.",
   "examples": [
@@ -1768,20 +2040,28 @@ UPDATE lessons SET grammar_note = '{
 
 -- Day 97
 UPDATE lessons SET grammar_note = '{
-  "title": "du or Sie decides the whole email",
-  "title_fa": "du یا Sie کل ایمیل را تعیین می‌کند",
+  "title": "Register (Register): du or Sie in writing",
+  "title_fa": "لحن (Register): du یا Sie در نوشتار",
   "explanation": "Pick the register first: Hallo plus du and Liebe Grüße, or Sehr geehrte plus Sie and Mit freundlichen Grüßen. Never mix them.",
   "explanation_fa": "اول لحن را انتخاب کن: Hallo با du و Liebe Grüße، یا Sehr geehrte با Sie و Mit freundlichen Grüßen. هرگز قاطی نکن.",
   "examples": [
-    {"de": "Hallo Anna, kannst du mir helfen? Liebe Grüße", "en": "informal email", "fa": "ایمیل خودمانی"},
-    {"de": "Sehr geehrte Frau Weber, könnten Sie ...? Mit freundlichen Grüßen", "en": "formal email", "fa": "ایمیل رسمی"}
+    {
+      "de": "Hallo Anna, kannst du mir helfen? Liebe Grüße",
+      "en": "informal email",
+      "fa": "ایمیل خودمانی"
+    },
+    {
+      "de": "Sehr geehrte Frau Weber, könnten Sie ...? Mit freundlichen Grüßen",
+      "en": "formal email",
+      "fa": "ایمیل رسمی"
+    }
   ]
 }'::jsonb WHERE day = 97;
 
 -- Day 98
 UPDATE lessons SET grammar_note = '{
-  "title": "es ist üblich, ... zu",
-  "title_fa": "es ist üblich, … zu — «رسم است که …»",
+  "title": "Infinitive with zu: es ist üblich, ... zu",
+  "title_fa": "مصدر با zu: es ist üblich, … zu",
   "explanation": "Describe customs with es ist üblich plus a zu-infinitive at the end: Es ist üblich, pünktlich zu sein.",
   "explanation_fa": "برای توصیف رسم‌ها از es ist üblich و مصدر با zu در آخر استفاده کن: Es ist üblich, pünktlich zu sein.",
   "examples": [
@@ -1801,8 +2081,8 @@ UPDATE lessons SET grammar_note = '{
 
 -- Day 99
 UPDATE lessons SET grammar_note = '{
-  "title": "Perfect tense for experience",
-  "title_fa": "ماضی نقلی برای بیان تجربه",
+  "title": "Perfect tense (Perfekt): describing experience",
+  "title_fa": "ماضی نقلی (Perfekt): بیان تجربه",
   "explanation": "Summing up what you have achieved uses the perfect: Ich habe viel gelernt. Ich bin sicherer geworden.",
   "explanation_fa": "برای جمع‌بندی دستاوردها از ماضی نقلی استفاده کن: Ich habe viel gelernt. Ich bin sicherer geworden.",
   "examples": [
@@ -1822,8 +2102,8 @@ UPDATE lessons SET grammar_note = '{
 
 -- Day 100
 UPDATE lessons SET grammar_note = '{
-  "title": "Talking about the future",
-  "title_fa": "صحبت دربارهٔ آینده",
+  "title": "Future (Futur I) and Konjunktiv II: plans and wishes",
+  "title_fa": "آینده (Futur I) و وجه شرطی: برنامه و آرزو",
   "explanation": "Combine Futur I for plans with Konjunktiv II for hopes: Ich werde weiterlernen. Ich würde gern die B1-Prüfung machen.",
   "explanation_fa": "برای برنامه‌ها Futur I و برای آرزوها Konjunktiv II را ترکیب کن: Ich werde weiterlernen. Ich würde gern die B1-Prüfung machen.",
   "examples": [
