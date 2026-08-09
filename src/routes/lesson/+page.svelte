@@ -105,10 +105,10 @@
 	}
 
 	function examTypeColor(t: string): string {
-		if (t === "listen") return "#b98a2f";
-		if (t === "meaning") return "#7b4b94";
-		if (t === "gap") return "#2f6f4f";
-		return "#31597a";
+		if (t === "listen") return "#f0b429";
+		if (t === "meaning") return "#a569bd";
+		if (t === "gap") return "#58d68d";
+		return "#5dade2";
 	}
 
 	function handleChoiceTap(i: number) {
@@ -1646,7 +1646,7 @@
 		padding: 15px 40px;
 		font-size: 1.5em;
 		background: var(--accent);
-		color: #fff8f0;
+		color: var(--on-accent);
 		border: none;
 		border-radius: 50px;
 		cursor: pointer;
@@ -1708,15 +1708,15 @@
 	}
 	.overlay-badge.difficulty-A2 {
 		background: rgba(49, 89, 122, 0.12);
-		color: #31597a;
+		color: #5dade2;
 	}
 	.overlay-badge.difficulty-B1 {
 		background: rgba(123, 75, 148, 0.12);
-		color: #7b4b94;
+		color: #a569bd;
 	}
 	.overlay-badge.difficulty-B1plus {
 		background: rgba(123, 75, 148, 0.12);
-		color: #7b4b94;
+		color: #a569bd;
 	}
 	.overlay-badge.grammar-tag {
 		background: var(--accent-wash);
@@ -1748,8 +1748,8 @@
 	}
 
 	.gm-badge {
-		background: #e8ecf7;
-		color: #3a5390;
+		background: var(--info-wash);
+		color: var(--info);
 		border-radius: 999px;
 		padding: 3px 12px;
 		font-size: 0.78rem;
@@ -1827,7 +1827,7 @@
 
 	.gm-continue {
 		background: var(--accent);
-		color: #fff8f0;
+		color: var(--on-accent);
 		border: none;
 		border-radius: 10px;
 		padding: 10px 20px;
@@ -1864,7 +1864,7 @@
 
 	.cr-delta {
 		background: var(--leaf);
-		color: #f2f8f4;
+		color: var(--on-accent);
 		border-radius: 999px;
 		padding: 1px 9px;
 		font-size: 0.8rem;
@@ -2006,7 +2006,7 @@
 	.listener-mode-btn.active {
 		background: var(--leaf);
 		border-color: var(--leaf);
-		color: #fff8f0;
+		color: var(--on-accent);
 	}
 
 	.lesson-toolbar-content label {
@@ -2275,8 +2275,8 @@
 	}
 
 	.interactive-word.error {
-		background: rgba(178, 60, 43, 0.12);
-		color: #b23c2b;
+		background: rgba(231, 76, 60, 0.12);
+		color: #e74c3c;
 	}
 
 	/* Karaoke — the word currently being read goes heavier and darker. */
@@ -2290,7 +2290,7 @@
 		border-radius: 20px;
 		border: none;
 		background: var(--accent);
-		color: #fff8f0;
+		color: var(--on-accent);
 		cursor: pointer;
 		font-weight: bold;
 		font-size: 0.95em;
@@ -2317,7 +2317,7 @@
 		border-radius: 30px;
 		border: none;
 		background: var(--accent);
-		color: #fff8f0;
+		color: var(--on-accent);
 		cursor: pointer;
 		font-size: 1.05rem;
 		font-weight: 600;
@@ -2465,7 +2465,7 @@
 
 	.btn-replay:hover {
 		background: var(--accent);
-		color: #fff8f0;
+		color: var(--on-accent);
 	}
 
 	.btn-replay.speaking {
@@ -2530,7 +2530,7 @@
 
 	.btn-hint:hover {
 		background: var(--accent-deep);
-		color: #fff8f0;
+		color: var(--on-accent);
 	}
 
 	/* Bookmark button - Star */
@@ -2599,8 +2599,8 @@
 	}
 
 	.choice-btn.wrong {
-		border-color: #b23c2b;
-		background: rgba(178, 60, 43, 0.08);
+		border-color: #e74c3c;
+		background: rgba(231, 76, 60, 0.08);
 	}
 
 	.exam-badge {
@@ -2656,9 +2656,9 @@
 	.btn-remove-review {
 		padding: 5px 14px;
 		border-radius: 20px;
-		border: 2px solid #b23c2b;
+		border: 2px solid #e74c3c;
 		background: transparent;
-		color: #b23c2b;
+		color: #e74c3c;
 		font-size: 0.8rem;
 		cursor: pointer;
 		transition: all 0.2s ease;
@@ -2666,7 +2666,7 @@
 	}
 
 	.btn-remove-review:hover {
-		background: #b23c2b;
+		background: #e74c3c;
 		color: white;
 	}
 
@@ -2720,19 +2720,19 @@
 		background: var(--leaf);
 	}
 	.difficulty-A1plus {
-		background: #275e42;
+		background: rgba(88, 214, 141, 0.22);
 	}
 	.difficulty-A2 {
-		background: #31597a;
+		background: #5dade2;
 	}
 	.difficulty-A2plus {
-		background: #274a66;
+		background: rgba(93, 173, 226, 0.22);
 	}
 	.difficulty-B1 {
-		background: #7b4b94;
+		background: #a569bd;
 	}
 	.difficulty-B1plus {
-		background: #5f3a73;
+		background: rgba(165, 105, 189, 0.22);
 	}
 
 	.grammar-tag {
@@ -2835,7 +2835,7 @@
 
 	.script-item.active .script-num {
 		background: var(--accent);
-		color: #fff8f0;
+		color: var(--on-accent);
 		font-size: 0.7rem;
 	}
 

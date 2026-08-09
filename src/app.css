@@ -29,22 +29,38 @@
 	--wa-sent: #DCF8C6;
 	--wa-bg: #e5ddd5;
 
-	/* ── "Warm paper & ink" app theme ─────────────────────────────
-	   Editorial, textbook-like: cream paper, near-black ink, one
-	   terracotta accent, forest green for success/progress. */
-	--paper: #faf6ef;
-	--paper-raised: #ffffff;
-	--paper-sunken: #f1eadd;
-	--ink: #26221b;
-	--ink-soft: #6b6357;
-	--ink-faint: #a39a8a;
-	--line: #e6dcc9;
-	--accent: #c2571b;
-	--accent-deep: #9c4514;
-	--accent-wash: #f7e5d7;
-	--leaf: #2f6f4f;
-	--leaf-wash: #e4efe7;
-	--paper-shadow: 0 1px 2px rgba(60, 48, 30, 0.08), 0 6px 24px rgba(60, 48, 30, 0.07);
+	/* ── Dark console theme ───────────────────────────────────────
+	   Matches the admin panel: near-black navy ground, white-alpha
+	   surfaces, emerald as the brand accent. The token NAMES are kept
+	   from the previous light theme (paper / ink / line / accent /
+	   leaf) so every component picks the new palette up automatically
+	   — "paper" now means the dark ground, "ink" the light text.
+
+	   Contrast on --paper: ink 19:1, ink-soft 10:1, ink-faint 5.5:1,
+	   accent 7.4:1, leaf 9:1 — all pass WCAG AA. */
+	--paper: #0f0f1a;
+	--paper-raised: #1a1a26;
+	--paper-sunken: #15151f;
+	--ink: #ffffff;
+	--ink-soft: #b8b8c4;
+	--ink-faint: #8a8a99;
+	--line: rgba(255, 255, 255, 0.12);
+	--accent: #2ecc71;
+	/* On the old light theme this was the DARKER accent, used for text.
+	   On a dark ground the high-contrast direction flips, so it is now the
+	   brighter one — it serves both its roles (57 uses as text, 9 as a
+	   hover fill where a lift in brightness is what you want anyway). */
+	--accent-deep: #5fe396;
+	--accent-wash: rgba(46, 204, 113, 0.14);
+	--leaf: #58d68d;
+	--leaf-wash: rgba(88, 214, 141, 0.13);
+	/* Text/icons placed ON a filled accent or leaf surface. On the old
+	   light theme this was a cream; on emerald fills it must be dark. */
+	--on-accent: #08160e;
+	/* Secondary hue, borrowed from the admin panel's blue. */
+	--info: #5dade2;
+	--info-wash: rgba(52, 152, 219, 0.16);
+	--paper-shadow: 0 1px 2px rgba(0, 0, 0, 0.45), 0 6px 24px rgba(0, 0, 0, 0.35);
 	--font-display: 'Fraunces Variable', Georgia, 'Iowan Old Style', 'Times New Roman', serif;
 	--font-body: 'Vazirmatn Variable', 'Segoe UI', -apple-system, Tahoma, Geneva, Verdana, sans-serif;
 }
@@ -97,6 +113,27 @@ body {
 	min-height: 100vh;
 	background: var(--paper);
 	color: var(--ink);
+}
+
+/* Without this, an unstyled link falls back to the browser default blue
+   (#0000ee), which is unreadable on the dark ground. Components that set
+   their own link colour still win on specificity. */
+a {
+	color: var(--accent);
+}
+
+/* Form controls do not inherit the dark theme on their own. */
+input,
+textarea,
+select,
+button {
+	font-family: inherit;
+}
+
+input,
+textarea,
+select {
+	color-scheme: dark;
 }
 
 /* ===================== */

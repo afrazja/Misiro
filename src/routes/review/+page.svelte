@@ -354,9 +354,9 @@
 	.btn-clear {
 		padding: 8px 18px;
 		border-radius: 20px;
-		border: 2px solid #b23c2b;
+		border: 2px solid #e74c3c;
 		background: transparent;
-		color: #b23c2b;
+		color: #e74c3c;
 		font-size: 0.85rem;
 		font-weight: 600;
 		cursor: pointer;
@@ -365,7 +365,7 @@
 	}
 
 	.btn-clear:hover {
-		background: #b23c2b;
+		background: #e74c3c;
 		color: white;
 	}
 
@@ -442,8 +442,8 @@
 	}
 
 	.item-remove:hover {
-		background: rgba(178, 60, 43, 0.08);
-		color: #b23c2b;
+		background: rgba(231, 76, 60, 0.08);
+		color: #e74c3c;
 	}
 
 	/* Mobile */

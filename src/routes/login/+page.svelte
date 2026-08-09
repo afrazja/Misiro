@@ -260,7 +260,7 @@
 	.submit-btn {
 		margin-top: 22px;
 		background: var(--accent);
-		color: #fff8f0;
+		color: var(--on-accent);
 		border: none;
 		border-radius: 12px;
 		padding: 14px;

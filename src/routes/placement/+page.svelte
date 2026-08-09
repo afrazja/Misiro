@@ -612,8 +612,8 @@
 		color: var(--ink-soft);
 	}
 	.mod-sprechen {
-		background: #e8ecf7;
-		color: #3a5390;
+		background: var(--info-wash);
+		color: var(--info);
 	}
 
 	.passage {
@@ -707,7 +707,7 @@
 
 	.btn-primary {
 		background: var(--accent);
-		color: #fff8f0;
+		color: var(--on-accent);
 		border: none;
 		border-radius: 10px;
 		padding: 12px 20px;
@@ -746,7 +746,7 @@
 
 	.btn-mic {
 		background: var(--leaf);
-		color: #f2f8f4;
+		color: var(--on-accent);
 		border: none;
 		border-radius: 10px;
 		padding: 12px 18px;

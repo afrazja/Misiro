@@ -419,8 +419,8 @@
 
 	.badge {
 		align-self: center;
-		background: #e8ecf7;
-		color: #3a5390;
+		background: var(--info-wash);
+		color: var(--info);
 		border-radius: 999px;
 		padding: 4px 14px;
 		font-size: 0.85rem;
@@ -458,8 +458,8 @@
 		font-weight: 700;
 		text-transform: uppercase;
 		letter-spacing: 0.05em;
-		background: #e8ecf7;
-		color: #3a5390;
+		background: var(--info-wash);
+		color: var(--info);
 		border-radius: 999px;
 		padding: 3px 12px;
 	}
@@ -501,7 +501,7 @@
 
 	.btn-primary {
 		background: var(--accent);
-		color: #fff8f0;
+		color: var(--on-accent);
 		border: none;
 		border-radius: 10px;
 		padding: 12px 20px;
@@ -535,7 +535,7 @@
 
 	.btn-mic {
 		background: var(--leaf);
-		color: #f2f8f4;
+		color: var(--on-accent);
 		border: none;
 		border-radius: 10px;
 		padding: 12px 18px;

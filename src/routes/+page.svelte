@@ -978,7 +978,7 @@
 
 	.cta-btn.primary {
 		background: var(--accent);
-		color: #fff8f0;
+		color: var(--on-accent);
 		box-shadow: 0 5px 18px rgba(156, 69, 20, 0.3);
 	}
 
@@ -1027,7 +1027,7 @@
 
 	.btn.btn-primary {
 		background: var(--accent);
-		color: #fff8f0;
+		color: var(--on-accent);
 		box-shadow: 0 5px 18px rgba(156, 69, 20, 0.3);
 	}
 
@@ -1191,7 +1191,7 @@
 		border-radius: 12px;
 		border: none;
 		background: var(--accent);
-		color: #fff8f0;
+		color: var(--on-accent);
 		font-size: 1rem;
 		font-weight: 700;
 		cursor: pointer;
@@ -1408,9 +1408,9 @@
 
 	.phone-frame {
 		width: 310px;
-		background: #26221b;
+		background: #2a2a3a;
 		border-radius: 40px;
-		border: 8px solid #26221b;
+		border: 8px solid #2a2a3a;
 		box-shadow:
 			0 50px 100px rgba(38, 34, 27, 0.28),
 			0 0 0 1px rgba(38, 34, 27, 0.08);
@@ -1431,7 +1431,7 @@
 	.phone-notch {
 		width: 100px;
 		height: 24px;
-		background: #26221b;
+		background: #2a2a3a;
 		border-radius: 0 0 18px 18px;
 		margin: 0 auto;
 	}
@@ -1679,12 +1679,12 @@
 	}
 
 	.j-dot.blue {
-		background: #31597a;
+		background: #5dade2;
 		box-shadow: 0 0 10px rgba(49, 89, 122, 0.35);
 	}
 
 	.j-dot.purple {
-		background: #7b4b94;
+		background: #a569bd;
 		box-shadow: 0 0 10px rgba(123, 75, 148, 0.35);
 	}
 

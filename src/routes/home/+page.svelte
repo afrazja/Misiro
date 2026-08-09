@@ -1186,7 +1186,7 @@
 		justify-content: center;
 		font-size: 0.9rem;
 		font-weight: 700;
-		color: #fff8f0;
+		color: var(--on-accent);
 		border: 1.5px solid var(--line);
 		overflow: hidden;
 	}
@@ -1254,7 +1254,7 @@
 		border-radius: 18px;
 		background: var(--accent);
 		text-decoration: none;
-		color: #fff8f0;
+		color: var(--on-accent);
 		box-shadow: 0 10px 30px rgba(156, 69, 20, 0.28);
 		transition:
 			transform 0.25s ease,
@@ -1297,8 +1297,8 @@
 
 	.today-btn {
 		flex-shrink: 0;
-		background: #fff8f0;
-		color: var(--accent-deep);
+		background: var(--on-accent);
+		color: var(--accent);
 		font-weight: 700;
 		font-size: 1rem;
 		padding: 14px 26px;
@@ -1689,7 +1689,7 @@
 
 	.fs-primary {
 		background: var(--accent);
-		color: #fff8f0;
+		color: var(--on-accent);
 		border-radius: 12px;
 		padding: 15px 30px;
 		font-size: 1.1rem;
@@ -1812,7 +1812,7 @@
 
 	.edp-save {
 		background: var(--accent);
-		color: #fff8f0;
+		color: var(--on-accent);
 	}
 
 	.edp-target {
@@ -1958,7 +1958,7 @@
 		left: 50%;
 		transform: translateX(-50%) translateY(-120px);
 		background: var(--leaf);
-		color: #fff8f0;
+		color: var(--on-accent);
 		padding: 16px 32px;
 		border-radius: 14px;
 		font-size: 1rem;
@@ -2021,8 +2021,8 @@
 	}
 
 	.auth-error {
-		background: rgba(178, 60, 43, 0.08);
-		color: #b23c2b;
+		background: rgba(231, 76, 60, 0.08);
+		color: #e74c3c;
 		padding: 10px;
 		border-radius: 10px;
 		margin-bottom: 15px;
@@ -2055,7 +2055,7 @@
 		border-radius: 10px;
 		border: none;
 		background: var(--accent);
-		color: #fff8f0;
+		color: var(--on-accent);
 		font-size: 1rem;
 		font-weight: 600;
 		cursor: pointer;
@@ -2307,11 +2307,11 @@
 
 	.mastery-item.a1 .m-label {
 		background: rgba(49, 89, 122, 0.12);
-		color: #31597a;
+		color: #5dade2;
 	}
 	.mastery-item.a2 .m-label {
 		background: rgba(123, 75, 148, 0.12);
-		color: #7b4b94;
+		color: #a569bd;
 	}
 	.mastery-item.b1 .m-label {
 		background: var(--accent-wash);

@@ -521,7 +521,7 @@
 		background: var(--leaf-wash);
 	}
 	.checkmark-item.wrong {
-		background: rgba(178, 60, 43, 0.08);
+		background: rgba(231, 76, 60, 0.08);
 	}
 	.cmd-icon.empty {
 		color: var(--ink-soft);
@@ -586,8 +586,8 @@
 		transition: all 0.2s;
 	}
 	.timer-display.danger {
-		color: #b23c2b;
-		background: rgba(178, 60, 43, 0.08);
+		color: #e74c3c;
+		background: rgba(231, 76, 60, 0.08);
 		animation: pulse-danger 1s infinite;
 	}
 
@@ -627,16 +627,16 @@
 	.btn-remove-review {
 		padding: 8px 16px;
 		border-radius: 20px;
-		border: 1px solid #b23c2b;
+		border: 1px solid #e74c3c;
 		background: transparent;
-		color: #b23c2b;
+		color: #e74c3c;
 		font-size: 0.85rem;
 		font-weight: 600;
 		cursor: pointer;
 		transition: all 0.2s;
 	}
 	.btn-remove-review:hover {
-		background: #b23c2b;
+		background: #e74c3c;
 		color: white;
 	}
 

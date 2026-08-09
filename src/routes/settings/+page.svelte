@@ -625,7 +625,7 @@
 		border-radius: 10px;
 		border: none;
 		background: var(--accent);
-		color: #fff8f0;
+		color: var(--on-accent);
 		font-size: 0.95rem;
 		font-weight: 600;
 		cursor: pointer;
@@ -656,17 +656,17 @@
 	.btn-danger {
 		padding: 10px 24px;
 		border-radius: 10px;
-		border: 1px solid rgba(178, 60, 43, 0.4);
-		background: rgba(178, 60, 43, 0.07);
-		color: #b23c2b;
+		border: 1px solid rgba(231, 76, 60, 0.4);
+		background: rgba(231, 76, 60, 0.07);
+		color: #e74c3c;
 		font-size: 0.95rem;
 		cursor: pointer;
 		transition: all 0.3s ease;
 	}
 
 	.btn-danger:hover {
-		background: rgba(178, 60, 43, 0.16);
-		border-color: #b23c2b;
+		background: rgba(231, 76, 60, 0.16);
+		border-color: #e74c3c;
 	}
 
 	.avatar-section {
@@ -686,7 +686,7 @@
 		justify-content: center;
 		font-size: 2.5rem;
 		font-weight: 700;
-		color: #fff8f0;
+		color: var(--on-accent);
 		border: 4px solid var(--line);
 		overflow: hidden;
 		flex-shrink: 0;
@@ -718,9 +718,9 @@
 	}
 
 	.status-msg.error {
-		background: rgba(178, 60, 43, 0.08);
-		color: #b23c2b;
-		border: 1px solid rgba(178, 60, 43, 0.35);
+		background: rgba(231, 76, 60, 0.08);
+		color: #e74c3c;
+		border: 1px solid rgba(231, 76, 60, 0.35);
 	}
 
 	.pref-row {

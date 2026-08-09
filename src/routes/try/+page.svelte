@@ -445,7 +445,7 @@
 
 	.btn-primary {
 		background: var(--accent);
-		color: #fff8f0;
+		color: var(--on-accent);
 		border: none;
 		border-radius: 10px;
 		padding: 13px 22px;
@@ -486,7 +486,7 @@
 
 	.btn-mic {
 		background: var(--leaf);
-		color: #f2f8f4;
+		color: var(--on-accent);
 		border: none;
 		border-radius: 10px;
 		padding: 13px 18px;
