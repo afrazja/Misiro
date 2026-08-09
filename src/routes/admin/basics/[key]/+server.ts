@@ -15,17 +15,33 @@ export const POST: RequestHandler = async ({ params, request, locals }) => {
 	if (catErr) throw error(500, catErr.message);
 	if (!cat) throw error(404, 'Category not found');
 
-	// Update category metadata
-	const { error: updateErr } = await locals.supabase
+	// Update category metadata. Explanation/pitfall are sent only when the
+	// columns exist; a failed update retries without them so editing still
+	// works on a database that has not run the migration yet.
+	const baseUpdate = {
+		icon: category.icon,
+		title_en: category.title_en,
+		title_fa: category.title_fa,
+		description_en: category.description_en,
+		description_fa: category.description_fa
+	};
+	let { error: updateErr } = await locals.supabase
 		.from('basics_categories')
 		.update({
-			icon: category.icon,
-			title_en: category.title_en,
-			title_fa: category.title_fa,
-			description_en: category.description_en,
-			description_fa: category.description_fa
+			...baseUpdate,
+			explanation_en: category.explanation_en || null,
+			explanation_fa: category.explanation_fa || null,
+			pitfall_en: category.pitfall_en || null,
+			pitfall_fa: category.pitfall_fa || null
 		})
 		.eq('id', cat.id);
+
+	if (updateErr) {
+		({ error: updateErr } = await locals.supabase
+			.from('basics_categories')
+			.update(baseUpdate)
+			.eq('id', cat.id));
+	}
 
 	if (updateErr) throw error(500, updateErr.message);
 
@@ -45,7 +61,18 @@ export const POST: RequestHandler = async ({ params, request, locals }) => {
 					updateData.infinitive = sec.infinitive;
 					updateData.tenses = sec.tenses;
 				}
-				await locals.supabase.from('basics_sections').update(updateData).eq('id', sec.id);
+				const { error: secUpdateErr } = await locals.supabase
+					.from('basics_sections')
+					.update({
+						...updateData,
+						explanation_en: sec.explanation_en || null,
+						explanation_fa: sec.explanation_fa || null
+					})
+					.eq('id', sec.id);
+				if (secUpdateErr) {
+					// Column not present yet — save the rest.
+					await locals.supabase.from('basics_sections').update(updateData).eq('id', sec.id);
+				}
 
 				// Replace words for non-conjugation sections
 				if (sec.type !== 'conjugation' && sec.words) {

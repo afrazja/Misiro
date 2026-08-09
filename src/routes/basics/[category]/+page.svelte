@@ -49,6 +49,34 @@
 	const catIcon = $derived(category?.icon || "📚");
 	const backText = $derived(currentLang === "fa" ? "بازگشت" : "Back");
 
+	// Rule text and the Persian-speaker pitfall. Vocabulary categories
+	// (colors, numbers, days, months) legitimately have none — the word list
+	// is the content — so both blocks simply do not render when empty.
+	const catExplanation = $derived(
+		category
+			? (currentLang === "fa"
+					? category.explanation_fa
+					: category.explanation_en) || ""
+			: "",
+	);
+	const catPitfall = $derived(
+		category
+			? (currentLang === "fa" ? category.pitfall_fa : category.pitfall_en) ||
+					""
+			: "",
+	);
+	const pitfallLabel = $derived(
+		currentLang === "fa" ? "تلهٔ فارسی‌زبان‌ها" : "Watch out",
+	);
+
+	function sectionExplanation(section: Record<string, any>): string {
+		return (
+			(currentLang === "fa"
+				? section.explanation_fa
+				: section.explanation_en) || ""
+		);
+	}
+
 	function getWordTranslation(word: BasicWord): string {
 		return currentLang === 'fa' ? word.fa : word.en;
 	}
@@ -407,10 +435,32 @@
 	{:else}
 	<div id="content-container">
 		{#if category}
+			<!-- The rule, before the tables: a reference table only helps
+			     someone who already knows the rule. -->
+			{#if catExplanation}
+				<div class="rule-block" dir={currentLang === "fa" ? "rtl" : "ltr"}>
+					<p class="rule-text">{catExplanation}</p>
+				</div>
+			{/if}
+			{#if catPitfall}
+				<div class="pitfall-block" dir={currentLang === "fa" ? "rtl" : "ltr"}>
+					<span class="pitfall-label">⚠️ {pitfallLabel}</span>
+					<p class="pitfall-text">{catPitfall}</p>
+				</div>
+			{/if}
+
 			{#if category.type === 'multi' && sections.length > 0}
 				{#each sections as section}
 					<div class="section-block">
 						<h3 class="section-heading">{currentLang === "fa" ? section.heading_fa : section.heading_en}</h3>
+						{#if sectionExplanation(section)}
+							<p
+								class="section-explanation"
+								dir={currentLang === "fa" ? "rtl" : "ltr"}
+							>
+								{sectionExplanation(section)}
+							</p>
+						{/if}
 
 						{#if section.type === 'conjugation' && section.infinitive && section.tenses}
 							<!-- Verb Banner -->
@@ -700,6 +750,59 @@
 		margin-bottom: 15px;
 		padding-bottom: 8px;
 		border-bottom: 1px solid var(--line);
+	}
+
+	/* ── Rule + pitfall (grammar categories only) ── */
+	.rule-block {
+		background: var(--paper-raised);
+		border: 1px solid var(--line);
+		border-inline-start: 4px solid var(--leaf);
+		border-radius: 12px;
+		padding: 16px 18px;
+		margin-bottom: 14px;
+		box-shadow: var(--paper-shadow);
+	}
+
+	.rule-text {
+		color: var(--ink);
+		font-size: 1.02rem;
+		line-height: 1.85;
+		margin: 0;
+		white-space: pre-line;
+	}
+
+	.pitfall-block {
+		background: var(--accent-wash);
+		border: 1px solid var(--accent);
+		border-radius: 12px;
+		padding: 14px 18px;
+		margin-bottom: 22px;
+	}
+
+	.pitfall-label {
+		display: block;
+		font-weight: 800;
+		font-size: 0.85rem;
+		color: var(--accent-deep);
+		margin-bottom: 5px;
+		text-transform: uppercase;
+		letter-spacing: 0.03em;
+	}
+
+	.pitfall-text {
+		color: var(--ink);
+		font-size: 0.97rem;
+		line-height: 1.8;
+		margin: 0;
+		white-space: pre-line;
+	}
+
+	.section-explanation {
+		color: var(--ink-soft);
+		font-size: 0.95rem;
+		line-height: 1.8;
+		margin: -6px 0 14px;
+		white-space: pre-line;
 	}
 
 	/* Word Grid */

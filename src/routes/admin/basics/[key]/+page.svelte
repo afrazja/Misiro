@@ -15,6 +15,8 @@
 		id?: string;
 		heading_en: string;
 		heading_fa: string;
+		explanation_en: string;
+		explanation_fa: string;
 		type: string;
 		sort_order?: number;
 		infinitive?: any;
@@ -28,6 +30,11 @@
 	let title_fa = $state("");
 	let description_en = $state("");
 	let description_fa = $state("");
+	// Rule + Persian-speaker pitfall (grammar categories; blank for vocabulary)
+	let explanation_en = $state("");
+	let explanation_fa = $state("");
+	let pitfall_en = $state("");
+	let pitfall_fa = $state("");
 
 	// Flat words (grid/table categories)
 	let words = $state<Word[]>([]);
@@ -41,6 +48,10 @@
 		title_fa = data.category.title_fa;
 		description_en = data.category.description_en;
 		description_fa = data.category.description_fa;
+		explanation_en = (data.category as any).explanation_en ?? "";
+		explanation_fa = (data.category as any).explanation_fa ?? "";
+		pitfall_en = (data.category as any).pitfall_en ?? "";
+		pitfall_fa = (data.category as any).pitfall_fa ?? "";
 
 		words = data.words.map((w: any) => ({
 			id: w.id,
@@ -56,6 +67,8 @@
 			id: s.id,
 			heading_en: s.heading_en ?? "",
 			heading_fa: s.heading_fa ?? "",
+			explanation_en: s.explanation_en ?? "",
+			explanation_fa: s.explanation_fa ?? "",
 			type: s.type ?? "grid",
 			sort_order: s.sort_order ?? 0,
 			infinitive: s.infinitive ?? null,
@@ -124,6 +137,10 @@
 						title_fa,
 						description_en,
 						description_fa,
+						explanation_en,
+						explanation_fa,
+						pitfall_en,
+						pitfall_fa,
 					},
 					words: data.category.type !== "multi" ? words : undefined,
 					sections:
@@ -183,6 +200,39 @@
 		<label>
 			Description (Persian)
 			<input type="text" bind:value={description_fa} dir="rtl" />
+		</label>
+	</div>
+</div>
+
+<!-- Rule + pitfall: grammar categories need these; vocabulary ones
+     (colors, numbers, days, months) can leave them blank and nothing
+     extra renders on the learner page. -->
+<div class="meta-card">
+	<h2>
+		📖 The Rule
+		<span class="field-hint"
+			>shown above the tables · leave blank for vocabulary-only
+			categories</span
+		>
+	</h2>
+	<div class="form-grid two">
+		<label>
+			Explanation (English)
+			<textarea rows="4" bind:value={explanation_en}></textarea>
+		</label>
+		<label>
+			Explanation (Persian)
+			<textarea rows="4" bind:value={explanation_fa} dir="rtl"></textarea>
+		</label>
+	</div>
+	<div class="form-grid two">
+		<label>
+			⚠️ Persian-speaker pitfall (English)
+			<textarea rows="3" bind:value={pitfall_en}></textarea>
+		</label>
+		<label>
+			⚠️ Persian-speaker pitfall (Persian)
+			<textarea rows="3" bind:value={pitfall_fa} dir="rtl"></textarea>
 		</label>
 	</div>
 </div>
@@ -285,6 +335,21 @@
 						/>
 					</label>
 					<div class="section-type-badge">{sec.type}</div>
+				</div>
+				<div class="section-labels section-explain">
+					<label>
+						Section note (EN)
+						<textarea rows="2" bind:value={sec.explanation_en}
+						></textarea>
+					</label>
+					<label>
+						Section note (FA)
+						<textarea
+							rows="2"
+							bind:value={sec.explanation_fa}
+							dir="rtl"
+						></textarea>
+					</label>
 				</div>
 			</div>
 
@@ -480,6 +545,23 @@
 	.form-grid label:nth-child(4),
 	.form-grid label:nth-child(5) {
 		grid-column: span 1;
+	}
+
+	/* Rule + pitfall editors: two equal columns, EN and FA side by side */
+	.form-grid.two {
+		grid-template-columns: 1fr 1fr;
+		margin-bottom: 14px;
+	}
+
+	.field-hint {
+		font-size: 0.72rem;
+		font-weight: 400;
+		color: #888;
+		margin-left: 8px;
+	}
+
+	.section-explain {
+		margin-top: 10px;
 	}
 
 	label {

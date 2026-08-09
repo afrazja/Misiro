@@ -4,12 +4,25 @@ import { error } from '@sveltejs/kit';
 export const load: PageServerLoad = async ({ locals, params }) => {
 	const key = params.category;
 
-	// Load category metadata
-	const { data: cat, error: catErr } = await locals.supabase
+	// Load category metadata. The explanation columns are requested
+	// opportunistically: on a database where they have not been added yet the
+	// whole select would fail, so fall back to the always-present column set
+	// rather than 404-ing a working page.
+	const BASE_COLS = 'id, key, icon, title_en, title_fa, description_en, description_fa, type';
+	const EXPLAIN_COLS = 'explanation_en, explanation_fa, pitfall_en, pitfall_fa';
+	let { data: cat, error: catErr } = await locals.supabase
 		.from('basics_categories')
-		.select('id, key, icon, title_en, title_fa, description_en, description_fa, type')
+		.select(`${BASE_COLS}, ${EXPLAIN_COLS}`)
 		.eq('key', key)
 		.maybeSingle();
+
+	if (catErr) {
+		({ data: cat, error: catErr } = await locals.supabase
+			.from('basics_categories')
+			.select(BASE_COLS)
+			.eq('key', key)
+			.maybeSingle());
+	}
 
 	if (catErr || !cat) {
 		throw error(404, 'Category not found');
@@ -20,11 +33,26 @@ export const load: PageServerLoad = async ({ locals, params }) => {
 
 	if (cat.type === 'multi') {
 		// Load sections for this category
-		const { data: sectionRows, error: secErr } = await locals.supabase
+		const SEC_BASE =
+			'id, heading_en, heading_fa, type, sort_order, infinitive, tenses, declension';
+		// Widened: the fallback select returns a narrower row shape than the
+		// first, so the two results need a common type to share a variable.
+		let sectionRows: Array<Record<string, any>> | null = null;
+		let secErr: { message: string } | null = null;
+		({ data: sectionRows, error: secErr } = await locals.supabase
 			.from('basics_sections')
-			.select('id, heading_en, heading_fa, type, sort_order, infinitive, tenses, declension')
+			.select(`${SEC_BASE}, explanation_en, explanation_fa`)
 			.eq('category_id', cat.id)
-			.order('sort_order', { ascending: true });
+			.order('sort_order', { ascending: true }));
+
+		if (secErr) {
+			// Same opportunistic pattern as the category select above.
+			({ data: sectionRows, error: secErr } = await locals.supabase
+				.from('basics_sections')
+				.select(SEC_BASE)
+				.eq('category_id', cat.id)
+				.order('sort_order', { ascending: true }));
+		}
 
 		if (secErr) {
 			console.error('Failed to load sections:', secErr.message);
