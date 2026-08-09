@@ -727,8 +727,8 @@
 	.controls select {
 		padding: 8px 16px;
 		border-radius: 20px;
-		border: 1px solid var(--line);
-		background: var(--paper-sunken);
+		border: 1px solid var(--control-border);
+		background: var(--control);
 		color: var(--ink);
 		font-size: 0.9rem;
 		cursor: pointer;

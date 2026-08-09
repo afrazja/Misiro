@@ -116,7 +116,7 @@
 		width: 100%;
 		min-height: 52px;
 		padding: 8px 16px;
-		background: var(--paper-sunken);
+		background: var(--paper-raised);
 		border: 1px solid var(--line);
 		border-top: 0;
 		border-radius: 0 0 16px 16px;
@@ -189,9 +189,11 @@
 		gap: 8px;
 		min-height: 40px;
 		padding: 8px 12px;
-		border: 1px solid var(--line);
+		/* Lifted off the page ground so the control is visible as a control —
+		   var(--paper) here made it the same colour as the page. */
+		border: 1px solid var(--control-border);
 		border-radius: 999px;
-		background: var(--paper);
+		background: var(--control);
 		color: var(--ink);
 		font: inherit;
 		font-size: 0.88rem;

@@ -1934,8 +1934,8 @@
 	.lesson-toolbar-content select {
 		min-height: 40px;
 		color: var(--ink);
-		background: var(--paper-raised);
-		border: 1px solid var(--line);
+		background: var(--control);
+		border: 1px solid var(--control-border);
 		border-radius: 10px;
 		padding: 7px 10px;
 		font-family: inherit;
@@ -1988,8 +1988,8 @@
 		min-height: 40px;
 		padding: 7px 12px;
 		border-radius: 10px;
-		border: 1px solid var(--line);
-		background: var(--paper-raised);
+		border: 1px solid var(--control-border);
+		background: var(--control);
 		color: var(--ink);
 		font-family: inherit;
 		font-size: 0.82rem;
