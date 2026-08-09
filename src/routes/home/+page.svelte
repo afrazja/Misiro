@@ -57,6 +57,26 @@
 	let deadline = $state<{ days: number; kind: "exam" | "target" } | null>(
 		null,
 	);
+	let showDatePanel = $state(false);
+	let heroDate = $state("");
+	const toISO = (d: Date) =>
+		`${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
+	const minHeroDate = toISO(new Date(Date.now() + 86400000));
+	const maxHeroDate = toISO(new Date(Date.now() + 2 * 365 * 86400000));
+
+	/** Save a date picked inline on the hero — as a booked exam or a target. */
+	async function saveHeroDate(kind: "scheduled" | "planned") {
+		if (!heroDate) return;
+		const settings: ExamSettings =
+			kind === "scheduled"
+				? { goal: "scheduled", examDate: heroDate, targetDate: null }
+				: { goal: "planned", examDate: null, targetDate: heroDate };
+		// Optimistic: hero updates instantly, persistence follows.
+		examSettings = settings;
+		deadline = dataLayer.examDeadline(settings);
+		showDatePanel = false;
+		await dataLayer.setExamSettings(settings);
+	}
 	let totalXp = $state(0);
 	let dueReviews = $state(0);
 	let savedWordCount = $state(0);
@@ -769,7 +789,18 @@
 						: "Goethe A1 Readiness"}</span
 				>
 				{#if deadline !== null && deadline.days >= 0}
-					<span class="exam-countdown" class:soft={deadline.kind === "target"}>
+					<button
+						class="exam-countdown"
+						class:soft={deadline.kind === "target"}
+						onclick={() => {
+							heroDate =
+								(deadline?.kind === "exam"
+									? examSettings?.examDate
+									: examSettings?.targetDate) ?? "";
+							showDatePanel = !showDatePanel;
+						}}
+						title={language === "fa" ? "تغییر تاریخ" : "Change date"}
+					>
 						{#if deadline.kind === "exam"}
 							{language === "fa"
 								? `${deadline.days} روز تا آزمون`
@@ -779,13 +810,44 @@
 								? `${deadline.days} روز تا هدفت`
 								: `${deadline.days} days to your target`}
 						{/if}
-					</span>
+					</button>
 				{:else}
-					<a class="exam-set-date" href="/settings">
-						{language === "fa" ? "تعیین تاریخ آزمون ←" : "Set exam date →"}
-					</a>
+					<button
+						class="exam-set-date"
+						onclick={() => (showDatePanel = !showDatePanel)}
+					>
+						{language === "fa" ? "📅 تعیین تاریخ آزمون" : "📅 Set exam date"}
+					</button>
 				{/if}
 			</div>
+
+			{#if showDatePanel}
+				<div class="exam-date-panel">
+					<input
+						type="date"
+						class="exam-date-input"
+						bind:value={heroDate}
+						min={minHeroDate}
+						max={maxHeroDate}
+					/>
+					<div class="exam-date-actions">
+						<button
+							class="edp-save"
+							disabled={!heroDate}
+							onclick={() => saveHeroDate("scheduled")}
+						>
+							📅 {language === "fa" ? "تاریخ آزمونم است" : "My exam date"}
+						</button>
+						<button
+							class="edp-target"
+							disabled={!heroDate}
+							onclick={() => saveHeroDate("planned")}
+						>
+							🎯 {language === "fa" ? "فقط هدف است" : "Just a target"}
+						</button>
+					</div>
+				</div>
+			{/if}
 
 			<div class="exam-hero-main">
 				<div class="exam-score" class:good={readiness.onTrack}>
@@ -1562,6 +1624,9 @@
 		padding: 4px 14px;
 		font-weight: 700;
 		font-size: 0.9rem;
+		border: none;
+		cursor: pointer;
+		font-family: inherit;
 	}
 
 	/* Soft "ready-by" target — green, calmer than a booked exam. */
@@ -1574,8 +1639,73 @@
 		color: var(--accent-deep);
 		font-weight: 600;
 		font-size: 0.9rem;
-		text-decoration: none;
-		border-bottom: 1px dotted var(--accent);
+		background: var(--accent-wash);
+		border: 1.5px dashed var(--accent);
+		border-radius: 999px;
+		padding: 4px 14px;
+		cursor: pointer;
+		font-family: inherit;
+	}
+
+	/* Inline date panel — set the exam/target date without leaving /home. */
+	.exam-date-panel {
+		display: flex;
+		align-items: center;
+		gap: 10px;
+		flex-wrap: wrap;
+		background: var(--paper-sunken);
+		border: 1px solid var(--line);
+		border-radius: 12px;
+		padding: 12px 14px;
+	}
+
+	.exam-date-input {
+		background: var(--paper-raised);
+		border: 1.5px solid var(--line);
+		border-radius: 10px;
+		padding: 9px 12px;
+		font-size: 0.95rem;
+		font-family: var(--font-body);
+		color: var(--ink);
+	}
+
+	.exam-date-input:focus {
+		border-color: var(--accent);
+		outline: none;
+	}
+
+	.exam-date-actions {
+		display: flex;
+		gap: 8px;
+		flex-wrap: wrap;
+	}
+
+	.edp-save,
+	.edp-target {
+		border: none;
+		border-radius: 10px;
+		padding: 9px 14px;
+		font-size: 0.9rem;
+		font-weight: 700;
+		cursor: pointer;
+		font-family: inherit;
+	}
+
+	.edp-save {
+		background: var(--accent);
+		color: #fff8f0;
+	}
+
+	.edp-target {
+		background: var(--leaf-wash);
+		color: var(--leaf);
+		border: 1.5px solid var(--leaf);
+	}
+
+	.edp-save:disabled,
+	.edp-target:disabled {
+		opacity: 0.5;
+		cursor: default;
 	}
 
 	.exam-hero-main {
