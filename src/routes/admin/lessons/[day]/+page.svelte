@@ -11,7 +11,7 @@
 
 	type GrammarExample = { de: string; en: string; fa: string };
 
-	/** Basics categories the grammar note can deep-link into. */
+	/** Basics categories the grammar note can deep-link into (live set). */
 	const BASICS_KEYS = [
 		"pronounsAndSein",
 		"articles",
@@ -22,6 +22,9 @@
 		"months",
 		"prepositions",
 		"cases",
+		"verbConjugation",
+		"questionWords",
+		"modalVerbs",
 	];
 
 	let title = $state("");

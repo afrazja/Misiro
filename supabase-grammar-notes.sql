@@ -139,10 +139,18 @@ UPDATE lessons SET grammar_note = '{
   "explanation": "Regular verbs drop -en and add: ich -e, du -st, er/sie/es -t, wir -en, ihr -t, sie/Sie -en. Learn this pattern once and hundreds of verbs follow it.",
   "explanation_fa": "فعل‌های باقاعده -en را حذف می‌کنند و می‌گیرند: ich -e، du -st، er/sie/es -t، wir -en، ihr -t، sie/Sie -en. این الگو برای صدها فعل کار می‌کند.",
   "examples": [
-    {"de": "Ich lerne Deutsch.", "en": "I learn German.", "fa": "من آلمانی یاد می‌گیرم."},
-    {"de": "Er wohnt in Berlin.", "en": "He lives in Berlin.", "fa": "او در برلین زندگی می‌کند."}
+    {
+      "de": "Ich lerne Deutsch.",
+      "en": "I learn German.",
+      "fa": "من آلمانی یاد می‌گیرم."
+    },
+    {
+      "de": "Er wohnt in Berlin.",
+      "en": "He lives in Berlin.",
+      "fa": "او در برلین زندگی می‌کند."
+    }
   ],
-  "basics_key": "pronounsAndSein"
+  "basics_key": "verbConjugation"
 }'::jsonb WHERE day = 9;
 
 -- Day 10
@@ -325,9 +333,18 @@ UPDATE lessons SET grammar_note = '{
   "explanation": "wer, was, wo, wann, wie, warum all take position one, and the verb follows immediately in position two.",
   "explanation_fa": "کلمه‌های پرسشی wer, was, wo, wann, wie, warum در جایگاه اول می‌آیند و بلافاصله فعل در جایگاه دوم قرار می‌گیرد.",
   "examples": [
-    {"de": "Wo wohnst du?", "en": "Where do you live?", "fa": "کجا زندگی می‌کنی؟"},
-    {"de": "Warum lernst du Deutsch?", "en": "Why are you learning German?", "fa": "چرا آلمانی یاد می‌گیری؟"}
-  ]
+    {
+      "de": "Wo wohnst du?",
+      "en": "Where do you live?",
+      "fa": "کجا زندگی می‌کنی؟"
+    },
+    {
+      "de": "Warum lernst du Deutsch?",
+      "en": "Why are you learning German?",
+      "fa": "چرا آلمانی یاد می‌گیری؟"
+    }
+  ],
+  "basics_key": "questionWords"
 }'::jsonb WHERE day = 24;
 
 -- Day 25
@@ -386,9 +403,18 @@ UPDATE lessons SET grammar_note = '{
   "explanation": "können, müssen and wollen are conjugated in position two, and the main verb stays in the infinitive at the very end.",
   "explanation_fa": "können، müssen و wollen در جایگاه دوم صرف می‌شوند و فعل اصلی به شکل مصدر در آخر جمله می‌ماند.",
   "examples": [
-    {"de": "Ich kann gut schwimmen.", "en": "I can swim well.", "fa": "خوب شنا می‌کنم."},
-    {"de": "Wir müssen jetzt gehen.", "en": "We must go now.", "fa": "الان باید برویم."}
-  ]
+    {
+      "de": "Ich kann gut schwimmen.",
+      "en": "I can swim well.",
+      "fa": "خوب شنا می‌کنم."
+    },
+    {
+      "de": "Wir müssen jetzt gehen.",
+      "en": "We must go now.",
+      "fa": "الان باید برویم."
+    }
+  ],
+  "basics_key": "modalVerbs"
 }'::jsonb WHERE day = 29;
 
 -- Day 30
@@ -398,9 +424,18 @@ UPDATE lessons SET grammar_note = '{
   "explanation": "dürfen is permission, sollen is an obligation someone else set, and mögen is liking. They follow the same end-position rule as other modals.",
   "explanation_fa": "dürfen یعنی اجازه، sollen یعنی وظیفه‌ای که دیگری تعیین کرده، و mögen یعنی دوست داشتن. همان قاعدهٔ «فعل اصلی در آخر» را دارند.",
   "examples": [
-    {"de": "Darf ich hier parken?", "en": "May I park here?", "fa": "می‌توانم اینجا پارک کنم؟"},
-    {"de": "Du sollst mehr schlafen.", "en": "You should sleep more.", "fa": "باید بیشتر بخوابی."}
-  ]
+    {
+      "de": "Darf ich hier parken?",
+      "en": "May I park here?",
+      "fa": "می‌توانم اینجا پارک کنم؟"
+    },
+    {
+      "de": "Du sollst mehr schlafen.",
+      "en": "You should sleep more.",
+      "fa": "باید بیشتر بخوابی."
+    }
+  ],
+  "basics_key": "modalVerbs"
 }'::jsonb WHERE day = 30;
 
 -- Day 31
@@ -831,9 +866,18 @@ UPDATE lessons SET grammar_note = '{
   "explanation": "In the perfect tense, modals do not use a participle. Two infinitives end the sentence instead: Ich habe arbeiten müssen.",
   "explanation_fa": "در ماضی نقلی، فعل‌های کمکی اسم مفعول نمی‌گیرند؛ به‌جایش دو مصدر آخر جمله می‌آیند: Ich habe arbeiten müssen.",
   "examples": [
-    {"de": "Ich habe gestern arbeiten müssen.", "en": "I had to work yesterday.", "fa": "دیروز مجبور بودم کار کنم."},
-    {"de": "Er hat nicht kommen können.", "en": "He was not able to come.", "fa": "نتوانست بیاید."}
-  ]
+    {
+      "de": "Ich habe gestern arbeiten müssen.",
+      "en": "I had to work yesterday.",
+      "fa": "دیروز مجبور بودم کار کنم."
+    },
+    {
+      "de": "Er hat nicht kommen können.",
+      "en": "He was not able to come.",
+      "fa": "نتوانست بیاید."
+    }
+  ],
+  "basics_key": "modalVerbs"
 }'::jsonb WHERE day = 65;
 
 -- Day 66
@@ -903,9 +947,18 @@ UPDATE lessons SET grammar_note = '{
   "explanation": "With a time word, the present tense already means the future. No special tense is needed: Morgen gehe ich ins Kino.",
   "explanation_fa": "با یک قید زمان، همان زمان حال معنی آینده می‌دهد و نیازی به زمان ویژه نیست: Morgen gehe ich ins Kino.",
   "examples": [
-    {"de": "Am Samstag besuche ich meine Familie.", "en": "On Saturday I am visiting my family.", "fa": "شنبه به دیدن خانواده‌ام می‌روم."},
-    {"de": "Nächste Woche fahren wir weg.", "en": "Next week we are going away.", "fa": "هفتهٔ آینده سفر می‌رویم."}
-  ]
+    {
+      "de": "Am Samstag besuche ich meine Familie.",
+      "en": "On Saturday I am visiting my family.",
+      "fa": "شنبه به دیدن خانواده‌ام می‌روم."
+    },
+    {
+      "de": "Nächste Woche fahren wir weg.",
+      "en": "Next week we are going away.",
+      "fa": "هفتهٔ آینده سفر می‌رویم."
+    }
+  ],
+  "basics_key": "verbConjugation"
 }'::jsonb WHERE day = 71;
 
 -- Day 72
