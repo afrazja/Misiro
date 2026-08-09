@@ -25,6 +25,13 @@
 		"verbConjugation",
 		"questionWords",
 		"modalVerbs",
+		// added by supabase-basics-grammar-topics.sql
+		"wordOrder",
+		"verbTenses",
+		"verbTypes",
+		"adjectives",
+		"passiveKonjunktiv",
+		"negationImpersonal",
 	];
 
 	let title = $state("");
