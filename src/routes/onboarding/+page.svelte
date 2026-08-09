@@ -16,7 +16,9 @@
 	let reason = $state("");
 	let examGoal = $state<"scheduled" | "planned" | "none">("none");
 	let examDate = $state("");
+	let targetDate = $state<string | null>(null);
 	let showDatePicker = $state(false);
+	let showTargetPicker = $state(false);
 	let skillLevel = $state("");
 	let dailyGoal = $state("");
 
@@ -28,6 +30,12 @@
 		`${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
 	const minExamDate = toISO(new Date(Date.now() + 86400000));
 	const maxExamDate = toISO(new Date(Date.now() + 2 * 365 * 86400000));
+
+	/** "Ready in ~N months" quick-pick → soft target date. */
+	function pickTarget(months: number | null) {
+		targetDate = months === null ? null : toISO(new Date(Date.now() + months * 30 * 86400000));
+		nextStep("planned", "examGoal");
+	}
 
 	// Animations
 	let enterClass = $state("slide-in-right");
@@ -55,6 +63,7 @@
 		if (step > 1) {
 			enterClass = "slide-in-left";
 			showDatePicker = false;
+			showTargetPicker = false;
 			step--;
 		}
 	}
@@ -85,6 +94,7 @@
 			await dataLayer.setExamSettings({
 				goal: examGoal,
 				examDate: examGoal === "scheduled" && examDate ? examDate : null,
+				targetDate: examGoal === "planned" ? targetDate : null,
 			});
 
 			// Optional: save the other onboarding data explicitly to the database
@@ -286,40 +296,7 @@
 					shows exactly how ready you are.
 				</p>
 
-				{#if !showDatePicker}
-					<div class="options-grid cols-1">
-						<button
-							class="choice-card flex-row"
-							onclick={() => (showDatePicker = true)}
-						>
-							<span class="emoji">📅</span>
-							<div class="lbl-block">
-								<strong>Yes — my exam is booked</strong>
-								<span>Goethe-Zertifikat A1 (Start Deutsch 1)</span>
-							</div>
-						</button>
-						<button
-							class="choice-card flex-row"
-							onclick={() => nextStep("planned", "examGoal")}
-						>
-							<span class="emoji">🎯</span>
-							<div class="lbl-block">
-								<strong>Planning to take it</strong>
-								<span>No date booked yet.</span>
-							</div>
-						</button>
-						<button
-							class="choice-card flex-row"
-							onclick={() => nextStep("none", "examGoal")}
-						>
-							<span class="emoji">🌱</span>
-							<div class="lbl-block">
-								<strong>Not for an exam</strong>
-								<span>I'm learning German for daily life.</span>
-							</div>
-						</button>
-					</div>
-				{:else}
+				{#if showDatePicker}
 					<div class="date-block">
 						<label class="date-label" for="exam-date"
 							>When is your exam?</label
@@ -340,9 +317,68 @@
 						>
 						<button
 							class="date-skip"
-							onclick={() => nextStep("planned", "examGoal")}
-							>I don't have a date yet</button
+							onclick={() => {
+								showDatePicker = false;
+								showTargetPicker = true;
+							}}>I don't have a date yet</button
 						>
+					</div>
+				{:else if showTargetPicker}
+					<div class="date-block">
+						<label class="date-label" for="target-picks"
+							>When do you want to be exam-ready?</label
+						>
+						<div class="options-grid cols-2" id="target-picks">
+							<button class="choice-card small-lbl" onclick={() => pickTarget(3)}>
+								<span class="emoji">🚀</span>
+								<span>In ~3 months</span>
+							</button>
+							<button class="choice-card small-lbl" onclick={() => pickTarget(6)}>
+								<span class="emoji">🏃</span>
+								<span>In ~6 months</span>
+							</button>
+							<button class="choice-card small-lbl" onclick={() => pickTarget(12)}>
+								<span class="emoji">🚶</span>
+								<span>Within a year</span>
+							</button>
+							<button class="choice-card small-lbl" onclick={() => pickTarget(null)}>
+								<span class="emoji">🤷</span>
+								<span>Not sure yet</span>
+							</button>
+						</div>
+					</div>
+				{:else}
+					<div class="options-grid cols-1">
+						<button
+							class="choice-card flex-row"
+							onclick={() => (showDatePicker = true)}
+						>
+							<span class="emoji">📅</span>
+							<div class="lbl-block">
+								<strong>Yes — my exam is booked</strong>
+								<span>Goethe-Zertifikat A1 (Start Deutsch 1)</span>
+							</div>
+						</button>
+						<button
+							class="choice-card flex-row"
+							onclick={() => (showTargetPicker = true)}
+						>
+							<span class="emoji">🎯</span>
+							<div class="lbl-block">
+								<strong>Planning to take it</strong>
+								<span>No date booked yet — set a ready-by target.</span>
+							</div>
+						</button>
+						<button
+							class="choice-card flex-row"
+							onclick={() => nextStep("none", "examGoal")}
+						>
+							<span class="emoji">🌱</span>
+							<div class="lbl-block">
+								<strong>Not for an exam</strong>
+								<span>I'm learning German for daily life.</span>
+							</div>
+						</button>
 					</div>
 				{/if}
 			</div>

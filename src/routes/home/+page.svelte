@@ -54,7 +54,9 @@
 	// Goethe hero
 	let readiness = $state<Readiness | null>(null);
 	let examSettings = $state<ExamSettings | null>(null);
-	let examDaysLeft = $state<number | null>(null);
+	let deadline = $state<{ days: number; kind: "exam" | "target" } | null>(
+		null,
+	);
 	let totalXp = $state(0);
 	let dueReviews = $state(0);
 	let savedWordCount = $state(0);
@@ -249,7 +251,7 @@
 		// the hero; it must never take the dashboard down with it.
 		try {
 			examSettings = await dataLayer.getExamSettings();
-			examDaysLeft = dataLayer.daysUntilExam(examSettings);
+			deadline = dataLayer.examDeadline(examSettings);
 			readiness = await computeReadiness();
 		} catch {
 			readiness = null;
@@ -766,11 +768,17 @@
 						? "آمادگی آزمون گوته A1"
 						: "Goethe A1 Readiness"}</span
 				>
-				{#if examDaysLeft !== null && examDaysLeft >= 0}
-					<span class="exam-countdown">
-						{language === "fa"
-							? `${examDaysLeft} روز تا آزمون`
-							: `${examDaysLeft} days to exam`}
+				{#if deadline !== null && deadline.days >= 0}
+					<span class="exam-countdown" class:soft={deadline.kind === "target"}>
+						{#if deadline.kind === "exam"}
+							{language === "fa"
+								? `${deadline.days} روز تا آزمون`
+								: `${deadline.days} days to exam`}
+						{:else}
+							{language === "fa"
+								? `${deadline.days} روز تا هدفت`
+								: `${deadline.days} days to your target`}
+						{/if}
 					</span>
 				{:else}
 					<a class="exam-set-date" href="/settings">
@@ -1554,6 +1562,12 @@
 		padding: 4px 14px;
 		font-weight: 700;
 		font-size: 0.9rem;
+	}
+
+	/* Soft "ready-by" target — green, calmer than a booked exam. */
+	.exam-countdown.soft {
+		background: var(--leaf-wash);
+		color: var(--leaf);
 	}
 
 	.exam-set-date {

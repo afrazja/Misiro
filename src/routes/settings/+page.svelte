@@ -43,6 +43,7 @@
 	// Goethe exam plan
 	let examGoal = $state<"scheduled" | "planned" | "none">("none");
 	let examDate = $state("");
+	let targetDate = $state("");
 	let examStatus = $state<{ text: string; type: "success" | "error" } | null>(
 		null,
 	);
@@ -251,6 +252,7 @@
 		await setExamSettings({
 			goal: examGoal,
 			examDate: examGoal === "scheduled" ? examDate : null,
+			targetDate: examGoal === "planned" && targetDate ? targetDate : null,
 		});
 		showStatus((v) => (examStatus = v), "Exam plan saved!", "success");
 	}
@@ -301,6 +303,7 @@
 		if (savedExam) {
 			examGoal = savedExam.goal;
 			examDate = savedExam.examDate ?? "";
+			targetDate = savedExam.targetDate ?? "";
 		}
 
 		isLoading = false;
@@ -501,6 +504,18 @@
 						class="exam-date-input"
 						type="date"
 						bind:value={examDate}
+						min={minExamDate}
+						max={maxExamDate}
+					/>
+				</div>
+			{:else if examGoal === "planned"}
+				<div class="pref-row">
+					<label for="target-date-input">Ready-by target (optional)</label>
+					<input
+						id="target-date-input"
+						class="exam-date-input"
+						type="date"
+						bind:value={targetDate}
 						min={minExamDate}
 						max={maxExamDate}
 					/>

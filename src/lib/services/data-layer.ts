@@ -92,6 +92,8 @@ export interface ExamSettings {
 	goal: 'scheduled' | 'planned' | 'none';
 	/** ISO date (YYYY-MM-DD); only meaningful when goal === 'scheduled' */
 	examDate: string | null;
+	/** Soft "ready by" date for goal === 'planned' (no booked exam yet). */
+	targetDate?: string | null;
 }
 
 const EXAM_SETTINGS_LS_KEY = 'mirifer_exam_settings';
@@ -102,7 +104,8 @@ function parseExamSettings(raw: unknown): ExamSettings | null {
 	if (o.goal !== 'scheduled' && o.goal !== 'planned' && o.goal !== 'none') return null;
 	return {
 		goal: o.goal,
-		examDate: typeof o.examDate === 'string' ? o.examDate : null
+		examDate: typeof o.examDate === 'string' ? o.examDate : null,
+		targetDate: typeof o.targetDate === 'string' ? o.targetDate : null
 	};
 }
 
@@ -136,14 +139,30 @@ export async function setExamSettings(settings: ExamSettings): Promise<void> {
 	}
 }
 
-/** Whole days until the exam (0 = today, negative = past). Null when no date set. */
-export function daysUntilExam(settings: ExamSettings | null): number | null {
-	if (!settings || settings.goal !== 'scheduled' || !settings.examDate) return null;
-	const exam = new Date(settings.examDate + 'T00:00:00');
-	if (isNaN(exam.getTime())) return null;
+/**
+ * The user's motivating deadline: the booked exam date, or the soft
+ * "ready by" target while they're still planning. Days are whole days
+ * (0 = today, negative = past). Null when nothing is set.
+ */
+export function examDeadline(
+	settings: ExamSettings | null
+): { days: number; kind: 'exam' | 'target' } | null {
+	if (!settings) return null;
+	const dateStr =
+		settings.goal === 'scheduled'
+			? settings.examDate
+			: settings.goal === 'planned'
+				? settings.targetDate
+				: null;
+	if (!dateStr) return null;
+	const deadline = new Date(dateStr + 'T00:00:00');
+	if (isNaN(deadline.getTime())) return null;
 	const now = new Date();
 	const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-	return Math.round((exam.getTime() - today.getTime()) / 86400000);
+	return {
+		days: Math.round((deadline.getTime() - today.getTime()) / 86400000),
+		kind: settings.goal === 'scheduled' ? 'exam' : 'target'
+	};
 }
 
 // ========== VOICE SPEED ==========
