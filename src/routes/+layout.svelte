@@ -9,9 +9,15 @@
 	import { authStore } from '$stores/auth';
 	import { inject } from '@vercel/analytics';
 	import { injectSpeedInsights } from '@vercel/speed-insights/sveltekit';
+	import { initTheme } from '$services/theme';
 
 	inject({ mode: 'production' });
 	injectSpeedInsights();
+
+	// The inline script in app.html already painted the right theme before
+	// first paint; this just syncs the stores so the toggle shows the
+	// correct state and starts following the OS when 'system' is chosen.
+	onMount(initTheme);
 
 	let { children, data } = $props();
 

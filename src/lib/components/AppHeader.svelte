@@ -1,5 +1,6 @@
 <script lang="ts">
 	import type { Snippet } from "svelte";
+	import { toggleTheme, resolvedTheme } from "$services/theme";
 
 	let {
 		title,
@@ -65,6 +66,17 @@
 
 		<div class="actions">
 			{#if actions}{@render actions()}{/if}
+			<button
+				class="theme-toggle"
+				type="button"
+				onclick={toggleTheme}
+				aria-label={$resolvedTheme === "dark"
+					? "Switch to light theme"
+					: "Switch to dark theme"}
+				title={$resolvedTheme === "dark" ? "Light mode" : "Dark mode"}
+			>
+				<span aria-hidden="true">{$resolvedTheme === "dark" ? "☀" : "☾"}</span>
+			</button>
 		</div>
 	</header>
 
@@ -218,6 +230,28 @@
 
 	[dir="rtl"] .back-arrow {
 		transform: rotate(180deg);
+	}
+
+	.theme-toggle {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		flex-shrink: 0;
+		width: 40px;
+		height: 40px;
+		border: 1px solid var(--control-border);
+		border-radius: 999px;
+		background: var(--control);
+		color: var(--ink);
+		font-size: 1.05rem;
+		line-height: 1;
+		cursor: pointer;
+		transition: background 0.15s, border-color 0.15s;
+	}
+
+	.theme-toggle:hover {
+		background: var(--control-hover);
+		border-color: var(--accent);
 	}
 
 	.brand-mark {
