@@ -810,13 +810,19 @@
 						? "🎯 سطح واقعی‌ات را بسنج — تست تعیین سطح رایگان"
 						: "🎯 Check your real level — free placement test"}
 				</a>
-			{:else}
-				<p class="exam-hero-note">
+			{/if}
+			<div class="exam-links">
+				<a class="exam-drill-link" href="/drill/sprechen">
+					🎙 {language === "fa"
+						? "تمرین Sprechen — معرفی خود"
+						: "Sprechen drill — introduce yourself"}
+				</a>
+				<span class="exam-hero-note">
 					{language === "fa"
 						? "نمره قبولی: ۶۰ از ۱۰۰"
 						: "Pass mark: 60 / 100"}
-				</p>
-			{/if}
+				</span>
+			</div>
 		</div>
 	{/if}
 
@@ -1652,6 +1658,22 @@
 		color: var(--ink-faint);
 		font-size: 0.82rem;
 		text-align: right;
+	}
+
+	.exam-links {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 10px;
+		flex-wrap: wrap;
+	}
+
+	.exam-drill-link {
+		color: var(--accent-deep);
+		font-weight: 600;
+		font-size: 0.9rem;
+		text-decoration: none;
+		border-bottom: 1px dotted var(--accent);
 	}
 
 	@media (max-width: 640px) {
