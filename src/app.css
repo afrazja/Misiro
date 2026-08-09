@@ -67,6 +67,11 @@
 	   --line gives. */
 	--control: #2b2b3d;
 	--control-hover: #3a3a52;
+	/* Solid edges sitting under a button give it physical thickness, the
+	   way a keycap has a side wall. Darker than the face, never a blur. */
+	--accent-edge: #1a8f4d;
+	--leaf-edge: #2f9c62;
+	--control-edge: #14141d;
 	/* 0.35 alpha puts the edge at ~3:1 against the header band, the
 	   contrast guidance for a UI component boundary. Surface lift alone
 	   never reaches that in a dark UI — the border does the work. */
@@ -145,6 +150,151 @@ input,
 textarea,
 select {
 	color-scheme: dark;
+}
+
+/* ===================== */
+/* 3D BUTTONS            */
+/* ===================== */
+/*
+ * Depth comes from three layers, not a blur:
+ *   1. an inset highlight along the top edge  — light catching the bevel
+ *   2. a solid offset shadow underneath       — the side wall of the key
+ *   3. a soft ambient shadow                  — the button floating above
+ * Pressing moves the face down onto its wall, so the travel distance and
+ * the wall height always change together.
+ *
+ * Listed by class rather than applied to every `button`: icon-only
+ * buttons, tappable word chips and list rows are buttons too, and they
+ * must stay flat.
+ */
+
+.start-btn,
+.btn-primary,
+.fs-primary,
+.today-btn,
+.cta-btn.primary,
+.btn-mic,
+.next-day-btn,
+.gm-continue,
+.edp-save,
+.edp-target,
+.exam-placement-cta,
+.btn-save,
+.date-continue {
+	box-shadow:
+		inset 0 1px 0 rgba(255, 255, 255, 0.28),
+		0 4px 0 var(--accent-edge),
+		0 6px 14px rgba(0, 0, 0, 0.45);
+	transition:
+		box-shadow 0.12s ease,
+		transform 0.12s ease,
+		filter 0.15s ease;
+}
+
+/* Green success buttons sit on their own edge colour. */
+.btn-mic,
+.edp-target {
+	box-shadow:
+		inset 0 1px 0 rgba(255, 255, 255, 0.28),
+		0 4px 0 var(--leaf-edge),
+		0 6px 14px rgba(0, 0, 0, 0.45);
+}
+
+.start-btn:hover,
+.btn-primary:hover,
+.fs-primary:hover,
+.today-btn:hover,
+.cta-btn.primary:hover,
+.btn-mic:hover,
+.next-day-btn:hover,
+.gm-continue:hover,
+.exam-placement-cta:hover {
+	filter: brightness(1.06);
+	transform: translateY(-1px);
+}
+
+.start-btn:active,
+.btn-primary:active,
+.fs-primary:active,
+.today-btn:active,
+.cta-btn.primary:active,
+.btn-mic:active,
+.next-day-btn:active,
+.gm-continue:active,
+.edp-save:active,
+.edp-target:active,
+.exam-placement-cta:active,
+.btn-save:active,
+.date-continue:active {
+	/* Travel equals the wall height, so the face lands flush on the base. */
+	transform: translateY(3px);
+	box-shadow:
+		inset 0 1px 0 rgba(255, 255, 255, 0.18),
+		0 1px 0 var(--accent-edge),
+		0 2px 5px rgba(0, 0, 0, 0.4);
+}
+
+/* Chrome: back button, toolbar selects, toggles. Shallower — these are
+   secondary, and a select's native popup sits badly on a tall bevel. */
+.back-control,
+.brand,
+.listener-mode-btn,
+.btn-ghost,
+.btn-choice,
+.lesson-toolbar-content select,
+.controls select {
+	box-shadow:
+		inset 0 1px 0 rgba(255, 255, 255, 0.1),
+		0 2px 0 var(--control-edge),
+		0 3px 8px rgba(0, 0, 0, 0.4);
+	transition:
+		box-shadow 0.12s ease,
+		transform 0.12s ease,
+		background 0.15s ease,
+		border-color 0.15s ease;
+}
+
+.back-control:active,
+.brand:active,
+.listener-mode-btn:active,
+.btn-ghost:active,
+.btn-choice:active {
+	transform: translateY(2px);
+	box-shadow:
+		inset 0 1px 0 rgba(255, 255, 255, 0.08),
+		0 0 0 var(--control-edge),
+		0 1px 3px rgba(0, 0, 0, 0.35);
+}
+
+/* Depth is decorative; motion is not free for everyone. */
+@media (prefers-reduced-motion: reduce) {
+	.start-btn,
+	.btn-primary,
+	.fs-primary,
+	.today-btn,
+	.cta-btn.primary,
+	.btn-mic,
+	.next-day-btn,
+	.gm-continue,
+	.back-control,
+	.brand,
+	.listener-mode-btn,
+	.btn-ghost,
+	.btn-choice {
+		transition: none;
+	}
+
+	.start-btn:hover,
+	.btn-primary:hover,
+	.fs-primary:hover,
+	.today-btn:hover,
+	.cta-btn.primary:hover,
+	.btn-mic:hover,
+	.next-day-btn:hover,
+	.gm-continue:hover,
+	.exam-placement-cta:hover {
+		transform: none;
+	}
 }
 
 /* ===================== */
