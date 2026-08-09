@@ -65,6 +65,18 @@
 	--leaf-edge: #1f7644;
 	--control-edge: #c8d0cc;
 	--paper-shadow: 0 1px 2px rgba(16, 24, 20, 0.06), 0 6px 20px rgba(16, 24, 20, 0.08);
+	/* ── Branded surfaces ──────────────────────────────────────────
+	   Large blocks of colour rather than white everywhere: the deep
+	   green header band, the dark script strip beneath it, and the warm
+	   field the message cards sit on — straight from the app screenshot. */
+	--brand-surface: #0e5c45;
+	--brand-surface-deep: #0a4433;
+	--on-brand: #ffffff;
+	--on-brand-soft: rgba(255, 255, 255, 0.82);
+	--strip: #1a1a2e;
+	--on-strip: #e8ecea;
+	--field: #e9e3dc;
+	--field-dot: rgba(20, 32, 27, 0.05);
 	--font-display: 'Fraunces Variable', Georgia, 'Iowan Old Style', 'Times New Roman', serif;
 	--font-body: 'Vazirmatn Variable', 'Segoe UI', -apple-system, Tahoma, Geneva, Verdana, sans-serif;
 }
@@ -108,6 +120,16 @@
 	   reaches that in a dark UI — the border does the work. */
 	--control-border: rgba(255, 255, 255, 0.35);
 	--paper-shadow: 0 1px 2px rgba(0, 0, 0, 0.45), 0 6px 24px rgba(0, 0, 0, 0.35);
+	/* Branded surfaces, dark variant: the green band stays green so the
+	   app keeps its identity, just deeper; the field goes near-black. */
+	--brand-surface: #10462f;
+	--brand-surface-deep: #0b3123;
+	--on-brand: #ffffff;
+	--on-brand-soft: rgba(255, 255, 255, 0.78);
+	--strip: #14141f;
+	--on-strip: #cfd6d3;
+	--field: #14141d;
+	--field-dot: rgba(255, 255, 255, 0.05);
 }
 
 /* ===================== */

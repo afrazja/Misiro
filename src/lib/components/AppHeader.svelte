@@ -15,6 +15,7 @@
 		secondaryLabel = "Page controls",
 		sticky = false,
 		direction = "ltr",
+		variant = "plain",
 	}: {
 		title?: string;
 		subtitle?: string;
@@ -28,10 +29,13 @@
 		secondaryLabel?: string;
 		sticky?: boolean;
 		direction?: "ltr" | "rtl";
+		/** "brand" paints the header as a solid green band with its controls
+		 *  inverted — the lesson chrome from the app screenshot. */
+		variant?: "plain" | "brand";
 	} = $props();
 </script>
 
-<div class="header-stack" class:sticky dir={direction}>
+<div class="header-stack" class:sticky class:brand-variant={variant === "brand"} dir={direction}>
 	<header class="app-header" class:connected={secondary}>
 		<div class="leading">
 			{#if leading}
@@ -230,6 +234,68 @@
 
 	[dir="rtl"] .back-arrow {
 		transform: rotate(180deg);
+	}
+
+	/* ── Brand variant: solid green band, inverted controls ──
+	   The lesson chrome from the app screenshot. Controls stay white
+	   pills so they read as controls against the colour. */
+	.brand-variant .app-header,
+	.brand-variant .secondary-toolbar {
+		background: var(--brand-surface);
+		border-color: var(--brand-surface-deep);
+	}
+
+	.brand-variant .app-header {
+		box-shadow: none;
+	}
+
+	.brand-variant :global(h1),
+	.brand-variant .identity p,
+	.brand-variant .title-icon {
+		color: var(--on-brand);
+	}
+
+	.brand-variant .identity p {
+		color: var(--on-brand-soft);
+	}
+
+	.brand-variant .back-control,
+	.brand-variant .brand {
+		background: var(--accent-strong, #3ab362);
+		border-color: rgba(255, 255, 255, 0.5);
+		color: var(--on-brand);
+		box-shadow:
+			inset 0 1px 0 rgba(255, 255, 255, 0.25),
+			0 2px 0 var(--brand-surface-deep);
+	}
+
+	.brand-variant .back-control:hover,
+	.brand-variant .brand:hover {
+		background: #45c470;
+		border-color: #ffffff;
+		color: var(--on-brand);
+	}
+
+	.brand-variant .theme-toggle {
+		background: rgba(255, 255, 255, 0.14);
+		border-color: rgba(255, 255, 255, 0.45);
+		color: var(--on-brand);
+	}
+
+	.brand-variant .theme-toggle:hover {
+		background: rgba(255, 255, 255, 0.24);
+		border-color: #ffffff;
+	}
+
+	/* Page controls dropped into the toolbar slot (selects, toggles). */
+	.brand-variant .secondary-toolbar :global(select),
+	.brand-variant .secondary-toolbar :global(label),
+	.brand-variant .secondary-toolbar :global(button) {
+		color: var(--ink);
+	}
+
+	.brand-variant .secondary-toolbar :global(label) {
+		color: var(--on-brand);
 	}
 
 	.theme-toggle {

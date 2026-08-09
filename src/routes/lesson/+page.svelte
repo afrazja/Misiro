@@ -829,6 +829,7 @@
 		secondary={lessonSecondaryControls}
 		secondaryLabel={prefs.language === "fa" ? "کنترل‌های درس" : "Lesson controls"}
 		sticky
+		variant="brand"
 		direction={prefs.language === "fa" ? "rtl" : "ltr"}
 	/>
 
@@ -2156,7 +2157,14 @@
 		flex: 1;
 		overflow-y: auto;
 		padding: 24px 20px;
-		background: var(--paper-sunken);
+		/* Warm field with the faint cross pattern from the app screenshot,
+		   so white message cards read as cards sitting on something. */
+		background-color: var(--field);
+		background-image:
+			linear-gradient(var(--field-dot) 1.5px, transparent 1.5px),
+			linear-gradient(90deg, var(--field-dot) 1.5px, transparent 1.5px);
+		background-size: 44px 44px;
+		background-position: center;
 		display: flex;
 		flex-direction: column;
 		justify-content: center;
@@ -2179,26 +2187,28 @@
 
 	.message {
 		max-width: 85%;
-		padding: 8px 14px;
-		border-radius: 8px;
+		padding: 14px 18px;
+		/* Softly rounded white cards lifted off the field, as in the
+		   screenshot — not tight chat bubbles. */
+		border-radius: 16px;
 		margin-bottom: 8px;
 		font-size: 0.95rem;
-		line-height: 1.4;
+		line-height: 1.5;
 		word-wrap: break-word;
-		align-self: flex-start; /* default: left-align in flex column */
+		align-self: flex-start;
+		box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 	}
 
 	.message.received {
 		background: var(--paper-raised);
 		border: 1px solid var(--line);
 		color: var(--ink);
-		border-top-left-radius: 0;
 	}
 
 	.message.sent {
 		background: var(--leaf-wash);
+		border: 1px solid var(--leaf);
 		color: var(--ink);
-		border-top-right-radius: 0;
 		align-self: flex-end;
 	}
 
@@ -2352,18 +2362,19 @@
 		align-items: center;
 		gap: 10px;
 		padding: 10px 15px;
-		background: var(--paper-raised);
+		background: var(--paper-sunken);
 		border-top: 1px solid var(--line);
 	}
 
 	.message-composer {
 		flex: 1;
-		padding: 8px 12px;
-		background: var(--paper-sunken);
+		padding: 10px 16px;
+		/* Pill input on the white bar, matching the screenshot. */
+		background: var(--paper-raised);
 		border: 1px solid var(--line);
 		color: var(--ink);
-		border-radius: 20px;
-		min-height: 36px;
+		border-radius: 999px;
+		min-height: 44px;
 		display: flex;
 		align-items: center;
 	}
@@ -3024,27 +3035,32 @@
 			justify-content: center;
 			gap: 8px;
 			width: 100%;
-			background: var(--paper-raised);
-			color: var(--ink);
+			/* Dark strip directly under the green band, as in the screenshot. */
+			background: var(--strip);
+			color: var(--on-strip);
 			border: none;
-			border-bottom: 1.5px solid var(--line);
+			border-bottom: none;
 			border-radius: 0;
 			padding: 9px 16px;
 			font-size: 0.85rem;
 			font-weight: 600;
 			cursor: pointer;
 			flex-shrink: 0;
+			box-shadow: none;
 		}
 
 		.script-toggle-count {
-			background: var(--paper-sunken);
+			background: rgba(255, 255, 255, 0.14);
+			color: var(--leaf);
 			border-radius: 10px;
 			padding: 1px 6px;
 			font-size: 0.75rem;
+			font-weight: 700;
 		}
 
 		.script-toggle-arrow {
 			font-size: 0.7rem;
+			color: var(--leaf);
 			transition: transform 0.3s;
 		}
 
