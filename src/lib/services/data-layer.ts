@@ -23,6 +23,23 @@ import {
 
 // ========== LANGUAGE ==========
 
+/**
+ * Declare the interface language on <html>.
+ *
+ * Without this the whole app is served as lang="en" even when the UI is
+ * Persian, so a screen reader pronounces Persian with English phonetics —
+ * unusable for exactly the audience this app targets. `dir` follows, so
+ * RTL no longer depends on each component remembering to set it.
+ *
+ * WCAG 3.1.1 (Language of Page).
+ */
+export function applyDocumentLanguage(lang: string | null | undefined): void {
+	if (typeof document === 'undefined') return;
+	const isFa = lang === 'fa';
+	document.documentElement.setAttribute('lang', isFa ? 'fa' : 'en');
+	document.documentElement.setAttribute('dir', isFa ? 'rtl' : 'ltr');
+}
+
 export async function getLanguage(): Promise<string | null> {
 	if (await isAuthenticated()) {
 		try {
@@ -52,6 +69,9 @@ export async function getLanguage(): Promise<string | null> {
 
 export async function setLanguage(lang: string): Promise<void> {
 	localStorage.setItem('mirifer_language', lang);
+	// Every language change in the app funnels through here, so this is the
+	// one place that keeps <html lang/dir> honest.
+	applyDocumentLanguage(lang);
 	await cloudWrite('profile_update', 'language', { language: lang });
 }
 

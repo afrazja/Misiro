@@ -10,6 +10,7 @@
 	import { inject } from '@vercel/analytics';
 	import { injectSpeedInsights } from '@vercel/speed-insights/sveltekit';
 	import { initTheme } from '$services/theme';
+	import { getLanguage, applyDocumentLanguage } from '$services/data-layer';
 
 	inject({ mode: 'production' });
 	injectSpeedInsights();
@@ -17,7 +18,17 @@
 	// The inline script in app.html already painted the right theme before
 	// first paint; this just syncs the stores so the toggle shows the
 	// correct state and starts following the OS when 'system' is chosen.
-	onMount(initTheme);
+	onMount(() => {
+		initTheme();
+		// The boot script set lang/dir from localStorage. For a signed-in
+		// user the authoritative value lives on their profile, so re-apply
+		// once it has been fetched.
+		getLanguage()
+			.then(applyDocumentLanguage)
+			.catch(() => {
+				/* boot-script value stands */
+			});
+	});
 
 	let { children, data } = $props();
 

@@ -187,7 +187,7 @@
 			<p class="step-label">Sentence {step + 1} of {SENTENCES.length} — tap any word 👇</p>
 
 			<div class="bubble">
-				<p class="german">
+				<p class="german" lang="de">
 					{#each words as w, i}
 						{#if w.gloss}<button
 								class="word"

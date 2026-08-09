@@ -41,15 +41,20 @@
 	--paper-sunken: #e9ecea;
 	--ink: #14201b;
 	--ink-soft: #4d5b55;
-	--ink-faint: #78857f;
+	/* Was #78857f — 4.6:1 on the page ground but only ~3.9:1 on the white
+	   cards where it is actually used, so small print failed. 5.5:1 now. */
+	--ink-faint: #5f6b66;
 	--line: #dde3e0;
 	--accent: #0e5c45;
 	/* The high-contrast variant used for accent-coloured TEXT. On light
 	   that means darker; the dark theme flips it to brighter. */
 	--accent-deep: #0a4433;
 	--accent-wash: rgba(14, 92, 69, 0.1);
-	--leaf: #2e9e5b;
-	--leaf-wash: rgba(46, 158, 91, 0.12);
+	/* Was #2e9e5b — only 3.4:1, which failed twice over: as success text on
+	   white, and under the white label of a filled button (mic, CTAs). This
+	   is 5.1:1 in both roles, and reads as a richer green besides. */
+	--leaf: #1e7e45;
+	--leaf-wash: rgba(30, 126, 69, 0.12);
 	/* Text/icons sitting ON a filled accent or leaf surface. */
 	--on-accent: #ffffff;
 	--info: #2b6cb0;
@@ -62,7 +67,7 @@
 	/* Solid edges under a button give it physical thickness, like the side
 	   wall of a keycap. Darker than the face, never a blur. */
 	--accent-edge: #07392b;
-	--leaf-edge: #1f7644;
+	--leaf-edge: #145c31;
 	--control-edge: #c8d0cc;
 	--paper-shadow: 0 1px 2px rgba(16, 24, 20, 0.06), 0 6px 20px rgba(16, 24, 20, 0.08);
 	/* ── Branded surfaces ──────────────────────────────────────────

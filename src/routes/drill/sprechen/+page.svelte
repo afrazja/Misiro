@@ -271,7 +271,7 @@
 			<p class="station">{stationLabel.de} · {stationLabel.fa}</p>
 
 			{#if item.kind === 'speak'}
-				<p class="frame">{item.display}</p>
+				<p class="frame" lang="de">{item.display}</p>
 				<p class="hint">{item.en}</p>
 				<p class="hint fa" dir="rtl">{item.fa}</p>
 				<button

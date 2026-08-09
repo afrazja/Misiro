@@ -23,6 +23,11 @@
 					document.documentElement.setAttribute('data-theme', dark ? 'dark' : 'light');
 					var m = document.querySelector('meta[name="theme-color"]');
 					if (m) m.setAttribute('content', dark ? '#0f0f1a' : '#0e5c45');
+					// Same reason as the theme: flipping lang/dir after paint
+					// would visibly jump the layout from LTR to RTL.
+					var fa = localStorage.getItem('mirifer_language') === 'fa';
+					document.documentElement.setAttribute('lang', fa ? 'fa' : 'en');
+					document.documentElement.setAttribute('dir', fa ? 'rtl' : 'ltr');
 				} catch (e) {
 					document.documentElement.setAttribute('data-theme', 'light');
 				}

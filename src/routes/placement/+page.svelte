@@ -353,11 +353,11 @@
 			{/if}
 
 			{#if 'passage' in item}
-				<pre class="passage">{item.passage}</pre>
+				<pre class="passage" lang="de">{item.passage}</pre>
 			{/if}
 
 			{#if item.kind === 'fill'}
-				<pre class="passage">{item.info}</pre>
+				<pre class="passage" lang="de">{item.info}</pre>
 				<p class="question">{item.field}: ______</p>
 				<p class="hint fa" dir="rtl">{item.hintFa}</p>
 				{#if !answered}
@@ -380,7 +380,7 @@
 						? 'گوش کن — این جمله درست است یا غلط؟'
 						: 'متن را بخوان — این جمله درست است یا غلط؟'}
 				</p>
-				<p class="question">{item.statement}</p>
+				<p class="question" lang="de">{item.statement}</p>
 				{#if !answered}
 					<div class="tf-row">
 						<button class="btn-choice" onclick={() => grade(item.kind === 'tf' && item.answer === true)}
@@ -397,7 +397,7 @@
 						? 'گوش کن و پاسخ درست را انتخاب کن.'
 						: 'متن را بخوان و پاسخ درست را انتخاب کن.'}
 				</p>
-				<p class="question">{item.question}</p>
+				<p class="question" lang="de">{item.question}</p>
 				{#if !answered}
 					<div class="choice-col">
 						{#each item.options as opt, i (opt)}
@@ -412,7 +412,7 @@
 			{:else if item.kind === 'speak'}
 				<p class="question">{item.prompt}</p>
 				<p class="hint fa" dir="rtl">{item.promptFa}</p>
-				<p class="speak-target">„{item.target}"</p>
+				<p class="speak-target" lang="de">„{item.target}"</p>
 				<button
 					class="btn-ghost"
 					onclick={() => playAudioPromise(item.kind === 'speak' ? item.target : '', 0.85, 'de-DE')}
