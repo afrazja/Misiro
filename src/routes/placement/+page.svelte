@@ -29,6 +29,11 @@
 	import { onMount } from 'svelte';
 
 	// ── Item model (self-contained; original content in official formats) ──
+	// NOTE: no Persian translations of the German CONTENT here — this is an
+	// assessment, and translating the statement/question hands the answer
+	// over (a zero-German user would score high and get a readiness number
+	// that lies to them). Persian appears only as task INSTRUCTIONS, the same
+	// split the real exam makes.
 	type Item =
 		| {
 				module: 'hoeren';
@@ -36,7 +41,6 @@
 				audio: string;
 				audioB?: string;
 				statement: string;
-				statementFa: string;
 				answer: boolean;
 		  }
 		| {
@@ -45,7 +49,6 @@
 				audio: string;
 				audioB?: string;
 				question: string;
-				questionFa: string;
 				options: string[];
 				correct: number;
 		  }
@@ -54,7 +57,6 @@
 				kind: 'tf';
 				passage: string;
 				statement: string;
-				statementFa: string;
 				answer: boolean;
 		  }
 		| {
@@ -62,7 +64,6 @@
 				kind: 'choice';
 				passage: string;
 				question: string;
-				questionFa: string;
 				options: string[];
 				correct: number;
 		  }
@@ -89,7 +90,6 @@
 			kind: 'tf',
 			audio: 'Der Zug nach Berlin fährt um vierzehn Uhr von Gleis drei.',
 			statement: 'Der Zug fährt um 14 Uhr.',
-			statementFa: 'قطار ساعت ۱۴ حرکت می‌کند.',
 			answer: true
 		},
 		{
@@ -97,7 +97,6 @@
 			kind: 'tf',
 			audio: 'Es regnet heute den ganzen Tag. Nehmen Sie einen Regenschirm mit!',
 			statement: 'Heute scheint die Sonne.',
-			statementFa: 'امروز آفتابی است.',
 			answer: false
 		},
 		{
@@ -106,7 +105,6 @@
 			audio: 'Guten Tag! Was möchten Sie trinken?',
 			audioB: 'Einen Kaffee mit Milch, bitte.',
 			question: 'Was bestellt die Frau?',
-			questionFa: 'خانم چه سفارش می‌دهد؟',
 			options: ['Tee', 'Kaffee mit Milch', 'Wasser'],
 			correct: 1
 		},
@@ -115,7 +113,6 @@
 			kind: 'choice',
 			audio: 'Die Apotheke ist heute bis achtzehn Uhr geöffnet.',
 			question: 'Bis wann ist die Apotheke geöffnet?',
-			questionFa: 'داروخانه تا چه ساعتی باز است؟',
 			options: ['Bis 16 Uhr', 'Bis 18 Uhr', 'Bis 20 Uhr'],
 			correct: 1
 		},
@@ -125,7 +122,6 @@
 			kind: 'tf',
 			passage: 'Geöffnet: Montag bis Freitag, 9–17 Uhr.\nSamstag und Sonntag geschlossen.',
 			statement: 'Das Geschäft ist am Samstag geöffnet.',
-			statementFa: 'مغازه شنبه باز است.',
 			answer: false
 		},
 		{
@@ -134,7 +130,6 @@
 			passage:
 				'Liebe Anna,\nich komme am Freitag um 15 Uhr am Bahnhof an. Kannst du mich abholen?\nViele Grüße, Maria',
 			statement: 'Maria kommt am Freitag an.',
-			statementFa: 'ماریا جمعه می‌رسد.',
 			answer: true
 		},
 		{
@@ -142,7 +137,6 @@
 			kind: 'choice',
 			passage: '2-Zimmer-Wohnung in Berlin-Mitte, 650 € warm, ab 1. März frei.\nTel. 030 123456',
 			question: 'Was kostet die Wohnung?',
-			questionFa: 'اجارهٔ آپارتمان چقدر است؟',
 			options: ['560 €', '650 €', '750 €'],
 			correct: 1
 		},
@@ -151,7 +145,6 @@
 			kind: 'choice',
 			passage: 'Sprachschule International\nDeutschkurs A1: Montag und Mittwoch, 18–20 Uhr',
 			question: 'Wann ist der Deutschkurs?',
-			questionFa: 'کلاس آلمانی چه زمانی است؟',
 			options: ['Am Wochenende', 'Montag und Mittwoch', 'Jeden Tag'],
 			correct: 1
 		},
@@ -162,7 +155,9 @@
 			info: 'Sara Ahmadi kommt aus dem Iran. Sie wohnt in Teheran. Sie ist 25 Jahre alt.',
 			field: 'Wohnort',
 			answer: 'Teheran',
-			hintFa: 'محل سکونت را از متن پیدا کن و بنویس'
+			// Instruction only — translating the field name ("Wohnort") would
+			// hand over exactly the vocabulary this item tests.
+			hintFa: 'فرم را با اطلاعات متن بالا کامل کن.'
 		},
 		{
 			module: 'schreiben',
@@ -170,7 +165,7 @@
 			info: 'Sara Ahmadi kommt aus dem Iran. Sie wohnt in Teheran. Sie ist 25 Jahre alt.',
 			field: 'Alter',
 			answer: '25',
-			hintFa: 'سن را با عدد بنویس'
+			hintFa: 'فرم را با اطلاعات متن بالا کامل کن.'
 		},
 		// ── Sprechen (optional mic) ──
 		{
@@ -338,6 +333,10 @@
 				۱۲ سؤال کوتاه دقیقاً در قالب آزمون گوته — شنیدن، خواندن، نوشتن و صحبت
 				کردن. حدود ۸ دقیقه.
 			</p>
+			<p class="intro-note fa" dir="rtl">
+				⚠️ سؤال‌ها فقط به آلمانی‌اند — بدون ترجمه، تا نمره‌ات واقعی باشد.
+				اگر چیزی را نفهمیدی، حدس بزن یا رد شو؛ همین هم بخشی از سنجش است.
+			</p>
 			<button class="btn-primary big" onclick={start}>▶ Start the test</button>
 			<p class="fine">Speaking questions are optional — you can skip them.</p>
 		</section>
@@ -376,8 +375,12 @@
 					</div>
 				{/if}
 			{:else if item.kind === 'tf'}
+				<p class="task-instruction fa" dir="rtl">
+					{item.module === 'hoeren'
+						? 'گوش کن — این جمله درست است یا غلط؟'
+						: 'متن را بخوان — این جمله درست است یا غلط؟'}
+				</p>
 				<p class="question">{item.statement}</p>
-				<p class="hint fa" dir="rtl">{item.statementFa}</p>
 				{#if !answered}
 					<div class="tf-row">
 						<button class="btn-choice" onclick={() => grade(item.kind === 'tf' && item.answer === true)}
@@ -389,8 +392,12 @@
 					</div>
 				{/if}
 			{:else if item.kind === 'choice'}
+				<p class="task-instruction fa" dir="rtl">
+					{item.module === 'hoeren'
+						? 'گوش کن و پاسخ درست را انتخاب کن.'
+						: 'متن را بخوان و پاسخ درست را انتخاب کن.'}
+				</p>
 				<p class="question">{item.question}</p>
-				<p class="hint fa" dir="rtl">{item.questionFa}</p>
 				{#if !answered}
 					<div class="choice-col">
 						{#each item.options as opt, i (opt)}
@@ -567,6 +574,17 @@
 		font-size: 0.85rem;
 	}
 
+	.intro-note {
+		background: var(--paper-sunken);
+		border: 1px solid var(--line);
+		border-radius: 10px;
+		padding: 10px 14px;
+		color: var(--ink-soft);
+		font-size: 0.9rem;
+		line-height: 1.7;
+		text-align: right;
+	}
+
 	.fine a {
 		color: var(--ink-soft);
 	}
@@ -620,6 +638,15 @@
 	.hint {
 		color: var(--ink-soft);
 		font-size: 0.92rem;
+	}
+
+	/* Persian task instruction — tells the user WHAT TO DO. Never translates
+	   the German being tested (that would hand over the answer). */
+	.task-instruction {
+		color: var(--ink-faint);
+		font-size: 0.88rem;
+		border-inline-start: 3px solid var(--line);
+		padding-inline-start: 10px;
 	}
 
 	.speak-target {
