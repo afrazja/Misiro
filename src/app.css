@@ -80,6 +80,10 @@
 	--on-brand-soft: rgba(255, 255, 255, 0.82);
 	--strip: #1a1a2e;
 	--on-strip: #e8ecea;
+	/* The strip is dark in BOTH themes, so accents on it must be light in
+	   both. --leaf is dark green in light mode and would only reach ~3:1
+	   here. 9:1 against the strip. */
+	--on-strip-accent: #4ade80;
 	--field: #e9e3dc;
 	--field-dot: rgba(20, 32, 27, 0.05);
 	--font-display: 'Fraunces Variable', Georgia, 'Iowan Old Style', 'Times New Roman', serif;
@@ -133,6 +137,7 @@
 	--on-brand-soft: rgba(255, 255, 255, 0.78);
 	--strip: #14141f;
 	--on-strip: #cfd6d3;
+	--on-strip-accent: #4ade80;
 	--field: #14141d;
 	--field-dot: rgba(255, 255, 255, 0.05);
 }

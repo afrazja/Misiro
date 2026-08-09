@@ -1200,7 +1200,9 @@
 	.brand-text {
 		font-weight: 700;
 		font-size: 1rem;
-		color: var(--ink);
+		/* Sits on the dark ribbon, not the page — var(--ink) rendered it
+		   invisible (1.02:1) in light mode. */
+		color: var(--on-brand);
 	}
 
 	.nav-right {
@@ -1323,10 +1325,12 @@
 		align-items: center;
 		gap: 4px;
 		margin-right: 8px;
-		background: var(--paper-sunken);
+		/* This pill sits on the dark ribbon, so a light --paper-sunken
+		   fill put white numerals on a white background (1.18:1). */
+		background: rgba(255, 255, 255, 0.08);
 		padding: 4px;
 		border-radius: 12px;
-		border: 1px solid var(--line);
+		border: 1px solid var(--on-strip-accent);
 	}
 
 	.nav-stat {
@@ -1340,7 +1344,7 @@
 		cursor: pointer;
 		transition: all 0.2s;
 		font-family: inherit;
-		color: var(--ink);
+		color: var(--on-brand);
 	}
 
 	.nav-stat:hover {
@@ -1366,6 +1370,9 @@
 	.ns-value {
 		font-size: 0.9rem;
 		font-weight: 700;
+		/* Bright green reads on the black ribbon in both themes; --leaf is
+		   dark green in light mode and would only reach ~3:1 here. */
+		color: var(--on-strip-accent);
 	}
 
 	/* ── Stats Row ────────────────────────────────────── */
@@ -1599,7 +1606,8 @@
 
 	.stat-cta {
 		font-size: 0.72rem;
-		color: var(--leaf);
+		/* Sits on the tinted stat card, where --leaf measured 4.01:1. */
+		color: var(--accent-deep);
 		font-weight: 700;
 		margin-top: 2px;
 	}
@@ -1753,7 +1761,8 @@
 	/* Soft "ready-by" target — green, calmer than a booked exam. */
 	.exam-countdown.soft {
 		background: var(--leaf-wash);
-		color: var(--leaf);
+		/* --leaf on --leaf-wash measured 4.33:1; darker green gives 9.5:1 */
+		color: var(--accent-deep);
 	}
 
 	.exam-set-date {
@@ -1910,7 +1919,8 @@
 		display: block;
 		text-align: center;
 		background: var(--leaf-wash);
-		color: var(--leaf);
+		/* --leaf on --leaf-wash measured 4.33:1 */
+		color: var(--accent-deep);
 		border: 1.5px dashed var(--leaf);
 		border-radius: 12px;
 		padding: 11px 16px;
