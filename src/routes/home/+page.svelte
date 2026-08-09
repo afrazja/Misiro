@@ -153,6 +153,23 @@
 		"December",
 	];
 
+	// Gregorian months, Persian names (the calendar stays Gregorian —
+	// exam dates and lesson history are Gregorian).
+	const MONTH_NAMES_FA = [
+		"ژانویه",
+		"فوریه",
+		"مارس",
+		"آوریل",
+		"مه",
+		"ژوئن",
+		"ژوئیه",
+		"اوت",
+		"سپتامبر",
+		"اکتبر",
+		"نوامبر",
+		"دسامبر",
+	];
+
 	// Set of YYYY-MM-DD strings for days the user completed at least one lesson
 	const practiceDates = $derived.by(() => {
 		const s = new Set<string>();
@@ -628,11 +645,19 @@
 			>
 
 			<div class="cal-header">
-				<h2>📅 Practice Calendar</h2>
+				<h2>
+					📅 {language === "fa" ? "تقویم تمرین" : "Practice Calendar"}
+				</h2>
 				<p>
-					{daysCompleted} lesson{daysCompleted === 1 ? "" : "s"} completed
-					{#if streakCount > 0}
-						· {streakCount}-day streak 🔥{/if}
+					{#if language === "fa"}
+						{daysCompleted} درس کامل شده
+						{#if streakCount > 0}
+							· {streakCount} روز پشت‌سرهم 🔥{/if}
+					{:else}
+						{daysCompleted} lesson{daysCompleted === 1 ? "" : "s"} completed
+						{#if streakCount > 0}
+							· {streakCount}-day streak 🔥{/if}
+					{/if}
 				</p>
 			</div>
 
@@ -643,7 +668,11 @@
 					onclick={prevCalMonth}
 					aria-label="Previous month">‹</button
 				>
-				<span class="pcal-title">{MONTH_NAMES[calMonth]} {calYear}</span
+				<span class="pcal-title"
+					>{(language === "fa" ? MONTH_NAMES_FA : MONTH_NAMES)[
+						calMonth
+					]}
+					{calYear}</span
 				>
 				<button
 					class="pcal-nav-btn"
@@ -656,7 +685,7 @@
 
 			<!-- Day-of-week headers -->
 			<div class="pcal-dow">
-				{#each ["M", "T", "W", "T", "F", "S", "S"] as label}
+				{#each language === "fa" ? ["د", "س", "چ", "پ", "ج", "ش", "ی"] : ["M", "T", "W", "T", "F", "S", "S"] as label}
 					<span class="pcal-dow-cell">{label}</span>
 				{/each}
 			</div>
@@ -672,9 +701,13 @@
 							class:practiced={practiceDates.has(cell.key!)}
 							class:today={cell.isToday}
 							title={practiceDates.has(cell.key!)
-								? `Practiced on ${new Date(cell.key!).toLocaleDateString("en", { month: "long", day: "numeric" })}`
+								? language === "fa"
+									? `تمرین در ${new Date(cell.key!).toLocaleDateString("fa-IR", { month: "long", day: "numeric" })}`
+									: `Practiced on ${new Date(cell.key!).toLocaleDateString("en", { month: "long", day: "numeric" })}`
 								: cell.isToday
-									? "Today"
+									? language === "fa"
+										? "امروز"
+										: "Today"
 									: ""}>{cell.day}</span
 						>
 					{/if}
@@ -684,15 +717,23 @@
 			<!-- Legend -->
 			<div class="cal-legend">
 				<span class="leg-item"
-					><span class="leg-sw practiced-sw"></span>Practiced</span
+					><span class="leg-sw practiced-sw"></span>{language === "fa"
+						? "تمرین‌شده"
+						: "Practiced"}</span
 				>
 				<span class="leg-item"
-					><span class="leg-sw today-sw"></span>Today</span
+					><span class="leg-sw today-sw"></span>{language === "fa"
+						? "امروز"
+						: "Today"}</span
 				>
 				<span class="leg-item pcal-month-stat">
-					{thisMonthPracticed} day{thisMonthPracticed !== 1
-						? "s"
-						: ""} this month
+					{#if language === "fa"}
+						{thisMonthPracticed} روز در این ماه
+					{:else}
+						{thisMonthPracticed} day{thisMonthPracticed !== 1
+							? "s"
+							: ""} this month
+					{/if}
 				</span>
 			</div>
 		</div>
@@ -739,15 +780,18 @@
 					{/if}
 				</div>
 
-				<a href="/settings" class="nav-icon-btn" title="Settings"
+				<a
+					href="/settings"
+					class="nav-icon-btn"
+					title={language === "fa" ? "تنظیمات" : "Settings"}
 					><Icon name="gear" size={19} /></a
 				>
 				<button class="nav-text-btn" onclick={handleSignOut}
-					>Sign Out</button
+					>{language === "fa" ? "خروج" : "Sign Out"}</button
 				>
 			{:else}
 				<button class="nav-text-btn" onclick={toggleAuthModal}
-					>Sign In</button
+					>{language === "fa" ? "ورود" : "Sign In"}</button
 				>
 			{/if}
 		</div>
@@ -761,18 +805,28 @@
 					<div class="welcome-header-row">
 						<div>
 							<h1>
-								Welcome back, {displayName.split(" ")[0]}! 👋
+								{language === "fa"
+									? `خوش برگشتی، ${displayName.split(" ")[0]}! 👋`
+									: `Welcome back, ${displayName.split(" ")[0]}! 👋`}
 							</h1>
 							<p>
 								{streakCount > 0
-									? `You're on a ${streakCount}-day streak — keep it going!`
-									: "Pick up where you left off."}
+									? language === "fa"
+										? `${streakCount} روز پشت‌سرهم تمرین کردی — همین‌طور ادامه بده!`
+										: `You're on a ${streakCount}-day streak — keep it going!`
+									: language === "fa"
+										? "از همان‌جا که بودی ادامه بده."
+										: "Pick up where you left off."}
 							</p>
 						</div>
 					</div>
 				{:else}
 					<h1>Mirifer</h1>
-					<p>Learn German the Natural Way</p>
+					<p>
+						{language === "fa"
+							? "آلمانی را طبیعی یاد بگیر"
+							: "Learn German the Natural Way"}
+					</p>
 				{/if}
 			</div>
 		</div>
@@ -943,12 +997,18 @@
 					<span class="stat-value">{dueReviews}</span>
 					<span class="stat-label"
 						>{dueReviews === 0
-							? "All caught up!"
-							: "Due Reviews"}</span
+							? language === "fa"
+								? "همه مرورها انجام شد!"
+								: "All caught up!"
+							: language === "fa"
+								? "مرور آماده"
+								: "Due Reviews"}</span
 					>
 				</div>
 				{#if dueReviews > 0}
-					<span class="stat-cta">Review now →</span>
+					<span class="stat-cta"
+						>{language === "fa" ? "شروع مرور ←" : "Review now →"}</span
+					>
 				{/if}
 			</a>
 			<a
@@ -960,10 +1020,14 @@
 				<span class="stat-icon warm"><Icon name="bookmark" size={26} /></span>
 				<div class="stat-content">
 					<span class="stat-value">{savedWordCount}</span>
-					<span class="stat-label">Saved Words</span>
+					<span class="stat-label"
+						>{language === "fa" ? "واژه‌های ذخیره‌شده" : "Saved Words"}</span
+					>
 				</div>
 				{#if savedWordCount > 0}
-					<span class="stat-cta vocab-cta">Practice →</span>
+					<span class="stat-cta vocab-cta"
+						>{language === "fa" ? "تمرین ←" : "Practice →"}</span
+					>
 				{/if}
 			</a>
 		</div>
@@ -979,7 +1043,9 @@
 			{#if isAuthenticated}
 				{#if totalLessons > 0 && daysCompleted >= totalLessons}
 					<div class="card-meta done">
-						🎉 All {totalLessons} days complete!
+						{language === "fa"
+							? `🎉 هر ${totalLessons} روز کامل شد!`
+							: `🎉 All ${totalLessons} days complete!`}
 					</div>
 					<div class="card-progress-bar">
 						<div
@@ -990,7 +1056,13 @@
 				{:else if daysCompleted > 0}
 					<div class="card-meta">
 						{#if totalLessons > 0}
-							{daysCompleted} of {totalLessons} days · {progressPercent}%
+							{#if language === "fa"}
+								{daysCompleted} از {totalLessons} روز · ٪{progressPercent}
+							{:else}
+								{daysCompleted} of {totalLessons} days · {progressPercent}%
+							{/if}
+						{:else if language === "fa"}
+							{daysCompleted} روز انجام شده
 						{:else}
 							{daysCompleted} days done
 						{/if}
@@ -1002,7 +1074,9 @@
 						></div>
 					</div>
 				{:else}
-					<div class="card-meta">Start Day 1 →</div>
+					<div class="card-meta">
+						{language === "fa" ? "شروع روز ۱ ←" : "Start Day 1 →"}
+					</div>
 				{/if}
 			{/if}
 			<div class="arrow">→</div>
@@ -1014,7 +1088,9 @@
 			<h2>{content.basicsTitle}</h2>
 			<p>{content.basicsDesc}</p>
 			<div class="card-meta basics-meta">
-				12 topics · Pronouns, Articles &amp; more
+				{language === "fa"
+					? "۱۲ مبحث · ضمایر، حروف تعریف و بیشتر"
+					: "12 topics · Pronouns, Articles & more"}
 			</div>
 			<div class="arrow">→</div>
 		</a>
@@ -1022,7 +1098,11 @@
 
 	<!-- ── Footer ──────────────────────────────────────── -->
 	<footer class="home-footer">
-		<p>Made with ❤️ for language learners</p>
+		<p>
+			{language === "fa"
+				? "ساخته‌شده با ❤️ برای زبان‌آموزها"
+				: "Made with ❤️ for language learners"}
+		</p>
 	</footer>
 </div>
 
