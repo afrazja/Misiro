@@ -1744,7 +1744,9 @@
 		max-width: 120px;
 	}
 	.speed-control select {
-		max-width: 90px;
+		/* Wide enough for "🔉 🇩🇪 0.75x" without clipping */
+		max-width: 132px;
+		min-width: 116px;
 	}
 	.day-selection-control select {
 		max-width: 220px;
