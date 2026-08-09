@@ -710,12 +710,17 @@
 	</div>
 {/if}
 
-{#snippet lessonHeaderActions()}
-	<div class="lesson-header-actions">
-		<div class="day-selection-control">
-			<label for="day-select">📅 Day:</label>
+{#snippet lessonSecondaryControls()}
+	<div class="lesson-toolbar-content">
+		<div class="lesson-toolbar-primary">
+			<div class="day-selection-control">
+				<label for="day-select">
+					<span aria-hidden="true">📅</span>
+					{prefs.language === "fa" ? "روز:" : "Day:"}
+				</label>
 			<select
 				id="day-select"
+				aria-label={prefs.language === "fa" ? "انتخاب روز" : "Select day"}
 				onchange={handleDaySelectChange}
 				value={app.currentDay.toString()}
 			>
@@ -756,66 +761,84 @@
 				{/each}
 			</select>
 		</div>
-
-		<div class="blind-mode-control">
-			<input
-				type="checkbox"
-				id="blind-mode-toggle"
-				checked={prefs.blindMode}
-				onchange={handleBlindModeChange}
-			/>
-			<label for="blind-mode-toggle">🙈 Blind Mode</label>
 		</div>
 
-		<div class="language-control">
-			<select
-				id="language-select"
-				aria-label="Select language"
-				value={prefs.language}
-				onchange={handleLanguageSelectChange}
-			>
-				<option value="fa">فارسی</option>
-				<option value="en">English</option>
-			</select>
-		</div>
+		<div class="lesson-toolbar-options">
+			<div class="blind-mode-control">
+				<input
+					type="checkbox"
+					id="blind-mode-toggle"
+					checked={prefs.blindMode}
+					onchange={handleBlindModeChange}
+				/>
+				<label for="blind-mode-toggle">
+					🙈 <span>{prefs.language === "fa" ? "حالت پنهان" : "Blind Mode"}</span>
+				</label>
+			</div>
 
-		<div class="speed-control">
-			<select
-				id="speed-select"
-				aria-label="German voice speed"
+			<div class="language-control">
+				<select
+					id="language-select"
+					aria-label={prefs.language === "fa" ? "انتخاب زبان" : "Select language"}
+					value={prefs.language}
+					onchange={handleLanguageSelectChange}
+				>
+					<option value="fa">فارسی</option>
+					<option value="en">English</option>
+				</select>
+			</div>
+
+			<div class="speed-control">
+				<select
+					id="speed-select"
+					aria-label={prefs.language === "fa"
+						? "سرعت صدای آلمانی"
+						: "German voice speed"}
+					title={prefs.language === "fa"
+						? "سرعت صدای آلمانی"
+						: "German voice speed"}
+					value={prefs.voiceSpeed.toString()}
+					onchange={handleSpeedSelectChange}
+				>
+					<option value="1">{"🔊 🇩🇪 1x"}</option>
+					<option value="0.75">{"🔉 🇩🇪 0.75x"}</option>
+				</select>
+			</div>
+
+			<button
+				class="listener-mode-btn"
+				class:active={listenerMode}
+				onclick={handleListenerToggle}
 				title={prefs.language === "fa"
-					? "سرعت صدای آلمانی"
-					: "German voice speed"}
-				value={prefs.voiceSpeed.toString()}
-				onchange={handleSpeedSelectChange}
+					? listenerMode
+						? "حالت شنونده روشن است — برای خاموش کردن کلیک کنید"
+						: "فعال کردن حالت شنونده"
+					: listenerMode
+						? "Listener Mode ON — click to disable"
+						: "Enable Listener Mode"}
 			>
-				<option value="1">{"🔊 🇩🇪 1x"}</option>
-				<option value="0.75">{"🔉 🇩🇪 0.75x"}</option>
-			</select>
+				🎧 {prefs.language === "fa"
+					? listenerMode
+						? "شنونده روشن"
+						: "شنونده"
+					: listenerMode
+						? "Listener ON"
+						: "Listener"}
+			</button>
 		</div>
-
-		<button
-			class="listener-mode-btn"
-			class:active={listenerMode}
-			onclick={handleListenerToggle}
-			title={listenerMode
-				? "Listener Mode ON — click to disable"
-				: "Enable Listener Mode"}
-		>
-			🎧 {listenerMode ? "Listener ON" : "Listener"}
-		</button>
 	</div>
 {/snippet}
 
 <div class="container" class:hidden={showOverlay}>
 	<AppHeader
-		title="Daily Lessons"
+		title={prefs.language === "fa" ? "درس‌های روزانه" : "Daily Lessons"}
 		icon="📖"
 		backHref="/home"
-		backLabel="Home"
-		actions={lessonHeaderActions}
+		backLabel={prefs.language === "fa" ? "خانه" : "Home"}
+		secondary={lessonSecondaryControls}
+		secondaryLabel={prefs.language === "fa" ? "کنترل‌های درس" : "Lesson controls"}
 		sticky
-		stackActions
+		direction={prefs.language === "fa" ? "rtl" : "ltr"}
 	/>
 
 	<!-- Main Learning Area -->
@@ -1746,11 +1769,25 @@
 		overflow: hidden;
 	}
 
-	.lesson-header-actions {
+	.lesson-toolbar-content {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 12px;
+		width: 100%;
+		min-width: 0;
+	}
+
+	.lesson-toolbar-primary {
+		flex: 1 1 320px;
+		min-width: 240px;
+	}
+
+	.lesson-toolbar-options {
 		display: flex;
 		align-items: center;
 		justify-content: flex-end;
-		gap: 10px;
+		gap: 8px;
 		flex-wrap: wrap;
 	}
 
@@ -1760,44 +1797,70 @@
 	.speed-control {
 		display: flex;
 		align-items: center;
-		gap: 5px;
+		gap: 6px;
 	}
 
-	.lesson-header-actions select,
-	.lesson-header-actions input[type="checkbox"] {
+	.lesson-toolbar-content select {
+		min-height: 40px;
 		color: var(--ink);
-		background: var(--paper-sunken);
-		border: 2px solid var(--line);
-		border-radius: 8px;
-		padding: 5px 10px;
+		background: var(--paper-raised);
+		border: 1px solid var(--line);
+		border-radius: 10px;
+		padding: 7px 10px;
+		font-family: inherit;
 		font-weight: 600;
 		cursor: pointer;
 	}
 
-	.lesson-header-actions select option {
+	.lesson-toolbar-content select:hover,
+	.lesson-toolbar-content select:focus-visible {
+		border-color: var(--accent);
+		outline: none;
+	}
+
+	.lesson-toolbar-content select option {
 		background: var(--paper-raised);
 		color: var(--ink);
 	}
 
 	/* Cap widths so the header stays on one row */
 	.language-control select {
+		min-width: 104px;
 		max-width: 120px;
 	}
 	.speed-control select {
-		/* Wide enough for "🔉 🇩🇪 0.75x" without clipping */
 		max-width: 132px;
 		min-width: 116px;
 	}
 	.day-selection-control select {
-		max-width: 220px;
+		width: min(100%, 360px);
+		max-width: 360px;
+	}
+
+	.blind-mode-control {
+		min-height: 40px;
+		padding: 7px 10px;
+		background: var(--paper-raised);
+		border: 1px solid var(--line);
+		border-radius: 10px;
+		white-space: nowrap;
+	}
+
+	.blind-mode-control input {
+		width: 16px;
+		height: 16px;
+		margin: 0;
+		accent-color: var(--leaf);
 	}
 
 	.listener-mode-btn {
-		padding: 6px 12px;
-		border-radius: 20px;
-		border: 2px solid var(--line);
-		background: var(--paper-sunken);
+		min-height: 40px;
+		padding: 7px 12px;
+		border-radius: 10px;
+		border: 1px solid var(--line);
+		background: var(--paper-raised);
 		color: var(--ink);
+		font-family: inherit;
 		font-size: 0.82rem;
 		font-weight: 600;
 		cursor: pointer;
@@ -1815,10 +1878,10 @@
 		color: #fff8f0;
 	}
 
-	.lesson-header-actions label {
+	.lesson-toolbar-content label {
 		font-weight: 600;
 		cursor: pointer;
-		font-size: 0.9rem;
+		font-size: 0.84rem;
 	}
 
 	.progress-info {
@@ -2868,18 +2931,80 @@
 		}
 	}
 
+	@media (max-width: 980px) {
+		.lesson-toolbar-content {
+			align-items: stretch;
+			flex-wrap: wrap;
+		}
+
+		.lesson-toolbar-primary {
+			flex-basis: 100%;
+		}
+
+		.day-selection-control select {
+			width: 100%;
+			max-width: none;
+		}
+
+		.lesson-toolbar-options {
+			width: 100%;
+			justify-content: flex-start;
+		}
+	}
+
 	/* Responsive */
 	@media (max-width: 600px) {
-		.lesson-header-actions {
-			justify-content: stretch;
+		.lesson-toolbar-content {
+			flex-direction: column;
+			gap: 8px;
+		}
+
+		.lesson-toolbar-primary {
+			min-width: 0;
 			width: 100%;
 		}
 
-		.blind-mode-control,
+		.day-selection-control {
+			display: grid;
+			grid-template-columns: auto minmax(0, 1fr);
+			width: 100%;
+		}
+
+		.lesson-toolbar-options {
+			display: grid;
+			grid-template-columns: 56px 82px minmax(112px, 1fr) 92px;
+			gap: 6px;
+		}
+
+		.language-control,
+		.speed-control,
+		.language-control select,
+		.speed-control select,
+		.listener-mode-btn {
+			width: 100%;
+			max-width: none;
+			min-width: 0;
+		}
+
+		.blind-mode-control {
+			justify-content: center;
+			padding-inline: 6px;
+		}
+
+		.blind-mode-control label span {
+			display: none;
+		}
+
 		.progress-info {
 			display: none;
 		}
 
 		/* script-view is a fixed drawer on mobile — no height override needed */
+	}
+
+	@media (max-width: 360px) {
+		.lesson-toolbar-options {
+			grid-template-columns: repeat(2, minmax(0, 1fr));
+		}
 	}
 </style>

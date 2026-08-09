@@ -10,8 +10,9 @@
 		onBack,
 		leading,
 		actions,
+		secondary,
+		secondaryLabel = "Page controls",
 		sticky = false,
-		stackActions = false,
 		direction = "ltr",
 	}: {
 		title?: string;
@@ -22,55 +23,70 @@
 		onBack?: () => void;
 		leading?: Snippet;
 		actions?: Snippet;
+		secondary?: Snippet;
+		secondaryLabel?: string;
 		sticky?: boolean;
-		stackActions?: boolean;
 		direction?: "ltr" | "rtl";
 	} = $props();
 </script>
 
-<header
-	class="app-header"
-	class:sticky
-	class:stack-actions={stackActions}
-	dir={direction}
->
-	<div class="leading">
-		{#if leading}
-			{@render leading()}
-		{:else if onBack}
-			<button class="back-control" type="button" onclick={onBack} aria-label={backLabel}>
-				<span class="back-arrow" aria-hidden="true">&larr;</span>
-				<span>{backLabel}</span>
-			</button>
-		{:else if backHref}
-			<a class="back-control" href={backHref} aria-label={backLabel}>
-				<span class="back-arrow" aria-hidden="true">&larr;</span>
-				<span>{backLabel}</span>
-			</a>
-		{:else}
-			<a class="brand" href="/home" aria-label="Mirifer home">
-				<span class="brand-mark" aria-hidden="true">M</span>
-				<span>Mirifer</span>
-			</a>
-		{/if}
-	</div>
+<div class="header-stack" class:sticky dir={direction}>
+	<header class="app-header" class:connected={secondary}>
+		<div class="leading">
+			{#if leading}
+				{@render leading()}
+			{:else if onBack}
+				<button class="back-control" type="button" onclick={onBack} aria-label={backLabel}>
+					<span class="back-arrow" aria-hidden="true">&larr;</span>
+					<span>{backLabel}</span>
+				</button>
+			{:else if backHref}
+				<a class="back-control" href={backHref} aria-label={backLabel}>
+					<span class="back-arrow" aria-hidden="true">&larr;</span>
+					<span>{backLabel}</span>
+				</a>
+			{:else}
+				<a class="brand" href="/home" aria-label="Mirifer home">
+					<span class="brand-mark" aria-hidden="true">M</span>
+					<span>Mirifer</span>
+				</a>
+			{/if}
+		</div>
 
-	{#if title}
-		<div class="identity">
-			<div class="title-row">
-				{#if icon}<span class="title-icon" aria-hidden="true">{icon}</span>{/if}
-				<h1>{title}</h1>
+		{#if title}
+			<div class="identity">
+				<div class="title-row">
+					{#if icon}<span class="title-icon" aria-hidden="true">{icon}</span>{/if}
+					<h1>{title}</h1>
+				</div>
+				{#if subtitle}<p>{subtitle}</p>{/if}
 			</div>
-			{#if subtitle}<p>{subtitle}</p>{/if}
+		{/if}
+
+		<div class="actions">
+			{#if actions}{@render actions()}{/if}
+		</div>
+	</header>
+
+	{#if secondary}
+		<div class="secondary-toolbar" role="toolbar" aria-label={secondaryLabel}>
+			{@render secondary()}
 		</div>
 	{/if}
-
-	<div class="actions">
-		{#if actions}{@render actions()}{/if}
-	</div>
-</header>
+</div>
 
 <style>
+	.header-stack {
+		width: 100%;
+		flex-shrink: 0;
+	}
+
+	.header-stack.sticky {
+		position: sticky;
+		top: 0;
+		z-index: 100;
+	}
+
 	.app-header {
 		display: grid;
 		grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
@@ -85,11 +101,30 @@
 		box-shadow: 0 1px 2px rgba(60, 48, 30, 0.05);
 	}
 
-	.app-header.sticky {
-		position: sticky;
-		top: 0;
-		z-index: 100;
+	.header-stack.sticky .app-header {
 		border-radius: 0 0 16px 16px;
+	}
+
+	.app-header.connected,
+	.header-stack.sticky .app-header.connected {
+		border-radius: 0;
+	}
+
+	.secondary-toolbar {
+		display: flex;
+		align-items: center;
+		width: 100%;
+		min-height: 52px;
+		padding: 8px 16px;
+		background: var(--paper-sunken);
+		border: 1px solid var(--line);
+		border-top: 0;
+		border-radius: 0 0 16px 16px;
+		box-shadow: 0 1px 2px rgba(60, 48, 30, 0.05);
+	}
+
+	.secondary-toolbar > :global(*) {
+		width: 100%;
 	}
 
 	.leading,
@@ -210,7 +245,18 @@
 			border-radius: 14px;
 		}
 
-		.app-header.sticky {
+		.header-stack.sticky .app-header {
+			border-radius: 0 0 14px 14px;
+		}
+
+		.app-header.connected,
+		.header-stack.sticky .app-header.connected {
+			border-radius: 0;
+		}
+
+		.secondary-toolbar {
+			min-height: 48px;
+			padding: 8px 10px;
 			border-radius: 0 0 14px 14px;
 		}
 
@@ -236,25 +282,6 @@
 			display: none;
 		}
 
-		.app-header.stack-actions {
-			grid-template-columns: auto minmax(0, 1fr);
-		}
-
-		.stack-actions .identity {
-			justify-self: end;
-		}
-
-		.stack-actions .actions {
-			grid-column: 1 / -1;
-			justify-content: stretch;
-			width: 100%;
-		}
-
-		.stack-actions .actions :global(select),
-		.stack-actions .actions :global(button),
-		.stack-actions .actions :global(a) {
-			flex: 1 1 auto;
-		}
 	}
 
 	@media (max-width: 440px) {

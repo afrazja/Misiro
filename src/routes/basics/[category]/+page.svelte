@@ -270,10 +270,13 @@
 
 <div class="category-container">
 	{#snippet categoryHeaderActions()}
+		{#if hasQuizWords}
+			<button class="practice-btn" onclick={startQuiz}>Practice</button>
+		{/if}
+	{/snippet}
+
+	{#snippet categorySecondaryControls()}
 		<div class="controls">
-			{#if hasQuizWords}
-				<button class="practice-btn" onclick={startQuiz}>Practice</button>
-			{/if}
 			<select aria-label="Select language" value={currentLang} onchange={handleLanguageChange}>
 				<option value="fa">فارسی</option>
 				<option value="en">English</option>
@@ -296,7 +299,8 @@
 				backHref="/basics"
 				backLabel={backText}
 				actions={categoryHeaderActions}
-				stackActions
+				secondary={categorySecondaryControls}
+				secondaryLabel={currentLang === "fa" ? "کنترل‌های مبحث" : "Topic controls"}
 				direction={currentLang === "fa" ? "rtl" : "ltr"}
 			/>
 		</div>
