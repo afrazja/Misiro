@@ -26,6 +26,7 @@ import {
 } from '$services/lesson-loader';
 import { getLanguage, getVoiceSpeed, getCompletedLessons, getProgress, saveProgress, saveCompletedLessons } from '$services/data-layer';
 import { recordSRAttempt, getDueReviewItems, removeFromReview } from '$services/spaced-repetition';
+import { computeReadiness } from '$services/readiness';
 import { removeBookmark } from '$services/data-layer';
 import { trackEvent } from '$services/analytics';
 import { makeWordHighlighter } from '$utils/word-timing';
@@ -82,6 +83,10 @@ export interface CompletionCardData {
 	nextDay: number | null;
 	nextLessonTitle: string | null;
 	wasAlreadyCompleted: boolean;
+	/** Goethe readiness (0–100) before/after this completion; null when the
+	 *  computation failed — the card simply omits the readiness row then. */
+	readinessBefore: number | null;
+	readinessAfter: number | null;
 }
 
 export interface ExamQuestionData {
@@ -287,6 +292,15 @@ async function handleLessonCompletion(
 		playAudioPromise(doneMsg, 1.0, getTranslationLang(prefs.language));
 	}
 
+	// Readiness before this completion — for the delta on the card. Computed
+	// against the pre-save map so the cloud write can't race the read.
+	let readinessBefore: number | null = null;
+	try {
+		readinessBefore = (await computeReadiness(app.completedLessons || {})).overall;
+	} catch {
+		// Card just omits the readiness row.
+	}
+
 	// Mark as completed
 	const updatedCompleted = { ...app.completedLessons };
 	updatedCompleted[app.currentDay] = {
@@ -321,11 +335,21 @@ async function handleLessonCompletion(
 		}
 	}
 
+	// Readiness after — same SR data, updated completion map.
+	let readinessAfter: number | null = null;
+	try {
+		readinessAfter = (await computeReadiness(updatedCompleted)).overall;
+	} catch {
+		readinessBefore = null; // show both or neither
+	}
+
 	callbacks?.onCompletionCard({
 		language: prefs.language,
 		nextDay: hasNextLesson ? nextDay : null,
 		nextLessonTitle,
-		wasAlreadyCompleted
+		wasAlreadyCompleted,
+		readinessBefore,
+		readinessAfter
 	});
 }
 

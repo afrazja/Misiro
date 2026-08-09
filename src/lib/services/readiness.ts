@@ -99,8 +99,15 @@ export function recordDrillResult(module: ReadinessModule, earned: number, possi
 
 const clamp01 = (n: number) => Math.min(1, Math.max(0, n));
 
-export async function computeReadiness(): Promise<Readiness> {
-	const [completed, srData] = await Promise.all([getCompletedLessons(), loadSRData()]);
+export async function computeReadiness(
+	/** Pass a completed-lessons map to compute against a known state (e.g.
+	 *  before/after deltas on lesson completion) instead of re-fetching. */
+	completedOverride?: Record<string | number, unknown>
+): Promise<Readiness> {
+	const [completed, srData] = await Promise.all([
+		completedOverride !== undefined ? Promise.resolve(completedOverride) : getCompletedLessons(),
+		loadSRData()
+	]);
 
 	const daysDone = Object.keys(completed || {}).length;
 	const coverage = clamp01(daysDone / A1_DAYS);

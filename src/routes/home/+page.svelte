@@ -88,6 +88,12 @@
 	let progressLoaded = $state(false);
 
 	// Today's-session hero: what one tap on /lesson will run
+	// Day-zero users get ONE door, not seven: the full dashboard (hero bars,
+	// stats, nav cards) unlocks after the first completed lesson.
+	const isNewUser = $derived(
+		isAuthenticated && progressLoaded && daysCompleted === 0,
+	);
+
 	const todayTitle = $derived.by(() => {
 		const m = lessonMetaIndex.find((meta) => meta.day === currentDay);
 		if (!m) return "";
@@ -837,8 +843,60 @@
 		</div>
 	</div>
 
+	<!-- ── First Step (day-zero users): one door only ──── -->
+	{#if isNewUser}
+		<div class="first-step">
+			{#if deadline !== null && deadline.days >= 0}
+				<span class="fs-countdown">
+					⏳ {language === "fa"
+						? `${deadline.days} روز تا ${deadline.kind === "exam" ? "آزمون" : "هدفت"}`
+						: `${deadline.days} days to your ${deadline.kind === "exam" ? "exam" : "target"}`}
+				</span>
+			{/if}
+			{#if readiness?.needsPlacement}
+				<h2 class="fs-title">
+					{language === "fa"
+						? "قدم اول: سطحت را بسنجیم"
+						: "First step: find your level"}
+				</h2>
+				<p class="fs-sub">
+					{language === "fa"
+						? "۱۲ سؤال در قالب واقعی آزمون گوته — حدود ۸ دقیقه. نوار آمادگی‌ات از همین‌جا ساخته می‌شود."
+						: "12 questions in the real Goethe format — about 8 minutes. Your readiness score starts here."}
+				</p>
+				<a class="fs-primary" href="/placement">
+					🎯 {language === "fa" ? "شروع تست تعیین سطح" : "Take the placement test"}
+				</a>
+				<a class="fs-secondary" href="/lesson">
+					{language === "fa"
+						? "یا مستقیم برو سراغ روز ۱ ←"
+						: "or start Day 1 directly →"}
+				</a>
+			{:else}
+				<h2 class="fs-title">
+					{language === "fa" ? "آماده‌ای؟ درس اول" : "Ready? Your first lesson"}
+				</h2>
+				<p class="fs-sub">
+					{language === "fa"
+						? "روزی یک درس کوتاه — از همین امروز."
+						: "One short lesson a day — starting now."}
+				</p>
+				<a class="fs-primary" href="/lesson">
+					▶ {language === "fa" ? "شروع" : "Start"}
+					{language === "fa" ? "روز" : "Day"}
+					{todayTitle || currentDay}
+				</a>
+				<a class="fs-secondary" href="/drill/sprechen">
+					🎙 {language === "fa"
+						? "یا تمرین Sprechen ←"
+						: "or the Sprechen drill →"}
+				</a>
+			{/if}
+		</div>
+	{/if}
+
 	<!-- ── Goethe A1 Readiness Hero ────────────────────── -->
-	{#if isAuthenticated && progressLoaded && readiness && examSettings?.goal !== "none"}
+	{#if !isNewUser && isAuthenticated && progressLoaded && readiness && examSettings?.goal !== "none"}
 		<div class="exam-hero">
 			<div class="exam-hero-top">
 				<span class="exam-hero-title"
@@ -956,7 +1014,7 @@
 	{/if}
 
 	<!-- ── Today's Session (primary daily action) ──────── -->
-	{#if isAuthenticated}
+	{#if isAuthenticated && !isNewUser}
 		<a href="/lesson" class="today-session" title="Start today's session">
 			<div class="today-info">
 				<span class="today-label">
@@ -989,7 +1047,7 @@
 	{/if}
 
 	<!-- ── Progress Stats ──────────────────────────────── -->
-	{#if isAuthenticated}
+	{#if isAuthenticated && !isNewUser}
 		<div class="stats-row action-row">
 			<a
 				href="/review"
@@ -1039,7 +1097,8 @@
 	{/if}
 
 	<!-- ── Nav Cards ───────────────────────────────────── -->
-	<div class="nav-cards" id="categories-grid">
+	{#if !isNewUser}
+		<div class="nav-cards" id="categories-grid">
 		<a href="/lesson" class="nav-card lessons">
 			<div class="card-glow"></div>
 			<div class="icon"><Icon name="book" size={44} /></div>
@@ -1099,7 +1158,8 @@
 			</div>
 			<div class="arrow">→</div>
 		</a>
-	</div>
+		</div>
+	{/if}
 
 	<!-- ── Footer ──────────────────────────────────────── -->
 	<footer class="home-footer">
@@ -1675,6 +1735,66 @@
 	}
 
 	/* ── Toast ────────────────────────────────────────── */
+	/* ── First Step (day-zero single door) ────────────── */
+	.first-step {
+		background: var(--paper-raised);
+		border: 1px solid var(--line);
+		border-radius: 18px;
+		box-shadow: var(--paper-shadow);
+		padding: 34px 28px;
+		margin-bottom: 16px;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		text-align: center;
+		gap: 12px;
+	}
+
+	.fs-countdown {
+		background: var(--accent-wash);
+		color: var(--accent-deep);
+		border-radius: 999px;
+		padding: 4px 14px;
+		font-weight: 700;
+		font-size: 0.88rem;
+	}
+
+	.fs-title {
+		font-family: var(--font-display);
+		font-size: 1.65rem;
+		color: var(--ink);
+		margin: 0;
+	}
+
+	.fs-sub {
+		color: var(--ink-soft);
+		line-height: 1.6;
+		max-width: 460px;
+		margin: 0;
+	}
+
+	.fs-primary {
+		background: var(--accent);
+		color: #fff8f0;
+		border-radius: 12px;
+		padding: 15px 30px;
+		font-size: 1.1rem;
+		font-weight: 800;
+		text-decoration: none;
+		margin-top: 6px;
+		transition: background 0.15s;
+	}
+
+	.fs-primary:hover {
+		background: var(--accent-deep);
+	}
+
+	.fs-secondary {
+		color: var(--ink-faint);
+		font-size: 0.92rem;
+		text-decoration: underline;
+	}
+
 	/* ── Goethe A1 Readiness Hero ─────────────────────── */
 	.exam-hero {
 		background: var(--paper-raised);

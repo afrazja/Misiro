@@ -1227,6 +1227,30 @@
 											>
 										{/if}
 									</div>
+									{#if completionData.readinessBefore !== null && completionData.readinessAfter !== null}
+										{@const delta =
+											completionData.readinessAfter -
+											completionData.readinessBefore}
+										<div class="comp-readiness">
+											🎓
+											{completionData.language === "fa"
+												? "آمادگی گوته"
+												: "Goethe readiness"}:
+											{#if delta > 0}
+												<span class="cr-was"
+													>{completionData.readinessBefore}</span
+												>
+												<span class="cr-now"
+													>{completionData.readinessAfter}/100</span
+												>
+												<span class="cr-delta">+{delta}</span>
+											{:else}
+												<span class="cr-now"
+													>{completionData.readinessAfter}/100</span
+												>
+											{/if}
+										</div>
+									{/if}
 									{#if completionData.nextDay}
 										<button
 											class="next-day-btn"
@@ -1650,6 +1674,40 @@
 		font-size: 0.85rem;
 		color: var(--ink-soft);
 		font-weight: 600;
+	}
+
+	/* Readiness delta on the completion card — the daily payoff moment. */
+	.comp-readiness {
+		display: inline-flex;
+		align-items: baseline;
+		gap: 7px;
+		background: var(--leaf-wash);
+		border-radius: 999px;
+		padding: 6px 16px;
+		margin: 10px 0 4px;
+		font-size: 0.92rem;
+		font-weight: 600;
+		color: var(--ink-soft);
+	}
+
+	.cr-was {
+		text-decoration: line-through;
+		color: var(--ink-faint);
+	}
+
+	.cr-now {
+		color: var(--leaf);
+		font-weight: 800;
+		font-size: 1.05rem;
+	}
+
+	.cr-delta {
+		background: var(--leaf);
+		color: #f2f8f4;
+		border-radius: 999px;
+		padding: 1px 9px;
+		font-size: 0.8rem;
+		font-weight: 800;
 	}
 
 	/* ── Script Empty ── */
