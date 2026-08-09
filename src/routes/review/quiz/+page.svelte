@@ -441,7 +441,7 @@
 		border-radius: 30px;
 		cursor: pointer;
 		transition: all 0.2s;
-		box-shadow: 0 4px 15px rgba(47, 111, 79, 0.3);
+		box-shadow: 0 4px 15px rgba(88, 214, 141, 0.3);
 	}
 	.start-btn:hover {
 		transform: translateY(-2px);
@@ -649,7 +649,7 @@
 		font-size: 1.2rem;
 		border-radius: 30px;
 		margin: 15px auto;
-		box-shadow: 0 4px 10px rgba(47, 111, 79, 0.1);
+		box-shadow: 0 4px 10px rgba(88, 214, 141, 0.1);
 		animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 	}
 
@@ -708,7 +708,7 @@
 		transition:
 			transform 0.2s,
 			background 0.2s;
-		box-shadow: 0 4px 15px rgba(47, 111, 79, 0.2);
+		box-shadow: 0 4px 15px rgba(88, 214, 141, 0.2);
 	}
 	.done-btn:hover {
 		transform: translateY(-2px);

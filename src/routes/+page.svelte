@@ -979,13 +979,13 @@
 	.cta-btn.primary {
 		background: var(--accent);
 		color: var(--on-accent);
-		box-shadow: 0 5px 18px rgba(156, 69, 20, 0.3);
+		box-shadow: 0 5px 18px rgba(46, 204, 113, 0.3);
 	}
 
 	.cta-btn.primary:hover {
 		transform: translateY(-3px) scale(1.03);
 		filter: brightness(1.06);
-		box-shadow: 0 10px 28px rgba(156, 69, 20, 0.35);
+		box-shadow: 0 10px 28px rgba(46, 204, 113, 0.35);
 	}
 
 	.cta-btn.ghost {
@@ -1028,13 +1028,13 @@
 	.btn.btn-primary {
 		background: var(--accent);
 		color: var(--on-accent);
-		box-shadow: 0 5px 18px rgba(156, 69, 20, 0.3);
+		box-shadow: 0 5px 18px rgba(46, 204, 113, 0.3);
 	}
 
 	.btn.btn-primary:hover {
 		transform: translateY(-2px);
 		filter: brightness(1.06);
-		box-shadow: 0 8px 24px rgba(156, 69, 20, 0.35);
+		box-shadow: 0 8px 24px rgba(46, 204, 113, 0.35);
 	}
 
 	.btn.btn-ghost {
@@ -1060,7 +1060,7 @@
 		border-radius: 14px;
 		font-size: 1rem;
 		font-weight: 600;
-		box-shadow: 0 10px 40px rgba(47, 111, 79, 0.35);
+		box-shadow: 0 10px 40px rgba(88, 214, 141, 0.35);
 		z-index: 2000;
 		/* visibility keeps the hidden toast out of screen readers, innerText
 		   and search snippets; the delay lets the slide-out finish first. */
@@ -1243,7 +1243,7 @@
 	}
 
 	.navbar.scrolled {
-		background: rgba(250, 246, 239, 0.92);
+		background: rgba(15, 15, 26, 0.92);
 		backdrop-filter: blur(20px);
 		border-bottom: 1px solid var(--line);
 		padding: 13px 48px;
@@ -1412,8 +1412,8 @@
 		border-radius: 40px;
 		border: 8px solid #2a2a3a;
 		box-shadow:
-			0 50px 100px rgba(38, 34, 27, 0.28),
-			0 0 0 1px rgba(38, 34, 27, 0.08);
+			0 50px 100px rgba(0, 0, 0, 0.28),
+			0 0 0 1px rgba(0, 0, 0, 0.08);
 		overflow: hidden;
 		animation: phoneFloat 4.5s ease-in-out infinite;
 	}
@@ -1541,7 +1541,7 @@
 	.step-card:hover {
 		transform: translateY(-10px);
 		border-color: var(--accent);
-		box-shadow: 0 24px 60px rgba(38, 34, 27, 0.12);
+		box-shadow: 0 24px 60px rgba(0, 0, 0, 0.12);
 	}
 
 	.step-num {
@@ -1617,7 +1617,7 @@
 	.feat-card:hover {
 		transform: translateY(-7px);
 		border-color: var(--accent);
-		box-shadow: 0 24px 60px rgba(38, 34, 27, 0.12);
+		box-shadow: 0 24px 60px rgba(0, 0, 0, 0.12);
 	}
 
 	.feat-card:hover::after {
@@ -1675,7 +1675,7 @@
 
 	.j-dot.green {
 		background: var(--leaf);
-		box-shadow: 0 0 10px rgba(47, 111, 79, 0.35);
+		box-shadow: 0 0 10px rgba(88, 214, 141, 0.35);
 	}
 
 	.j-dot.blue {
@@ -1829,7 +1829,7 @@
 	.reason-card:hover {
 		transform: translateY(-6px);
 		border-color: var(--accent);
-		box-shadow: 0 20px 50px rgba(38, 34, 27, 0.12);
+		box-shadow: 0 20px 50px rgba(0, 0, 0, 0.12);
 	}
 
 	.reason-icon {
@@ -1872,7 +1872,7 @@
 	.audience-card:hover {
 		transform: translateY(-6px);
 		border-color: var(--leaf);
-		box-shadow: 0 20px 50px rgba(38, 34, 27, 0.12);
+		box-shadow: 0 20px 50px rgba(0, 0, 0, 0.12);
 	}
 
 	.audience-emoji {

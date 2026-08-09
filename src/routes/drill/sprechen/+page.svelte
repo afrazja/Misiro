@@ -551,10 +551,10 @@
 	@keyframes pulse {
 		0%,
 		100% {
-			box-shadow: 0 0 0 0 rgba(47, 111, 79, 0.35);
+			box-shadow: 0 0 0 0 rgba(88, 214, 141, 0.35);
 		}
 		50% {
-			box-shadow: 0 0 0 10px rgba(47, 111, 79, 0);
+			box-shadow: 0 0 0 10px rgba(88, 214, 141, 0);
 		}
 	}
 

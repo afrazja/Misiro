@@ -831,7 +831,7 @@
 		transform: translateY(-5px);
 		background: var(--leaf-wash);
 		border-color: var(--leaf);
-		box-shadow: 0 10px 30px rgba(47, 111, 79, 0.15);
+		box-shadow: 0 10px 30px rgba(88, 214, 141, 0.15);
 	}
 
 	.word-card:active {
@@ -957,7 +957,7 @@
 	.verb-infinitive-banner:hover {
 		background: var(--leaf-wash);
 		transform: translateY(-2px);
-		box-shadow: 0 8px 25px rgba(47, 111, 79, 0.15);
+		box-shadow: 0 8px 25px rgba(88, 214, 141, 0.15);
 	}
 
 	.verb-main {
@@ -1449,8 +1449,8 @@
 	}
 
 	@keyframes mic-pulse {
-		0%, 100% { box-shadow: 0 0 0 0 rgba(194, 87, 27, 0.3); }
-		50% { box-shadow: 0 0 0 12px rgba(194, 87, 27, 0); }
+		0%, 100% { box-shadow: 0 0 0 0 rgba(46, 204, 113, 0.3); }
+		50% { box-shadow: 0 0 0 12px rgba(46, 204, 113, 0); }
 	}
 
 	.quiz-skip-btn {

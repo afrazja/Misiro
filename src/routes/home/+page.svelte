@@ -1255,7 +1255,7 @@
 		background: var(--accent);
 		text-decoration: none;
 		color: var(--on-accent);
-		box-shadow: 0 10px 30px rgba(156, 69, 20, 0.28);
+		box-shadow: 0 10px 30px rgba(46, 204, 113, 0.28);
 		transition:
 			transform 0.25s ease,
 			box-shadow 0.25s ease;
@@ -1582,7 +1582,7 @@
 
 	.stat-card-link.has-due:hover {
 		border-color: var(--leaf);
-		box-shadow: 0 8px 24px rgba(47, 111, 79, 0.18);
+		box-shadow: 0 8px 24px rgba(88, 214, 141, 0.18);
 	}
 
 	.stat-card-link.has-words {
@@ -1592,7 +1592,7 @@
 
 	.stat-card-link.has-words:hover {
 		border-color: var(--accent);
-		box-shadow: 0 8px 24px rgba(156, 69, 20, 0.15);
+		box-shadow: 0 8px 24px rgba(46, 204, 113, 0.15);
 	}
 
 	.stat-cta {
@@ -1963,7 +1963,7 @@
 		border-radius: 14px;
 		font-size: 1rem;
 		font-weight: 600;
-		box-shadow: 0 10px 30px rgba(47, 111, 79, 0.35);
+		box-shadow: 0 10px 30px rgba(88, 214, 141, 0.35);
 		z-index: 2000;
 		/* visibility keeps the hidden toast out of screen readers, innerText
 		   and search snippets; the delay lets the slide-out finish first. */
@@ -2103,7 +2103,7 @@
 		width: 100%;
 		border: 1px solid var(--line);
 		position: relative;
-		box-shadow: 0 24px 60px rgba(60, 48, 30, 0.25);
+		box-shadow: 0 24px 60px rgba(0, 0, 0, 0.25);
 		max-height: 90vh;
 		overflow-y: auto;
 	}

@@ -98,7 +98,7 @@
 		background: color-mix(in srgb, var(--paper-raised) 94%, var(--paper));
 		border: 1px solid var(--line);
 		border-radius: 16px;
-		box-shadow: 0 1px 2px rgba(60, 48, 30, 0.05);
+		box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
 	}
 
 	.header-stack.sticky .app-header {
@@ -120,7 +120,7 @@
 		border: 1px solid var(--line);
 		border-top: 0;
 		border-radius: 0 0 16px 16px;
-		box-shadow: 0 1px 2px rgba(60, 48, 30, 0.05);
+		box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
 	}
 
 	.secondary-toolbar > :global(*) {

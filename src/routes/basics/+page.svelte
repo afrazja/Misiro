@@ -159,7 +159,7 @@
 	.category-card:hover {
 		transform: translateY(-8px) scale(1.02);
 		border-color: var(--leaf);
-		box-shadow: 0 15px 40px rgba(47, 111, 79, 0.18);
+		box-shadow: 0 15px 40px rgba(88, 214, 141, 0.18);
 	}
 
 	.category-card:hover::before {

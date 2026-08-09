@@ -1621,7 +1621,7 @@
 		width: 100%;
 		height: 100vh;
 		height: 100dvh;
-		background: rgba(250, 246, 239, 0.97);
+		background: rgba(15, 15, 26, 0.97);
 		z-index: 10000;
 		display: flex;
 		justify-content: center;
@@ -2300,7 +2300,7 @@
 
 	.btn-inline-next:hover {
 		transform: translateY(-1px);
-		box-shadow: 0 3px 10px rgba(156, 69, 20, 0.3);
+		box-shadow: 0 3px 10px rgba(46, 204, 113, 0.3);
 	}
 
 	/* Completion Card */
@@ -2327,7 +2327,7 @@
 
 	.next-day-btn:hover {
 		transform: translateY(-2px);
-		box-shadow: 0 5px 20px rgba(156, 69, 20, 0.35);
+		box-shadow: 0 5px 20px rgba(46, 204, 113, 0.35);
 	}
 
 	/* Exam Progress */
@@ -2811,7 +2811,7 @@
 		background: var(--accent-wash);
 		border-left-color: var(--accent);
 		border-left-width: 4px;
-		box-shadow: 0 0 0 1px rgba(194, 87, 27, 0.3);
+		box-shadow: 0 0 0 1px rgba(46, 204, 113, 0.3);
 	}
 
 	.script-item.done {
@@ -2985,7 +2985,7 @@
 			transition: transform 0.32s cubic-bezier(0.4, 0, 0.2, 1);
 			border-top: none;
 			border-radius: 0 0 18px 18px;
-			box-shadow: 0 4px 24px rgba(38, 34, 27, 0.18);
+			box-shadow: 0 4px 24px rgba(0, 0, 0, 0.18);
 		}
 
 		.script-view.open {
@@ -3057,7 +3057,7 @@
 			display: block;
 			position: fixed;
 			inset: 0;
-			background: rgba(38, 34, 27, 0.35);
+			background: rgba(0, 0, 0, 0.35);
 			z-index: 399;
 		}
 	}

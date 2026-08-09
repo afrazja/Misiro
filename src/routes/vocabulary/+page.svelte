@@ -843,8 +843,8 @@
 	}
 
 	@keyframes mic-pulse {
-		0%, 100% { box-shadow: 0 0 0 0 rgba(194, 87, 27, 0.3); }
-		50% { box-shadow: 0 0 0 12px rgba(194, 87, 27, 0); }
+		0%, 100% { box-shadow: 0 0 0 0 rgba(46, 204, 113, 0.3); }
+		50% { box-shadow: 0 0 0 12px rgba(46, 204, 113, 0); }
 	}
 
 	.fc-skip-btn {
