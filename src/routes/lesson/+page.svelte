@@ -19,7 +19,6 @@
 		answerExamChoice,
 		startReviewMode,
 		startConversation,
-		getDueCount,
 		incrementSession,
 		skipAndRemoveReviewItem,
 		continueAfterGrammar,
@@ -92,7 +91,6 @@
 	// "open app, feel guilt, close app" churn loop. The backlog lives in the
 	// dedicated Review flow instead.
 	const WARMUP_CAP = 3;
-	let dueWarmupCount = $state(0);
 	let warmupThenLesson = $state(false);
 	// Tap-based exam questions: index the user picked (-1 = not yet answered)
 	let choiceAnswered = $state(-1);
@@ -410,7 +408,6 @@
 				// today's lesson automatically.
 				if (warmupThenLesson && data.wasReview) {
 					warmupThenLesson = false;
-					dueWarmupCount = 0;
 					setTimeout(() => {
 						examResultsData = null;
 						systemMessages = [];
@@ -644,10 +641,7 @@
 			return;
 		}
 
-		// Review-first: check for due SR items to offer as a warm-up
-		getDueCount()
-			.then((c) => (dueWarmupCount = c))
-			.catch(() => (dueWarmupCount = 0));
+		// (No due-count fetch: the start overlay no longer offers a warm-up.)
 
 		// If no overlay needed (already clicked), start
 		if (!showOverlay) {
@@ -691,37 +685,19 @@
 		{:else}
 			<p>Loading lesson details...</p>
 		{/if}
-		{#if dueWarmupCount > 0}
-			<p class="warmup-note">
-				{prefs.language === "fa"
-					? `🔄 ${Math.min(dueWarmupCount, WARMUP_CAP)} جمله برای مرور آماده است — اول با مرور گرم می‌شوید.`
-					: `🔄 ${Math.min(dueWarmupCount, WARMUP_CAP)} sentence${Math.min(dueWarmupCount, WARMUP_CAP) === 1 ? "" : "s"} due for review — you'll warm up first.`}
-			</p>
-			<button
-				class="start-btn"
-				onclick={handleStartWithWarmup}
-				disabled={!isReady}
-			>
-				{isReady
-					? prefs.language === "fa"
-						? "▶ مرور + درس"
-						: "▶ Warm-up + Lesson"
+		<!-- Review warm-up removed from the start overlay: it pushed the real
+		     Start button below the fold. Reviews stay available on their own
+		     in /review; handleStartWithWarmup() is kept for when we bring an
+		     opt-in version back. -->
+		<button class="start-btn" onclick={handleStart} disabled={!isReady}>
+			{isReady
+				? prefs.language === "fa"
+					? "▶ شروع درس"
+					: "▶ Start Lesson"
+				: prefs.language === "fa"
+					? "⏳ در حال بارگذاری..."
 					: "⏳ Loading..."}
-			</button>
-			<button
-				class="skip-warmup-link"
-				onclick={handleStart}
-				disabled={!isReady}
-			>
-				{prefs.language === "fa"
-					? "رد شدن از مرور ←"
-					: "Skip warm-up →"}
-			</button>
-		{:else}
-			<button class="start-btn" onclick={handleStart} disabled={!isReady}>
-				{isReady ? "▶ Start Lesson" : "⏳ Loading..."}
-			</button>
-		{/if}
+		</button>
 	</div>
 {/if}
 
@@ -1685,33 +1661,6 @@
 
 	.start-btn:disabled {
 		opacity: 0.6;
-		cursor: wait;
-	}
-
-	.warmup-note {
-		margin: 0 0 14px;
-		font-size: 1.05em;
-		color: var(--accent-deep);
-	}
-
-	.skip-warmup-link {
-		display: block;
-		margin: 14px auto 0;
-		background: none;
-		border: none;
-		color: var(--ink-soft);
-		font-size: 0.95em;
-		cursor: pointer;
-		text-decoration: underline;
-		transition: color 0.2s;
-	}
-
-	.skip-warmup-link:hover {
-		color: var(--ink);
-	}
-
-	.skip-warmup-link:disabled {
-		opacity: 0.5;
 		cursor: wait;
 	}
 

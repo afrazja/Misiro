@@ -990,11 +990,10 @@
 					{language === "fa" ? "جلسه امروز" : "TODAY'S SESSION"}
 				</span>
 				{#if progressLoaded}
+					<!-- No review count here: the lesson no longer starts with a
+					     warm-up, so promising one would be a lie. Reviews have
+					     their own card below. -->
 					<span class="today-title">
-						{#if dueReviews > 0}
-							{Math.min(dueReviews, 3)}
-							{language === "fa" ? "مرور" : "reviews"} &nbsp;+&nbsp;
-						{/if}
 						{language === "fa" ? "روز" : "Day"}
 						{todayTitle || currentDay}
 					</span>
