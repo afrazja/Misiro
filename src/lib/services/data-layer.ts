@@ -721,6 +721,34 @@ export function removeBookmark(day: number, sentenceId: number): void {
 	localStorage.setItem(BOOKMARKS_LS_KEY, JSON.stringify([...bookmarks]));
 }
 
+// ========== BASICS TOPIC PROGRESS ==========
+
+// Local-only for now, like bookmarks above: there is no Supabase column for
+// it yet. Routed through here anyway so the pages never touch storage
+// directly and adding the cloud write later is a change in one file.
+const BASICS_DONE_LS_KEY = 'mirifer_basics_done';
+
+/** Category key → when the learner finished its closing checks. */
+export function getBasicsCompleted(): Record<string, number> {
+	try {
+		const raw = localStorage.getItem(BASICS_DONE_LS_KEY);
+		const parsed = raw ? JSON.parse(raw) : {};
+		return parsed && typeof parsed === 'object' ? parsed : {};
+	} catch {
+		return {};
+	}
+}
+
+export function markBasicsCompleted(categoryKey: string, at: number = Date.now()): void {
+	try {
+		const all = getBasicsCompleted();
+		all[categoryKey] = at;
+		localStorage.setItem(BASICS_DONE_LS_KEY, JSON.stringify(all));
+	} catch {
+		/* storage unavailable — progress just is not remembered */
+	}
+}
+
 // ========== CLEAR ALL LOCAL DATA ==========
 
 export function clearAllLocal(): void {
@@ -732,6 +760,7 @@ export function clearAllLocal(): void {
 	localStorage.removeItem('mirifer_voice_speed');
 	localStorage.removeItem('mirifer_display_name');
 	localStorage.removeItem('mirifer_avatar_url');
+	localStorage.removeItem('mirifer_basics_done');
 	localStorage.removeItem('mirifer_sync_queue');
 	localStorage.removeItem(VOCAB_LS_KEY);
 	localStorage.removeItem(BOOKMARKS_LS_KEY);

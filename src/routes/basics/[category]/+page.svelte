@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { onMount, onDestroy } from "svelte";
 	import AppHeader from "$lib/components/AppHeader.svelte";
-	import { getLanguage, setLanguage, getVoiceSpeed, setVoiceSpeed } from "$services/data-layer";
+	import { getLanguage, setLanguage, getVoiceSpeed, setVoiceSpeed, markBasicsCompleted } from "$services/data-layer";
 	import { stopAllAudio, playAudioPromise } from "$services/tts";
 	import { initSpeechRecognition, setVoiceInputHandler, setMicStateChangeHandler, toggleMic, stopListening, destroySpeechRecognition } from '$services/speech';
 	import { matchVoiceInput } from '$utils/text-matching';
@@ -108,9 +108,6 @@
 	const atEnd = $derived(stepIndex >= steps.length - 1);
 	const currentCheck = $derived(checks[checkIndex]);
 
-	const progressKey = $derived(
-		category?.key ? `mirifer_basics_done_${category.key}` : null,
-	);
 
 	const isFa = $derived(currentLang === "fa");
 	const checkKicker = $derived(isFa ? "تمرین کوتاه" : "Quick check");
@@ -207,11 +204,7 @@
 			checkIndex += 1;
 		} else {
 			// Finished the topic — remember it so /basics can show progress.
-			try {
-				if (progressKey) localStorage.setItem(progressKey, String(Date.now()));
-			} catch {
-				/* storage unavailable — progress just is not remembered */
-			}
+			if (category?.key) markBasicsCompleted(category.key);
 			checkIndex = checks.length; // falls through to the done panel
 		}
 	}

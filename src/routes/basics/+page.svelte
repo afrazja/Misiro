@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { onMount } from "svelte";
 	import AppHeader from "$lib/components/AppHeader.svelte";
-	import { getLanguage, setLanguage } from "$services/data-layer";
+	import { getLanguage, setLanguage, getBasicsCompleted } from "$services/data-layer";
 	import type { Language } from "$stores/preferences";
 
 	let { data } = $props();
@@ -47,17 +47,7 @@
 	}
 
 	onMount(async () => {
-		try {
-			const found = new Set<string>();
-			for (const cat of data.categories ?? []) {
-				if (localStorage.getItem(`mirifer_basics_done_${cat.key}`)) {
-					found.add(cat.key);
-				}
-			}
-			completed = found;
-		} catch {
-			/* storage unavailable — cards simply show no progress */
-		}
+		completed = new Set(Object.keys(getBasicsCompleted()));
 
 		const savedLang = await getLanguage();
 		if (savedLang === "fa" || savedLang === "en") {
