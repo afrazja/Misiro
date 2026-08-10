@@ -44,6 +44,8 @@ import { logError } from '$utils/error';
 
 export interface LessonCallbacks {
 	onTeachStep: (step: TeachStepData) => void;
+	/** Tap-to-build exercise for the current sentence; null clears it. */
+	onBuildStep?: (data: BuildStepData | null) => void;
 	/** End-of-lesson grammar moment; null clears it. */
 	onGrammarMoment?: (data: GrammarMomentData | null) => void;
 	onCompletionCard: (data: CompletionCardData) => void;
@@ -78,6 +80,25 @@ export interface TeachStepData {
 	hint?: string;
 	hintFa?: string;
 	difficulty?: string;
+}
+
+/**
+ * Tap-to-build (retrieval ladder, stage 2).
+ *
+ * The learner assembles the sentence from scrambled word tiles before being
+ * asked to say it. Reading a sentence aloud while it is on screen is
+ * recognition; putting the words in order is production, and it drills the
+ * word-order rules that are the most common A1/A2 error for Persian
+ * speakers (verb position, separable prefixes at the end).
+ */
+export interface BuildStepData {
+	language: Language;
+	/** Scrambled tiles the learner picks from. */
+	tiles: string[];
+	/** The sentence in its correct order — used to grade, never shown. */
+	solution: string[];
+	/** Meaning prompt in the interface language, so there is something to aim at. */
+	translation: string;
 }
 
 export interface GrammarMomentData {
@@ -137,6 +158,50 @@ let callbacks: LessonCallbacks | null = null;
 /** Guards the end-of-lesson grammar moment so it shows once per lesson visit. */
 let grammarMomentShown = false;
 
+/** Sentence index whose build step is currently on screen (-1 = none). */
+let buildStepIndex = -1;
+
+/**
+ * Split a sentence into draggable tiles. Punctuation stays attached to its
+ * word — separating it would turn word order into punctuation trivia.
+ */
+export function tokenizeForBuild(sentence: string): string[] {
+	return sentence.trim().split(/\s+/).filter(Boolean);
+}
+
+/**
+ * Shuffle tiles so the learner cannot just read them left to right.
+ *
+ * Two guarantees, both of which matter for the exercise to be worth doing:
+ *  - the result is never the solution order (unless the sentence is so short
+ *    that no other arrangement exists)
+ *  - identical words are allowed to collide; comparison is by value, so a
+ *    duplicate in the "wrong" slot still grades correct
+ */
+export function shuffleTiles(solution: string[], rand: () => number = Math.random): string[] {
+	if (solution.length < 2) return [...solution];
+	const distinct = new Set(solution).size;
+
+	for (let attempt = 0; attempt < 12; attempt++) {
+		const t = [...solution];
+		for (let i = t.length - 1; i > 0; i--) {
+			const j = Math.floor(rand() * (i + 1));
+			[t[i], t[j]] = [t[j], t[i]];
+		}
+		// Every arrangement of a single repeated word equals the solution, so
+		// only insist on a difference when one is actually reachable.
+		if (distinct < 2 || t.some((w, i) => w !== solution[i])) return t;
+	}
+	// Fell through (astronomically unlikely): rotate by one so it is not the
+	// answer sitting in order.
+	return [...solution.slice(1), solution[0]];
+}
+
+/** Grade an assembled attempt. Compares by value, so duplicates are fine. */
+export function isBuildCorrect(attempt: string[], solution: string[]): boolean {
+	return attempt.length === solution.length && attempt.every((w, i) => w === solution[i]);
+}
+
 export function setCallbacks(cb: LessonCallbacks) {
 	callbacks = cb;
 }
@@ -179,6 +244,7 @@ export function isDayUnlocked(day: number): boolean {
 export async function initLesson(): Promise<void> {
 	deactivateConversation(); // stale state from a previous page visit
 	grammarMomentShown = false;
+	buildStepIndex = -1;
 	try {
 		// Load saved language preference
 		const savedLang = await getLanguage();
@@ -320,12 +386,61 @@ export async function processNextStep(skipAudio = false): Promise<void> {
 		if (getSessionID() !== mySessionID) return;
 	}
 
+	// Retrieval ladder stage 2: on the learner's own lines, assemble the
+	// sentence from tiles before being asked to say it. Skipped in exam and
+	// review modes, which have their own question formats.
+	const exam = get(examStore);
+	if (
+		currentStep.role === 'sent' &&
+		!exam.isExamMode &&
+		buildStepIndex !== app.currentSentenceIndex &&
+		callbacks?.onBuildStep
+	) {
+		const solution = tokenizeForBuild(germanText);
+		// A one-word sentence has nothing to order.
+		if (solution.length >= 2) {
+			buildStepIndex = app.currentSentenceIndex;
+			callbacks.onBuildStep({
+				language: prefs.language,
+				tiles: shuffleTiles(solution),
+				solution,
+				translation: translationText
+			});
+			return; // finishBuildStep() resumes into the speak prompt
+		}
+	}
+
 	// Prompt user
 	const promptMsg =
 		prefs.language === 'fa'
 			? 'برای تمرین 🎙️ را بزنید یا بعدی.'
 			: 'Tap 🎙️ to practice or Next to skip.';
 	callbacks?.onAnswerPrompt(promptMsg);
+}
+
+/**
+ * Dismiss the build exercise and fall through to the speaking prompt.
+ *
+ * `solved` records whether they assembled it correctly; a wrong build feeds
+ * the same SR card the speaking attempt does, so the sentence comes back
+ * sooner. Skipping records nothing — an untried item is not a failed one.
+ */
+export async function finishBuildStep(solved: boolean | null = null): Promise<void> {
+	callbacks?.onBuildStep?.(null);
+	if (solved !== null) {
+		const app = get(appStore);
+		const lesson = get(lessonStore).currentLesson;
+		const step = lesson?.sentences[app.currentSentenceIndex];
+		if (step) {
+			try {
+				await recordSRAttempt(app.currentDay, step.id, solved);
+			} catch {
+				// SR is best-effort; never block the lesson on it.
+			}
+		}
+	}
+	// skipAudio: the sentence was just played before the build step.
+	await processNextStep(true);
 }
 
 async function handleLessonCompletion(
@@ -431,6 +546,7 @@ export async function goToNextDay(nextDay: number): Promise<void> {
 	incrementSession();
 	stopAllAudio();
 	grammarMomentShown = false; // each day gets its own grammar moment
+	buildStepIndex = -1;
 
 	appStore.update((s) => ({
 		...s,

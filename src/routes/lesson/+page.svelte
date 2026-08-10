@@ -22,9 +22,12 @@
 		incrementSession,
 		skipAndRemoveReviewItem,
 		continueAfterGrammar,
+		finishBuildStep,
+		isBuildCorrect,
 		type TeachStepData,
 		type CompletionCardData,
 		type GrammarMomentData,
+		type BuildStepData,
 		type ExamQuestionData,
 		type ExamResultsData,
 		type VoiceResultData,
@@ -37,7 +40,7 @@
 		type LessonMeta,
 	} from "$services/lesson-loader";
 	import { stopAllAudio, playAudioPromise } from "$services/tts";
-	import { unlockAudioContext } from "$services/audio-context";
+	import { unlockAudioContext, playTone } from "$services/audio-context";
 	import {
 		initSpeechRecognition,
 		setVoiceInputHandler,
@@ -78,6 +81,60 @@
 	let showHint = $state(false);
 	let completionData: CompletionCardData | null = $state(null);
 	let grammarMoment: GrammarMomentData | null = $state(null);
+
+	// ── Tap-to-build (retrieval ladder, stage 2) ──
+	let buildStep: BuildStepData | null = $state(null);
+	/** Tiles still in the tray, as {word, id} so duplicates stay distinct. */
+	let buildTray: Array<{ word: string; id: number }> = $state([]);
+	/** Tiles the learner has placed, in order. */
+	let buildAnswer: Array<{ word: string; id: number }> = $state([]);
+	let buildVerdict: "none" | "right" | "wrong" = $state("none");
+
+	function startBuild(data: BuildStepData) {
+		buildStep = data;
+		buildTray = data.tiles.map((word, id) => ({ word, id }));
+		buildAnswer = [];
+		buildVerdict = "none";
+	}
+
+	function placeTile(tile: { word: string; id: number }) {
+		if (buildVerdict === "right") return;
+		buildTray = buildTray.filter((t) => t.id !== tile.id);
+		buildAnswer = [...buildAnswer, tile];
+		buildVerdict = "none";
+	}
+
+	function removeTile(tile: { word: string; id: number }) {
+		if (buildVerdict === "right") return;
+		buildAnswer = buildAnswer.filter((t) => t.id !== tile.id);
+		buildTray = [...buildTray, tile];
+		buildVerdict = "none";
+	}
+
+	function checkBuild() {
+		if (!buildStep) return;
+		const ok = isBuildCorrect(
+			buildAnswer.map((t) => t.word),
+			buildStep.solution,
+		);
+		buildVerdict = ok ? "right" : "wrong";
+		playTone(ok ? "success" : "error");
+		if (ok) {
+			// Hear the sentence they just assembled, then move on.
+			playAudioPromise(buildStep.solution.join(" "), 0.85, "de-DE");
+			setTimeout(() => finishBuildStep(true), 1400);
+		}
+	}
+
+	/** Wrong twice is a teaching moment, not a wall: show it and continue. */
+	function revealBuild() {
+		if (!buildStep) return;
+		buildAnswer = buildStep.solution.map((word, id) => ({ word, id }));
+		buildTray = [];
+		buildVerdict = "right";
+		playAudioPromise(buildStep.solution.join(" "), 0.85, "de-DE");
+		setTimeout(() => finishBuildStep(false), 1800);
+	}
 	let examQuestionData: ExamQuestionData | null = $state(null);
 	let examResultsData: ExamResultsData | null = $state(null);
 	let examProgressCurrent = $state(0);
@@ -307,6 +364,7 @@
 				showHint = false;
 				completionData = null;
 				grammarMoment = null;
+				buildStep = null;
 				examQuestionData = null;
 				examResultsData = null;
 				voiceResult = null;
@@ -316,6 +374,14 @@
 			},
 			onSpokenWord(index) {
 				spokenWordIndex = index;
+			},
+			onBuildStep(data) {
+				if (data) {
+					startBuild(data);
+					isSpeaking = false;
+				} else {
+					buildStep = null;
+				}
 			},
 			onGrammarMoment(data) {
 				grammarMoment = data;
@@ -392,6 +458,7 @@
 				currentTeachStep = null;
 				completionData = null;
 				grammarMoment = null;
+				buildStep = null;
 				examResultsData = null;
 				voiceResult = null;
 				choiceAnswered = -1;
@@ -401,6 +468,7 @@
 				currentTeachStep = null;
 				completionData = null;
 				grammarMoment = null;
+				buildStep = null;
 				examQuestionData = null;
 				voiceResult = null;
 				examResultsData = data;
@@ -427,6 +495,7 @@
 				currentTeachStep = null;
 				completionData = null;
 				grammarMoment = null;
+				buildStep = null;
 				examQuestionData = null;
 				examResultsData = null;
 				voiceResult = null;
@@ -1199,6 +1268,105 @@
 							</div>
 						{/if}
 
+						<!-- Tap-to-build: assemble the sentence before saying it -->
+						{#if buildStep}
+							<div class="message system build-step">
+								<div class="text">
+									<div class="bs-head">
+										<span class="bs-badge"
+											>🧩 {buildStep.language === "fa"
+												? "جمله را بچین"
+												: "Build the sentence"}</span
+										>
+									</div>
+									<p
+										class="bs-prompt"
+										dir={buildStep.language === "fa" ? "rtl" : "ltr"}
+									>
+										{buildStep.translation}
+									</p>
+
+									<!-- Answer row -->
+									<div
+										class="bs-answer"
+										class:right={buildVerdict === "right"}
+										class:wrong={buildVerdict === "wrong"}
+										aria-live="polite"
+									>
+										{#if buildAnswer.length === 0}
+											<span class="bs-placeholder">
+												{buildStep.language === "fa"
+													? "کلمه‌ها را به ترتیب بزن"
+													: "Tap the words in order"}
+											</span>
+										{:else}
+											{#each buildAnswer as tile (tile.id)}
+												<button
+													class="bs-tile placed"
+													lang="de"
+													onclick={() => removeTile(tile)}
+													disabled={buildVerdict === "right"}
+												>
+													{tile.word}
+												</button>
+											{/each}
+										{/if}
+									</div>
+
+									<!-- Tray -->
+									{#if buildTray.length}
+										<div class="bs-tray">
+											{#each buildTray as tile (tile.id)}
+												<button
+													class="bs-tile"
+													lang="de"
+													onclick={() => placeTile(tile)}
+												>
+													{tile.word}
+												</button>
+											{/each}
+										</div>
+									{/if}
+
+									<div class="bs-actions">
+										{#if buildVerdict === "right"}
+											<span class="bs-ok"
+												>✓ {buildStep.language === "fa"
+													? "درست!"
+													: "Correct!"}</span
+											>
+										{:else}
+											<button
+												class="bs-check"
+												onclick={checkBuild}
+												disabled={buildTray.length > 0}
+											>
+												{buildStep.language === "fa" ? "بررسی" : "Check"}
+											</button>
+											{#if buildVerdict === "wrong"}
+												<span class="bs-retry">
+													{buildStep.language === "fa"
+														? "هنوز نه — دوباره بچین."
+														: "Not yet — try another order."}
+												</span>
+												<button class="bs-reveal" onclick={revealBuild}>
+													{buildStep.language === "fa"
+														? "نشانم بده"
+														: "Show me"}
+												</button>
+											{/if}
+											<button
+												class="bs-skip"
+												onclick={() => finishBuildStep(null)}
+											>
+												{buildStep.language === "fa" ? "رد کن" : "Skip"}
+											</button>
+										{/if}
+									</div>
+								</div>
+							</div>
+						{/if}
+
 						<!-- Grammar Moment (after the last sentence, before completion) -->
 						{#if grammarMoment}
 							<div class="message system grammar-moment">
@@ -1736,6 +1904,156 @@
 		font-size: 0.85rem;
 		color: var(--ink-soft);
 		font-weight: 600;
+	}
+
+	/* ── Tap-to-build (retrieval ladder, stage 2) ── */
+	.build-step .text {
+		text-align: start;
+		max-width: 560px;
+	}
+
+	.bs-head {
+		margin-bottom: 8px;
+	}
+
+	.bs-badge {
+		background: var(--accent-wash);
+		color: var(--accent-deep);
+		border-radius: 999px;
+		padding: 3px 12px;
+		font-size: 0.78rem;
+		font-weight: 800;
+		text-transform: uppercase;
+		letter-spacing: 0.04em;
+	}
+
+	.bs-prompt {
+		color: var(--ink-soft);
+		font-size: 1.02rem;
+		line-height: 1.6;
+		margin: 0 0 12px;
+	}
+
+	/* The slot the learner fills. Dashed while empty so it reads as a target. */
+	.bs-answer {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 8px;
+		align-items: center;
+		min-height: 56px;
+		padding: 10px 12px;
+		border: 2px dashed var(--line);
+		border-radius: 12px;
+		background: var(--paper-sunken);
+		margin-bottom: 12px;
+		transition: border-color 0.15s, background 0.15s;
+	}
+
+	.bs-answer.right {
+		border-style: solid;
+		border-color: var(--leaf);
+		background: var(--leaf-wash);
+	}
+
+	.bs-answer.wrong {
+		border-style: solid;
+		border-color: #e74c3c;
+	}
+
+	.bs-placeholder {
+		color: var(--ink-faint);
+		font-size: 0.92rem;
+	}
+
+	.bs-tray {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 8px;
+		margin-bottom: 14px;
+	}
+
+	.bs-tile {
+		min-height: 44px;
+		padding: 10px 14px;
+		border-radius: 10px;
+		border: 1.5px solid var(--control-border);
+		background: var(--control);
+		color: var(--ink);
+		font-family: inherit;
+		font-size: 1.02rem;
+		font-weight: 700;
+		cursor: pointer;
+		box-shadow:
+			inset 0 1px 0 rgba(255, 255, 255, 0.1),
+			0 2px 0 var(--control-edge);
+		transition: transform 0.1s, box-shadow 0.1s;
+	}
+
+	.bs-tile:active {
+		transform: translateY(2px);
+		box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+	}
+
+	.bs-tile.placed {
+		border-color: var(--accent);
+		background: var(--accent-wash);
+		color: var(--accent-deep);
+	}
+
+	.bs-tile:disabled {
+		cursor: default;
+		opacity: 0.9;
+	}
+
+	.bs-actions {
+		display: flex;
+		align-items: center;
+		gap: 10px;
+		flex-wrap: wrap;
+	}
+
+	.bs-check {
+		background: var(--accent);
+		color: var(--on-accent);
+		border: none;
+		border-radius: 10px;
+		min-height: 44px;
+		padding: 11px 22px;
+		font-size: 1rem;
+		font-weight: 700;
+		cursor: pointer;
+	}
+
+	.bs-check:disabled {
+		opacity: 0.45;
+		cursor: default;
+	}
+
+	.bs-ok {
+		color: var(--leaf);
+		font-weight: 800;
+		font-size: 1.05rem;
+	}
+
+	.bs-retry {
+		color: #e74c3c;
+		font-size: 0.9rem;
+	}
+
+	.bs-reveal,
+	.bs-skip {
+		background: none;
+		border: none;
+		color: var(--ink-faint);
+		font-size: 0.9rem;
+		text-decoration: underline;
+		cursor: pointer;
+		min-height: 44px;
+		padding: 4px 6px;
+	}
+
+	.bs-skip {
+		margin-inline-start: auto;
 	}
 
 	/* ── Grammar moment (end-of-lesson consolidation card) ── */
