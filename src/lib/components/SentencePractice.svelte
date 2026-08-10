@@ -16,6 +16,7 @@
 	import { bestVoiceMatch } from '$utils/text-matching';
 	import { playAudioPromise, stopAllAudio, ttsIsPlaying } from '$services/tts';
 	import { playTone } from '$services/audio-context';
+	import type { Outcome } from '$services/word-strength';
 	import type { Language } from '$stores/preferences';
 
 	interface Props {
@@ -25,8 +26,12 @@
 		isListening?: boolean;
 		onToggleMic?: () => void;
 		onExit: () => void;
-		/** (germanCredited, correct) — the caller updates word strength. */
-		onResult?: (german: string, correct: boolean) => void;
+		/**
+		 * (wordsCredited, outcome, guessable) — the caller updates strength.
+		 * `guessable` is true on multiple-choice rungs, where a wrong pick may
+		 * have been a coin flip and so costs more.
+		 */
+		onResult?: (german: string, outcome: Outcome, guessable: boolean) => void;
 	}
 
 	let {
@@ -86,11 +91,11 @@
 		heard: isFa ? 'شنیدم:' : 'Heard:'
 	});
 
-	function record(german: string, correct: boolean) {
-		verdict = correct ? 'right' : 'wrong';
-		if (correct) score += 1;
-		onResult?.(german, correct);
-		playTone(correct ? 'success' : 'error');
+	function record(german: string, outcome: Outcome, guessable = false) {
+		verdict = outcome === 'correct' ? 'right' : 'wrong';
+		if (outcome === 'correct') score += 1;
+		onResult?.(german, outcome, guessable);
+		playTone(outcome === 'correct' ? 'success' : 'error');
 	}
 
 	function advance() {
@@ -126,13 +131,14 @@
 	}
 
 	function checkBuild() {
-		record(sentence.german, isBuildCorrect(answer.map((x) => x.word), drill!.solution ?? []));
+		const ok = isBuildCorrect(answer.map((x) => x.word), drill!.solution ?? []);
+		record(sentence.german, ok ? 'correct' : 'wrong');
 	}
 
 	function revealBuild() {
 		answer = (drill!.solution ?? []).map((word, id) => ({ word, id }));
 		tray = [];
-		record(sentence.german, false);
+		record(sentence.german, 'revealed');
 	}
 
 	// ── gap ──
@@ -141,7 +147,7 @@
 		picked = i;
 		// Credit only the blanked word: getting `den` right says nothing
 		// about the rest of the sentence.
-		record(drill!.options![drill!.correctIndex!], i === drill!.correctIndex);
+		record(drill!.options![drill!.correctIndex!], i === drill!.correctIndex ? 'correct' : 'wrong', true);
 	}
 
 	// ── speak ──
@@ -154,11 +160,11 @@
 			sentence.german,
 			0.7
 		);
-		record(sentence.german, result.isMatch);
+		record(sentence.german, result.isMatch ? 'correct' : 'wrong');
 	}
 
 	function revealSpeak() {
-		record(sentence.german, false);
+		record(sentence.german, 'revealed');
 		void playAudioPromise(sentence.german, 0.8, 'de-DE');
 	}
 </script>
@@ -261,7 +267,7 @@
 					</button>
 				{:else}
 					<p class="pr-hint">{t.noMic}</p>
-					<button class="pr-primary" onclick={() => record(sentence.german, true)}>
+					<button class="pr-primary" onclick={() => record(sentence.german, 'correct')}>
 						{t.iSaidIt}
 					</button>
 				{/if}

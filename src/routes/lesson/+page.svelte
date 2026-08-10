@@ -54,7 +54,11 @@
 		getWordStrengths,
 		saveWordStrengths,
 	} from "$services/data-layer";
-	import { applyAttempt, sentenceMastery } from "$services/word-strength";
+	import {
+		applyAttempt,
+		sentenceMastery,
+		type Outcome,
+	} from "$services/word-strength";
 	import {
 		getLanguage,
 		setLanguage,
@@ -579,8 +583,12 @@
 	}
 
 	/** Practice reports a rung result; strength is the lesson's to persist. */
-	function handlePracticeResult(german: string, correct: boolean) {
-		wordStrengths = applyAttempt(wordStrengths, german, correct);
+	function handlePracticeResult(
+		german: string,
+		outcome: Outcome,
+		guessable: boolean,
+	) {
+		wordStrengths = applyAttempt(wordStrengths, german, outcome, guessable);
 		saveWordStrengths(wordStrengths);
 	}
 
