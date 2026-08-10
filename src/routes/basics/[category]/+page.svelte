@@ -7,6 +7,7 @@
 	import { matchVoiceInput } from '$utils/text-matching';
 	import { unlockAudioContext, playTone } from '$services/audio-context';
 	import { buildChecks, collectWords } from '$services/basics-checks';
+	import { isBuildCorrect } from '$services/sentence-build';
 	import { appStore } from '$stores/app';
 	import type { Language } from "$stores/preferences";
 	import type { BasicWord, ConjugationTense, DeclensionTable } from "$lib/types/basics";
@@ -118,6 +119,13 @@
 	const doneTitle = $derived(isFa ? "این مبحث تمام شد" : "Topic complete");
 	const againText = $derived(isFa ? "دوباره" : "Try again");
 	const allTopicsText = $derived(isFa ? "همهٔ مباحث" : "All topics");
+	const tapHint = $derived(
+		isFa ? "کلمه‌ها را به ترتیب بزنید" : "Tap the words in order",
+	);
+	const checkText = $derived(isFa ? "بررسی" : "Check");
+	const showMeText = $derived(isFa ? "جواب را نشان بده" : "Show me");
+	const rightText = $derived(isFa ? "درست بود ✓" : "Correct ✓");
+	const notQuiteText = $derived(isFa ? "نه دقیقاً ✗" : "Not quite ✗");
 
 	function goNext() {
 		if (stepIndex < steps.length - 1) {
@@ -141,8 +149,60 @@
 		playTone(right ? "success" : "error");
 	}
 
+	// ── Word-order checks: tap tiles to rebuild the sentence ──────────
+	// Tiles carry an id so two identical words stay distinct in the tray.
+	let orderTray = $state<Array<{ word: string; id: number }>>([]);
+	let orderAnswer = $state<Array<{ word: string; id: number }>>([]);
+	let orderVerdict = $state<"none" | "right" | "wrong">("none");
+
+	// Reset the tray whenever a new order check comes up.
+	$effect(() => {
+		const c = checks[checkIndex];
+		if (c?.kind === "order" && c.tiles) {
+			orderTray = c.tiles.map((word, id) => ({ word, id }));
+			orderAnswer = [];
+			orderVerdict = "none";
+		}
+	});
+
+	function placeTile(id: number) {
+		if (orderVerdict !== "none") return;
+		const i = orderTray.findIndex((t) => t.id === id);
+		if (i === -1) return;
+		orderAnswer = [...orderAnswer, orderTray[i]];
+		orderTray = orderTray.filter((_, k) => k !== i);
+	}
+
+	function removeTile(id: number) {
+		if (orderVerdict !== "none") return;
+		const i = orderAnswer.findIndex((t) => t.id === id);
+		if (i === -1) return;
+		orderTray = [...orderTray, orderAnswer[i]];
+		orderAnswer = orderAnswer.filter((_, k) => k !== i);
+	}
+
+	function checkOrder() {
+		const solution = currentCheck?.solution ?? [];
+		const right = isBuildCorrect(
+			orderAnswer.map((t) => t.word),
+			solution,
+		);
+		orderVerdict = right ? "right" : "wrong";
+		if (right) checkScore += 1;
+		playTone(right ? "success" : "error");
+	}
+
+	/** Give up: show the sentence and move on. Wrong is a teaching moment. */
+	function revealOrder() {
+		const solution = currentCheck?.solution ?? [];
+		orderAnswer = solution.map((word, id) => ({ word, id }));
+		orderTray = [];
+		orderVerdict = "wrong";
+	}
+
 	function nextCheck() {
 		checkPicked = null;
+		orderVerdict = "none";
 		if (checkIndex < checks.length - 1) {
 			checkIndex += 1;
 		} else {
@@ -160,6 +220,7 @@
 		checkIndex = 0;
 		checkPicked = null;
 		checkScore = 0;
+		orderVerdict = "none";
 	}
 
 	function getWordTranslation(word: BasicWord): string {
@@ -809,8 +870,81 @@
 						<p class="check-prompt" dir={currentLang === "fa" ? "rtl" : "ltr"}>
 							{currentCheck.prompt}
 						</p>
-						<p class="check-subject" lang="de">{currentCheck.subject}</p>
+						<p
+							class="check-subject"
+							lang={currentCheck.subjectLang === 'de' ? 'de' : undefined}
+							dir={currentCheck.subjectLang === 'de'
+								? 'ltr'
+								: currentLang === 'fa'
+									? 'rtl'
+									: 'ltr'}
+						>
+							{currentCheck.subject}
+						</p>
 
+						{#if currentCheck.kind === 'order'}
+							<!-- Rebuild the sentence from scrambled tiles. The grammar
+							     topics are made of worked sentences, not vocabulary, so
+							     word order is the check they actually want. -->
+							<div
+								class="order-answer"
+								class:right={orderVerdict === 'right'}
+								class:wrong={orderVerdict === 'wrong'}
+								dir="ltr"
+							>
+								{#if orderAnswer.length === 0}
+									<span class="order-hint">{tapHint}</span>
+								{:else}
+									{#each orderAnswer as tile (tile.id)}
+										<button
+											class="order-tile placed"
+											lang="de"
+											disabled={orderVerdict !== 'none'}
+											onclick={() => removeTile(tile.id)}
+										>
+											{tile.word}
+										</button>
+									{/each}
+								{/if}
+							</div>
+
+							{#if orderTray.length > 0}
+								<div class="order-tray" dir="ltr">
+									{#each orderTray as tile (tile.id)}
+										<button
+											class="order-tile"
+											lang="de"
+											onclick={() => placeTile(tile.id)}
+										>
+											{tile.word}
+										</button>
+									{/each}
+								</div>
+							{/if}
+
+							{#if orderVerdict === 'none'}
+								<div class="order-actions">
+									<button
+										class="check-next"
+										disabled={orderTray.length > 0}
+										onclick={checkOrder}
+									>
+										{checkText}
+									</button>
+									<button class="order-reveal" onclick={revealOrder}>
+										{showMeText}
+									</button>
+								</div>
+							{:else}
+								<p class="order-verdict" class:wrong={orderVerdict === 'wrong'}>
+									{orderVerdict === 'right' ? rightText : notQuiteText}
+								</p>
+								<button class="check-next" onclick={nextCheck}>
+									{checkIndex < checks.length - 1 ? nextText : finishText}
+								</button>
+							{/if}
+
+						{:else}
 						<div class="check-options">
 							{#each currentCheck.options as option, i}
 								<button
@@ -837,6 +971,7 @@
 							<button class="check-next" onclick={nextCheck}>
 								{checkIndex < checks.length - 1 ? nextText : finishText}
 							</button>
+						{/if}
 						{/if}
 					</div>
 				{:else}
@@ -1088,6 +1223,104 @@
 	.opt-mark {
 		margin-inline-start: 8px;
 		font-weight: 700;
+	}
+
+	/* ── Word-order check ── */
+	.order-answer {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: center;
+		align-items: center;
+		gap: 8px;
+		min-height: 60px;
+		padding: 12px;
+		border: 2px dashed var(--control-edge);
+		border-radius: 12px;
+		background: var(--paper-sunken);
+	}
+
+	.order-answer.right {
+		border-style: solid;
+		border-color: var(--leaf);
+	}
+
+	.order-answer.wrong {
+		border-style: solid;
+		border-color: var(--miss);
+	}
+
+	.order-hint {
+		color: var(--ink-faint);
+		font-size: 0.9rem;
+	}
+
+	.order-tray {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: center;
+		gap: 8px;
+		margin-top: 16px;
+	}
+
+	.order-tile {
+		min-height: 44px;
+		padding: 10px 16px;
+		border-radius: 10px;
+		border: 2px solid var(--control-edge);
+		background: var(--control);
+		color: var(--ink);
+		font-size: 1rem;
+		font-weight: 600;
+		cursor: pointer;
+		box-shadow: 0 3px 0 var(--control-edge);
+	}
+
+	.order-tile:not(:disabled):active {
+		transform: translateY(3px);
+		box-shadow: 0 0 0 var(--control-edge);
+	}
+
+	.order-tile.placed {
+		background: var(--leaf-wash);
+		border-color: var(--leaf);
+		box-shadow: none;
+	}
+
+	.order-actions {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		gap: 14px;
+		flex-wrap: wrap;
+	}
+
+	.order-reveal {
+		min-height: 44px;
+		margin-top: 20px;
+		padding: 12px 18px;
+		border: none;
+		background: none;
+		color: var(--ink-soft);
+		font-size: 0.9rem;
+		font-weight: 600;
+		text-decoration: underline;
+		cursor: pointer;
+	}
+
+	.check-next:disabled {
+		opacity: 0.45;
+		cursor: not-allowed;
+		box-shadow: none;
+	}
+
+	.order-verdict {
+		margin: 14px 0 0;
+		color: var(--leaf);
+		font-weight: 700;
+	}
+
+	.order-verdict.wrong {
+		color: var(--miss);
 	}
 
 	.check-option:disabled {
