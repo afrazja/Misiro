@@ -139,7 +139,7 @@
 		/>
 	</div>
 
-	<main class="review-content">
+	<main id="main-content" tabindex="-1" class="review-content">
 		{#if isLoading}
 			<div class="empty-state">
 				<div class="empty-icon">⏳</div>

@@ -438,9 +438,7 @@
 	<title>{catTitle} - Mirifer</title>
 </svelte:head>
 
-<a href="#content-container" class="skip-link">Skip to content</a>
-
-<div class="category-container">
+<main class="category-container">
 	{#snippet categoryHeaderActions()}
 		{#if hasQuizWords}
 			<button class="practice-btn" onclick={startQuiz}>Practice</button>
@@ -477,6 +475,8 @@
 				direction={currentLang === "fa" ? "rtl" : "ltr"}
 			/>
 		</div>
+
+		<span id="main-content" tabindex="-1" class="sr-only"></span>
 	{/if}
 
 	{#if quizMode}
@@ -1004,7 +1004,7 @@
 		{/if}
 	</div>
 	{/if}
-</div>
+</main>
 
 <style>
 	:global(body) {
@@ -1028,6 +1028,8 @@
 	}
 
 	.controls select {
+		/* 44px minimum touch target. */
+		min-height: 44px;
 		padding: 8px 16px;
 		border-radius: 20px;
 		border: 1px solid var(--control-border);
@@ -1881,6 +1883,8 @@
 
 	/* ══════ Practice Button ══════ */
 	.practice-btn {
+		/* 44px minimum touch target. */
+		min-height: 44px;
 		padding: 8px 18px;
 		background: var(--accent-deep);
 		border: none;

@@ -210,8 +210,9 @@
 		align-items: center;
 		justify-content: center;
 		gap: 8px;
-		min-height: 40px;
-		padding: 8px 12px;
+		/* 44px: the minimum touch target. Was 40. */
+		min-height: 44px;
+		padding: 10px 12px;
 		/* Lifted off the page ground so the control is visible as a control —
 		   var(--paper) here made it the same colour as the page. */
 		border: 1px solid var(--control-border);
@@ -363,8 +364,8 @@
 		align-items: center;
 		justify-content: center;
 		flex-shrink: 0;
-		width: 40px;
-		height: 40px;
+		width: 44px;
+		height: 44px;
 		border: 1px solid var(--control-border);
 		border-radius: 999px;
 		background: var(--control);
@@ -435,8 +436,8 @@
 
 		.back-control,
 		.brand {
-			min-height: 40px;
-			padding: 8px 10px;
+			min-height: 44px;
+			padding: 10px 10px;
 			font-size: 0.8rem;
 		}
 
@@ -448,7 +449,7 @@
 
 	@media (max-width: 440px) {
 		.back-control {
-			width: 40px;
+			width: 44px;
 			padding-inline: 8px;
 		}
 

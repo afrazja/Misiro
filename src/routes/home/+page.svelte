@@ -752,7 +752,7 @@
 	</div>
 {/if}
 
-<div class="home-container">
+<main class="home-container">
 	{#snippet profileLeading()}
 		<a href="/settings" class="nav-profile-brand" title="Profile Settings">
 			<div class="brand-avatar">
@@ -811,6 +811,10 @@
 	{/snippet}
 
 	<AppHeader leading={profileLeading} actions={homeHeaderActions} variant="dark" />
+
+	<!-- Skip-link target: absolutely positioned, so it adds no box. -->
+	<span id="main-content" tabindex="-1" class="sr-only"></span>
+
 
 	<!-- ── First Step (day-zero users): one door only ──── -->
 	{#if isNewUser}
@@ -1137,7 +1141,7 @@
 				: "Made with ❤️ for language learners"}
 		</p>
 	</footer>
-</div>
+</main>
 
 <style>
 	:global(body) {

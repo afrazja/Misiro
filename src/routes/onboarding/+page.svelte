@@ -143,7 +143,7 @@
 	<div class="stars2"></div>
 </div>
 
-<div class="onboarding-layout">
+<main class="onboarding-layout">
 	<!-- Progress Bar -->
 	<div class="progress-bar">
 		<div
@@ -162,7 +162,7 @@
 		{#if isSaving}
 			<div class="wizard-step centered flex-col fade-in">
 				<div class="spinner"></div>
-				<h2 class="save-title">Personalizing your experience...</h2>
+				<h1 class="save-title">Personalizing your experience...</h1>
 				<p class="save-subtitle">
 					Preparing your daily lessons and review algorithms.
 				</p>
@@ -177,7 +177,7 @@
 		{:else if step === 1}
 			<!-- STEP 1: TARGET LANGUAGE -->
 			<div class="wizard-step {enterClass}">
-				<h2 class="q-title">What do you want to learn?</h2>
+				<h1 class="q-title">What do you want to learn?</h1>
 				<p class="q-sub">Select the language you want to master.</p>
 
 				<div class="options-grid cols-2">
@@ -203,9 +203,9 @@
 		{:else if step === 2}
 			<!-- STEP 2: INTERFACE LANGUAGE -->
 			<div class="wizard-step {enterClass}">
-				<h2 class="q-title">
+				<h1 class="q-title">
 					Which language should we use for explanations?
-				</h2>
+				</h1>
 				<p class="q-sub">
 					This is the language of instructions, hints, and grammar
 					rules.
@@ -231,11 +231,11 @@
 		{:else if step === 3}
 			<!-- STEP 3: WHY ARE YOU LEARNING -->
 			<div class="wizard-step {enterClass}">
-				<h2 class="q-title">
+				<h1 class="q-title">
 					Why are you learning {targetLanguage === "de"
 						? "German"
 						: "French"}?
-				</h2>
+				</h1>
 				<p class="q-sub">
 					This helps us understand your goals and keep you motivated.
 				</p>
@@ -288,9 +288,9 @@
 		{:else if step === 4}
 			<!-- STEP 4: GOETHE A1 EXAM -->
 			<div class="wizard-step {enterClass}">
-				<h2 class="q-title">
+				<h1 class="q-title">
 					Are you preparing for the Goethe A1 exam?
-				</h2>
+				</h1>
 				<p class="q-sub">
 					If you have a date, your daily plan counts down to it — and
 					shows exactly how ready you are.
@@ -385,10 +385,10 @@
 		{:else if step === 5}
 			<!-- STEP 5: CURRENT LEVEL -->
 			<div class="wizard-step {enterClass}">
-				<h2 class="q-title">
+				<h1 class="q-title">
 					How much {targetLanguage === "de" ? "German" : "French"} do you
 					already know?
-				</h2>
+				</h1>
 				<p class="q-sub">Don't worry, everyone starts somewhere.</p>
 
 				<div class="options-grid cols-1">
@@ -429,7 +429,7 @@
 		{:else if step === 6}
 			<!-- STEP 6: DAILY GOAL -->
 			<div class="wizard-step {enterClass}">
-				<h2 class="q-title">What's your daily goal?</h2>
+				<h1 class="q-title">What's your daily goal?</h1>
 				<p class="q-sub">
 					Consistency beats intensity when learning a language.
 				</p>
@@ -471,7 +471,7 @@
 			</div>
 		{/if}
 	</div>
-</div>
+</main>
 
 <style>
 	:global(body) {

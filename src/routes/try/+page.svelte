@@ -156,7 +156,7 @@
 	/>
 </svelte:head>
 
-<div class="demo-page">
+<main class="demo-page">
 	<header class="demo-header">
 		<a href="/" class="back">← Mirifer</a>
 		{#if phase === 'practice'}
@@ -167,6 +167,8 @@
 			</div>
 		{/if}
 	</header>
+
+	<span id="main-content" tabindex="-1" class="sr-only"></span>
 
 	{#if phase === 'intro'}
 		<section class="card intro">
@@ -210,8 +212,13 @@
 			</div>
 
 			<div class="controls">
-				<button class="btn-ghost" onclick={() => playCurrent()} disabled={$ttsIsPlaying}>
-					🔊 {$ttsIsPlaying ? 'Playing…' : 'Hear it again'}
+				<!-- The demo speaks each sentence on its own, so this has to
+				     stay live while playing (WCAG 1.4.2). -->
+				<button
+					class="btn-ghost"
+					onclick={() => ($ttsIsPlaying ? stopAllAudio() : playCurrent())}
+				>
+					{$ttsIsPlaying ? '⏹ Stop' : '🔊 Hear it again'}
 				</button>
 
 				{#if stepDone}
@@ -270,7 +277,7 @@
 			</p>
 		</section>
 	{/if}
-</div>
+</main>
 
 <style>
 	.demo-page {

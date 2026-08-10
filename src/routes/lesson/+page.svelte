@@ -903,7 +903,7 @@
 	/>
 
 	<!-- Main Learning Area -->
-	<main class="learning-area">
+	<main id="main-content" tabindex="-1" class="learning-area">
 		<!-- Mobile script toggle bar — top of content area on mobile -->
 		<button
 			class="script-toggle-btn"
@@ -1192,17 +1192,32 @@
 									</span>
 								</div>
 								<div class="teach-actions">
+									<!-- One button, two jobs. While audio is playing it
+									     STOPS it, so the name has to say so — the
+									     waveform alone told a screen reader nothing,
+									     and the label still said "Replay". -->
 									<button
 										class="btn-replay"
 										class:speaking={isSpeaking}
 										onclick={handleSpeakerClick}
-										aria-label="Replay audio"
+										aria-label={isSpeaking
+											? currentTeachStep.language === "fa"
+												? "توقف صدا"
+												: "Stop audio"
+											: currentTeachStep.language === "fa"
+												? "پخش دوباره"
+												: "Replay audio"}
 									>
 										{#if isSpeaking}
-											<span class="audio-wave">
+											<span class="audio-wave" aria-hidden="true">
 												<span></span><span></span><span
 												></span><span></span><span
 												></span>
+											</span>
+											<span class="sr-only">
+												{currentTeachStep.language === "fa"
+													? "توقف"
+													: "Stop"}
 											</span>
 										{:else}
 											{currentTeachStep.language === "fa"

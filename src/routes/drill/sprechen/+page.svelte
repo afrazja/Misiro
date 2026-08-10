@@ -242,13 +242,15 @@
 	/>
 </svelte:head>
 
-<div class="drill-page">
+<main class="drill-page">
 	<header class="dr-header">
 		<a href={authed ? '/home' : '/'} class="back">← Mirifer</a>
 		{#if phase === 'drill'}
 			<span class="dr-progress">{idx + 1} / {total}</span>
 		{/if}
 	</header>
+
+	<span id="main-content" tabindex="-1" class="sr-only"></span>
 
 	{#if phase === 'intro'}
 		<section class="card intro">
@@ -276,10 +278,12 @@
 				<p class="hint fa" dir="rtl">{item.fa}</p>
 				<button
 					class="btn-ghost"
-					onclick={() => playAudioPromise(item.kind === 'speak' ? item.example : '', 0.85, 'de-DE')}
-					disabled={$ttsIsPlaying}
+					onclick={() =>
+						$ttsIsPlaying
+							? stopAllAudio()
+							: playAudioPromise(item.kind === 'speak' ? item.example : '', 0.85, 'de-DE')}
 				>
-					🔊 Hear an example
+					{$ttsIsPlaying ? '⏹ Stop' : '🔊 Hear an example'}
 				</button>
 				{#if !answered}
 					{#if micAvailable}
@@ -303,8 +307,13 @@
 					</button>
 				{/if}
 			{:else}
-				<button class="btn-ghost" onclick={playItemAudio} disabled={$ttsIsPlaying}>
-					🔊 {$ttsIsPlaying ? 'Playing…' : 'Play again'}
+				<!-- Stays live while playing: this item's audio starts on its
+				     own, so the learner needs a way to stop it (WCAG 1.4.2). -->
+				<button
+					class="btn-ghost"
+					onclick={() => ($ttsIsPlaying ? stopAllAudio() : playItemAudio())}
+				>
+					{$ttsIsPlaying ? '⏹ Stop' : '🔊 Play again'}
 				</button>
 				<p class="frame">{item.question}</p>
 				<p class="hint fa" dir="rtl">{item.questionFa}</p>
@@ -365,7 +374,7 @@
 			<p class="fine"><a href="/placement">Also take the full placement test →</a></p>
 		</section>
 	{/if}
-</div>
+</main>
 
 <style>
 	.drill-page {

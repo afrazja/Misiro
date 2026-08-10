@@ -316,10 +316,14 @@
 </svelte:head>
 
 {#if !isLoading}
-	<div class="settings-container">
+	<main class="settings-container">
 		<div class="settings-header">
 			<AppHeader title="Settings" icon="⚙" backHref="/home" backLabel="Home" />
 		</div>
+
+	<!-- Skip-link target: absolutely positioned, so it adds no box. -->
+	<span id="main-content" tabindex="-1" class="sr-only"></span>
+
 
 		<!-- Profile Section -->
 		<div class="settings-section">
@@ -547,7 +551,7 @@
 
 			<button class="btn-danger" onclick={handleSignOut}>Sign Out</button>
 		</div>
-	</div>
+	</main>
 {/if}
 
 <style>

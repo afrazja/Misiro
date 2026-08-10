@@ -313,13 +313,15 @@
 	/>
 </svelte:head>
 
-<div class="placement-page">
+<main class="placement-page">
 	<header class="pt-header">
 		<a href={authed ? '/home' : '/'} class="back">← Mirifer</a>
 		{#if phase === 'test'}
 			<span class="pt-progress">{idx + 1} / {total}</span>
 		{/if}
 	</header>
+
+	<span id="main-content" tabindex="-1" class="sr-only"></span>
 
 	{#if phase === 'intro'}
 		<section class="card intro">
@@ -347,8 +349,14 @@
 			</p>
 
 			{#if item.module === 'hoeren'}
-				<button class="btn-ghost" onclick={playItemAudio} disabled={$ttsIsPlaying}>
-					🔊 {$ttsIsPlaying ? 'Playing…' : 'Play again'}
+				<!-- Hoeren items start playing on their own, so this must stay
+				     live while it plays — a disabled button is no way to stop
+				     audio you did not start (WCAG 1.4.2). -->
+				<button
+					class="btn-ghost"
+					onclick={() => ($ttsIsPlaying ? stopAllAudio() : playItemAudio())}
+				>
+					{$ttsIsPlaying ? '⏹ Stop' : '🔊 Play again'}
 				</button>
 			{/if}
 
@@ -415,8 +423,11 @@
 				<p class="speak-target" lang="de">„{item.target}"</p>
 				<button
 					class="btn-ghost"
-					onclick={() => playAudioPromise(item.kind === 'speak' ? item.target : '', 0.85, 'de-DE')}
-					disabled={$ttsIsPlaying}>🔊 Hear it first</button
+					onclick={() =>
+						$ttsIsPlaying
+							? stopAllAudio()
+							: playAudioPromise(item.kind === 'speak' ? item.target : '', 0.85, 'de-DE')}
+					>{$ttsIsPlaying ? '⏹ Stop' : '🔊 Hear it first'}</button
 				>
 				{#if !answered}
 					{#if micAvailable}
@@ -496,7 +507,7 @@
 			{/if}
 		</section>
 	{/if}
-</div>
+</main>
 
 <style>
 	.placement-page {

@@ -205,7 +205,7 @@
 	/>
 
 	<!-- Main Learning Area -->
-	<main class="quiz-area">
+	<main id="main-content" tabindex="-1" class="quiz-area">
 		<div class="quiz-content">
 			<!-- Checkmark Progress visualizer -->
 			<div class="checkmark-row">

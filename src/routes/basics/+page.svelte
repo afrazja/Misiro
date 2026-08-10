@@ -63,9 +63,7 @@
 	<title>{pageTitle} - Mirifer</title>
 </svelte:head>
 
-<a href="#categories-container" class="skip-link">Skip to categories</a>
-
-<div class="basics-container">
+<main class="basics-container">
 	{#snippet headerActions()}
 		<div class="controls">
 			<select
@@ -90,6 +88,10 @@
 		direction={currentLang === "fa" ? "rtl" : "ltr"}
 	/>
 
+	<!-- Skip-link target: absolutely positioned, so it adds no box. -->
+	<span id="main-content" tabindex="-1" class="sr-only"></span>
+
+
 	{#if doneCount > 0}
 		<p class="topic-progress" dir={currentLang === "fa" ? "rtl" : "ltr"}>
 			{currentLang === "fa"
@@ -112,7 +114,7 @@
 			</a>
 		{/each}
 	</div>
-</div>
+</main>
 
 <style>
 	:global(body) {
@@ -126,6 +128,8 @@
 	}
 
 	.controls select {
+		/* 44px minimum touch target. */
+		min-height: 44px;
 		padding: 8px 16px;
 		border-radius: 20px;
 		border: 1px solid var(--control-border);

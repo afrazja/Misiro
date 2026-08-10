@@ -32,6 +32,20 @@
 
 	let { children, data } = $props();
 
+	// One skip link for the whole app, targeting the <main id="main-content">
+	// every page renders. Keyboard users otherwise tab through the header's
+	// back button, language select and speed select on every single page.
+	let skipLang = $state('en');
+	onMount(() => {
+		getLanguage()
+			.then((l) => {
+				if (l === 'fa' || l === 'en') skipLang = l;
+			})
+			.catch(() => {
+				/* stays English */
+			});
+	});
+
 	// Initialize auth store reactively from server-provided data
 	$effect(() => {
 		if (data.session) {
@@ -66,5 +80,9 @@
 		return () => subscription.unsubscribe();
 	});
 </script>
+
+<a href="#main-content" class="skip-link">
+	{skipLang === 'fa' ? 'رفتن به محتوا' : 'Skip to content'}
+</a>
 
 {@render children()}

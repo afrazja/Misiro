@@ -4,7 +4,7 @@
 	<link rel="canonical" href="https://www.mirifer.com/privacy" />
 </svelte:head>
 
-<div class="legal-page">
+<main class="legal-page">
 	<nav class="legal-nav">
 		<a href="/" class="back-link">← Back to Mirifer</a>
 	</nav>
@@ -45,7 +45,7 @@
 		<h2>9. Contact</h2>
 		<p>Questions about your privacy? Reach us at <strong>afraz.jva@gmail.com</strong>.</p>
 	</article>
-</div>
+</main>
 
 <style>
 	.legal-page {

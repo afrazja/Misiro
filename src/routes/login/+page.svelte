@@ -76,7 +76,9 @@
 	<meta name="robots" content="noindex" />
 </svelte:head>
 
-<div class="login-page">
+<main class="login-page">
+
+	<span id="main-content" tabindex="-1" class="sr-only"></span>
 	<div class="login-card">
 		<div class="brand">
 			<img src="/android-chrome-192x192.png" alt="" class="brand-icon" />
@@ -160,7 +162,7 @@
 	</div>
 
 	<a href="/" class="site-link">About Mirifer →</a>
-</div>
+</main>
 
 <style>
 	:global(body) {

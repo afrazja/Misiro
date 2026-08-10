@@ -162,10 +162,14 @@
 .skip-link {
 	position: absolute;
 	top: -100px;
-	left: 10px;
-	background: #2196F3;
-	color: white;
-	padding: 10px 20px;
+	/* Logical, so it lands top-right in the Persian RTL layout. */
+	inset-inline-start: 10px;
+	background: var(--accent);
+	color: var(--on-accent);
+	padding: 12px 20px;
+	min-height: 44px;
+	display: inline-flex;
+	align-items: center;
 	border-radius: 8px;
 	z-index: 10001;
 	font-weight: 600;

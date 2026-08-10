@@ -212,7 +212,7 @@
 	{/if}
 {/snippet}
 
-<div class="vocab-page">
+<main class="vocab-page">
 	{#if mode === 'list'}
 		<AppHeader
 			title="My Vocabulary"
@@ -222,6 +222,10 @@
 			actions={listHeaderActions}
 			sticky
 		/>
+
+	<!-- Skip-link target: absolutely positioned, so it adds no box. -->
+	<span id="main-content" tabindex="-1" class="sr-only"></span>
+
 
 		{#if loading}
 			<div class="loading-state">
@@ -407,7 +411,7 @@
 			</div>
 		{/if}
 	{/if}
-</div>
+</main>
 
 <style>
 	:global(body) {
