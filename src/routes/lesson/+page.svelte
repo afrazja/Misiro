@@ -2266,7 +2266,7 @@
 	}
 
 	.lesson-toolbar-content select {
-		min-height: 40px;
+		min-height: 44px;
 		color: var(--ink);
 		background: var(--control);
 		border: 1px solid var(--control-border);
@@ -2303,7 +2303,7 @@
 	}
 
 	.blind-mode-control {
-		min-height: 40px;
+		min-height: 44px;
 		padding: 7px 10px;
 		background: var(--paper-raised);
 		border: 1px solid var(--line);
@@ -2319,7 +2319,7 @@
 	}
 
 	.listener-mode-btn {
-		min-height: 40px;
+		min-height: 44px;
 		padding: 7px 12px;
 		border-radius: 10px;
 		border: 1px solid var(--control-border);

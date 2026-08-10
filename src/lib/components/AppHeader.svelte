@@ -393,10 +393,13 @@
 		font-size: 0.82rem;
 	}
 
+	/* Whatever a page drops into the toolbar slot. This beats the page's own
+	   rule on specificity, so 40px here quietly capped every slotted control
+	   in the app below the 44px minimum target — the page could not opt out. */
 	.actions :global(select),
 	.actions :global(button),
 	.actions :global(a) {
-		min-height: 40px;
+		min-height: 44px;
 	}
 
 	@media (max-width: 760px) {
