@@ -57,6 +57,11 @@
 	--leaf-wash: rgba(30, 126, 69, 0.12);
 	/* Text/icons sitting ON a filled accent or leaf surface. */
 	--on-accent: #ffffff;
+	/* A wrong answer. The palette is green top to bottom — --accent is deep
+	   forest green, not red — so marking a mistake needs its own token or
+	   right and wrong come out the same colour. White on it is 6.5:1. */
+	--miss: #b3261e;
+	--miss-edge: #7d1a14;
 	--info: #2b6cb0;
 	--info-wash: rgba(43, 108, 176, 0.1);
 	/* Interactive chrome — back buttons, selects, toggles. White cards on
@@ -115,6 +120,9 @@
 	--leaf: #58d68d;
 	--leaf-wash: rgba(88, 214, 141, 0.13);
 	--on-accent: #08160e;
+	/* Light enough that the near-black --on-accent reads on it: 6.9:1. */
+	--miss: #f5766a;
+	--miss-edge: #b8493f;
 	--info: #5dade2;
 	--info-wash: rgba(52, 152, 219, 0.16);
 	/* Elevation reads as LIGHTER on dark, so controls need their own

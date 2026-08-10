@@ -822,6 +822,13 @@
 									onclick={() => answerCheck(i)}
 								>
 									{option}
+									<!-- A mark as well as a colour: which answer was
+									     right must not depend on telling two hues apart. -->
+									{#if checkPicked !== null && i === currentCheck.correctIndex}
+										<span class="opt-mark" aria-hidden="true">✓</span>
+									{:else if checkPicked === i}
+										<span class="opt-mark" aria-hidden="true">✗</span>
+									{/if}
 								</button>
 							{/each}
 						</div>
@@ -1069,11 +1076,18 @@
 		color: var(--on-accent);
 	}
 
+	/* --accent is deep green in this palette, so a wrong answer needs the
+	   dedicated --miss token or it comes out the same colour as a right one. */
 	.check-option.wrong {
-		background: var(--accent);
-		border-color: var(--accent-edge);
-		box-shadow: 0 3px 0 var(--accent-edge);
+		background: var(--miss);
+		border-color: var(--miss-edge);
+		box-shadow: 0 3px 0 var(--miss-edge);
 		color: var(--on-accent);
+	}
+
+	.opt-mark {
+		margin-inline-start: 8px;
+		font-weight: 700;
 	}
 
 	.check-option:disabled {
