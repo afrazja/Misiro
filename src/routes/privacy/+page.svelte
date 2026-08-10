@@ -9,6 +9,8 @@
 		<a href="/" class="back-link">← Back to Mirifer</a>
 	</nav>
 
+	<span id="main-content" tabindex="-1" class="sr-only"></span>
+
 	<article class="legal-content">
 		<h1>Privacy Policy</h1>
 		<p class="legal-date">Last updated: February 24, 2026</p>
@@ -61,6 +63,11 @@
 	}
 
 	.back-link {
+		/* 44px minimum touch target. */
+		display: inline-flex;
+		align-items: center;
+		min-height: 44px;
+		padding: 10px 4px;
 		color: #e94560;
 		text-decoration: none;
 		font-size: 0.9rem;

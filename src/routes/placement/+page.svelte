@@ -529,6 +529,11 @@
 	}
 
 	.back {
+		/* 44px minimum touch target — this was a bare 26px-tall link. */
+		display: inline-flex;
+		align-items: center;
+		min-height: 44px;
+		padding: 10px 4px;
 		color: var(--ink-soft);
 		text-decoration: none;
 		font-weight: 600;

@@ -1015,7 +1015,9 @@
 
 	/* ── Small nav buttons ───────────────────────────── */
 	.btn {
-		padding: 9px 20px;
+		/* 44px minimum touch target. */
+		min-height: 44px;
+		padding: 11px 20px;
 		border-radius: 24px;
 		font-size: 0.88rem;
 		font-weight: 600;
@@ -1258,6 +1260,7 @@
 		display: flex;
 		align-items: center;
 		gap: 10px;
+		min-height: 44px;
 		text-decoration: none;
 	}
 
@@ -1798,6 +1801,12 @@
 	}
 
 	.footer-nav a {
+		/* 24px is the WCAG 2.2 AA minimum for inline links;
+		   44px here would break the footer row. */
+		display: inline-flex;
+		align-items: center;
+		min-height: 24px;
+		padding: 2px 4px;
 		color: var(--ink-soft);
 		text-decoration: none;
 		font-size: 0.85rem;
