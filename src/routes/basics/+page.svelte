@@ -8,6 +8,10 @@
 
 	let currentLang = $state("en" as Language);
 
+	// Topics the learner has worked all the way through, written by
+	// /basics/[category] when its closing checks are finished.
+	let completed = $state(new Set<string>());
+
 	const categories = $derived(
 		(data.categories ?? []).map((cat: any) => ({
 			key: cat.key,
@@ -15,8 +19,11 @@
 			title: currentLang === "fa" ? cat.title_fa : cat.title_en,
 			description:
 				currentLang === "fa" ? cat.description_fa : cat.description_en,
+			done: completed.has(cat.key),
 		})),
 	);
+
+	const doneCount = $derived(categories.filter((c: any) => c.done).length);
 
 	const pageTitle = $derived(
 		currentLang === "fa" ? "مبانی آلمانی" : "German Basics",
@@ -40,6 +47,18 @@
 	}
 
 	onMount(async () => {
+		try {
+			const found = new Set<string>();
+			for (const cat of data.categories ?? []) {
+				if (localStorage.getItem(`mirifer_basics_done_${cat.key}`)) {
+					found.add(cat.key);
+				}
+			}
+			completed = found;
+		} catch {
+			/* storage unavailable — cards simply show no progress */
+		}
+
 		const savedLang = await getLanguage();
 		if (savedLang === "fa" || savedLang === "en") {
 			currentLang = savedLang;
@@ -81,13 +100,25 @@
 		direction={currentLang === "fa" ? "rtl" : "ltr"}
 	/>
 
+	{#if doneCount > 0}
+		<p class="topic-progress" dir={currentLang === "fa" ? "rtl" : "ltr"}>
+			{currentLang === "fa"
+				? `${doneCount} از ${categories.length} مبحث تمام شده`
+				: `${doneCount} of ${categories.length} topics complete`}
+		</p>
+	{/if}
+
 	<div class="categories-grid" id="categories-container">
 		{#each categories as cat (cat.key)}
-			<a href="/basics/{cat.key}" class="category-card">
+			<a href="/basics/{cat.key}" class="category-card" class:done={cat.done}>
 				<div class="category-icon">{cat.icon}</div>
 				<div class="category-title">{cat.title}</div>
 				<div class="category-desc">{cat.description}</div>
-				<div class="category-arrow">&rarr;</div>
+				{#if cat.done}
+					<div class="category-arrow done-tick" aria-label="Completed">✓</div>
+				{:else}
+					<div class="category-arrow">&rarr;</div>
+				{/if}
 			</a>
 		{/each}
 	</div>
@@ -124,6 +155,22 @@
 		grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
 		gap: 20px;
 		margin-top: 28px;
+	}
+
+	.topic-progress {
+		margin: 22px 0 0;
+		color: var(--ink-soft);
+		font-size: 0.9rem;
+		font-weight: 600;
+	}
+
+	.category-card.done {
+		border-color: var(--leaf);
+		background: linear-gradient(145deg, var(--leaf-wash), var(--paper-raised));
+	}
+
+	.done-tick {
+		color: var(--leaf);
 	}
 
 	.category-card {

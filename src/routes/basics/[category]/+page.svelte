@@ -6,6 +6,7 @@
 	import { initSpeechRecognition, setVoiceInputHandler, setMicStateChangeHandler, toggleMic, stopListening, destroySpeechRecognition } from '$services/speech';
 	import { matchVoiceInput } from '$utils/text-matching';
 	import { unlockAudioContext, playTone } from '$services/audio-context';
+	import { buildChecks, collectWords } from '$services/basics-checks';
 	import { appStore } from '$stores/app';
 	import type { Language } from "$stores/preferences";
 	import type { BasicWord, ConjugationTense, DeclensionTable } from "$lib/types/basics";
@@ -75,6 +76,90 @@
 				? section.explanation_fa
 				: section.explanation_en) || ""
 		);
+	}
+
+	// ── Stepped reading: one screen at a time, then retrieval ──────────
+	// A single long scroll is a reference document. Chunking it and ending
+	// on questions turns it into study: read a rule, immediately use it.
+	let stepIndex = $state(0);
+	let checkIndex = $state(0);
+	let checkPicked = $state<number | null>(null);
+	let checkScore = $state(0);
+
+	const checks = $derived(
+		buildChecks(collectWords(words, sections), currentLang, 5),
+	);
+
+	/** The screens: the rule (if any), then one per section, then checks. */
+	const steps = $derived.by(() => {
+		const out: Array<{ kind: "rule" | "section" | "checks"; section?: any }> = [];
+		if (catExplanation || catPitfall) out.push({ kind: "rule" });
+		if (category?.type === "multi" && sections.length) {
+			for (const s of sections) out.push({ kind: "section", section: s });
+		} else {
+			out.push({ kind: "section" }); // flat word grid
+		}
+		if (checks.length) out.push({ kind: "checks" });
+		return out;
+	});
+
+	const currentStep = $derived(steps[Math.min(stepIndex, steps.length - 1)]);
+	const atEnd = $derived(stepIndex >= steps.length - 1);
+	const currentCheck = $derived(checks[checkIndex]);
+
+	const progressKey = $derived(
+		category?.key ? `mirifer_basics_done_${category.key}` : null,
+	);
+
+	const isFa = $derived(currentLang === "fa");
+	const checkKicker = $derived(isFa ? "تمرین کوتاه" : "Quick check");
+	const nextText = $derived(isFa ? "بعدی" : "Next");
+	const finishText = $derived(isFa ? "پایان" : "Finish");
+	const doneTitle = $derived(isFa ? "این مبحث تمام شد" : "Topic complete");
+	const againText = $derived(isFa ? "دوباره" : "Try again");
+	const allTopicsText = $derived(isFa ? "همهٔ مباحث" : "All topics");
+
+	function goNext() {
+		if (stepIndex < steps.length - 1) {
+			stepIndex += 1;
+			scrollTo({ top: 0, behavior: "smooth" });
+		}
+	}
+
+	function goBack() {
+		if (stepIndex > 0) {
+			stepIndex -= 1;
+			scrollTo({ top: 0, behavior: "smooth" });
+		}
+	}
+
+	function answerCheck(i: number) {
+		if (checkPicked !== null) return;
+		checkPicked = i;
+		const right = i === currentCheck.correctIndex;
+		if (right) checkScore += 1;
+		playTone(right ? "success" : "error");
+	}
+
+	function nextCheck() {
+		checkPicked = null;
+		if (checkIndex < checks.length - 1) {
+			checkIndex += 1;
+		} else {
+			// Finished the topic — remember it so /basics can show progress.
+			try {
+				if (progressKey) localStorage.setItem(progressKey, String(Date.now()));
+			} catch {
+				/* storage unavailable — progress just is not remembered */
+			}
+			checkIndex = checks.length; // falls through to the done panel
+		}
+	}
+
+	function restartChecks() {
+		checkIndex = 0;
+		checkPicked = null;
+		checkScore = 0;
 	}
 
 	function getWordTranslation(word: BasicWord): string {
@@ -436,22 +521,38 @@
 	{:else}
 	<div id="content-container">
 		{#if category}
-			<!-- The rule, before the tables: a reference table only helps
-			     someone who already knows the rule. -->
-			{#if catExplanation}
-				<div class="rule-block" dir={currentLang === "fa" ? "rtl" : "ltr"}>
-					<p class="rule-text">{catExplanation}</p>
-				</div>
-			{/if}
-			{#if catPitfall}
-				<div class="pitfall-block" dir={currentLang === "fa" ? "rtl" : "ltr"}>
-					<span class="pitfall-label">⚠️ {pitfallLabel}</span>
-					<p class="pitfall-text">{catPitfall}</p>
+			{#if steps.length > 1}
+				<div class="step-rail">
+					<div class="rail-dots" aria-hidden="true">
+						{#each steps as _, i}
+							<span
+								class="rail-dot"
+								class:passed={i < stepIndex}
+								class:here={i === stepIndex}
+							></span>
+						{/each}
+					</div>
+					<span class="rail-count">{stepIndex + 1} / {steps.length}</span>
 				</div>
 			{/if}
 
-			{#if category.type === 'multi' && sections.length > 0}
-				{#each sections as section}
+			<!-- One screen at a time. The rule leads: a reference table only
+			     helps someone who already knows the rule. -->
+			{#if currentStep?.kind === 'rule'}
+				{#if catExplanation}
+					<div class="rule-block" dir={currentLang === "fa" ? "rtl" : "ltr"}>
+						<p class="rule-text">{catExplanation}</p>
+					</div>
+				{/if}
+				{#if catPitfall}
+					<div class="pitfall-block" dir={currentLang === "fa" ? "rtl" : "ltr"}>
+						<span class="pitfall-label">⚠️ {pitfallLabel}</span>
+						<p class="pitfall-text">{catPitfall}</p>
+					</div>
+				{/if}
+
+			{:else if currentStep?.kind === 'section' && currentStep.section}
+				{@const section = currentStep.section}
 					<div class="section-block">
 						<h3 class="section-heading">{currentLang === "fa" ? section.heading_fa : section.heading_en}</h3>
 						{#if sectionExplanation(section)}
@@ -659,9 +760,8 @@
 							</div>
 						{/if}
 					</div>
-				{/each}
 
-			{:else if words.length > 0}
+			{:else if currentStep?.kind === 'section' && words.length > 0}
 				<!-- Simple Word Grid -->
 				<div class="word-grid">
 					{#each words as word}
@@ -695,6 +795,68 @@
 							<div class="play-icon" aria-hidden="true">🔊</div>
 						</div>
 					{/each}
+				</div>
+
+			{:else if currentStep?.kind === 'checks'}
+				<!-- Retrieval. Reading a rule is not knowing it; this is the
+				     first moment the learner has to produce anything. -->
+				{#if currentCheck}
+					<div class="check-card">
+						<div class="check-head">
+							<span class="check-kicker">{checkKicker}</span>
+							<span class="check-count">{checkIndex + 1} / {checks.length}</span>
+						</div>
+						<p class="check-prompt" dir={currentLang === "fa" ? "rtl" : "ltr"}>
+							{currentCheck.prompt}
+						</p>
+						<p class="check-subject" lang="de">{currentCheck.subject}</p>
+
+						<div class="check-options">
+							{#each currentCheck.options as option, i}
+								<button
+									class="check-option"
+									class:right={checkPicked !== null && i === currentCheck.correctIndex}
+									class:wrong={checkPicked === i && i !== currentCheck.correctIndex}
+									disabled={checkPicked !== null}
+									lang={currentCheck.kind === 'article' ? 'de' : undefined}
+									onclick={() => answerCheck(i)}
+								>
+									{option}
+								</button>
+							{/each}
+						</div>
+
+						{#if checkPicked !== null}
+							<button class="check-next" onclick={nextCheck}>
+								{checkIndex < checks.length - 1 ? nextText : finishText}
+							</button>
+						{/if}
+					</div>
+				{:else}
+					<div class="check-card done-card">
+						<span class="done-mark" aria-hidden="true">✓</span>
+						<h3 class="done-title">{doneTitle}</h3>
+						<p class="done-score">{checkScore} / {checks.length}</p>
+						<div class="done-actions">
+							<button class="check-next" onclick={restartChecks}>{againText}</button>
+							<a class="done-link" href="/basics">{allTopicsText}</a>
+						</div>
+					</div>
+				{/if}
+			{/if}
+
+			{#if steps.length > 1}
+				<div class="step-nav">
+					<button class="step-btn" onclick={goBack} disabled={stepIndex === 0}>
+						{currentLang === "fa" ? "→ قبلی" : "← Previous"}
+					</button>
+					{#if !atEnd}
+						<button class="step-btn primary" onclick={goNext}>
+							{currentLang === "fa" ? "بعدی ←" : "Next →"}
+						</button>
+					{:else}
+						<a class="step-btn primary" href="/basics">{allTopicsText}</a>
+					{/if}
 				</div>
 			{/if}
 		{:else}
@@ -742,6 +904,241 @@
 
 	.section-block {
 		margin-bottom: 30px;
+	}
+
+	/* ── Stepped flow: rail, nav, checks ── */
+	.step-rail {
+		display: flex;
+		align-items: center;
+		gap: 12px;
+		margin-bottom: 18px;
+	}
+
+	.rail-dots {
+		display: flex;
+		gap: 6px;
+		flex: 1;
+	}
+
+	.rail-dot {
+		flex: 1;
+		height: 5px;
+		border-radius: 3px;
+		background: var(--control-border);
+		transition: background 0.2s ease;
+	}
+
+	.rail-dot.passed {
+		background: var(--leaf);
+	}
+
+	.rail-dot.here {
+		background: var(--accent);
+	}
+
+	.rail-count {
+		color: var(--ink-soft);
+		font-size: 0.8rem;
+		font-variant-numeric: tabular-nums;
+		white-space: nowrap;
+	}
+
+	.step-nav {
+		display: flex;
+		justify-content: space-between;
+		gap: 12px;
+		margin-top: 28px;
+		padding-top: 20px;
+		border-top: 1px solid var(--line);
+	}
+
+	.step-btn {
+		min-height: 44px;
+		padding: 12px 22px;
+		border-radius: 12px;
+		border: 2px solid var(--control-edge);
+		background: var(--control);
+		color: var(--ink);
+		font-size: 0.95rem;
+		font-weight: 600;
+		cursor: pointer;
+		text-decoration: none;
+		display: inline-flex;
+		align-items: center;
+		box-shadow: 0 3px 0 var(--control-edge);
+		transition:
+			transform 0.06s ease,
+			box-shadow 0.06s ease;
+	}
+
+	.step-btn.primary {
+		background: var(--leaf);
+		border-color: var(--leaf-edge);
+		box-shadow: 0 3px 0 var(--leaf-edge);
+		color: var(--on-accent);
+	}
+
+	.step-btn:not(:disabled):active {
+		transform: translateY(3px);
+		box-shadow: 0 0 0 var(--control-edge);
+	}
+
+	.step-btn:disabled {
+		opacity: 0.4;
+		cursor: not-allowed;
+		box-shadow: none;
+	}
+
+	.check-card {
+		background: var(--paper-raised);
+		border: 2px solid var(--leaf-edge);
+		border-radius: 16px;
+		padding: 24px 20px;
+		text-align: center;
+	}
+
+	.check-head {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		margin-bottom: 14px;
+	}
+
+	.check-kicker {
+		color: var(--leaf);
+		font-size: 0.75rem;
+		font-weight: 700;
+		letter-spacing: 0.08em;
+		text-transform: uppercase;
+	}
+
+	.check-count {
+		color: var(--ink-soft);
+		font-size: 0.8rem;
+		font-variant-numeric: tabular-nums;
+	}
+
+	.check-prompt {
+		color: var(--ink-soft);
+		font-size: 0.95rem;
+		margin: 0 0 8px;
+	}
+
+	.check-subject {
+		color: var(--ink);
+		font-family: var(--font-display);
+		font-size: 1.8rem;
+		margin: 0 0 22px;
+	}
+
+	.check-options {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: center;
+		gap: 10px;
+	}
+
+	.check-option {
+		min-height: 48px;
+		min-width: 96px;
+		padding: 12px 20px;
+		border-radius: 12px;
+		border: 2px solid var(--control-edge);
+		background: var(--control);
+		color: var(--ink);
+		font-size: 1rem;
+		font-weight: 600;
+		cursor: pointer;
+		box-shadow: 0 3px 0 var(--control-edge);
+		transition:
+			transform 0.06s ease,
+			box-shadow 0.06s ease;
+	}
+
+	.check-option:not(:disabled):active {
+		transform: translateY(3px);
+		box-shadow: 0 0 0 var(--control-edge);
+	}
+
+	/* After an answer the right option is always marked, so a wrong pick
+	   teaches instead of only scoring. */
+	.check-option.right {
+		background: var(--leaf);
+		border-color: var(--leaf-edge);
+		box-shadow: 0 3px 0 var(--leaf-edge);
+		color: var(--on-accent);
+	}
+
+	.check-option.wrong {
+		background: var(--accent);
+		border-color: var(--accent-edge);
+		box-shadow: 0 3px 0 var(--accent-edge);
+		color: var(--on-accent);
+	}
+
+	.check-option:disabled {
+		cursor: default;
+	}
+
+	.check-next {
+		min-height: 44px;
+		margin-top: 20px;
+		padding: 12px 30px;
+		border-radius: 12px;
+		border: 2px solid var(--leaf-edge);
+		background: var(--leaf);
+		color: var(--on-accent);
+		font-size: 0.95rem;
+		font-weight: 700;
+		cursor: pointer;
+		box-shadow: 0 3px 0 var(--leaf-edge);
+	}
+
+	.check-next:active {
+		transform: translateY(3px);
+		box-shadow: 0 0 0 var(--leaf-edge);
+	}
+
+	.done-mark {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		width: 56px;
+		height: 56px;
+		border-radius: 50%;
+		background: var(--leaf);
+		color: var(--on-accent);
+		font-size: 1.8rem;
+	}
+
+	.done-title {
+		color: var(--ink);
+		font-family: var(--font-display);
+		margin: 14px 0 4px;
+	}
+
+	.done-score {
+		color: var(--ink-soft);
+		font-size: 1.1rem;
+		font-variant-numeric: tabular-nums;
+		margin: 0;
+	}
+
+	.done-actions {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		gap: 16px;
+		flex-wrap: wrap;
+	}
+
+	.done-link {
+		color: var(--leaf);
+		font-size: 0.95rem;
+		font-weight: 600;
+		min-height: 44px;
+		display: inline-flex;
+		align-items: center;
 	}
 
 	.section-heading {
