@@ -23,7 +23,7 @@ export interface BasicsWordLike {
 	example?: string;
 }
 
-export type CheckKind = 'article' | 'meaning' | 'order';
+export type CheckKind = 'article' | 'meaning' | 'order' | 'conjugation';
 
 export interface BasicsCheck {
 	kind: CheckKind;
@@ -175,19 +175,27 @@ export function buildChecks(
 	// Interleave the kinds so the learner cannot settle into one pattern, then
 	// trim. Whichever kinds a topic produced take turns; a topic that yields
 	// only one kind simply gets that one.
-	const queues = [
-		checks.filter((c) => c.kind === 'article'),
-		checks.filter((c) => c.kind === 'order'),
-		checks.filter((c) => c.kind === 'meaning')
-	];
-	const mixed: BasicsCheck[] = [];
-	while (mixed.length < limit && queues.some((q) => q.length)) {
-		for (const q of queues) {
-			if (mixed.length >= limit) break;
-			if (q.length) mixed.push(q.shift()!);
+	return interleave(
+		[
+			checks.filter((c) => c.kind === 'article'),
+			checks.filter((c) => c.kind === 'order'),
+			checks.filter((c) => c.kind === 'meaning')
+		],
+		limit
+	);
+}
+
+/** Round-robin the queues until `limit` is reached or they all run dry. */
+function interleave(queues: BasicsCheck[][], limit: number): BasicsCheck[] {
+	const out: BasicsCheck[] = [];
+	const pools = queues.map((q) => [...q]);
+	while (out.length < limit && pools.some((q) => q.length)) {
+		for (const q of pools) {
+			if (out.length >= limit) break;
+			if (q.length) out.push(q.shift()!);
 		}
 	}
-	return mixed;
+	return out;
 }
 
 /** Flatten a category's words, whether it is a flat grid or has sections. */
@@ -198,4 +206,81 @@ export function collectWords(
 	const out: BasicsWordLike[] = [...(words ?? [])];
 	for (const s of sections ?? []) out.push(...(s.words ?? []));
 	return out.filter((w) => w?.german?.trim());
+}
+
+/**
+ * Every check a topic can offer: word-derived plus table-derived, mixed.
+ * This is what the page calls.
+ */
+export function buildTopicChecks(
+	words: BasicsWordLike[],
+	forms: ConjugationFormLike[],
+	lang: Language,
+	limit = 5,
+	rand: () => number = Math.random
+): BasicsCheck[] {
+	return interleave(
+		[buildConjugationChecks(forms, lang, rand), buildChecks(words, lang, limit, rand)],
+		limit
+	);
+}
+
+export interface ConjugationFormLike {
+	pronoun: string;
+	verb: string;
+}
+
+/**
+ * Pull the conjugated forms out of a category's tables.
+ *
+ * The verb topics carry no `words` at all — their content lives in
+ * tenses[].forms[] — so without this they would be the one part of Basics
+ * with nothing to practise, which is exactly the handbook problem.
+ */
+export function collectForms(
+	sections:
+		| Array<{ tenses?: Array<{ forms?: ConjugationFormLike[] | null }> | null }>
+		| null
+		| undefined
+): ConjugationFormLike[] {
+	const out: ConjugationFormLike[] = [];
+	for (const s of sections ?? []) {
+		for (const t of s.tenses ?? []) {
+			for (const f of t.forms ?? []) {
+				if (f?.pronoun?.trim() && f?.verb?.trim()) {
+					out.push({ pronoun: f.pronoun.trim(), verb: f.verb.trim() });
+				}
+			}
+		}
+	}
+	return out;
+}
+
+/**
+ * "ich ___" with the conjugated verb blanked, options drawn from the other
+ * forms of the same verb. Getting `du gehst` vs `er geht` right IS the topic,
+ * and the distractors are the exact endings learners confuse.
+ */
+export function buildConjugationChecks(
+	forms: ConjugationFormLike[],
+	lang: Language,
+	rand: () => number = Math.random
+): BasicsCheck[] {
+	const isFa = lang === 'fa';
+	const checks: BasicsCheck[] = [];
+
+	for (const f of shuffle(forms, rand)) {
+		const others = [...new Set(forms.map((x) => x.verb))].filter((v) => v !== f.verb);
+		if (others.length < 2) continue; // no honest distractors
+		const options = shuffle([f.verb, ...shuffle(others, rand).slice(0, 2)], rand);
+		checks.push({
+			kind: 'conjugation',
+			prompt: isFa ? 'کدام صرف درست است؟' : 'Which form is correct?',
+			subject: `${f.pronoun} ___`,
+			subjectLang: 'de',
+			options,
+			correctIndex: options.indexOf(f.verb)
+		});
+	}
+	return checks;
 }

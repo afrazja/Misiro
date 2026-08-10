@@ -1,5 +1,13 @@
 import { describe, it, expect } from 'vitest';
-import { buildChecks, collectWords, isWordEntry, splitArticle } from './basics-checks';
+import {
+	buildChecks,
+	buildConjugationChecks,
+	buildTopicChecks,
+	collectForms,
+	collectWords,
+	isWordEntry,
+	splitArticle
+} from './basics-checks';
 
 const NOUNS = [
 	{ german: 'der Tisch', en: 'the table', fa: 'میز' },
@@ -186,6 +194,72 @@ describe('word-order checks', () => {
 			5
 		);
 		expect(out.map((c) => c.solution?.length)).toEqual([4]);
+	});
+});
+
+describe('conjugation checks', () => {
+	const SECTIONS = [
+		{
+			tenses: [
+				{
+					forms: [
+						{ pronoun: 'ich', verb: 'gehe' },
+						{ pronoun: 'du', verb: 'gehst' },
+						{ pronoun: 'er/sie/es', verb: 'geht' },
+						{ pronoun: 'wir', verb: 'gehen' }
+					]
+				}
+			]
+		}
+	];
+
+	it('pulls forms out of the tables the verb topics are made of', () => {
+		expect(collectForms(SECTIONS)).toHaveLength(4);
+		expect(collectForms(null)).toEqual([]);
+		expect(collectForms([{ tenses: null }])).toEqual([]);
+	});
+
+	it('blanks the verb and draws distractors from the other forms', () => {
+		const checks = buildConjugationChecks(collectForms(SECTIONS), 'en');
+		expect(checks).toHaveLength(4);
+		for (const c of checks) {
+			expect(c.kind).toBe('conjugation');
+			expect(c.subject).toMatch(/ ___$/);
+			expect(c.subjectLang).toBe('de');
+			expect(c.options).toHaveLength(3);
+			expect(new Set(c.options).size).toBe(3);
+			// The blanked form is the answer, and it belongs to this pronoun.
+			const pronoun = c.subject.replace(' ___', '');
+			const source = collectForms(SECTIONS).find((f) => f.pronoun === pronoun)!;
+			expect(c.options[c.correctIndex]).toBe(source.verb);
+		}
+	});
+
+	it('emits nothing when there are too few forms to build options', () => {
+		expect(
+			buildConjugationChecks([{ pronoun: 'ich', verb: 'bin' }], 'en')
+		).toEqual([]);
+	});
+
+	it('mixes table checks in with word checks', () => {
+		const kinds = buildTopicChecks(NOUNS, collectForms(SECTIONS), 'en', 4).map((c) => c.kind);
+		expect(kinds[0]).toBe('conjugation');
+		expect(kinds[1]).toBe('article');
+		expect(kinds).toHaveLength(4);
+	});
+
+	it('falls back to word checks alone when a topic has no tables', () => {
+		const kinds = buildTopicChecks(NOUNS, [], 'en', 3).map((c) => c.kind);
+		expect(kinds).toHaveLength(3);
+		expect(kinds).not.toContain('conjugation');
+	});
+
+	it('gives a table-only topic checks it would otherwise have none of', () => {
+		// verbConjugation and friends carry no `words` at all — this is the
+		// case that used to render a stepped flow with nothing to practise.
+		const checks = buildTopicChecks([], collectForms(SECTIONS), 'en', 5);
+		expect(checks.length).toBeGreaterThan(0);
+		expect(checks.every((c) => c.kind === 'conjugation')).toBe(true);
 	});
 });
 

@@ -6,7 +6,7 @@
 	import { initSpeechRecognition, setVoiceInputHandler, setMicStateChangeHandler, toggleMic, stopListening, destroySpeechRecognition } from '$services/speech';
 	import { matchVoiceInput } from '$utils/text-matching';
 	import { unlockAudioContext, playTone } from '$services/audio-context';
-	import { buildChecks, collectWords } from '$services/basics-checks';
+	import { buildTopicChecks, collectWords, collectForms } from '$services/basics-checks';
 	import { isBuildCorrect } from '$services/sentence-build';
 	import { appStore } from '$stores/app';
 	import type { Language } from "$stores/preferences";
@@ -88,7 +88,12 @@
 	let checkScore = $state(0);
 
 	const checks = $derived(
-		buildChecks(collectWords(words, sections), currentLang, 5),
+		buildTopicChecks(
+			collectWords(words, sections),
+			collectForms(sections),
+			currentLang,
+			5,
+		),
 	);
 
 	/** The screens: the rule (if any), then one per section, then checks. */
@@ -945,7 +950,7 @@
 									class:right={checkPicked !== null && i === currentCheck.correctIndex}
 									class:wrong={checkPicked === i && i !== currentCheck.correctIndex}
 									disabled={checkPicked !== null}
-									lang={currentCheck.kind === 'article' ? 'de' : undefined}
+									lang={currentCheck.kind === 'meaning' ? undefined : 'de'}
 									onclick={() => answerCheck(i)}
 								>
 									{option}
