@@ -46,7 +46,15 @@
 		setVoiceInputHandler,
 		toggleMic,
 		stopListening,
+		getLastVoiceAlternatives,
+		isSpeechSupported,
 	} from "$services/speech";
+	import SentencePractice from "$components/SentencePractice.svelte";
+	import {
+		getWordStrengths,
+		saveWordStrengths,
+	} from "$services/data-layer";
+	import { applyAttempt, sentenceMastery } from "$services/word-strength";
 	import {
 		getLanguage,
 		setLanguage,
@@ -543,6 +551,43 @@
 		toggleMic();
 	}
 
+	// ── Practice mode ──────────────────────────────────────────────────
+	// The retrieval ladder for one sentence, opened from its Practice button.
+	// The lesson keeps running underneath; closing returns to exactly where
+	// the learner was.
+	let practiceSentence = $state<{ german: string; meaning: string } | null>(
+		null,
+	);
+	let practiceEl = $state<SentencePractice | null>(null);
+	let wordStrengths = $state<Record<string, number>>({});
+	let micSupported = $state(false);
+
+	function openPractice(german: string, meaning: string) {
+		if (!german?.trim()) return;
+		stopAllAudio();
+		if (app.isListening) stopListening();
+		// On mobile the script is a drawer over the content — leaving it open
+		// would cover the panel it just launched.
+		showScript = false;
+		practiceSentence = { german, meaning };
+	}
+
+	function closePractice() {
+		stopAllAudio();
+		if (app.isListening) stopListening();
+		practiceSentence = null;
+	}
+
+	/** Practice reports a rung result; strength is the lesson's to persist. */
+	function handlePracticeResult(german: string, correct: boolean) {
+		wordStrengths = applyAttempt(wordStrengths, german, correct);
+		saveWordStrengths(wordStrengths);
+	}
+
+	function masteryOf(german: string): number {
+		return sentenceMastery(wordStrengths, german);
+	}
+
 	function handleDaySelectChange(e: Event) {
 		const val = (e.target as HTMLSelectElement).value;
 		if (val.startsWith("exam") || val.startsWith("talk")) {
@@ -681,11 +726,19 @@
 	onMount(async () => {
 		setupCallbacks();
 		initSyncListeners();
-		initSpeechRecognition();
+		micSupported = initSpeechRecognition() && isSpeechSupported();
+		wordStrengths = getWordStrengths();
 		getLessonIndex().then((idx) => {
 			lessonIndex = idx;
 		});
+		// One owner for speech recognition. When practice is open it gets the
+		// transcript instead of the controller, so nothing has to be swapped
+		// out and restored around the panel.
 		setVoiceInputHandler((transcript: string) => {
+			if (practiceSentence) {
+				practiceEl?.handleVoice(transcript, getLastVoiceAlternatives());
+				return;
+			}
 			controllerHandleVoice(transcript);
 		});
 
@@ -725,6 +778,14 @@
 		}
 	});
 </script>
+
+<!-- Escape leaves practice. A drill you cannot back out of with the keyboard
+     is a trap for anyone not using a mouse. -->
+<svelte:window
+	onkeydown={(e) => {
+		if (e.key === "Escape" && practiceSentence) closePractice();
+	}}
+/>
 
 <svelte:head>
 	<title>Mirifer - Learn German</title>
@@ -903,7 +964,29 @@
 	/>
 
 	<!-- Main Learning Area -->
-	<main id="main-content" tabindex="-1" class="learning-area">
+	<main
+		id="main-content"
+		tabindex="-1"
+		class="learning-area"
+		class:practicing={!!practiceSentence}
+	>
+		{#if practiceSentence}
+			<!-- Practice takes over the content area, never the whole page:
+			     the lesson is still there underneath and Back returns to it. -->
+			<div class="practice-host">
+				<SentencePractice
+					bind:this={practiceEl}
+					sentence={practiceSentence}
+					lang={prefs.language}
+					micAvailable={micSupported}
+					isListening={app.isListening}
+					onToggleMic={toggleMic}
+					onExit={closePractice}
+					onResult={handlePracticeResult}
+				/>
+			</div>
+		{/if}
+
 		<!-- Mobile script toggle bar — top of content area on mobile -->
 		<button
 			class="script-toggle-btn"
@@ -1238,6 +1321,21 @@
 												: "Hint"}
 										</button>
 									{/if}
+									<!-- The ladder for the sentence on screen,
+									     without hunting for it in the script. -->
+									<button
+										class="btn-practice"
+										onclick={() =>
+											openPractice(
+												currentTeachStep!.germanText,
+												currentTeachStep!
+													.translationText,
+											)}
+									>
+										🎯 {currentTeachStep.language === "fa"
+											? "تمرین"
+											: "Practice"}
+									</button>
 									<button
 										class="btn-inline-next"
 										onclick={() => manualNext()}
@@ -1711,36 +1809,67 @@
 							</div>
 						{/if}
 						{#each exam.isExamMode || exam.isConversation ? [] : scriptItems as item, i}
-							<!-- svelte-ignore a11y_interactive_supports_focus -->
-							<div
-								class="script-item"
-								class:done={item.done}
-								class:active={item.active}
-								role="button"
-								tabindex="0"
-								aria-label="Sentence {i + 1}: {item.german}"
-								onclick={() => handleScriptItemClick(i)}
-								onkeydown={(e) => {
-									if (e.key === "Enter" || e.key === " ") {
-										e.preventDefault();
-										handleScriptItemClick(i);
-									}
-								}}
-							>
-								<div class="script-num">
-									{item.active ? "▶" : i + 1}
-								</div>
-								<div class="script-text">
-									<div class="german">{item.german}</div>
-									<div
-										class="translation"
-										style="direction: {prefs.language ===
-										'fa'
-											? 'rtl'
-											: 'ltr'};"
-									>
-										{item.translation}
+							{@const mastery = masteryOf(item.german)}
+							<div class="script-row">
+								<!-- svelte-ignore a11y_interactive_supports_focus -->
+								<div
+									class="script-item"
+									class:done={item.done}
+									class:active={item.active}
+									role="button"
+									tabindex="0"
+									aria-label="Sentence {i + 1}: {item.german}"
+									onclick={() => handleScriptItemClick(i)}
+									onkeydown={(e) => {
+										if (e.key === "Enter" || e.key === " ") {
+											e.preventDefault();
+											handleScriptItemClick(i);
+										}
+									}}
+								>
+									<div class="script-num">
+										{item.active ? "▶" : i + 1}
 									</div>
+									<div class="script-text">
+										<div class="german">{item.german}</div>
+										<div
+											class="translation"
+											style="direction: {prefs.language ===
+											'fa'
+												? 'rtl'
+												: 'ltr'};"
+										>
+											{item.translation}
+										</div>
+									</div>
+								</div>
+
+								<div class="script-foot">
+									<!-- Five dots = the weakest word in the
+									     sentence, not an average. -->
+									<span
+										class="mastery"
+										aria-label="Mastery {mastery} of 5"
+									>
+										{#each [0, 1, 2, 3, 4] as d}
+											<span
+												class="dot"
+												class:lit={d < mastery}
+											></span>
+										{/each}
+									</span>
+									<button
+										class="practice-link"
+										onclick={() =>
+											openPractice(
+												item.german,
+												item.translation,
+											)}
+									>
+										{prefs.language === "fa"
+											? "تمرین ←"
+											: "Practice →"}
+									</button>
 								</div>
 							</div>
 						{/each}
@@ -2857,6 +2986,82 @@
 		50% {
 			transform: scaleY(1);
 		}
+	}
+
+	/* ── Practice mode ── */
+	/* Practice owns the content area while it is open. Hiding the siblings
+	   rather than unmounting them keeps the lesson's scroll and state, so
+	   Back really does return to where the learner was. */
+	.learning-area.practicing > :global(*:not(.practice-host)) {
+		display: none;
+	}
+
+	.practice-host {
+		padding: 16px;
+		max-width: 640px;
+		margin: 0 auto;
+		width: 100%;
+	}
+
+	.btn-practice {
+		min-height: 44px;
+		padding: 6px 16px;
+		border-radius: 20px;
+		border: 2px solid var(--leaf-edge);
+		background: var(--leaf);
+		color: var(--on-accent);
+		font-size: 0.85rem;
+		font-weight: 700;
+		cursor: pointer;
+		box-shadow: 0 3px 0 var(--leaf-edge);
+	}
+
+	.btn-practice:active {
+		transform: translateY(3px);
+		box-shadow: none;
+	}
+
+	.script-row {
+		border-bottom: 1px solid var(--line);
+	}
+
+	.script-foot {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 10px;
+		padding: 0 12px 8px;
+	}
+
+	.mastery {
+		display: inline-flex;
+		gap: 4px;
+	}
+
+	.mastery .dot {
+		width: 7px;
+		height: 7px;
+		border-radius: 50%;
+		background: var(--control-edge);
+	}
+
+	.mastery .dot.lit {
+		background: var(--leaf);
+	}
+
+	.practice-link {
+		min-height: 44px;
+		padding: 6px 12px;
+		border: none;
+		background: none;
+		color: var(--leaf);
+		font-size: 0.8rem;
+		font-weight: 700;
+		cursor: pointer;
+	}
+
+	.practice-link:hover {
+		text-decoration: underline;
 	}
 
 	/* Hint button */

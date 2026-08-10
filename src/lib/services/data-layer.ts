@@ -749,6 +749,32 @@ export function markBasicsCompleted(categoryKey: string, at: number = Date.now()
 	}
 }
 
+// ========== WORD-LEVEL STRENGTH ==========
+
+// Local-only for now, like bookmarks and Basics progress above. Kept behind
+// data-layer so the pages never touch storage and adding the cloud write
+// later is a change in one file.
+const WORD_STRENGTH_LS_KEY = 'mirifer_word_strength';
+
+/** Normalised German word → strength 0-5. */
+export function getWordStrengths(): Record<string, number> {
+	try {
+		const raw = localStorage.getItem(WORD_STRENGTH_LS_KEY);
+		const parsed = raw ? JSON.parse(raw) : {};
+		return parsed && typeof parsed === 'object' ? parsed : {};
+	} catch {
+		return {};
+	}
+}
+
+export function saveWordStrengths(strengths: Record<string, number>): void {
+	try {
+		localStorage.setItem(WORD_STRENGTH_LS_KEY, JSON.stringify(strengths));
+	} catch {
+		/* storage unavailable — strength just is not remembered */
+	}
+}
+
 // ========== CLEAR ALL LOCAL DATA ==========
 
 export function clearAllLocal(): void {
@@ -761,6 +787,7 @@ export function clearAllLocal(): void {
 	localStorage.removeItem('mirifer_display_name');
 	localStorage.removeItem('mirifer_avatar_url');
 	localStorage.removeItem('mirifer_basics_done');
+	localStorage.removeItem('mirifer_word_strength');
 	localStorage.removeItem('mirifer_sync_queue');
 	localStorage.removeItem(VOCAB_LS_KEY);
 	localStorage.removeItem(BOOKMARKS_LS_KEY);
