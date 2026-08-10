@@ -198,46 +198,80 @@ describe('word-order checks', () => {
 });
 
 describe('conjugation checks', () => {
-	const SECTIONS = [
-		{
-			tenses: [
-				{
-					forms: [
-						{ pronoun: 'ich', verb: 'gehe' },
-						{ pronoun: 'du', verb: 'gehst' },
-						{ pronoun: 'er/sie/es', verb: 'geht' },
-						{ pronoun: 'wir', verb: 'gehen' }
-					]
-				}
-			]
-		}
-	];
+	const GEHEN = {
+		infinitive: { german: 'gehen' },
+		tenses: [
+			{
+				forms: [
+					{ pronoun: 'ich', verb: 'gehe' },
+					{ pronoun: 'du', verb: 'gehst' },
+					{ pronoun: 'er/sie/es', verb: 'geht' },
+					{ pronoun: 'wir', verb: 'gehen' }
+				]
+			}
+		]
+	};
+	const FAHREN = {
+		infinitive: { german: 'fahren' },
+		tenses: [
+			{
+				forms: [
+					{ pronoun: 'ich', verb: 'fahre' },
+					{ pronoun: 'du', verb: 'fährst' },
+					{ pronoun: 'wir', verb: 'fahren' }
+				]
+			}
+		]
+	};
+	const SECTIONS = [GEHEN];
 
 	it('pulls forms out of the tables the verb topics are made of', () => {
-		expect(collectForms(SECTIONS)).toHaveLength(4);
+		const groups = collectForms(SECTIONS);
+		expect(groups).toHaveLength(1);
+		expect(groups[0].infinitive).toBe('gehen');
+		expect(groups[0].forms).toHaveLength(4);
 		expect(collectForms(null)).toEqual([]);
 		expect(collectForms([{ tenses: null }])).toEqual([]);
 	});
 
-	it('blanks the verb and draws distractors from the other forms', () => {
+	it('blanks the verb and names the pronoun being asked about', () => {
 		const checks = buildConjugationChecks(collectForms(SECTIONS), 'en');
 		expect(checks).toHaveLength(4);
 		for (const c of checks) {
 			expect(c.kind).toBe('conjugation');
-			expect(c.subject).toMatch(/ ___$/);
+			expect(c.subject).toMatch(/^gehen — .+ ___$/);
 			expect(c.subjectLang).toBe('de');
 			expect(c.options).toHaveLength(3);
 			expect(new Set(c.options).size).toBe(3);
-			// The blanked form is the answer, and it belongs to this pronoun.
-			const pronoun = c.subject.replace(' ___', '');
-			const source = collectForms(SECTIONS).find((f) => f.pronoun === pronoun)!;
+			const pronoun = c.subject.replace('gehen — ', '').replace(' ___', '');
+			const source = GEHEN.tenses[0].forms.find((f) => f.pronoun === pronoun)!;
 			expect(c.options[c.correctIndex]).toBe(source.verb);
 		}
 	});
 
+	// The bug this guards: with forms flattened across every verb in the
+	// topic, "wir ___" was offered siehst / sprechen / fahren — two of which
+	// are correct answers for wir.
+	it('never draws a distractor from a different verb', () => {
+		const own = new Set(GEHEN.tenses[0].forms.map((f) => f.verb));
+		const checks = buildConjugationChecks(collectForms([GEHEN, FAHREN]), 'en');
+		const gehenChecks = checks.filter((c) => c.subject.startsWith('gehen'));
+		expect(gehenChecks.length).toBeGreaterThan(0);
+		for (const c of gehenChecks) {
+			for (const o of c.options) expect(own.has(o)).toBe(true);
+		}
+	});
+
+	it('takes turns between verbs instead of drilling only the first', () => {
+		const subjects = buildConjugationChecks(collectForms([GEHEN, FAHREN]), 'en')
+			.slice(0, 2)
+			.map((c) => c.subject.split(' — ')[0]);
+		expect(new Set(subjects).size).toBe(2);
+	});
+
 	it('emits nothing when there are too few forms to build options', () => {
 		expect(
-			buildConjugationChecks([{ pronoun: 'ich', verb: 'bin' }], 'en')
+			buildConjugationChecks([{ forms: [{ pronoun: 'ich', verb: 'bin' }] }], 'en')
 		).toEqual([]);
 	});
 

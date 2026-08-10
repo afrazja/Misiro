@@ -214,13 +214,13 @@ export function collectWords(
  */
 export function buildTopicChecks(
 	words: BasicsWordLike[],
-	forms: ConjugationFormLike[],
+	groups: ConjugationGroup[],
 	lang: Language,
 	limit = 5,
 	rand: () => number = Math.random
 ): BasicsCheck[] {
 	return interleave(
-		[buildConjugationChecks(forms, lang, rand), buildChecks(words, lang, limit, rand)],
+		[buildConjugationChecks(groups, lang, rand), buildChecks(words, lang, limit, rand)],
 		limit
 	);
 }
@@ -230,57 +230,78 @@ export interface ConjugationFormLike {
 	verb: string;
 }
 
+/** One verb's forms in one tense. The grouping is the point — see below. */
+export interface ConjugationGroup {
+	infinitive?: string;
+	forms: ConjugationFormLike[];
+}
+
 /**
- * Pull the conjugated forms out of a category's tables.
+ * Pull the conjugated forms out of a category's tables, grouped by verb and
+ * tense.
  *
  * The verb topics carry no `words` at all — their content lives in
  * tenses[].forms[] — so without this they would be the one part of Basics
  * with nothing to practise, which is exactly the handbook problem.
+ *
+ * Grouping is not tidiness. Distractors have to come from the SAME table:
+ * offer "wir ___" a choice between siehst, sprechen and fahren and two of
+ * the three are correct answers.
  */
 export function collectForms(
 	sections:
-		| Array<{ tenses?: Array<{ forms?: ConjugationFormLike[] | null }> | null }>
+		| Array<{
+				infinitive?: { german?: string } | null;
+				tenses?: Array<{ forms?: ConjugationFormLike[] | null }> | null;
+		  }>
 		| null
 		| undefined
-): ConjugationFormLike[] {
-	const out: ConjugationFormLike[] = [];
+): ConjugationGroup[] {
+	const out: ConjugationGroup[] = [];
 	for (const s of sections ?? []) {
 		for (const t of s.tenses ?? []) {
-			for (const f of t.forms ?? []) {
-				if (f?.pronoun?.trim() && f?.verb?.trim()) {
-					out.push({ pronoun: f.pronoun.trim(), verb: f.verb.trim() });
-				}
-			}
+			const forms = (t.forms ?? [])
+				.filter((f) => f?.pronoun?.trim() && f?.verb?.trim())
+				.map((f) => ({ pronoun: f.pronoun.trim(), verb: f.verb.trim() }));
+			if (forms.length) out.push({ infinitive: s.infinitive?.german?.trim(), forms });
 		}
 	}
 	return out;
 }
 
 /**
- * "ich ___" with the conjugated verb blanked, options drawn from the other
- * forms of the same verb. Getting `du gehst` vs `er geht` right IS the topic,
- * and the distractors are the exact endings learners confuse.
+ * "wir ___" with the conjugated verb blanked, options drawn from the other
+ * forms of the same verb. Telling `du gehst` from `er geht` IS the topic, and
+ * same-table distractors are the exact endings learners confuse.
+ *
+ * Groups take turns, so a topic with several verbs drills all of them rather
+ * than five questions about the first one.
  */
 export function buildConjugationChecks(
-	forms: ConjugationFormLike[],
+	groups: ConjugationGroup[],
 	lang: Language,
 	rand: () => number = Math.random
 ): BasicsCheck[] {
 	const isFa = lang === 'fa';
-	const checks: BasicsCheck[] = [];
 
-	for (const f of shuffle(forms, rand)) {
-		const others = [...new Set(forms.map((x) => x.verb))].filter((v) => v !== f.verb);
-		if (others.length < 2) continue; // no honest distractors
-		const options = shuffle([f.verb, ...shuffle(others, rand).slice(0, 2)], rand);
-		checks.push({
-			kind: 'conjugation',
-			prompt: isFa ? 'کدام صرف درست است؟' : 'Which form is correct?',
-			subject: `${f.pronoun} ___`,
-			subjectLang: 'de',
-			options,
-			correctIndex: options.indexOf(f.verb)
-		});
-	}
-	return checks;
+	const perGroup = shuffle(groups, rand).map((g) => {
+		const distinct = [...new Set(g.forms.map((f) => f.verb))];
+		const made: BasicsCheck[] = [];
+		for (const f of shuffle(g.forms, rand)) {
+			const others = distinct.filter((v) => v !== f.verb);
+			if (others.length < 2) continue; // no honest distractors
+			const options = shuffle([f.verb, ...shuffle(others, rand).slice(0, 2)], rand);
+			made.push({
+				kind: 'conjugation',
+				prompt: isFa ? 'کدام صرف درست است؟' : 'Which form is correct?',
+				subject: g.infinitive ? `${g.infinitive} — ${f.pronoun} ___` : `${f.pronoun} ___`,
+				subjectLang: 'de',
+				options,
+				correctIndex: options.indexOf(f.verb)
+			});
+		}
+		return made;
+	});
+
+	return interleave(perGroup, Number.MAX_SAFE_INTEGER);
 }
