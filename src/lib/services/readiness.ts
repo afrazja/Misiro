@@ -50,7 +50,20 @@ export interface Readiness {
 
 // ── Drill stats (fed by /placement + skill drills) ────────────────────────
 
+export interface DrillAttempt {
+	earned: number;
+	possible: number;
+	at: number;
+}
+
 interface DrillStats {
+	/** Most recent FIRST. Capped, so old sittings stop counting. */
+	history: DrillAttempt[];
+	updatedAt: number;
+}
+
+/** The pre-recency shape, still in some browsers' localStorage. */
+interface LegacyDrillStats {
 	attempts: number;
 	earned: number;
 	possible: number;
@@ -65,10 +78,80 @@ const MIN_DRILL_POINTS = 2;
 /** A1 curriculum span used for coverage (days 61+ are post-exam content). */
 const A1_DAYS = 60;
 
+/**
+ * Weight of each older sitting relative to the one after it. 0.6 means the
+ * latest attempt carries most of the score while earlier ones still damp the
+ * noise — necessary, because a Schreiben sitting is only 2 questions and one
+ * lucky answer would otherwise swing the bar 50 points.
+ */
+const RECENCY_DECAY = 0.6;
+/** Beyond this, older sittings contribute nothing worth storing. */
+const MAX_HISTORY = 8;
+/** Months-old evidence does not describe today's German. */
+const MAX_AGE_MS = 120 * 24 * 60 * 60 * 1000;
+
+/**
+ * Collapse a module's sittings into one accuracy, recent work weighted
+ * heaviest.
+ *
+ * The old version summed lifetime earned/possible, which meant a retake could
+ * never say what you can do NOW: score 1/2 then a perfect 2/2 and the module
+ * showed 75%, permanently anchored to the first attempt. Pure "latest only"
+ * overcorrects at these sample sizes, hence the decay.
+ *
+ * `now` is a parameter so this stays testable without mocking the clock.
+ */
+export function weightedAccuracy(
+	history: DrillAttempt[],
+	now: number
+): { accuracy: number; possible: number } | null {
+	let num = 0;
+	let den = 0;
+	let possible = 0;
+	let i = 0;
+	for (const a of history) {
+		if (!a || a.possible <= 0) continue;
+		if (now - a.at > MAX_AGE_MS) continue;
+		const w = RECENCY_DECAY ** i;
+		num += w * a.earned;
+		den += w * a.possible;
+		possible += a.possible;
+		i += 1;
+	}
+	if (den <= 0) return null;
+	return { accuracy: clamp01(num / den), possible };
+}
+
 function readDrillStats(): Partial<Record<ReadinessModule, DrillStats>> {
 	try {
 		const raw = JSON.parse(localStorage.getItem(DRILL_LS_KEY) || '{}');
-		return raw && typeof raw === 'object' ? raw : {};
+		if (!raw || typeof raw !== 'object') return {};
+		const out: Partial<Record<ReadinessModule, DrillStats>> = {};
+		for (const m of READINESS_MODULES) {
+			const v = raw[m];
+			if (!v || typeof v !== 'object') continue;
+			if (Array.isArray(v.history)) {
+				out[m] = { history: v.history, updatedAt: v.updatedAt || 0 };
+			} else {
+				// Migrate the lifetime-totals shape into a single sitting, so
+				// existing users keep their score instead of dropping to
+				// "not placed yet".
+				const legacy = v as LegacyDrillStats;
+				if (legacy.possible > 0) {
+					out[m] = {
+						history: [
+							{
+								earned: legacy.earned,
+								possible: legacy.possible,
+								at: legacy.updatedAt || Date.now()
+							}
+						],
+						updatedAt: legacy.updatedAt || 0
+					};
+				}
+			}
+		}
+		return out;
 	} catch {
 		return {};
 	}
@@ -76,16 +159,15 @@ function readDrillStats(): Partial<Record<ReadinessModule, DrillStats>> {
 
 /**
  * Record an exam-format drill result (placement test, Sprechen drill, …).
- * Rolling totals per module; recent work counts the same as old work in v1.
+ * Newest first, capped — retaking a module moves its score toward what you
+ * just scored rather than nudging a lifetime average.
  */
 export function recordDrillResult(module: ReadinessModule, earned: number, possible: number): void {
 	if (possible <= 0) return;
 	const stats = readDrillStats();
-	const cur = stats[module] || { attempts: 0, earned: 0, possible: 0, updatedAt: 0 };
+	const cur = stats[module]?.history ?? [];
 	stats[module] = {
-		attempts: cur.attempts + 1,
-		earned: cur.earned + earned,
-		possible: cur.possible + possible,
+		history: [{ earned, possible, at: Date.now() }, ...cur].slice(0, MAX_HISTORY),
 		updatedAt: Date.now()
 	};
 	try {
@@ -126,12 +208,12 @@ export async function computeReadiness(
 
 	const drills = readDrillStats();
 
+	const now = Date.now();
 	const moduleScore = (m: ReadinessModule, factor: number, cap: number): ModuleReadiness => {
-		const d = drills[m];
-		if (d && d.possible >= MIN_DRILL_POINTS) {
-			const acc = clamp01(d.earned / d.possible);
+		const w = drills[m] ? weightedAccuracy(drills[m]!.history, now) : null;
+		if (w && w.possible >= MIN_DRILL_POINTS) {
 			// Drill accuracy dominates; coverage keeps early lucky streaks honest.
-			return { score: Math.round(100 * (0.7 * acc + 0.3 * coverage)), trained: true };
+			return { score: Math.round(100 * (0.7 * w.accuracy + 0.3 * coverage)), trained: true };
 		}
 		return { score: Math.min(cap, Math.round(lessonEstimate * factor)), trained: false };
 	};
