@@ -322,10 +322,22 @@
 			}
 
 			// Weakest evidence first: a retake should reduce uncertainty.
-			const readiness = await computeReadiness();
-			const priority = [...READINESS_MODULES].sort(
-				(a, b) => readiness.modules[a].score - readiness.modules[b].score
-			);
+			//
+			// Best-effort, and bounded. This is a nicety — it only decides the
+			// ORDER of the questions — but computeReadiness() awaits Supabase,
+			// and a request that hangs rather than rejects would leave the
+			// learner staring at the authored twelve with nothing logged.
+			// Nothing optional gets to block the sitting.
+			const priority = await Promise.race([
+				computeReadiness()
+					.then((r) =>
+						[...READINESS_MODULES].sort(
+							(a, b) => r.modules[a].score - r.modules[b].score
+						)
+					)
+					.catch(() => [] as ReadinessModule[]),
+				new Promise<ReadinessModule[]>((resolve) => setTimeout(() => resolve([]), 2500))
+			]);
 
 			const sitting = selectSitting(bank, {
 				count: 12,
