@@ -6,14 +6,22 @@
  *
  *   coverage — completed lesson days vs the A1 curriculum span (days 1–60)
  *   recall   — rolling SM-2 accuracy (attempts vs successes across all cards)
- *   drills   — rolling per-module exam-format results (placement test +
- *              skill drills call recordDrillResult); once a module has real
- *              drill data it dominates that module's score
+ *   drills   — per-module exam-format results (placement test, skill drills)
+ *   practice — per-module results from ORDINARY USE: review answers,
+ *              practice-mode rungs, Basics checks
  *
- * Modules without drill data are ESTIMATES: Hören/Sprechen lean on lesson
- * practice (listening + speaking are how lessons work), Lesen/Schreiben are
- * capped low until the user actually tries those formats — honest "you
- * haven't practiced this yet" signaling that also sells the placement test.
+ * A test only produces data when someone chooses to sit one, and this app's
+ * is 12 questions. Practice produces hundreds of graded answers a week from
+ * work the learner is doing anyway, so it is the better progress signal;
+ * the test is the better calibration. Both feed in, exam-format weighted
+ * higher per point because practice is scaffolded — the sentence is in front
+ * of you and you can retry.
+ *
+ * Modules with neither are ESTIMATES: Hören/Sprechen lean on lesson practice
+ * (listening + speaking are how lessons work), Lesen/Schreiben are capped low
+ * until the user actually tries those formats. Every module reports its
+ * `source` so the dashboard can say which it is instead of implying they are
+ * all measurements.
  *
  * Import discipline: /home renders this — keep the import graph to
  * data-layer only (see commit 83fef01 for what happens otherwise).
@@ -33,10 +41,21 @@ export const READINESS_LABELS: Record<ReadinessModule, { de: string; en: string;
 	sprechen: { de: 'Sprechen', en: 'Speaking', fa: 'صحبت' }
 };
 
+/**
+ * Where a module's number came from. The learner is owed this: a guess and
+ * a measurement should not look identical on the dashboard.
+ *
+ *   estimate — inferred from lesson coverage, nothing graded yet
+ *   practice — real answers, but from everyday scaffolded practice
+ *   test     — exam-format items (placement test, skill drills)
+ */
+export type ReadinessSource = 'estimate' | 'practice' | 'test';
+
 export interface ModuleReadiness {
 	score: number; // 0–100
-	/** false = estimated from lessons only; true = backed by exam-format drills */
+	/** false = estimated from lessons only; true = backed by real answers */
 	trained: boolean;
+	source: ReadinessSource;
 }
 
 export interface Readiness {
@@ -44,7 +63,7 @@ export interface Readiness {
 	modules: Record<ReadinessModule, ModuleReadiness>;
 	/** overall at or above the official 60/100 pass mark */
 	onTrack: boolean;
-	/** true when no module has drill data yet — placement test pitch */
+	/** true when no module has exam-format data yet — placement test pitch */
 	needsPlacement: boolean;
 }
 
@@ -85,6 +104,8 @@ const A1_DAYS = 60;
  * lucky answer would otherwise swing the bar 50 points.
  */
 const RECENCY_DECAY = 0.6;
+/** Weight given to exam-format evidence when a module has both kinds. */
+const DRILL_SHARE = 0.6;
 /** Beyond this, older sittings contribute nothing worth storing. */
 const MAX_HISTORY = 8;
 /** Months-old evidence does not describe today's German. */
@@ -177,6 +198,73 @@ export function recordDrillResult(module: ReadinessModule, earned: number, possi
 	}
 }
 
+// ── Practice signal (fed by ordinary use) ─────────────────────────────────
+//
+// A test gives 12 answers when someone chooses to sit it. Reviews, practice
+// rungs and Basics checks give hundreds a week from work already happening,
+// and cost the learner nothing. That is the better instrument for tracking
+// progress; the test is better for calibration.
+//
+// Practice arrives one graded answer at a time, so it is bucketed BY DAY —
+// otherwise an 8-entry history would cover the last eight answers rather
+// than the last eight sessions. Same recency weighting either way.
+
+const PRACTICE_LS_KEY = 'mirifer_practice_signal';
+/** Practice answers needed before a module stops being a guess. Higher than
+ *  the drill gate: practice is scaffolded, so any single answer proves less. */
+const MIN_PRACTICE_POINTS = 12;
+
+const dayStamp = (t: number) => Math.floor(t / (24 * 60 * 60 * 1000));
+
+function readPracticeStats(): Partial<Record<ReadinessModule, DrillStats>> {
+	try {
+		const raw = JSON.parse(localStorage.getItem(PRACTICE_LS_KEY) || '{}');
+		if (!raw || typeof raw !== 'object') return {};
+		const out: Partial<Record<ReadinessModule, DrillStats>> = {};
+		for (const m of READINESS_MODULES) {
+			const v = raw[m];
+			if (v && Array.isArray(v.history)) {
+				out[m] = { history: v.history, updatedAt: v.updatedAt || 0 };
+			}
+		}
+		return out;
+	} catch {
+		return {};
+	}
+}
+
+/**
+ * Record graded practice — a review answer, a practice rung, a Basics check.
+ * Merges into today's bucket for that module.
+ */
+export function recordPracticeResult(
+	module: ReadinessModule,
+	earned: number,
+	possible: number
+): void {
+	if (possible <= 0) return;
+	const now = Date.now();
+	const stats = readPracticeStats();
+	const history = [...(stats[module]?.history ?? [])];
+
+	if (history[0] && dayStamp(history[0].at) === dayStamp(now)) {
+		history[0] = {
+			earned: history[0].earned + earned,
+			possible: history[0].possible + possible,
+			at: now
+		};
+	} else {
+		history.unshift({ earned, possible, at: now });
+	}
+
+	stats[module] = { history: history.slice(0, MAX_HISTORY), updatedAt: now };
+	try {
+		localStorage.setItem(PRACTICE_LS_KEY, JSON.stringify(stats));
+	} catch {
+		// Storage full/unavailable — readiness just stays estimate-based.
+	}
+}
+
 // ── Computation ───────────────────────────────────────────────────────────
 
 const clamp01 = (n: number) => Math.min(1, Math.max(0, n));
@@ -208,14 +296,37 @@ export async function computeReadiness(
 
 	const drills = readDrillStats();
 
+	const practice = readPracticeStats();
 	const now = Date.now();
+
 	const moduleScore = (m: ReadinessModule, factor: number, cap: number): ModuleReadiness => {
-		const w = drills[m] ? weightedAccuracy(drills[m]!.history, now) : null;
-		if (w && w.possible >= MIN_DRILL_POINTS) {
-			// Drill accuracy dominates; coverage keeps early lucky streaks honest.
-			return { score: Math.round(100 * (0.7 * w.accuracy + 0.3 * coverage)), trained: true };
+		const d = drills[m] ? weightedAccuracy(drills[m]!.history, now) : null;
+		const p = practice[m] ? weightedAccuracy(practice[m]!.history, now) : null;
+		const hasDrill = !!d && d.possible >= MIN_DRILL_POINTS;
+		const hasPractice = !!p && p.possible >= MIN_PRACTICE_POINTS;
+
+		if (hasDrill || hasPractice) {
+			// Both count, but a point of exam-format evidence is worth more
+			// than a point of scaffolded practice — practice has the sentence
+			// in front of you and lets you retry.
+			const acc =
+				hasDrill && hasPractice
+					? DRILL_SHARE * d!.accuracy + (1 - DRILL_SHARE) * p!.accuracy
+					: hasDrill
+						? d!.accuracy
+						: p!.accuracy;
+			return {
+				// Coverage keeps an early lucky streak from claiming the exam.
+				score: Math.round(100 * (0.7 * acc + 0.3 * coverage)),
+				trained: true,
+				source: hasDrill ? 'test' : 'practice'
+			};
 		}
-		return { score: Math.min(cap, Math.round(lessonEstimate * factor)), trained: false };
+		return {
+			score: Math.min(cap, Math.round(lessonEstimate * factor)),
+			trained: false,
+			source: 'estimate'
+		};
 	};
 
 	const modules: Record<ReadinessModule, ModuleReadiness> = {
@@ -235,6 +346,8 @@ export async function computeReadiness(
 		overall,
 		modules,
 		onTrack: overall >= 60,
-		needsPlacement: !READINESS_MODULES.some((m) => modules[m].trained)
+		// Practice makes a bar real, but it is not exam-format — the
+		// placement pitch stays until something has actually been tested.
+		needsPlacement: !READINESS_MODULES.some((m) => modules[m].source === 'test')
 	};
 }

@@ -1017,7 +1017,6 @@
 
 				<div class="exam-bars">
 					{#each READINESS_MODULES as m (m)}
-						{@const trained = readiness.modules[m].trained}
 						<div class="exam-bar-row">
 							<span class="exam-bar-label"
 								>{READINESS_LABELS[m][
@@ -1027,7 +1026,7 @@
 							<div class="exam-bar">
 								<div
 									class="exam-bar-fill"
-									class:trained
+									class:trained={readiness.modules[m].trained}
 									style="width:{readiness.modules[m].score}%"
 								></div>
 							</div>
@@ -1035,9 +1034,13 @@
 							<!-- Estimated vs measured used to be carried by bar
 							     colour alone — two greens, no legend. Nobody
 							     decodes that, and colour alone fails 1.4.1. -->
-							{#if trained}
-								<span class="exam-bar-tag measured">
-									{language === "fa" ? "سنجیده‌شده" : "measured"}
+							{#if readiness.modules[m].source === "test"}
+								<span class="exam-bar-tag tested">
+									{language === "fa" ? "آزمون" : "tested"}
+								</span>
+							{:else if readiness.modules[m].source === "practice"}
+								<span class="exam-bar-tag practice">
+									{language === "fa" ? "تمرین" : "practice"}
 								</span>
 							{:else}
 								<span class="exam-bar-tag">
@@ -2159,7 +2162,14 @@
 		color: var(--ink-faint);
 	}
 
-	.exam-bar-tag.measured {
+	/* Three states, three looks — and each one says its own name, so the
+	   colour is reinforcement rather than the message. */
+	.exam-bar-tag.practice {
+		background: var(--info-wash);
+		color: var(--info);
+	}
+
+	.exam-bar-tag.tested {
 		background: var(--leaf-wash);
 		color: var(--leaf);
 	}

@@ -11,7 +11,12 @@
 	 * singleton and forwards transcripts via handleVoice(), so there is one
 	 * owner and nothing to restore on close.
 	 */
-	import { buildDrills, type Drill, type PracticeSentence } from '$services/practice-drills';
+	import {
+		buildDrills,
+		type Drill,
+		type DrillKind,
+		type PracticeSentence
+	} from '$services/practice-drills';
 	import { isBuildCorrect } from '$services/sentence-build';
 	import { bestVoiceMatch } from '$utils/text-matching';
 	import { playAudioPromise, stopAllAudio, ttsIsPlaying } from '$services/tts';
@@ -27,11 +32,17 @@
 		onToggleMic?: () => void;
 		onExit: () => void;
 		/**
-		 * (wordsCredited, outcome, guessable) — the caller updates strength.
-		 * `guessable` is true on multiple-choice rungs, where a wrong pick may
-		 * have been a coin flip and so costs more.
+		 * (wordsCredited, outcome, guessable, kind) — the caller updates word
+		 * strength and the readiness signal. `guessable` is true on
+		 * multiple-choice rungs, where a wrong pick may have been a coin flip
+		 * and so costs more; `kind` says which rung it was.
 		 */
-		onResult?: (german: string, outcome: Outcome, guessable: boolean) => void;
+		onResult?: (
+			german: string,
+			outcome: Outcome,
+			guessable: boolean,
+			kind: DrillKind
+		) => void;
 	}
 
 	let {
@@ -94,7 +105,7 @@
 	function record(german: string, outcome: Outcome, guessable = false) {
 		verdict = outcome === 'correct' ? 'right' : 'wrong';
 		if (outcome === 'correct') score += 1;
-		onResult?.(german, outcome, guessable);
+		onResult?.(german, outcome, guessable, drill?.kind ?? 'build');
 		playTone(outcome === 'correct' ? 'success' : 'error');
 	}
 

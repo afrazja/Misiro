@@ -26,7 +26,11 @@ import {
 } from '$services/lesson-loader';
 import { getLanguage, getVoiceSpeed, getCompletedLessons, getProgress, saveProgress, saveCompletedLessons } from '$services/data-layer';
 import { recordSRAttempt, getDueReviewItems, removeFromReview } from '$services/spaced-repetition';
-import { computeReadiness } from '$services/readiness';
+import {
+	computeReadiness,
+	recordPracticeResult,
+	type ReadinessModule
+} from '$services/readiness';
 import { removeBookmark } from '$services/data-layer';
 import { trackEvent } from '$services/analytics';
 import { makeWordHighlighter } from '$utils/word-timing';
@@ -954,6 +958,7 @@ export async function answerExamChoice(index: number): Promise<void> {
 	if (q.day && q.sentenceId) {
 		await recordSRAttempt(q.day, q.sentenceId, false);
 	}
+	recordExamPractice(q, false);
 	examStore.update((s) => ({
 		...s,
 		examWrongAnswers: [...s.examWrongAnswers, { question: q, heard: q.options![index] }]
@@ -969,6 +974,25 @@ export async function answerExamChoice(index: number): Promise<void> {
 	}, 1500);
 }
 
+/**
+ * Which Goethe module a review question exercises. Reviews are the best
+ * practice signal the app has: the German is hidden, the item is days old,
+ * and the four question types map straight onto the four exam modules.
+ */
+const EXAM_MODULE: Record<ExamQuestion['type'], ReadinessModule> = {
+	listen: 'hoeren',
+	speak: 'sprechen',
+	meaning: 'lesen',
+	gap: 'schreiben'
+};
+
+/** Record one graded review answer. Called once per question, on its
+ *  terminal outcome — a retry is the same question, not a second data point. */
+function recordExamPractice(q: ExamQuestion | undefined, correct: boolean): void {
+	const m = q && EXAM_MODULE[q.type];
+	if (m) recordPracticeResult(m, correct ? 1 : 0, 1);
+}
+
 async function handleExamCorrect(transcript: string): Promise<void> {
 	const exam = get(examStore);
 	const prefs = get(preferencesStore);
@@ -978,6 +1002,7 @@ async function handleExamCorrect(transcript: string): Promise<void> {
 	if (q.day && q.sentenceId) {
 		await recordSRAttempt(q.day, q.sentenceId, true);
 	}
+	recordExamPractice(q, true);
 
 	examStore.update((s) => ({ ...s, examScore: s.examScore + 1 }));
 
@@ -1010,6 +1035,7 @@ async function handleExamIncorrect(targetGerman: string, transcript: string): Pr
 		if (q.day && q.sentenceId) {
 			await recordSRAttempt(q.day, q.sentenceId, false);
 		}
+		recordExamPractice(q, false);
 
 		// Record wrong answer
 		const wrongAnswer: WrongAnswer = {

@@ -1,5 +1,10 @@
 import { describe, it, expect, beforeEach } from 'vitest';
-import { weightedAccuracy, recordDrillResult, type DrillAttempt } from './readiness';
+import {
+	weightedAccuracy,
+	recordDrillResult,
+	recordPracticeResult,
+	type DrillAttempt
+} from './readiness';
 
 const NOW = 1_700_000_000_000;
 const DAY = 24 * 60 * 60 * 1000;
@@ -104,5 +109,59 @@ describe('recordDrillResult', () => {
 		expect(h).toHaveLength(2);
 		expect(h[0]).toMatchObject({ earned: 2, possible: 2 });
 		expect(h[1]).toMatchObject({ earned: 3, possible: 4 });
+	});
+});
+
+describe('recordPracticeResult', () => {
+	beforeEach(() => localStorage.clear());
+
+	const stored = () => JSON.parse(localStorage.getItem('mirifer_practice_signal') || '{}');
+
+	// Practice arrives one answer at a time. Without day bucketing an
+	// 8-entry history would cover the last eight ANSWERS, not the last eight
+	// sessions, and the whole recency idea would collapse to "this minute".
+	it('merges answers from the same day into one bucket', () => {
+		recordPracticeResult('lesen', 1, 1);
+		recordPracticeResult('lesen', 0, 1);
+		recordPracticeResult('lesen', 1, 1);
+		const h = stored().lesen.history;
+		expect(h).toHaveLength(1);
+		expect(h[0]).toMatchObject({ earned: 2, possible: 3 });
+	});
+
+	it('keeps a separate bucket per module', () => {
+		recordPracticeResult('sprechen', 1, 1);
+		recordPracticeResult('schreiben', 0, 1);
+		expect(stored().sprechen.history[0].earned).toBe(1);
+		expect(stored().schreiben.history[0].earned).toBe(0);
+	});
+
+	it('starts a new bucket on a later day', () => {
+		recordPracticeResult('lesen', 1, 1);
+		const raw = stored();
+		raw.lesen.history[0].at = Date.now() - 3 * DAY;
+		localStorage.setItem('mirifer_practice_signal', JSON.stringify(raw));
+		recordPracticeResult('lesen', 1, 1);
+		expect(stored().lesen.history).toHaveLength(2);
+	});
+
+	it('ignores an empty result', () => {
+		recordPracticeResult('lesen', 0, 0);
+		expect(stored().lesen).toBeUndefined();
+	});
+
+	it('caps the number of days kept', () => {
+		for (let i = 0; i < 12; i++) {
+			recordPracticeResult('hoeren', 1, 1);
+			const raw = stored();
+			raw.hoeren.history[0].at = Date.now() - (i + 1) * DAY;
+			localStorage.setItem('mirifer_practice_signal', JSON.stringify(raw));
+		}
+		expect(stored().hoeren.history.length).toBeLessThanOrEqual(8);
+	});
+
+	it('does not touch the drill bucket', () => {
+		recordPracticeResult('lesen', 1, 1);
+		expect(localStorage.getItem('mirifer_drill_stats')).toBeNull();
 	});
 });

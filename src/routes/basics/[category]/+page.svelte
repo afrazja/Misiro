@@ -8,10 +8,26 @@
 	import { unlockAudioContext, playTone } from '$services/audio-context';
 	import { buildTopicChecks, collectWords, collectForms } from '$services/basics-checks';
 	import { isBuildCorrect } from '$services/sentence-build';
+	import {
+		recordPracticeResult,
+		type ReadinessModule,
+	} from '$services/readiness';
 	import { appStore } from '$stores/app';
 	import type { Language } from "$stores/preferences";
 	import type { BasicWord, ConjugationTense, DeclensionTable } from "$lib/types/basics";
 	import type { PageData } from "./$types";
+
+	/**
+	 * Which exam module each check kind exercises. Article, meaning and
+	 * conjugation are recognition of written German; rebuilding a sentence is
+	 * written structure.
+	 */
+	const CHECK_MODULE: Record<string, ReadinessModule> = {
+		article: "lesen",
+		meaning: "lesen",
+		conjugation: "lesen",
+		order: "schreiben",
+	};
 
 	// The server load's `let x = null` pattern defeats PageData inference;
 	// widen explicitly to what +page.server.ts actually returns.
@@ -148,7 +164,14 @@
 		checkPicked = i;
 		const right = i === currentCheck.correctIndex;
 		if (right) checkScore += 1;
+		recordCheck(currentCheck.kind, right);
 		playTone(right ? "success" : "error");
+	}
+
+	/** Feed the readiness signal. Every answered check is one graded point. */
+	function recordCheck(kind: string, correct: boolean) {
+		const m = CHECK_MODULE[kind];
+		if (m) recordPracticeResult(m, correct ? 1 : 0, 1);
 	}
 
 	// ── Word-order checks: tap tiles to rebuild the sentence ──────────
@@ -191,6 +214,7 @@
 		);
 		orderVerdict = right ? "right" : "wrong";
 		if (right) checkScore += 1;
+		recordCheck("order", right);
 		playTone(right ? "success" : "error");
 	}
 

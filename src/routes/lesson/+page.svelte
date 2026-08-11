@@ -60,6 +60,10 @@
 		type Outcome,
 	} from "$services/word-strength";
 	import {
+		recordPracticeResult,
+		type ReadinessModule,
+	} from "$services/readiness";
+	import {
 		getLanguage,
 		setLanguage,
 		getVoiceSpeed,
@@ -582,14 +586,36 @@
 		practiceSentence = null;
 	}
 
-	/** Practice reports a rung result; strength is the lesson's to persist. */
+	/**
+	 * Which exam module each practice rung exercises. Building word order and
+	 * choosing an article are written-accuracy skills; producing the sentence
+	 * aloud from the translation is Sprechen. Nothing maps to Hören — the
+	 * learner is reading, not listening — and inventing a mapping there would
+	 * be the sort of made-up number this whole change is meant to remove.
+	 */
+	const RUNG_MODULE: Record<string, ReadinessModule> = {
+		build: "schreiben",
+		gap: "schreiben",
+		speak: "sprechen",
+	};
+
+	/** Practice reports a rung result; strength and readiness are the
+	 *  lesson's to persist. */
 	function handlePracticeResult(
 		german: string,
 		outcome: Outcome,
 		guessable: boolean,
+		kind: string,
 	) {
 		wordStrengths = applyAttempt(wordStrengths, german, outcome, guessable);
 		saveWordStrengths(wordStrengths);
+
+		// A revealed answer is not evidence either way — it says the learner
+		// asked rather than tried.
+		const m = RUNG_MODULE[kind];
+		if (m && outcome !== "revealed") {
+			recordPracticeResult(m, outcome === "correct" ? 1 : 0, 1);
+		}
 	}
 
 	function masteryOf(german: string): number {
