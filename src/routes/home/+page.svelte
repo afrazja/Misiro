@@ -54,6 +54,13 @@
 
 	// Goethe hero
 	let readiness = $state<Readiness | null>(null);
+	/** Nothing graded anywhere yet — the whole card is inference. Once even
+	 *  one bar is backed by real answers the blanket note would be a lie, and
+	 *  the per-bar tags say it better anyway. */
+	const allEstimated = $derived(
+		!!readiness &&
+			READINESS_MODULES.every((m) => readiness!.modules[m].source === "estimate"),
+	);
 	let examSettings = $state<ExamSettings | null>(null);
 	let deadline = $state<{ days: number; kind: "exam" | "target" } | null>(
 		null,
@@ -1007,7 +1014,7 @@
 				<!-- Until something has actually been graded, this number is
 				     inferred from lesson progress. Saying so is the difference
 				     between a score and a guess wearing a score's clothes. -->
-				{#if readiness.needsPlacement}
+				{#if allEstimated}
 					<p class="exam-estimate-note">
 						{language === "fa"
 							? "تخمینی بر پایهٔ پیشرفت درس‌ها — هنوز سنجیده نشده"
