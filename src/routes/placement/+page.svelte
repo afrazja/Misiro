@@ -33,6 +33,7 @@
 	import { getLessonIndex, loadLesson } from '$services/lesson-loader';
 	import { getLanguage, getSeenExamItems, addSeenExamItems } from '$services/data-layer';
 	import type { Language } from '$stores/preferences';
+	import { logError, logWarn } from '$utils/error';
 
 	// ── Item model (self-contained; original content in official formats) ──
 	// NOTE: no Persian translations of the German CONTENT here — this is an
@@ -283,7 +284,10 @@
 		try {
 			const lang = ((await getLanguage()) === 'fa' ? 'fa' : 'en') as Language;
 			const index = await getLessonIndex();
-			if (!index.length) return;
+			if (!index.length) {
+				logWarn('placement:retake', 'no lesson index — serving the authored set');
+				return;
+			}
 
 			// A slice, not all 100 — enough for a varied bank without pulling
 			// the whole curriculum over the wire for one test.
@@ -301,7 +305,13 @@
 			}
 
 			const bank = buildExamBank(sentences, lang);
-			if (bank.length < 4) return; // not enough content — keep the authored set
+			if (bank.length < 4) {
+				logWarn(
+					'placement:retake',
+					`bank too small (${bank.length}) from ${sentences.length} sentences — serving the authored set`
+				);
+				return;
+			}
 
 			// Weakest evidence first: a retake should reduce uncertainty.
 			const readiness = await computeReadiness();
@@ -319,9 +329,14 @@
 				activeItems = adapted;
 				servedIds = sitting.map((g) => g.id);
 				isRetake = true;
+			} else {
+				logWarn('placement:retake', `only ${adapted.length} items adapted`);
 			}
-		} catch {
-			// Any failure just leaves the authored 12 in place.
+		} catch (e) {
+			// Falling back to the authored 12 is fine; failing SILENTLY is not —
+			// a retake quietly serving the same twelve is the bug this feature
+			// exists to fix, and it would look identical to working.
+			logError('placement:retake', e);
 		}
 	}
 
