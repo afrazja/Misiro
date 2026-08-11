@@ -229,9 +229,17 @@
 	const item = $derived(activeItems[idx]);
 	const total = $derived(activeItems.length);
 
-	onMount(async () => {
-		authed = await checkAuth();
-		if (hasBeenTested()) await loadRetakeSitting();
+	onMount(() => {
+		// Independent, deliberately. Sequencing the sitting behind checkAuth()
+		// meant a slow or failing Supabase auth round-trip silently prevented
+		// the retake from ever loading — the test looked fine and served the
+		// same twelve questions, which is the exact bug this feature fixes.
+		void checkAuth()
+			.then((a) => (authed = a))
+			.catch(() => {
+				/* the back link just points home for guests */
+			});
+		if (hasBeenTested()) void loadRetakeSitting();
 	});
 
 	/** Turn a generated item into the shape this page already renders. */
