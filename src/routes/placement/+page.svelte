@@ -299,18 +299,32 @@
 
 			// A slice, not all 100 — enough for a varied bank without pulling
 			// the whole curriculum over the wire for one test.
-			const days = index.slice(0, 24).map((l) => l.day);
+			//
+			// In parallel and time-boxed, NOT a sequential await per day. Awaiting
+			// 16 Supabase round-trips one after another means any single request
+			// that hangs rather than fails takes the whole retake with it — which
+			// is exactly what happened: lessons cached, nothing logged, and the
+			// learner served the same twelve questions as if by design.
+			const days = index.slice(0, 16).map((l) => l.day);
+			const loaded = await Promise.race([
+				Promise.allSettled(days.map((d) => loadLesson(d))),
+				new Promise<PromiseSettledResult<unknown>[]>((resolve) =>
+					setTimeout(() => resolve([]), 6000)
+				)
+			]);
+
 			const sentences: SourceSentence[] = [];
-			for (const day of days) {
-				const lesson = await loadLesson(day);
+			loaded.forEach((res, i) => {
+				if (res.status !== 'fulfilled') return;
+				const lesson = res.value as Awaited<ReturnType<typeof loadLesson>>;
 				for (const st of lesson?.sentences ?? []) {
 					const german = st.role === 'received' ? st.audioText : st.targetText;
 					const meaning = lang === 'fa' ? st.translationFa || st.translation : st.translation;
 					if (german?.trim() && meaning?.trim()) {
-						sentences.push({ day, id: st.id, german, meaning });
+						sentences.push({ day: days[i], id: st.id, german, meaning });
 					}
 				}
-			}
+			});
 
 			const bank = buildExamBank(sentences, lang);
 			if (bank.length < 4) {

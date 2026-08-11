@@ -3,6 +3,7 @@ import {
 	weightedAccuracy,
 	recordDrillResult,
 	recordPracticeResult,
+	hasBeenTested,
 	type DrillAttempt
 } from './readiness';
 
@@ -163,5 +164,34 @@ describe('recordPracticeResult', () => {
 	it('does not touch the drill bucket', () => {
 		recordPracticeResult('lesen', 1, 1);
 		expect(localStorage.getItem('mirifer_drill_stats')).toBeNull();
+	});
+});
+
+describe('hasBeenTested', () => {
+	beforeEach(() => localStorage.clear());
+
+	it('is false with nothing stored', () => {
+		expect(hasBeenTested()).toBe(false);
+	});
+
+	it('is true once a module has a sitting', () => {
+		localStorage.setItem(
+			'mirifer_drill_stats',
+			JSON.stringify({ lesen: { history: [{ earned: 3, possible: 4, at: NOW }], updatedAt: NOW } })
+		);
+		expect(hasBeenTested()).toBe(true);
+	});
+
+	it('is true for the legacy lifetime-totals shape too', () => {
+		localStorage.setItem(
+			'mirifer_drill_stats',
+			JSON.stringify({ lesen: { attempts: 1, earned: 3, possible: 4, updatedAt: NOW } })
+		);
+		expect(hasBeenTested()).toBe(true);
+	});
+
+	it('is false for an empty history', () => {
+		localStorage.setItem('mirifer_drill_stats', JSON.stringify({ lesen: { history: [] } }));
+		expect(hasBeenTested()).toBe(false);
 	});
 });
