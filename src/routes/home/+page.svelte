@@ -1298,7 +1298,8 @@
 
 	.brand-caret {
 		color: var(--on-brand-soft);
-		font-size: 0.7rem;
+		font-size: 0.95rem;
+		line-height: 1;
 		transition: transform 0.18s ease;
 	}
 
