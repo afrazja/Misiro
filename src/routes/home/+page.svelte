@@ -107,6 +107,8 @@
 	// Badges & Calendar expansion
 	let showCalendar = $state(false);
 	let showBadges = $state(false);
+	let showProfileMenu = $state(false);
+	let profileMenuEl = $state<HTMLDivElement | null>(null);
 	let unlockedBadges = $state<string[]>([]);
 	let unreadBadgesCount = $state(0);
 	let sentenceStats = $state<Record<string, number>>({ A1: 0, A2: 0, B1: 0 });
@@ -433,6 +435,12 @@
 	function handleKeydown(e: KeyboardEvent) {
 		if (e.key === "Escape" && showCalendar) showCalendar = false;
 		if (e.key === "Escape" && showAuthModal) toggleAuthModal();
+		if (e.key === "Escape" && showProfileMenu) {
+			showProfileMenu = false;
+			// Send focus back to the trigger, or the tab order restarts at
+			// the top of the page.
+			profileMenuEl?.querySelector("button")?.focus();
+		}
 		if (e.key === "Tab" && showAuthModal && modalEl) {
 			const focusable = modalEl.querySelectorAll<HTMLElement>(
 				'input:not([style*="display:none"]), button, a[href], [tabindex]:not([tabindex="-1"])',
@@ -486,7 +494,16 @@
 	});
 </script>
 
-<svelte:window onkeydown={handleKeydown} />
+<svelte:window
+	onkeydown={handleKeydown}
+	onpointerdown={(e) => {
+		// Close on any tap outside. Checking containment first means the
+		// trigger's own click still toggles instead of closing and reopening.
+		if (showProfileMenu && profileMenuEl && !profileMenuEl.contains(e.target as Node)) {
+			showProfileMenu = false;
+		}
+	}}
+/>
 
 <svelte:head>
 	<title>Mirifer – My Dashboard</title>
@@ -754,16 +771,67 @@
 
 <main class="home-container">
 	{#snippet profileLeading()}
-		<a href="/settings" class="nav-profile-brand" title="Profile Settings">
-			<div class="brand-avatar">
-				{#if avatarUrl}
-					<img src={avatarUrl} alt="Avatar" />
-				{:else}
-					{(displayName || "L").charAt(0).toUpperCase()}
+		{#if isAuthenticated}
+			<!-- Account actions live behind the avatar. They used to sit loose
+			     in the toolbar as a gear and a Sign Out button, which put a
+			     destructive action one stray tap away and — because the gear
+			     glyph is a ring of straight rays — read as a second sun next
+			     to the actual theme toggle. -->
+			<div class="nav-profile" bind:this={profileMenuEl}>
+				<button
+					type="button"
+					class="nav-profile-brand"
+					aria-haspopup="menu"
+					aria-expanded={showProfileMenu}
+					onclick={() => (showProfileMenu = !showProfileMenu)}
+				>
+					<div class="brand-avatar">
+						{#if avatarUrl}
+							<img src={avatarUrl} alt="" />
+						{:else}
+							{(displayName || "L").charAt(0).toUpperCase()}
+						{/if}
+					</div>
+					<span class="brand-text">{displayName}</span>
+					<span class="brand-caret" class:open={showProfileMenu} aria-hidden="true"
+						>▾</span
+					>
+				</button>
+
+				{#if showProfileMenu}
+					<div class="profile-menu" role="menu">
+						<a
+							href="/settings"
+							role="menuitem"
+							class="profile-menu-item"
+							onclick={() => (showProfileMenu = false)}
+						>
+							<Icon name="gear" size={17} />
+							<span>{language === "fa" ? "تنظیمات" : "Settings"}</span>
+						</a>
+						<button
+							type="button"
+							role="menuitem"
+							class="profile-menu-item danger"
+							onclick={() => {
+								showProfileMenu = false;
+								handleSignOut();
+							}}
+						>
+							<span class="pm-glyph" aria-hidden="true">⎋</span>
+							<span>{language === "fa" ? "خروج" : "Sign Out"}</span>
+						</button>
+					</div>
 				{/if}
 			</div>
-			<span class="brand-text">{displayName}</span>
-		</a>
+		{:else}
+			<span class="nav-profile-brand static">
+				<div class="brand-avatar">
+					{(displayName || "L").charAt(0).toUpperCase()}
+				</div>
+				<span class="brand-text">{displayName}</span>
+			</span>
+		{/if}
 	{/snippet}
 
 	{#snippet homeHeaderActions()}
@@ -793,15 +861,7 @@
 					{/if}
 				</div>
 
-				<a
-					href="/settings"
-					class="nav-icon-btn"
-					title={language === "fa" ? "تنظیمات" : "Settings"}
-					><Icon name="gear" size={19} /></a
-				>
-				<button class="nav-text-btn" onclick={handleSignOut}
-					>{language === "fa" ? "خروج" : "Sign Out"}</button
-				>
+				<!-- Settings and Sign Out moved into the avatar menu. -->
 			{:else}
 				<button class="nav-text-btn" onclick={toggleAuthModal}
 					>{language === "fa" ? "ورود" : "Sign In"}</button
@@ -964,19 +1024,11 @@
 				</div>
 			</div>
 
-			{#if readiness.needsPlacement}
-				<a class="exam-placement-cta" href="/placement">
-					{language === "fa"
-						? "🎯 سطح واقعی‌ات را بسنج — تست تعیین سطح رایگان"
-						: "🎯 Check your real level — free placement test"}
-				</a>
-			{/if}
+			<!-- The placement test and the Sprechen drill used to hang off the
+			     bottom of this card. This card reports a score; those are
+			     things you go and do, so they live in the action row with the
+			     other two. -->
 			<div class="exam-links">
-				<a class="exam-drill-link" href="/drill/sprechen">
-					🎙 {language === "fa"
-						? "تمرین Sprechen — معرفی خود"
-						: "Sprechen drill — introduce yourself"}
-				</a>
 				<span class="exam-hero-note">
 					{language === "fa"
 						? "نمره قبولی: ۶۰ از ۱۰۰"
@@ -1064,6 +1116,53 @@
 						>{language === "fa" ? "تمرین ←" : "Practice →"}</span
 					>
 				{/if}
+			</a>
+
+			<!-- Relocated from the readiness card: these are actions, not
+			     score. The placement test only appears while the score is
+			     still an estimate — once it is real, the card is clutter. -->
+			{#if readiness?.needsPlacement}
+				<a
+					href="/placement"
+					class="stat-card stat-card-link action-card"
+					title={language === "fa" ? "تست تعیین سطح" : "Placement test"}
+				>
+					<span class="stat-icon aim" aria-hidden="true">🎯</span>
+					<div class="stat-content">
+						<span class="stat-label strong"
+							>{language === "fa"
+								? "سطح واقعی‌ات را بسنج"
+								: "Check your real level"}</span
+						>
+						<span class="stat-sub"
+							>{language === "fa"
+								? "تست تعیین سطح رایگان"
+								: "Free placement test"}</span
+						>
+					</div>
+					<span class="stat-cta"
+						>{language === "fa" ? "شروع ←" : "Start →"}</span
+					>
+				</a>
+			{/if}
+
+			<a
+				href="/drill/sprechen"
+				class="stat-card stat-card-link action-card"
+				title={language === "fa" ? "تمرین Sprechen" : "Sprechen drill"}
+			>
+				<span class="stat-icon aim" aria-hidden="true">🎙</span>
+				<div class="stat-content">
+					<span class="stat-label strong"
+						>{language === "fa" ? "تمرین Sprechen" : "Sprechen drill"}</span
+					>
+					<span class="stat-sub"
+						>{language === "fa" ? "معرفی خود" : "Introduce yourself"}</span
+					>
+				</div>
+				<span class="stat-cta"
+					>{language === "fa" ? "تمرین ←" : "Practice →"}</span
+				>
 			</a>
 		</div>
 	{/if}
@@ -1168,16 +1267,108 @@
 		--install-fg: var(--leaf);
 	}
 
+	.nav-profile {
+		position: relative;
+	}
+
 	.nav-profile-brand {
 		display: flex;
 		align-items: center;
 		gap: 12px;
+		min-height: 44px;
+		padding: 4px 8px;
+		border: none;
+		border-radius: 12px;
+		background: none;
+		color: inherit;
+		font: inherit;
+		text-align: start;
 		text-decoration: none;
+		cursor: pointer;
 		transition: opacity 0.2s;
+	}
+
+	.nav-profile-brand.static {
+		cursor: default;
 	}
 
 	.nav-profile-brand:hover {
 		opacity: 0.8;
+	}
+
+	.brand-caret {
+		color: var(--on-brand-soft);
+		font-size: 0.7rem;
+		transition: transform 0.18s ease;
+	}
+
+	.brand-caret.open {
+		transform: rotate(180deg);
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.brand-caret {
+			transition: none;
+		}
+	}
+
+	/* ── Account menu ── */
+	.profile-menu {
+		position: absolute;
+		top: calc(100% + 6px);
+		inset-inline-start: 0;
+		z-index: 200;
+		min-width: 190px;
+		padding: 6px;
+		border: 1px solid var(--line);
+		border-radius: 12px;
+		background: var(--paper-raised);
+		box-shadow: var(--paper-shadow);
+		display: flex;
+		flex-direction: column;
+		gap: 2px;
+	}
+
+	.profile-menu-item {
+		display: flex;
+		align-items: center;
+		gap: 10px;
+		width: 100%;
+		min-height: 44px;
+		padding: 10px 12px;
+		border: none;
+		border-radius: 8px;
+		background: none;
+		color: var(--ink);
+		font: inherit;
+		font-size: 0.9rem;
+		font-weight: 600;
+		text-align: start;
+		text-decoration: none;
+		cursor: pointer;
+	}
+
+	.profile-menu-item:hover,
+	.profile-menu-item:focus-visible {
+		background: var(--control-hover);
+	}
+
+	/* Signing out is the one destructive thing here — it should not look
+	   like the neutral item above it. */
+	.profile-menu-item.danger {
+		color: var(--miss);
+	}
+
+	.profile-menu-item.danger:hover,
+	.profile-menu-item.danger:focus-visible {
+		background: color-mix(in srgb, var(--miss) 10%, transparent);
+	}
+
+	.pm-glyph {
+		display: inline-flex;
+		width: 17px;
+		justify-content: center;
+		font-size: 1rem;
 	}
 
 	.brand-avatar {
@@ -1216,21 +1407,6 @@
 	}
 
 	/* Compact language picker */
-
-	.nav-icon-btn {
-		text-decoration: none;
-		padding: 6px;
-		border-radius: 8px;
-		transition: all 0.2s;
-		line-height: 1;
-		color: var(--ink-soft);
-		display: inline-flex;
-	}
-
-	.nav-icon-btn:hover {
-		color: var(--ink);
-		background: var(--paper-sunken);
-	}
 
 	.nav-text-btn {
 		padding: 6px 16px;
@@ -1359,12 +1535,18 @@
 		display: inline-flex;
 	}
 
-	.ns-icon.star {
-		color: var(--accent);
+	/* Gold, and the same gold for the numeral beside it, so the XP badge
+	   reads as one thing. The star was var(--accent) — deep forest green on
+	   a near-black pill, measured 1.8:1 on the live page, which is why it
+	   looked like nothing was there. This is 8.6:1. */
+	.ns-icon.star,
+	.nav-stat.xp .ns-value {
+		color: var(--gold);
 	}
 
+	/* Amber rather than the old --accent-deep: same problem, same fix. */
 	.ns-icon.flame {
-		color: var(--accent-deep);
+		color: var(--ember);
 	}
 
 	.ns-icon {
@@ -1463,6 +1645,25 @@
 		font-size: 0.78rem;
 		color: var(--ink-soft);
 		font-weight: 500;
+	}
+
+	/* The relocated cards carry a title instead of a big numeral, so the
+	   label has to do the work the number does on the other two. */
+	.stat-label.strong {
+		font-size: 0.95rem;
+		font-weight: 700;
+		color: var(--ink);
+		line-height: 1.25;
+	}
+
+	.stat-sub {
+		font-size: 0.78rem;
+		color: var(--ink-soft);
+	}
+
+	.stat-icon.aim {
+		font-size: 1.5rem;
+		line-height: 1;
 	}
 
 	/* ── Nav Cards ────────────────────────────────────── */
@@ -1919,20 +2120,6 @@
 		font-variant-numeric: tabular-nums;
 	}
 
-	.exam-placement-cta {
-		display: block;
-		text-align: center;
-		background: var(--leaf-wash);
-		/* --leaf on --leaf-wash measured 4.33:1 */
-		color: var(--accent-deep);
-		border: 1.5px dashed var(--leaf);
-		border-radius: 12px;
-		padding: 11px 16px;
-		font-weight: 700;
-		font-size: 0.95rem;
-		text-decoration: none;
-	}
-
 	.exam-hero-note {
 		color: var(--ink-faint);
 		font-size: 0.82rem;
@@ -1945,14 +2132,6 @@
 		justify-content: space-between;
 		gap: 10px;
 		flex-wrap: wrap;
-	}
-
-	.exam-drill-link {
-		color: var(--accent-deep);
-		font-weight: 600;
-		font-size: 0.9rem;
-		text-decoration: none;
-		border-bottom: 1px dotted var(--accent);
 	}
 
 	@media (max-width: 640px) {
