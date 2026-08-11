@@ -8,7 +8,7 @@
 	 * trained. Public route — works for guests too (results stay local),
 	 * so it doubles as a marketing hook.
 	 */
-	import { onDestroy } from 'svelte';
+	import { onDestroy, onMount } from 'svelte';
 	import { playAudioPromise, stopAllAudio, ttsIsPlaying } from '$services/tts';
 	import {
 		initSpeechRecognition,
@@ -22,11 +22,17 @@
 	import { bestVoiceMatch, matchVoiceInput } from '$utils/text-matching';
 	import {
 		recordDrillResult,
+		hasBeenTested,
 		READINESS_LABELS,
+		READINESS_MODULES,
+		computeReadiness,
 		type ReadinessModule
 	} from '$services/readiness';
 	import { isAuthenticated as checkAuth } from '$services/auth';
-	import { onMount } from 'svelte';
+	import { buildExamBank, selectSitting, type SourceSentence } from '$services/exam-items';
+	import { getLessonIndex, loadLesson } from '$services/lesson-loader';
+	import { getLanguage, getSeenExamItems, addSeenExamItems } from '$services/data-layer';
+	import type { Language } from '$stores/preferences';
 
 	// ── Item model (self-contained; original content in official formats) ──
 	// NOTE: no Persian translations of the German CONTENT here — this is an
@@ -209,12 +215,115 @@
 		sprechen: 0
 	};
 
-	const item = $derived(ITEMS[idx]);
-	const total = ITEMS.length;
+	/**
+	 * The sitting actually being served. First time round it is the authored
+	 * 12 — those are curriculum-independent, which is what a placement test
+	 * has to be. Retakes swap in a fresh set generated from lesson content,
+	 * because sitting the SAME twelve twice measures memory of the answers.
+	 */
+	let activeItems = $state<Item[]>(ITEMS);
+	let isRetake = $state(false);
+	let servedIds: string[] = [];
+
+	const item = $derived(activeItems[idx]);
+	const total = $derived(activeItems.length);
 
 	onMount(async () => {
 		authed = await checkAuth();
+		if (hasBeenTested()) await loadRetakeSitting();
 	});
+
+	/** Turn a generated item into the shape this page already renders. */
+	function adapt(g: ReturnType<typeof selectSitting>[number]): Item | null {
+		switch (g.kind) {
+			case 'tf':
+				return {
+					module: 'hoeren',
+					kind: 'tf',
+					audio: g.german,
+					statement: g.prompt,
+					answer: g.correctIndex === 0
+				};
+			case 'choice':
+				return {
+					module: 'lesen',
+					kind: 'choice',
+					passage: g.german,
+					question: g.prompt,
+					options: g.options ?? [],
+					correct: g.correctIndex ?? 0
+				};
+			case 'fill':
+				return {
+					module: 'schreiben',
+					kind: 'fill',
+					info: g.german,
+					field: 'Missing word',
+					answer: g.answer ?? '',
+					hintFa: g.prompt
+				};
+			case 'speak':
+				return {
+					module: 'sprechen',
+					kind: 'speak',
+					prompt: g.prompt,
+					promptFa: g.meaning,
+					target: g.target ?? g.german
+				};
+			default:
+				return null;
+		}
+	}
+
+	/**
+	 * Build the bank from lessons the learner has actually studied, and spend
+	 * the sitting on whichever modules the score is least sure about.
+	 */
+	async function loadRetakeSitting() {
+		try {
+			const lang = ((await getLanguage()) === 'fa' ? 'fa' : 'en') as Language;
+			const index = await getLessonIndex();
+			if (!index.length) return;
+
+			// A slice, not all 100 — enough for a varied bank without pulling
+			// the whole curriculum over the wire for one test.
+			const days = index.slice(0, 24).map((l) => l.day);
+			const sentences: SourceSentence[] = [];
+			for (const day of days) {
+				const lesson = await loadLesson(day);
+				for (const st of lesson?.sentences ?? []) {
+					const german = st.role === 'received' ? st.audioText : st.targetText;
+					const meaning = lang === 'fa' ? st.translationFa || st.translation : st.translation;
+					if (german?.trim() && meaning?.trim()) {
+						sentences.push({ day, id: st.id, german, meaning });
+					}
+				}
+			}
+
+			const bank = buildExamBank(sentences, lang);
+			if (bank.length < 4) return; // not enough content — keep the authored set
+
+			// Weakest evidence first: a retake should reduce uncertainty.
+			const readiness = await computeReadiness();
+			const priority = [...READINESS_MODULES].sort(
+				(a, b) => readiness.modules[a].score - readiness.modules[b].score
+			);
+
+			const sitting = selectSitting(bank, {
+				count: 12,
+				seenIds: getSeenExamItems(),
+				priority
+			});
+			const adapted = sitting.map(adapt).filter((x): x is Item => !!x);
+			if (adapted.length >= 4) {
+				activeItems = adapted;
+				servedIds = sitting.map((g) => g.id);
+				isRetake = true;
+			}
+		} catch {
+			// Any failure just leaves the authored 12 in place.
+		}
+	}
 
 	function playItemAudio() {
 		const it = item;
@@ -279,7 +388,7 @@
 		}
 		idx += 1;
 		// Honor "skip speaking questions" — hop over any remaining speak items.
-		while (skipAllSpeaking && ITEMS[idx].kind === 'speak') {
+		while (skipAllSpeaking && activeItems[idx].kind === 'speak') {
 			if (idx >= total - 1) {
 				finish();
 				return;
@@ -290,6 +399,8 @@
 	}
 
 	function finish() {
+		// So the next retake draws different questions.
+		addSeenExamItems(servedIds);
 		for (const m of ['hoeren', 'lesen', 'schreiben', 'sprechen'] as ReadinessModule[]) {
 			if (possible[m] > 0) recordDrillResult(m, earned[m], possible[m]);
 		}
@@ -326,15 +437,29 @@
 	{#if phase === 'intro'}
 		<section class="card intro">
 			<div class="badge">🎓 Goethe A1 · Start Deutsch 1</div>
-			<h1>How ready are you?</h1>
-			<p class="sub">
-				12 quick questions in the real exam format — listening, reading,
-				writing, speaking. Takes about 8 minutes.
-			</p>
-			<p class="sub fa" dir="rtl">
-				۱۲ سؤال کوتاه دقیقاً در قالب آزمون گوته — شنیدن، خواندن، نوشتن و صحبت
-				کردن. حدود ۸ دقیقه.
-			</p>
+			<h1>{isRetake ? 'Check your progress' : 'How ready are you?'}</h1>
+			{#if isRetake}
+				<!-- Say plainly that the questions are new. Otherwise a returning
+				     learner assumes it is the same test and does not bother. -->
+				<p class="sub">
+					{total} fresh questions, drawn from the German you have been
+					studying — different from last time, so this measures what you
+					know now rather than what you remember answering.
+				</p>
+				<p class="sub fa" dir="rtl">
+					{total} سؤال تازه از درس‌هایی که خوانده‌ای — با دفعهٔ قبل فرق دارد،
+					تا آنچه الان بلدی سنجیده شود، نه آنچه جوابش را به یاد داری.
+				</p>
+			{:else}
+				<p class="sub">
+					12 quick questions in the real exam format — listening, reading,
+					writing, speaking. Takes about 8 minutes.
+				</p>
+				<p class="sub fa" dir="rtl">
+					۱۲ سؤال کوتاه دقیقاً در قالب آزمون گوته — شنیدن، خواندن، نوشتن و صحبت
+					کردن. حدود ۸ دقیقه.
+				</p>
+			{/if}
 			<p class="intro-note fa" dir="rtl">
 				⚠️ سؤال‌ها فقط به آلمانی‌اند — بدون ترجمه، تا نمره‌ات واقعی باشد.
 				اگر چیزی را نفهمیدی، حدس بزن یا رد شو؛ همین هم بخشی از سنجش است.

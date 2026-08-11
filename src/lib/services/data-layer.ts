@@ -775,6 +775,33 @@ export function saveWordStrengths(strengths: Record<string, number>): void {
 	}
 }
 
+// ========== SEEN EXAM ITEMS ==========
+
+// Ids of generated exam items already served, so a retake draws fresh ones.
+// Capped: past a few sittings the oldest ids no longer need avoiding, and an
+// unbounded list would grow with every question ever answered.
+const SEEN_ITEMS_LS_KEY = 'mirifer_seen_exam_items';
+const SEEN_ITEMS_MAX = 120;
+
+export function getSeenExamItems(): string[] {
+	try {
+		const raw = JSON.parse(localStorage.getItem(SEEN_ITEMS_LS_KEY) || '[]');
+		return Array.isArray(raw) ? raw.filter((x) => typeof x === 'string') : [];
+	} catch {
+		return [];
+	}
+}
+
+export function addSeenExamItems(ids: string[]): void {
+	if (!ids.length) return;
+	try {
+		const merged = [...ids, ...getSeenExamItems().filter((x) => !ids.includes(x))];
+		localStorage.setItem(SEEN_ITEMS_LS_KEY, JSON.stringify(merged.slice(0, SEEN_ITEMS_MAX)));
+	} catch {
+		/* storage unavailable — retakes may repeat an item, which is survivable */
+	}
+}
+
 // ========== CLEAR ALL LOCAL DATA ==========
 
 export function clearAllLocal(): void {
@@ -788,6 +815,8 @@ export function clearAllLocal(): void {
 	localStorage.removeItem('mirifer_avatar_url');
 	localStorage.removeItem('mirifer_basics_done');
 	localStorage.removeItem('mirifer_word_strength');
+	localStorage.removeItem('mirifer_seen_exam_items');
+	localStorage.removeItem('mirifer_practice_signal');
 	localStorage.removeItem('mirifer_sync_queue');
 	localStorage.removeItem(VOCAB_LS_KEY);
 	localStorage.removeItem(BOOKMARKS_LS_KEY);

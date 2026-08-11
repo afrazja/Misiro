@@ -198,6 +198,16 @@ export function recordDrillResult(module: ReadinessModule, earned: number, possi
 	}
 }
 
+/**
+ * Has any module ever been graded by an exam-format sitting? Cheap and
+ * synchronous — the placement route uses it to decide whether this is a
+ * first sitting (authored items) or a retake (a fresh generated set).
+ */
+export function hasBeenTested(): boolean {
+	const stats = readDrillStats();
+	return READINESS_MODULES.some((m) => (stats[m]?.history?.length ?? 0) > 0);
+}
+
 // ── Practice signal (fed by ordinary use) ─────────────────────────────────
 //
 // A test gives 12 answers when someone chooses to sit it. Reviews, practice
