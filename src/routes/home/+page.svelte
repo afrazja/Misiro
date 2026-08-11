@@ -1003,8 +1003,21 @@
 				<div class="exam-score" class:good={readiness.onTrack}>
 					<strong>{readiness.overall}</strong><span>/100</span>
 				</div>
+
+				<!-- Until something has actually been graded, this number is
+				     inferred from lesson progress. Saying so is the difference
+				     between a score and a guess wearing a score's clothes. -->
+				{#if readiness.needsPlacement}
+					<p class="exam-estimate-note">
+						{language === "fa"
+							? "تخمینی بر پایهٔ پیشرفت درس‌ها — هنوز سنجیده نشده"
+							: "Estimated from your lesson progress — not measured yet"}
+					</p>
+				{/if}
+
 				<div class="exam-bars">
 					{#each READINESS_MODULES as m (m)}
+						{@const trained = readiness.modules[m].trained}
 						<div class="exam-bar-row">
 							<span class="exam-bar-label"
 								>{READINESS_LABELS[m][
@@ -1014,11 +1027,23 @@
 							<div class="exam-bar">
 								<div
 									class="exam-bar-fill"
-									class:trained={readiness.modules[m].trained}
+									class:trained
 									style="width:{readiness.modules[m].score}%"
 								></div>
 							</div>
 							<span class="exam-bar-num">{readiness.modules[m].score}</span>
+							<!-- Estimated vs measured used to be carried by bar
+							     colour alone — two greens, no legend. Nobody
+							     decodes that, and colour alone fails 1.4.1. -->
+							{#if trained}
+								<span class="exam-bar-tag measured">
+									{language === "fa" ? "سنجیده‌شده" : "measured"}
+								</span>
+							{:else}
+								<span class="exam-bar-tag">
+									{language === "fa" ? "تخمینی" : "estimated"}
+								</span>
+							{/if}
 						</div>
 					{/each}
 				</div>
@@ -2084,7 +2109,7 @@
 
 	.exam-bar-row {
 		display: grid;
-		grid-template-columns: 74px 1fr 30px;
+		grid-template-columns: 74px 1fr 30px auto;
 		align-items: center;
 		gap: 10px;
 	}
@@ -2119,6 +2144,46 @@
 		color: var(--ink-faint);
 		text-align: right;
 		font-variant-numeric: tabular-nums;
+	}
+
+	/* Says in words what the two bar greens were trying to say on their own. */
+	.exam-bar-tag {
+		font-size: 0.66rem;
+		font-weight: 700;
+		letter-spacing: 0.04em;
+		text-transform: uppercase;
+		white-space: nowrap;
+		padding: 2px 7px;
+		border-radius: 999px;
+		background: var(--paper-sunken);
+		color: var(--ink-faint);
+	}
+
+	.exam-bar-tag.measured {
+		background: var(--leaf-wash);
+		color: var(--leaf);
+	}
+
+	/* On a narrow phone the tag would squeeze the bar itself down to a stub.
+	   Shrink the tag, not the bar — the bar is the thing being read. */
+	@media (max-width: 440px) {
+		.exam-bar-row {
+			grid-template-columns: 62px 1fr 26px auto;
+			gap: 7px;
+		}
+
+		.exam-bar-tag {
+			font-size: 0.6rem;
+			padding: 2px 5px;
+			letter-spacing: 0;
+		}
+	}
+
+	.exam-estimate-note {
+		margin: -4px 0 14px;
+		text-align: center;
+		font-size: 0.82rem;
+		color: var(--ink-soft);
 	}
 
 	.exam-hero-note {
