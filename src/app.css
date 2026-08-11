@@ -308,9 +308,13 @@ select {
 }
 
 /* Chrome: back button, toolbar selects, toggles. Shallower — these are
-   secondary, and a select's native popup sits badly on a tall bevel. */
+   secondary, and a select's native popup sits badly on a tall bevel.
+
+   .brand is scoped to the app header on purpose. Bare `.brand` also matched
+   the landing page's logo link, which has no background and no border, so
+   the keycap shadow drew a raised box around nothing. */
 .back-control,
-.brand,
+.app-header .brand,
 .listener-mode-btn,
 .btn-ghost,
 .btn-choice,
@@ -328,7 +332,7 @@ select {
 }
 
 .back-control:active,
-.brand:active,
+.app-header .brand:active,
 .listener-mode-btn:active,
 .btn-ghost:active,
 .btn-choice:active {
@@ -350,7 +354,7 @@ select {
 	.next-day-btn,
 	.gm-continue,
 	.back-control,
-	.brand,
+	.app-header .brand,
 	.listener-mode-btn,
 	.btn-ghost,
 	.btn-choice {

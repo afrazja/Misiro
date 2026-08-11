@@ -1264,18 +1264,25 @@
 		text-decoration: none;
 	}
 
+	/* The logo used to bob up and down forever (float 3s infinite). Motion
+	   that never stops pulls the eye away from the headline it sits above,
+	   and WCAG 2.2.2 wants a way to stop anything that moves for more than
+	   five seconds. It lifts on hover instead — motion the visitor asks for. */
 	.brand-icon {
 		font-size: 1.9rem;
-		animation: float 3s ease-in-out infinite;
+		transition: transform 0.25s ease;
 	}
 
-	@keyframes float {
-		0%,
-		100% {
-			transform: translateY(0);
+	.brand:hover .brand-icon {
+		transform: translateY(-3px);
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.brand-icon {
+			transition: none;
 		}
-		50% {
-			transform: translateY(-6px);
+		.brand:hover .brand-icon {
+			transform: none;
 		}
 	}
 
