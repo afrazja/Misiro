@@ -4,6 +4,8 @@ import {
 	recordDrillResult,
 	recordPracticeResult,
 	hasBeenTested,
+	checkAvailability,
+	LESSONS_PER_CHECK,
 	type DrillAttempt
 } from './readiness';
 
@@ -193,5 +195,64 @@ describe('hasBeenTested', () => {
 	it('is false for an empty history', () => {
 		localStorage.setItem('mirifer_drill_stats', JSON.stringify({ lesen: { history: [] } }));
 		expect(hasBeenTested()).toBe(false);
+	});
+});
+
+describe('checkAvailability', () => {
+	const lessons = (n: number, since: number) =>
+		Array.from({ length: n }, (_, i) => since + (i + 1) * 60_000);
+
+	it('is always open before the first sitting — placement is calibration', () => {
+		const a = checkAvailability([], null, NOW);
+		expect(a.unlocked).toBe(true);
+		expect(a.isFirstSitting).toBe(true);
+	});
+
+	// The point of the gate: retaking with nothing studied samples the same
+	// ability twice, and the difference is noise on twelve questions.
+	it('stays locked when nothing has been finished since the last check', () => {
+		const a = checkAvailability([], NOW - 10 * DAY, NOW);
+		expect(a.unlocked).toBe(false);
+		expect(a.lessonsNeeded).toBe(LESSONS_PER_CHECK);
+	});
+
+	it('counts down the lessons still needed', () => {
+		const last = NOW - 10 * DAY;
+		expect(checkAvailability(lessons(2, last), last, NOW).lessonsNeeded).toBe(
+			LESSONS_PER_CHECK - 2
+		);
+	});
+
+	it('opens once enough lessons are done', () => {
+		const last = NOW - 10 * DAY;
+		const a = checkAvailability(lessons(LESSONS_PER_CHECK, last), last, NOW);
+		expect(a.unlocked).toBe(true);
+		expect(a.lessonsNeeded).toBe(0);
+	});
+
+	it('ignores lessons finished BEFORE the last check', () => {
+		const last = NOW - 10 * DAY;
+		const older = Array.from({ length: 20 }, (_, i) => last - (i + 1) * DAY);
+		expect(checkAvailability(older, last, NOW).lessonsNeeded).toBe(LESSONS_PER_CHECK);
+	});
+
+	// Otherwise someone could bulk-complete five days and immediately re-roll.
+	it('holds the 24h floor even with the lessons done', () => {
+		const last = NOW - 2 * 60 * 60 * 1000;
+		const a = checkAvailability(lessons(LESSONS_PER_CHECK, last), last, NOW);
+		expect(a.unlocked).toBe(false);
+		expect(a.lessonsNeeded).toBe(0);
+		expect(a.hoursNeeded).toBe(22);
+	});
+
+	it('reports no hours left once the floor has passed', () => {
+		const last = NOW - 30 * 60 * 60 * 1000;
+		expect(checkAvailability([], last, NOW).hoursNeeded).toBe(0);
+	});
+
+	it('survives junk in the completion timestamps', () => {
+		const last = NOW - 10 * DAY;
+		const junk = [null, undefined, 'x', NaN] as unknown as number[];
+		expect(checkAvailability(junk, last, NOW).lessonsNeeded).toBe(LESSONS_PER_CHECK);
 	});
 });

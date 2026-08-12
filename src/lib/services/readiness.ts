@@ -208,6 +208,80 @@ export function hasBeenTested(): boolean {
 	return READINESS_MODULES.some((m) => (stats[m]?.history?.length ?? 0) > 0);
 }
 
+// ── When the next check is allowed ────────────────────────────────────────
+//
+// A learner who studies nothing and retakes twice in a day gets two samples
+// of the same ability, and the gap between them is noise on twelve
+// questions. Worse, checking your level FEELS like studying — it is the
+// exam-prep equivalent of reorganising your notes — so an app whose problem
+// is unfinished lessons should not hand out a frictionless way to feel
+// productive without learning.
+//
+// So the check unlocks on new evidence, not on a timer: a timer rewards
+// waiting, and waiting is not learning. Shown as a countdown, the lock stops
+// being a refusal and becomes the milestone the app was missing.
+
+/** Lessons that must be finished between one scored check and the next. */
+export const LESSONS_PER_CHECK = 5;
+/** Floor, so bulk-completing in one sitting cannot farm checks. */
+const MIN_CHECK_GAP_MS = 24 * 60 * 60 * 1000;
+
+export interface CheckAvailability {
+	unlocked: boolean;
+	/** Nothing tested yet — placement is calibration and always open. */
+	isFirstSitting: boolean;
+	/** Lessons still to finish before the next check opens. */
+	lessonsNeeded: number;
+	/** Whole hours left on the 24h floor; 0 when that is not the blocker. */
+	hoursNeeded: number;
+}
+
+/**
+ * Pure so the rule is testable without a clock or storage.
+ *
+ * @param completedAts when each finished lesson was completed
+ * @param lastSittingAt the most recent scored sitting, or null for never
+ */
+export function checkAvailability(
+	completedAts: number[],
+	lastSittingAt: number | null,
+	now: number
+): CheckAvailability {
+	if (lastSittingAt == null) {
+		return { unlocked: true, isFirstSitting: true, lessonsNeeded: 0, hoursNeeded: 0 };
+	}
+	const since = completedAts.filter((t) => typeof t === 'number' && t > lastSittingAt).length;
+	const lessonsNeeded = Math.max(0, LESSONS_PER_CHECK - since);
+	const hoursNeeded = Math.max(
+		0,
+		Math.ceil((MIN_CHECK_GAP_MS - (now - lastSittingAt)) / (60 * 60 * 1000))
+	);
+	return {
+		unlocked: lessonsNeeded === 0 && hoursNeeded === 0,
+		isFirstSitting: false,
+		lessonsNeeded,
+		hoursNeeded
+	};
+}
+
+/** Most recent scored sitting across all modules, or null. */
+export function lastSittingAt(): number | null {
+	const stats = readDrillStats();
+	const times = READINESS_MODULES.flatMap((m) => (stats[m]?.history ?? []).map((h) => h.at)).filter(
+		(t) => typeof t === 'number'
+	);
+	return times.length ? Math.max(...times) : null;
+}
+
+/** The rule applied to real data. */
+export async function getCheckAvailability(): Promise<CheckAvailability> {
+	const completed = await getCompletedLessons();
+	const ats = Object.values(completed || {})
+		.map((c) => (c as { completedAt?: number })?.completedAt)
+		.filter((t): t is number => typeof t === 'number');
+	return checkAvailability(ats, lastSittingAt(), Date.now());
+}
+
 // ── Practice signal (fed by ordinary use) ─────────────────────────────────
 //
 // A test gives 12 answers when someone chooses to sit it. Reviews, practice

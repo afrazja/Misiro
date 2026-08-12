@@ -91,11 +91,24 @@ describe('selectSitting', () => {
 	});
 
 	// The whole point of the bank: a retake must not be the same sitting.
+	//
+	// Needs a bank comfortably larger than two sittings. On a tiny one a
+	// module runs dry and selectSitting deliberately backfills with a seen
+	// item rather than returning a short test — correct behaviour, but it
+	// would make this assertion flaky, which it was.
 	it('prefers items the learner has not seen', () => {
-		const first = selectSitting(bank, { count: 6 });
-		const second = selectSitting(bank, { count: 6, seenIds: first.map((i) => i.id) });
-		const overlap = second.filter((i) => first.some((f) => f.id === i.id));
-		expect(overlap).toHaveLength(0);
+		const many = Array.from({ length: 20 }, (_, i) => ({
+			day: 1,
+			id: i + 1,
+			german: `Ich fahre heute nach Stadt${i}.`,
+			meaning: `I am travelling to city ${i} today.`
+		}));
+		const bigBank = buildExamBank(many, 'en');
+		expect(bigBank.length).toBeGreaterThan(40);
+
+		const first = selectSitting(bigBank, { count: 8 });
+		const second = selectSitting(bigBank, { count: 8, seenIds: first.map((i) => i.id) });
+		expect(second.filter((i) => first.some((f) => f.id === i.id))).toHaveLength(0);
 	});
 
 	it('spends the first questions on the modules that need them most', () => {

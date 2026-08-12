@@ -23,6 +23,9 @@
 	import {
 		recordDrillResult,
 		hasBeenTested,
+		getCheckAvailability,
+		LESSONS_PER_CHECK,
+		type CheckAvailability,
 		READINESS_LABELS,
 		READINESS_MODULES,
 		computeReadiness,
@@ -226,6 +229,15 @@
 	let isRetake = $state(false);
 	let servedIds: string[] = [];
 
+	/**
+	 * Whether a scored sitting is allowed yet. Null while we are still
+	 * finding out — the intro waits rather than flashing the wrong state.
+	 */
+	let availability = $state<CheckAvailability | null>(null);
+	/** Set when the learner takes it anyway; results are then not recorded. */
+	let unscored = $state(false);
+	const locked = $derived(!!availability && !availability.unlocked && !unscored);
+
 	const item = $derived(activeItems[idx]);
 	const total = $derived(activeItems.length);
 
@@ -238,6 +250,18 @@
 			.then((a) => (authed = a))
 			.catch(() => {
 				/* the back link just points home for guests */
+			});
+		// Same rule as everything else on this page: never let an async call
+		// stand between the learner and the test. A failure here unlocks.
+		void getCheckAvailability()
+			.then((a) => (availability = a))
+			.catch(() => {
+				availability = {
+					unlocked: true,
+					isFirstSitting: false,
+					lessonsNeeded: 0,
+					hoursNeeded: 0
+				};
 			});
 		if (hasBeenTested()) void loadRetakeSitting();
 	});
@@ -450,6 +474,12 @@
 	function finish() {
 		// So the next retake draws different questions.
 		addSeenExamItems(servedIds);
+		// An "anyway" sitting is practice, not evidence — recording it would
+		// reintroduce exactly the re-rollable score the gate exists to stop.
+		if (unscored) {
+			phase = 'results';
+			return;
+		}
 		for (const m of ['hoeren', 'lesen', 'schreiben', 'sprechen'] as ReadinessModule[]) {
 			if (possible[m] > 0) recordDrillResult(m, earned[m], possible[m]);
 		}
@@ -484,6 +514,38 @@
 	<span id="main-content" tabindex="-1" class="sr-only"></span>
 
 	{#if phase === 'intro'}
+		{#if locked && availability}
+			<!-- The lock is the point, not an apology: a countdown to the next
+			     check is a reason to open today's lesson, which is the thing
+			     the score actually depends on. -->
+			<section class="card intro locked-card">
+				<div class="badge">🔒 Goethe A1</div>
+				<h1>
+					{availability.lessonsNeeded > 0
+						? `${availability.lessonsNeeded} ${availability.lessonsNeeded === 1 ? 'lesson' : 'lessons'} to your next check`
+						: `Next check in ${availability.hoursNeeded}h`}
+				</h1>
+				<p class="sub">
+					Your score only moves when your German does. Finish
+					{LESSONS_PER_CHECK} lessons between checks and the next one
+					measures something real instead of re-rolling the same twelve
+					questions.
+				</p>
+				<p class="sub fa" dir="rtl">
+					{availability.lessonsNeeded > 0
+						? `${availability.lessonsNeeded} درس دیگر تا سنجش بعدی. نمره وقتی تغییر می‌کند که آلمانی‌ات تغییر کند.`
+						: `سنجش بعدی تا ${availability.hoursNeeded} ساعت دیگر.`}
+				</p>
+				<a class="btn-primary big" href="/lesson">▶ Today's lesson</a>
+				<button class="btn-ghost" onclick={() => (unscored = true)}>
+					Take it anyway — won't count
+				</button>
+				<p class="fine">
+					An unscored run is practice: you'll see how you did, but it
+					won't change your readiness.
+				</p>
+			</section>
+		{:else}
 		<section class="card intro">
 			<div class="badge">🎓 Goethe A1 · Start Deutsch 1</div>
 			<h1>{isRetake ? 'Check your progress' : 'How ready are you?'}</h1>
@@ -516,6 +578,7 @@
 			<button class="btn-primary big" onclick={start}>▶ Start the test</button>
 			<p class="fine">Speaking questions are optional — you can skip them.</p>
 		</section>
+		{/if}
 	{:else if phase === 'test'}
 		<section class="card">
 			<p class="module-tag mod-{item.module}">

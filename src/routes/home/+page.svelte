@@ -15,9 +15,11 @@
 	} from "$services/lesson-loader";
 	import {
 		computeReadiness,
+		getCheckAvailability,
 		READINESS_MODULES,
 		READINESS_LABELS,
 		type Readiness,
+		type CheckAvailability,
 	} from "$services/readiness";
 	import type { ExamSettings } from "$services/data-layer";
 	import { computeStreak } from "$utils/streak";
@@ -54,6 +56,7 @@
 
 	// Goethe hero
 	let readiness = $state<Readiness | null>(null);
+	let checkGate = $state<CheckAvailability | null>(null);
 	/** Nothing graded anywhere yet — the whole card is inference. Once even
 	 *  one bar is backed by real answers the blanket note would be a lie, and
 	 *  the per-bar tags say it better anyway. */
@@ -313,6 +316,13 @@
 			readiness = await computeReadiness();
 		} catch {
 			readiness = null;
+		}
+
+		try {
+			checkGate = await getCheckAvailability();
+		} catch {
+			// The card falls back to the plain CTA rather than a wrong lock.
+			checkGate = null;
 		}
 
 		try {
@@ -1156,28 +1166,61 @@
 			<!-- Relocated from the readiness card: these are actions, not
 			     score. The placement test only appears while the score is
 			     still an estimate — once it is real, the card is clutter. -->
-			{#if readiness?.needsPlacement}
+			<!-- Locked shows a countdown rather than disappearing: "3 lessons to
+			     your next check" is a reason to start today's lesson, which is
+			     the only thing that can move the score. -->
+			{#if readiness?.needsPlacement || checkGate}
 				<a
-					href="/placement"
+					href={checkGate && !checkGate.unlocked ? "/lesson" : "/placement"}
 					class="stat-card stat-card-link action-card"
-					title={language === "fa" ? "تست تعیین سطح" : "Placement test"}
+					class:locked={checkGate && !checkGate.unlocked}
+					title={language === "fa" ? "سنجش سطح" : "Level check"}
 				>
-					<span class="stat-icon aim" aria-hidden="true">🎯</span>
-					<div class="stat-content">
-						<span class="stat-label strong"
-							>{language === "fa"
-								? "سطح واقعی‌ات را بسنج"
-								: "Check your real level"}</span
-						>
-						<span class="stat-sub"
-							>{language === "fa"
-								? "تست تعیین سطح رایگان"
-								: "Free placement test"}</span
-						>
-					</div>
-					<span class="stat-cta"
-						>{language === "fa" ? "شروع ←" : "Start →"}</span
+					<span class="stat-icon aim" aria-hidden="true"
+						>{checkGate && !checkGate.unlocked ? "🔒" : "🎯"}</span
 					>
+					<div class="stat-content">
+						{#if checkGate && !checkGate.unlocked}
+							<span class="stat-label strong">
+								{#if checkGate.lessonsNeeded > 0}
+									{language === "fa"
+										? `${checkGate.lessonsNeeded} درس تا سنجش بعدی`
+										: `${checkGate.lessonsNeeded} ${checkGate.lessonsNeeded === 1 ? "lesson" : "lessons"} to your next check`}
+								{:else}
+									{language === "fa"
+										? `سنجش بعدی تا ${checkGate.hoursNeeded} ساعت`
+										: `Next check in ${checkGate.hoursNeeded}h`}
+								{/if}
+							</span>
+							<span class="stat-sub"
+								>{language === "fa"
+									? "نمره وقتی تغییر می‌کند که آلمانی‌ات تغییر کند"
+									: "Your score moves when your German does"}</span
+							>
+						{:else}
+							<span class="stat-label strong"
+								>{language === "fa"
+									? "سطح واقعی‌ات را بسنج"
+									: "Check your real level"}</span
+							>
+							<span class="stat-sub"
+								>{language === "fa"
+									? readiness?.needsPlacement
+										? "تست تعیین سطح رایگان"
+										: "سؤال‌های تازه"
+									: readiness?.needsPlacement
+										? "Free placement test"
+										: "Fresh questions"}</span
+							>
+						{/if}
+					</div>
+					<span class="stat-cta">
+						{#if checkGate && !checkGate.unlocked}
+							{language === "fa" ? "درس امروز ←" : "Today's lesson →"}
+						{:else}
+							{language === "fa" ? "شروع ←" : "Start →"}
+						{/if}
+					</span>
 				</a>
 			{/if}
 
@@ -1700,6 +1743,15 @@
 	.stat-icon.aim {
 		font-size: 1.5rem;
 		line-height: 1;
+	}
+
+	/* Muted, not disabled — it is still a live link, just to the lesson. */
+	.action-card.locked {
+		border-style: dashed;
+	}
+
+	.action-card.locked .stat-label.strong {
+		color: var(--ink-soft);
 	}
 
 	/* ── Nav Cards ────────────────────────────────────── */
