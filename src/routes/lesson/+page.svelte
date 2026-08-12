@@ -2557,6 +2557,16 @@
 		font-weight: 600;
 		cursor: pointer;
 		font-size: 0.84rem;
+		/* Stated, never inherited: the header band behind these is brand green
+		   with white text, so inheriting painted the Blind Mode label white on
+		   its white pill — 1.00:1, invisible in light mode and only survivable
+		   in dark because --paper-raised is near-black there. */
+		color: var(--ink);
+	}
+
+	/* The one label that really is on the band rather than in a pill. */
+	.day-selection-control label {
+		color: var(--on-brand);
 	}
 
 	.progress-info {

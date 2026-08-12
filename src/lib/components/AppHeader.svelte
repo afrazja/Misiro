@@ -295,16 +295,18 @@
 		border-color: #ffffff;
 	}
 
-	/* Page controls dropped into the toolbar slot (selects, toggles). */
+	/* Page controls dropped into the toolbar slot (selects, toggles). These
+	   sit on their own light pill, so they take ink rather than the band's
+	   white. */
 	.brand-variant .secondary-toolbar :global(select),
-	.brand-variant .secondary-toolbar :global(label),
 	.brand-variant .secondary-toolbar :global(button) {
 		color: var(--ink);
 	}
 
-	.brand-variant .secondary-toolbar :global(label) {
-		color: var(--on-brand);
-	}
+	/* Labels are deliberately NOT coloured here. A slotted label might sit
+	   directly on the green band or inside a white pill, and only the page
+	   knows which — the lesson has one of each. Forcing --on-brand made the
+	   Blind Mode label white on a white pill: 1.00:1, invisible. */
 
 	/* ── Dark variant: near-black ribbon, green-outlined controls ──
 	   Used where a pale header made the page look washed out. The green
