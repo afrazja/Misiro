@@ -37,7 +37,25 @@ let recordedChunks: Blob[] = [];
 let recorderTimeout: ReturnType<typeof setTimeout> | null = null;
 
 /** Max recording length for the STT fallback (safety + quota). */
-const MAX_RECORD_MS = 10000;
+const MAX_RECORD_MS = 15000;
+
+// ── How long to wait for a learner ──
+//
+// These are generous on purpose. Being cut off mid-sentence is far worse
+// than waiting an extra second: the learner loses the answer, gets marked
+// wrong for it, and cannot tell whether their German or the app was at
+// fault. Waiting too long costs a beat, and there is a tap-to-stop button
+// for anyone impatient.
+//
+// A2/B1 sentences run long and beginners pause inside them — before a hard
+// word, after an article, halfway through a compound noun.
+
+/** Silence that ends an utterance, once they have started talking. */
+const SPEECH_PAUSE_MS = 2000;
+/** Silence allowed BEFORE they start, while they read and think. */
+const SPEECH_LEAD_MS = 7000;
+/** Absolute cap on one Web Speech utterance. */
+const SPEECH_MAX_MS = 25000;
 
 /**
  * Capture constraints for the fallback recorder.
@@ -60,8 +78,16 @@ const MIC_CONSTRAINTS: MediaTrackConstraints = {
 };
 
 // ── Voice activity detection ─────────────────────────────────────────────
-/** Silence after speech that ends the recording. */
-const SILENCE_MS = 900;
+/**
+ * Silence after speech that ends the recording.
+ *
+ * Was 900ms, which cut people off mid-sentence — a pause that short is
+ * ordinary inside a sentence a learner is still assembling. Matches the
+ * Web Speech pause above so both engines feel the same.
+ */
+const SILENCE_MS = SPEECH_PAUSE_MS;
+/** Never auto-stop before this, whatever the mic hears. */
+const MIN_RECORD_MS = 2500;
 /** How often to sample loudness. */
 const VAD_POLL_MS = 100;
 /** Window used to learn the room's noise floor before speech starts. */
@@ -97,46 +123,161 @@ export function initSpeechRecognition(): boolean {
 	}
 
 	recognition = new SpeechRecognition();
-	recognition.continuous = false;
+	// continuous = true is the whole fix for "it cuts me off mid-sentence".
+	//
+	// With continuous = false the browser decides when the learner is done,
+	// and Chrome decides at the FIRST end-of-speech it detects. A beginner
+	// reading a German sentence pauses — mid-clause, before a hard word,
+	// after an article — and the recognizer treats that pause as the end,
+	// submits half a sentence and stops listening. Combined with strict
+	// scoring that reads as "wrong", for a sentence they were never allowed
+	// to finish.
+	//
+	// So we keep the stream open and decide the endpoint ourselves, below.
+	recognition.continuous = true;
 	recognition.lang = 'de-DE';
-	recognition.interimResults = false;
+	// Not for display — interim results are the only signal that says
+	// "still talking", which is what resets the pause timer.
+	recognition.interimResults = true;
 	// Multiple hypotheses: the 2nd/3rd guess is often what the learner said.
 	recognition.maxAlternatives = 5;
 
 	recognition.onstart = () => {
+		resetUtterance();
 		setListening(true);
 		emitState('listening');
 		playTone('start');
+		// They have not started yet. Give them room to think before the
+		// pause timer has anything to measure.
+		armEndpoint(SPEECH_LEAD_MS);
+		speechMaxTimer = setTimeout(() => finishRecognition(), SPEECH_MAX_MS);
 	};
 
 	recognition.onend = () => {
+		clearEndpointTimers();
 		setListening(false);
 		emitState('idle');
+		emitUtterance();
 	};
 
 	recognition.onresult = (event: any) => {
-		const alternatives: string[] = [];
-		const res = event.results[0];
-		for (let i = 0; i < res.length; i++) {
-			const t = res[i]?.transcript?.trim();
-			if (t) alternatives.push(t);
-		}
-		if (alternatives.length === 0) return;
+		// Any result at all — interim included — means they are still going.
+		armEndpoint(SPEECH_PAUSE_MS);
 
-		// NOTE: no hard confidence gate here — some browsers (notably Chrome
-		// on Android) report confidence 0 for perfectly good results, which
-		// used to reject every answer. The text matcher is the arbiter.
-		lastAlternatives = alternatives;
-		if (onVoiceInput) onVoiceInput(alternatives[0]);
+		for (let r = event.resultIndex; r < event.results.length; r++) {
+			const res = event.results[r];
+			if (!res.isFinal) continue;
+
+			const alternatives: string[] = [];
+			for (let i = 0; i < res.length; i++) {
+				const t = res[i]?.transcript?.trim();
+				if (t) alternatives.push(t);
+			}
+			// NOTE: no hard confidence gate here — some browsers (notably
+			// Chrome on Android) report confidence 0 for perfectly good
+			// results, which used to reject every answer. The text matcher
+			// is the arbiter.
+			if (alternatives.length) chunkAlternatives.push(alternatives);
+		}
 	};
 
 	recognition.onerror = (event: any) => {
+		// 'no-speech' is the learner tapping the mic and saying nothing. It
+		// is not an error worth a tone and a red state.
+		if (event.error === 'no-speech' || event.error === 'aborted') {
+			clearEndpointTimers();
+			return;
+		}
 		console.error('Voice Error:', event.error);
+		clearEndpointTimers();
 		playTone('error');
 		emitState('error');
 	};
 
 	return true;
+}
+
+// ── Endpointing for the Web Speech path ───────────────────────────
+
+/** Final transcripts so far this utterance, one entry per recognized chunk. */
+let chunkAlternatives: string[][] = [];
+let endpointTimer: ReturnType<typeof setTimeout> | null = null;
+let speechMaxTimer: ReturnType<typeof setTimeout> | null = null;
+let utteranceEmitted = false;
+
+function resetUtterance(): void {
+	chunkAlternatives = [];
+	utteranceEmitted = false;
+}
+
+function clearEndpointTimers(): void {
+	if (endpointTimer) {
+		clearTimeout(endpointTimer);
+		endpointTimer = null;
+	}
+	if (speechMaxTimer) {
+		clearTimeout(speechMaxTimer);
+		speechMaxTimer = null;
+	}
+}
+
+/** (Re)start the silence countdown that ends the utterance. */
+function armEndpoint(ms: number): void {
+	if (endpointTimer) clearTimeout(endpointTimer);
+	endpointTimer = setTimeout(() => finishRecognition(), ms);
+}
+
+function finishRecognition(): void {
+	clearEndpointTimers();
+	// Tell the learner we heard them and are working, so the extra beat of
+	// patience does not read as the app having missed the whole thing.
+	emitState('processing');
+	try {
+		recognition?.stop();
+	} catch {
+		// Already stopped — onend still fires and emits.
+	}
+}
+
+/**
+ * Stitch recognized chunks into whole-sentence hypotheses.
+ *
+ * A sentence spoken with pauses arrives as several final results, and each
+ * one carries its own alternatives. Joining alternative i across every chunk
+ * keeps each hypothesis internally coherent, rather than mixing chunk 1's
+ * best guess with chunk 2's fourth. A chunk with fewer alternatives falls
+ * back to its own primary instead of dropping out and leaving a hole in the
+ * middle of the sentence.
+ *
+ * Exported for tests — this is the part with the off-by-ones in it.
+ */
+export function stitchAlternatives(chunks: string[][], maxDepth = 5): string[] {
+	const usable = chunks.filter((c) => c.length > 0);
+	if (!usable.length) return [];
+
+	const depth = Math.min(maxDepth, Math.max(...usable.map((c) => c.length)));
+	const combined: string[] = [];
+	for (let i = 0; i < depth; i++) {
+		const text = usable
+			.map((c) => c[i] ?? c[0])
+			.join(' ')
+			.replace(/\s+/g, ' ')
+			.trim();
+		if (text && !combined.includes(text)) combined.push(text);
+	}
+	return combined;
+}
+
+/** Hand the finished utterance to whoever is listening — exactly once. */
+function emitUtterance(): void {
+	if (utteranceEmitted) return;
+	utteranceEmitted = true;
+
+	const combined = stitchAlternatives(chunkAlternatives);
+	if (!combined.length) return;
+
+	lastAlternatives = combined;
+	if (onVoiceInput) onVoiceInput(combined[0]);
 }
 
 /** Alternatives from the most recent recognition (primary first). */
@@ -230,7 +371,11 @@ function startVAD(stream: MediaStream): void {
 			// a learner who takes two seconds to think gets cut off.
 			if (!hasSpoken) return;
 			quietFor += VAD_POLL_MS;
-			if (quietFor >= SILENCE_MS) stopFallbackRecording();
+			// The floor matters independently: a learner who starts, says one
+			// word and hesitates would otherwise be submitted on that word.
+			if (quietFor >= SILENCE_MS && elapsed >= MIN_RECORD_MS) {
+				stopFallbackRecording();
+			}
 		}, VAD_POLL_MS);
 	} catch {
 		// No VAD — the manual tap and MAX_RECORD_MS still end the recording.
@@ -419,6 +564,8 @@ export function destroySpeechRecognition(): void {
 		}
 		recognition = null;
 	}
+	clearEndpointTimers();
+	resetUtterance();
 	stopFallbackRecording();
 	stopVAD();
 	mediaStream?.getTracks().forEach((t) => t.stop());
