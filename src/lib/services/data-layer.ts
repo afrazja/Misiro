@@ -802,6 +802,33 @@ export function addSeenExamItems(ids: string[]): void {
 	}
 }
 
+// ========== CHECKPOINTS TAKEN ==========
+
+// Which level checkpoints the learner has already sat, e.g. ['A1-1','A1-2'].
+const CHECKPOINTS_LS_KEY = 'mirifer_checkpoints_done';
+
+export function getCheckpointsDone(): string[] {
+	try {
+		const raw = JSON.parse(localStorage.getItem(CHECKPOINTS_LS_KEY) || '[]');
+		return Array.isArray(raw) ? raw.filter((x) => typeof x === 'string') : [];
+	} catch {
+		return [];
+	}
+}
+
+export function markCheckpointDone(key: string): void {
+	if (!key) return;
+	try {
+		const all = getCheckpointsDone();
+		if (!all.includes(key)) {
+			localStorage.setItem(CHECKPOINTS_LS_KEY, JSON.stringify([...all, key]));
+		}
+	} catch {
+		/* storage unavailable — the checkpoint stays offered, which is the
+		   safe direction to fail */
+	}
+}
+
 // ========== CLEAR ALL LOCAL DATA ==========
 
 export function clearAllLocal(): void {
@@ -816,6 +843,7 @@ export function clearAllLocal(): void {
 	localStorage.removeItem('mirifer_basics_done');
 	localStorage.removeItem('mirifer_word_strength');
 	localStorage.removeItem('mirifer_seen_exam_items');
+	localStorage.removeItem('mirifer_checkpoints_done');
 	localStorage.removeItem('mirifer_practice_signal');
 	localStorage.removeItem('mirifer_sync_queue');
 	localStorage.removeItem(VOCAB_LS_KEY);

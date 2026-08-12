@@ -5,7 +5,6 @@ import {
 	recordPracticeResult,
 	hasBeenTested,
 	checkAvailability,
-	LESSONS_PER_CHECK,
 	type DrillAttempt
 } from './readiness';
 
@@ -199,60 +198,60 @@ describe('hasBeenTested', () => {
 });
 
 describe('checkAvailability', () => {
-	const lessons = (n: number, since: number) =>
-		Array.from({ length: n }, (_, i) => since + (i + 1) * 60_000);
+	const upTo = (n: number) => Array.from({ length: n }, (_, i) => i + 1);
+	const longAgo = NOW - 10 * DAY;
 
-	it('is always open before the first sitting — placement is calibration', () => {
-		const a = checkAvailability([], null, NOW);
+	it('is open before anything has ever been sat — placement is calibration', () => {
+		const a = checkAvailability([], [], null, NOW);
 		expect(a.unlocked).toBe(true);
 		expect(a.isFirstSitting).toBe(true);
 	});
 
 	// The point of the gate: retaking with nothing studied samples the same
 	// ability twice, and the difference is noise on twelve questions.
-	it('stays locked when nothing has been finished since the last check', () => {
-		const a = checkAvailability([], NOW - 10 * DAY, NOW);
+	it('locks until the next checkpoint milestone is reached', () => {
+		const a = checkAvailability(upTo(5), ['A1-1'], longAgo, NOW);
 		expect(a.unlocked).toBe(false);
-		expect(a.lessonsNeeded).toBe(LESSONS_PER_CHECK);
+		expect(a.checkpoint).toMatchObject({ level: 'A1', index: 2, day: 16 });
+		expect(a.lessonsNeeded).toBe(11);
 	});
 
-	it('counts down the lessons still needed', () => {
-		const last = NOW - 10 * DAY;
-		expect(checkAvailability(lessons(2, last), last, NOW).lessonsNeeded).toBe(
-			LESSONS_PER_CHECK - 2
-		);
-	});
-
-	it('opens once enough lessons are done', () => {
-		const last = NOW - 10 * DAY;
-		const a = checkAvailability(lessons(LESSONS_PER_CHECK, last), last, NOW);
+	it('unlocks on the milestone day', () => {
+		const a = checkAvailability(upTo(16), ['A1-1'], longAgo, NOW);
 		expect(a.unlocked).toBe(true);
+		expect(a.checkpoint).toMatchObject({ index: 2, day: 16 });
 		expect(a.lessonsNeeded).toBe(0);
 	});
 
-	it('ignores lessons finished BEFORE the last check', () => {
-		const last = NOW - 10 * DAY;
-		const older = Array.from({ length: 20 }, (_, i) => last - (i + 1) * DAY);
-		expect(checkAvailability(older, last, NOW).lessonsNeeded).toBe(LESSONS_PER_CHECK);
-	});
-
-	// Otherwise someone could bulk-complete five days and immediately re-roll.
-	it('holds the 24h floor even with the lessons done', () => {
-		const last = NOW - 2 * 60 * 60 * 1000;
-		const a = checkAvailability(lessons(LESSONS_PER_CHECK, last), last, NOW);
+	// Otherwise finishing several days in one sitting could farm checkpoints.
+	it('holds the 24h floor even at a milestone', () => {
+		const a = checkAvailability(upTo(16), ['A1-1'], NOW - 2 * 60 * 60 * 1000, NOW);
 		expect(a.unlocked).toBe(false);
-		expect(a.lessonsNeeded).toBe(0);
 		expect(a.hoursNeeded).toBe(22);
 	});
 
-	it('reports no hours left once the floor has passed', () => {
-		const last = NOW - 30 * 60 * 60 * 1000;
-		expect(checkAvailability([], last, NOW).hoursNeeded).toBe(0);
+	it('counts down to the next level once one is finished', () => {
+		const a = checkAvailability(upTo(24), ['A1-1', 'A1-2', 'A1-3'], longAgo, NOW);
+		expect(a.unlocked).toBe(false);
+		expect(a.checkpoint).toMatchObject({ level: 'A2', index: 1, day: 32 });
+		expect(a.lessonsNeeded).toBe(8);
 	});
 
-	it('survives junk in the completion timestamps', () => {
-		const last = NOW - 10 * DAY;
-		const junk = [null, undefined, 'x', NaN] as unknown as number[];
-		expect(checkAvailability(junk, last, NOW).lessonsNeeded).toBe(LESSONS_PER_CHECK);
+	it('offers the earliest unsat checkpoint, never a later one', () => {
+		const a = checkAvailability(upTo(50), [], longAgo, NOW);
+		expect(a.checkpoint).toMatchObject({ level: 'A1', index: 1 });
+	});
+
+	it('stays locked with every checkpoint sat', () => {
+		const all = ['A1-1', 'A1-2', 'A1-3', 'A2-1', 'A2-2', 'A2-3', 'B1-1', 'B1-2', 'B1-3'];
+		const a = checkAvailability(upTo(100), all, longAgo, NOW);
+		expect(a.unlocked).toBe(false);
+		expect(a.checkpoint).toBeNull();
+	});
+
+	// Someone mid-course who has never been scored still gets the first
+	// sitting, rather than being locked out by a checkpoint they skipped.
+	it('treats a never-tested learner as a first sitting', () => {
+		expect(checkAvailability(upTo(30), [], null, NOW).isFirstSitting).toBe(true);
 	});
 });

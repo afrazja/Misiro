@@ -14,6 +14,11 @@
 		type LessonMeta,
 	} from "$services/lesson-loader";
 	import {
+		levelProgress,
+		type LevelProgress,
+	} from "$services/curriculum";
+	import { getCheckpointsDone } from "$services/data-layer";
+	import {
 		computeReadiness,
 		getCheckAvailability,
 		READINESS_MODULES,
@@ -57,6 +62,7 @@
 	// Goethe hero
 	let readiness = $state<Readiness | null>(null);
 	let checkGate = $state<CheckAvailability | null>(null);
+	let roadmap = $state<LevelProgress[]>([]);
 	/** Nothing graded anywhere yet — the whole card is inference. Once even
 	 *  one bar is backed by real answers the blanket note would be a lie, and
 	 *  the per-bar tags say it better anyway. */
@@ -316,6 +322,15 @@
 			readiness = await computeReadiness();
 		} catch {
 			readiness = null;
+		}
+
+		try {
+			const days = Object.keys(completedLessons || {})
+				.map((k) => Number(k))
+				.filter((n) => Number.isFinite(n));
+			roadmap = levelProgress(days, getCheckpointsDone());
+		} catch {
+			roadmap = [];
 		}
 
 		try {
@@ -1117,6 +1132,29 @@
 
 	<!-- ── Progress Stats ──────────────────────────────── -->
 	{#if isAuthenticated && !isNewUser}
+		<!-- The course map. A learner on Day 44 was being told their "A1
+		     readiness" with no way to see that A1 ended twenty days ago. -->
+		{#if roadmap.length}
+			<section class="roadmap" aria-label="Course progress">
+				{#each roadmap as lv (lv.level)}
+					<div class="rm-level" class:current={lv.current} class:done={lv.percent === 100}>
+						<div class="rm-head">
+							<span class="rm-name">{lv.level}</span>
+							<span class="rm-count">{lv.daysDone}/{lv.daysTotal}</span>
+						</div>
+						<div class="rm-bar">
+							<div class="rm-fill" style="width:{lv.percent}%"></div>
+						</div>
+						<div class="rm-cps" aria-label="{lv.checkpointsDone} of {lv.checkpointsTotal} checkpoints done">
+							{#each Array(lv.checkpointsTotal) as _, i}
+								<span class="rm-cp" class:passed={i < lv.checkpointsDone}></span>
+							{/each}
+						</div>
+					</div>
+				{/each}
+			</section>
+		{/if}
+
 		<div class="stats-row action-row">
 			<a
 				href="/review"
@@ -1641,6 +1679,95 @@
 	}
 
 	/* ── Stats Row ────────────────────────────────────── */
+	/* ── Course roadmap ── */
+	.roadmap {
+		display: grid;
+		grid-template-columns: repeat(3, 1fr);
+		gap: 12px;
+	}
+
+	.rm-level {
+		padding: 12px;
+		border: 1.5px solid var(--line);
+		border-radius: 14px;
+		background: var(--paper-raised);
+	}
+
+	/* The level being worked through is the one that matters today. */
+	.rm-level.current {
+		border-color: var(--leaf);
+		box-shadow: var(--paper-shadow);
+	}
+
+	.rm-head {
+		display: flex;
+		align-items: baseline;
+		justify-content: space-between;
+		gap: 8px;
+		margin-bottom: 8px;
+	}
+
+	.rm-name {
+		font-family: var(--font-display);
+		font-size: 1.05rem;
+		font-weight: 700;
+		color: var(--ink);
+	}
+
+	.rm-level.current .rm-name {
+		color: var(--leaf);
+	}
+
+	.rm-count {
+		font-size: 0.78rem;
+		color: var(--ink-faint);
+		font-variant-numeric: tabular-nums;
+	}
+
+	.rm-bar {
+		height: 6px;
+		border-radius: 4px;
+		background: var(--paper-sunken);
+		overflow: hidden;
+	}
+
+	.rm-fill {
+		height: 100%;
+		background: var(--leaf);
+		border-radius: 4px;
+	}
+
+	/* Three dots per level — the checkpoints, filled as they are passed. */
+	.rm-cps {
+		display: flex;
+		gap: 5px;
+		margin-top: 8px;
+	}
+
+	.rm-cp {
+		width: 8px;
+		height: 8px;
+		border-radius: 50%;
+		border: 1.5px solid var(--control-edge);
+	}
+
+	.rm-cp.passed {
+		background: var(--gold);
+		border-color: var(--gold);
+	}
+
+	@media (max-width: 520px) {
+		.roadmap {
+			gap: 8px;
+		}
+		.rm-level {
+			padding: 10px 8px;
+		}
+		.rm-name {
+			font-size: 0.95rem;
+		}
+	}
+
 	.stats-row {
 		display: grid;
 		grid-template-columns: repeat(4, 1fr);

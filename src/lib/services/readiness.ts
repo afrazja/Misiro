@@ -27,7 +27,8 @@
  * data-layer only (see commit 83fef01 for what happens otherwise).
  */
 
-import { loadSRData, getCompletedLessons } from './data-layer';
+import { loadSRData, getCompletedLessons, getCheckpointsDone } from './data-layer';
+import { dueCheckpoint, nextCheckpoint, type Checkpoint } from './curriculum';
 
 export type ReadinessModule = 'hoeren' | 'lesen' | 'schreiben' | 'sprechen';
 
@@ -212,54 +213,66 @@ export function hasBeenTested(): boolean {
 //
 // A learner who studies nothing and retakes twice in a day gets two samples
 // of the same ability, and the gap between them is noise on twelve
-// questions. Worse, checking your level FEELS like studying — it is the
-// exam-prep equivalent of reorganising your notes — so an app whose problem
-// is unfinished lessons should not hand out a frictionless way to feel
-// productive without learning.
+// questions. Worse, checking your level FEELS like studying, so an app whose
+// problem is unfinished lessons should not hand out a frictionless way to
+// feel productive without learning.
 //
-// So the check unlocks on new evidence, not on a timer: a timer rewards
-// waiting, and waiting is not learning. Shown as a countdown, the lock stops
-// being a refusal and becomes the milestone the app was missing.
-
-/** Lessons that must be finished between one scored check and the next. */
-export const LESSONS_PER_CHECK = 5;
-/** Floor, so bulk-completing in one sitting cannot farm checks. */
-const MIN_CHECK_GAP_MS = 24 * 60 * 60 * 1000;
+// The gate is the curriculum's own checkpoints: three per CEFR level, the
+// last of which is the level's final day. A rolling "every 5 lessons"
+// counter told the learner nothing about where they were; fixed milestones
+// are a map they can see from day one, and the lock becomes a countdown to
+// the next one rather than a refusal.
 
 export interface CheckAvailability {
 	unlocked: boolean;
 	/** Nothing tested yet — placement is calibration and always open. */
 	isFirstSitting: boolean;
-	/** Lessons still to finish before the next check opens. */
+	/** Lessons still to finish before the next checkpoint opens. */
 	lessonsNeeded: number;
+	/** The checkpoint being counted down to, or waited on. */
+	checkpoint: Checkpoint | null;
 	/** Whole hours left on the 24h floor; 0 when that is not the blocker. */
 	hoursNeeded: number;
 }
 
+/** Floor, so finishing several days at once cannot farm checkpoints. */
+const MIN_CHECK_GAP_MS = 24 * 60 * 60 * 1000;
+
 /**
  * Pure so the rule is testable without a clock or storage.
  *
- * @param completedAts when each finished lesson was completed
+ * @param completedDays lesson days finished
+ * @param checkpointsDone keys of checkpoints already sat
  * @param lastSittingAt the most recent scored sitting, or null for never
  */
 export function checkAvailability(
-	completedAts: number[],
+	completedDays: number[],
+	checkpointsDone: string[],
 	lastSittingAt: number | null,
 	now: number
 ): CheckAvailability {
-	if (lastSittingAt == null) {
-		return { unlocked: true, isFirstSitting: true, lessonsNeeded: 0, hoursNeeded: 0 };
+	if (lastSittingAt == null && !checkpointsDone.length) {
+		return {
+			unlocked: true,
+			isFirstSitting: true,
+			lessonsNeeded: 0,
+			checkpoint: null,
+			hoursNeeded: 0
+		};
 	}
-	const since = completedAts.filter((t) => typeof t === 'number' && t > lastSittingAt).length;
-	const lessonsNeeded = Math.max(0, LESSONS_PER_CHECK - since);
-	const hoursNeeded = Math.max(
-		0,
-		Math.ceil((MIN_CHECK_GAP_MS - (now - lastSittingAt)) / (60 * 60 * 1000))
-	);
+
+	const due = dueCheckpoint(completedDays, checkpointsDone);
+	const next = nextCheckpoint(completedDays, checkpointsDone);
+	const hoursNeeded =
+		lastSittingAt == null
+			? 0
+			: Math.max(0, Math.ceil((MIN_CHECK_GAP_MS - (now - lastSittingAt)) / (60 * 60 * 1000)));
+
 	return {
-		unlocked: lessonsNeeded === 0 && hoursNeeded === 0,
+		unlocked: !!due && hoursNeeded === 0,
 		isFirstSitting: false,
-		lessonsNeeded,
+		lessonsNeeded: next?.lessonsRemaining ?? 0,
+		checkpoint: due ?? next?.checkpoint ?? null,
 		hoursNeeded
 	};
 }
@@ -276,10 +289,10 @@ export function lastSittingAt(): number | null {
 /** The rule applied to real data. */
 export async function getCheckAvailability(): Promise<CheckAvailability> {
 	const completed = await getCompletedLessons();
-	const ats = Object.values(completed || {})
-		.map((c) => (c as { completedAt?: number })?.completedAt)
-		.filter((t): t is number => typeof t === 'number');
-	return checkAvailability(ats, lastSittingAt(), Date.now());
+	const days = Object.keys(completed || {})
+		.map((k) => Number(k))
+		.filter((n) => Number.isFinite(n));
+	return checkAvailability(days, getCheckpointsDone(), lastSittingAt(), Date.now());
 }
 
 // ── Practice signal (fed by ordinary use) ─────────────────────────────────

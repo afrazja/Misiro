@@ -24,7 +24,6 @@
 		recordDrillResult,
 		hasBeenTested,
 		getCheckAvailability,
-		LESSONS_PER_CHECK,
 		type CheckAvailability,
 		READINESS_LABELS,
 		READINESS_MODULES,
@@ -34,7 +33,13 @@
 	import { isAuthenticated as checkAuth } from '$services/auth';
 	import { buildExamBank, selectSitting, type SourceSentence } from '$services/exam-items';
 	import { getLessonIndex, loadLesson } from '$services/lesson-loader';
-	import { getLanguage, getSeenExamItems, addSeenExamItems } from '$services/data-layer';
+	import {
+		getLanguage,
+		getSeenExamItems,
+		addSeenExamItems,
+		markCheckpointDone
+	} from '$services/data-layer';
+	import { checkpointKey } from '$services/curriculum';
 	import type { Language } from '$stores/preferences';
 	import { logError, logWarn } from '$utils/error';
 
@@ -260,6 +265,7 @@
 					unlocked: true,
 					isFirstSitting: false,
 					lessonsNeeded: 0,
+					checkpoint: null,
 					hoursNeeded: 0
 				};
 			});
@@ -480,6 +486,7 @@
 			phase = 'results';
 			return;
 		}
+		if (availability?.checkpoint) markCheckpointDone(checkpointKey(availability.checkpoint));
 		for (const m of ['hoeren', 'lesen', 'schreiben', 'sprechen'] as ReadinessModule[]) {
 			if (possible[m] > 0) recordDrillResult(m, earned[m], possible[m]);
 		}
@@ -522,14 +529,19 @@
 				<div class="badge">🔒 Goethe A1</div>
 				<h1>
 					{availability.lessonsNeeded > 0
-						? `${availability.lessonsNeeded} ${availability.lessonsNeeded === 1 ? 'lesson' : 'lessons'} to your next check`
-						: `Next check in ${availability.hoursNeeded}h`}
+						? `${availability.lessonsNeeded} ${availability.lessonsNeeded === 1 ? 'lesson' : 'lessons'} to your next checkpoint`
+						: `Next checkpoint in ${availability.hoursNeeded}h`}
 				</h1>
+				{#if availability.checkpoint}
+					<p class="cp-name">
+						{availability.checkpoint.level} · checkpoint
+						{availability.checkpoint.index} of 3 — day {availability.checkpoint.day}
+					</p>
+				{/if}
 				<p class="sub">
-					Your score only moves when your German does. Finish
-					{LESSONS_PER_CHECK} lessons between checks and the next one
-					measures something real instead of re-rolling the same twelve
-					questions.
+					Your score only moves when your German does. Each level has three
+					checkpoints; reaching one is what makes the next result mean
+					something instead of re-rolling the same questions.
 				</p>
 				<p class="sub fa" dir="rtl">
 					{availability.lessonsNeeded > 0
@@ -820,6 +832,14 @@
 	.sub {
 		color: var(--ink-soft);
 		line-height: 1.6;
+	}
+
+	/* Names the milestone, so the lock reads as a position on a map rather
+	   than an arbitrary refusal. */
+	.cp-name {
+		font-weight: 700;
+		color: var(--leaf);
+		margin: -4px 0 10px;
 	}
 
 	.fine {
