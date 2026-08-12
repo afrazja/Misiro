@@ -51,6 +51,8 @@
 		isSpeechSupported,
 	} from "$services/speech";
 	import SentencePractice from "$components/SentencePractice.svelte";
+	import ConversationTurn from "$components/ConversationTurn.svelte";
+	import { openerForDay } from "$services/conversation-openers";
 	import { type Outcome } from "$services/practice-drills";
 	import {
 		recordPracticeResult,
@@ -495,6 +497,33 @@
 		null,
 	);
 	let practiceEl = $state<SentencePractice | null>(null);
+
+	// ── The free-response turn ──
+	// Offered after the completion card, so the lesson is already credited.
+	// Dark unless /proxy/converse says it has a key — the client cannot read
+	// env, and flashing a card we cannot serve is worse than never showing it.
+	let converseAvailable = $state(false);
+	let freeTurnEl = $state<ConversationTurn | null>(null);
+	let freeTurnDone = $state(false);
+	let freeTurnOffered = false;
+
+	/** Shown only after a completed lesson, and only when configured. */
+	const showFreeTurn = $derived(
+		!!completionData &&
+			converseAvailable &&
+			!freeTurnDone &&
+			!exam.isExamMode &&
+			!exam.isConversation,
+	);
+
+	// Log the offer exactly once per lesson, so the funnel has a denominator
+	// — how many people were shown this versus how many spoke.
+	$effect(() => {
+		if (showFreeTurn && !freeTurnOffered) {
+			freeTurnOffered = true;
+			void trackEvent("free_turn_offered", { day: app.currentDay });
+		}
+	});
 	let micSupported = $state(false);
 
 	function openPractice(german: string, meaning: string) {
@@ -656,8 +685,20 @@
 				practiceEl?.handleVoice(transcript, getLastVoiceAlternatives());
 				return;
 			}
+			if (showFreeTurn) {
+				freeTurnEl?.handleVoice(transcript);
+				return;
+			}
 			controllerHandleVoice(transcript);
 		});
+
+		// Fire-and-forget on purpose. This has no business delaying the
+		// lesson, and a lesson that will not load because an availability
+		// probe hung is a mistake this codebase has already made three times.
+		fetch("/proxy/converse")
+			.then((r) => r.json())
+			.then((d) => (converseAvailable = !!d?.available))
+			.catch(() => {});
 
 		await initLesson();
 		isReady = true;
@@ -1543,6 +1584,38 @@
 									{/if}
 								</div>
 							</div>
+						{/if}
+
+						<!-- The one turn where the learner says their own words.
+						     After the completion card on purpose: the lesson is
+						     already credited, so skipping this costs nothing. -->
+						{#if showFreeTurn}
+							{@const op = openerForDay(app.currentDay)}
+							<ConversationTurn
+								bind:this={freeTurnEl}
+								scenario={scenarioDescription() ||
+									scenarioTitle() ||
+									'An everyday conversation in German.'}
+								vocab={(lesson.currentLesson?.sentences ?? [])
+									.map((s) => s.targetText || s.audioText || '')
+									.filter(Boolean)}
+								opener={op.de}
+								openerTranslation={prefs.language === 'fa' ? op.fa : op.en}
+								lang={prefs.language}
+								micAvailable={micSupported}
+								isListening={app.isListening}
+								onToggleMic={handleMicClick}
+								onBegin={() =>
+									trackEvent('free_turn_begun', { day: app.currentDay })}
+								onFinish={(turns) => {
+									freeTurnDone = true;
+									if (app.isListening) stopListening();
+									void trackEvent('free_turn_completed', {
+										day: app.currentDay,
+										metadata: { turns },
+									});
+								}}
+							/>
 						{/if}
 
 						<!-- Exam Results -->

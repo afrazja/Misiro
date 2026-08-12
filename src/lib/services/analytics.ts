@@ -30,6 +30,15 @@ export type AnalyticsEvent =
 	 */
 	| 'lesson_begun'
 	| 'lesson_completed'
+	/**
+	 * The free-response turn: offered after a completed lesson, begun when
+	 * the learner actually says something, completed when they finish or
+	 * skip. Instrumented from the start rather than retrofitted the way
+	 * lesson_begun had to be.
+	 */
+	| 'free_turn_offered'
+	| 'free_turn_begun'
+	| 'free_turn_completed'
 	| 'exam_completed'
 	| 'review_started'
 	| 'conversation_started'
