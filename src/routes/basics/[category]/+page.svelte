@@ -1258,7 +1258,9 @@
 		gap: 8px;
 		min-height: 60px;
 		padding: 12px;
-		border: 2px dashed var(--control-edge);
+		/* Mid-tone, not the keycap wall: the dashed edge is the only thing
+		   marking this drop zone and --control-edge is near-black in dark. */
+		border: 2px dashed var(--ink-faint);
 		border-radius: 12px;
 		background: var(--paper-sunken);
 	}

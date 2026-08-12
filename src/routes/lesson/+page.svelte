@@ -3129,15 +3129,20 @@
 		gap: 4px;
 	}
 
+	/* --ink-faint, not --control-edge: that token is the dark "wall" under a
+	   filled control and is near-black in dark mode, so a dot relying on it as
+	   its only visible mark vanished into the script panel. Unlit is a ring,
+	   lit is filled — the same language as the roadmap checkpoints. */
 	.mastery .dot {
-		width: 7px;
-		height: 7px;
+		width: 8px;
+		height: 8px;
 		border-radius: 50%;
-		background: var(--control-edge);
+		border: 1.5px solid var(--ink-faint);
 	}
 
 	.mastery .dot.lit {
 		background: var(--leaf);
+		border-color: var(--leaf);
 	}
 
 	.practice-link {

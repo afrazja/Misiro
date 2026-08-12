@@ -364,7 +364,9 @@
 		gap: 8px;
 		min-height: 60px;
 		padding: 12px;
-		border: 2px dashed var(--control-edge);
+		/* Dashed edge is the whole affordance here, and --paper-sunken is
+		   near-black in dark — so the outline needs a mid-tone, not the wall. */
+		border: 2px dashed var(--ink-faint);
 		border-radius: 12px;
 		background: var(--paper-sunken);
 	}
@@ -421,7 +423,7 @@
 		display: inline-block;
 		min-width: 68px;
 		padding: 0 6px;
-		border-bottom: 3px solid var(--control-edge);
+		border-bottom: 3px solid var(--ink-faint);
 		font-weight: 700;
 	}
 

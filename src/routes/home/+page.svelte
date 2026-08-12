@@ -1791,7 +1791,9 @@
 		width: 8px;
 		height: 8px;
 		border-radius: 50%;
-		border: 1.5px solid var(--control-edge);
+		/* See the mastery dots in /lesson — --control-edge is invisible on a
+		   dark surface when nothing fills the shape. */
+		border: 1.5px solid var(--ink-faint);
 	}
 
 	.rm-cp.passed {
