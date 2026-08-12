@@ -162,9 +162,23 @@ Rules the prompt must enforce, each for a reason:
    garbled transcript means correcting German the learner actually said
    fine.
 
-Model: start on **Claude Sonnet 5** for judgment quality. At six users the
-cost is rounding error, so buy quality first and evaluate **Haiku 4.5** for
-latency and cost once the prompt is stable and we know what good looks like.
+Model: **OpenAI**, because Afraz already has a working key — and account
+access, not model quality, is what killed the Azure pronunciation route.
+Two turns of A1 German with short replies is not a hard task; every current
+frontier model does it well, so the deciding factor is which one can
+actually be switched on. Use structured-output mode to enforce the schema
+above rather than parsing prose.
+
+The contract is provider-agnostic. Swapping is one file if that ever
+matters.
+
+Not the Realtime speech-to-speech API for v1, despite the obvious appeal.
+It replaces the app's own TTS and STT with a black box, makes the A1
+vocabulary constraint and the structured reply much harder to enforce, and
+costs per minute rather than per turn. The relay — existing STT, text
+model, existing TTS — keeps German voice quality under our control and
+keeps every rule above enforceable. Worth revisiting once the mechanic is
+proven.
 
 ## Failure modes
 
