@@ -1277,12 +1277,20 @@
 												: "🔊 Replay"}
 										{/if}
 									</button>
-									<!-- The mic belongs where the sentence is. It lived only
-									     in the composer at the bottom of the screen, so
-									     reading your line and answering it were at opposite
-									     ends of the page. Only on 'sent' steps — there is
-									     nothing to say back to the other speaker's line. -->
-									{#if currentTeachStep.role === "sent" && micSupported}
+									<!-- The mic belongs where the sentence is, beside the
+									     button that reads it aloud.
+
+									     On EVERY step, not just the learner's own. It was
+									     gated to 'sent' on the theory that there is nothing
+									     to say back to the other speaker — but repeating
+									     what you just heard is shadowing, and
+									     evaluateVoiceInput already scores a received line
+									     against its audioText. The gate blocked a technique
+									     the controller supported, and it moved the mic
+									     between the card and the page footer depending on
+									     whose line it was, which is worse than either
+									     position alone. -->
+									{#if micSupported}
 										<button
 											class="btn-record"
 											class:recording={app.isListening}
@@ -1714,11 +1722,12 @@
 						>
 							{@html answerLineHtml}
 						</div>
-						<!-- Hidden while the card shows its own record button: two
-						     mics doing one job is the duplication the Practice
-						     button was just removed for. Still the only mic in exam
-						     and conversation mode, which have no teach card. -->
-						{#if !(currentTeachStep?.role === "sent" && micSupported)}
+						<!-- Hidden whenever a teach card is up, since the card carries
+						     its own. Two mics doing one job is the duplication the
+						     Practice button was removed for, and a mic that changes
+						     position between sentences is worse still. Remains the only
+						     mic in exam and conversation mode, which have no card. -->
+						{#if !(currentTeachStep && micSupported)}
 							<button
 								class="btn-send"
 							class:pulse={app.isListening}
