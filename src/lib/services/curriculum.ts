@@ -32,26 +32,37 @@ export interface LevelSpan {
 	lastDay: number;
 	/** Lesson days that unlock a checkpoint, in order. */
 	checkpoints: number[];
-	/** Minute budget at the level's first and last day; days in between ramp. */
-	minutesFrom: number;
-	minutesTo: number;
+	/** Sentence budget at the level's first and last day; days between ramp. */
+	sentencesFrom: number;
+	sentencesTo: number;
 }
 
+/**
+ * Hard bounds on a lesson, in sentences.
+ *
+ * Below 8 there is not enough conversation to be worth opening. Above 15 it
+ * stops being a daily habit and becomes homework — which is the argument
+ * against the 22-30 minute targets this file carried until today: costed
+ * out, 26 minutes was a 45-turn dialogue, and nobody finishes one.
+ *
+ * Every lesson currently sits at 10, 12 or 14, so these bind future
+ * authoring rather than describing a problem.
+ */
+export const MIN_SENTENCES = 8;
+export const MAX_SENTENCES = 15;
+
 export const CURRICULUM: LevelSpan[] = [
-	// minutesFrom/To describe what a lesson at each end of the level should
-	// GROW to. They were 10-15 / 15-22 / 22-30, which sounded reasonable
-	// until costed: at 18s a heard line and 50s a spoken one, 26 minutes is
-	// a 45-turn dialogue. Nobody finishes a 45-turn dialogue. The revised
-	// figures come out at roughly 13 / 18 / 25 sentences a day, which is a
-	// lesson someone will actually sit through.
+	// Budgeted in SENTENCES, not minutes, because sentences are what an
+	// author controls. Minutes are downstream of how long a learner takes
+	// per line — measured (lesson_completed logs actualSeconds) and currently
+	// disputed: lesson-duration says a 15-line lesson is 9 minutes, and it
+	// counts no retries, no audio replays and no practice mode, so it is
+	// very likely low.
 	//
-	// Today's content averages 7.5 / 6.7 / 6.3 min, so these are still a
-	// target and not a description — but a reachable one. The old table
-	// implied 4,190 authored sentences against 1,082 that exist; this
-	// implies 2,395.
-	{ level: 'A1', firstDay: 1, lastDay: 30, checkpoints: [10, 20, 30], minutesFrom: 7, minutesTo: 9 },
-	{ level: 'A2', firstDay: 31, lastDay: 65, checkpoints: [42, 54, 65], minutesFrom: 9, minutesTo: 13 },
-	{ level: 'B1', firstDay: 66, lastDay: 120, checkpoints: [83, 101, 120], minutesFrom: 13, minutesTo: 17 }
+	// Spec what you control; measure what you do not.
+	{ level: 'A1', firstDay: 1, lastDay: 30, checkpoints: [10, 20, 30], sentencesFrom: 8, sentencesTo: 11 },
+	{ level: 'A2', firstDay: 31, lastDay: 65, checkpoints: [42, 54, 65], sentencesFrom: 11, sentencesTo: 13 },
+	{ level: 'B1', firstDay: 66, lastDay: 120, checkpoints: [83, 101, 120], sentencesFrom: 13, sentencesTo: 15 }
 ];
 
 /**
@@ -76,21 +87,20 @@ export function tierForDay(day: number): { level: CefrLevel; tier: Tier } | null
 }
 
 /**
- * The minute budget a given day is written to, ramping across its level.
- * Content is specced against this; the actual estimate the learner sees
- * comes from what the lesson really contains (see lesson-duration).
+ * How many sentences a given day should be written to, ramping across its
+ * level and always inside [MIN_SENTENCES, MAX_SENTENCES].
  *
- * NOTHING CALLS THIS YET. Left in place because it is the only executable
- * statement of the authoring target, and because its absence is what let
- * the old 22-30 minute figures sit in the table unchallenged for a day —
- * unread numbers do not get sanity-checked.
+ * Replaces targetMinutesForDay, which nobody called — and being unread is
+ * exactly how a 22-30 minute target sat here unchallenged. A sentence count
+ * can be checked against the data with one query; a minute estimate cannot.
  */
-export function targetMinutesForDay(day: number): number | null {
+export function targetSentencesForDay(day: number): number | null {
 	const span = CURRICULUM.find((l) => day >= l.firstDay && day <= l.lastDay);
 	if (!span) return null;
 	const total = span.lastDay - span.firstDay;
 	const progress = total === 0 ? 1 : (day - span.firstDay) / total;
-	return Math.round(span.minutesFrom + progress * (span.minutesTo - span.minutesFrom));
+	const n = Math.round(span.sentencesFrom + progress * (span.sentencesTo - span.sentencesFrom));
+	return Math.min(MAX_SENTENCES, Math.max(MIN_SENTENCES, n));
 }
 
 export const TOTAL_DAYS = CURRICULUM[CURRICULUM.length - 1].lastDay;

@@ -1,13 +1,16 @@
 import { describe, it, expect } from 'vitest';
 import {
 	CURRICULUM,
+	MAX_SENTENCES,
+	MIN_SENTENCES,
 	TOTAL_DAYS,
 	allCheckpoints,
 	checkpointKey,
 	dueCheckpoint,
 	levelForDay,
 	levelProgress,
-	nextCheckpoint
+	nextCheckpoint,
+	targetSentencesForDay
 } from './curriculum';
 
 const upTo = (n: number) => Array.from({ length: n }, (_, i) => i + 1);
@@ -146,5 +149,42 @@ describe('levelProgress', () => {
 		const p = levelProgress(upTo(30), ['A1-1', 'A1-2']);
 		expect(p[0]).toMatchObject({ checkpointsDone: 2, checkpointsTotal: 3 });
 		expect(p[1].checkpointsDone).toBe(0);
+	});
+});
+
+describe('targetSentencesForDay', () => {
+	it('ramps across a level', () => {
+		expect(targetSentencesForDay(1)).toBe(8);
+		expect(targetSentencesForDay(30)).toBe(11);
+		expect(targetSentencesForDay(31)).toBe(11);
+		expect(targetSentencesForDay(65)).toBe(13);
+		expect(targetSentencesForDay(66)).toBe(13);
+		expect(targetSentencesForDay(120)).toBe(15);
+	});
+
+	it('never leaves the bounds a lesson is allowed to have', () => {
+		// Below 8 there is no conversation; above 15 it stops being a daily
+		// habit. Every day of the course has to sit inside that.
+		for (let d = 1; d <= 120; d++) {
+			const n = targetSentencesForDay(d)!;
+			expect(n).toBeGreaterThanOrEqual(MIN_SENTENCES);
+			expect(n).toBeLessThanOrEqual(MAX_SENTENCES);
+		}
+	});
+
+	it('rises monotonically — a later day is never a smaller lesson', () => {
+		// The old minute table had B1 shorter than A1 in practice; this is the
+		// guard against writing that back in.
+		let prev = 0;
+		for (let d = 1; d <= 120; d++) {
+			const n = targetSentencesForDay(d)!;
+			expect(n).toBeGreaterThanOrEqual(prev);
+			prev = n;
+		}
+	});
+
+	it('has no answer for a day outside the course', () => {
+		expect(targetSentencesForDay(0)).toBeNull();
+		expect(targetSentencesForDay(121)).toBeNull();
 	});
 });
