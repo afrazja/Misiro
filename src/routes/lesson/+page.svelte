@@ -776,8 +776,15 @@
 
 <!-- Audio Unlock Overlay -->
 {#if showOverlay}
-	<div class="start-overlay">
-		<h1>Ready to Learn?</h1>
+	<!-- dir follows the language. Everything inside was English, so in
+	     Persian it rendered LTR text in an RTL page and the punctuation
+	     drifted: "?Ready to Learn", "sentences 10". Translating is the fix
+	     — Persian text in an RTL container is simply correct — and the dir
+	     keeps anything added later honest. -->
+	<div class="start-overlay" dir={prefs.language === "fa" ? "rtl" : "ltr"}>
+		<h1>
+			{prefs.language === "fa" ? "آمادهٔ یادگیری؟" : "Ready to Learn?"}
+		</h1>
 		{#if lesson.currentLesson}
 			<div class="overlay-preview">
 				<h2 class="overlay-title">{scenarioTitle()}</h2>
@@ -790,13 +797,18 @@
 							>{lessonGrammarFocus()}</span
 						>
 					{/if}
-					<span class="overlay-badge"
-						>{lesson.currentLesson.sentences.length} sentences</span
-					>
+					<span class="overlay-badge">
+						{lesson.currentLesson.sentences.length}
+						{prefs.language === "fa" ? "جمله" : "sentences"}
+					</span>
 				</div>
 			</div>
 		{:else}
-			<p>Loading lesson details...</p>
+			<p>
+				{prefs.language === "fa"
+					? "در حال بارگذاری اطلاعات درس…"
+					: "Loading lesson details…"}
+			</p>
 		{/if}
 		<!-- Review warm-up removed from the start overlay: it pushed the real
 		     Start button below the fold. Reviews stay available on their own
@@ -1865,8 +1877,9 @@
 						{:else if scriptItems.length === 0}
 							<div class="script-empty">
 								<p>
-									Lesson script will appear here once you
-									start.
+									{prefs.language === "fa"
+										? "وقتی شروع کنی، متن درس اینجا نمایش داده می‌شود."
+										: "Lesson script will appear here once you start."}
 								</p>
 							</div>
 						{/if}
