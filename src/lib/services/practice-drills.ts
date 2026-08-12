@@ -15,6 +15,15 @@
 import type { Language } from '$stores/preferences';
 import { tokenizeForBuild, shuffleTiles } from '$services/sentence-build';
 
+/**
+ * How an attempt ended. Lived in word-strength.ts until the mastery meter
+ * was removed; it belongs with the drills that produce it.
+ *
+ * `revealed` is not a wrong answer — it says the learner asked rather than
+ * guessed, and the readiness signal ignores it entirely.
+ */
+export type Outcome = 'correct' | 'wrong' | 'revealed';
+
 export type DrillKind = 'build' | 'gap' | 'speak';
 
 export interface Drill {

@@ -15,6 +15,7 @@
 		buildDrills,
 		type Drill,
 		type DrillKind,
+		type Outcome,
 		type PracticeSentence
 	} from '$services/practice-drills';
 	import { isBuildCorrect } from '$services/sentence-build';
@@ -22,7 +23,6 @@
 	import { diagnose, tipFor, type SoundNote } from '$services/pronunciation';
 	import { playAudioPromise, stopAllAudio, ttsIsPlaying } from '$services/tts';
 	import { playTone } from '$services/audio-context';
-	import type { Outcome } from '$services/word-strength';
 	import type { Language } from '$stores/preferences';
 
 	interface Props {

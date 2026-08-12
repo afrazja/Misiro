@@ -754,26 +754,6 @@ export function markBasicsCompleted(categoryKey: string, at: number = Date.now()
 // Local-only for now, like bookmarks and Basics progress above. Kept behind
 // data-layer so the pages never touch storage and adding the cloud write
 // later is a change in one file.
-const WORD_STRENGTH_LS_KEY = 'mirifer_word_strength';
-
-/** Normalised German word → strength 0-5. */
-export function getWordStrengths(): Record<string, number> {
-	try {
-		const raw = localStorage.getItem(WORD_STRENGTH_LS_KEY);
-		const parsed = raw ? JSON.parse(raw) : {};
-		return parsed && typeof parsed === 'object' ? parsed : {};
-	} catch {
-		return {};
-	}
-}
-
-export function saveWordStrengths(strengths: Record<string, number>): void {
-	try {
-		localStorage.setItem(WORD_STRENGTH_LS_KEY, JSON.stringify(strengths));
-	} catch {
-		/* storage unavailable — strength just is not remembered */
-	}
-}
 
 // ========== SEEN EXAM ITEMS ==========
 

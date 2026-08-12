@@ -50,16 +50,7 @@
 		isSpeechSupported,
 	} from "$services/speech";
 	import SentencePractice from "$components/SentencePractice.svelte";
-	import {
-		getWordStrengths,
-		saveWordStrengths,
-	} from "$services/data-layer";
-	import {
-		applyAttempt,
-		sentenceMastery,
-		hasPracticeData,
-		type Outcome,
-	} from "$services/word-strength";
+	import { type Outcome } from "$services/practice-drills";
 	import {
 		recordPracticeResult,
 		type ReadinessModule,
@@ -489,7 +480,6 @@
 		null,
 	);
 	let practiceEl = $state<SentencePractice | null>(null);
-	let wordStrengths = $state<Record<string, number>>({});
 	let micSupported = $state(false);
 
 	function openPractice(german: string, meaning: string) {
@@ -521,27 +511,20 @@
 		speak: "sprechen",
 	};
 
-	/** Practice reports a rung result; strength and readiness are the
-	 *  lesson's to persist. */
+	/** Practice reports a rung result. Readiness is the only thing that
+	 *  consumes it now — the per-word mastery meter is gone. */
 	function handlePracticeResult(
 		german: string,
 		outcome: Outcome,
 		guessable: boolean,
 		kind: string,
 	) {
-		wordStrengths = applyAttempt(wordStrengths, german, outcome, guessable);
-		saveWordStrengths(wordStrengths);
-
 		// A revealed answer is not evidence either way — it says the learner
 		// asked rather than tried.
 		const m = RUNG_MODULE[kind];
 		if (m && outcome !== "revealed") {
 			recordPracticeResult(m, outcome === "correct" ? 1 : 0, 1);
 		}
-	}
-
-	function masteryOf(german: string): number {
-		return sentenceMastery(wordStrengths, german);
 	}
 
 	function handleDaySelectChange(e: Event) {
@@ -647,7 +630,6 @@
 		setupCallbacks();
 		initSyncListeners();
 		micSupported = initSpeechRecognition() && isSpeechSupported();
-		wordStrengths = getWordStrengths();
 		getLessonIndex().then((idx) => {
 			lessonIndex = idx;
 		});
@@ -1706,11 +1688,6 @@
 							</div>
 						{/if}
 						{#each exam.isExamMode || exam.isConversation ? [] : scriptItems as item, i}
-							{@const mastery = masteryOf(item.german)}
-							{@const practised = hasPracticeData(
-								wordStrengths,
-								item.german,
-							)}
 							<div class="script-row">
 								<!-- svelte-ignore a11y_interactive_supports_focus -->
 								<div
@@ -1746,32 +1723,6 @@
 								</div>
 
 								<div class="script-foot">
-									<!-- Five dots = the weakest word in the
-									     sentence, not an average.
-									
-									     Only once there IS a weakest word to
-									     report. These rendered on every
-									     sentence including untouched ones,
-									     which nobody noticed while the unlit
-									     dot sat at 1.01:1 against the panel.
-									     Fixing that contrast made five empty
-									     dots appear under every line of a
-									     lesson never practised — a meter
-									     measuring nothing, and a zero implied
-									     where no attempt exists. -->
-									{#if practised}
-										<span
-											class="mastery"
-											aria-label="Mastery {mastery} of 5"
-										>
-											{#each [0, 1, 2, 3, 4] as d}
-												<span
-													class="dot"
-													class:lit={d < mastery}
-												></span>
-											{/each}
-										</span>
-									{/if}
 									<button
 										class="practice-link"
 										onclick={() =>
@@ -2942,27 +2893,6 @@
 	   keeps its place on the sentences that have no mastery meter yet. */
 	.script-foot .practice-link {
 		margin-inline-start: auto;
-	}
-
-	.mastery {
-		display: inline-flex;
-		gap: 4px;
-	}
-
-	/* --ink-faint, not --control-edge: that token is the dark "wall" under a
-	   filled control and is near-black in dark mode, so a dot relying on it as
-	   its only visible mark vanished into the script panel. Unlit is a ring,
-	   lit is filled — the same language as the roadmap checkpoints. */
-	.mastery .dot {
-		width: 8px;
-		height: 8px;
-		border-radius: 50%;
-		border: 1.5px solid var(--ink-faint);
-	}
-
-	.mastery .dot.lit {
-		background: var(--leaf);
-		border-color: var(--leaf);
 	}
 
 	.practice-link {
