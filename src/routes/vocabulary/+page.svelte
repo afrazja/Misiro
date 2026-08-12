@@ -145,7 +145,7 @@
 			playTone('success');
 			// Play the correct pronunciation
 			stopAllAudio();
-			playAudioPromise(card.word, 0.8, 'de-DE');
+			playAudioPromise(card.word, 1, 'de-DE');
 			// Auto-advance after delay
 			setTimeout(() => advanceCard(true), 1800);
 		} else {
@@ -155,7 +155,7 @@
 			// Play the correct pronunciation so user hears it
 			setTimeout(() => {
 				stopAllAudio();
-				playAudioPromise(card.word, 0.8, 'de-DE');
+				playAudioPromise(card.word, 1, 'de-DE');
 			}, 400);
 		}
 	}
@@ -167,7 +167,7 @@
 		// Play the word
 		const card = flashcardDeck[flashcardIndex];
 		stopAllAudio();
-		playAudioPromise(card.word, 0.8, 'de-DE');
+		playAudioPromise(card.word, 1, 'de-DE');
 	}
 
 	function retryCard() {

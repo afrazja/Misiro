@@ -383,7 +383,7 @@ export async function processNextStep(skipAudio = false): Promise<void> {
 		const highlight = makeWordHighlighter(germanText, (i) => callbacks?.onSpokenWord?.(i));
 		await playAudioPromise(
 			germanText,
-			0.8,
+			1,
 			'de-DE',
 			highlight,
 			currentStep.role === 'received' ? 'b' : 'a'
@@ -694,7 +694,7 @@ async function handleLessonIncorrect(step: Sentence, targetGerman: string, trans
 	callbacks?.onAnswerPrompt(`<span style="color:red">${heardMsg}</span>`);
 
 	// Replay target
-	playAudioPromise(targetGerman, 0.8, 'de-DE');
+	playAudioPromise(targetGerman, 1, 'de-DE');
 }
 
 // ============ EXAM SYSTEM ============
@@ -939,7 +939,7 @@ function processNextExamQuestion(): void {
 	// Listening-based questions actually play the German out loud.
 	// ('gap' stays silent — the audio would give the missing word away.)
 	if (q.type === 'listen' || q.type === 'meaning') {
-		playAudioPromise(q.audioText, 0.8, 'de-DE', undefined, 'b');
+		playAudioPromise(q.audioText, 1, 'de-DE', undefined, 'b');
 	}
 
 	// Show the initial prompt for the user to answer
@@ -1040,7 +1040,7 @@ async function handleExamIncorrect(targetGerman: string, transcript: string): Pr
 		examStore.update((s) => ({ ...s, examRetry: true }));
 		const retryMsg = isFa ? '\u06CC\u06A9\u0628\u0627\u0631 \u062F\u06CC\u06AF\u0647 \u062A\u0644\u0627\u0634 \u06A9\u0646...' : 'Try once more...';
 		callbacks?.onAnswerPrompt(`<span style="color:orange">${retryMsg}</span>`);
-		playAudioPromise(targetGerman, 0.8, 'de-DE');
+		playAudioPromise(targetGerman, 1, 'de-DE');
 	} else {
 		// Second attempt failed — move on
 		examStore.update((s) => ({ ...s, examRetry: false }));
@@ -1239,7 +1239,7 @@ async function presentConvTurn(): Promise<void> {
 		audioText: pair.question.german,
 		translation: pair.question.translation
 	});
-	await playAudioPromise(pair.question.german, 0.8, 'de-DE', undefined, 'b');
+	await playAudioPromise(pair.question.german, 1, 'de-DE', undefined, 'b');
 	if (!convState?.active) return; // mode ended while audio played
 
 	// Two valid replies: this pair's answer + one from another exchange.

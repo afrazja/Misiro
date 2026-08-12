@@ -227,7 +227,7 @@
 
 		// Play word
 		const clean = word.replace(/[.,!?]/g, "");
-		playAudioPromise(clean, 0.8, "de-DE");
+		playAudioPromise(clean, 1, "de-DE");
 
 		// Show tooltip
 		if (meaning) {
@@ -597,7 +597,7 @@
 		);
 		playAudioPromise(
 			currentTeachStep.germanText,
-			0.8,
+			1,
 			"de-DE",
 			highlight,
 			currentTeachStep.role === "received" ? "b" : "a",
@@ -615,7 +615,7 @@
 	function handleMessageBubbleClick(text: string) {
 		stopAllAudio();
 		if ($appStore.isListening) stopListening();
-		playAudioPromise(text, 0.8, "de-DE");
+		playAudioPromise(text, 1, "de-DE");
 	}
 
 	function trimMessages() {
@@ -1334,7 +1334,7 @@
 											{#each warmUp.words as w}
 												<button
 													class="wu-chip"
-													onclick={() => playAudioPromise(w.de, 0.85, "de-DE")}
+													onclick={() => playAudioPromise(w.de, 1, "de-DE")}
 												>
 													<span class="wu-de" lang="de">{w.de}</span>
 													<span class="wu-gloss">{w.gloss}</span>
@@ -1353,7 +1353,7 @@
 											{#each warmUp.collocations as c}
 												<button
 													class="wu-chip phrase"
-													onclick={() => playAudioPromise(c.de, 0.85, "de-DE")}
+													onclick={() => playAudioPromise(c.de, 1, "de-DE")}
 												>
 													<span class="wu-de" lang="de">{c.de}</span>
 													<span class="wu-gloss">{c.gloss}</span>
@@ -1402,7 +1402,7 @@
 													<button
 														class="gm-play"
 														onclick={() =>
-															playAudioPromise(ex.de, 0.85, "de-DE")}
+															playAudioPromise(ex.de, 1, "de-DE")}
 														aria-label="Play example"
 													>
 														🔊

@@ -408,8 +408,8 @@
 		const it = item;
 		if (it.module !== 'hoeren') return;
 		void (async () => {
-			await playAudioPromise(it.audio, 0.9, 'de-DE', undefined, 'a');
-			if (it.audioB) await playAudioPromise(it.audioB, 0.9, 'de-DE', undefined, 'b');
+			await playAudioPromise(it.audio, 1, 'de-DE', undefined, 'a');
+			if (it.audioB) await playAudioPromise(it.audioB, 1, 'de-DE', undefined, 'b');
 		})();
 	}
 
@@ -675,7 +675,7 @@
 					onclick={() =>
 						$ttsIsPlaying
 							? stopAllAudio()
-							: playAudioPromise(item.kind === 'speak' ? item.target : '', 0.85, 'de-DE')}
+							: playAudioPromise(item.kind === 'speak' ? item.target : '', 1, 'de-DE')}
 					>{$ttsIsPlaying ? '⏹ Stop' : '🔊 Hear it first'}</button
 				>
 				{#if !answered}

@@ -259,13 +259,13 @@
 
 	function playWord(text: string) {
 		stopAllAudio();
-		playAudioPromise(text, 0.8, 'de-DE');
+		playAudioPromise(text, 1, 'de-DE');
 	}
 
 	function playExample(text: string) {
 		if (!text) return;
 		stopAllAudio();
-		playAudioPromise(text, 0.8, 'de-DE');
+		playAudioPromise(text, 1, 'de-DE');
 	}
 
 	function handleWordClick(german: string) {
@@ -359,7 +359,7 @@
 		quizRevealed = true;
 		// Play the word audio
 		stopAllAudio();
-		playAudioPromise(quizDeck[quizIndex].german, 0.8, 'de-DE');
+		playAudioPromise(quizDeck[quizIndex].german, 1, 'de-DE');
 	}
 
 	function quizAnswer(gotIt: boolean) {
@@ -401,7 +401,7 @@
 			quizGotIt++;
 			playTone('success');
 			stopAllAudio();
-			playAudioPromise(card.german, 0.8, 'de-DE');
+			playAudioPromise(card.german, 1, 'de-DE');
 			setTimeout(() => quizAnswer(false), 1800); // already counted above
 		} else {
 			playTone('error');
@@ -409,7 +409,7 @@
 			setTimeout(() => { wrongFlash = false; }, 1000);
 			setTimeout(() => {
 				stopAllAudio();
-				playAudioPromise(card.german, 0.8, 'de-DE');
+				playAudioPromise(card.german, 1, 'de-DE');
 			}, 400);
 		}
 	}
@@ -420,7 +420,7 @@
 		voiceResult = null;
 		const card = quizDeck[quizIndex];
 		stopAllAudio();
-		playAudioPromise(card.german, 0.8, 'de-DE');
+		playAudioPromise(card.german, 1, 'de-DE');
 	}
 
 	function retryQuizCard() {

@@ -94,7 +94,7 @@
 		return false;
 	}
 
-	function playCurrent(rate = 0.9): void {
+	function playCurrent(rate = 1): void {
 		void playAudioPromise(current.german, rate, 'de-DE');
 	}
 

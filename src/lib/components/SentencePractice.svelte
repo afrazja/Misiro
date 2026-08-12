@@ -127,7 +127,7 @@
 
 	function speak() {
 		if ($ttsIsPlaying) stopAllAudio();
-		else void playAudioPromise(sentence.german, 0.85, 'de-DE');
+		else void playAudioPromise(sentence.german, 1, 'de-DE');
 	}
 
 	// ── build ──
@@ -195,7 +195,7 @@
 
 	function revealSpeak() {
 		record(sentence.german, 'revealed');
-		void playAudioPromise(sentence.german, 0.8, 'de-DE');
+		void playAudioPromise(sentence.german, 1, 'de-DE');
 	}
 </script>
 

@@ -177,7 +177,7 @@
 	function playItemAudio() {
 		const it = item;
 		if (it.kind === 'listen') {
-			void playAudioPromise(it.audio, 0.85, 'de-DE');
+			void playAudioPromise(it.audio, 1, 'de-DE');
 		}
 	}
 
@@ -281,7 +281,7 @@
 					onclick={() =>
 						$ttsIsPlaying
 							? stopAllAudio()
-							: playAudioPromise(item.kind === 'speak' ? item.example : '', 0.85, 'de-DE')}
+							: playAudioPromise(item.kind === 'speak' ? item.example : '', 1, 'de-DE')}
 				>
 					{$ttsIsPlaying ? '⏹ Stop' : '🔊 Hear an example'}
 				</button>

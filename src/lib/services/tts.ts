@@ -183,7 +183,16 @@ function playWebAudio(
  * Returns a promise that resolves when playback finishes.
  *
  * @param text - Text to speak
- * @param rate - Playback rate multiplier (before voice speed preference)
+ * @param rate - RELATIVE to the learner's German speed setting, not an
+ *   absolute rate. Pass 1 for normal playback; the setting decides the
+ *   actual speed. Only pass less than 1 when the point IS a slower read of
+ *   this particular item — the pronunciation coach saying one badly-said
+ *   word, for instance.
+ *
+ *   28 call sites used to pass 0.7-0.9 here as though it were absolute,
+ *   so a learner whose toolbar read "DE 1x" was listening at 0.8x and had
+ *   no way to reach 1. If a lesson feels too fast, the fix is the default
+ *   in preferences.ts, never a multiplier hidden at a call site.
  * @param lang - BCP-47 language code (e.g. 'de-DE', 'en-US', 'fa-IR')
  */
 export function playAudioPromise(
@@ -202,6 +211,10 @@ export function playAudioPromise(
 		// language, where slower articulation aids decoding. Narration and
 		// translations in the user's own language always play at natural
 		// pace (slowed native-language speech just sounds broken).
+		//
+		// `rate` multiplies the setting rather than replacing it, so it must
+		// be 1 for ordinary playback or the toolbar tells the truth about
+		// nothing. See the note on the @param above.
 		const prefs = get(preferencesStore);
 		const effectiveRate = lang.startsWith('de') ? rate * prefs.voiceSpeed : rate;
 
