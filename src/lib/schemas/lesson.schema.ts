@@ -56,8 +56,41 @@ export const LessonDetailRowSchema = z.object({
 	// Unparsed here on purpose: a malformed note must not invalidate the whole
 	// lesson row. loadLesson() validates it separately and drops it if bad.
 	grammar_note: z.unknown().nullable().optional(),
+	// Same treatment as grammar_note: validated separately so one malformed
+	// chunk drops itself rather than taking the lesson down.
+	words: z.unknown().nullable().optional(),
+	collocations: z.unknown().nullable().optional(),
+	paragraphs: z.unknown().nullable().optional(),
 	difficulty: z.string().nullable().optional()
 });
+
+/** A pre-taught vocabulary item or a collocation — same shape, different job. */
+export const LessonChunkSchema = z.object({
+	de: z.string().min(1),
+	en: z.string().optional().default(''),
+	fa: z.string().optional().default('')
+});
+
+export const LessonChunkListSchema = z.array(LessonChunkSchema);
+
+/** A short reading text with its comprehension questions. */
+export const LessonParagraphSchema = z.object({
+	de: z.string().min(1),
+	en: z.string().optional().default(''),
+	fa: z.string().optional().default(''),
+	questions: z
+		.array(
+			z.object({
+				q: z.string().min(1),
+				options: z.array(z.string()).min(2),
+				correct: z.number().int().min(0)
+			})
+		)
+		.optional()
+		.default([])
+});
+
+export const LessonParagraphListSchema = z.array(LessonParagraphSchema);
 
 export type LessonDetailRow = z.infer<typeof LessonDetailRowSchema>;
 

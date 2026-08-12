@@ -5,7 +5,7 @@
  */
 
 import { getSupabaseBrowserClient } from '$lib/supabase/client';
-import type { Lesson, Sentence } from '$stores/lesson';
+import type { Lesson, LessonChunk, LessonParagraph, Sentence } from '$stores/lesson';
 import type { Language } from '$stores/preferences';
 import { logError, logWarn } from '$utils/error';
 import {
@@ -13,7 +13,9 @@ import {
 	LessonDetailRowSchema,
 	SentenceRowSchema,
 	GlossaryRowSchema,
-	GrammarNoteSchema
+	GrammarNoteSchema,
+	LessonChunkListSchema,
+	LessonParagraphListSchema
 } from '$lib/schemas';
 
 export interface LessonMeta {
@@ -144,11 +146,29 @@ export async function loadLesson(day: number): Promise<Lesson | null> {
 	// than letting an optional feature break lesson loading.
 	const BASE_COLS =
 		'id, title, title_fa, description, description_fa, grammar_focus, grammar_focus_fa, difficulty';
+	// Widest select first, narrowing on error. Optional content columns are
+	// added by separate migrations, and Supabase rejects the whole select if
+	// one is missing — so an un-migrated database must not lose the lesson.
+	const CHUNK_COLS = 'words, collocations, paragraphs';
 	let { data: lessonRow, error: lessonErr } = await sb
 		.from('lessons')
-		.select(`${BASE_COLS}, grammar_note`)
+		.select(`${BASE_COLS}, grammar_note, ${CHUNK_COLS}`)
 		.eq('day', day)
 		.maybeSingle();
+
+	if (lessonErr) {
+		({ data: lessonRow, error: lessonErr } = await sb
+			.from('lessons')
+			.select(`${BASE_COLS}, grammar_note`)
+			.eq('day', day)
+			.maybeSingle());
+		if (!lessonErr) {
+			logWarn(
+				'lesson-loader:loadLesson',
+				'words/collocations/paragraphs columns missing — run supabase-lesson-chunks.sql to enable the warm-up'
+			);
+		}
+	}
 
 	if (lessonErr) {
 		({ data: lessonRow, error: lessonErr } = await sb
@@ -228,8 +248,33 @@ export async function loadLesson(day: number): Promise<Lesson | null> {
 		}
 	}
 
+	// Same treatment as the grammar note: each chunk list validates on its
+	// own, so a malformed warm-up drops itself rather than costing the
+	// learner the whole lesson.
+	const parseChunks = (raw: unknown, field: string): LessonChunk[] | undefined => {
+		if (!raw) return undefined;
+		const r = LessonChunkListSchema.safeParse(raw);
+		if (r.success) return r.data.length ? r.data : undefined;
+		logWarn('lesson-loader:loadLesson', `${field} for day ${day} failed validation: ${r.error.message}`);
+		return undefined;
+	};
+
+	let paragraphs: LessonParagraph[] | undefined;
+	if (validatedLesson.paragraphs) {
+		const r = LessonParagraphListSchema.safeParse(validatedLesson.paragraphs);
+		if (r.success) paragraphs = r.data.length ? r.data : undefined;
+		else
+			logWarn(
+				'lesson-loader:loadLesson',
+				`paragraphs for day ${day} failed validation: ${r.error.message}`
+			);
+	}
+
 	const lesson: Lesson = {
 		title: validatedLesson.title,
+		words: parseChunks(validatedLesson.words, 'words'),
+		collocations: parseChunks(validatedLesson.collocations, 'collocations'),
+		paragraphs,
 		titleFa: validatedLesson.title_fa ?? undefined,
 		description: validatedLesson.description ?? undefined,
 		descriptionFa: validatedLesson.description_fa ?? undefined,

@@ -52,6 +52,8 @@ export interface LessonCallbacks {
 	onTeachStep: (step: TeachStepData) => void;
 	/** Tap-to-build exercise for the current sentence; null clears it. */
 	onBuildStep?: (data: BuildStepData | null) => void;
+	/** Pre-dialogue warm-up: today's words and collocations. null clears it. */
+	onWarmUp?: (data: WarmUpData | null) => void;
 	/** End-of-lesson grammar moment; null clears it. */
 	onGrammarMoment?: (data: GrammarMomentData | null) => void;
 	onCompletionCard: (data: CompletionCardData) => void;
@@ -105,6 +107,20 @@ export interface BuildStepData {
 	solution: string[];
 	/** Meaning prompt in the interface language, so there is something to aim at. */
 	translation: string;
+}
+
+/**
+ * The building blocks for today, shown before the conversation starts.
+ *
+ * Pre-teach then encounter in context: every item here appears in the
+ * dialogue that follows, so this lowers the load of the conversation rather
+ * than adding to it. Collocations are deliberately whole — a learner who
+ * decomposes "Freut mich" into freuen + mich will never say it naturally.
+ */
+export interface WarmUpData {
+	language: Language;
+	words: Array<{ de: string; gloss: string }>;
+	collocations: Array<{ de: string; gloss: string }>;
 }
 
 export interface GrammarMomentData {
@@ -164,6 +180,9 @@ let callbacks: LessonCallbacks | null = null;
 /** Guards the end-of-lesson grammar moment so it shows once per lesson visit. */
 let grammarMomentShown = false;
 
+/** Same, for the warm-up at the start of the lesson. */
+let warmUpShown = false;
+
 /** Sentence index whose build step is currently on screen (-1 = none). */
 let buildStepIndex = -1;
 
@@ -181,6 +200,15 @@ export { tokenizeForBuild, shuffleTiles, isBuildCorrect };
 
 export function setCallbacks(cb: LessonCallbacks) {
 	callbacks = cb;
+}
+
+/**
+ * Dismiss the warm-up and open the conversation. Called by the lesson page
+ * when the learner has been through today's building blocks.
+ */
+export async function continueAfterWarmUp(): Promise<void> {
+	callbacks?.onWarmUp?.(null);
+	await processNextStep();
 }
 
 /**
@@ -221,6 +249,7 @@ export function isDayUnlocked(day: number): boolean {
 export async function initLesson(): Promise<void> {
 	deactivateConversation(); // stale state from a previous page visit
 	grammarMomentShown = false;
+	warmUpShown = false;
 	buildStepIndex = -1;
 	try {
 		// Load saved language preference
@@ -298,6 +327,28 @@ export async function processNextStep(skipAudio = false): Promise<void> {
 	const lesson = lessonState.currentLesson;
 
 	if (!lesson) return;
+
+	// Warm-up: today's words and collocations, before the conversation opens.
+	// Only at the very start, only once, and only when the lesson actually
+	// carries them — A2 upward has no words, and un-migrated content has
+	// neither, in which case the lesson simply begins as it always did.
+	if (
+		!warmUpShown &&
+		app.currentSentenceIndex === 0 &&
+		callbacks?.onWarmUp &&
+		((lesson.words?.length ?? 0) > 0 || (lesson.collocations?.length ?? 0) > 0)
+	) {
+		warmUpShown = true;
+		stopAllAudio();
+		const isFa = prefs.language === 'fa';
+		const gloss = (c: { en: string; fa: string }) => (isFa ? c.fa : c.en) || c.en || c.fa;
+		callbacks.onWarmUp({
+			language: prefs.language,
+			words: (lesson.words ?? []).map((w) => ({ de: w.de, gloss: gloss(w) })),
+			collocations: (lesson.collocations ?? []).map((c) => ({ de: c.de, gloss: gloss(c) }))
+		});
+		return; // continueAfterWarmUp() starts the dialogue
+	}
 
 	// Lesson complete?
 	if (app.currentSentenceIndex >= lesson.sentences.length) {
@@ -533,6 +584,7 @@ export async function goToNextDay(nextDay: number): Promise<void> {
 	incrementSession();
 	stopAllAudio();
 	grammarMomentShown = false; // each day gets its own grammar moment
+	warmUpShown = false; // …and its own warm-up
 	buildStepIndex = -1;
 
 	appStore.update((s) => ({
@@ -570,6 +622,7 @@ export async function changeDay(day: number): Promise<void> {
 	incrementSession();
 	stopAllAudio();
 	grammarMomentShown = false; // each day gets its own grammar moment
+	warmUpShown = false; // …and its own warm-up
 
 	examStore.update((s) => ({ ...s, isExamMode: false, isReviewMode: false }));
 

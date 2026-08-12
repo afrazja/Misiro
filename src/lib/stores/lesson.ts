@@ -42,7 +42,26 @@ export interface Lesson {
 	grammarFocus?: string;
 	grammarFocusFa?: string;
 	grammarNote?: GrammarNote;
+	/** Pre-taught vocabulary shown before the dialogue. A1 only. */
+	words?: LessonChunk[];
+	/** Word pairs taught as single units. Every level. */
+	collocations?: LessonChunk[];
+	/** Short reading texts. From A2 middle upward. */
+	paragraphs?: LessonParagraph[];
 	difficulty?: string;
+}
+
+export interface LessonChunk {
+	de: string;
+	en: string;
+	fa: string;
+}
+
+export interface LessonParagraph {
+	de: string;
+	en: string;
+	fa: string;
+	questions: Array<{ q: string; options: string[]; correct: number }>;
 }
 
 export interface LessonState {

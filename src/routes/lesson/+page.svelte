@@ -22,11 +22,13 @@
 		incrementSession,
 		skipAndRemoveReviewItem,
 		continueAfterGrammar,
+		continueAfterWarmUp,
 		finishBuildStep,
 		isBuildCorrect,
 		type TeachStepData,
 		type CompletionCardData,
 		type GrammarMomentData,
+		type WarmUpData,
 		type BuildStepData,
 		type ExamQuestionData,
 		type ExamResultsData,
@@ -97,6 +99,7 @@
 	let showHint = $state(false);
 	let completionData: CompletionCardData | null = $state(null);
 	let grammarMoment: GrammarMomentData | null = $state(null);
+	let warmUp: WarmUpData | null = $state(null);
 
 	// ── Tap-to-build (retrieval ladder, stage 2) ──
 	let buildStep: BuildStepData | null = $state(null);
@@ -397,6 +400,13 @@
 					isSpeaking = false;
 				} else {
 					buildStep = null;
+				}
+			},
+			onWarmUp(data) {
+				warmUp = data;
+				if (data) {
+					currentTeachStep = null;
+					isSpeaking = false;
 				}
 			},
 			onGrammarMoment(data) {
@@ -1514,6 +1524,71 @@
 							</div>
 						{/if}
 
+						<!-- Warm-up: today's building blocks, before the conversation.
+						     Pre-teach then encounter in context — every item here
+						     turns up in the dialogue that follows. -->
+						{#if warmUp}
+							<div class="message system warm-up">
+								<div class="text">
+									<div class="wu-head">
+										<span class="wu-badge"
+											>🧱 {warmUp.language === "fa"
+												? "بلوک‌های امروز"
+												: "Today's building blocks"}</span
+										>
+									</div>
+
+									{#if warmUp.words.length}
+										<p class="wu-label">
+											{warmUp.language === "fa" ? "واژه‌ها" : "Words"}
+										</p>
+										<div class="wu-grid">
+											{#each warmUp.words as w}
+												<button
+													class="wu-chip"
+													onclick={() => playAudioPromise(w.de, 0.85, "de-DE")}
+												>
+													<span class="wu-de" lang="de">{w.de}</span>
+													<span class="wu-gloss">{w.gloss}</span>
+												</button>
+											{/each}
+										</div>
+									{/if}
+
+									{#if warmUp.collocations.length}
+										<p class="wu-label">
+											{warmUp.language === "fa"
+												? "ترکیب‌های ثابت"
+												: "Phrases to learn whole"}
+										</p>
+										<div class="wu-grid">
+											{#each warmUp.collocations as c}
+												<button
+													class="wu-chip phrase"
+													onclick={() => playAudioPromise(c.de, 0.85, "de-DE")}
+												>
+													<span class="wu-de" lang="de">{c.de}</span>
+													<span class="wu-gloss">{c.gloss}</span>
+												</button>
+											{/each}
+										</div>
+									{/if}
+
+									<p class="wu-hint">
+										{warmUp.language === "fa"
+											? "روی هر کدام بزن تا بشنوی — همه‌شان در گفتگوی امروز می‌آیند."
+											: "Tap any of them to hear it — they all turn up in today's conversation."}
+									</p>
+
+									<button class="gm-continue" onclick={() => continueAfterWarmUp()}>
+										{warmUp.language === "fa"
+											? "شروع گفتگو ←"
+											: "Start the conversation →"}
+									</button>
+								</div>
+							</div>
+						{/if}
+
 						<!-- Grammar Moment (after the last sentence, before completion) -->
 						{#if grammarMoment}
 							<div class="message system grammar-moment">
@@ -2320,6 +2395,81 @@
 		font-size: 0.9rem;
 		text-decoration: none;
 		border-bottom: 1px dotted var(--accent);
+	}
+
+	/* ── Warm-up card ── */
+	.warm-up .wu-head {
+		margin-bottom: 10px;
+	}
+
+	.wu-badge {
+		display: inline-block;
+		padding: 4px 12px;
+		border-radius: 999px;
+		background: var(--info-wash);
+		color: var(--info);
+		font-size: 0.75rem;
+		font-weight: 700;
+	}
+
+	.wu-label {
+		margin: 12px 0 6px;
+		font-size: 0.72rem;
+		font-weight: 700;
+		letter-spacing: 0.06em;
+		text-transform: uppercase;
+		color: var(--ink-faint);
+	}
+
+	.wu-grid {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 8px;
+	}
+
+	.wu-chip {
+		display: flex;
+		flex-direction: column;
+		align-items: flex-start;
+		gap: 2px;
+		min-height: 44px;
+		padding: 8px 14px;
+		border: 2px solid var(--control-edge);
+		border-radius: 12px;
+		background: var(--control);
+		cursor: pointer;
+		text-align: start;
+		box-shadow: 0 3px 0 var(--control-edge);
+	}
+
+	.wu-chip:active {
+		transform: translateY(3px);
+		box-shadow: none;
+	}
+
+	/* Collocations look like one object, because that is the whole point —
+	   they are learned as a unit, not as two words that happen to be adjacent. */
+	.wu-chip.phrase {
+		background: var(--leaf-wash);
+		border-color: var(--leaf);
+	}
+
+	.wu-de {
+		font-family: var(--font-display);
+		font-size: 1rem;
+		font-weight: 700;
+		color: var(--ink);
+	}
+
+	.wu-gloss {
+		font-size: 0.78rem;
+		color: var(--ink-soft);
+	}
+
+	.wu-hint {
+		margin: 12px 0 0;
+		font-size: 0.82rem;
+		color: var(--ink-faint);
 	}
 
 	.gm-continue {
