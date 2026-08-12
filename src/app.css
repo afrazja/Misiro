@@ -212,6 +212,21 @@ body {
 	color: var(--ink);
 }
 
+/* German is left-to-right whatever the interface language is.
+   
+   Persian sets dir="rtl" on <html>, and a German sentence inside an RTL
+   paragraph hands its trailing "?" or "." to the paragraph direction — the
+   mark jumps to the far left, so "…gekommen bist?" renders as "?…gekommen
+   bist". Every German string in the app was doing this in Persian.
+   
+   Attaching it to lang="de" means an author has ONE thing to remember
+   instead of two, and the rule covers text written after this. isolate
+   stops the German run from reordering the Persian around it as well. */
+[lang="de"] {
+	direction: ltr;
+	unicode-bidi: isolate;
+}
+
 /* Without this, an unstyled link falls back to the browser default blue
    (#0000ee), which is unreadable on the dark ground. Components that set
    their own link colour still win on specificity. */

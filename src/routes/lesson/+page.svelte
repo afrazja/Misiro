@@ -1021,8 +1021,13 @@
 							{#if msg.type === "system"}
 								<div class="message system">{msg.text}</div>
 							{:else}
+								<!-- German, so LTR regardless of interface language.
+								     The system branch above is narration in the
+								     learner's own language and must not get this. -->
 								<div
 									class="message {msg.type}"
+									lang="de"
+									dir="ltr"
 									role="button"
 									tabindex="0"
 									onclick={() =>
@@ -1130,7 +1135,7 @@
 								{#each convOptions as opt}
 									<div class="conv-option">
 										<div class="conv-german">
-											{opt.german}
+											<span lang="de">{opt.german}</span>
 										</div>
 										<div
 											class="conv-translation"
@@ -1207,7 +1212,11 @@
 								>
 									{currentTeachStep.translationText}
 								</div>
-								<div class="german-line">
+								<!-- dir="ltr" is load-bearing, not decoration. A German
+								     sentence inside an RTL page hands its trailing "?" or
+								     "." to the paragraph direction, and the mark jumps to
+								     the left end: "?bist" instead of "bist?". -->
+								<div class="german-line" lang="de" dir="ltr">
 									<span class="teach-text">
 										{#if prefs.blindMode}
 											<span
@@ -1783,7 +1792,7 @@
 							aria-live="polite"
 							aria-label="Your reply"
 						>
-							{@html answerLineHtml}
+							<span lang="de" dir="ltr">{@html answerLineHtml}</span>
 						</div>
 						<!-- Hidden whenever a teach card is up, since the card carries
 						     its own. Two mics doing one job is the duplication the
@@ -1883,7 +1892,7 @@
 										{item.active ? "▶" : i + 1}
 									</div>
 									<div class="script-text">
-										<div class="german">{item.german}</div>
+										<div class="german" lang="de" dir="ltr">{item.german}</div>
 										<div
 											class="translation"
 											style="direction: {prefs.language ===
@@ -3619,6 +3628,17 @@
 		.chat-main {
 			flex: 1;
 			min-width: 0;
+		}
+
+		/* The script panel stays on the visual RIGHT in both directions.
+		   flex-direction: row mirrors under dir="rtl", which put the panel
+		   on the left in Persian — correct mirroring, wrong for this panel.
+		   Its contents are German, which is LTR whatever the interface is,
+		   and a learner switching language should not have to relearn where
+		   their sentence list lives. order: -1 makes it first in RTL flow,
+		   which is the rightmost position. */
+		:global(html[dir="rtl"]) .script-view {
+			order: -1;
 		}
 
 		.script-view {
