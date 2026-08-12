@@ -1321,27 +1321,27 @@
 											? "بعدی ←"
 											: "Next ➡"}
 									</button>
+									{#if !exam.isExamMode && !exam.isReviewMode}
+										<button
+											class="btn-bookmark"
+											class:bookmarked={bookmarkedSentences.has(
+												currentSentenceKey,
+											)}
+											onclick={handleBookmarkSentence}
+											aria-label={bookmarkedSentences.has(
+												currentSentenceKey,
+											)
+												? "Remove bookmark"
+												: "Bookmark sentence"}
+										>
+											{#if bookmarkedSentences.has(currentSentenceKey)}
+												★
+											{:else}
+												☆
+											{/if}
+										</button>
+									{/if}
 								</div>
-								{#if !exam.isExamMode && !exam.isReviewMode}
-									<button
-										class="btn-bookmark"
-										class:bookmarked={bookmarkedSentences.has(
-											currentSentenceKey,
-										)}
-										onclick={handleBookmarkSentence}
-										aria-label={bookmarkedSentences.has(
-											currentSentenceKey,
-										)
-											? "Remove bookmark"
-											: "Bookmark sentence"}
-									>
-										{#if bookmarkedSentences.has(currentSentenceKey)}
-											★
-										{:else}
-											☆
-										{/if}
-									</button>
-								{/if}
 								{#if showHint && currentTeachStep.role === "sent"}
 									<div
 										class="hint-text"
@@ -2905,6 +2905,7 @@
 	/* Teach Actions Row */
 	.teach-actions {
 		display: flex;
+		align-items: center;
 		gap: 8px;
 		margin-top: 8px;
 		flex-wrap: wrap;
@@ -3041,10 +3042,21 @@
 	}
 
 	/* Bookmark button - Star */
+	/* A flex item at the end of the action row, not an absolute overlay.
+	   It was pinned to `right: 18px` against the card, which is fine while
+	   the buttons flow from the left — and in Persian they flow from the
+	   right, straight underneath the star. Logical properties alone would
+	   move the collision rather than remove it, since a wide enough row
+	   reaches the far edge in either direction. */
 	.btn-bookmark {
-		position: absolute;
-		bottom: 16px;
-		right: 18px;
+		margin-inline-start: auto;
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		/* 44px: it was ~37px once padding is counted, which is under the
+		   minimum target and the smallest control on the card. */
+		min-width: 44px;
+		min-height: 44px;
 		font-size: 1.8rem;
 		background: transparent;
 		border: none;
