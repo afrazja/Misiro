@@ -1290,21 +1290,6 @@
 												: "Hint"}
 										</button>
 									{/if}
-									<!-- The ladder for the sentence on screen,
-									     without hunting for it in the script. -->
-									<button
-										class="btn-practice"
-										onclick={() =>
-											openPractice(
-												currentTeachStep!.germanText,
-												currentTeachStep!
-													.translationText,
-											)}
-									>
-										🎯 {currentTeachStep.language === "fa"
-											? "تمرین"
-											: "Practice"}
-									</button>
 									<button
 										class="btn-inline-next"
 										onclick={() => manualNext()}
@@ -2946,24 +2931,6 @@
 		max-width: 640px;
 		margin: 0 auto;
 		width: 100%;
-	}
-
-	.btn-practice {
-		min-height: 44px;
-		padding: 6px 16px;
-		border-radius: 20px;
-		border: 2px solid var(--leaf-edge);
-		background: var(--leaf);
-		color: var(--on-accent);
-		font-size: 0.85rem;
-		font-weight: 700;
-		cursor: pointer;
-		box-shadow: 0 3px 0 var(--leaf-edge);
-	}
-
-	.btn-practice:active {
-		transform: translateY(3px);
-		box-shadow: none;
 	}
 
 	.script-row {
