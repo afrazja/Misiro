@@ -60,8 +60,12 @@ export const CURRICULUM: LevelSpan[] = [
 	// very likely low.
 	//
 	// Spec what you control; measure what you do not.
-	{ level: 'A1', firstDay: 1, lastDay: 30, checkpoints: [10, 20, 30], sentencesFrom: 8, sentencesTo: 11 },
-	{ level: 'A2', firstDay: 31, lastDay: 65, checkpoints: [42, 54, 65], sentencesFrom: 11, sentencesTo: 13 },
+	// A1 starts at 10, not 8. The 8 was mine and it under-described content
+	// that already works — no A1 lesson is shorter than 10. A2 starts at 12
+	// so day 31 is not a step DOWN from day 30, which the monotonic test
+	// would have caught anyway.
+	{ level: 'A1', firstDay: 1, lastDay: 30, checkpoints: [10, 20, 30], sentencesFrom: 10, sentencesTo: 12 },
+	{ level: 'A2', firstDay: 31, lastDay: 65, checkpoints: [42, 54, 65], sentencesFrom: 12, sentencesTo: 13 },
 	{ level: 'B1', firstDay: 66, lastDay: 120, checkpoints: [83, 101, 120], sentencesFrom: 13, sentencesTo: 15 }
 ];
 

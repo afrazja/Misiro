@@ -17,7 +17,18 @@ import { getUser } from './auth';
 import { logWarn } from '$utils/error';
 
 export type AnalyticsEvent =
+	/**
+	 * The lesson PAGE loaded. Not the same as the learner beginning it —
+	 * initLesson fires this before the start overlay is even dismissed.
+	 */
 	| 'lesson_started'
+	/**
+	 * The learner pressed Start. The gap between this and lesson_started is
+	 * the one the funnel could not see: on Day 1, 26 loads produced 6
+	 * completions and there was no way to tell whether the other 20 bounced
+	 * off the overlay or gave up on sentence four. Those need opposite fixes.
+	 */
+	| 'lesson_begun'
 	| 'lesson_completed'
 	| 'exam_completed'
 	| 'review_started'

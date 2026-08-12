@@ -154,12 +154,23 @@ describe('levelProgress', () => {
 
 describe('targetSentencesForDay', () => {
 	it('ramps across a level', () => {
-		expect(targetSentencesForDay(1)).toBe(8);
-		expect(targetSentencesForDay(30)).toBe(11);
-		expect(targetSentencesForDay(31)).toBe(11);
+		// A1 starts at 10 rather than the 8 first written here: no A1 lesson
+		// is shorter than 10, so an 8 described nothing real. MIN_SENTENCES
+		// stays 8 as the hard floor a lesson may never go below.
+		expect(targetSentencesForDay(1)).toBe(10);
+		expect(targetSentencesForDay(30)).toBe(12);
+		expect(targetSentencesForDay(31)).toBe(12);
 		expect(targetSentencesForDay(65)).toBe(13);
 		expect(targetSentencesForDay(66)).toBe(13);
 		expect(targetSentencesForDay(120)).toBe(15);
+	});
+
+	it('does not step down at a level boundary', () => {
+		// The monotonic test below covers this, but the boundary is where it
+		// nearly went wrong: A1 ending at 12 with A2 starting at 11 would
+		// have made day 31 a smaller lesson than day 30.
+		expect(targetSentencesForDay(31)!).toBeGreaterThanOrEqual(targetSentencesForDay(30)!);
+		expect(targetSentencesForDay(66)!).toBeGreaterThanOrEqual(targetSentencesForDay(65)!);
 	});
 
 	it('never leaves the bounds a lesson is allowed to have', () => {

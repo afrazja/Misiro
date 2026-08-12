@@ -40,6 +40,7 @@
 	} from "$services/lesson-loader";
 	import { stopAllAudio, playAudioPromise } from "$services/tts";
 	import { tipFor } from "$services/pronunciation";
+	import { trackEvent } from "$services/analytics";
 	import { unlockAudioContext, playTone } from "$services/audio-context";
 	import {
 		initSpeechRecognition,
@@ -79,6 +80,8 @@
 
 	// ============ STATE ============
 	let showOverlay = $state(true);
+	/** When the start overlay went up, for the time-to-begin signal. */
+	let overlayShownAt = Date.now();
 	let isReady = $state(false);
 	let chatMessages: ChatMessage[] = $state([]);
 	let answerLineHtml = $state(
@@ -444,6 +447,18 @@
 
 	// ============ EVENT HANDLERS ============
 	function handleStart() {
+		// secondsOnOverlay separates "read it and committed" from "sat there
+		// deciding" — a long pause before Start is a different signal from a
+		// quick one, and both differ from never pressing it at all.
+		void trackEvent("lesson_begun", {
+			day: app.currentDay,
+			metadata: {
+				sentenceCount: lesson.currentLesson?.sentences?.length ?? 0,
+				secondsOnOverlay: overlayShownAt
+					? Math.round((Date.now() - overlayShownAt) / 1000)
+					: null,
+			},
+		});
 		showOverlay = false;
 		unlockAudioContext();
 		if (isReady) {
