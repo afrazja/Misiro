@@ -1848,7 +1848,16 @@
 		width: 100%;
 		height: 100vh;
 		height: 100dvh;
-		background: rgba(15, 15, 26, 0.97);
+		/* Follows the theme. This was hard-coded rgba(15,15,26,.97) — the
+		   DARK page colour, in both themes — while every piece of text on it
+		   uses --ink / --ink-soft / --accent-deep, which do flip. In dark
+		   that lined up by luck; in light it put near-black text on a
+		   near-black sheet and the heading measured 1.13:1.
+
+		   Fixing the scrim rather than recolouring the five children kills
+		   the whole class: anything added here later inherits a surface its
+		   tokens were actually designed for. */
+		background: color-mix(in srgb, var(--paper) 97%, transparent);
 		z-index: 10000;
 		display: flex;
 		justify-content: center;
