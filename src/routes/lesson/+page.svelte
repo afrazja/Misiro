@@ -1290,6 +1290,29 @@
 												: "Hint"}
 										</button>
 									{/if}
+									<!-- The mic belongs where the sentence is. It lived only
+									     in the composer at the bottom of the screen, so
+									     reading your line and answering it were at opposite
+									     ends of the page. Only on 'sent' steps — there is
+									     nothing to say back to the other speaker's line. -->
+									{#if currentTeachStep.role === "sent" && micSupported}
+										<button
+											class="btn-record"
+											class:recording={app.isListening}
+											onclick={handleMicClick}
+											aria-label={app.isListening
+												? "Stop recording"
+												: "Record your answer"}
+										>
+											{app.isListening
+												? currentTeachStep.language === "fa"
+													? "🛑 تمام"
+													: "🛑 Stop"
+												: currentTeachStep.language === "fa"
+													? "🎤 بگو"
+													: "🎤 Say it"}
+										</button>
+									{/if}
 									<button
 										class="btn-inline-next"
 										onclick={() => manualNext()}
@@ -1691,8 +1714,13 @@
 						>
 							{@html answerLineHtml}
 						</div>
-						<button
-							class="btn-send"
+						<!-- Hidden while the card shows its own record button: two
+						     mics doing one job is the duplication the Practice
+						     button was just removed for. Still the only mic in exam
+						     and conversation mode, which have no teach card. -->
+						{#if !(currentTeachStep?.role === "sent" && micSupported)}
+							<button
+								class="btn-send"
 							class:pulse={app.isListening}
 							style="background: {app.isListening
 								? '#f44336'
@@ -1704,6 +1732,7 @@
 						>
 							{app.isListening ? "🛑" : "🎙️"}
 						</button>
+						{/if}
 					</div>
 				</div>
 				<!-- end chat-main -->
@@ -2612,6 +2641,34 @@
 	.interactive-word.reading {
 		font-weight: 900;
 		color: var(--ink);
+	}
+
+	/* Reads as the primary action on the learner's own lines, because it
+	   is — Replay and Hint are optional, saying it is the lesson. Turns
+	   --miss while live so "recording" is not carried by the label alone. */
+	.btn-record {
+		min-height: 44px;
+		padding: 6px 16px;
+		border: 2px solid var(--leaf-edge);
+		border-radius: 20px;
+		background: var(--leaf);
+		color: var(--on-accent);
+		font-size: 0.85rem;
+		font-weight: 700;
+		cursor: pointer;
+		box-shadow: 0 3px 0 var(--leaf-edge);
+	}
+
+	.btn-record:active {
+		transform: translateY(3px);
+		box-shadow: none;
+	}
+
+	.btn-record.recording {
+		background: var(--miss);
+		border-color: var(--miss-edge);
+		box-shadow: 0 3px 0 var(--miss-edge);
+		animation: pulse 1.4s ease-in-out infinite;
 	}
 
 	.btn-inline-next {
