@@ -36,7 +36,6 @@ import { trackEvent } from '$services/analytics';
 import { makeWordHighlighter } from '$utils/word-timing';
 import { playAudioPromise, stopAllAudio } from '$services/tts';
 import { playTone } from '$services/audio-context';
-import { tokenizeForBuild, shuffleTiles, isBuildCorrect } from '$services/sentence-build';
 import { lessonMinutes, countLessonContent } from '$services/lesson-duration';
 import { matchVoiceInput, bestVoiceMatch } from '$utils/text-matching';
 import { diagnose, type SoundNote } from './pronunciation';
@@ -51,8 +50,6 @@ import { logError } from '$utils/error';
 
 export interface LessonCallbacks {
 	onTeachStep: (step: TeachStepData) => void;
-	/** Tap-to-build exercise for the current sentence; null clears it. */
-	onBuildStep?: (data: BuildStepData | null) => void;
 	/** Pre-dialogue warm-up: today's words and collocations. null clears it. */
 	onWarmUp?: (data: WarmUpData | null) => void;
 	/** End-of-lesson grammar moment; null clears it. */
@@ -89,25 +86,6 @@ export interface TeachStepData {
 	hint?: string;
 	hintFa?: string;
 	difficulty?: string;
-}
-
-/**
- * Tap-to-build (retrieval ladder, stage 2).
- *
- * The learner assembles the sentence from scrambled word tiles before being
- * asked to say it. Reading a sentence aloud while it is on screen is
- * recognition; putting the words in order is production, and it drills the
- * word-order rules that are the most common A1/A2 error for Persian
- * speakers (verb position, separable prefixes at the end).
- */
-export interface BuildStepData {
-	language: Language;
-	/** Scrambled tiles the learner picks from. */
-	tiles: string[];
-	/** The sentence in its correct order — used to grade, never shown. */
-	solution: string[];
-	/** Meaning prompt in the interface language, so there is something to aim at. */
-	translation: string;
 }
 
 /**
@@ -191,20 +169,12 @@ let grammarMomentShown = false;
 /** Same, for the warm-up at the start of the lesson. */
 let warmUpShown = false;
 
-/** Sentence index whose build step is currently on screen (-1 = none). */
-let buildStepIndex = -1;
-
 /**
  * When the current lesson was opened. The duration estimate on the dashboard
  * is a promise about effort, and the only way to know whether it is honest is
  * to measure the real thing — logged on completion, compared to the estimate.
  */
 let lessonStartedAt = 0;
-
-// Tile helpers live in sentence-build so Basics can use them without
-// importing this module's whole graph. Re-exported: callers here and in
-// the lesson page already import them from the controller.
-export { tokenizeForBuild, shuffleTiles, isBuildCorrect };
 
 export function setCallbacks(cb: LessonCallbacks) {
 	callbacks = cb;
@@ -258,7 +228,6 @@ export async function initLesson(): Promise<void> {
 	deactivateConversation(); // stale state from a previous page visit
 	grammarMomentShown = false;
 	warmUpShown = false;
-	buildStepIndex = -1;
 	try {
 		// Load saved language preference
 		const savedLang = await getLanguage();
@@ -423,61 +392,12 @@ export async function processNextStep(skipAudio = false): Promise<void> {
 		if (getSessionID() !== mySessionID) return;
 	}
 
-	// Retrieval ladder stage 2: on the learner's own lines, assemble the
-	// sentence from tiles before being asked to say it. Skipped in exam and
-	// review modes, which have their own question formats.
-	const exam = get(examStore);
-	if (
-		currentStep.role === 'sent' &&
-		!exam.isExamMode &&
-		buildStepIndex !== app.currentSentenceIndex &&
-		callbacks?.onBuildStep
-	) {
-		const solution = tokenizeForBuild(germanText);
-		// A one-word sentence has nothing to order.
-		if (solution.length >= 2) {
-			buildStepIndex = app.currentSentenceIndex;
-			callbacks.onBuildStep({
-				language: prefs.language,
-				tiles: shuffleTiles(solution),
-				solution,
-				translation: translationText
-			});
-			return; // finishBuildStep() resumes into the speak prompt
-		}
-	}
-
 	// Prompt user
 	const promptMsg =
 		prefs.language === 'fa'
 			? 'برای تمرین 🎙️ را بزنید یا بعدی.'
 			: 'Tap 🎙️ to practice or Next to skip.';
 	callbacks?.onAnswerPrompt(promptMsg);
-}
-
-/**
- * Dismiss the build exercise and fall through to the speaking prompt.
- *
- * `solved` records whether they assembled it correctly; a wrong build feeds
- * the same SR card the speaking attempt does, so the sentence comes back
- * sooner. Skipping records nothing — an untried item is not a failed one.
- */
-export async function finishBuildStep(solved: boolean | null = null): Promise<void> {
-	callbacks?.onBuildStep?.(null);
-	if (solved !== null) {
-		const app = get(appStore);
-		const lesson = get(lessonStore).currentLesson;
-		const step = lesson?.sentences[app.currentSentenceIndex];
-		if (step) {
-			try {
-				await recordSRAttempt(app.currentDay, step.id, solved);
-			} catch {
-				// SR is best-effort; never block the lesson on it.
-			}
-		}
-	}
-	// skipAudio: the sentence was just played before the build step.
-	await processNextStep(true);
 }
 
 async function handleLessonCompletion(
@@ -593,7 +513,6 @@ export async function goToNextDay(nextDay: number): Promise<void> {
 	stopAllAudio();
 	grammarMomentShown = false; // each day gets its own grammar moment
 	warmUpShown = false; // …and its own warm-up
-	buildStepIndex = -1;
 
 	appStore.update((s) => ({
 		...s,

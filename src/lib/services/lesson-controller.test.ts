@@ -62,10 +62,6 @@ import {
 	processNextStep,
 	continueAfterGrammar,
 	initLesson,
-	finishBuildStep,
-	tokenizeForBuild,
-	shuffleTiles,
-	isBuildCorrect,
 	type LessonCallbacks
 } from './lesson-controller';
 import { playTone } from '$services/audio-context';
@@ -103,7 +99,6 @@ function resetStores() {
 function makeCallbacks(overrides: Partial<LessonCallbacks> = {}): LessonCallbacks {
 	return {
 		onTeachStep: vi.fn(),
-		onBuildStep: vi.fn(),
 		onGrammarMoment: vi.fn(),
 		onCompletionCard: vi.fn(),
 		onAnswerPrompt: vi.fn(),
@@ -157,186 +152,6 @@ const lessonWithGrammar = {
 		basicsKey: 'pronounsAndSein'
 	}
 };
-
-// ─── Tap-to-build (retrieval ladder, stage 2) ─────────────────────────────────
-
-describe('tokenizeForBuild', () => {
-	it('splits on whitespace and keeps punctuation attached to its word', () => {
-		expect(tokenizeForBuild('Ich lerne Deutsch.')).toEqual(['Ich', 'lerne', 'Deutsch.']);
-	});
-
-	it('collapses irregular spacing', () => {
-		expect(tokenizeForBuild('  Wie   geht es dir?  ')).toEqual(['Wie', 'geht', 'es', 'dir?']);
-	});
-});
-
-describe('shuffleTiles', () => {
-	it('keeps exactly the same multiset of words', () => {
-		const sol = ['Ich', 'stehe', 'um', 'sieben', 'Uhr', 'auf.'];
-		const out = shuffleTiles(sol);
-		expect([...out].sort()).toEqual([...sol].sort());
-	});
-
-	it('never returns the solution order — even when the shuffle keeps landing on it', () => {
-		const sol = ['Ich', 'lerne', 'Deutsch.'];
-		// A rand() that always yields the identity permutation: every attempt
-		// reproduces the solution, so the fallback rotation has to kick in.
-		const out = shuffleTiles(sol, () => 0.999999);
-		expect(out).not.toEqual(sol);
-		expect([...out].sort()).toEqual([...sol].sort());
-	});
-
-	it('does not hang when every word is identical', () => {
-		const sol = ['ja', 'ja', 'ja'];
-		expect(shuffleTiles(sol)).toEqual(sol); // no other arrangement exists
-	});
-
-	it('leaves a single-word sentence alone', () => {
-		expect(shuffleTiles(['Hallo!'])).toEqual(['Hallo!']);
-	});
-});
-
-describe('isBuildCorrect', () => {
-	it('accepts the exact order', () => {
-		expect(isBuildCorrect(['Ich', 'bin', 'müde.'], ['Ich', 'bin', 'müde.'])).toBe(true);
-	});
-
-	it('rejects a wrong order', () => {
-		expect(isBuildCorrect(['Bin', 'ich', 'müde.'], ['Ich', 'bin', 'müde.'])).toBe(false);
-	});
-
-	it('rejects an incomplete attempt', () => {
-		expect(isBuildCorrect(['Ich', 'bin'], ['Ich', 'bin', 'müde.'])).toBe(false);
-	});
-
-	it('grades duplicates by value, so a swapped duplicate still passes', () => {
-		expect(isBuildCorrect(['sehr', 'sehr', 'gut'], ['sehr', 'sehr', 'gut'])).toBe(true);
-	});
-});
-
-describe('build step in the lesson flow', () => {
-	beforeEach(async () => {
-		resetStores();
-		vi.clearAllMocks();
-		await initLesson(); // clears the per-visit guards
-		resetStores();
-	});
-
-	it("fires on the learner's own line, before the speak prompt", async () => {
-		const onBuildStep = vi.fn();
-		const onAnswerPrompt = vi.fn();
-		setCallbacks(makeCallbacks({ onBuildStep, onAnswerPrompt }));
-		lessonStore.set({ currentLesson: sampleLesson, glossary: {}, isLoading: false });
-		appStore.update((s) => ({ ...s, currentSentenceIndex: 0 })); // 'sent'
-
-		await processNextStep(true);
-
-		expect(onBuildStep).toHaveBeenCalledTimes(1);
-		expect(onAnswerPrompt).not.toHaveBeenCalled();
-		const d = onBuildStep.mock.calls[0][0];
-		expect(d.solution).toEqual(['Guten', 'Morgen']);
-		expect([...d.tiles].sort()).toEqual(['Guten', 'Morgen']);
-	});
-
-	it("does not fire on the partner's line", async () => {
-		const onBuildStep = vi.fn();
-		const onAnswerPrompt = vi.fn();
-		setCallbacks(makeCallbacks({ onBuildStep, onAnswerPrompt }));
-		lessonStore.set({ currentLesson: sampleLesson, glossary: {}, isLoading: false });
-		appStore.update((s) => ({ ...s, currentSentenceIndex: 1 })); // 'received'
-
-		await processNextStep(true);
-
-		expect(onBuildStep).not.toHaveBeenCalled();
-		expect(onAnswerPrompt).toHaveBeenCalled();
-	});
-
-	it('skips one-word sentences, which have no order to get wrong', async () => {
-		const onBuildStep = vi.fn();
-		const onAnswerPrompt = vi.fn();
-		setCallbacks(makeCallbacks({ onBuildStep, onAnswerPrompt }));
-		lessonStore.set({
-			currentLesson: {
-				title: 'One word',
-				sentences: [
-					{ id: 1, role: 'sent' as const, targetText: 'Hallo!', translation: 'Hi!' }
-				]
-			},
-			glossary: {},
-			isLoading: false
-		});
-		appStore.update((s) => ({ ...s, currentSentenceIndex: 0 }));
-
-		await processNextStep(true);
-
-		expect(onBuildStep).not.toHaveBeenCalled();
-		expect(onAnswerPrompt).toHaveBeenCalled();
-	});
-
-	it('finishing clears the card and falls through to the speak prompt', async () => {
-		const onBuildStep = vi.fn();
-		const onAnswerPrompt = vi.fn();
-		setCallbacks(makeCallbacks({ onBuildStep, onAnswerPrompt }));
-		lessonStore.set({ currentLesson: sampleLesson, glossary: {}, isLoading: false });
-		appStore.update((s) => ({ ...s, currentSentenceIndex: 0 }));
-
-		await processNextStep(true);
-		await finishBuildStep(true);
-
-		expect(onBuildStep).toHaveBeenLastCalledWith(null);
-		expect(onAnswerPrompt).toHaveBeenCalled();
-		expect(recordSRAttempt).toHaveBeenCalledWith(1, 1, true);
-	});
-
-	it('records a failure when the learner had it revealed', async () => {
-		setCallbacks(makeCallbacks());
-		lessonStore.set({ currentLesson: sampleLesson, glossary: {}, isLoading: false });
-		appStore.update((s) => ({ ...s, currentSentenceIndex: 0 }));
-
-		await processNextStep(true);
-		await finishBuildStep(false);
-
-		expect(recordSRAttempt).toHaveBeenCalledWith(1, 1, false);
-	});
-
-	it('records nothing when skipped — an untried item is not a failed one', async () => {
-		setCallbacks(makeCallbacks());
-		lessonStore.set({ currentLesson: sampleLesson, glossary: {}, isLoading: false });
-		appStore.update((s) => ({ ...s, currentSentenceIndex: 0 }));
-
-		await processNextStep(true);
-		await finishBuildStep(null);
-
-		expect(recordSRAttempt).not.toHaveBeenCalled();
-	});
-
-	it('does not re-fire for the same sentence after finishing', async () => {
-		const onBuildStep = vi.fn();
-		setCallbacks(makeCallbacks({ onBuildStep }));
-		lessonStore.set({ currentLesson: sampleLesson, glossary: {}, isLoading: false });
-		appStore.update((s) => ({ ...s, currentSentenceIndex: 0 }));
-
-		await processNextStep(true);
-		onBuildStep.mockClear();
-		await finishBuildStep(null); // calls processNextStep again internally
-
-		expect(onBuildStep).not.toHaveBeenCalledWith(
-			expect.objectContaining({ solution: expect.anything() })
-		);
-	});
-
-	it('stays out of exam and review modes, which have their own formats', async () => {
-		const onBuildStep = vi.fn();
-		setCallbacks(makeCallbacks({ onBuildStep }));
-		lessonStore.set({ currentLesson: sampleLesson, glossary: {}, isLoading: false });
-		appStore.update((s) => ({ ...s, currentSentenceIndex: 0 }));
-		examStore.update((s) => ({ ...s, isExamMode: true }));
-
-		await processNextStep(true);
-
-		expect(onBuildStep).not.toHaveBeenCalled();
-	});
-});
 
 // ─── Grammar moment ───────────────────────────────────────────────────────────
 
