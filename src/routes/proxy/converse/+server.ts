@@ -112,9 +112,42 @@ ${vocab.map((v) => `- ${v}`).join('\n') || '- (none)'}`;
 /**
  * Availability probe. The client cannot read env, and rendering the card
  * then hiding it on a 503 would flash a promise we cannot keep.
+ *
+ * Checks the key WORKS, not merely that it is set. A stale key is worse
+ * than a missing one: the card renders, the learner composes their first
+ * unscripted German sentence, and the reply is an error. Found exactly
+ * that way — the key on the dev machine was invalid, and a
+ * presence-only probe reported the feature as available.
+ *
+ * /v1/models generates no tokens, so this costs nothing, and the result
+ * is cached per server instance so a lesson page load is not an upstream
+ * round-trip.
  */
+let keyOk: { valid: boolean; at: number } | null = null;
+const KEY_CACHE_MS = 10 * 60 * 1000;
+
+async function keyWorks(): Promise<boolean> {
+	if (!env.OPENAI_API_KEY) return false;
+	if (keyOk && Date.now() - keyOk.at < KEY_CACHE_MS) return keyOk.valid;
+	try {
+		const controller = new AbortController();
+		const t = setTimeout(() => controller.abort(), 4000);
+		const r = await fetch('https://api.openai.com/v1/models', {
+			headers: { Authorization: `Bearer ${env.OPENAI_API_KEY}` },
+			signal: controller.signal
+		});
+		clearTimeout(t);
+		keyOk = { valid: r.ok, at: Date.now() };
+		if (!r.ok) console.error(`OpenAI key rejected: ${r.status}`);
+		return r.ok;
+	} catch {
+		// Network wobble, not a bad key. Do not cache a false negative.
+		return true;
+	}
+}
+
 export const GET: RequestHandler = async () =>
-	new Response(JSON.stringify({ available: !!env.OPENAI_API_KEY }), {
+	new Response(JSON.stringify({ available: await keyWorks() }), {
 		headers: { 'Content-Type': 'application/json' }
 	});
 
@@ -215,6 +248,13 @@ export const POST: RequestHandler = async ({ request, locals }) => {
 
 		if (!response.ok) {
 			console.error(`Converse failed: ${response.status}`);
+			// 401/403 is a configuration problem, not a transient one. Report
+			// it as unconfigured so the client retires the card instead of
+			// showing a learner an error it can never recover from.
+			if (response.status === 401 || response.status === 403) {
+				keyOk = { valid: false, at: Date.now() };
+				return json({ error: 'Conversation not configured' }, 503);
+			}
 			return json({ error: 'Conversation unavailable' }, 502);
 		}
 

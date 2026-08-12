@@ -137,6 +137,13 @@
 				headers: { 'Content-Type': 'application/json' },
 				body: JSON.stringify({ scenario, vocab, history, utterance })
 			});
+			// 503 means the key is missing or rejected — a state no learner
+			// can recover from by trying again. Retire the card rather than
+			// leave them talking to something that cannot answer.
+			if (res.status === 503) {
+				onFinish?.(turnsTaken);
+				return;
+			}
 			if (!res.ok) throw new Error(String(res.status));
 			const reply = (await res.json()) as Reply;
 
