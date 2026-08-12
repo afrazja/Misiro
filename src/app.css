@@ -323,7 +323,6 @@ select {
    the keycap shadow drew a raised box around nothing. */
 .back-control,
 .app-header .brand,
-.listener-mode-btn,
 .btn-ghost,
 .btn-choice,
 .lesson-toolbar-content select,
@@ -341,7 +340,6 @@ select {
 
 .back-control:active,
 .app-header .brand:active,
-.listener-mode-btn:active,
 .btn-ghost:active,
 .btn-choice:active {
 	transform: translateY(2px);
@@ -363,8 +361,7 @@ select {
 	.gm-continue,
 	.back-control,
 	.app-header .brand,
-	.listener-mode-btn,
-	.btn-ghost,
+		.btn-ghost,
 	.btn-choice {
 		transition: none;
 	}

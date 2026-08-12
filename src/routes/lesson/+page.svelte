@@ -160,8 +160,6 @@
 	let examProgressTotal = $state(0);
 	let systemMessages: string[] = $state([]);
 	let voiceResult: VoiceResultData | null = $state(null);
-	let listenerMode = $state(false);
-	let _listenerSeq = 0;
 	// Review-first flow: due SR items become a warm-up before the day's lesson.
 	// Capped low on purpose — a big review wall before new material is the #1
 	// "open app, feel guilt, close app" churn loop. The backlog lives in the
@@ -387,7 +385,6 @@
 				examQuestionData = null;
 				examResultsData = null;
 				voiceResult = null;
-				_listenerSeq++; // invalidate any pending listener timers
 				isSpeaking = true; // audio is about to play
 				updateScript();
 			},
@@ -425,25 +422,6 @@
 			async onAnswerPrompt(message) {
 				answerLineHtml = message;
 				isSpeaking = false; // audio just finished
-				if (!listenerMode || !currentTeachStep || exam.isExamMode)
-					return;
-				const mySeq = _listenerSeq;
-				const germanText = currentTeachStep.germanText;
-				const ttsVoice = currentTeachStep.role === "received" ? "b" : "a";
-				// Brief pause after the normal-speed audio that just finished
-				await new Promise<void>((r) => setTimeout(r, 800));
-				if (_listenerSeq !== mySeq || !listenerMode) return;
-				// Play German a second time at 0.75x speed (rate 0.6 = 0.8 x 0.75)
-				stopAllAudio();
-				const highlight = makeWordHighlighter(
-					germanText,
-					(i) => (spokenWordIndex = i),
-				);
-				await playAudioPromise(germanText, 0.6, "de-DE", highlight, ttsVoice);
-				spokenWordIndex = -1;
-				await new Promise<void>((r) => setTimeout(r, 600));
-				if (_listenerSeq !== mySeq || !listenerMode) return;
-				manualNext();
 			},
 			onMessageBubble(step) {
 				currentTeachStep = null;
@@ -670,7 +648,6 @@
 	function handleSpeakerClick() {
 		if (!currentTeachStep) return;
 		if (isSpeaking) {
-			_listenerSeq++;
 			incrementSession();
 			stopAllAudio();
 			isSpeaking = false;
@@ -694,41 +671,6 @@
 			isSpeaking = false;
 			spokenWordIndex = -1;
 		});
-	}
-
-	async function handleListenerToggle() {
-		listenerMode = !listenerMode;
-		// If turning ON while a sentence is already shown and audio has finished,
-		// immediately start the listener sequence for the current sentence.
-		if (!listenerMode || !currentTeachStep || isSpeaking || exam.isExamMode)
-			return;
-		const mySeq = _listenerSeq;
-		const germanText = currentTeachStep.germanText;
-		const ttsVoice = currentTeachStep.role === "received" ? "b" : "a";
-		const highlight = makeWordHighlighter(
-			germanText,
-			(i) => (spokenWordIndex = i),
-		);
-		// Normal-speed play
-		isSpeaking = true;
-		await playAudioPromise(germanText, 0.8, "de-DE", highlight, ttsVoice);
-		isSpeaking = false;
-		spokenWordIndex = -1;
-		await new Promise<void>((r) => setTimeout(r, 600));
-		if (_listenerSeq !== mySeq || !listenerMode) return;
-		// Slow play (0.75x)
-		stopAllAudio();
-		isSpeaking = true;
-		const highlightSlow = makeWordHighlighter(
-			germanText,
-			(i) => (spokenWordIndex = i),
-		);
-		await playAudioPromise(germanText, 0.6, "de-DE", highlightSlow, ttsVoice);
-		isSpeaking = false;
-		spokenWordIndex = -1;
-		await new Promise<void>((r) => setTimeout(r, 600));
-		if (_listenerSeq !== mySeq || !listenerMode) return;
-		manualNext();
 	}
 
 	function handleScriptItemClick(index: number) {
@@ -970,26 +912,6 @@
 				</select>
 			</div>
 
-			<button
-				class="listener-mode-btn"
-				class:active={listenerMode}
-				onclick={handleListenerToggle}
-				title={prefs.language === "fa"
-					? listenerMode
-						? "حالت شنونده روشن است — برای خاموش کردن کلیک کنید"
-						: "فعال کردن حالت شنونده"
-					: listenerMode
-						? "Listener Mode ON — click to disable"
-						: "Enable Listener Mode"}
-			>
-				🎧 {prefs.language === "fa"
-					? listenerMode
-						? "شنونده روشن"
-						: "شنونده"
-					: listenerMode
-						? "Listener ON"
-						: "Listener"}
-			</button>
 		</div>
 	</div>
 {/snippet}
@@ -2631,31 +2553,6 @@
 		accent-color: var(--leaf);
 	}
 
-	.listener-mode-btn {
-		min-height: 44px;
-		padding: 7px 12px;
-		border-radius: 10px;
-		border: 1px solid var(--control-border);
-		background: var(--control);
-		color: var(--ink);
-		font-family: inherit;
-		font-size: 0.82rem;
-		font-weight: 600;
-		cursor: pointer;
-		white-space: nowrap;
-		transition:
-			background 0.2s,
-			border-color 0.2s;
-	}
-	.listener-mode-btn:hover {
-		background: var(--accent-wash);
-	}
-	.listener-mode-btn.active {
-		background: var(--leaf);
-		border-color: var(--leaf);
-		color: var(--on-accent);
-	}
-
 	.lesson-toolbar-content label {
 		font-weight: 600;
 		cursor: pointer;
@@ -3849,12 +3746,6 @@
 		.speed-control,
 		.language-control select,
 		.speed-control select,
-		.listener-mode-btn {
-			width: 100%;
-			max-width: none;
-			min-width: 0;
-		}
-
 		.blind-mode-control {
 			justify-content: center;
 			padding-inline: 6px;
