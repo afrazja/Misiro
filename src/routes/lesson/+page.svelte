@@ -1277,19 +1277,6 @@
 												: "🔊 Replay"}
 										{/if}
 									</button>
-									{#if currentTeachStep.role === "sent" && (currentTeachStep.hint || currentTeachStep.hintFa)}
-										<button
-											class="btn-hint"
-											onclick={() =>
-												(showHint = !showHint)}
-											aria-label="Toggle hint"
-										>
-											💡 {currentTeachStep.language ===
-											"fa"
-												? "راهنما"
-												: "Hint"}
-										</button>
-									{/if}
 									<!-- The mic belongs where the sentence is. It lived only
 									     in the composer at the bottom of the screen, so
 									     reading your line and answering it were at opposite
@@ -1311,6 +1298,19 @@
 												: currentTeachStep.language === "fa"
 													? "🎤 بگو"
 													: "🎤 Say it"}
+										</button>
+									{/if}
+									{#if currentTeachStep.role === "sent" && (currentTeachStep.hint || currentTeachStep.hintFa)}
+										<button
+											class="btn-hint"
+											onclick={() =>
+												(showHint = !showHint)}
+											aria-label="Toggle hint"
+										>
+											💡 {currentTeachStep.language ===
+											"fa"
+												? "راهنما"
+												: "Hint"}
 										</button>
 									{/if}
 									<button
