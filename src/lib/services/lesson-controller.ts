@@ -628,7 +628,11 @@ export async function changeDay(day: number): Promise<void> {
 
 	// Check if this day is completed
 	const completedLessons = app.completedLessons;
-	const selectedLesson = getLesson(day) || (await loadLesson(day));
+	// loadLesson, NOT getLesson: getLesson reads localStorage first and never
+	// touches the network, so switching to a day the learner had cached served
+	// the pre-migration copy forever. loadLesson is network-first with the
+	// cache as its offline fallback, which is the behaviour this wants.
+	const selectedLesson = await loadLesson(day);
 
 	appStore.update((s) => ({
 		...s,

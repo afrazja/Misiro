@@ -403,6 +403,7 @@ describe('offline caching (localStorage)', () => {
 	it('falls back to the cached lesson when Supabase fails (offline)', async () => {
 		const cachedLesson = { title: 'Offline Café', sentences: [{ id: 1, role: 'received', translation: 'Hi' }] };
 		localStorage.setItem('mirifer_lesson_3', JSON.stringify(cachedLesson));
+		localStorage.setItem('mirifer_lesson_3_v', '2');
 		const sb = mockSbForTables({ lessons: { data: null, error: { message: 'network down' } } });
 		vi.mocked(getSupabaseBrowserClient).mockReturnValue(sb as any);
 
@@ -414,8 +415,20 @@ describe('offline caching (localStorage)', () => {
 	it('getLesson reads from localStorage when not in the in-memory cache', () => {
 		const cachedLesson = { title: 'Synced Café', sentences: [] };
 		localStorage.setItem('mirifer_lesson_9', JSON.stringify(cachedLesson));
+		localStorage.setItem('mirifer_lesson_9_v', '2');
 
 		expect(getLesson(9)!.title).toBe('Synced Café');
+	});
+
+	// A copy cached before a content migration must not be served as if it
+	// were current — that is how Day 1's warm-up stayed invisible to everyone
+	// who had already opened Day 1.
+	it('ignores a cached lesson written by an older shape', () => {
+		localStorage.setItem('mirifer_lesson_11', JSON.stringify({ title: 'Stale', sentences: [] }));
+		expect(getLesson(11)).toBeNull();
+
+		localStorage.setItem('mirifer_lesson_11_v', '1');
+		expect(getLesson(11)).toBeNull();
 	});
 
 	it('invalidateLessonCache clears the localStorage copies too', async () => {

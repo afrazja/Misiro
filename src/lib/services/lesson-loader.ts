@@ -40,6 +40,31 @@ const LS_INDEX_KEY = 'mirifer_lesson_index';
 const LS_GLOSSARY_KEY = 'mirifer_glossary';
 const lsLessonKey = (day: number) => `mirifer_lesson_${day}`;
 
+/**
+ * Bump when the lesson SHAPE changes, to drop copies cached before it.
+ *
+ * Without this, a learner holding a pre-migration lesson keeps it: the cache
+ * is only refreshed by a successful network read, and changeDay used to
+ * prefer the cache over the network entirely. Day 1's warm-up was invisible
+ * to exactly the people who had used the app most.
+ *
+ * 2 = words / collocations / paragraphs added.
+ */
+const LESSON_CACHE_VERSION = 2;
+const lsLessonVersionKey = (day: number) => `mirifer_lesson_${day}_v`;
+
+/** A cached lesson is only usable if it was written by this shape. */
+function readCachedLesson(day: number): Lesson | null {
+	const v = Number(readLS<number>(lsLessonVersionKey(day)));
+	if (v !== LESSON_CACHE_VERSION) return null;
+	return readLS<Lesson>(lsLessonKey(day));
+}
+
+function writeCachedLesson(day: number, lesson: Lesson): void {
+	writeLS(lsLessonKey(day), lesson);
+	writeLS(lsLessonVersionKey(day), LESSON_CACHE_VERSION);
+}
+
 function readLS<T>(key: string): T | null {
 	if (typeof localStorage === 'undefined') return null;
 	try {
@@ -129,7 +154,7 @@ export async function loadLesson(day: number): Promise<Lesson | null> {
 	// Offline fallback: serve the last cached copy of this lesson if the
 	// network fetch can't complete or returns bad data.
 	const offlineFallback = (): Lesson | null => {
-		const cached = readLS<Lesson>(lsLessonKey(day));
+		const cached = readCachedLesson(day);
 		if (cached) {
 			logWarn('lesson-loader:loadLesson', `Using offline cached lesson for day ${day}`);
 			lessonCache[day] = cached;
@@ -296,7 +321,7 @@ export async function loadLesson(day: number): Promise<Lesson | null> {
 	};
 
 	lessonCache[day] = lesson;
-	writeLS(lsLessonKey(day), lesson); // mirror to offline cache
+	writeCachedLesson(day, lesson); // mirror to offline cache
 	return lesson;
 }
 
@@ -312,7 +337,7 @@ export async function loadLessons(days: number[]): Promise<void> {
  */
 export function getLesson(day: number): Lesson | null {
 	if (lessonCache[day]) return lessonCache[day];
-	const cached = readLS<Lesson>(lsLessonKey(day));
+	const cached = readCachedLesson(day);
 	if (cached) {
 		lessonCache[day] = cached;
 		return cached;
