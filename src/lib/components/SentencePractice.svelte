@@ -19,6 +19,7 @@
 	} from '$services/practice-drills';
 	import { isBuildCorrect } from '$services/sentence-build';
 	import { bestVoiceMatch } from '$utils/text-matching';
+	import { diagnose, tipFor, type SoundNote } from '$services/pronunciation';
 	import { playAudioPromise, stopAllAudio, ttsIsPlaying } from '$services/tts';
 	import { playTone } from '$services/audio-context';
 	import type { Outcome } from '$services/word-strength';
@@ -73,12 +74,16 @@
 	// ── gap rung ──
 	let picked = $state<number | null>(null);
 
+	/** Sounds the learner got wrong on the speak rung, if any are nameable. */
+	let soundNotes = $state<SoundNote[]>([]);
+
 	// Reset the rung's own state whenever the rung changes.
 	$effect(() => {
 		const d = drills[index];
 		verdict = 'none';
 		picked = null;
 		heard = '';
+		soundNotes = [];
 		tray = d?.kind === 'build' ? (d.tiles ?? []).map((word, id) => ({ word, id })) : [];
 		answer = [];
 	});
@@ -99,7 +104,8 @@
 		iSaidIt: isFa ? '✓ گفتم' : '✓ I said it',
 		done: isFa ? 'تمرین این جمله تمام شد' : 'Sentence practised',
 		again: isFa ? 'دوباره' : 'Again',
-		heard: isFa ? 'شنیدم:' : 'Heard:'
+		heard: isFa ? 'شنیدم:' : 'Heard:',
+		hearWord: isFa ? 'شنیدن تلفظ درست' : 'Hear it pronounced'
 	});
 
 	function record(german: string, outcome: Outcome, guessable = false) {
@@ -166,12 +172,25 @@
 	export function handleVoice(transcript: string, alternatives: string[] = []) {
 		if (drill?.kind !== 'speak' || verdict !== 'none') return;
 		heard = transcript;
+		// Two questions, two different readings of the same audio.
+		//
+		// "Did they know the sentence" stays generous on purpose — best of
+		// five hypotheses, because the recognizer's 2nd guess is often what
+		// was actually said.
 		const { result } = bestVoiceMatch(
 			alternatives.length ? alternatives : [transcript],
 			sentence.german,
 			0.7
 		);
-		record(sentence.german, result.isMatch ? 'correct' : 'wrong');
+
+		// "Did they say it correctly" uses the PRIMARY transcript only.
+		// Best-of would be searching for the most flattering reading of the
+		// audio, which is the opposite of what a pronunciation check is for.
+		soundNotes = diagnose(sentence.german, transcript);
+
+		// Strict: every word can be present and the sentence still wrong.
+		// "Ich mochte" is real German. It is not this sentence.
+		record(sentence.german, result.isMatch && soundNotes.length === 0 ? 'correct' : 'wrong');
 	}
 
 	function revealSpeak() {
@@ -307,6 +326,33 @@
 			<p class="pr-verdict" class:wrong={verdict === 'wrong'}>
 				{verdict === 'right' ? t.right : t.wrong}
 			</p>
+
+			<!-- A bare ✗ on a word the learner is certain they said right
+			     teaches nothing, so strictness only ships with the diagnosis. -->
+			{#each soundNotes as note (note.contrast.id)}
+				<div class="pr-sound">
+					<p class="pr-sound-head">
+						<span class="pr-sound-label" lang="de" dir="ltr">{note.contrast.label}</span>
+						<span class="pr-sound-diff" lang="de" dir="ltr">
+							<span class="said">{note.heard}</span>
+							<span aria-hidden="true">→</span>
+							<span class="want">{note.target}</span>
+						</span>
+						<button
+							class="pr-sound-play"
+							onclick={() => playAudioPromise(note.target, 0.7, 'de-DE')}
+							aria-label={t.hearWord}
+						>🔊</button>
+					</p>
+					<p class="pr-sound-tip">{tipFor(note, lang)}</p>
+					<p class="pr-sound-pair" lang="de" dir="ltr">
+						{note.contrast.pair.wrong} &middot; {note.contrast.pair.right}
+						<span class="pr-sound-gloss" dir={isFa ? 'rtl' : 'ltr'}>
+							{isFa ? note.contrast.pair.glossFa : note.contrast.pair.gloss}
+						</span>
+					</p>
+				</div>
+			{/each}
 			<button class="pr-primary" onclick={advance}>
 				{index < drills.length - 1 ? t.next : t.finish}
 			</button>
@@ -574,6 +620,94 @@
 		margin: 14px 0 0;
 		color: var(--leaf);
 		font-weight: 700;
+	}
+
+	/* ── Sound coaching ──
+	   Gold rather than --miss: the verdict above already says "wrong". This
+	   block is the way out of it, and colouring help like a failure makes a
+	   strict check feel like punishment. */
+	.pr-sound {
+		margin: 12px 0 0;
+		padding: 12px 14px;
+		/* Gold is inherently light — 1.67:1 on white — so it cannot be the
+		   only thing marking the card's edge in light mode. It stays as the
+		   accent; a real border does the boundary work. */
+		border: 1px solid var(--control-border);
+		border-inline-start: 3px solid var(--gold);
+		border-radius: 10px;
+		background: var(--paper-sunken);
+		text-align: start;
+	}
+
+	.pr-sound-head {
+		display: flex;
+		align-items: center;
+		gap: 10px;
+		flex-wrap: wrap;
+		margin: 0;
+	}
+
+	.pr-sound-label {
+		padding: 2px 8px;
+		border-radius: 999px;
+		background: var(--gold);
+		color: #3b2c00;
+		font-weight: 800;
+		font-size: 0.9rem;
+	}
+
+	.pr-sound-diff {
+		display: inline-flex;
+		align-items: center;
+		gap: 6px;
+		font-size: 0.95rem;
+	}
+
+	.pr-sound-diff .said {
+		color: var(--miss);
+		text-decoration: line-through;
+	}
+
+	/* --accent, not --leaf. --leaf measures 4.28:1 on --paper-sunken in light
+	   mode, under the 4.5 body text needs; --accent clears 6.7 there and 8.6
+	   in dark. It also reads better semantically — --leaf means "you got it
+	   right", and nothing here went right. */
+	.pr-sound-diff .want {
+		color: var(--accent);
+		font-weight: 700;
+	}
+
+	.pr-sound-play {
+		margin-inline-start: auto;
+		min-width: 44px;
+		min-height: 44px;
+		border: 1px solid var(--control-border);
+		border-radius: 999px;
+		background: var(--control);
+		cursor: pointer;
+		font-size: 1rem;
+	}
+
+	.pr-sound-play:hover {
+		background: var(--control-hover);
+		border-color: var(--accent);
+	}
+
+	.pr-sound-tip {
+		margin: 8px 0 0;
+		color: var(--ink);
+		font-size: 0.9rem;
+		line-height: 1.5;
+	}
+
+	.pr-sound-pair {
+		margin: 8px 0 0;
+		color: var(--ink-soft);
+		font-size: 0.85rem;
+	}
+
+	.pr-sound-gloss {
+		color: var(--ink-faint);
 	}
 
 	.pr-verdict.wrong {

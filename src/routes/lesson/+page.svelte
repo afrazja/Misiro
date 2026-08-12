@@ -42,6 +42,7 @@
 		type LessonMeta,
 	} from "$services/lesson-loader";
 	import { stopAllAudio, playAudioPromise } from "$services/tts";
+	import { tipFor } from "$services/pronunciation";
 	import { unlockAudioContext, playTone } from "$services/audio-context";
 	import {
 		initSpeechRecognition,
@@ -1157,6 +1158,37 @@
 									: "✅ Correct!"}
 							</div>
 						{/if}
+
+						<!-- Sound coaching. Only appears when the error is one we
+						     can actually name — see pronunciation.ts. -->
+						{#each voiceResult?.soundNotes ?? [] as note (note.contrast.id)}
+							<div class="sound-note">
+								<div class="sound-note-head">
+									<span class="sound-note-label" lang="de" dir="ltr"
+										>{note.contrast.label}</span
+									>
+									<span class="sound-note-diff" lang="de" dir="ltr">
+										<span class="said">{note.heard}</span>
+										<span aria-hidden="true">→</span>
+										<span class="want">{note.target}</span>
+									</span>
+									<button
+										class="sound-note-play"
+										onclick={() =>
+											playAudioPromise(note.target, 0.7, "de-DE")}
+										aria-label={prefs.language === "fa"
+											? "شنیدن تلفظ درست"
+											: "Hear it pronounced"}>🔊</button
+									>
+								</div>
+								<p
+									class="sound-note-tip"
+									dir={prefs.language === "fa" ? "rtl" : "ltr"}
+								>
+									{tipFor(note, prefs.language)}
+								</p>
+							</div>
+						{/each}
 
 						<!-- Teach Bubble -->
 						{#if currentTeachStep}
@@ -3004,6 +3036,79 @@
 		margin: 4px auto;
 		width: fit-content;
 		animation: popIn 0.2s ease-out;
+	}
+
+	/* ── Sound coaching ──
+	   Gold, not --miss. The ✗ has already been delivered; this is the way out
+	   of it, and painting help in the failure colour makes a strict check
+	   read as punishment rather than teaching. */
+	.sound-note {
+		max-width: 85%;
+		margin: 6px auto;
+		padding: 10px 14px;
+		border: 1px solid var(--control-border);
+		border-inline-start: 3px solid var(--gold);
+		border-radius: 10px;
+		background: var(--paper-raised);
+		animation: popIn 0.2s ease-out;
+	}
+
+	.sound-note-head {
+		display: flex;
+		align-items: center;
+		gap: 10px;
+		flex-wrap: wrap;
+	}
+
+	.sound-note-label {
+		padding: 2px 8px;
+		border-radius: 999px;
+		background: var(--gold);
+		color: #3b2c00;
+		font-weight: 800;
+		font-size: 0.88rem;
+	}
+
+	.sound-note-diff {
+		display: inline-flex;
+		align-items: center;
+		gap: 6px;
+		font-size: 0.95rem;
+	}
+
+	.sound-note-diff .said {
+		color: var(--miss);
+		text-decoration: line-through;
+	}
+
+	/* See SentencePractice: --leaf is under 4.5:1 on the sunken card in light
+	   mode, and "correct" is the wrong meaning here anyway. */
+	.sound-note-diff .want {
+		color: var(--accent);
+		font-weight: 700;
+	}
+
+	.sound-note-play {
+		margin-inline-start: auto;
+		min-width: 44px;
+		min-height: 44px;
+		border: 1px solid var(--control-border);
+		border-radius: 999px;
+		background: var(--control);
+		cursor: pointer;
+		font-size: 1rem;
+	}
+
+	.sound-note-play:hover {
+		background: var(--control-hover);
+		border-color: var(--accent);
+	}
+
+	.sound-note-tip {
+		margin: 8px 0 0;
+		color: var(--ink);
+		font-size: 0.9rem;
+		line-height: 1.5;
 	}
 
 	/* Teach Actions Row */

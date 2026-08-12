@@ -39,6 +39,7 @@ import { playTone } from '$services/audio-context';
 import { tokenizeForBuild, shuffleTiles, isBuildCorrect } from '$services/sentence-build';
 import { lessonMinutes, countLessonContent } from '$services/lesson-duration';
 import { matchVoiceInput, bestVoiceMatch } from '$utils/text-matching';
+import { diagnose, type SoundNote } from './pronunciation';
 import { getLastVoiceAlternatives } from '$services/speech';
 import { getTranslation, getTranslationLang } from '$utils/i18n';
 import { wait } from '$utils/wait';
@@ -171,6 +172,13 @@ export interface VoiceResultData {
 	transcript: string;
 	matchPercentage: number;
 	matchedWordIndices?: boolean[];
+	/**
+	 * Sounds the learner got wrong, when the error is one we can name.
+	 * Usually empty — most mispronunciation is repaired by the recognizer
+	 * before it reaches us, and guessing would send the learner after a
+	 * sound that was fine.
+	 */
+	soundNotes?: SoundNote[];
 }
 
 // ============ CONTROLLER ============
@@ -689,20 +697,32 @@ export async function handleVoiceInput(transcript: string): Promise<void> {
 	const candidates = [transcript, ...getLastVoiceAlternatives()];
 	const best = bestVoiceMatch(candidates, targetGerman, 0.8);
 	const result = best.result;
+
+	// Diagnose against the recognizer's OWN first choice, before best-of
+	// overwrites it below. Best-of deliberately picks the most flattering of
+	// five hypotheses, which is right for "did they know the sentence" and
+	// exactly wrong for "did they say it properly".
+	const soundNotes = diagnose(targetGerman, transcript);
+
 	transcript = best.transcript || transcript;
 
+	// Strict: matching every word is not the same as saying the sentence.
+	// "Ich mochte einen Kaffee" is real German and the wrong answer.
+	const isCorrect = result.isMatch && soundNotes.length === 0;
+
 	callbacks?.onVoiceResult({
-		isCorrect: result.isMatch,
+		isCorrect,
 		transcript,
 		matchPercentage: result.matchPercentage,
 		matchedWordIndices: result.targetWords.map((tw) =>
 			result.userWords.some(
 				(uw) => uw === tw || uw.includes(tw) || tw.includes(uw)
 			)
-		)
+		),
+		soundNotes
 	});
 
-	if (result.isMatch) {
+	if (isCorrect) {
 		playTone('success');
 
 		if (exam.isExamMode) {
