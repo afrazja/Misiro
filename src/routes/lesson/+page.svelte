@@ -60,6 +60,7 @@
 	import {
 		applyAttempt,
 		sentenceMastery,
+		hasPracticeData,
 		type Outcome,
 	} from "$services/word-strength";
 	import {
@@ -1873,6 +1874,10 @@
 						{/if}
 						{#each exam.isExamMode || exam.isConversation ? [] : scriptItems as item, i}
 							{@const mastery = masteryOf(item.german)}
+							{@const practised = hasPracticeData(
+								wordStrengths,
+								item.german,
+							)}
 							<div class="script-row">
 								<!-- svelte-ignore a11y_interactive_supports_focus -->
 								<div
@@ -1909,18 +1914,31 @@
 
 								<div class="script-foot">
 									<!-- Five dots = the weakest word in the
-									     sentence, not an average. -->
-									<span
-										class="mastery"
-										aria-label="Mastery {mastery} of 5"
-									>
-										{#each [0, 1, 2, 3, 4] as d}
-											<span
-												class="dot"
-												class:lit={d < mastery}
-											></span>
-										{/each}
-									</span>
+									     sentence, not an average.
+									
+									     Only once there IS a weakest word to
+									     report. These rendered on every
+									     sentence including untouched ones,
+									     which nobody noticed while the unlit
+									     dot sat at 1.01:1 against the panel.
+									     Fixing that contrast made five empty
+									     dots appear under every line of a
+									     lesson never practised — a meter
+									     measuring nothing, and a zero implied
+									     where no attempt exists. -->
+									{#if practised}
+										<span
+											class="mastery"
+											aria-label="Mastery {mastery} of 5"
+										>
+											{#each [0, 1, 2, 3, 4] as d}
+												<span
+													class="dot"
+													class:lit={d < mastery}
+												></span>
+											{/each}
+										</span>
+									{/if}
 									<button
 										class="practice-link"
 										onclick={() =>
@@ -3224,9 +3242,14 @@
 	.script-foot {
 		display: flex;
 		align-items: center;
-		justify-content: space-between;
 		gap: 10px;
 		padding: 0 12px 8px;
+	}
+
+	/* Pushed right by an auto margin rather than space-between, so the button
+	   keeps its place on the sentences that have no mastery meter yet. */
+	.script-foot .practice-link {
+		margin-inline-start: auto;
 	}
 
 	.mastery {

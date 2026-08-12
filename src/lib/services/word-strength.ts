@@ -80,6 +80,21 @@ export function sentenceMastery(strengths: WordStrengths, german: string): numbe
 	return Math.min(...words.map((w) => strengths[w] ?? 0));
 }
 
+/**
+ * Has this sentence ever been practised at all?
+ *
+ * sentenceMastery() cannot answer this: it returns 0 both for "you got every
+ * word wrong" and for "you have never tried", which are opposite facts. The
+ * mastery meter needs the difference — five empty dots under a sentence
+ * nobody has touched is not a score, it is a widget advertising itself.
+ *
+ * applyAttempt writes a key for every content word on every attempt, even
+ * when the value lands on 0, so the presence of a key is the signal.
+ */
+export function hasPracticeData(strengths: WordStrengths, german: string): boolean {
+	return contentWords(german).some((w) => strengths[w] !== undefined);
+}
+
 /** The words dragging a sentence down, weakest first. For a "focus on" hint. */
 export function weakestWords(
 	strengths: WordStrengths,

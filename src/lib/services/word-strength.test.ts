@@ -2,6 +2,7 @@ import { describe, it, expect } from 'vitest';
 import {
 	applyAttempt,
 	contentWords,
+	hasPracticeData,
 	MAX_STRENGTH,
 	sentenceMastery,
 	weakestWords,
@@ -110,5 +111,43 @@ describe('weakestWords', () => {
 
 	it('respects the limit', () => {
 		expect(weakestWords({}, 'a b c d e', 2)).toHaveLength(2);
+	});
+});
+
+describe('hasPracticeData', () => {
+	it('is false for a sentence nobody has touched', () => {
+		// The bug this exists to fix: sentenceMastery returns 0 here too, so
+		// the meter rendered five empty dots as if it were a score.
+		expect(hasPracticeData({}, 'Ich möchte einen Kaffee')).toBe(false);
+	});
+
+	it('is true after an attempt, even one that scored nothing', () => {
+		// "practised and got it wrong" and "never practised" are opposite
+		// facts that sentenceMastery collapses to the same 0.
+		const after = applyAttempt({}, 'Ich möchte einen Kaffee', 'wrong');
+		expect(sentenceMastery(after, 'Ich möchte einen Kaffee')).toBe(0);
+		expect(hasPracticeData(after, 'Ich möchte einen Kaffee')).toBe(true);
+	});
+
+	it('is true when only part of the sentence has been seen', () => {
+		// Words are shared between sentences, so a new sentence built from
+		// familiar words legitimately has something to show.
+		const seen = applyAttempt({}, 'Ich möchte Tee', 'correct');
+		expect(hasPracticeData(seen, 'Ich möchte einen Kaffee')).toBe(true);
+	});
+
+	it('is false when the strengths belong to unrelated sentences', () => {
+		const other = applyAttempt({}, 'Guten Morgen', 'correct');
+		expect(hasPracticeData(other, 'Wo ist der Bahnhof')).toBe(false);
+	});
+
+	it('is false for a sentence with no content words', () => {
+		expect(hasPracticeData({ ja: 3 }, '...')).toBe(false);
+	});
+
+	it('is unaffected by a revealed answer', () => {
+		// Revealing is not an attempt, so it must not light the meter.
+		const revealed = applyAttempt({}, 'Ich möchte Tee', 'revealed');
+		expect(hasPracticeData(revealed, 'Ich möchte Tee')).toBe(false);
 	});
 });
