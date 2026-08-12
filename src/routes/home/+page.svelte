@@ -328,14 +328,26 @@
 		// not-yet-completed day, never a stale revisit).
 		currentDay = resolveResumePoint(progress, completed).day;
 
-		// The minute estimate needs the lesson itself, not just its index.
-		// Best-effort: no lesson, no number — the card falls back to the tier.
+		// Cheap and local first. levelProgress is pure and the checkpoint list
+		// is localStorage, so the roadmap can render even if every network
+		// call below hangs — which is the failure mode that would otherwise
+		// make the whole dashboard look unchanged.
 		try {
-			const todayLesson = await loadLesson(currentDay);
-			todayMinutes = lessonMinutes(todayLesson) || null;
+			const days = Object.keys(completedLessons || {})
+				.map((k) => Number(k))
+				.filter((n) => Number.isFinite(n));
+			roadmap = levelProgress(days, getCheckpointsDone());
 		} catch {
-			todayMinutes = null;
+			roadmap = [];
 		}
+
+		// The minute estimate needs the lesson itself. Fire-and-forget on
+		// purpose: it is one line of text, and awaiting it here would let a
+		// single slow Supabase read hold up the readiness bars, the roadmap
+		// and the checkpoint card behind it.
+		void loadLesson(currentDay)
+			.then((l) => (todayMinutes = lessonMinutes(l) || null))
+			.catch(() => (todayMinutes = null));
 
 		// Goethe hero — exam plan + readiness estimate. Failure just hides
 		// the hero; it must never take the dashboard down with it.
@@ -345,15 +357,6 @@
 			readiness = await computeReadiness();
 		} catch {
 			readiness = null;
-		}
-
-		try {
-			const days = Object.keys(completedLessons || {})
-				.map((k) => Number(k))
-				.filter((n) => Number.isFinite(n));
-			roadmap = levelProgress(days, getCheckpointsDone());
-		} catch {
-			roadmap = [];
 		}
 
 		try {
