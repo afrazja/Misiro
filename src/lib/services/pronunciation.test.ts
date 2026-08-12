@@ -109,8 +109,8 @@ describe('diagnose', () => {
 describe('tipFor', () => {
 	it('gives the instruction in the learner’s language', () => {
 		const note = { contrast: CONTRASTS.ue, target: 'Mütter', heard: 'Mutter' };
-		expect(tipFor(note, 'en')).toContain('round your lips');
-		expect(tipFor(note, 'fa')).toContain('گرد کن');
+		expect(tipFor(note.contrast, 'en')).toContain('round your lips');
+		expect(tipFor(note.contrast, 'fa')).toContain('گرد کن');
 	});
 
 	it('has both languages filled in for every contrast', () => {

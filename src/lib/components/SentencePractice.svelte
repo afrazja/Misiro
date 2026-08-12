@@ -344,7 +344,7 @@
 							aria-label={t.hearWord}
 						>🔊</button>
 					</p>
-					<p class="pr-sound-tip">{tipFor(note, lang)}</p>
+					<p class="pr-sound-tip">{tipFor(note.contrast, lang)}</p>
 					<p class="pr-sound-pair" lang="de" dir="ltr">
 						{note.contrast.pair.wrong} &middot; {note.contrast.pair.right}
 						<span class="pr-sound-gloss" dir={isFa ? 'rtl' : 'ltr'}>

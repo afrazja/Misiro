@@ -37,7 +37,7 @@ import { makeWordHighlighter } from '$utils/word-timing';
 import { playAudioPromise, stopAllAudio } from '$services/tts';
 import { playTone } from '$services/audio-context';
 import { lessonMinutes, countLessonContent } from '$services/lesson-duration';
-import { matchVoiceInput, bestVoiceMatch } from '$utils/text-matching';
+import { matchVoiceInput, bestVoiceMatch, getWordMatchStatus } from '$utils/text-matching';
 import { diagnose, type SoundNote } from './pronunciation';
 import { getLastVoiceAlternatives } from '$services/speech';
 import { getTranslation, getTranslationLang } from '$utils/i18n';
@@ -157,6 +157,13 @@ export interface VoiceResultData {
 	 * sound that was fine.
 	 */
 	soundNotes?: SoundNote[];
+	/**
+	 * Target words that did not come back at all, in their written form.
+	 * Weaker evidence than soundNotes — we know something went wrong and not
+	 * what — but the learner knows which word they were reaching for even
+	 * when we cannot say why it failed.
+	 */
+	missedWords?: string[];
 }
 
 // ============ CONTROLLER ============
@@ -629,6 +636,15 @@ export async function handleVoiceInput(transcript: string): Promise<void> {
 	// "Ich mochte einen Kaffee" is real German and the wrong answer.
 	const isCorrect = result.isMatch && soundNotes.length === 0;
 
+	// Keyed by the written word rather than an index into the normalized
+	// list, so nothing can drift out of alignment when a token normalizes
+	// away.
+	const missedWords = isCorrect
+		? []
+		: [...getWordMatchStatus(transcript, targetGerman.split(/\s+/))]
+				.filter(([, matched]) => !matched)
+				.map(([word]) => word);
+
 	callbacks?.onVoiceResult({
 		isCorrect,
 		transcript,
@@ -638,7 +654,8 @@ export async function handleVoiceInput(transcript: string): Promise<void> {
 				(uw) => uw === tw || uw.includes(tw) || tw.includes(uw)
 			)
 		),
-		soundNotes
+		soundNotes,
+		missedWords
 	});
 
 	if (isCorrect) {

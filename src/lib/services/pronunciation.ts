@@ -324,7 +324,13 @@ export function diagnose(targetText: string, heardText: string): SoundNote[] {
 	});
 }
 
-/** The instruction for a note, in the learner's language. */
-export function tipFor(note: SoundNote, lang: Language): string {
-	return lang === 'fa' ? note.contrast.tipFa : note.contrast.tip;
+/**
+ * The instruction for a contrast, in the learner's language.
+ *
+ * Takes the contrast itself rather than a SoundNote: the end-of-lesson list
+ * holds a different shape around the same contrast, and a nullable field
+ * inside a wrapper does not narrow through an {#if} in a Svelte each-block.
+ */
+export function tipFor(contrast: Contrast, lang: Language): string {
+	return lang === 'fa' ? contrast.tipFa : contrast.tip;
 }

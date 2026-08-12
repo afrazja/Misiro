@@ -40,6 +40,12 @@
 	} from "$services/lesson-loader";
 	import { stopAllAudio, playAudioPromise } from "$services/tts";
 	import { tipFor } from "$services/pronunciation";
+	import {
+		recordMiss,
+		rankMisses,
+		MAX_SHOWN,
+		type PronunciationMiss,
+	} from "$services/pronunciation-log";
 	import { trackEvent } from "$services/analytics";
 	import { unlockAudioContext, playTone } from "$services/audio-context";
 	import {
@@ -434,12 +440,23 @@
 				examResultsData = null;
 				voiceResult = null;
 				convOptions = null;
+				// A new lesson starts a new list. Carrying yesterday's misses
+				// into today would make the card a running tally, which is a
+				// different and much more discouraging thing.
+				lessonMisses = [];
 				systemMessages = [];
 				answerLineHtml = "";
 				updateScript();
 			},
 			onVoiceResult(result) {
 				voiceResult = result;
+				if (!result.isCorrect) {
+					lessonMisses = recordMiss(lessonMisses, {
+						notes: result.soundNotes ?? [],
+						missedWords: result.missedWords ?? [],
+						matchPercentage: result.matchPercentage,
+					});
+				}
 			},
 			onConversationOptions(options) {
 				convOptions = options;
@@ -502,6 +519,14 @@
 	// Offered after the completion card, so the lesson is already credited.
 	// Dark unless /proxy/converse says it has a key — the client cannot read
 	// env, and flashing a card we cannot serve is worse than never showing it.
+	/**
+	 * Words that did not come out right, gathered across the whole lesson
+	 * and shown once at the end. Feedback mid-sentence is momentary — by
+	 * sentence nine you have forgotten sentence two — and the pattern only
+	 * becomes visible in a list.
+	 */
+	let lessonMisses = $state<PronunciationMiss[]>([]);
+
 	let converseAvailable = $state(false);
 	let freeTurnEl = $state<ConversationTurn | null>(null);
 	let freeTurnDone = $state(false);
@@ -1156,7 +1181,7 @@
 									class="sound-note-tip"
 									dir={prefs.language === "fa" ? "rtl" : "ltr"}
 								>
-									{tipFor(note, prefs.language)}
+									{tipFor(note.contrast, prefs.language)}
 								</p>
 							</div>
 						{/each}
@@ -1597,6 +1622,44 @@
 												? "همه درس‌ها را تمام کردید! 🏆"
 												: "All lessons completed! 🏆"}
 										</p>
+									{/if}
+									<!-- Words to work on. Not a score — the lesson is already
+									     complete and credited above this. Diagnosed sounds come
+									     first because they come with something to do. -->
+									{#if lessonMisses.length}
+										<div class="comp-misses">
+											<h4>
+												{completionData.language === "fa"
+													? "تلفظ این کلمه‌ها را تمرین کن"
+													: "Words to practise"}
+											</h4>
+											{#each rankMisses(lessonMisses).slice(0, MAX_SHOWN) as m (m.word)}
+												<div class="cm-row">
+													<button
+														class="cm-word"
+														lang="de"
+														dir="ltr"
+														onclick={() => playAudioPromise(m.word, 1, "de-DE")}
+														aria-label={`Hear ${m.word}`}
+													>
+														🔊 {m.word}
+													</button>
+													{#if m.contrast}
+														{@const c = m.contrast}
+														<span class="cm-sound" dir="ltr">{c.label}</span>
+														<span class="cm-tip">
+															{tipFor(c, completionData.language)}
+														</span>
+													{:else if m.times > 1}
+														<span class="cm-tip">
+															{completionData.language === "fa"
+																? `${m.times} بار`
+																: `missed ${m.times}×`}
+														</span>
+													{/if}
+												</div>
+											{/each}
+										</div>
 									{/if}
 								</div>
 							</div>
@@ -2836,6 +2899,75 @@
 		margin: 4px auto;
 		width: fit-content;
 		animation: popIn 0.2s ease-out;
+	}
+
+	/* ── Words to practise, on the completion card ──
+	   Sits under a card that already says the lesson is finished, so this
+	   is a list of things to work on and not a mark. No red, no count of
+	   what went wrong out of what. */
+	.comp-misses {
+		margin: 14px 0 0;
+		padding: 12px 14px;
+		border: 1px solid var(--control-border);
+		border-inline-start: 3px solid var(--gold);
+		border-radius: 10px;
+		background: var(--paper-sunken);
+		text-align: start;
+	}
+
+	.comp-misses h4 {
+		margin: 0 0 8px;
+		color: var(--ink);
+		font-family: var(--font-display);
+		font-size: 0.95rem;
+	}
+
+	.cm-row {
+		display: flex;
+		align-items: center;
+		gap: 8px;
+		flex-wrap: wrap;
+		padding: 6px 0;
+		border-top: 1px solid var(--line);
+	}
+
+	.cm-row:first-of-type {
+		border-top: 0;
+	}
+
+	/* The word itself is the button — tapping it plays the German, which is
+	   the one action anyone wants from a list like this. */
+	.cm-word {
+		min-height: 44px;
+		padding: 4px 12px;
+		border: 1px solid var(--control-border);
+		border-radius: 999px;
+		background: var(--control);
+		color: var(--ink);
+		font: inherit;
+		font-weight: 700;
+		cursor: pointer;
+	}
+
+	.cm-word:hover {
+		background: var(--control-hover);
+		border-color: var(--accent);
+	}
+
+	.cm-sound {
+		padding: 2px 8px;
+		border-radius: 999px;
+		background: var(--gold);
+		color: #3b2c00;
+		font-size: 0.8rem;
+		font-weight: 800;
+	}
+
+	.cm-tip {
+		flex: 1 1 200px;
+		color: var(--ink-soft);
+		font-size: 0.85rem;
+		line-height: 1.45;
 	}
 
 	/* ── Sound coaching ──
