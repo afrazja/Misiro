@@ -212,29 +212,29 @@ describe('checkAvailability', () => {
 	it('locks until the next checkpoint milestone is reached', () => {
 		const a = checkAvailability(upTo(5), ['A1-1'], longAgo, NOW);
 		expect(a.unlocked).toBe(false);
-		expect(a.checkpoint).toMatchObject({ level: 'A1', index: 2, day: 16 });
-		expect(a.lessonsNeeded).toBe(11);
+		expect(a.checkpoint).toMatchObject({ level: 'A1', index: 2, day: 20 });
+		expect(a.lessonsNeeded).toBe(15);
 	});
 
 	it('unlocks on the milestone day', () => {
-		const a = checkAvailability(upTo(16), ['A1-1'], longAgo, NOW);
+		const a = checkAvailability(upTo(20), ['A1-1'], longAgo, NOW);
 		expect(a.unlocked).toBe(true);
-		expect(a.checkpoint).toMatchObject({ index: 2, day: 16 });
+		expect(a.checkpoint).toMatchObject({ index: 2, day: 20 });
 		expect(a.lessonsNeeded).toBe(0);
 	});
 
 	// Otherwise finishing several days in one sitting could farm checkpoints.
 	it('holds the 24h floor even at a milestone', () => {
-		const a = checkAvailability(upTo(16), ['A1-1'], NOW - 2 * 60 * 60 * 1000, NOW);
+		const a = checkAvailability(upTo(20), ['A1-1'], NOW - 2 * 60 * 60 * 1000, NOW);
 		expect(a.unlocked).toBe(false);
 		expect(a.hoursNeeded).toBe(22);
 	});
 
 	it('counts down to the next level once one is finished', () => {
-		const a = checkAvailability(upTo(24), ['A1-1', 'A1-2', 'A1-3'], longAgo, NOW);
+		const a = checkAvailability(upTo(30), ['A1-1', 'A1-2', 'A1-3'], longAgo, NOW);
 		expect(a.unlocked).toBe(false);
-		expect(a.checkpoint).toMatchObject({ level: 'A2', index: 1, day: 32 });
-		expect(a.lessonsNeeded).toBe(8);
+		expect(a.checkpoint).toMatchObject({ level: 'A2', index: 1, day: 42 });
+		expect(a.lessonsNeeded).toBe(12);
 	});
 
 	it('offers the earliest unsat checkpoint, never a later one', () => {
@@ -244,7 +244,7 @@ describe('checkAvailability', () => {
 
 	it('stays locked with every checkpoint sat', () => {
 		const all = ['A1-1', 'A1-2', 'A1-3', 'A2-1', 'A2-2', 'A2-3', 'B1-1', 'B1-2', 'B1-3'];
-		const a = checkAvailability(upTo(100), all, longAgo, NOW);
+		const a = checkAvailability(upTo(120), all, longAgo, NOW);
 		expect(a.unlocked).toBe(false);
 		expect(a.checkpoint).toBeNull();
 	});

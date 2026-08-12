@@ -10,13 +10,17 @@
 	import { initSyncListeners } from "$services/sync-queue";
 	import {
 		getLessonIndex,
+		loadLesson,
 		resolveResumePoint,
 		type LessonMeta,
 	} from "$services/lesson-loader";
 	import {
 		levelProgress,
+		tierForDay,
+		TIER_LABELS,
 		type LevelProgress,
 	} from "$services/curriculum";
+	import { lessonMinutes } from "$services/lesson-duration";
 	import { getCheckpointsDone } from "$services/data-layer";
 	import {
 		computeReadiness,
@@ -63,6 +67,16 @@
 	let readiness = $state<Readiness | null>(null);
 	let checkGate = $state<CheckAvailability | null>(null);
 	let roadmap = $state<LevelProgress[]>([]);
+	/** Estimated minutes for today's lesson, from its actual content. */
+	let todayMinutes = $state<number | null>(null);
+
+	/** "middle A2" — where today's day sits, so the level is legible at a glance. */
+	const todayTier = $derived.by(() => {
+		const t = tierForDay(currentDay);
+		if (!t) return null;
+		const label = TIER_LABELS[t.tier][language === "fa" ? "fa" : "en"];
+		return language === "fa" ? `${t.level} ${label}` : `${label} ${t.level}`;
+	});
 	/** Nothing graded anywhere yet — the whole card is inference. Once even
 	 *  one bar is backed by real answers the blanket note would be a lie, and
 	 *  the per-bar tags say it better anyway. */
@@ -313,6 +327,15 @@
 		// the lesson always agree (mid-lesson resumes; otherwise the lowest
 		// not-yet-completed day, never a stale revisit).
 		currentDay = resolveResumePoint(progress, completed).day;
+
+		// The minute estimate needs the lesson itself, not just its index.
+		// Best-effort: no lesson, no number — the card falls back to the tier.
+		try {
+			const todayLesson = await loadLesson(currentDay);
+			todayMinutes = lessonMinutes(todayLesson) || null;
+		} catch {
+			todayMinutes = null;
+		}
 
 		// Goethe hero — exam plan + readiness estimate. Failure just hides
 		// the hero; it must never take the dashboard down with it.
@@ -1113,8 +1136,19 @@
 						{language === "fa" ? "روز" : "Day"}
 						{todayTitle || currentDay}
 					</span>
+					<!-- Estimated from what the lesson actually contains, so it
+					     cannot drift from the content the way a hardcoded
+					     "~5–10 minutes" on every day of the course did. -->
 					<span class="today-sub">
-						{language === "fa" ? "حدود ۵ تا ۱۰ دقیقه" : "~5–10 minutes"}
+						{#if todayMinutes}
+							{language === "fa"
+								? `حدود ${todayMinutes} دقیقه`
+								: `~${todayMinutes} min`}{#if todayTier}<span class="today-tier"
+									>· {todayTier}</span
+								>{/if}
+						{:else if todayTier}
+							{todayTier}
+						{/if}
 					</span>
 				{:else}
 					<span class="today-title today-loading">
@@ -1684,6 +1718,12 @@
 		display: grid;
 		grid-template-columns: repeat(3, 1fr);
 		gap: 12px;
+	}
+
+	.today-tier {
+		margin-inline-start: 6px;
+		opacity: 0.85;
+		text-transform: capitalize;
 	}
 
 	.rm-level {

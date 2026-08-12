@@ -37,6 +37,7 @@ import { makeWordHighlighter } from '$utils/word-timing';
 import { playAudioPromise, stopAllAudio } from '$services/tts';
 import { playTone } from '$services/audio-context';
 import { tokenizeForBuild, shuffleTiles, isBuildCorrect } from '$services/sentence-build';
+import { lessonMinutes, countLessonContent } from '$services/lesson-duration';
 import { matchVoiceInput, bestVoiceMatch } from '$utils/text-matching';
 import { getLastVoiceAlternatives } from '$services/speech';
 import { getTranslation, getTranslationLang } from '$utils/i18n';
@@ -166,6 +167,13 @@ let grammarMomentShown = false;
 /** Sentence index whose build step is currently on screen (-1 = none). */
 let buildStepIndex = -1;
 
+/**
+ * When the current lesson was opened. The duration estimate on the dashboard
+ * is a promise about effort, and the only way to know whether it is honest is
+ * to measure the real thing — logged on completion, compared to the estimate.
+ */
+let lessonStartedAt = 0;
+
 // Tile helpers live in sentence-build so Basics can use them without
 // importing this module's whole graph. Re-exported: callers here and in
 // the lesson page already import them from the controller.
@@ -269,6 +277,7 @@ export async function initLesson(): Promise<void> {
 		}));
 
 		// Analytics: a lesson session opened (fire-and-forget).
+		lessonStartedAt = Date.now();
 		void trackEvent('lesson_started', { day: currentDay });
 	} catch (e) {
 		logError('lesson-controller:initLesson', e);
@@ -447,9 +456,18 @@ async function handleLessonCompletion(
 
 	// Analytics: only count the first time a lesson is completed.
 	if (!wasAlreadyCompleted) {
+		// actualSeconds next to estimateMinutes is the whole point: after a
+		// week of real completions the per-item costs in lesson-duration can
+		// be corrected from data instead of argued about.
+		const actualSeconds = lessonStartedAt ? Math.round((Date.now() - lessonStartedAt) / 1000) : null;
 		void trackEvent('lesson_completed', {
 			day: app.currentDay,
-			metadata: { sentenceCount: lesson.sentences.length }
+			metadata: {
+				sentenceCount: lesson.sentences.length,
+				estimateMinutes: lessonMinutes(lesson),
+				actualSeconds,
+				content: countLessonContent(lesson)
+			}
 		});
 	}
 

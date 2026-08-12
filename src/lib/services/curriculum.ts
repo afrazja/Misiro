@@ -1,11 +1,19 @@
 /**
  * The CEFR shape of the 100-day course, and where the checkpoints sit.
  *
- * The content is tagged A1 (days 1–24), A2 (25–45) and B1 (46–70), with
- * 71–100 tagged inconsistently — A2 and B1 alternating, which looks like
- * drift rather than design. Treated here as B1 consolidation so "which level
- * am I in" has an answer on every day of the course; retag the data and this
- * table is the only thing that needs to change.
+ * 120 days across three levels. A2 gets the biggest share of the twenty days
+ * added beyond the original hundred: at 21 days it was far too thin for a
+ * whole CEFR level, while B1's span was already the longest.
+ *
+ * Each level also carries a minute budget that ramps across it — 10 min at
+ * the start of A1 up to 30 at the end of B1. Later material is denser, but
+ * the ceiling stays at 30 deliberately: a daily habit that costs 45 minutes
+ * stops being daily.
+ *
+ * NOTE: the seeded content is still 100 days and tagged A1 1–24 / A2 25–45 /
+ * B1 46–70, with 71–100 alternating incoherently. This table is the target
+ * shape; twenty new days (mostly A2) and a retag are content work still to
+ * come. Until then days beyond the seeded content simply do not exist yet.
  *
  * Checkpoints replace the old "every 5 lessons" rule. A rolling counter tells
  * a learner nothing about where they are; three fixed milestones per level,
@@ -24,13 +32,50 @@ export interface LevelSpan {
 	lastDay: number;
 	/** Lesson days that unlock a checkpoint, in order. */
 	checkpoints: number[];
+	/** Minute budget at the level's first and last day; days in between ramp. */
+	minutesFrom: number;
+	minutesTo: number;
 }
 
 export const CURRICULUM: LevelSpan[] = [
-	{ level: 'A1', firstDay: 1, lastDay: 24, checkpoints: [8, 16, 24] },
-	{ level: 'A2', firstDay: 25, lastDay: 45, checkpoints: [32, 39, 45] },
-	{ level: 'B1', firstDay: 46, lastDay: 100, checkpoints: [64, 82, 100] }
+	{ level: 'A1', firstDay: 1, lastDay: 30, checkpoints: [10, 20, 30], minutesFrom: 10, minutesTo: 15 },
+	{ level: 'A2', firstDay: 31, lastDay: 65, checkpoints: [42, 54, 65], minutesFrom: 15, minutesTo: 22 },
+	{ level: 'B1', firstDay: 66, lastDay: 120, checkpoints: [83, 101, 120], minutesFrom: 22, minutesTo: 30 }
 ];
+
+/**
+ * Where in a level a day sits. Three tiers per level, bounded by the
+ * checkpoints — so a tier and the checkpoint that certifies it are the same
+ * unit, and "top A2" means "working through A2's last third".
+ */
+export type Tier = 'beginner' | 'middle' | 'top';
+
+export const TIER_LABELS: Record<Tier, { en: string; fa: string }> = {
+	beginner: { en: 'beginner', fa: 'مقدماتی' },
+	middle: { en: 'middle', fa: 'میانی' },
+	top: { en: 'top', fa: 'پیشرفته' }
+};
+
+export function tierForDay(day: number): { level: CefrLevel; tier: Tier } | null {
+	const span = CURRICULUM.find((l) => day >= l.firstDay && day <= l.lastDay);
+	if (!span) return null;
+	const [first, second] = span.checkpoints;
+	const tier: Tier = day <= first ? 'beginner' : day <= second ? 'middle' : 'top';
+	return { level: span.level, tier };
+}
+
+/**
+ * The minute budget a given day is written to, ramping across its level.
+ * Content is specced against this; the actual estimate comes from what the
+ * lesson really contains (see lesson-duration).
+ */
+export function targetMinutesForDay(day: number): number | null {
+	const span = CURRICULUM.find((l) => day >= l.firstDay && day <= l.lastDay);
+	if (!span) return null;
+	const total = span.lastDay - span.firstDay;
+	const progress = total === 0 ? 1 : (day - span.firstDay) / total;
+	return Math.round(span.minutesFrom + progress * (span.minutesTo - span.minutesFrom));
+}
 
 export const TOTAL_DAYS = CURRICULUM[CURRICULUM.length - 1].lastDay;
 
