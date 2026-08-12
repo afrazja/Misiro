@@ -38,9 +38,20 @@ export interface LevelSpan {
 }
 
 export const CURRICULUM: LevelSpan[] = [
-	{ level: 'A1', firstDay: 1, lastDay: 30, checkpoints: [10, 20, 30], minutesFrom: 10, minutesTo: 15 },
-	{ level: 'A2', firstDay: 31, lastDay: 65, checkpoints: [42, 54, 65], minutesFrom: 15, minutesTo: 22 },
-	{ level: 'B1', firstDay: 66, lastDay: 120, checkpoints: [83, 101, 120], minutesFrom: 22, minutesTo: 30 }
+	// minutesFrom/To describe what a lesson at each end of the level should
+	// GROW to. They were 10-15 / 15-22 / 22-30, which sounded reasonable
+	// until costed: at 18s a heard line and 50s a spoken one, 26 minutes is
+	// a 45-turn dialogue. Nobody finishes a 45-turn dialogue. The revised
+	// figures come out at roughly 13 / 18 / 25 sentences a day, which is a
+	// lesson someone will actually sit through.
+	//
+	// Today's content averages 7.5 / 6.7 / 6.3 min, so these are still a
+	// target and not a description — but a reachable one. The old table
+	// implied 4,190 authored sentences against 1,082 that exist; this
+	// implies 2,395.
+	{ level: 'A1', firstDay: 1, lastDay: 30, checkpoints: [10, 20, 30], minutesFrom: 7, minutesTo: 9 },
+	{ level: 'A2', firstDay: 31, lastDay: 65, checkpoints: [42, 54, 65], minutesFrom: 9, minutesTo: 13 },
+	{ level: 'B1', firstDay: 66, lastDay: 120, checkpoints: [83, 101, 120], minutesFrom: 13, minutesTo: 17 }
 ];
 
 /**
@@ -66,8 +77,13 @@ export function tierForDay(day: number): { level: CefrLevel; tier: Tier } | null
 
 /**
  * The minute budget a given day is written to, ramping across its level.
- * Content is specced against this; the actual estimate comes from what the
- * lesson really contains (see lesson-duration).
+ * Content is specced against this; the actual estimate the learner sees
+ * comes from what the lesson really contains (see lesson-duration).
+ *
+ * NOTHING CALLS THIS YET. Left in place because it is the only executable
+ * statement of the authoring target, and because its absence is what let
+ * the old 22-30 minute figures sit in the table unchallenged for a day —
+ * unread numbers do not get sanity-checked.
  */
 export function targetMinutesForDay(day: number): number | null {
 	const span = CURRICULUM.find((l) => day >= l.firstDay && day <= l.lastDay);
