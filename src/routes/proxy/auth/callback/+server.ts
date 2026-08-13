@@ -20,8 +20,13 @@ const DEFAULT_NEXT = '/?confirmed=true';
  * Only same-origin paths. `next` arrives in a URL the user can edit, and an
  * open redirect on an auth callback is the classic way to hand someone's
  * freshly minted session to another site.
+ *
+ * Underscore-prefixed because SvelteKit rejects any other named export from
+ * a +server module — the build fails with "Invalid export", and only at
+ * postbuild, so neither svelte-check nor vitest sees it. The prefix is the
+ * sanctioned way to expose a helper for tests.
  */
-export function safeNext(raw: string | null): string | null {
+export function _safeNext(raw: string | null): string | null {
 	if (!raw) return null;
 	if (!raw.startsWith('/')) return null;
 	// "//evil.com" is protocol-relative and leaves the origin.
@@ -31,7 +36,7 @@ export function safeNext(raw: string | null): string | null {
 
 export const GET: RequestHandler = async ({ url, locals }) => {
 	const code = url.searchParams.get('code');
-	const next = safeNext(url.searchParams.get('next'));
+	const next = _safeNext(url.searchParams.get('next'));
 
 	// Google reports a refusal here rather than by omitting the code —
 	// someone who closes the consent screen should land back on the app,

@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { safeNext } from './+server';
+import { _safeNext as safeNext } from './+server';
 
 /**
  * An auth callback is the one place an open redirect really hurts: the
