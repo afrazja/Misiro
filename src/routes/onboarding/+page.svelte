@@ -5,6 +5,7 @@
 	import { preferencesStore } from "$stores/preferences";
 	import type { TargetLanguage } from "$stores/preferences";
 	import * as dataLayer from "$services/data-layer";
+	import { onboardingStrings } from "$services/onboarding-strings";
 
 	// The flow steps
 	let step = $state(1);
@@ -12,6 +13,9 @@
 
 	// The collected data
 	let targetLanguage = $state<TargetLanguage>("de");
+	// Seeded from the browser in onMount. Steps 1 and 2 come BEFORE the
+	// learner tells us, so a guess is all we have for those two screens —
+	// and step 2's buttons are 🇬🇧/🇮🇷 flagged, readable either way.
 	let interfaceLanguage = $state<"en" | "fa">("en");
 	let reason = $state("");
 	let examGoal = $state<"scheduled" | "planned" | "none">("none");
@@ -40,12 +44,30 @@
 	// Animations
 	let enterClass = $state("slide-in-right");
 
+	/**
+	 * Put the interface into a language the moment we know it.
+	 *
+	 * The choice used to be stashed in a variable and only applied by
+	 * finishOnboarding — so someone who asked for Persian at step 2 then
+	 * answered four more questions in English, including the exam step that
+	 * sets their countdown. Answering the wrong question there costs them a
+	 * wrong exam date, not just a bad first impression.
+	 */
+	function applyLanguage(lang: "en" | "fa") {
+		interfaceLanguage = lang;
+		preferencesStore.update((s) => ({ ...s, language: lang }));
+		if (typeof document !== "undefined") {
+			document.documentElement.setAttribute("lang", lang);
+			document.documentElement.setAttribute("dir", lang === "fa" ? "rtl" : "ltr");
+		}
+	}
+
 	function nextStep(
 		val: any,
 		field: "target" | "interface" | "reason" | "examGoal" | "skill" | "goal",
 	) {
 		if (field === "target") targetLanguage = val;
-		if (field === "interface") interfaceLanguage = val;
+		if (field === "interface") applyLanguage(val);
 		if (field === "reason") reason = val;
 		if (field === "examGoal") examGoal = val;
 		if (field === "skill") skillLevel = val;
@@ -128,7 +150,17 @@
 		}
 	}
 
+
+	const isFa = $derived(interfaceLanguage === "fa");
+	const t = $derived(onboardingStrings(isFa));
+
 	onMount(() => {
+		// A guess for the two screens that precede the question. Wrong for a
+		// Persian speaker running an English browser, which is common — but
+		// step 2 is two taps away and overrides it.
+		const browser = navigator.language || "en";
+		if (browser.toLowerCase().startsWith("fa")) applyLanguage("fa");
+
 		// Preload home chunks so transition is smooth
 		fetch("/home");
 	});
@@ -162,14 +194,14 @@
 		{#if isSaving}
 			<div class="wizard-step centered flex-col fade-in">
 				<div class="spinner"></div>
-				<h1 class="save-title">Personalizing your experience...</h1>
+				<h1 class="save-title">{t.saving}</h1>
 				<p class="save-subtitle">
 					Preparing your daily lessons and review algorithms.
 				</p>
 				{#if saveError}
 					<div class="error-box">
 						{saveError}
-						<button onclick={() => (isSaving = false)}>Retry</button
+						<button onclick={() => (isSaving = false)}>{t.retry}</button
 						>
 					</div>
 				{/if}
@@ -177,8 +209,8 @@
 		{:else if step === 1}
 			<!-- STEP 1: TARGET LANGUAGE -->
 			<div class="wizard-step {enterClass}">
-				<h1 class="q-title">What do you want to learn?</h1>
-				<p class="q-sub">Select the language you want to master.</p>
+				<h1 class="q-title">{t.q1}</h1>
+				<p class="q-sub">{t.q1sub}</p>
 
 				<div class="options-grid cols-2">
 					<button
@@ -186,14 +218,14 @@
 						onclick={() => nextStep("de", "target")}
 					>
 						<span class="flag">🇩🇪</span>
-						<span class="lbl">German</span>
+						<span class="lbl">{t.german}</span>
 					</button>
 					<button
 						class="choice-card"
 						onclick={() => nextStep("fr", "target")}
 					>
 						<span class="flag">🇫🇷</span>
-						<span class="lbl">French</span>
+						<span class="lbl">{t.french}</span>
 					</button>
 				</div>
 				<p class="helper-text">
@@ -204,11 +236,10 @@
 			<!-- STEP 2: INTERFACE LANGUAGE -->
 			<div class="wizard-step {enterClass}">
 				<h1 class="q-title">
-					Which language should we use for explanations?
+					{t.q2}
 				</h1>
 				<p class="q-sub">
-					This is the language of instructions, hints, and grammar
-					rules.
+					{t.q2sub}
 				</p>
 
 				<div class="options-grid cols-2">
@@ -232,12 +263,10 @@
 			<!-- STEP 3: WHY ARE YOU LEARNING -->
 			<div class="wizard-step {enterClass}">
 				<h1 class="q-title">
-					Why are you learning {targetLanguage === "de"
-						? "German"
-						: "French"}?
+					{t.q3}
 				</h1>
 				<p class="q-sub">
-					This helps us understand your goals and keep you motivated.
+					{t.q3sub}
 				</p>
 
 				<div class="options-grid cols-2">
@@ -246,42 +275,42 @@
 						onclick={() => nextStep("moving", "reason")}
 					>
 						<span class="emoji">✈️</span>
-						<span>Relocation / Moving</span>
+						<span>{t.rMove}</span>
 					</button>
 					<button
 						class="choice-card small-lbl"
 						onclick={() => nextStep("work", "reason")}
 					>
 						<span class="emoji">💼</span>
-						<span>Career / Work</span>
+						<span>{t.rCareer}</span>
 					</button>
 					<button
 						class="choice-card small-lbl"
 						onclick={() => nextStep("study", "reason")}
 					>
 						<span class="emoji">🎓</span>
-						<span>University / Study</span>
+						<span>{t.rStudy}</span>
 					</button>
 					<button
 						class="choice-card small-lbl"
 						onclick={() => nextStep("travel", "reason")}
 					>
 						<span class="emoji">🌍</span>
-						<span>Travel & Leisure</span>
+						<span>{t.rTravel}</span>
 					</button>
 					<button
 						class="choice-card small-lbl"
 						onclick={() => nextStep("brain", "reason")}
 					>
 						<span class="emoji">🧠</span>
-						<span>Brain Training</span>
+						<span>{t.rBrain}</span>
 					</button>
 					<button
 						class="choice-card small-lbl"
 						onclick={() => nextStep("other", "reason")}
 					>
 						<span class="emoji">💬</span>
-						<span>Connections</span>
+						<span>{t.rPeople}</span>
 					</button>
 				</div>
 			</div>
@@ -289,17 +318,16 @@
 			<!-- STEP 4: GOETHE A1 EXAM -->
 			<div class="wizard-step {enterClass}">
 				<h1 class="q-title">
-					Are you preparing for the Goethe A1 exam?
+					{t.q4}
 				</h1>
 				<p class="q-sub">
-					If you have a date, your daily plan counts down to it — and
-					shows exactly how ready you are.
+					{t.q4sub}
 				</p>
 
 				{#if showDatePicker}
 					<div class="date-block">
 						<label class="date-label" for="exam-date"
-							>When is your exam?</label
+							>{t.examWhen}</label
 						>
 						<input
 							id="exam-date"
@@ -313,37 +341,37 @@
 							class="date-continue"
 							disabled={!examDate}
 							onclick={() => nextStep("scheduled", "examGoal")}
-							>Continue →</button
+							>{t.continue}</button
 						>
 						<button
 							class="date-skip"
 							onclick={() => {
 								showDatePicker = false;
 								showTargetPicker = true;
-							}}>I don't have a date yet</button
+							}}>{t.noDate}</button
 						>
 					</div>
 				{:else if showTargetPicker}
 					<div class="date-block">
 						<label class="date-label" for="target-picks"
-							>When do you want to be exam-ready?</label
+							>{t.readyWhen}</label
 						>
 						<div class="options-grid cols-2" id="target-picks">
 							<button class="choice-card small-lbl" onclick={() => pickTarget(3)}>
 								<span class="emoji">🚀</span>
-								<span>In ~3 months</span>
+								<span>{t.in3}</span>
 							</button>
 							<button class="choice-card small-lbl" onclick={() => pickTarget(6)}>
 								<span class="emoji">🏃</span>
-								<span>In ~6 months</span>
+								<span>{t.in6}</span>
 							</button>
 							<button class="choice-card small-lbl" onclick={() => pickTarget(12)}>
 								<span class="emoji">🚶</span>
-								<span>Within a year</span>
+								<span>{t.in12}</span>
 							</button>
 							<button class="choice-card small-lbl" onclick={() => pickTarget(null)}>
 								<span class="emoji">🤷</span>
-								<span>Not sure yet</span>
+								<span>{t.eUnsure}</span>
 							</button>
 						</div>
 					</div>
@@ -355,7 +383,7 @@
 						>
 							<span class="emoji">📅</span>
 							<div class="lbl-block">
-								<strong>Yes — my exam is booked</strong>
+								<strong>{t.eBooked}</strong>
 								<span>Goethe-Zertifikat A1 (Start Deutsch 1)</span>
 							</div>
 						</button>
@@ -365,8 +393,8 @@
 						>
 							<span class="emoji">🎯</span>
 							<div class="lbl-block">
-								<strong>Planning to take it</strong>
-								<span>No date booked yet — set a ready-by target.</span>
+								<strong>{t.ePlanned}</strong>
+								<span>{t.noDateSub}</span>
 							</div>
 						</button>
 						<button
@@ -375,8 +403,8 @@
 						>
 							<span class="emoji">🌱</span>
 							<div class="lbl-block">
-								<strong>Not for an exam</strong>
-								<span>I'm learning German for daily life.</span>
+								<strong>{t.eNone}</strong>
+								<span>{t.eNoneSub}</span>
 							</div>
 						</button>
 					</div>
@@ -389,7 +417,7 @@
 					How much {targetLanguage === "de" ? "German" : "French"} do you
 					already know?
 				</h1>
-				<p class="q-sub">Don't worry, everyone starts somewhere.</p>
+				<p class="q-sub">{t.q5sub}</p>
 
 				<div class="options-grid cols-1">
 					<button
@@ -398,8 +426,8 @@
 					>
 						<span class="emoji">🐣</span>
 						<div class="lbl-block">
-							<strong>I'm a complete beginner</strong>
-							<span>I know absolutely nothing.</span>
+							<strong>{t.lNone}</strong>
+							<span>{t.lNoneSub}</span>
 						</div>
 					</button>
 					<button
@@ -408,8 +436,8 @@
 					>
 						<span class="emoji">🐥</span>
 						<div class="lbl-block">
-							<strong>I know a few words</strong>
-							<span>Greetings, numbers, simple phrases.</span>
+							<strong>{t.lFew}</strong>
+							<span>{t.lFewSub}</span>
 						</div>
 					</button>
 					<button
@@ -418,9 +446,9 @@
 					>
 						<span class="emoji">🦅</span>
 						<div class="lbl-block">
-							<strong>I can have basic conversations</strong>
+							<strong>{t.lBasic}</strong>
 							<span
-								>But I want to build fluency and confidence.</span
+								>{t.lBasicSub}</span
 							>
 						</div>
 					</button>
@@ -429,7 +457,7 @@
 		{:else if step === 6}
 			<!-- STEP 6: DAILY GOAL -->
 			<div class="wizard-step {enterClass}">
-				<h1 class="q-title">What's your daily goal?</h1>
+				<h1 class="q-title">{t.q6}</h1>
 				<p class="q-sub">
 					Consistency beats intensity when learning a language.
 				</p>
@@ -442,7 +470,7 @@
 						<span class="emoji">☕</span>
 						<div class="lbl-block">
 							<strong>5 minutes a day</strong>
-							<span>Casual &middot; Good for busy days.</span>
+							<span>{t.gCasual}</span>
 						</div>
 					</button>
 					<button
@@ -453,7 +481,7 @@
 						<div class="lbl-block">
 							<strong>15 minutes a day</strong>
 							<span
-								>Regular &middot; Steady progress. (Recommended)</span
+								>{t.gRegular}</span
 							>
 						</div>
 					</button>
@@ -464,7 +492,7 @@
 						<span class="emoji">🚀</span>
 						<div class="lbl-block">
 							<strong>30+ minutes a day</strong>
-							<span>Serious &middot; Rapid advancement.</span>
+							<span>{t.gSerious}</span>
 						</div>
 					</button>
 				</div>
