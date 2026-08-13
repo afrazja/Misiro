@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { onMount } from "svelte";
+	import GoogleSignIn from "$components/GoogleSignIn.svelte";
 	import { page } from "$app/stores";
 	import { goto } from "$app/navigation";
 	import { preferencesStore } from "$stores/preferences";
@@ -638,6 +639,11 @@
 						? "Sign In"
 						: "Sign Up"}
 			</button>
+			<GoogleSignIn
+				next="/home"
+				lang={language}
+				onError={(m) => (authError = m)}
+			/>
 			<p class="auth-toggle">
 				<span
 					>{authMode === "signin"

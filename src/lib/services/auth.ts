@@ -132,9 +132,11 @@ export async function getDisplayName(): Promise<string> {
 
 		if (data?.display_name) return data.display_name;
 
-		// Fallback: auth user metadata
-		const metaName = user.user_metadata?.display_name;
-		if (metaName) {
+		// Fallback: whatever the provider gave us. Same chain as
+		// ensureProfile, so a Google user is not "Learner" here and their
+		// real name there.
+		const metaName = nameFromMetadata(user);
+		if (metaName && metaName !== 'Learner') {
 			await ensureProfile(user);
 			return metaName;
 		}
@@ -151,21 +153,85 @@ export async function getDisplayName(): Promise<string> {
 }
 
 /** Ensure user has profile and progress rows */
+/**
+ * The name a provider gave us, in the order we trust it.
+ *
+ * Email signup writes display_name. Google writes full_name and name and
+ * has never heard of display_name — so reading only the first one meant
+ * every Google user would be called "Learner".
+ */
+export function nameFromMetadata(user: User): string {
+	const meta = (user.user_metadata ?? {}) as Record<string, unknown>;
+	const pick = (k: string) => {
+		const v = meta[k];
+		return typeof v === 'string' && v.trim() ? v.trim() : null;
+	};
+	return (
+		pick('display_name') ||
+		pick('full_name') ||
+		pick('name') ||
+		user.email?.split('@')[0] ||
+		'Learner'
+	);
+}
+
 export async function ensureProfile(user: User): Promise<void> {
 	const client = sb();
 	if (!client || !user) return;
 	try {
-		const displayName = user.user_metadata?.display_name || 'Learner';
-		await client.from('user_profiles').upsert(
-			{ id: user.id, display_name: displayName },
-			{ onConflict: 'id' }
-		);
-		await client.from('user_progress').upsert(
-			{ user_id: user.id },
-			{ onConflict: 'user_id' }
-		);
+		// Progress row is safe to upsert — it has no user-authored fields.
+		await client.from('user_progress').upsert({ user_id: user.id }, { onConflict: 'user_id' });
+
+		// The profile is NOT. This runs on every sign-in, and upserting
+		// display_name unconditionally overwrote whatever the learner had
+		// set in Settings with the provider's version, every single login.
+		// Harmless while the provider value never changed; with Google it
+		// would silently undo their choice each time they came back.
+		const { data: existing } = await client
+			.from('user_profiles')
+			.select('display_name')
+			.eq('id', user.id)
+			.maybeSingle();
+
+		if (existing?.display_name && existing.display_name !== 'Learner') return;
+
+		await client
+			.from('user_profiles')
+			.upsert({ id: user.id, display_name: nameFromMetadata(user) }, { onConflict: 'id' });
 	} catch (e) {
 		console.error('ensureProfile error:', e);
+	}
+}
+
+/**
+ * Send the learner to Google, and back again.
+ *
+ * Returns only on failure — on success the browser navigates away, so there
+ * is no user object here. The session lands at /proxy/auth/callback, which
+ * already exchanges the code (it was written for email confirmation; OAuth
+ * returns through the identical PKCE flow).
+ *
+ * `next` rides along so the callback knows where to send them. Without it a
+ * Google user would be shown "Email confirmed!", which they never asked for
+ * and did not do.
+ */
+export async function signInWithGoogle(next = '/home'): Promise<{ error: string | null }> {
+	const client = sb();
+	if (!client) return { error: 'Supabase not configured' };
+	if (typeof window === 'undefined') return { error: 'Unavailable' };
+	try {
+		const { error } = await client.auth.signInWithOAuth({
+			provider: 'google',
+			options: {
+				redirectTo: `${window.location.origin}/proxy/auth/callback?next=${encodeURIComponent(next)}`,
+				// Otherwise a shared device silently reuses whichever Google
+				// account signed in last, with no way to pick another.
+				queryParams: { prompt: 'select_account' }
+			}
+		});
+		return { error: error?.message ?? null };
+	} catch (e) {
+		return { error: (e as Error)?.message ?? 'Could not reach Google' };
 	}
 }
 

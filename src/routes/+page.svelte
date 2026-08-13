@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { onMount } from "svelte";
+	import GoogleSignIn from "$components/GoogleSignIn.svelte";
 	import { page } from "$app/stores";
 	import { goto } from "$app/navigation";
 	import * as auth from "$services/auth";
@@ -398,6 +399,8 @@
 						? "Sign In"
 						: "Create Free Account"}
 			</button>
+
+			<GoogleSignIn next="/home" onError={(m) => (authError = m)} />
 
 			<p class="auth-toggle">
 				<span
