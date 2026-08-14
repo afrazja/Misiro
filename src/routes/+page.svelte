@@ -535,6 +535,94 @@
 </section>
 
 <!-- ════════════════════════════════════════════════════════ -->
+<!--  PHILOSOPHY — why it is built this way, then how to use it -->
+<!--                                                            -->
+<!--  Sits before the method section on purpose: the why has to -->
+<!--  land before the mechanics. Every principle names a real   -->
+<!--  constraint already in the product — the sentence cap, the -->
+<!--  day-one speaking, the error diagnosis — so it reads as    -->
+<!--  decisions taken rather than claims made.                  -->
+<!-- ════════════════════════════════════════════════════════ -->
+<section class="lp-section" id="philosophy-section">
+	<div class="lp-inner">
+		<p class="eyebrow">Our Philosophy</p>
+		<h2 class="section-h2">
+			Four Ideas Mirifer Is <span class="grad-text">Built On</span>
+		</h2>
+		<p class="section-lead">
+			Each one is a decision about what to leave out.
+		</p>
+
+		<div class="phil-grid">
+			<div class="phil-card">
+				<h3>You learn a language in sentences, not words</h3>
+				<p>
+					A word list gives you words you can't use. Every lesson here
+					is whole sentences, because a sentence is the smallest thing
+					you can actually say to another person. You learn
+					<em lang="de">Ich hätte gern einen Kaffee</em> — not "coffee".
+				</p>
+			</div>
+			<div class="phil-card">
+				<h3>Fifteen minutes you repeat beats two hours you don't</h3>
+				<p>
+					Lessons are capped at 8–15 sentences and 10–20 minutes. The
+					cap is deliberate. A lesson long enough to dread is a lesson
+					you skip, and a lesson you skip teaches you nothing.
+				</p>
+			</div>
+			<div class="phil-card">
+				<h3>You speak from the first lesson</h3>
+				<p>
+					Not after six months of grammar tables. On day one you say a
+					German sentence out loud and the app tells you what it
+					actually heard — because the gap between those two is where
+					the learning happens.
+				</p>
+			</div>
+			<div class="phil-card">
+				<h3>Saying it wrong out loud beats saying it right in your head</h3>
+				<p>
+					Silent reading feels like progress and builds nothing you can
+					use in a bakery. This app is built to hear your mistakes and
+					name them, and that only works if you make them.
+				</p>
+			</div>
+		</div>
+	</div>
+</section>
+
+<section class="lp-section dark-section" id="howto-section">
+	<div class="lp-inner">
+		<p class="eyebrow">How To Use It</p>
+		<h2 class="section-h2">
+			Four Rules That <span class="grad-text">Make It Work</span>
+		</h2>
+
+		<ol class="rules">
+			<li>
+				<strong>One lesson a day. That's it.</strong>
+				Same time each day if you can. Not five on Sunday and none until
+				Friday.
+			</li>
+			<li>
+				<strong>Say every sentence out loud.</strong>
+				Even alone. Even when it feels strange — especially when it feels
+				strange.
+			</li>
+			<li>
+				<strong>Don't restart a lesson for a perfect score.</strong>
+				Getting it wrong and being corrected is the lesson. Move on.
+			</li>
+			<li>
+				<strong>Come back tomorrow.</strong>
+				That is the whole method. Everything else is detail.
+			</li>
+		</ol>
+	</div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════ -->
 <!--  METHOD + FEATURES (merged)                               -->
 <!-- ════════════════════════════════════════════════════════ -->
 <section class="lp-section dark-section" id="method-section">
@@ -1543,6 +1631,95 @@
 		justify-content: center;
 		gap: 0;
 		margin-top: 60px;
+	}
+
+	/* Philosophy cards. Two-up rather than the four-across the step row
+	   uses — these are sentences to read, not labels to scan, so they need
+	   the line length. */
+	.phil-grid {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+		gap: 20px;
+		max-width: 900px;
+		margin: 44px auto 0;
+		text-align: left;
+	}
+
+	.phil-card {
+		background: var(--paper-raised);
+		border: 1px solid var(--line);
+		box-shadow: var(--paper-shadow);
+		border-radius: 22px;
+		padding: 28px 26px;
+	}
+
+	.phil-card h3 {
+		margin: 0 0 10px;
+		font-size: 1.08rem;
+		line-height: 1.45;
+		color: var(--ink);
+	}
+
+	.phil-card p {
+		margin: 0;
+		color: var(--ink-soft);
+		line-height: 1.8;
+	}
+
+	.phil-card em {
+		font-style: normal;
+		font-weight: 600;
+		color: var(--ink);
+	}
+
+	/* Numbered rules. The counter is drawn rather than left to the list
+	   marker so it can take the accent and align with the text box. */
+	.rules {
+		list-style: none;
+		counter-reset: rule;
+		padding: 0;
+		margin: 44px auto 0;
+		max-width: 720px;
+		display: grid;
+		gap: 14px;
+		text-align: left;
+	}
+
+	.rules li {
+		counter-increment: rule;
+		position: relative;
+		padding-block: 20px;
+		padding-inline-start: 68px;
+		padding-inline-end: 24px;
+		background: var(--paper-raised);
+		border: 1px solid var(--line);
+		box-shadow: var(--paper-shadow);
+		border-radius: 18px;
+		color: var(--ink-soft);
+		line-height: 1.8;
+	}
+
+	.rules li::before {
+		content: counter(rule);
+		position: absolute;
+		inset-inline-start: 22px;
+		inset-block-start: 19px;
+		inline-size: 32px;
+		block-size: 32px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		border-radius: 50%;
+		background: var(--accent);
+		color: var(--on-accent);
+		font-weight: 800;
+		font-size: 0.9rem;
+	}
+
+	.rules strong {
+		display: block;
+		color: var(--ink);
+		margin-bottom: 3px;
 	}
 
 	.step-card {

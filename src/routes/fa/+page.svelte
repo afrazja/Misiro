@@ -154,6 +154,77 @@
 		</div>
 	</section>
 
+	<!-- Philosophy. Deliberately framed as method rather than audience fit,
+	     so it does not repeat the Persian-specific section above it. Each
+	     principle names a real product constraint — the sentence cap, the
+	     day-one speaking, the error diagnosis — so it reads as decisions
+	     already made rather than as marketing. -->
+	<section class="band alt">
+		<p class="eyebrow">فلسفهٔ ما</p>
+		<h2>چهار اصلی که این برنامه رویش ساخته شده</h2>
+		<p class="lead">هرکدام از این‌ها تصمیمی است دربارهٔ چیزی که عمداً نگذاشته‌ایم.</p>
+		<div class="grid">
+			<div class="card">
+				<h3>جمله یاد می‌گیری، نه کلمه</h3>
+				<p>
+					فهرست لغت به تو کلمه‌هایی می‌دهد که نمی‌توانی به کار ببری.
+					اینجا هر درس جملهٔ کامل است، چون کوچک‌ترین چیزی که واقعاً
+					می‌شود به کسی گفت یک جمله است. یاد می‌گیری
+					<span lang="de">Ich hätte gern einen Kaffee</span> — نه «قهوه».
+				</p>
+			</div>
+			<div class="card">
+				<h3>پانزده دقیقه‌ای که تکرار می‌شود، از دو ساعتی که نمی‌شود بهتر است</h3>
+				<p>
+					هر درس بین ۸ تا ۱۵ جمله است و ۱۰ تا ۲۰ دقیقه طول می‌کشد. این
+					سقف عمدی است. درسی که از فکرش خسته شوی، درسی است که انجامش
+					نمی‌دهی — و درسی که انجام ندهی چیزی یادت نمی‌دهد.
+				</p>
+			</div>
+			<div class="card">
+				<h3>از درس اول حرف می‌زنی</h3>
+				<p>
+					نه بعد از شش ماه جدول گرامر. روز اول یک جملهٔ آلمانی بلند
+					می‌گویی و برنامه می‌گوید چه چیزی شنیده — چون فاصلهٔ بین آن دو
+					همان جایی است که یادگیری اتفاق می‌افتد.
+				</p>
+			</div>
+			<div class="card">
+				<h3>اشتباهِ بلند، بهتر از درستِ توی ذهن</h3>
+				<p>
+					خواندن در سکوت حس پیشرفت می‌دهد و چیزی نمی‌سازد که در نانوایی
+					به کارت بیاید. این برنامه ساخته شده که اشتباه‌هایت را بشنود و
+					اسم ببرد — و این فقط وقتی کار می‌کند که اشتباه کنی.
+				</p>
+			</div>
+		</div>
+	</section>
+
+	<section class="band">
+		<p class="eyebrow">چطور استفاده کنی</p>
+		<h2>چهار قانون که کار را جلو می‌برد</h2>
+		<ol class="rules">
+			<li>
+				<strong>روزی یک درس. همین.</strong>
+				اگر می‌توانی هر روز سر یک ساعت. نه پنج درس در جمعه و هیچ‌چیز تا
+				جمعهٔ بعد.
+			</li>
+			<li>
+				<strong>هر جمله را بلند بگو.</strong>
+				حتی وقتی تنهایی. حتی وقتی عجیب به نظر می‌رسد — مخصوصاً وقتی عجیب
+				به نظر می‌رسد.
+			</li>
+			<li>
+				<strong>برای نمرهٔ کامل درس را از اول شروع نکن.</strong>
+				اشتباه کردن و اصلاح شدن، خودِ درس است. رد شو و برو جلو.
+			</li>
+			<li>
+				<strong>فردا برگرد.</strong>
+				کل روش همین است. بقیه‌اش جزئیات است.
+			</li>
+		</ol>
+	</section>
+
 	<section class="band alt">
 		<p class="eyebrow">آزمون گوته</p>
 		<h2>آمادگی Goethe-Zertifikat A1</h2>
@@ -360,6 +431,58 @@
 		border: 1px solid var(--line);
 		border-radius: 14px;
 		background: var(--paper-raised);
+	}
+
+	/* Numbered rules. The counter is drawn rather than using the list
+	   marker, because a default RTL marker sits awkwardly against the
+	   card edge and cannot be styled to match the accent. */
+	.rules {
+		list-style: none;
+		counter-reset: rule;
+		padding: 0;
+		margin: 0 auto;
+		max-width: 620px;
+		display: grid;
+		gap: 12px;
+		text-align: start;
+	}
+
+	.rules li {
+		counter-increment: rule;
+		position: relative;
+		/* Logical, not physical — the number sits at inset-inline-start, so
+		   the wide side has to follow direction rather than be pinned right. */
+		padding-block: 16px;
+		padding-inline-start: 60px;
+		padding-inline-end: 20px;
+		border: 1px solid var(--line);
+		border-radius: 14px;
+		background: var(--paper-raised);
+		color: var(--ink-soft);
+		line-height: 1.9;
+	}
+
+	.rules li::before {
+		content: counter(rule);
+		position: absolute;
+		inset-inline-start: 18px;
+		inset-block-start: 16px;
+		inline-size: 28px;
+		block-size: 28px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		border-radius: 50%;
+		background: var(--accent);
+		color: var(--on-accent);
+		font-weight: 800;
+		font-size: 0.85rem;
+	}
+
+	.rules strong {
+		display: block;
+		color: var(--ink);
+		margin-bottom: 2px;
 	}
 
 	.card h3 {
