@@ -504,6 +504,7 @@
 
 <svelte:head>
 	<title>Goethe A1 Placement Test – Free | Mirifer</title>
+	<link rel="canonical" href="https://www.mirifer.com/placement" />
 	<meta
 		name="description"
 		content="Find out how ready you are for the Goethe A1 exam in 8 minutes. Listening, reading, writing and speaking — free, no account needed."

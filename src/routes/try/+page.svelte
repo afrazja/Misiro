@@ -150,6 +150,10 @@
 
 <svelte:head>
 	<title>Try a Free German Lesson – No Signup | Mirifer</title>
+	<!-- This page is linked from both landing pages and gets shared with
+	     tracking params; without a canonical each variant is a separate URL
+	     to Google, splitting whatever ranking it earns. -->
+	<link rel="canonical" href="https://www.mirifer.com/try" />
 	<meta
 		name="description"
 		content="Speak your first German sentence in 2 minutes. Hear it, tap words for meanings in English and Persian, say it out loud. No account needed."
