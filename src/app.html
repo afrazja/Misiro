@@ -37,12 +37,18 @@
 		<meta name="apple-mobile-web-app-capable" content="yes" />
 		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 		<meta name="apple-mobile-web-app-title" content="Mirifer" />
-		<!-- No <title> here on purpose. A title in this file is emitted BEFORE
-		     %sveltekit.head%, so every page shipped two of them and browsers
-		     and crawlers both take the first — every per-page title on the
-		     site was dead, and the whole index read "Mirifer - Learn German".
-		     The fallback now lives in +layout.svelte, where svelte:head lets
-		     a page override it instead of losing to it. -->
+		<!-- No title element here on purpose. One in this file is emitted
+		     ahead of the SvelteKit head placeholder below, so every page
+		     shipped two and browsers and crawlers both take the first: every
+		     per-page title was dead and the index read "Mirifer - Learn
+		     German". The fallback lives in +layout.svelte now, inside
+		     svelte:head, where a page replaces it instead of losing to it.
+
+		     Never write a sveltekit percent-token in a comment here. The
+		     placeholders are substituted by plain string replacement, with no
+		     HTML parsing, so a token inside a comment injects the whole head
+		     into it — and the injected SSR anchors close the comment early
+		     and spill the rest onto the page as visible text. That shipped. -->
 		<!-- Microsoft Clarity (proxied to bypass DNS blocks on clarity.ms) -->
 		<script type="text/javascript">
 			(function(c,l,a,r,i,t,y){
