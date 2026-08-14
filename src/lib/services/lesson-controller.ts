@@ -22,9 +22,11 @@ import {
 	getLesson,
 	getLessonIndex,
 	hasLesson,
-	resolveResumePoint
+	resolveResumePoint,
+	getTotalLessons
 } from '$services/lesson-loader';
-import { getLanguage, getVoiceSpeed, getCompletedLessons, getProgress, saveProgress, saveCompletedLessons } from '$services/data-layer';
+import { getLanguage, getVoiceSpeed, getCompletedLessons, getProgress, saveProgress, saveCompletedLessons, adoptPendingPlacement } from '$services/data-layer';
+import { clampStartDay } from '$services/placement';
 import { recordSRAttempt, getDueReviewItems, removeFromReview } from '$services/spaced-repetition';
 import {
 	computeReadiness,
@@ -250,16 +252,24 @@ export async function initLesson(): Promise<void> {
 
 		// Load index, saved progress, and completed lessons in parallel.
 		// getLessonIndex() must run before hasLesson() — it populates the index cache.
-		const [, savedProgress, completedLessons] = await Promise.all([
+		const [, savedProgress, completedLessons, placement] = await Promise.all([
 			getLessonIndex(),
 			getProgress(),
-			getCompletedLessons()
+			getCompletedLessons(),
+			// Claims a start day chosen by the signed-out free test, if the
+			// learner has since signed up and has no placement of their own.
+			adoptPendingPlacement()
 		]);
 
 		// Determine current day and sentence index. Mid-lesson progress resumes
-		// exactly; otherwise the lowest not-yet-completed day wins (see
-		// resolveResumePoint for the rationale).
-		const resume = resolveResumePoint(savedProgress, completedLessons);
+		// exactly; otherwise the lowest not-yet-completed day at or after the
+		// learner's placement wins (see resolveResumePoint for the rationale).
+		//
+		// Clamped here rather than at write time: this is the first point at
+		// which the lesson index is loaded, so it is the first point the real
+		// day count is known.
+		const startDay = placement ? clampStartDay(placement.startDay, getTotalLessons()) : 1;
+		const resume = resolveResumePoint(savedProgress, completedLessons, startDay);
 		const currentDay = resume.day;
 		let currentSentenceIndex = resume.sentenceIndex;
 		const xp = savedProgress?.xp || 0;

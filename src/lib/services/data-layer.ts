@@ -8,6 +8,7 @@
 import { getSupabaseBrowserClient } from '$lib/supabase/client';
 import { isAuthenticated, getUser, updateDisplayName as authUpdateDisplayName } from './auth';
 import { cloudWrite, flushQueue } from './sync-queue';
+import { parsePlacement, PENDING_KEY, type Placement } from './placement';
 import { logError, logWarn } from '$utils/error';
 import {
 	UserProfileLanguageRowSchema,
@@ -157,6 +158,79 @@ export async function setExamSettings(settings: ExamSettings): Promise<void> {
 	} catch (e) {
 		logError('data-layer:setExamSettings', e);
 	}
+}
+
+const PLACEMENT_LS_KEY = 'mirifer_placement';
+
+/**
+ * Where this learner starts the course.
+ *
+ * Stored unclamped. Clamping needs the lesson index, and pulling
+ * lesson-loader into data-layer would widen a module graph that every page
+ * imports — the same graph discipline that /home already has to observe.
+ * Callers clamp with clampStartDay() once the index is loaded, which is
+ * also the only moment the real total is known.
+ */
+export async function getPlacement(): Promise<Placement | null> {
+	if (await isAuthenticated()) {
+		try {
+			const user = await getUser();
+			const p = parsePlacement(user?.user_metadata?.placement, 0);
+			if (p) {
+				localStorage.setItem(PLACEMENT_LS_KEY, JSON.stringify(p));
+				return p;
+			}
+		} catch (e) {
+			logError('data-layer:getPlacement', e);
+		}
+	}
+	try {
+		return parsePlacement(JSON.parse(localStorage.getItem(PLACEMENT_LS_KEY) || 'null'), 0);
+	} catch {
+		return null;
+	}
+}
+
+export async function setPlacement(placement: Placement): Promise<void> {
+	localStorage.setItem(PLACEMENT_LS_KEY, JSON.stringify(placement));
+	try {
+		const client = getSupabaseBrowserClient();
+		await client.auth.updateUser({ data: { placement } });
+	} catch (e) {
+		logError('data-layer:setPlacement', e);
+	}
+}
+
+/**
+ * Adopt a placement chosen before the account existed.
+ *
+ * /fa/test runs signed out on purpose — it has to survive being opened
+ * from a Telegram link — so its recommendation is parked in localStorage
+ * and claimed here on the first authenticated load. Without this the free
+ * test tells someone to start on day 60 and the app then opens day 1,
+ * contradicting its own advice one click after earning their trust.
+ *
+ * An existing placement always wins: a learner who has since been placed
+ * deliberately must not be moved by a stale pending value.
+ */
+export async function adoptPendingPlacement(): Promise<Placement | null> {
+	let pending: Placement | null = null;
+	try {
+		pending = parsePlacement(JSON.parse(localStorage.getItem(PENDING_KEY) || 'null'), 0);
+	} catch {
+		pending = null;
+	}
+	if (!pending) return null;
+
+	const existing = await getPlacement();
+	if (existing) {
+		localStorage.removeItem(PENDING_KEY);
+		return existing;
+	}
+
+	await setPlacement(pending);
+	localStorage.removeItem(PENDING_KEY);
+	return pending;
 }
 
 /**

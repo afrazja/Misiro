@@ -15,6 +15,7 @@
 	 * The URL is short on purpose. Shared links get retyped and truncated.
 	 */
 	import { QUESTIONS, bandFor, scoreByTopic, totalCorrect, shareText } from '$lib/data/fa-placement';
+	import { PENDING_KEY, type Placement } from '$services/placement';
 
 	type Phase = 'intro' | 'test' | 'result';
 
@@ -41,10 +42,37 @@
 		answers[idx] = i;
 	}
 
+	/**
+	 * Park the recommended start day for the account that does not exist yet.
+	 *
+	 * This page runs signed out by design, so it cannot write a placement.
+	 * data-layer's adoptPendingPlacement() claims this on the first
+	 * authenticated lesson load. Until this existed the page told people to
+	 * start on day 60 and the app then opened day 1 — advice contradicted one
+	 * click after the test earned their trust.
+	 *
+	 * Not clamped here: the lesson index is not loaded on this page, so the
+	 * real day count is unknown. The controller clamps when it adopts.
+	 */
+	function rememberPlacement() {
+		const pending: Placement = {
+			startDay: bandFor(score).startDay,
+			source: 'self-test',
+			placedAt: new Date().toISOString().slice(0, 10)
+		};
+		try {
+			localStorage.setItem(PENDING_KEY, JSON.stringify(pending));
+		} catch {
+			// Private mode or a full quota. The recommendation is still shown
+			// on screen; only the automatic hand-off is lost.
+		}
+	}
+
 	function next() {
 		if (picked === null) return;
 		if (isLast) {
 			phase = 'result';
+			rememberPlacement();
 			return;
 		}
 		idx += 1;
@@ -186,7 +214,12 @@
 			</ul>
 
 			<div class="cta">
-				<p>پیشنهاد ما: از <strong>روز {fa(band.startDay)}</strong> شروع کن.</p>
+				<!-- Says what the app will do, not what it advises. The start
+				     day is now stored and picked up on the first lesson. -->
+				<p>
+					دوره برای تو از <strong>روز {fa(band.startDay)}</strong> شروع می‌شود — روزهای
+					قبلش را رد می‌کنیم. هر وقت خواستی می‌توانی برگردی و آن‌ها را هم ببینی.
+				</p>
 				<a class="primary" href="/fa">شروع رایگان دوره</a>
 				<button class="ghost" onclick={share}>فرستادن نتیجه برای دوستان</button>
 				{#if shareNote}<p class="sub" role="status">{shareNote}</p>{/if}

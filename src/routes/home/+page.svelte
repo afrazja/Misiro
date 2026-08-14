@@ -23,6 +23,7 @@
 	} from "$services/curriculum";
 	import { lessonMinutes } from "$services/lesson-duration";
 	import { getCheckpointsDone } from "$services/data-layer";
+	import { summarizeProgress, type Placement } from "$services/placement";
 	import {
 		computeReadiness,
 		getCheckAvailability,
@@ -113,6 +114,8 @@
 	let dueReviews = $state(0);
 	let savedWordCount = $state(0);
 	let totalLessons = $state(0);
+	/** Null until loaded, and null for anyone who was never placed. */
+	let placement = $state<Placement | null>(null);
 	let completedLessons = $state<
 		Record<number, { completedAt: number; sentenceCount: number }>
 	>({});
@@ -175,9 +178,20 @@
 		return TIER_A2;
 	});
 
-	const progressPercent = $derived(
-		totalLessons > 0 ? Math.round((daysCompleted / totalLessons) * 100) : 0,
+	/**
+	 * Progress through this learner's own course.
+	 *
+	 * A learner placed at day 40 has 61 lessons ahead, not 100. Dividing by
+	 * the full curriculum would show 5 lessons as 5% and imply 95 days of
+	 * work they were explicitly told to skip; counting the skipped days as
+	 * done would hand them 39% for answering twelve questions. Neither is
+	 * the truth, so the denominator is what they were actually assigned.
+	 */
+	const placementSummary = $derived(
+		summarizeProgress(completedLessons, placement?.startDay ?? 1, totalLessons),
 	);
+
+	const progressPercent = $derived(placementSummary.percent);
 
 	// ── Practice Calendar ──────────────────────────────
 	let calYear = $state(new Date().getFullYear());
@@ -303,17 +317,26 @@
 
 	async function loadProgress() {
 		// Fault-isolated: one failed fetch must not zero out the others.
-		const [completedRes, progressRes, indexRes] = await Promise.allSettled([
-			dataLayer.getCompletedLessons(),
-			dataLayer.getProgress(),
-			getLessonIndex(),
-		]);
+		const [completedRes, progressRes, indexRes, placementRes] =
+			await Promise.allSettled([
+				dataLayer.getCompletedLessons(),
+				dataLayer.getProgress(),
+				getLessonIndex(),
+				dataLayer.getPlacement(),
+			]);
 
 		const completed =
 			completedRes.status === "fulfilled" ? completedRes.value : {};
 		completedLessons = completed;
 		daysCompleted = Object.keys(completed).length;
 		streakCount = computeStreak(completed);
+
+		// Skipped days are assumed-known, never completed — so daysCompleted
+		// and the streak stay a record of work actually done. Only the
+		// denominator changes: progress is measured against this learner's
+		// own course, not the whole curriculum.
+		placement =
+			placementRes.status === "fulfilled" ? placementRes.value : null;
 
 		const progress =
 			progressRes.status === "fulfilled" ? progressRes.value : null;
@@ -1349,11 +1372,25 @@
 					</div>
 				{:else if daysCompleted > 0}
 					<div class="card-meta">
+						<!-- Denominator is `scheduled`, matching the percent. Showing
+						     "5 of 100 · 8%" would be two numbers that contradict each
+						     other for anyone who was placed forward. -->
 						{#if totalLessons > 0}
 							{#if language === "fa"}
-								{daysCompleted} از {totalLessons} روز · ٪{progressPercent}
+								{daysCompleted} از {placementSummary.scheduled} روز · ٪{progressPercent}
 							{:else}
-								{daysCompleted} of {totalLessons} days · {progressPercent}%
+								{daysCompleted} of {placementSummary.scheduled} days · {progressPercent}%
+							{/if}
+							{#if placementSummary.assumed > 0}
+								<!-- Named, not hidden. A learner who sees a shorter course
+								     than the 120 days advertised should be told why. -->
+								<span class="skipped-note">
+									{#if language === "fa"}
+										· {placementSummary.assumed} روز با تعیین سطح رد شد
+									{:else}
+										· {placementSummary.assumed} skipped by placement
+									{/if}
+								</span>
 							{/if}
 						{:else if language === "fa"}
 							{daysCompleted} روز انجام شده
@@ -2026,6 +2063,13 @@
 		font-size: 0.92rem;
 		position: relative;
 		z-index: 1;
+	}
+
+	/* Quieter than the count it follows — an explanation, not a second
+	   statistic competing with the one that matters. */
+	.skipped-note {
+		font-weight: 600;
+		opacity: 0.75;
 	}
 
 	.card-meta {

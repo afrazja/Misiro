@@ -442,7 +442,13 @@ export function getGlossaryMeaning(word: string, language: Language): string | n
  */
 export function resolveResumePoint(
 	savedProgress: { currentDay: number; currentSentenceIndex: number } | null,
-	completedLessons: Record<string | number, unknown> | null | undefined
+	completedLessons: Record<string | number, unknown> | null | undefined,
+	/**
+	 * First day this learner is expected to do, from their placement.
+	 * Defaults to 1, which is the behaviour every account had before
+	 * placement existed.
+	 */
+	startDay: number = 1
 ): { day: number; sentenceIndex: number; allDone: boolean } {
 	const completed = completedLessons || {};
 
@@ -450,22 +456,47 @@ export function resolveResumePoint(
 		const d = savedProgress.currentDay;
 		const midLesson = (savedProgress.currentSentenceIndex ?? 0) > 0 && !completed[d];
 		if (midLesson) {
+			// Deliberately not floored by startDay. Someone half-way through
+			// an earlier lesson they opened on purpose should land back in
+			// it, not be bounced forward and lose the half they did.
 			return { day: d, sentenceIndex: savedProgress.currentSentenceIndex, allDone: false };
 		}
 	}
 
-	// Frontier: lowest existing day not yet completed. Small buffer over the
-	// index length in case day numbering ever has gaps.
-	const maxScan = getTotalLessons() + 10;
-	let lastExisting = 1;
-	for (let d = 1; d <= maxScan; d++) {
-		if (!hasLesson(d)) continue;
-		lastExisting = d;
+	// Walk the actual day numbers rather than counting up to a guessed
+	// bound. The previous version scanned 1..getTotalLessons()+10, which is
+	// a COUNT standing in for a maximum day number: an index of [1,2,3,50,
+	// 51,52] bounded the scan at 16 and could never see day 50. Dense 1..100
+	// numbering hid that, and a placement floor above the count exposed it
+	// immediately.
+	const days = indexDays();
+	if (days.length === 0) return { day: 1, sentenceIndex: 0, allDone: true };
+
+	const from = Number.isFinite(startDay) && startDay > 1 ? Math.floor(startDay) : 1;
+	const atOrAfter = days.filter((d) => d >= from);
+
+	for (const d of atOrAfter) {
 		if (!completed[d]) return { day: d, sentenceIndex: 0, allDone: false };
 	}
 
+	// Nothing left at or after the placement. Look below it, so a learner
+	// placed near the end who finishes those lessons is pointed at the
+	// earlier material instead of being told the course is over.
+	if (from > 1) {
+		for (const d of days) {
+			if (d >= from) break;
+			if (!completed[d]) return { day: d, sentenceIndex: 0, allDone: false };
+		}
+	}
+
 	// Every existing lesson is completed — park on the last one.
-	return { day: lastExisting, sentenceIndex: 0, allDone: true };
+	return { day: days[days.length - 1], sentenceIndex: 0, allDone: true };
+}
+
+/** Every day number in the index, ascending. Empty when nothing is cached. */
+function indexDays(): number[] {
+	if (!indexCache) indexCache = readLS<LessonMeta[]>(LS_INDEX_KEY);
+	return (indexCache ?? []).map((m) => m.day).sort((a, b) => a - b);
 }
 
 export function hasLesson(day: number): boolean {
