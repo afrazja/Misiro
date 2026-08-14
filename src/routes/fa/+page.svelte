@@ -80,29 +80,80 @@
 
 <div class="fa-page" lang="fa" dir="rtl">
 	<section class="hero">
-		<div class="badge">🇩🇪 آلمانی برای فارسی‌زبانان</div>
-		<h1>
-			آلمانی را طوری یاد بگیر<br />
-			<span class="grad">که واقعاً حرف بزنی</span>
-		</h1>
-		<p class="sub">
-			توضیح‌ها به فارسی. از روز اول صحبت می‌کنی، نه بعد از ماه‌ها گرامر.
-		</p>
-		<div class="actions">
-			{#if isAuthenticated}
-				<a class="btn primary" href="/home">رفتن به درس‌ها ←</a>
-			{:else}
-				<a class="btn primary" href="/try">🎙️ یک درس را همین حالا امتحان کن</a>
-				<a class="btn ghost" href="/login">شروع رایگان</a>
-			{/if}
+		<!-- Ambient blobs, same treatment as the English hero. Purely
+		     decorative, so aria-hidden and pointer-events:none. -->
+		<div class="blob blob-1" aria-hidden="true"></div>
+		<div class="blob blob-2" aria-hidden="true"></div>
+
+		<div class="hero-content">
+			<div class="badge">🇩🇪 آلمانی برای فارسی‌زبانان</div>
+			<h1>
+				آلمانی را طوری یاد بگیر<br />
+				<span class="grad">که واقعاً حرف بزنی</span>
+			</h1>
+			<p class="sub">
+				توضیح‌ها به فارسی. از روز اول صحبت می‌کنی، نه بعد از ماه‌ها گرامر.
+			</p>
+			<div class="actions">
+				{#if isAuthenticated}
+					<a class="btn primary" href="/home">رفتن به درس‌ها ←</a>
+				{:else}
+					<a class="btn primary" href="/try">🎙️ یک درس را همین حالا امتحان کن</a>
+					<a class="btn ghost" href="/login">شروع رایگان</a>
+				{/if}
+			</div>
+			<p class="note">بدون کارت بانکی · بدون هزینه</p>
+			<!-- The self-test is the page people forward to each other, so it
+			     needs a route in from the landing page rather than only existing
+			     at the end of a shared link. -->
+			<p class="note alt">
+				نمی‌دانی از کجا شروع کنی؟ <a href="/fa/test">تست رایگان سطح‌سنجی</a> — ۱۲ سؤال، بدون ثبت‌نام.
+			</p>
 		</div>
-		<p class="note">بدون کارت بانکی · بدون هزینه</p>
-		<!-- The self-test is the page people forward to each other, so it
-		     needs a route in from the landing page rather than only existing
-		     at the end of a shared link. -->
-		<p class="note alt">
-			نمی‌دانی از کجا شروع کنی؟ <a href="/fa/test">تست رایگان سطح‌سنجی</a> — ۱۲ سؤال، بدون ثبت‌نام.
-		</p>
+
+		<!--
+			App preview, built as markup rather than reusing the English
+			page's phone-preview.jpg.
+
+			That screenshot shows an English interface — the language
+			selector literally reads "English", and the sentence is glossed
+			"What is your favorite hobby?". Putting it here would contradict
+			«توضیح‌ها به فارسی» in the paragraph directly above it, at the
+			exact moment someone is deciding whether to believe the claim.
+
+			Markup also beats the JPEG on its own terms: nothing to download
+			on a slow mobile connection, sharp at any density, and it follows
+			the theme instead of being a baked-in light-mode picture.
+		-->
+		<div class="hero-visual" aria-hidden="true">
+			<div class="phone">
+				<div class="phone-notch"></div>
+				<div class="phone-screen">
+					<div class="ph-top">
+						<span class="ph-brand">میریفر</span>
+						<span class="ph-day">روز ۳</span>
+					</div>
+					<div class="ph-progress"><span style="inline-size: 38%"></span></div>
+
+					<div class="ph-card">
+						<p class="ph-de" dir="ltr" lang="de">Was möchten Sie trinken?</p>
+						<p class="ph-fa">چه چیزی میل دارید بنوشید؟</p>
+						<div class="ph-btns">
+							<span class="ph-btn ghost">🔊 دوباره</span>
+							<span class="ph-btn solid">بعدی ←</span>
+						</div>
+					</div>
+
+					<div class="ph-card said">
+						<p class="ph-label">تو گفتی</p>
+						<p class="ph-de" dir="ltr" lang="de">Ich möchte einen Kaffee.</p>
+						<p class="ph-ok">✓ درست — تلفظ ö عالی بود</p>
+					</div>
+
+					<div class="ph-mic"><span>🎙️</span></div>
+				</div>
+			</div>
+		</div>
 	</section>
 
 	<section class="stats">
@@ -276,7 +327,236 @@
 	}
 
 	.hero {
+		position: relative;
+		max-width: 1100px;
 		padding-block: 72px 40px;
+		display: grid;
+		grid-template-columns: 1fr;
+		gap: 44px;
+		align-items: center;
+		/* The blobs overhang the edges; without this they widen the document
+		   and the whole page scrolls sideways on a phone. */
+		overflow: hidden;
+	}
+
+	/* Two columns once there is room. In RTL the first grid item lands on
+	   the right on its own — no ordering needed. */
+	@media (min-width: 900px) {
+		.hero {
+			grid-template-columns: 1.05fr 0.95fr;
+			gap: 32px;
+			padding-block: 88px 56px;
+			text-align: start;
+		}
+	}
+
+	.hero-content,
+	.hero-visual {
+		position: relative;
+		z-index: 1;
+	}
+
+	/* ── Ambient blobs ─────────────────────────────────── */
+	.blob {
+		position: absolute;
+		border-radius: 50%;
+		filter: blur(90px);
+		opacity: 0.5;
+		pointer-events: none;
+		z-index: 0;
+	}
+
+	.blob-1 {
+		inline-size: 420px;
+		block-size: 420px;
+		background: var(--accent-wash);
+		inset-block-start: -150px;
+		inset-inline-end: -90px;
+		animation: blobDrift 9s ease-in-out infinite;
+	}
+
+	.blob-2 {
+		inline-size: 340px;
+		block-size: 340px;
+		background: var(--leaf-wash);
+		inset-block-end: -110px;
+		inset-inline-start: -70px;
+		animation: blobDrift 11s ease-in-out infinite reverse;
+	}
+
+	@keyframes blobDrift {
+		0%,
+		100% {
+			transform: translate(0, 0) scale(1);
+		}
+		33% {
+			transform: translate(20px, -16px) scale(1.04);
+		}
+		66% {
+			transform: translate(-10px, 12px) scale(0.97);
+		}
+	}
+
+	/* ── Phone mockup ──────────────────────────────────── */
+	.hero-visual {
+		display: flex;
+		justify-content: center;
+	}
+
+	/* The bezel stays dark in both themes — a phone is a dark object, and a
+	   bezel that follows the theme stops reading as a phone. The screen
+	   inside deliberately matches the real lesson page's colours so this is
+	   a picture of the product rather than a flattering invention. */
+	.phone {
+		position: relative;
+		inline-size: 272px;
+		max-inline-size: 100%;
+		padding: 10px;
+		border-radius: 38px;
+		background: #15161a;
+		box-shadow:
+			0 24px 60px rgba(0, 0, 0, 0.28),
+			0 2px 6px rgba(0, 0, 0, 0.2);
+	}
+
+	.phone-notch {
+		position: absolute;
+		inset-block-start: 10px;
+		/* inset-inline:0 + margin-inline:auto centres in either direction.
+		   A 50% offset plus a translate only happens to work in one. */
+		inset-inline: 0;
+		margin-inline: auto;
+		inline-size: 92px;
+		block-size: 18px;
+		border-end-start-radius: 12px;
+		border-end-end-radius: 12px;
+		background: #15161a;
+		z-index: 2;
+	}
+
+	.phone-screen {
+		border-radius: 28px;
+		overflow: hidden;
+		background: #e9e2d9;
+		padding-block-end: 12px;
+		min-block-size: 430px;
+		display: flex;
+		flex-direction: column;
+		gap: 10px;
+	}
+
+	.ph-top {
+		background: #0e5c45;
+		color: #fff;
+		padding: 22px 14px 10px;
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		font-size: 0.82rem;
+		font-weight: 700;
+	}
+
+	.ph-day {
+		background: rgba(255, 255, 255, 0.16);
+		border-radius: 999px;
+		padding: 2px 10px;
+		font-size: 0.74rem;
+	}
+
+	.ph-progress {
+		block-size: 4px;
+		background: rgba(0, 0, 0, 0.09);
+		margin-block-start: -10px;
+	}
+
+	.ph-progress span {
+		display: block;
+		block-size: 100%;
+		background: #2ecc71;
+	}
+
+	.ph-card {
+		background: #fff;
+		border-radius: 14px;
+		margin-inline: 12px;
+		padding: 12px 14px;
+		box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+		text-align: start;
+	}
+
+	/* The learner's own turn, tinted like a sent message. */
+	.ph-card.said {
+		background: #dcf8c6;
+	}
+
+	.ph-label {
+		margin: 0 0 4px;
+		font-size: 0.68rem;
+		font-weight: 700;
+		color: #5b6b60;
+	}
+
+	.ph-de {
+		margin: 0;
+		font-size: 0.92rem;
+		font-weight: 700;
+		color: #1c1c1c;
+		unicode-bidi: isolate;
+	}
+
+	.ph-fa {
+		margin: 4px 0 0;
+		font-size: 0.82rem;
+		color: #5a5a5a;
+	}
+
+	.ph-ok {
+		margin: 6px 0 0;
+		font-size: 0.74rem;
+		font-weight: 700;
+		color: #1e8449;
+	}
+
+	.ph-btns {
+		display: flex;
+		gap: 6px;
+		margin-block-start: 10px;
+	}
+
+	.ph-btn {
+		font-size: 0.72rem;
+		font-weight: 700;
+		border-radius: 999px;
+		padding: 5px 12px;
+	}
+
+	.ph-btn.ghost {
+		border: 1px solid #0e5c45;
+		color: #0e5c45;
+	}
+
+	.ph-btn.solid {
+		background: #2ecc71;
+		color: #08301f;
+	}
+
+	.ph-mic {
+		margin-block-start: auto;
+		margin-inline: 12px;
+		background: #fff;
+		border-radius: 999px;
+		padding: 9px;
+		text-align: center;
+		font-size: 1rem;
+		box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+	}
+
+	/* Decoration only. Anyone who has asked the OS to calm down should not
+	   get drifting blobs behind their reading. */
+	@media (prefers-reduced-motion: reduce) {
+		.blob {
+			animation: none;
+		}
 	}
 
 	.badge {
