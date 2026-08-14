@@ -237,6 +237,31 @@ export async function adoptPendingPlacement(): Promise<Placement | null> {
 const PROBE_LS_KEY = 'mirifer_placement_probes';
 
 /**
+ * Undo a placement and start from day 1 again.
+ *
+ * A placement moves a learner past material without asking them lesson by
+ * lesson, so there has to be one visible control that puts it back. Clears
+ * the probe tally too — that sample only describes the placement being
+ * removed, and carrying it forward would let stale misses trigger a
+ * "you started too far ahead" offer about a placement that no longer
+ * exists.
+ *
+ * Completed lessons are untouched. Skipped days were never marked
+ * complete, so there is nothing to unwind.
+ */
+export async function clearPlacement(): Promise<void> {
+	localStorage.removeItem(PLACEMENT_LS_KEY);
+	localStorage.removeItem(PROBE_LS_KEY);
+	localStorage.removeItem(PENDING_KEY);
+	try {
+		const client = getSupabaseBrowserClient();
+		await client.auth.updateUser({ data: { placement: null, placement_probes: null } });
+	} catch (e) {
+		logError('data-layer:clearPlacement', e);
+	}
+}
+
+/**
  * How the placement check is going.
  *
  * Small and bounded — at most PROBE_BUDGET entries — so user_metadata is

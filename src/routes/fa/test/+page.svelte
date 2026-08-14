@@ -47,9 +47,14 @@
 	 *
 	 * This page runs signed out by design, so it cannot write a placement.
 	 * data-layer's adoptPendingPlacement() claims this on the first
-	 * authenticated lesson load. Until this existed the page told people to
-	 * start on day 60 and the app then opened day 1 — advice contradicted one
-	 * click after the test earned their trust.
+	 * authenticated lesson load.
+	 *
+	 * Called ONLY from the "start from day N" button, never on finishing the
+	 * quiz. The first version fired at the end of the last question, which
+	 * meant anyone who opened the test to look at it — including on a
+	 * browser where someone was already signed in — had their course
+	 * silently rearranged. A quiz is not consent; pressing the button that
+	 * names the day is.
 	 *
 	 * Not clamped here: the lesson index is not loaded on this page, so the
 	 * real day count is unknown. The controller clamps when it adopts.
@@ -72,7 +77,6 @@
 		if (picked === null) return;
 		if (isLast) {
 			phase = 'result';
-			rememberPlacement();
 			return;
 		}
 		idx += 1;
@@ -214,13 +218,19 @@
 			</ul>
 
 			<div class="cta">
-				<!-- Says what the app will do, not what it advises. The start
-				     day is now stored and picked up on the first lesson. -->
+				<!-- The button carries the day, so pressing it IS the consent.
+				     Nothing is stored until then: this page is built for
+				     strangers to try casually, and finishing a quiz must not
+				     quietly rearrange the course of whoever is signed in on
+				     this browser. -->
 				<p>
-					دوره برای تو از <strong>روز {fa(band.startDay)}</strong> شروع می‌شود — روزهای
-					قبلش را رد می‌کنیم. هر وقت خواستی می‌توانی برگردی و آن‌ها را هم ببینی.
+					بر اساس نتیجه، پیشنهاد ما شروع از <strong>روز {fa(band.startDay)}</strong> است —
+					روزهای قبلش رد می‌شوند و هر وقت خواستی می‌توانی برگردی و ببینی‌شان.
 				</p>
-				<a class="primary" href="/fa">شروع رایگان دوره</a>
+				<a class="primary" href="/fa" onclick={rememberPlacement}>
+					شروع دوره از روز {fa(band.startDay)}
+				</a>
+				<a class="ghost-link" href="/fa">فقط می‌خواهم نگاهی بیندازم</a>
 				<button class="ghost" onclick={share}>فرستادن نتیجه برای دوستان</button>
 				{#if shareNote}<p class="sub" role="status">{shareNote}</p>{/if}
 				<button class="link" onclick={restart}>دوباره امتحان کن</button>
@@ -336,6 +346,28 @@
 		min-block-size: 44px;
 		margin-top: 6px;
 		font-weight: 600;
+	}
+
+	/* The opt-out. Has to be a real, obvious way through to the site that
+	   does not set a placement — otherwise the only route onward is the
+	   one that changes your course. */
+	.ghost-link {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		min-block-size: 44px;
+		margin-top: 10px;
+		color: var(--ink-soft);
+		font-weight: 600;
+		font-size: 0.92rem;
+		text-decoration: none;
+		border: 1px solid var(--control-border);
+		border-radius: 12px;
+		background: var(--control);
+	}
+
+	.ghost-link:hover {
+		background: var(--control-hover);
 	}
 
 	.sub {

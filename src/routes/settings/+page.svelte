@@ -2,6 +2,7 @@
 	import { onMount } from "svelte";
 	import { goto } from "$app/navigation";
 	import AppHeader from "$lib/components/AppHeader.svelte";
+	import type { Placement } from "$services/placement";
 	import {
 		isAuthenticated,
 		getUser,
@@ -20,6 +21,8 @@
 		setVoiceSpeed,
 		getExamSettings,
 		setExamSettings,
+		getPlacement,
+		clearPlacement,
 		setAvatarUrl as setLocalAvatarUrl,
 		setDisplayName as setLocalDisplayName,
 	} from "$services/data-layer";
@@ -40,6 +43,20 @@
 	let langStatus = $state<{ text: string; type: "success" | "error" } | null>(
 		null,
 	);
+
+	// Starting point (placement)
+	let placement = $state<Placement | null>(null);
+	let clearingPlacement = $state(false);
+	let placementCleared = $state(false);
+
+	async function resetPlacement() {
+		if (clearingPlacement) return;
+		clearingPlacement = true;
+		await clearPlacement();
+		placement = null;
+		placementCleared = true;
+		clearingPlacement = false;
+	}
 
 	// Goethe exam plan
 	let examGoal = $state<"scheduled" | "planned" | "none">("none");
@@ -278,6 +295,8 @@
 			email = user.email || "";
 		}
 
+		placement = await getPlacement();
+
 		// Load display name
 		const name = await getDisplayName();
 		displayName = name;
@@ -476,6 +495,29 @@
 				</div>
 			{/if}
 		</div>
+
+		<!-- Starting point. Only shown to someone who actually has a
+		     placement — for everyone else there is nothing to undo, and a
+		     control that resets a thing you never set is just confusing. -->
+		{#if placement && placement.startDay > 1}
+			<div class="settings-section">
+				<h3><span class="section-icon">📍</span> Starting Point</h3>
+				<p class="pref-hint">
+					You are starting from <strong>day {placement.startDay}</strong>, so days
+					1–{placement.startDay - 1} are treated as already known. Nothing you have
+					completed is affected either way.
+				</p>
+				<button class="danger-btn" onclick={resetPlacement} disabled={clearingPlacement}>
+					{clearingPlacement ? "Resetting…" : "Start from day 1 instead"}
+				</button>
+				{#if placementCleared}
+					<p class="pref-hint" role="status">
+						Done — your next lesson will pick up from the first day you have not
+						completed.
+					</p>
+				{/if}
+			</div>
+		{/if}
 
 		<!-- Goethe Exam Section -->
 		<div class="settings-section">
@@ -796,6 +838,39 @@
 	.exam-date-input:focus {
 		border-color: var(--accent);
 		outline: none;
+	}
+
+	/* Explanatory copy under a section heading. */
+	.pref-hint {
+		margin: 0 0 14px;
+		color: var(--ink-soft);
+		font-size: 0.9rem;
+		line-height: 1.75;
+	}
+
+	/* Outlined rather than filled: resetting a placement is reversible and
+	   affects no completed work, so it should not look like deleting an
+	   account. It still reads as the consequential control in its section. */
+	.danger-btn {
+		font: inherit;
+		font-weight: 700;
+		font-size: 0.92rem;
+		min-height: 44px;
+		padding: 10px 18px;
+		border-radius: 10px;
+		background: transparent;
+		color: var(--accent);
+		border: 1px solid var(--accent);
+		cursor: pointer;
+	}
+
+	.danger-btn:hover:not(:disabled) {
+		background: var(--accent-wash);
+	}
+
+	.danger-btn:disabled {
+		opacity: 0.6;
+		cursor: wait;
 	}
 
 	.target-btn {
