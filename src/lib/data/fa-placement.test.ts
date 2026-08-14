@@ -1,5 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import {
+	startDayFor,
 	QUESTIONS,
 	TOPICS,
 	BANDS,
@@ -85,15 +86,21 @@ describe('bandFor', () => {
 	});
 
 	it('sends a zero score to day 1 and a top score further in', () => {
-		expect(bandFor(0).startDay).toBe(1);
-		expect(bandFor(QUESTIONS.length).startDay).toBeGreaterThan(1);
+		expect(startDayFor(0)).toBe(1);
+		expect(startDayFor(QUESTIONS.length)).toBeGreaterThan(1);
 	});
 
-	it('starts every band on a day the course actually has', () => {
-		for (const b of BANDS) {
-			expect(b.startDay, `${b.fa} starts before day 1`).toBeGreaterThanOrEqual(1);
-			expect(b.startDay, `${b.fa} starts past the built curriculum`).toBeLessThanOrEqual(100);
+	it('starts on a day the course actually has, at every score', () => {
+		for (let s = 0; s <= QUESTIONS.length; s++) {
+			expect(startDayFor(s), `score ${s} starts before day 1`).toBeGreaterThanOrEqual(1);
+			expect(startDayFor(s), `score ${s} starts past the curriculum`).toBeLessThanOrEqual(100);
 		}
+	});
+
+	it('never sends a top score deep into A2', () => {
+		// Twelve A1 grammar questions are evidence of holding A1 and nothing
+		// more. The first version pointed a perfect score at day 60.
+		expect(startDayFor(QUESTIONS.length)).toBeLessThanOrEqual(31);
 	});
 
 	it('never tells the learner they failed', () => {

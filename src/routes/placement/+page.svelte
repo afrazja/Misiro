@@ -37,9 +37,11 @@
 		getLanguage,
 		getSeenExamItems,
 		addSeenExamItems,
-		markCheckpointDone
+		markCheckpointDone,
+		setPlacement
 	} from '$services/data-layer';
 	import { checkpointKey } from '$services/curriculum';
+import { startDayForScore, PENDING_KEY, type Placement } from '$services/placement';
 	import type { Language } from '$stores/preferences';
 	import { logError, logWarn } from '$utils/error';
 
@@ -482,6 +484,7 @@
 		addSeenExamItems(servedIds);
 		// An "anyway" sitting is practice, not evidence — recording it would
 		// reintroduce exactly the re-rollable score the gate exists to stop.
+		suggestedDay = computeSuggestedDay();
 		if (unscored) {
 			phase = 'results';
 			return;
@@ -495,6 +498,52 @@
 
 	const pct = (m: ReadinessModule) =>
 		possible[m] > 0 ? Math.round((earned[m] / possible[m]) * 100) : null;
+
+	// ── Starting point ────────────────────────────────────────────────
+	/**
+	 * Snapshotted rather than derived: `earned`/`possible` are plain objects
+	 * mutated during the sitting, not runes, so nothing would re-run.
+	 * finish() is the one moment the totals are final.
+	 */
+	let suggestedDay = $state(1);
+	let placementSaved = $state(false);
+	let savingPlacement = $state(false);
+
+	function computeSuggestedDay(): number {
+		const e = (Object.values(earned) as number[]).reduce((a, b) => a + b, 0);
+		const p = (Object.values(possible) as number[]).reduce((a, b) => a + b, 0);
+		return startDayForScore(p > 0 ? e / p : 0);
+	}
+
+	/**
+	 * Apply the start day. Offered by a button that names the day, never on
+	 * its own — the same rule /fa/test learned the hard way, where merely
+	 * finishing the quiz rearranged whoever was signed in on that browser.
+	 *
+	 * Signed in, it writes straight through. Signed out there is no account
+	 * yet, so it parks the same pending value /fa/test uses and the first
+	 * authenticated lesson adopts it.
+	 */
+	async function applyStartDay() {
+		if (savingPlacement) return;
+		savingPlacement = true;
+		const p: Placement = {
+			startDay: suggestedDay,
+			source: 'placement',
+			placedAt: new Date().toISOString().slice(0, 10)
+		};
+		try {
+			if (authed) {
+				await setPlacement(p);
+			} else {
+				localStorage.setItem(PENDING_KEY, JSON.stringify(p));
+			}
+			placementSaved = true;
+		} catch (e) {
+			logError('placement:applyStartDay', e);
+		}
+		savingPlacement = false;
+	}
 
 	onDestroy(() => {
 		stopAllAudio();
@@ -747,6 +796,48 @@
 				نمرهٔ آمادگی در داشبورد از همین نتایج ساخته می‌شود — هر درس و مرور،
 				تو را به نمرهٔ قبولی (۶۰ از ۱۰۰) نزدیک‌تر می‌کند.
 			</p>
+			<!--
+				The start day. This page was headed "Your starting point" while
+				being the one test that could not actually set one — the
+				lightweight Persian quiz could and this, the adaptive
+				exam-format sitting, could not.
+
+				Offered, never applied: the button names the day, so pressing
+				it is the consent. /fa/test learned that the hard way, where
+				merely finishing rearranged whoever was signed in.
+			-->
+			{#if !unscored}
+				<div class="start-day">
+					{#if placementSaved}
+						<p class="sd-done">
+							✓ Your course starts at <strong>day {suggestedDay}</strong>.
+							{#if suggestedDay > 1}
+								Days 1–{suggestedDay - 1} are treated as known — you can still
+								open them any time, and Settings can undo this.
+							{/if}
+						</p>
+					{:else}
+						<p class="sd-lead">
+							{#if suggestedDay > 1}
+								Based on this, we'd start you at <strong>day {suggestedDay}</strong>
+								instead of day 1.
+							{:else}
+								We'd start you at <strong>day 1</strong> — the beginning of A1.
+							{/if}
+						</p>
+						{#if suggestedDay > 1}
+							<button
+								class="btn-primary"
+								onclick={applyStartDay}
+								disabled={savingPlacement}
+							>
+								{savingPlacement ? 'Saving…' : `Start me at day ${suggestedDay}`}
+							</button>
+						{/if}
+					{/if}
+				</div>
+			{/if}
+
 			{#if authed}
 				<a class="btn-primary big" href="/home">See your readiness →</a>
 			{:else}
@@ -833,6 +924,29 @@
 	.sub {
 		color: var(--ink-soft);
 		line-height: 1.6;
+	}
+
+	/* The start-day offer. Set apart from the readiness bars above it —
+	   those report, this one asks for a decision. */
+	.start-day {
+		margin: 22px 0;
+		padding: 18px 20px;
+		background: var(--paper-sunken);
+		border-radius: 14px;
+		border-inline-start: 3px solid var(--accent);
+		text-align: start;
+	}
+
+	.sd-lead,
+	.sd-done {
+		margin: 0 0 12px;
+		color: var(--ink-soft);
+		line-height: 1.75;
+	}
+
+	.sd-done {
+		margin-bottom: 0;
+		color: var(--ink);
 	}
 
 	/* Names the milestone, so the lock reads as a position on a map rather

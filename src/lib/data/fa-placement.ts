@@ -3,10 +3,12 @@
  *
  * Deliberately not a fork of /placement. That page is an in-app diagnostic
  * wired to readiness scoring, auth, adaptive item selection and the
- * microphone; it is 1,129 lines and entirely in English. What has to survive
- * being pasted into a Telegram channel is the opposite: no signup, no mic
- * permission, no Supabase round-trip, and small enough to open on a slow
- * mobile connection.
+ * microphone, across 1,129 lines. (It IS bilingual — an earlier version of
+ * this comment claimed otherwise on the strength of a grep for `fa:` keys,
+ * which that file does not use; it translates with inline ternaries.) What
+ * has to survive being pasted into a Telegram channel is the opposite: no
+ * signup, no mic permission, no Supabase round-trip, and small enough to
+ * open on a slow mobile connection.
  *
  * So the bank is static and self-contained. Every item is answerable from A1
  * knowledge alone, and each one targets a distinct thing the Goethe A1 exam
@@ -16,6 +18,8 @@
  * — grammatical gender and the accusative have no Persian equivalent, and
  * that is worth telling the learner instead of just marking them wrong.
  */
+
+import { startDayForScore } from '$services/placement';
 
 export type TopicId =
 	| 'artikel'
@@ -177,8 +181,6 @@ export interface Band {
 	min: number;
 	fa: string;
 	blurb: string;
-	/** Which day of the course to point them at. */
-	startDay: number;
 }
 
 /**
@@ -192,28 +194,36 @@ export const BANDS: Band[] = [
 	{
 		min: 11,
 		fa: 'نزدیک پایان A1',
-		blurb: 'پایه‌ات محکم است. با تمرین مکالمه و بخش گفتاری، برای آزمون گوته A1 آماده می‌شوی.',
-		startDay: 60
+		blurb: 'پایه‌ات محکم است. با تمرین مکالمه و بخش گفتاری، برای آزمون گوته A1 آماده می‌شوی.'
 	},
 	{
 		min: 8,
 		fa: 'A1.2',
-		blurb: 'بیشتر ساختارهای پایه را بلدی. حالا وقت جمله‌های طولانی‌تر و حالت‌هاست.',
-		startDay: 35
+		blurb: 'بیشتر ساختارهای پایه را بلدی. حالا وقت جمله‌های طولانی‌تر و حالت‌هاست.'
 	},
 	{
 		min: 5,
 		fa: 'A1.1',
-		blurb: 'شروع خوبی داشته‌ای. با تمرین روزانه‌ی صرف فعل و ترتیب کلمات سریع جلو می‌روی.',
-		startDay: 15
+		blurb: 'شروع خوبی داشته‌ای. با تمرین روزانه‌ی صرف فعل و ترتیب کلمات سریع جلو می‌روی.'
 	},
 	{
 		min: 0,
 		fa: 'تازه شروع کرده‌ای',
-		blurb: 'دقیقاً همان‌جایی هستی که این دوره برایش ساخته شده. از روز اول شروع کن.',
-		startDay: 1
+		blurb: 'دقیقاً همان‌جایی هستی که این دوره برایش ساخته شده. از روز اول شروع کن.'
 	}
 ];
+
+/**
+ * Where this score should start the learner.
+ *
+ * Delegates to the shared mapping so this test and /placement cannot
+ * disagree about what a score means. The bands above kept their own
+ * startDay until they were caught sending a top scorer to day 60 — late
+ * A2 — on the strength of twelve A1 grammar questions.
+ */
+export function startDayFor(score: number): number {
+	return startDayForScore(QUESTIONS.length > 0 ? score / QUESTIONS.length : 0);
+}
 
 export function bandFor(score: number): Band {
 	// BANDS is ordered high→low, so the first satisfied minimum is the match.

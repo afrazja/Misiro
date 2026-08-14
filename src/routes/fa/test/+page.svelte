@@ -9,12 +9,17 @@
 	 *
 	 * That is why this is not a fork of /placement. That page is the in-app
 	 * diagnostic — auth, readiness scoring, mic, adaptive item selection,
-	 * 1,129 lines, all of it in English. Everything that makes it good inside
-	 * the app makes it useless as a link someone forwards to a friend.
+	 * 1,129 lines. Everything that makes it good inside the app makes it
+	 * useless as a link someone forwards to a friend. (It is bilingual, not
+	 * English-only as this comment first claimed — that came from grepping
+	 * for `fa:` keys in a file that translates with inline ternaries.)
+	 *
+	 * Both tests map score to start day through the same startDayForScore,
+	 * so they cannot disagree about what a result means.
 	 *
 	 * The URL is short on purpose. Shared links get retyped and truncated.
 	 */
-	import { QUESTIONS, bandFor, scoreByTopic, totalCorrect, shareText } from '$lib/data/fa-placement';
+	import { QUESTIONS, bandFor, startDayFor, scoreByTopic, totalCorrect, shareText } from '$lib/data/fa-placement';
 	import { PENDING_KEY, type Placement } from '$services/placement';
 
 	type Phase = 'intro' | 'test' | 'result';
@@ -29,6 +34,7 @@
 	const isLast = $derived(idx === QUESTIONS.length - 1);
 	const score = $derived(totalCorrect(answers));
 	const band = $derived(bandFor(score));
+	const startDay = $derived(startDayFor(score));
 	const breakdown = $derived(scoreByTopic(answers));
 
 	/** Persian-Indic digits. Latin numerals in Persian prose read as foreign. */
@@ -61,7 +67,7 @@
 	 */
 	function rememberPlacement() {
 		const pending: Placement = {
-			startDay: bandFor(score).startDay,
+			startDay: startDayFor(score),
 			source: 'self-test',
 			placedAt: new Date().toISOString().slice(0, 10)
 		};
@@ -224,11 +230,11 @@
 				     quietly rearrange the course of whoever is signed in on
 				     this browser. -->
 				<p>
-					بر اساس نتیجه، پیشنهاد ما شروع از <strong>روز {fa(band.startDay)}</strong> است —
+					بر اساس نتیجه، پیشنهاد ما شروع از <strong>روز {fa(startDay)}</strong> است —
 					روزهای قبلش رد می‌شوند و هر وقت خواستی می‌توانی برگردی و ببینی‌شان.
 				</p>
 				<a class="primary" href="/fa" onclick={rememberPlacement}>
-					شروع دوره از روز {fa(band.startDay)}
+					شروع دوره از روز {fa(startDay)}
 				</a>
 				<a class="ghost-link" href="/fa">فقط می‌خواهم نگاهی بیندازم</a>
 				<button class="ghost" onclick={share}>فرستادن نتیجه برای دوستان</button>

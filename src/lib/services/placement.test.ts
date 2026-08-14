@@ -4,8 +4,10 @@ import {
 	parsePlacement,
 	isAssumedKnown,
 	summarizeProgress,
+	startDayForScore,
 	type Placement
 } from './placement';
+import { CURRICULUM } from './curriculum';
 
 const TOTAL = 100;
 
@@ -79,6 +81,60 @@ describe('parsePlacement', () => {
 			source: 'manual',
 			placedAt: ''
 		});
+	});
+});
+
+describe('startDayForScore', () => {
+	const A1 = CURRICULUM.find((l) => l.level === 'A1')!;
+	const A2 = CURRICULUM.find((l) => l.level === 'A2')!;
+
+	it('sends a blank score to day 1', () => {
+		expect(startDayForScore(0)).toBe(1);
+		expect(startDayForScore(0.3)).toBe(1);
+	});
+
+	it('never moves anyone past A1 for an A1-format test', () => {
+		// Both tests are A1 material. A perfect run is evidence of holding
+		// A1, and says nothing whatsoever about B1. The Persian test used to
+		// send a top scorer to day 60 — late A2 — on twelve A1 questions.
+		expect(startDayForScore(1)).toBeLessThanOrEqual(A2.firstDay);
+	});
+
+	it('starts A2 exactly at the curriculum boundary on a clean sweep', () => {
+		expect(startDayForScore(1)).toBe(A2.firstDay);
+		expect(startDayForScore(0.9)).toBe(A2.firstDay);
+	});
+
+	it('lands on the curriculum’s own A1 thirds', () => {
+		// A1 checkpoints are 10/20/30, so the thirds begin at 1, 11 and 21.
+		// These are read off the course structure, not invented.
+		expect(A1.checkpoints).toEqual([10, 20, 30]);
+		expect([1, 11, 21, A2.firstDay]).toContain(startDayForScore(0.75));
+		expect(startDayForScore(0.75)).toBe(21);
+		expect(startDayForScore(0.6)).toBe(11);
+	});
+
+	it('never goes down as the score goes up', () => {
+		let last = 0;
+		for (let r = 0; r <= 1.0001; r += 0.01) {
+			const d = startDayForScore(r);
+			expect(d, `regressed at ${r.toFixed(2)}`).toBeGreaterThanOrEqual(last);
+			last = d;
+		}
+	});
+
+	it('stays inside the built curriculum at every score', () => {
+		for (let r = 0; r <= 1.0001; r += 0.05) {
+			const d = startDayForScore(r);
+			expect(d).toBeGreaterThanOrEqual(1);
+			expect(d).toBeLessThanOrEqual(100); // days 101-120 do not exist yet
+		}
+	});
+
+	it('falls back to day 1 on a nonsense ratio', () => {
+		for (const bad of [NaN, Infinity, -Infinity]) {
+			expect(startDayForScore(bad), `${bad}`).toBe(1);
+		}
 	});
 });
 

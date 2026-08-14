@@ -74,6 +74,32 @@ export function isAssumedKnown(day: number, startDay: number): boolean {
 	return day < startDay;
 }
 
+/**
+ * Turn a placement score into a start day.
+ *
+ * Shared by both tests so they cannot disagree about what a score means.
+ * Both are A1-format, so the score says how much of A1 the learner already
+ * holds — not how advanced they are in general. A perfect run on twelve A1
+ * grammar questions is evidence of having A1, and nothing at all about B1.
+ *
+ * The landing points are the curriculum's own A1 thirds (checkpoints at 10,
+ * 20 and 30), with a clean sweep starting A2 at day 31. Picked from the
+ * course structure rather than invented: the first version of the Persian
+ * test sent a top scorer to day 60, which is late A2, on the strength of
+ * twelve A1 questions.
+ *
+ * Errs low on purpose. Starting a learner a week behind costs them a few
+ * easy lessons; starting them a month ahead costs them the gap this whole
+ * system exists to prevent.
+ */
+export function startDayForScore(ratio: number): number {
+	if (!Number.isFinite(ratio)) return 1;
+	if (ratio >= 0.85) return 31; // A1 cleared → start A2
+	if (ratio >= 0.7) return 21; // final third of A1
+	if (ratio >= 0.5) return 11; // middle third of A1
+	return 1;
+}
+
 export interface ProgressSummary {
 	/** Lessons the learner actually finished. */
 	completed: number;
