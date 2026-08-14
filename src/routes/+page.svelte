@@ -721,8 +721,13 @@
 
 <!-- ════════════════════════════════════════════════════════ -->
 <!--  YOUR LEARNING PATH                                       -->
+<!--                                                            -->
+<!--  Light on purpose. The "Why German?" section that used to  -->
+<!--  sit below this one was the light band separating it from  -->
+<!--  "Who It's For"; removing it left four sunken sections     -->
+<!--  running together as one block. This restores the break.   -->
 <!-- ════════════════════════════════════════════════════════ -->
-<section class="lp-section dark-section">
+<section class="lp-section">
 	<div class="lp-inner">
 		<p class="eyebrow">Your Learning Path</p>
 		<h2 class="section-h2">
@@ -775,62 +780,6 @@
 				>Begin Day 1 — It's Free</button
 			>
 		{/if}
-	</div>
-</section>
-
-<!-- ════════════════════════════════════════════════════════ -->
-<!--  WHY LEARN GERMAN                                         -->
-<!-- ════════════════════════════════════════════════════════ -->
-<section class="lp-section">
-	<div class="lp-inner">
-		<p class="eyebrow">Why German?</p>
-		<h2 class="section-h2">
-			Why Learn German <span class="grad-text">in {new Date().getFullYear()}?</span>
-		</h2>
-		<p class="section-lead">
-			German is the most spoken native language in Europe and opens doors
-			to careers, culture, and travel across Germany, Austria, and
-			Switzerland.
-		</p>
-
-		<div class="reasons-grid">
-			<div class="reason-card">
-				<span class="reason-icon">💼</span>
-				<h3>Career Opportunities</h3>
-				<p>
-					Germany has Europe's largest economy. Speaking German gives
-					you access to top employers like Siemens, BMW, SAP, and
-					thousands of companies actively hiring international talent.
-				</p>
-			</div>
-			<div class="reason-card">
-				<span class="reason-icon">🎓</span>
-				<h3>Free University Education</h3>
-				<p>
-					Most German public universities charge zero tuition — even
-					for international students. Learning German unlocks access
-					to world-class education without the debt.
-				</p>
-			</div>
-			<div class="reason-card">
-				<span class="reason-icon">🌍</span>
-				<h3>100+ Million Speakers</h3>
-				<p>
-					German is spoken natively by over 100 million people across
-					Europe. It's an official language in Germany, Austria,
-					Switzerland, Luxembourg, Belgium, and Liechtenstein.
-				</p>
-			</div>
-			<div class="reason-card">
-				<span class="reason-icon">🏠</span>
-				<h3>Life in Germany</h3>
-				<p>
-					Moving to Germany for work or study? Daily life — from
-					finding an apartment to visiting the doctor — becomes
-					dramatically easier when you speak the language.
-				</p>
-			</div>
-		</div>
 	</div>
 </section>
 
@@ -2042,49 +1991,6 @@
 		font-size: 0.82rem !important;
 	}
 
-	/* ── Why Learn German grid ───────────────────────── */
-	.reasons-grid {
-		display: grid;
-		grid-template-columns: repeat(2, 1fr);
-		gap: 22px;
-		margin-top: 48px;
-		text-align: left;
-	}
-
-	.reason-card {
-		background: var(--paper-raised);
-		border: 1px solid var(--line);
-		box-shadow: var(--paper-shadow);
-		border-radius: 20px;
-		padding: 30px 26px;
-		transition: all 0.35s ease;
-	}
-
-	.reason-card:hover {
-		transform: translateY(-6px);
-		border-color: var(--accent);
-		box-shadow: 0 20px 50px rgba(0, 0, 0, 0.12);
-	}
-
-	.reason-icon {
-		display: block;
-		font-size: 2rem;
-		margin-bottom: 14px;
-	}
-
-	.reason-card h3 {
-		font-size: 1.08rem;
-		font-weight: 700;
-		color: var(--ink);
-		margin-bottom: 10px;
-	}
-
-	.reason-card p {
-		color: var(--ink-soft);
-		line-height: 1.65;
-		font-size: 0.9rem;
-	}
-
 	/* ── Who is Mirifer for grid ─────────────────────── */
 	.audience-grid {
 		display: grid;
@@ -2234,7 +2140,6 @@
 
 	@media (max-width: 640px) {
 		.feat-grid,
-		.reasons-grid,
 		.audience-grid {
 			grid-template-columns: 1fr;
 		}
