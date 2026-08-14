@@ -9,6 +9,7 @@ import { getSupabaseBrowserClient } from '$lib/supabase/client';
 import { isAuthenticated, getUser, updateDisplayName as authUpdateDisplayName } from './auth';
 import { cloudWrite, flushQueue } from './sync-queue';
 import { parsePlacement, PENDING_KEY, type Placement } from './placement';
+import { parseProbeState, emptyProbeState, type ProbeState } from './placement-probe';
 import { logError, logWarn } from '$utils/error';
 import {
 	UserProfileLanguageRowSchema,
@@ -231,6 +232,44 @@ export async function adoptPendingPlacement(): Promise<Placement | null> {
 	await setPlacement(pending);
 	localStorage.removeItem(PENDING_KEY);
 	return pending;
+}
+
+const PROBE_LS_KEY = 'mirifer_placement_probes';
+
+/**
+ * How the placement check is going.
+ *
+ * Small and bounded — at most PROBE_BUDGET entries — so user_metadata is
+ * the right home, same as the placement itself.
+ */
+export async function getProbeState(): Promise<ProbeState> {
+	if (await isAuthenticated()) {
+		try {
+			const user = await getUser();
+			if (user?.user_metadata?.placement_probes !== undefined) {
+				const s = parseProbeState(user.user_metadata.placement_probes);
+				localStorage.setItem(PROBE_LS_KEY, JSON.stringify(s));
+				return s;
+			}
+		} catch (e) {
+			logError('data-layer:getProbeState', e);
+		}
+	}
+	try {
+		return parseProbeState(JSON.parse(localStorage.getItem(PROBE_LS_KEY) || 'null'));
+	} catch {
+		return emptyProbeState();
+	}
+}
+
+export async function setProbeState(state: ProbeState): Promise<void> {
+	localStorage.setItem(PROBE_LS_KEY, JSON.stringify(state));
+	try {
+		const client = getSupabaseBrowserClient();
+		await client.auth.updateUser({ data: { placement_probes: state } });
+	} catch (e) {
+		logError('data-layer:setProbeState', e);
+	}
 }
 
 /**

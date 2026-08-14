@@ -24,6 +24,7 @@
 	import { lessonMinutes } from "$services/lesson-duration";
 	import { getCheckpointsDone } from "$services/data-layer";
 	import { summarizeProgress, type Placement } from "$services/placement";
+	import { probeVerdict, type ProbeState } from "$services/placement-probe";
 	import {
 		computeReadiness,
 		getCheckAvailability,
@@ -116,6 +117,8 @@
 	let totalLessons = $state(0);
 	/** Null until loaded, and null for anyone who was never placed. */
 	let placement = $state<Placement | null>(null);
+	let probes = $state<ProbeState | null>(null);
+	let movingBack = $state(false);
 	let completedLessons = $state<
 		Record<number, { completedAt: number; sentenceCount: number }>
 	>({});
@@ -192,6 +195,37 @@
 	);
 
 	const progressPercent = $derived(placementSummary.percent);
+
+	/**
+	 * The placement check, once it has enough evidence to mean anything.
+	 *
+	 * Only ever offered — never applied on its own. Twenty samples out of
+	 * ~440 sentences is enough to suspect a bad placement and nowhere near
+	 * enough to be sure, and silently dragging someone back thirty days on
+	 * a suspicion would be worse than the gap it was correcting.
+	 */
+	const verdict = $derived(probes ? probeVerdict(probes) : null);
+
+	async function acceptMoveBack() {
+		if (!verdict?.suggestedDay || movingBack) return;
+		movingBack = true;
+		await dataLayer.setPlacement({
+			startDay: verdict.suggestedDay,
+			source: "manual",
+			placedAt: new Date().toISOString().slice(0, 10),
+		});
+		await dismissMoveBack();
+		await loadProgress();
+		movingBack = false;
+	}
+
+	/** Records that the offer was answered, either way, so it is asked once. */
+	async function dismissMoveBack() {
+		if (!probes) return;
+		const next = { ...probes, resolved: true };
+		await dataLayer.setProbeState(next);
+		probes = next;
+	}
 
 	// ── Practice Calendar ──────────────────────────────
 	let calYear = $state(new Date().getFullYear());
@@ -317,13 +351,15 @@
 
 	async function loadProgress() {
 		// Fault-isolated: one failed fetch must not zero out the others.
-		const [completedRes, progressRes, indexRes, placementRes] =
+		const [completedRes, progressRes, indexRes, placementRes, probeRes] =
 			await Promise.allSettled([
 				dataLayer.getCompletedLessons(),
 				dataLayer.getProgress(),
 				getLessonIndex(),
 				dataLayer.getPlacement(),
+				dataLayer.getProbeState(),
 			]);
+		probes = probeRes.status === "fulfilled" ? probeRes.value : null;
 
 		const completed =
 			completedRes.status === "fulfilled" ? completedRes.value : {};
@@ -1196,6 +1232,40 @@
 		</a>
 	{/if}
 
+	<!-- ── Placement check ─────────────────────────────── -->
+	<!--
+		Shown only when the probe sample actually says something: at least
+		MIN_SAMPLE probes served and a miss rate over the threshold. It is an
+		offer, never an action — twenty samples out of ~440 sentences is
+		enough to suspect a bad placement and nowhere near enough to move
+		someone thirty days without asking. Either answer resolves it, so it
+		is asked once.
+	-->
+	{#if isAuthenticated && verdict?.tooAggressive && verdict.suggestedDay}
+		<section class="placement-check" aria-live="polite">
+			<h2>
+				{language === "fa"
+					? "به نظر می‌رسد کمی جلوتر شروع کرده‌ای"
+					: "You may have started a little far ahead"}
+			</h2>
+			<p>
+				{language === "fa"
+					? `از چند جمله‌ای که از روزهای ردشده پرسیدیم، بیشترشان را نتوانستی. می‌خواهی از روز ${verdict.suggestedDay} شروع کنی؟ چیزی از پیشرفتت پاک نمی‌شود.`
+					: `Of the sentences we sampled from the days you skipped, most did not come back. Want to start from day ${verdict.suggestedDay} instead? Nothing you have completed is lost.`}
+			</p>
+			<div class="pc-actions">
+				<button class="pc-yes" onclick={acceptMoveBack} disabled={movingBack}>
+					{language === "fa"
+						? `شروع از روز ${verdict.suggestedDay}`
+						: `Start from day ${verdict.suggestedDay}`}
+				</button>
+				<button class="pc-no" onclick={dismissMoveBack} disabled={movingBack}>
+					{language === "fa" ? "همین‌جا خوب است" : "I'm fine where I am"}
+				</button>
+			</div>
+		</section>
+	{/if}
+
 	<!-- ── Progress Stats ──────────────────────────────── -->
 	{#if isAuthenticated && !isNewUser}
 		<!-- The course map. A learner on Day 44 was being told their "A1
@@ -2063,6 +2133,68 @@
 		font-size: 0.92rem;
 		position: relative;
 		z-index: 1;
+	}
+
+	/* Placement check. Reads as information, not an error — the learner did
+	   nothing wrong, the app's guess was off. Hence the neutral surface
+	   rather than a warning colour. */
+	.placement-check {
+		margin: 18px auto 0;
+		max-width: 640px;
+		background: var(--paper-raised);
+		border: 1px solid var(--line);
+		border-inline-start: 3px solid var(--accent);
+		border-radius: 14px;
+		padding: 18px 20px;
+		text-align: start;
+	}
+
+	.placement-check h2 {
+		margin: 0 0 6px;
+		font-size: 1.02rem;
+		color: var(--ink);
+	}
+
+	.placement-check p {
+		margin: 0 0 14px;
+		color: var(--ink-soft);
+		line-height: 1.8;
+		font-size: 0.92rem;
+	}
+
+	.pc-actions {
+		display: flex;
+		gap: 10px;
+		flex-wrap: wrap;
+	}
+
+	.pc-yes,
+	.pc-no {
+		font: inherit;
+		font-weight: 700;
+		font-size: 0.9rem;
+		min-height: 44px;
+		padding: 8px 18px;
+		border-radius: 10px;
+		cursor: pointer;
+	}
+
+	.pc-yes {
+		background: var(--accent);
+		color: var(--on-accent);
+		border: none;
+	}
+
+	.pc-no {
+		background: var(--control);
+		color: var(--ink);
+		border: 1px solid var(--control-border);
+	}
+
+	.pc-yes:disabled,
+	.pc-no:disabled {
+		opacity: 0.6;
+		cursor: wait;
 	}
 
 	/* Quieter than the count it follows — an explanation, not a second
