@@ -61,6 +61,11 @@
 
 <svelte:head>
 	<title>{pageTitle} - Mirifer</title>
+	<!-- Must mirror /fa/basics. Google discards hreflang that is not
+	     reciprocal, so leaving these off would void the Persian side too. -->
+	<link rel="canonical" href="https://www.mirifer.com/basics" />
+	<link rel="alternate" hreflang="en" href="https://www.mirifer.com/basics" />
+	<link rel="alternate" hreflang="fa" href="https://www.mirifer.com/fa/basics" />
 </svelte:head>
 
 <main class="basics-container">

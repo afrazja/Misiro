@@ -1,9 +1,16 @@
 User-agent: *
 Allow: /
+
+# Signed-in app surfaces. Nothing here reads as a useful search result and
+# /lesson/ in particular would index the course content page by page.
 Disallow: /home
 Disallow: /lesson/
 Disallow: /vocabulary
-Disallow: /basics/
 Disallow: /onboarding
+
+# /basics used to be blocked too. It is public reference content that needs
+# no login, so blocking it hid the only substantial pages on the site from
+# search for no reason. The Persian versions under /fa/basics are the ones
+# meant to rank; both are allowed and paired with hreflang.
 
 Sitemap: https://www.mirifer.com/sitemap.xml
