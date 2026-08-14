@@ -1,5 +1,42 @@
 import { describe, it, expect } from 'vitest';
-import { _safeNext as safeNext } from './+server';
+import { _safeNext as safeNext, _safeStartDay as safeStartDay } from './+server';
+import { TOTAL_DAYS } from '$services/curriculum';
+
+/**
+ * `place` carries a level-test result through email confirmation, so a test
+ * taken on a laptop survives a confirmation opened on a phone. It arrives in
+ * a URL the learner can edit and is written straight to their profile, so it
+ * has to be a real day first.
+ */
+describe('safeStartDay', () => {
+	it('accepts a day inside the curriculum', () => {
+		expect(safeStartDay('31')).toBe(31);
+		expect(safeStartDay('1')).toBe(1);
+		expect(safeStartDay(String(TOTAL_DAYS))).toBe(TOTAL_DAYS);
+	});
+
+	it('refuses a day past the end of the course', () => {
+		expect(safeStartDay(String(TOTAL_DAYS + 1))).toBeNull();
+		expect(safeStartDay('9999')).toBeNull();
+	});
+
+	it('refuses zero and negatives', () => {
+		expect(safeStartDay('0')).toBeNull();
+		expect(safeStartDay('-5')).toBeNull();
+	});
+
+	it('refuses anything that is not a plain integer', () => {
+		// Number() is lenient — it happily reads ' 31 ', '3e1', '0x1f' and
+		// '31.0'. The digits-only guard runs first for exactly that reason.
+		for (const bad of ['31.5', '3e1', '0x1f', ' 31', '31 ', '+31', '31abc', 'abc', '', 'NaN', 'Infinity']) {
+			expect(safeStartDay(bad), `accepted ${JSON.stringify(bad)}`).toBeNull();
+		}
+	});
+
+	it('returns null when absent', () => {
+		expect(safeStartDay(null)).toBeNull();
+	});
+});
 
 /**
  * An auth callback is the one place an open redirect really hurts: the

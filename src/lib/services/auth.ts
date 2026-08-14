@@ -5,6 +5,8 @@
 
 import { getSupabaseBrowserClient } from '$lib/supabase/client';
 import type { SupabaseClient, User } from '@supabase/supabase-js';
+// Pure module, no imports of its own — safe here where data-layer is not.
+import { PENDING_KEY } from './placement';
 
 function sb(): SupabaseClient | null {
 	try {
@@ -50,6 +52,38 @@ export async function isAuthenticated(): Promise<boolean> {
 }
 
 /** Sign up with email, password, and display name */
+/**
+ * The start day a signed-out level test parked for this browser.
+ *
+ * Read straight from localStorage rather than through data-layer: that
+ * module imports auth, and importing it back would close a cycle.
+ */
+function pendingStartDay(): number | null {
+	try {
+		const raw = localStorage.getItem(PENDING_KEY);
+		if (!raw) return null;
+		const day = JSON.parse(raw)?.startDay;
+		return typeof day === 'number' && day > 1 ? Math.floor(day) : null;
+	} catch {
+		return null;
+	}
+}
+
+/**
+ * Query string for the confirmation link.
+ *
+ * `place` is what lets a placement survive being confirmed on a different
+ * device from the one that took the test — localStorage does not follow the
+ * learner from a laptop to a phone, and without this the day is lost with
+ * nothing on screen to say so.
+ */
+function confirmQuery(): string {
+	const params = new URLSearchParams({ next: '/home' });
+	const day = pendingStartDay();
+	if (day !== null) params.set('place', String(day));
+	return `?${params}`;
+}
+
 export async function signUp(
 	email: string,
 	password: string,
@@ -71,8 +105,10 @@ export async function signUp(
 				// no route onward except starting over.
 				//
 				// The callback already exchanges the code and honours `next`;
-				// it is the same path Google sign-in takes.
-				emailRedirectTo: window.location.origin + '/proxy/auth/callback?next=/home'
+				// it is the same path Google sign-in takes. `place` rides
+				// along so a level test taken on one device survives a
+				// confirmation opened on another — see pendingStartDay().
+				emailRedirectTo: window.location.origin + '/proxy/auth/callback' + confirmQuery()
 			}
 		});
 		if (error) return { user: null, error: error.message };
