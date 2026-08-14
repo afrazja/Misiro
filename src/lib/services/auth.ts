@@ -63,7 +63,16 @@ export async function signUp(
 			password,
 			options: {
 				data: { display_name: displayName || 'Learner' },
-				emailRedirectTo: window.location.origin + '/?confirmed=true'
+				// Through the auth callback and into the app, not onto the
+				// landing page. This used to point at '/?confirmed=true', so
+				// confirming your email dropped you on the English marketing
+				// page — and for someone who arrived from the Persian level
+				// test, that is the wrong language AND the wrong place, with
+				// no route onward except starting over.
+				//
+				// The callback already exchanges the code and honours `next`;
+				// it is the same path Google sign-in takes.
+				emailRedirectTo: window.location.origin + '/proxy/auth/callback?next=/home'
 			}
 		});
 		if (error) return { user: null, error: error.message };
