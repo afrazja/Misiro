@@ -37,7 +37,12 @@
 		<meta name="apple-mobile-web-app-capable" content="yes" />
 		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 		<meta name="apple-mobile-web-app-title" content="Mirifer" />
-		<title>Mirifer - Learn German</title>
+		<!-- No <title> here on purpose. A title in this file is emitted BEFORE
+		     %sveltekit.head%, so every page shipped two of them and browsers
+		     and crawlers both take the first — every per-page title on the
+		     site was dead, and the whole index read "Mirifer - Learn German".
+		     The fallback now lives in +layout.svelte, where svelte:head lets
+		     a page override it instead of losing to it. -->
 		<!-- Microsoft Clarity (proxied to bypass DNS blocks on clarity.ms) -->
 		<script type="text/javascript">
 			(function(c,l,a,r,i,t,y){

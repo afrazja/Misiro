@@ -81,6 +81,14 @@
 	});
 </script>
 
+<!-- Fallback title for the routes that set none — mostly signed-in app pages,
+     which robots.txt already disallows. A page's own svelte:head title
+     replaces this one rather than stacking with it; the previous fallback
+     lived in app.html, outside svelte:head, which is why it always won. -->
+<svelte:head>
+	<title>Mirifer — Learn German</title>
+</svelte:head>
+
 <a href="#main-content" class="skip-link">
 	{skipLang === 'fa' ? 'رفتن به محتوا' : 'Skip to content'}
 </a>

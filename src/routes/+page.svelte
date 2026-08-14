@@ -212,6 +212,11 @@
 		content="Learn German free with 100+ daily lessons, natural audio, and voice practice. No grammar drills — just real conversations. Start today, no credit card needed."
 	/>
 	<link rel="canonical" href="https://www.mirifer.com/" />
+	<!-- Must mirror the annotations on /fa. Google discards hreflang that is
+	     not reciprocal, so omitting these here would silently void both. -->
+	<link rel="alternate" hreflang="en" href="https://www.mirifer.com/" />
+	<link rel="alternate" hreflang="fa" href="https://www.mirifer.com/fa" />
+	<link rel="alternate" hreflang="x-default" href="https://www.mirifer.com/" />
 
 	<!-- Open Graph -->
 	<meta
