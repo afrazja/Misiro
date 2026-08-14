@@ -442,6 +442,13 @@
 	</a>
 
 	<div class="navbar-right">
+		<!-- The Persian page linked here from the start but not the reverse,
+		     so anyone who typed mirifer.com — which is what a brand search
+		     returns — landed in English with no way out. That is the exact
+		     audience the Persian page was built for. Written in Persian, not
+		     as "FA": someone who needs it recognises their own script faster
+		     than a language code. -->
+		<a href="/fa" class="lang-link" lang="fa" hreflang="fa">فارسی</a>
 		<InstallAppButton />
 		{#if isAuthenticated}
 			<a href="/home" class="btn btn-primary">Open App &rarr;</a>
@@ -1395,6 +1402,28 @@
 		gap: 12px;
 	}
 
+	/* Quieter than the sign-in buttons on purpose — it is a way out for the
+	   minority who need it, not a competing call to action. Still a 44px
+	   target, because on a phone it is the only route to the Persian site. */
+	.lang-link {
+		display: inline-flex;
+		align-items: center;
+		min-height: 44px;
+		padding: 0 10px;
+		border-radius: 8px;
+		color: var(--ink-soft);
+		font-weight: 600;
+		font-size: 0.95rem;
+		text-decoration: none;
+		white-space: nowrap;
+		transition: color 0.15s, background 0.15s;
+	}
+
+	.lang-link:hover {
+		color: var(--accent);
+		background: var(--accent-wash);
+	}
+
 	/* ── Hero ─────────────────────────────────────────── */
 	.hero {
 		min-height: 100vh;
@@ -2230,6 +2259,14 @@
 
 		.navbar-right .btn-primary {
 			display: none;
+		}
+
+		/* Stays visible on mobile — most Iranian traffic is phone traffic, so
+		   this is exactly where it must not be the thing that gets dropped.
+		   Tightened instead of hidden. */
+		.lang-link {
+			padding: 0 6px;
+			font-size: 0.9rem;
 		}
 
 		.hero-actions {
