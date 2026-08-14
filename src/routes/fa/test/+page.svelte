@@ -19,10 +19,34 @@
 	 *
 	 * The URL is short on purpose. Shared links get retyped and truncated.
 	 */
+	import { onMount } from 'svelte';
+	import { goto } from '$app/navigation';
 	import { QUESTIONS, bandFor, startDayFor, scoreByTopic, totalCorrect, shareText } from '$lib/data/fa-placement';
 	import { PENDING_KEY, type Placement } from '$services/placement';
+	import { setPlacement } from '$services/data-layer';
+	import * as auth from '$services/auth';
 
 	type Phase = 'intro' | 'test' | 'result';
+
+	/**
+	 * Where the result screen sends people.
+	 *
+	 * It used to send everyone to /fa — so finishing the test and pressing
+	 * "start from day 15" put you back on the marketing page you had just
+	 * come from. The test is the top of the funnel; its last screen has to
+	 * open the app, not loop.
+	 */
+	let isAuthenticated = $state(false);
+	/** Guards a double tap while the placement is being written. */
+	let leaving = $state(false);
+
+	onMount(async () => {
+		try {
+			isAuthenticated = await auth.isAuthenticated();
+		} catch {
+			// Signed out is the default and the common case here.
+		}
+	});
 
 	let phase = $state<Phase>('intro');
 	let idx = $state(0);
@@ -65,18 +89,46 @@
 	 * Not clamped here: the lesson index is not loaded on this page, so the
 	 * real day count is unknown. The controller clamps when it adopts.
 	 */
-	function rememberPlacement() {
-		const pending: Placement = {
+	function placementNow(): Placement {
+		return {
 			startDay: startDayFor(score),
 			source: 'self-test',
 			placedAt: new Date().toISOString().slice(0, 10)
 		};
+	}
+
+	function rememberPlacement() {
 		try {
-			localStorage.setItem(PENDING_KEY, JSON.stringify(pending));
+			localStorage.setItem(PENDING_KEY, JSON.stringify(placementNow()));
 		} catch {
 			// Private mode or a full quota. The recommendation is still shown
 			// on screen; only the automatic hand-off is lost.
 		}
+	}
+
+	/**
+	 * Save the placement and leave for the app.
+	 *
+	 * Signed in, it writes through — parking a pending value would do
+	 * nothing, because adoptPendingPlacement only claims one when the
+	 * account has no placement yet, and this account already would.
+	 *
+	 * Signed out there is no account to write to, so the pending value is
+	 * correct and the first authenticated lesson adopts it.
+	 */
+	async function startCourse(to: string) {
+		if (leaving) return;
+		leaving = true;
+		try {
+			if (isAuthenticated) {
+				await setPlacement(placementNow());
+			} else {
+				rememberPlacement();
+			}
+		} catch {
+			// A failed save must not trap the learner on the results screen.
+		}
+		await goto(to);
 	}
 
 	function next() {
@@ -233,9 +285,26 @@
 					بر اساس نتیجه، پیشنهاد ما شروع از <strong>روز {fa(startDay)}</strong> است —
 					روزهای قبلش رد می‌شوند و هر وقت خواستی می‌توانی برگردی و ببینی‌شان.
 				</p>
-				<a class="primary" href="/fa" onclick={rememberPlacement}>
-					شروع دوره از روز {fa(startDay)}
-				</a>
+				<!-- Signed in, straight into the lesson. Signed out, straight to
+				     signup, which lands on /home once the account exists — the
+				     placement written here is claimed on the first lesson load.
+				     Either way this button leaves the marketing site. -->
+				{#if isAuthenticated}
+					<button class="primary" onclick={() => startCourse('/lesson')} disabled={leaving}>
+						{leaving ? 'یک لحظه…' : `شروع درس از روز ${fa(startDay)}`}
+					</button>
+				{:else}
+					<button
+						class="primary"
+						onclick={() => startCourse('/login?mode=signup')}
+						disabled={leaving}
+					>
+						{leaving ? 'یک لحظه…' : `ساخت حساب رایگان و شروع از روز ${fa(startDay)}`}
+					</button>
+					<button class="ghost-link" onclick={() => startCourse('/login')} disabled={leaving}>
+						قبلاً حساب دارم — ورود
+					</button>
+				{/if}
 				<a class="ghost-link" href="/fa">فقط می‌خواهم نگاهی بیندازم</a>
 				<button class="ghost" onclick={share}>فرستادن نتیجه برای دوستان</button>
 				{#if shareNote}<p class="sub" role="status">{shareNote}</p>{/if}
@@ -361,19 +430,28 @@
 		display: flex;
 		align-items: center;
 		justify-content: center;
+		inline-size: 100%;
 		min-block-size: 44px;
 		margin-top: 10px;
 		color: var(--ink-soft);
+		font: inherit;
 		font-weight: 600;
 		font-size: 0.92rem;
 		text-decoration: none;
 		border: 1px solid var(--control-border);
 		border-radius: 12px;
 		background: var(--control);
+		cursor: pointer;
 	}
 
-	.ghost-link:hover {
+	.ghost-link:hover:not(:disabled) {
 		background: var(--control-hover);
+	}
+
+	.ghost-link:disabled,
+	.primary:disabled {
+		opacity: 0.65;
+		cursor: wait;
 	}
 
 	.sub {
