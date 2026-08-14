@@ -99,16 +99,16 @@
 					<a class="btn primary" href="/home">رفتن به درس‌ها ←</a>
 				{:else}
 					<a class="btn primary" href="/try">🎙️ یک درس را همین حالا امتحان کن</a>
-					<a class="btn ghost" href="/login">شروع رایگان</a>
+					<!-- Was a "start free" link straight to /login. The test earns
+					     the signup instead of asking for it cold: it costs nothing,
+					     ends by naming your level, and the account is what saves
+					     that result. Signup moves to the closing section — this
+					     page has no navbar to hold it, so unlike the English hero's
+					     button it cannot simply be dropped. -->
+					<a class="btn ghost" href="/fa/test">📊 تست رایگان سطح‌سنجی</a>
 				{/if}
 			</div>
 			<p class="note">بدون کارت بانکی · بدون هزینه</p>
-			<!-- The self-test is the page people forward to each other, so it
-			     needs a route in from the landing page rather than only existing
-			     at the end of a shared link. -->
-			<p class="note alt">
-				نمی‌دانی از کجا شروع کنی؟ <a href="/fa/test">تست رایگان سطح‌سنجی</a> — ۱۲ سؤال، بدون ثبت‌نام.
-			</p>
 		</div>
 
 		<!--
@@ -307,6 +307,7 @@
 		<p class="lead">سه جمله. بدون ثبت‌نام. ببین چطور است.</p>
 		<div class="actions">
 			<a class="btn primary" href="/try">🎙️ شروع کن</a>
+			<a class="btn ghost" href="/login">ساخت حساب رایگان</a>
 		</div>
 		<p class="switch"><a href="/">English version</a></p>
 	</section>
@@ -631,15 +632,6 @@
 		font-size: 0.85rem;
 	}
 
-	.note.alt {
-		margin-top: 8px;
-		font-size: 0.9rem;
-	}
-
-	.note.alt a {
-		color: var(--accent);
-		font-weight: 700;
-	}
 
 	.stats {
 		display: flex;
