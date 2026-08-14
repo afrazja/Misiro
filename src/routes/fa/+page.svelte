@@ -97,6 +97,12 @@
 			{/if}
 		</div>
 		<p class="note">بدون کارت بانکی · بدون هزینه</p>
+		<!-- The self-test is the page people forward to each other, so it
+		     needs a route in from the landing page rather than only existing
+		     at the end of a shared link. -->
+		<p class="note alt">
+			نمی‌دانی از کجا شروع کنی؟ <a href="/fa/test">تست رایگان سطح‌سنجی</a> — ۱۲ سؤال، بدون ثبت‌نام.
+		</p>
 	</section>
 
 	<section class="stats">
@@ -272,6 +278,16 @@
 		margin-top: 14px;
 		color: var(--ink-faint);
 		font-size: 0.85rem;
+	}
+
+	.note.alt {
+		margin-top: 8px;
+		font-size: 0.9rem;
+	}
+
+	.note.alt a {
+		color: var(--accent);
+		font-weight: 700;
 	}
 
 	.stats {
