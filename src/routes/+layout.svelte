@@ -11,6 +11,20 @@
 	import { injectSpeedInsights } from '@vercel/speed-insights/sveltekit';
 	import { initTheme } from '$services/theme';
 	import { getLanguage, applyDocumentLanguage } from '$services/data-layer';
+	import { env } from '$env/dynamic/public';
+
+	/**
+	 * Google Search Console ownership token.
+	 *
+	 * Read from the environment rather than committed so the code can be set
+	 * in Vercel and take effect on the next deploy without a commit — and so
+	 * rotating or removing it is not a code change.
+	 *
+	 * $env/dynamic rather than $env/static on purpose: static would fail the
+	 * build on any checkout where the variable is not declared, which is
+	 * every local one.
+	 */
+	const googleVerification = $derived(env.PUBLIC_GOOGLE_SITE_VERIFICATION ?? '');
 
 	inject({ mode: 'production' });
 	injectSpeedInsights();
@@ -87,6 +101,9 @@
      lived in app.html, outside svelte:head, which is why it always won. -->
 <svelte:head>
 	<title>Mirifer — Learn German</title>
+	{#if googleVerification}
+		<meta name="google-site-verification" content={googleVerification} />
+	{/if}
 </svelte:head>
 
 <a href="#main-content" class="skip-link">
