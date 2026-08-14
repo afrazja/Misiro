@@ -488,9 +488,12 @@
 				<a href="/try" class="cta-btn primary"
 					>🎙️ Try a Lesson Now — No Signup</a
 				>
-				<button class="cta-btn ghost" onclick={openSignUp}
-					>Start for Free</button
-				>
+				<!-- Was "Start for Free", which opened the signup modal. The
+				     test earns the signup instead of asking for it cold: it
+				     costs nothing, it ends by naming your level, and the
+				     account is what saves that result. Signup is still one
+				     tap away in the navbar, so nothing is orphaned. -->
+				<a href="/placement" class="cta-btn ghost">📊 Take a Free Level Test</a>
 			{/if}
 		</div>
 		<div class="hero-trust">
@@ -498,16 +501,6 @@
 			<span>✅ Works on any device</span>
 			<span>✅ Free during early access</span>
 		</div>
-		<!-- The evaluation entry, mirroring the one on /fa. The English page
-		     had none at all: /placement is public, needs no signup and now
-		     sets a start day, and nothing on this page pointed at it. Kept as
-		     a line rather than a section — the page was deliberately trimmed
-		     and does not need re-lengthening to carry one link. -->
-		<p class="hero-alt">
-			Not sure where to start? <a href="/placement">Take the free level test</a>
-			— 12 questions in the real exam format, about 8 minutes, no signup.
-			We'll start you at the right day.
-		</p>
 	</div>
 
 	<!-- App preview mockup -->
@@ -1495,21 +1488,6 @@
 		font-size: 0.84rem;
 	}
 
-	/* Quieter than the two CTAs above it — an alternative route for the
-	   minority who do not know where to begin, not a third competing
-	   button. */
-	.hero-alt {
-		margin-top: 14px;
-		max-width: 460px;
-		color: var(--ink-faint);
-		font-size: 0.88rem;
-		line-height: 1.7;
-	}
-
-	.hero-alt a {
-		color: var(--accent);
-		font-weight: 700;
-	}
 
 	/* ── Phone / Chat mockup ──────────────────────────── */
 	.hero-visual {
