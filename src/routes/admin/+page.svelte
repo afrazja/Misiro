@@ -70,6 +70,7 @@
 		<div class="stat-card">
 			<div class="stat-num">{data.usage.totalUsers}</div>
 			<div class="stat-label">Registered Users</div>
+			<a href="/admin/users" class="stat-link">Manage →</a>
 		</div>
 		<div class="stat-card">
 			<div class="stat-num">{data.usage.activeUsers7d}</div>
@@ -138,6 +139,11 @@
 	<!-- ── Admin jobs ──────────────────────────────────── -->
 	<h2 class="section-title">🛠️ Admin Jobs</h2>
 	<div class="jobs-grid">
+		<a href="/admin/users" class="job-card">
+			<span class="job-icon">👥</span>
+			<span class="job-title">Manage Users</span>
+			<span class="job-desc">Reset passwords and delete accounts</span>
+		</a>
 		<a href="/admin/lessons" class="job-card">
 			<span class="job-icon">📚</span>
 			<span class="job-title">Manage Lessons</span>

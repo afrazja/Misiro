@@ -1,24 +1,13 @@
 import type { PageServerLoad, Actions } from './$types';
 import { fail, redirect } from '@sveltejs/kit';
-import { createClient, type SupabaseClient } from '@supabase/supabase-js';
-import { env } from '$env/dynamic/private';
-import { env as publicEnv } from '$env/dynamic/public';
 import {
 	checkAdminCredentials,
 	setAdminCookie,
 	clearAdminCookie
 } from '$lib/server/admin-auth';
+import { serviceClient } from '$lib/server/supabase-admin';
 
 const DAY_MS = 24 * 60 * 60 * 1000;
-
-/** Service-role client (bypasses RLS) for cross-user analytics, when the key
- *  is configured. Falls back to the request-scoped client otherwise. */
-function serviceClient(): SupabaseClient | null {
-	const url = publicEnv.PUBLIC_SUPABASE_URL;
-	const key = env.SUPABASE_SERVICE_ROLE_KEY;
-	if (!url || !key || url.includes('placeholder')) return null;
-	return createClient(url, key, { auth: { persistSession: false } });
-}
 
 export const load: PageServerLoad = async ({ parent, locals }) => {
 	const { authorized } = await parent();

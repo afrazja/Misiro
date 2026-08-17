@@ -10,9 +10,9 @@
  * nothing is exposed in the client bundle.
  */
 
-import { createHash } from 'node:crypto';
+import { createHash, timingSafeEqual } from 'node:crypto';
 import { env } from '$env/dynamic/private';
-import type { Cookies } from '@sveltejs/kit';
+import { error, type Cookies } from '@sveltejs/kit';
 
 const ADMIN_EMAIL = () => env.ADMIN_EMAIL || 'afz.javan@gmail.com';
 const ADMIN_PASSWORD = () => env.ADMIN_PASSWORD || '1234';
@@ -27,15 +27,28 @@ export function adminToken(): string {
 		.digest('hex');
 }
 
+/** Length-independent, constant-time string compare. Plain `===` leaks how
+ *  many leading characters matched, which is worth avoiding now that these
+ *  checks gate user deletion and password resets. */
+function safeEqual(a: string, b: string): boolean {
+	const ha = createHash('sha256').update(a).digest();
+	const hb = createHash('sha256').update(b).digest();
+	return timingSafeEqual(ha, hb);
+}
+
+/** True when `email` is the configured admin account. */
+export function isAdminEmail(email: string | null | undefined): boolean {
+	if (!email) return false;
+	return email.trim().toLowerCase() === ADMIN_EMAIL().toLowerCase();
+}
+
 export function checkAdminCredentials(email: string, password: string): boolean {
-	return (
-		email.trim().toLowerCase() === ADMIN_EMAIL().toLowerCase() &&
-		password === ADMIN_PASSWORD()
-	);
+	return isAdminEmail(email) && safeEqual(password, ADMIN_PASSWORD());
 }
 
 export function hasValidAdminCookie(cookies: Cookies): boolean {
-	return cookies.get(ADMIN_COOKIE) === adminToken();
+	const cookie = cookies.get(ADMIN_COOKIE);
+	return !!cookie && safeEqual(cookie, adminToken());
 }
 
 export function setAdminCookie(cookies: Cookies): void {
@@ -50,4 +63,60 @@ export function setAdminCookie(cookies: Cookies): void {
 
 export function clearAdminCookie(cookies: Cookies): void {
 	cookies.delete(ADMIN_COOKIE, { path: '/admin' });
+}
+
+export type AdminIdentity = {
+	authorized: boolean;
+	displayName: string;
+	/** The Supabase user id of the signed-in admin, or null when they got in
+	 *  via the password gate (which has no Supabase session). */
+	selfId: string | null;
+};
+
+/** Resolves admin rights the same two ways the docs describe: a valid admin
+ *  cookie, or a signed-in Supabase user whose profile has is_admin = true. */
+export async function resolveAdmin(
+	locals: App.Locals,
+	cookies: Cookies
+): Promise<AdminIdentity> {
+	const selfId = locals.user?.id ?? null;
+
+	if (hasValidAdminCookie(cookies)) {
+		return { authorized: true, displayName: 'Admin', selfId };
+	}
+
+	if (locals.session && selfId) {
+		const { data: profile } = await locals.supabase
+			.from('user_profiles')
+			.select('is_admin, display_name')
+			.eq('id', selfId)
+			.maybeSingle();
+
+		if (profile?.is_admin) {
+			return {
+				authorized: true,
+				displayName: profile.display_name ?? 'Admin',
+				selfId
+			};
+		}
+	}
+
+	return { authorized: false, displayName: 'Admin', selfId };
+}
+
+/**
+ * Throws 403 unless the request carries admin rights.
+ *
+ * Use this in EVERY form action and endpoint under /admin that touches the
+ * service-role client. The `/admin` layout `load` only guards page loads — it
+ * does not run for form actions or `+server.ts` handlers, and the service role
+ * bypasses RLS, so without this an unauthenticated POST would go through.
+ */
+export async function requireAdmin(
+	locals: App.Locals,
+	cookies: Cookies
+): Promise<AdminIdentity> {
+	const admin = await resolveAdmin(locals, cookies);
+	if (!admin.authorized) throw error(403, 'Not authorized.');
+	return admin;
 }

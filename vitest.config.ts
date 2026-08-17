@@ -16,7 +16,10 @@ export default defineConfig({
 			$stores: fileURLToPath(new URL('./src/lib/stores', import.meta.url)),
 			$data: fileURLToPath(new URL('./src/lib/data', import.meta.url)),
 			$utils: fileURLToPath(new URL('./src/lib/utils', import.meta.url)),
-			'$env/dynamic/public': fileURLToPath(new URL('./src/test/env.mock.ts', import.meta.url))
+			'$env/dynamic/public': fileURLToPath(new URL('./src/test/env.mock.ts', import.meta.url)),
+			'$env/dynamic/private': fileURLToPath(
+				new URL('./src/test/env.private.mock.ts', import.meta.url)
+			)
 		}
 	}
 });

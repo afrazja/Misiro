@@ -8,6 +8,7 @@
 			<div class="admin-brand">⚙️ Mirifer Admin</div>
 			<div class="admin-user">👤 {data.adminUser.displayName}</div>
 			<a href="/admin" class="nav-link">📊 Dashboard</a>
+			<a href="/admin/users" class="nav-link">👥 Users</a>
 			<a href="/admin/lessons" class="nav-link">📚 Lessons</a>
 			<a href="/admin/basics" class="nav-link">🔤 Basics</a>
 			<a href="/admin/glossary" class="nav-link">📖 Glossary</a>
