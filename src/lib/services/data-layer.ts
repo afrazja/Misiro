@@ -949,23 +949,33 @@ export function markCheckpointDone(key: string): void {
 
 // ========== CLEAR ALL LOCAL DATA ==========
 
+/** Device preferences rather than account data. Wiping these would reset the
+ *  app's appearance for whoever uses this browser next, which is not what
+ *  signing out or deleting an account is asking for. */
+const LOCAL_KEEP = new Set(['mirifer_theme']);
+
+/**
+ * Remove every `mirifer_`-prefixed key except {@link LOCAL_KEEP}.
+ *
+ * Swept by prefix rather than listed: a hardcoded list silently missed
+ * `mirifer_placement`, `mirifer_placement_probes`, `mirifer_pending_placement`,
+ * `mirifer_exam_settings`, `mirifer_drill_stats`, `mirifer_target_language` and
+ * the per-lesson `mirifer_lesson_*` caches, which left personal data behind on
+ * sign-out and would have made account deletion incomplete. A prefix sweep
+ * cannot fall behind as keys are added.
+ */
 export function clearAllLocal(): void {
-	localStorage.removeItem('mirifer_progress');
-	localStorage.removeItem('mirifer_completed_lessons');
-	localStorage.removeItem('mirifer_sr_data');
-	localStorage.removeItem('mirifer_exam_results');
-	localStorage.removeItem('mirifer_language');
-	localStorage.removeItem('mirifer_voice_speed');
-	localStorage.removeItem('mirifer_display_name');
-	localStorage.removeItem('mirifer_avatar_url');
-	localStorage.removeItem('mirifer_basics_done');
-	localStorage.removeItem('mirifer_word_strength');
-	localStorage.removeItem('mirifer_seen_exam_items');
-	localStorage.removeItem('mirifer_checkpoints_done');
-	localStorage.removeItem('mirifer_practice_signal');
-	localStorage.removeItem('mirifer_sync_queue');
-	localStorage.removeItem(VOCAB_LS_KEY);
-	localStorage.removeItem(BOOKMARKS_LS_KEY);
+	try {
+		// Collect first: removing while iterating shifts the indices underneath.
+		const doomed: string[] = [];
+		for (let i = 0; i < localStorage.length; i++) {
+			const key = localStorage.key(i);
+			if (key && key.startsWith('mirifer_') && !LOCAL_KEEP.has(key)) doomed.push(key);
+		}
+		for (const key of doomed) localStorage.removeItem(key);
+	} catch {
+		/* storage unavailable — there is nothing cached to clear */
+	}
 }
 
 // ========== SYNC ON LOGIN ==========

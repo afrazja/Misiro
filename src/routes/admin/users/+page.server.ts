@@ -11,6 +11,7 @@ import type { PageServerLoad, Actions } from './$types';
 import { fail } from '@sveltejs/kit';
 import { requireAdmin, isAdminEmail } from '$lib/server/admin-auth';
 import { serviceClient } from '$lib/server/supabase-admin';
+import { purgeUser } from '$lib/server/delete-account';
 import type { SupabaseClient, User } from '@supabase/supabase-js';
 
 /** Matches the 6-character floor the signup and settings screens enforce. */
@@ -153,8 +154,8 @@ export const actions: Actions = {
 	},
 
 	/**
-	 * Permanently delete a user. Every user-owned table declares
-	 * `REFERENCES auth.users(id) ON DELETE CASCADE`, so this also removes their
+	 * Permanently delete a user, via the same purge the user's own /settings
+	 * deletion uses: avatar files, then the auth row, whose cascade takes the
 	 * profile, progress, spaced-repetition cards, exam results and events.
 	 * There is no undo, hence the typed-email confirmation.
 	 */
@@ -197,9 +198,13 @@ export const actions: Actions = {
 			});
 		}
 
-		const { error } = await svc.auth.admin.deleteUser(userId);
-		if (error) return fail(500, { userId, error: error.message });
+		const { error, orphanedStorage } = await purgeUser(svc, userId);
+		if (error) return fail(500, { userId, error });
 
-		return { success: `Deleted ${email} and all of their data.` };
+		return {
+			success:
+				`Deleted ${email} and all of their data.` +
+				(orphanedStorage ? ' Their avatar file could not be removed — see the server log.' : '')
+		};
 	}
 };

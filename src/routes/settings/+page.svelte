@@ -23,6 +23,7 @@
 		setExamSettings,
 		getPlacement,
 		clearPlacement,
+		clearAllLocal,
 		setAvatarUrl as setLocalAvatarUrl,
 		setDisplayName as setLocalDisplayName,
 	} from "$services/data-layer";
@@ -279,6 +280,66 @@
 	async function handleSignOut() {
 		await signOut();
 		window.location.href = "/";
+	}
+
+	// ============ DELETE ACCOUNT ============
+	let showDelete = $state(false);
+	let deleteConfirmEmail = $state("");
+	let deleting = $state(false);
+	let deleteStatus = $state<{
+		text: string;
+		type: "success" | "error";
+	} | null>(null);
+
+	// The typed address must match before the button arms. The server checks
+	// this again — this is the guard against a slip, not against an attacker.
+	const deleteArmed = $derived(
+		email.trim().length > 0 &&
+			deleteConfirmEmail.trim().toLowerCase() === email.trim().toLowerCase(),
+	);
+
+	function cancelDelete() {
+		showDelete = false;
+		deleteConfirmEmail = "";
+		deleteStatus = null;
+	}
+
+	async function handleDeleteAccount() {
+		if (!deleteArmed || deleting) return;
+		deleting = true;
+		deleteStatus = null;
+
+		try {
+			const res = await fetch("/settings/delete-account", {
+				method: "POST",
+				headers: { "Content-Type": "application/json" },
+				body: JSON.stringify({ confirmEmail: deleteConfirmEmail.trim() }),
+			});
+
+			if (!res.ok) {
+				const body = await res.json().catch(() => ({}));
+				throw new Error(
+					body?.message ?? "Your account could not be deleted.",
+				);
+			}
+
+			// The account is gone. Wipe the offline cache directly rather than
+			// relying on signOut to do it, because this page reads from
+			// localStorage and a stale copy would outlive the account. signOut
+			// then clears the browser's own session token; it may fail against a
+			// user that no longer exists, which does not matter here.
+			clearAllLocal();
+			await signOut().catch(() => {});
+			window.location.href = "/";
+		} catch (e: any) {
+			showStatus(
+				(v) => (deleteStatus = v),
+				e.message,
+				"error",
+				false,
+			);
+			deleting = false;
+		}
 	}
 
 	// ============ LIFECYCLE ============
@@ -593,6 +654,76 @@
 
 			<button class="btn-danger" onclick={handleSignOut}>Sign Out</button>
 		</div>
+
+		<!-- Delete Account -->
+		<div class="settings-section danger-zone">
+			<h3><span class="section-icon">⚠</span> Delete Account</h3>
+
+			{#if !showDelete}
+				<p class="danger-lead">
+					Permanently delete your account and everything in it. This
+					cannot be undone.
+				</p>
+				<button
+					class="btn-danger"
+					onclick={() => (showDelete = true)}
+					aria-expanded="false">Delete My Account</button
+				>
+			{:else}
+				<p class="danger-lead">
+					This permanently removes your account and all of the
+					following:
+				</p>
+				<ul class="danger-list">
+					<li>Your profile, display name and photo</li>
+					<li>Your lesson progress and streak</li>
+					<li>Your review history and word strengths</li>
+					<li>Your test, exam and placement results</li>
+					<li>Your saved words and bookmarks</li>
+				</ul>
+				<p class="danger-lead">
+					You will be signed out immediately. Your progress cannot be
+					recovered afterwards, and starting again means beginning
+					from day one.
+				</p>
+
+				<div class="form-group">
+					<label for="delete-confirm">
+						Type <strong>{email}</strong> to confirm
+					</label>
+					<input
+						type="text"
+						id="delete-confirm"
+						autocomplete="off"
+						spellcheck="false"
+						placeholder={email}
+						bind:value={deleteConfirmEmail}
+						disabled={deleting}
+					/>
+				</div>
+
+				<div class="danger-actions">
+					<button
+						class="btn-danger-solid"
+						onclick={handleDeleteAccount}
+						disabled={!deleteArmed || deleting}
+					>
+						{deleting ? "Deleting…" : "Delete Everything"}
+					</button>
+					<button
+						class="btn-secondary"
+						onclick={cancelDelete}
+						disabled={deleting}>Keep My Account</button
+					>
+				</div>
+
+				{#if deleteStatus}
+					<div class="status-msg {deleteStatus.type}">
+						{deleteStatus.text}
+					</div>
+				{/if}
+			{/if}
+		</div>
 	</main>
 {/if}
 
@@ -713,6 +844,59 @@
 	.btn-danger:hover {
 		background: rgba(231, 76, 60, 0.16);
 		border-color: #e74c3c;
+	}
+
+	/* ── Delete account ── */
+	.danger-zone {
+		border-color: rgba(231, 76, 60, 0.35);
+	}
+
+	.danger-zone h3 {
+		color: #e74c3c;
+	}
+
+	.danger-lead {
+		font-size: 0.9rem;
+		color: var(--ink-soft);
+		line-height: 1.6;
+		margin: 0 0 14px;
+	}
+
+	.danger-list {
+		margin: 0 0 14px;
+		padding-left: 22px;
+		font-size: 0.9rem;
+		color: var(--ink-soft);
+		line-height: 1.75;
+	}
+
+	.danger-actions {
+		display: flex;
+		gap: 12px;
+		flex-wrap: wrap;
+		margin-top: 4px;
+	}
+
+	.btn-danger-solid {
+		padding: 10px 24px;
+		border-radius: 10px;
+		border: 1px solid #c0392b;
+		background: #e74c3c;
+		color: #fff;
+		font-size: 0.95rem;
+		font-weight: 600;
+		cursor: pointer;
+		transition: all 0.3s ease;
+	}
+
+	.btn-danger-solid:hover:not(:disabled) {
+		background: #c0392b;
+	}
+
+	.btn-danger-solid:disabled,
+	.btn-secondary:disabled {
+		opacity: 0.5;
+		cursor: not-allowed;
 	}
 
 	.avatar-section {

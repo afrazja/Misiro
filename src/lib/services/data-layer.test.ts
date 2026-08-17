@@ -318,6 +318,61 @@ describe('offline mode (not authenticated)', () => {
 			// Non-mirifer keys are preserved
 			expect(localStorage.getItem('other_key')).toBe('keep_me');
 		});
+
+		// These were all missed by the previous hardcoded list, which left
+		// personal data on the device after sign-out and would have made
+		// account deletion incomplete.
+		it.each([
+			'mirifer_placement',
+			'mirifer_placement_probes',
+			'mirifer_pending_placement',
+			'mirifer_exam_settings',
+			'mirifer_target_language',
+			'mirifer_drill_stats',
+			'mirifer_lesson_index',
+			'mirifer_lesson_7',
+			'mirifer_glossary',
+			'mirifer_vocabulary',
+			'mirifer_bookmarks',
+			'mirifer_sync_queue'
+		])('removes %s', (key) => {
+			localStorage.setItem(key, 'x');
+
+			clearAllLocal();
+
+			expect(localStorage.getItem(key)).toBeNull();
+		});
+
+		it('leaves the theme alone — a device preference, not account data', () => {
+			localStorage.setItem('mirifer_theme', 'dark');
+			localStorage.setItem('mirifer_progress', '{}');
+
+			clearAllLocal();
+
+			expect(localStorage.getItem('mirifer_theme')).toBe('dark');
+			expect(localStorage.getItem('mirifer_progress')).toBeNull();
+		});
+
+		it('clears every mirifer key when many are present at once', () => {
+			const keys = [
+				'mirifer_progress',
+				'mirifer_placement',
+				'mirifer_lesson_1',
+				'mirifer_lesson_2',
+				'mirifer_vocabulary',
+				'mirifer_drill_stats'
+			];
+			for (const k of keys) localStorage.setItem(k, 'x');
+			localStorage.setItem('mirifer_theme', 'light');
+			localStorage.setItem('unrelated', 'y');
+
+			clearAllLocal();
+
+			// Removing while iterating would skip keys — none may survive.
+			for (const k of keys) expect(localStorage.getItem(k)).toBeNull();
+			expect(localStorage.getItem('mirifer_theme')).toBe('light');
+			expect(localStorage.getItem('unrelated')).toBe('y');
+		});
 	});
 });
 
