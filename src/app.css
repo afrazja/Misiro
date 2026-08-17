@@ -30,21 +30,34 @@
 	--wa-bg: #e5ddd5;
 
 	/* ── LIGHT THEME (default) ────────────────────────────────────
-	   Taken from the app screenshot on the landing page: white cards
-	   floating on a soft neutral ground, deep forest green as the brand
-	   surface, a brighter green for go-actions.
+	   White cards floating on a warm paper ground, deep forest green as the
+	   brand surface, a brighter green for go-actions.
 
-	   Contrast on --paper: ink 15.8:1, ink-soft 7.4:1, ink-faint 4.6:1,
-	   accent 8.1:1 — all pass WCAG AA. White on --accent is 8.5:1. */
-	--paper: #f4f6f5;
+	   The ground was a cool grey-green (#f4f6f5). It is warm now, which is
+	   the one change the redesign makes to every screen at once: the warm
+	   --field tone the lesson page already used is promoted to the whole
+	   app, so cards read as paper on a desk rather than panels on glass.
+
+	   Warming costs a little contrast — every ratio below is measured
+	   against the new ground, not the old one.
+	   Contrast on --paper: ink 14.3:1, ink-soft 6.1:1, ink-faint 5.6:1,
+	   accent 6.8:1, accent-deep 9.5:1 — all pass WCAG AA.
+	   White on --accent is 8.0:1. */
+	--paper: #f2ece3;
 	--paper-raised: #ffffff;
-	--paper-sunken: #e9ecea;
+	/* Kept light for a reason: --ink-faint has to clear 4.5:1 here as well
+	   as on paper and on white. At #e6dfd4 it managed only 4.2:1. */
+	--paper-sunken: #ece5db;
 	--ink: #14201b;
 	--ink-soft: #4d5b55;
 	/* Was #78857f — 4.6:1 on the page ground but only ~3.9:1 on the white
-	   cards where it is actually used, so small print failed. 5.5:1 now. */
-	--ink-faint: #5f6b66;
-	--line: #dde3e0;
+	   cards where it is actually used, so small print failed. Darkened again
+	   from #5f6b66 when the ground went warm: that value fell to 4.4:1 on
+	   --paper-sunken. Now 5.6:1 on paper, 6.5:1 on white, 5.2:1 on sunken. */
+	--ink-faint: #55605b;
+	/* Separator only — 1.2:1, far under the 3:1 a UI boundary needs. Use
+	   --control-border where an edge has to be perceivable. */
+	--line: #e0d8cb;
 	--accent: #0e5c45;
 	/* The high-contrast variant used for accent-coloured TEXT. On light
 	   that means darker; the dark theme flips it to brighter. */
@@ -52,9 +65,20 @@
 	--accent-wash: rgba(14, 92, 69, 0.1);
 	/* Was #2e9e5b — only 3.4:1, which failed twice over: as success text on
 	   white, and under the white label of a filled button (mic, CTAs). This
-	   is 5.1:1 in both roles, and reads as a richer green besides. */
+	   is 5.1:1 in both roles, and reads as a richer green besides.
+
+	   The redesign draws its go-buttons in a brighter green (#34a05f). That
+	   is NOT adopted: a white label on it measures 3.3:1, which fails AA for
+	   normal text and would reinstate exactly the fault the line above
+	   records fixing. The brightness belongs to the button's bevel and
+	   hover, not its face. */
 	--leaf: #1e7e45;
 	--leaf-wash: rgba(30, 126, 69, 0.12);
+	/* Leaf as TEXT, mirroring --accent-deep. Plain --leaf is 5.1:1 on white
+	   but only 4.3:1 on the warm ground, so "Finished", "done" counts and
+	   any other leaf-coloured label needs this instead: 5.8:1 on paper,
+	   6.8:1 on white, 5.5:1 on sunken. */
+	--leaf-deep: #17683a;
 	/* Text/icons sitting ON a filled accent or leaf surface. */
 	--on-accent: #ffffff;
 	/* A wrong answer. The palette is green top to bottom — --accent is deep
@@ -62,6 +86,14 @@
 	   right and wrong come out the same colour. White on it is 6.5:1. */
 	--miss: #b3261e;
 	--miss-edge: #7d1a14;
+	/* "Behind, not wrong" — overdue reviews, an in-progress topic, the pass
+	   line on the readiness gauge. Deliberately NOT --miss: a mistake is red
+	   and final, whereas 19 sentences due is a nudge, and a learner who sees
+	   the same red for both learns to read their own dashboard as failure.
+	   Rust rather than red, and warm enough to belong to the paper ground.
+	   5.7:1 on paper, 6.7:1 on white, 5.0:1 on sunken; white on it 6.7:1. */
+	--attention: #9c3f26;
+	--attention-wash: rgba(156, 63, 38, 0.1);
 	/* XP and streak. These live on the near-black ribbon in BOTH themes, so
 	   they are the same value in both — a theme-following green measured
 	   1.8:1 there and the star read as blank space. Gold is 8.6:1 on the
@@ -73,13 +105,13 @@
 	/* Interactive chrome — back buttons, selects, toggles. White cards on
 	   a tinted ground, the way the screenshot renders its pill controls. */
 	--control: #ffffff;
-	--control-hover: #f0f3f1;
+	--control-hover: #f3eee7;
 	--control-border: rgba(20, 32, 27, 0.24);
 	/* Solid edges under a button give it physical thickness, like the side
 	   wall of a keycap. Darker than the face, never a blur. */
 	--accent-edge: #07392b;
 	--leaf-edge: #145c31;
-	--control-edge: #c8d0cc;
+	--control-edge: #d5cbbc;
 	--paper-shadow: 0 1px 2px rgba(16, 24, 20, 0.06), 0 6px 20px rgba(16, 24, 20, 0.08);
 	/* ── Branded surfaces ──────────────────────────────────────────
 	   Large blocks of colour rather than white everywhere: the deep
@@ -99,6 +131,54 @@
 	--field-dot: rgba(20, 32, 27, 0.05);
 	--font-display: 'Fraunces Variable', Georgia, 'Iowan Old Style', 'Times New Roman', serif;
 	--font-body: 'Vazirmatn Variable', 'Segoe UI', -apple-system, Tahoma, Geneva, Verdana, sans-serif;
+	/* Figures and small labels. The redesign leans on monospace to make
+	   numbers scannable — day counts, "5 / 18", "pass 60", playback speeds —
+	   and it is the one typographic move that carries across every screen.
+	   A system stack, so it costs no webfont: there is no mono to download
+	   and no third face to load on a slow connection.
+
+	   Persian caveat: Vazirmatn has no monospace companion, so Persian text
+	   in a mono slot falls back to a system font and loses the family match.
+	   Use it for DIGITS and Latin labels, which is what the designs do —
+	   `۵ / ۱۸` should stay in --font-body. */
+	--font-mono: ui-monospace, 'SF Mono', 'Cascadia Mono', 'Segoe UI Mono',
+		'Roboto Mono', Menlo, Consolas, monospace;
+
+	/* ── Type scale ───────────────────────────────────────────────
+	   Read off the redesign. Named by role, not by size, so a screen asks
+	   for "the section heading" and cannot invent a seventh heading size.
+	   Prefixed --type- rather than --text-: --text-dark/--text-light above
+	   are legacy COLOUR tokens and the collision would be nasty. */
+	--type-display-xl: 3.5rem;   /* the readiness figure, "5 / 18"         */
+	--type-display-lg: 2.5rem;   /* page title — "German Basics"           */
+	--type-display-md: 1.5rem;   /* section head — "The building blocks"   */
+	--type-title: 1.125rem;      /* card and row titles                    */
+	--type-body: 1rem;
+	--type-small: 0.875rem;      /* row descriptions, helper text          */
+	--type-label: 0.7rem;        /* the mono caps label                    */
+	--tracking-label: 0.08em;
+	--leading-tight: 1.2;        /* display sizes                          */
+	--leading-body: 1.6;         /* prose                                  */
+
+	/* ── Radii ────────────────────────────────────────────────────
+	   Three steps and a pill. The 18px card matches what /settings already
+	   used, so existing sections need no change. */
+	--radius-card: 18px;
+	--radius-control: 10px;
+	--radius-badge: 6px;
+	--radius-pill: 999px;
+
+	/* ── Spacing ──────────────────────────────────────────────────
+	   4px base. Enough rungs to build the designs, few enough that the
+	   vertical rhythm cannot drift page to page. */
+	--space-1: 4px;
+	--space-2: 8px;
+	--space-3: 12px;
+	--space-4: 16px;
+	--space-5: 20px;
+	--space-6: 24px;
+	--space-8: 32px;
+	--space-10: 40px;
 }
 
 /* ── DARK THEME ───────────────────────────────────────────────────
@@ -108,7 +188,9 @@
    ground and "ink" the light text.
 
    Contrast on --paper: ink 19:1, ink-soft 10:1, ink-faint 5.5:1,
-   accent 7.4:1, leaf 9:1 — all pass WCAG AA. */
+   accent 7.4:1, leaf 9:1, leaf-deep 12.4:1, attention 6.5:1 — all pass
+   WCAG AA. The warm ground is a light-theme change only; dark stays
+   near-black, so none of those values moved. */
 :root[data-theme='dark'] {
 	--paper: #0f0f1a;
 	--paper-raised: #1a1a26;
@@ -125,10 +207,18 @@
 	--accent-wash: rgba(46, 204, 113, 0.14);
 	--leaf: #58d68d;
 	--leaf-wash: rgba(88, 214, 141, 0.13);
+	/* Flipped like --accent-deep: brighter is the high-contrast direction on
+	   a dark ground. 12.4:1 on --paper, 11.2:1 on --paper-raised. */
+	--leaf-deep: #7ee5a8;
 	--on-accent: #08160e;
 	/* Light enough that the near-black --on-accent reads on it: 6.9:1. */
 	--miss: #f5766a;
 	--miss-edge: #b8493f;
+	/* The rust has to lighten on dark or it disappears into the ground —
+	   the light value measures ~1.7:1 here. 6.5:1 on --paper, 5.8:1 on
+	   --paper-raised, and the near-black --on-accent reads 6.3:1 on it. */
+	--attention: #d97f57;
+	--attention-wash: rgba(217, 127, 87, 0.14);
 	--gold: #fbbf24;
 	--ember: #fb923c;
 	--info: #5dade2;
@@ -199,6 +289,38 @@
 	clip: rect(0, 0, 0, 0);
 	white-space: nowrap;
 	border: 0;
+}
+
+/* ===================== */
+/* THE MONO LABEL        */
+/* ===================== */
+/*
+ * REFERENCE · TOPICS FINISHED · LISTEN, THEN SAY IT · PICK UP WHERE YOU LEFT
+ *
+ * The redesign's most repeated element, so it is defined once here rather
+ * than re-declared in a dozen scoped <style> blocks that would slowly drift
+ * apart. Global on the same grounds as .skip-link and .sr-only.
+ *
+ * text-transform is deliberately NOT set. Persian has no letter case, and
+ * `uppercase` on Persian text is a no-op that still applies the tracking —
+ * which pulls the joined letterforms apart and makes the word unreadable.
+ * Latin labels should be written in caps in the markup instead, where a
+ * translator can see them and choose not to.
+ */
+.meta-label {
+	font-family: var(--font-mono);
+	font-size: var(--type-label);
+	letter-spacing: var(--tracking-label);
+	color: var(--ink-faint);
+	line-height: 1.4;
+}
+
+/* Persian joins its letters, so tracking is actively harmful there — the
+   size and family stay, the spacing goes. */
+:root[lang='fa'] .meta-label,
+[lang='fa'] .meta-label {
+	font-family: var(--font-body);
+	letter-spacing: normal;
 }
 
 /* ===================== */
