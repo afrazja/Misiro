@@ -903,6 +903,54 @@
 	</div>
 {/if}
 
+<!--
+	Dashboard shell — the redesign's left rail beside the existing content.
+
+	The rail is the one structural addition the artboard makes; everything
+	it links to already existed, scattered across cards further down the
+	page. Desktop only: on a phone the same destinations are the cards
+	themselves, and a rail would cost a third of the screen to repeat them.
+-->
+<div class="dash-shell">
+	{#if isAuthenticated && !isNewUser}
+		<aside class="rail" aria-label="Dashboard sections">
+			<a class="rail-brand" href="/">
+				<span class="rail-mark" aria-hidden="true"></span>
+				<span>Mirifer</span>
+			</a>
+			<nav class="rail-nav">
+				<a class="rail-item is-current" href="/home" aria-current="page">
+					<span aria-hidden="true">◆</span>{language === "fa" ? "امروز" : "Today"}
+				</a>
+				<a class="rail-item" href="/lesson">
+					<span aria-hidden="true">▸</span>{language === "fa" ? "درس‌های روزانه" : "Daily lessons"}
+				</a>
+				<a class="rail-item" href="/review">
+					<span aria-hidden="true">↻</span>{language === "fa" ? "مرورها" : "Reviews"}
+					{#if dueReviews > 0}<em class="rail-count">{dueReviews}</em>{/if}
+				</a>
+				<a class="rail-item" href={language === "fa" ? "/fa/basics" : "/basics"}>
+					<span aria-hidden="true">▤</span>{language === "fa" ? "گرامر آلمانی" : "German Basics"}
+				</a>
+				<a class="rail-item" href="/vocabulary">
+					<span aria-hidden="true">★</span>{language === "fa" ? "کلمه‌های ذخیره‌شده" : "Saved words"}
+				</a>
+				<a class="rail-item" href="/placement">
+					<span aria-hidden="true">◎</span>{language === "fa" ? "آمادگی آزمون" : "Exam readiness"}
+				</a>
+			</nav>
+			<div class="rail-user">
+				<div class="rail-avatar">
+					{#if avatarUrl}<img src={avatarUrl} alt="" />{:else}{(displayName || "L").charAt(0).toUpperCase()}{/if}
+				</div>
+				<div class="rail-who">
+					<strong>{displayName}</strong>
+					<span>{totalXp} {language === "fa" ? "امتیاز" : "points"}</span>
+				</div>
+			</div>
+		</aside>
+	{/if}
+
 <main class="home-container">
 	{#snippet profileLeading()}
 		{#if isAuthenticated}
@@ -1518,6 +1566,7 @@
 		</p>
 	</footer>
 </main>
+</div>
 
 <style>
 	:global(body) {
@@ -1527,6 +1576,163 @@
 
 	:global(body) {
 		background: var(--paper);
+	}
+
+	/* ── Dashboard shell + left rail ─────────────────── */
+	.dash-shell {
+		display: block;
+	}
+
+	.rail {
+		display: none;
+	}
+
+	/* The rail only earns its width when there is width to spare. Below
+	   this the same destinations are the cards in the page itself, so a
+	   rail would be a third of a phone screen spent repeating them. */
+	@media (min-width: 1080px) {
+		.dash-shell {
+			display: grid;
+			grid-template-columns: 232px minmax(0, 1fr);
+			align-items: start;
+			max-width: 1340px;
+			margin-inline: auto;
+		}
+
+		.rail {
+			display: flex;
+			flex-direction: column;
+			gap: var(--space-6);
+			position: sticky;
+			top: 0;
+			block-size: 100vh;
+			padding: 28px 20px;
+			border-inline-end: 1px solid var(--line);
+		}
+
+		.home-container {
+			margin: 0;
+			max-width: none;
+		}
+	}
+
+	.rail-brand {
+		display: flex;
+		align-items: center;
+		gap: 10px;
+		font-family: var(--font-display);
+		font-size: 1.2rem;
+		font-weight: 600;
+		color: var(--ink);
+		text-decoration: none;
+	}
+
+	.rail-mark {
+		inline-size: 22px;
+		block-size: 22px;
+		border-radius: 7px;
+		background: var(--leaf);
+		flex: none;
+	}
+
+	.rail-nav {
+		display: flex;
+		flex-direction: column;
+		gap: 2px;
+	}
+
+	.rail-item {
+		display: flex;
+		align-items: center;
+		gap: 10px;
+		min-block-size: 44px;
+		padding: 0 12px;
+		border-radius: var(--radius-control);
+		color: var(--ink-soft);
+		text-decoration: none;
+		font-size: 0.94rem;
+	}
+
+	.rail-item span {
+		color: var(--ink-faint);
+		font-size: 0.8rem;
+	}
+
+	.rail-item:hover {
+		background: var(--control-hover);
+		color: var(--ink);
+	}
+
+	.rail-item.is-current {
+		background: var(--accent-wash);
+		color: var(--accent);
+		font-weight: 600;
+	}
+
+	.rail-item.is-current span {
+		color: var(--accent);
+	}
+
+	/* Sits at the end of the row in either direction. */
+	.rail-count {
+		margin-inline-start: auto;
+		font-family: var(--font-mono);
+		font-size: 0.72rem;
+		font-style: normal;
+		background: var(--attention-wash);
+		color: var(--attention);
+		border-radius: var(--radius-pill);
+		padding: 2px 8px;
+	}
+
+	.rail-user {
+		margin-block-start: auto;
+		display: flex;
+		align-items: center;
+		gap: 10px;
+		padding-block-start: var(--space-4);
+		border-block-start: 1px solid var(--line);
+	}
+
+	.rail-avatar {
+		inline-size: 34px;
+		block-size: 34px;
+		border-radius: 50%;
+		background: var(--accent);
+		color: var(--on-accent);
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		font-weight: 700;
+		font-size: 0.9rem;
+		overflow: hidden;
+		flex: none;
+	}
+
+	.rail-avatar img {
+		inline-size: 100%;
+		block-size: 100%;
+		object-fit: cover;
+	}
+
+	.rail-who {
+		display: flex;
+		flex-direction: column;
+		min-width: 0;
+	}
+
+	.rail-who strong {
+		font-size: 0.9rem;
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
+	}
+
+	.rail-who span {
+		font-family: var(--font-mono);
+		font-size: var(--type-label);
+		letter-spacing: var(--tracking-label);
+		color: var(--ink-faint);
 	}
 
 	.home-container {
