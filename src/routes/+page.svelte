@@ -24,19 +24,13 @@
 	// After signup with email confirmation on: show a "check your email" view
 	let signupEmailSent = $state(false);
 
-	// Profile
-	let displayName = $state("Learner");
-	let avatarUrl = $state<string | null>(null);
 	let isAuthenticated = $state(false);
 
 	// Navbar scroll effect
 	let scrolled = $state(false);
 
-	// Dynamic lesson count
+	// Dynamic lesson count, shown in the stats strip.
 	let totalLessons = $state(0);
-	let stageOneEnd = $derived(Math.round(totalLessons / 3));
-	let stageTwoEnd = $derived(Math.round((totalLessons * 2) / 3));
-	let stageThreeEnd = $derived(totalLessons);
 
 	// Refs for focus trap
 	let modalEl: HTMLDivElement | undefined = $state();
@@ -125,29 +119,18 @@
 		}
 	}
 
-	async function handleSignOut() {
-		await auth.signOut();
-		await updateProfileUI();
-	}
-
+	/**
+	 * The navbar only needs to know whether someone is signed in — the
+	 * redesigned page shows "Open App" rather than a name and avatar, so the
+	 * display name and avatar state it used to keep are gone. Caching the
+	 * avatar URL stays: /home reads it, and warming it here saves that page
+	 * a round trip.
+	 */
 	async function updateProfileUI() {
-		const authed = await auth.isAuthenticated();
-		isAuthenticated = authed;
-		if (authed) {
-			displayName = await auth.getDisplayName();
-			const url = dataLayer.getAvatarUrl() || (await auth.getAvatarUrl());
-			if (url) dataLayer.setAvatarUrl(url);
-			avatarUrl = url;
-		} else {
-			displayName = "Learner";
-			avatarUrl = null;
-		}
-	}
-
-	function scrollToMethod() {
-		document
-			.getElementById("method-section")
-			?.scrollIntoView({ behavior: "smooth" });
+		isAuthenticated = await auth.isAuthenticated();
+		if (!isAuthenticated) return;
+		const url = dataLayer.getAvatarUrl() || (await auth.getAvatarUrl());
+		if (url) dataLayer.setAvatarUrl(url);
 	}
 
 	function handleKeydown(e: KeyboardEvent) {
@@ -442,712 +425,1349 @@
 <!-- ════════════════════════════════════════════════════════ -->
 <nav class="navbar" class:scrolled>
 	<a href="/" class="brand">
-		<img
-			src="/android-chrome-192x192.png"
-			alt="Mirifer Logo"
-			class="brand-icon"
-			style="width: 32px; height: 32px; border-radius: 6px;"
-		/>
+		<span class="brand-mark" aria-hidden="true"></span>
 		<span class="brand-name">Mirifer</span>
 	</a>
 
+	<div class="nav-links">
+		<a href="#session">The session</a>
+		<a href="#method">Method</a>
+		<a href="#path">100-day path</a>
+		<a href="#faq">FAQ</a>
+	</div>
+
 	<div class="navbar-right">
-		<!-- The Persian page linked here from the start but not the reverse,
-		     so anyone who typed mirifer.com — which is what a brand search
-		     returns — landed in English with no way out. That is the exact
-		     audience the Persian page was built for. Written in Persian, not
-		     as "FA": someone who needs it recognises their own script faster
-		     than a language code. -->
 		<a href="/fa" class="lang-link" lang="fa" hreflang="fa">فارسی</a>
 		<InstallAppButton />
 		{#if isAuthenticated}
 			<a href="/home" class="btn btn-primary">Open App &rarr;</a>
 		{:else}
-			<button class="btn btn-ghost" onclick={openSignIn}>Sign In</button>
-			<button class="btn btn-primary" onclick={openSignUp}
-				>Get Started Free</button
-			>
+			<button class="btn btn-ghost" onclick={openSignIn}>Sign in</button>
+			<button class="btn btn-primary" onclick={openSignUp}>Start free</button>
 		{/if}
 	</div>
 </nav>
 
 <main id="main-content" tabindex="-1">
+	<!-- ══ HERO ══════════════════════════════════════════ -->
+	<section class="hero">
+		<div class="hero-copy">
+			<span class="eyebrow-pill"><i aria-hidden="true"></i>Six minutes a day</span>
+			<h1>
+				Learn German<br />the way you would learn<br />it <em>on the street</em>.
+			</h1>
+			<p class="hero-lede">
+				One short lesson a day, built entirely out of sentences real people
+				say. You hear it, you say it out loud, and the app brings it back
+				when you are about to forget it.
+			</p>
+			<div class="hero-actions">
+				{#if isAuthenticated}
+					<a href="/home" class="pill pill-solid">Go to my lessons →</a>
+				{:else}
+					<a href="/try" class="pill pill-solid">Try a lesson now — no signup</a>
+					<a href="/placement" class="pill pill-outline">Take a free level test</a>
+				{/if}
+			</div>
+			<ul class="hero-trust">
+				<li>No credit card</li>
+				<li>Works in your browser</li>
+				<li>English &amp; Persian support</li>
+			</ul>
+		</div>
 
-<!-- ════════════════════════════════════════════════════════ -->
-<!--  HERO                                                    -->
-<!-- ════════════════════════════════════════════════════════ -->
-<section class="hero">
-	<!-- Ambient blobs -->
-	<div class="blob blob-1"></div>
-	<div class="blob blob-2"></div>
-	<div class="blob blob-3"></div>
+		<!-- The lesson card is drawn, not screenshotted: sharp at any density,
+		     nothing to download on a slow connection, and it follows the theme
+		     instead of being a baked-in light-mode picture. -->
+		<div class="hero-visual" aria-hidden="true">
+			<div class="lesson-card">
+				<div class="lc-top">
+					<span class="lc-level">A2</span>
+					<span class="lc-star">☆</span>
+				</div>
+				<p class="lc-en">What do you do when it rains?</p>
+				<p class="lc-de" lang="de">
+					<span class="lc-said">Was</span> machst du, wenn es regnet?
+				</p>
+				<div class="lc-actions">
+					<span class="lc-btn lc-ghost">▮▮▮▮</span>
+					<span class="lc-btn lc-leaf">Say it</span>
+					<span class="lc-btn lc-deep">Next →</span>
+				</div>
+			</div>
+			<div class="script-peek">
+				<div class="sp-head">
+					<span>Lesson script</span><span class="sp-count">1 / 10</span>
+				</div>
+				<p class="sp-de" lang="de">Wenn es regnet, bleibe ich zu Hause.</p>
+				<p class="sp-en">When it rains, I stay home.</p>
+				<p class="sp-de dim" lang="de">Was hast du gemacht, als du ein Kind warst?</p>
+				<p class="sp-en dim">What did you do when you were a child?</p>
+			</div>
+		</div>
+	</section>
 
-	<div class="hero-content">
-		<div class="hero-badge">🇩🇪 &nbsp;German Made for Real Life</div>
-		<h1 class="hero-h1">
-			Learn German Online —<br />
-			<span class="grad-text">The Way You'd Learn It on the Street</span>
-		</h1>
-		<p class="hero-sub">
-			Speak German from day one — not after months of grammar drills.
+	<!-- ══ STATS ═════════════════════════════════════════ -->
+	<section class="stats">
+		<div><strong>{totalLessons || 100}+</strong><span>Daily lessons</span></div>
+		<div><strong>300+</strong><span>Scripted dialogues</span></div>
+		<div><strong>1,500+</strong><span>Practice sentences</span></div>
+		<div><strong>A1 → B1+</strong><span>Levels covered</span></div>
+	</section>
+
+	<!-- ══ THE SESSION ═══════════════════════════════════ -->
+	<section class="band" id="session">
+		<p class="label">What the app actually is</p>
+		<h2>A six-minute session, and a script that talks back.</h2>
+		<p class="lede">
+			Every day opens on one scene — rain, a café, a landlord. Ten sentences,
+			spoken by a native voice, with everything you need to take them apart.
 		</p>
-		<div class="hero-actions">
-			{#if isAuthenticated}
-				<a href="/home" class="cta-btn primary">Go to My Lessons →</a>
-			{:else}
-				<a href="/try" class="cta-btn primary"
-					>🎙️ Try a Lesson Now — No Signup</a
-				>
-				<!-- Was "Start for Free", which opened the signup modal. The
-				     test earns the signup instead of asking for it cold: it
-				     costs nothing, it ends by naming your level, and the
-				     account is what saves that result. Signup is still one
-				     tap away in the navbar, so nothing is orphaned. -->
-				<a href="/placement" class="cta-btn ghost">📊 Take a Free Level Test</a>
-			{/if}
-		</div>
-		<div class="hero-trust">
-			<span>✅ No credit card</span>
-			<span>✅ Works on any device</span>
-			<span>✅ Free during early access</span>
-		</div>
-	</div>
-
-	<!-- App preview mockup -->
-	<div class="hero-visual">
-		<div class="phone-frame">
-			<div class="phone-notch"></div>
-			<img
-				src="/phone-preview.jpg"
-				alt="Mirifer lesson interface"
-				class="phone-screenshot"
-			/>
-		</div>
-	</div>
-</section>
-
-<!-- ════════════════════════════════════════════════════════ -->
-<!--  STATS                                                   -->
-<!-- ════════════════════════════════════════════════════════ -->
-<section class="stats-strip">
-	<h2 class="stats-header">What's Inside Mirifer</h2>
-	<div class="stats-inner">
-		<div class="stat-item">
-			<span class="stat-num">{totalLessons || 100}+</span>
-			<span class="stat-lbl">Lessons</span>
-		</div>
-		<div class="stat-sep"></div>
-		<div class="stat-item">
-			<span class="stat-num">300+</span>
-			<span class="stat-lbl">Real Scenarios</span>
-		</div>
-		<div class="stat-sep"></div>
-		<div class="stat-item">
-			<span class="stat-num">1,500+</span>
-			<span class="stat-lbl">Practice Sentences</span>
-		</div>
-		<div class="stat-sep"></div>
-		<div class="stat-item">
-			<span class="stat-num">A1→B1+</span>
-			<span class="stat-lbl">Proficiency Range</span>
-		</div>
-	</div>
-</section>
-
-<!-- ════════════════════════════════════════════════════════ -->
-<!--  PHILOSOPHY — why it is built this way, then how to use it -->
-<!--                                                            -->
-<!--  Sits before the method section on purpose: the why has to -->
-<!--  land before the mechanics. Every principle names a real   -->
-<!--  constraint already in the product — the sentence cap, the -->
-<!--  day-one speaking, the error diagnosis — so it reads as    -->
-<!--  decisions taken rather than claims made.                  -->
-<!-- ════════════════════════════════════════════════════════ -->
-<section class="lp-section" id="philosophy-section">
-	<div class="lp-inner">
-		<p class="eyebrow">Our Philosophy</p>
-		<h2 class="section-h2">
-			Four Ideas Mirifer Is <span class="grad-text">Built On</span>
-		</h2>
-		<p class="section-lead">
-			Each one is a decision about what to leave out.
-		</p>
-
-		<div class="phil-grid">
-			<div class="phil-card">
-				<h3>You learn a language in sentences, not words</h3>
-				<p>
-					A word list gives you words you can't use. Every lesson here
-					is whole sentences, because a sentence is the smallest thing
-					you can actually say to another person. You learn
-					<em lang="de">Ich hätte gern einen Kaffee</em> — not "coffee".
-				</p>
-			</div>
-			<div class="phil-card">
-				<h3>Fifteen minutes you repeat beats two hours you don't</h3>
-				<p>
-					Lessons are capped at 8–15 sentences and 10–20 minutes. The
-					cap is deliberate. A lesson long enough to dread is a lesson
-					you skip, and a lesson you skip teaches you nothing.
-				</p>
-			</div>
-			<div class="phil-card">
-				<h3>You speak from the first lesson</h3>
-				<p>
-					Not after six months of grammar tables. On day one you say a
-					German sentence out loud and the app tells you what it
-					actually heard — because the gap between those two is where
-					the learning happens.
-				</p>
-			</div>
-			<div class="phil-card">
-				<h3>Saying it wrong out loud beats saying it right in your head</h3>
-				<p>
-					Silent reading feels like progress and builds nothing you can
-					use in a bakery. This app is built to hear your mistakes and
-					name them, and that only works if you make them.
-				</p>
-			</div>
-		</div>
-	</div>
-</section>
-
-<section class="lp-section dark-section" id="howto-section">
-	<div class="lp-inner">
-		<p class="eyebrow">How To Use It</p>
-		<h2 class="section-h2">
-			Four Rules That <span class="grad-text">Make It Work</span>
-		</h2>
-
-		<ol class="rules">
+		<ol class="numbered">
 			<li>
-				<strong>One lesson a day. That's it.</strong>
-				Same time each day if you can. Not five on Sunday and none until
-				Friday.
+				<span class="num">01</span>
+				<div>
+					<h3>Pick the day, or let it pick you</h3>
+					<p>Day 44: Talking About Habits · about 6 min · middle A2</p>
+				</div>
 			</li>
 			<li>
-				<strong>Say every sentence out loud.</strong>
-				Even alone. Even when it feels strange — especially when it feels
-				strange.
+				<span class="num">02</span>
+				<div>
+					<h3>Slow the audio to 0.75×</h3>
+					<p>Until the sentence stops being a blur and becomes words.</p>
+				</div>
 			</li>
 			<li>
-				<strong>Don't restart a lesson for a perfect score.</strong>
-				Getting it wrong and being corrected is the lesson. Move on.
+				<span class="num">03</span>
+				<div>
+					<h3>Switch on Blind Mode</h3>
+					<p>Text disappears. Only your ears are left.</p>
+				</div>
 			</li>
 			<li>
-				<strong>Come back tomorrow.</strong>
-				That is the whole method. Everything else is detail.
+				<span class="num">04</span>
+				<div>
+					<h3>Read in English or Persian</h3>
+					<p>Full Farsi translations, right-to-left, for every line.</p>
+				</div>
 			</li>
 		</ol>
-	</div>
-</section>
+	</section>
 
-<!-- ════════════════════════════════════════════════════════ -->
-<!--  METHOD + FEATURES (merged)                               -->
-<!-- ════════════════════════════════════════════════════════ -->
-<section class="lp-section dark-section" id="method-section">
-	<div class="lp-inner">
-		<p class="eyebrow">The Method</p>
-		<h2 class="section-h2">
-			How Mirifer <span class="grad-text">Teaches You German</span>
-		</h2>
-		<p class="section-lead">
-			Forget memorising verb tables. Mirifer puts you in real
-			conversations from day one.<br />
-			<em class="diff-line"
-				>Unlike gamified apps, Mirifer focuses entirely on real
-				conversation.</em
-			>
-		</p>
-
-		<div class="steps-row">
-			<div class="step-card">
-				<span class="step-num">01</span>
-				<span class="step-emoji">🎧</span>
-				<h3>Hear Natural Audio</h3>
-				<p>
-					Every sentence is read aloud by a lifelike AI voice at a
-					natural pace — so you hear how German actually sounds, not
-					exaggerated slow speech.
-				</p>
-			</div>
-			<div class="step-arrow">→</div>
-			<div class="step-card">
-				<span class="step-num">02</span>
-				<span class="step-emoji">🎙️</span>
-				<h3>Say It Out Loud</h3>
-				<p>
-					Your mic captures what you say and checks it against the
-					target. Get instant feedback on which words you nailed —
-					and which to try again.
-				</p>
-			</div>
-			<div class="step-arrow">→</div>
-			<div class="step-card">
-				<span class="step-num">03</span>
-				<span class="step-emoji">🔄</span>
-				<h3>Review at the Right Time</h3>
-				<p>
-					Spaced repetition (SM-2) surfaces words you're about to
-					forget — exactly when you need to see them again.
-				</p>
-			</div>
+	<!-- ══ METHOD — full-bleed green ═════════════════════ -->
+	<section class="bleed bleed-green" id="method">
+		<div class="bleed-inner">
+			<p class="label">The method</p>
+			<h2>Four rules that make it work.</h2>
+			<p class="lede">
+				Forget memorising vocabulary tables. Mirifer puts you into real
+				conversation from day one — and these four rules are what turn it
+				into German you can actually reach for.
+			</p>
+			<ol class="rules">
+				<li>
+					<span class="num">01</span>
+					<div>
+						<h3>One lesson a day. That is it.</h3>
+						<p>
+							Same time each day if you can. Four on Sunday and none until
+							Friday is not a week of German.
+						</p>
+					</div>
+				</li>
+				<li>
+					<span class="num">02</span>
+					<div>
+						<h3>Say every sentence out loud.</h3>
+						<p>
+							Even alone. Especially alone. Your mouth has to learn the
+							shapes, and it only learns them by making them.
+						</p>
+					</div>
+				</li>
+				<li>
+					<span class="num">03</span>
+					<div>
+						<h3>Do not restart a lesson for a perfect score.</h3>
+						<p>
+							Getting it wrong and being corrected is the lesson. Move on —
+							the review system will bring it back.
+						</p>
+					</div>
+				</li>
+				<li>
+					<span class="num">04</span>
+					<div>
+						<h3>Come back tomorrow.</h3>
+						<p>That is the whole method. Everything else is detail.</p>
+					</div>
+				</li>
+			</ol>
 		</div>
+	</section>
 
-		<!-- Feature highlights -->
-		<div class="feat-grid" style="margin-top: 80px;">
-			<div class="feat-card">
-				<span class="feat-icon">💬</span>
-				<h3>Real-Life Scenarios</h3>
+	<!-- ══ THREE PILLARS ═════════════════════════════════ -->
+	<section class="band">
+		<div class="trio">
+			<div class="trio-card">
+				<span class="trio-icon" aria-hidden="true">🎧</span>
+				<h3>Hear natural audio</h3>
 				<p>
-					Order coffee, ask for directions, introduce yourself. Every
-					lesson is a situation you'll face in Germany.
+					Native speakers at a natural pace, slowed to 0.75× or 0.5× whenever
+					the sentence outruns you.
 				</p>
 			</div>
-			<div class="feat-card">
-				<span class="feat-icon">📖</span>
-				<h3>Word-by-Word Meanings</h3>
+			<div class="trio-card">
+				<span class="trio-icon" aria-hidden="true">🎙️</span>
+				<h3>Say it out loud</h3>
 				<p>
-					Tap any word in a sentence to see its meaning instantly.
-					Build vocabulary in context, not in isolation.
+					The mic hears every attempt and tells you which word slipped, so you
+					can try the line again.
 				</p>
 			</div>
-			<div class="feat-card">
-				<span class="feat-icon">📊</span>
-				<h3>Progress Tracking</h3>
+			<div class="trio-card">
+				<span class="trio-icon" aria-hidden="true">🔄</span>
+				<h3>Review at the right time</h3>
 				<p>
-					See your streak, completed lessons, and review stats. Know
-					exactly how far you've come and what's next.
-				</p>
-			</div>
-			<div class="feat-card">
-				<span class="feat-icon">🌐</span>
-				<h3>English &amp; Persian</h3>
-				<p>
-					All hints and translations in both English and Persian
-					(فارسی). Switch languages any time, even mid-lesson.
-				</p>
-			</div>
-		</div>
-	</div>
-</section>
-
-<!-- ════════════════════════════════════════════════════════ -->
-<!--  YOUR LEARNING PATH                                       -->
-<!--                                                            -->
-<!--  Light on purpose. The "Why German?" section that used to  -->
-<!--  sit below this one was the light band separating it from  -->
-<!--  "Who It's For"; removing it left four sunken sections     -->
-<!--  running together as one block. This restores the break.   -->
-<!-- ════════════════════════════════════════════════════════ -->
-<section class="lp-section">
-	<div class="lp-inner">
-		<p class="eyebrow">Your Learning Path</p>
-		<h2 class="section-h2">
-			Your 100-Day Path from <span class="grad-text">Zero to Fluent</span>
-		</h2>
-		<p class="section-lead">
-			No more wondering "what should I study today?" Each day has a theme,
-			a scenario, and carefully crafted sentences that build on everything
-			before.
-		</p>
-
-		<ul class="journey-list centered">
-			<li>
-				<span class="j-dot green"></span>
-				<div>
-					<strong>Days 1–{stageOneEnd || 33} · A1</strong>
-					<span
-						>Greetings, numbers, colours, essential daily phrases</span
-					>
-				</div>
-			</li>
-			<li>
-				<span class="j-dot blue"></span>
-				<div>
-					<strong
-						>Days {(stageOneEnd || 33) + 1}–{stageTwoEnd || 67} · A2</strong
-					>
-					<span>Shopping, travel, work, and social situations</span>
-				</div>
-			</li>
-			<li>
-				<span class="j-dot purple"></span>
-				<div>
-					<strong
-						>Days {(stageTwoEnd || 67) + 1}–{stageThreeEnd || 100} · B1+</strong
-					>
-					<span
-						>Opinions, storytelling, and complex conversations</span
-					>
-				</div>
-			</li>
-		</ul>
-
-		{#if isAuthenticated}
-			<a href="/home" class="cta-btn primary inline"
-				>Go to My Lessons &rarr;</a
-			>
-		{:else}
-			<button class="cta-btn primary inline" onclick={openSignUp}
-				>Begin Day 1 — It's Free</button
-			>
-		{/if}
-	</div>
-</section>
-
-<!-- ════════════════════════════════════════════════════════ -->
-<!--  WHO IS MIRIFER FOR                                       -->
-<!-- ════════════════════════════════════════════════════════ -->
-<section class="lp-section dark-section">
-	<div class="lp-inner">
-		<p class="eyebrow">Who It's For</p>
-		<h2 class="section-h2">
-			Built for People Who <span class="grad-text"
-				>Actually Want to Speak</span
-			>
-		</h2>
-		<p class="section-lead">
-			Mirifer is designed for anyone who wants to have real German
-			conversations — not just pass grammar quizzes.
-		</p>
-
-		<div class="audience-grid">
-			<div class="audience-card">
-				<span class="audience-emoji">🔰</span>
-				<h3>Complete Beginners</h3>
-				<p>
-					Never spoken a word of German? Start from zero with day-one
-					basics — greetings, numbers, and simple phrases you'll use
-					immediately.
-				</p>
-			</div>
-			<div class="audience-card">
-				<span class="audience-emoji">✈️</span>
-				<h3>Travellers to Germany</h3>
-				<p>
-					Planning a trip to Berlin, Munich, or Vienna? Learn exactly
-					the phrases you'll need — ordering food, asking directions,
-					and making small talk.
-				</p>
-			</div>
-			<div class="audience-card">
-				<span class="audience-emoji">🏢</span>
-				<h3>Expats &amp; New Residents</h3>
-				<p>
-					Moving to a German-speaking country? Master daily situations
-					like finding an apartment, opening a bank account, and
-					navigating bureaucracy.
-				</p>
-			</div>
-			<div class="audience-card">
-				<span class="audience-emoji">🇮🇷</span>
-				<h3>Persian Speakers</h3>
-				<p>
-					Mirifer is one of the few German learning apps with full
-					Persian (فارسی) translation support. Switch between English
-					and Persian anytime.
-				</p>
-			</div>
-		</div>
-	</div>
-</section>
-
-<!-- ════════════════════════════════════════════════════════ -->
-<!--  FAQ                                                      -->
-<!-- ════════════════════════════════════════════════════════ -->
-<section class="lp-section" id="faq-section">
-	<div class="lp-inner">
-		<p class="eyebrow">Common Questions</p>
-		<h2 class="section-h2">
-			Frequently Asked <span class="grad-text">Questions</span>
-		</h2>
-
-		<div class="faq-list">
-			<details class="faq-item">
-				<summary
-					>How long does it take to learn German with Mirifer?</summary
-				>
-				<p>
-					Mirifer's 100+ lessons take you from complete beginner (A1)
-					to intermediate (B1+). Spending 15–20 minutes a day, most
-					learners complete the full path in about 3 months. Because
-					every lesson uses real conversations, you'll start speaking
-					from day one.
-				</p>
-			</details>
-			<details class="faq-item">
-				<summary>Can I learn German for free?</summary>
-				<p>
-					Yes! Mirifer is completely free during early access — no
-					credit card, no trial period, no hidden fees. You get full
-					access to all 100+ lessons, voice practice, and spaced
-					repetition flashcards.
-				</p>
-			</details>
-			<details class="faq-item">
-				<summary>How is Mirifer different from Duolingo?</summary>
-				<p>
-					While Duolingo uses gamified drills with isolated words,
-					Mirifer teaches through real-life conversations. Every
-					lesson is a scenario you'd actually face in Germany —
-					ordering food, asking for directions, making small talk.
-					Mirifer also includes voice recognition so you practise
-					speaking out loud, with instant word-by-word feedback on
-					what you said.
-				</p>
-			</details>
-			<details class="faq-item">
-				<summary>What level of German does Mirifer teach?</summary>
-				<p>
-					Mirifer covers A1 (complete beginner) through B1+
-					(intermediate). You'll progress from basic greetings and
-					numbers through shopping and travel scenarios to complex
-					conversations and expressing opinions.
-				</p>
-			</details>
-			<details class="faq-item">
-				<summary>Do I need a microphone?</summary>
-				<p>
-					A microphone helps you practise speaking, but it's not
-					required. You can complete all lessons without voice input —
-					though we highly recommend using it to build pronunciation
-					confidence from the start.
-				</p>
-			</details>
-			<details class="faq-item">
-				<summary
-					>What's the best app to learn German as a beginner?</summary
-				>
-				<p>
-					The best app depends on your goal. If you want to speak
-					German in real situations — not just translate isolated
-					words — Mirifer is built exactly for that. It combines
-					conversation-based lessons, voice practice, and spaced
-					repetition to build speaking skills from day one.
-				</p>
-			</details>
-		</div>
-	</div>
-</section>
-
-<!-- ════════════════════════════════════════════════════════ -->
-<!--  FINAL CTA  (only for guests)                            -->
-<!-- ════════════════════════════════════════════════════════ -->
-{#if !isAuthenticated}
-	<section class="lp-section cta-section">
-		<div class="lp-inner">
-			<div class="cta-box">
-				<span class="cta-icon">🚀</span>
-				<h2>Ready to Speak German?</h2>
-				<p>
-					Join learners building real German skills — one conversation
-					at a time.
-				</p>
-				<button class="cta-btn primary large" onclick={openSignUp}
-					>Create Your Free Account</button
-				>
-				<p class="cta-fine">
-					No credit card &nbsp;·&nbsp; No spam &nbsp;·&nbsp; Just
-					German
+					Spaced repetition schedules each sentence to return at the edge of
+					forgetting, not before.
 				</p>
 			</div>
 		</div>
 	</section>
-{/if}
 
-<!-- ════════════════════════════════════════════════════════ -->
-<!--  FOOTER                                                  -->
-<!-- ════════════════════════════════════════════════════════ -->
+	<!-- ══ PROGRESS ══════════════════════════════════════ -->
+	<section class="band split">
+		<div>
+			<p class="label">Progress you can defend</p>
+			<h2>You always know where you stand.</h2>
+		</div>
+		<div class="split-body">
+			<p>
+				A Goethe readiness score estimated from your own lesson history —
+				listening, reading, writing and speaking scored separately, so you can
+				see which one is holding you back.
+			</p>
+			<p>
+				Set your exam date and the path reshuffles around it. The sentences
+				you keep missing come back first.
+			</p>
+			<a class="pill pill-outline" href="/placement">See where you would start →</a>
+		</div>
+	</section>
+
+	<!-- ══ GRAMMAR ═══════════════════════════════════════ -->
+	<section class="band">
+		<p class="label">When you need the grammar</p>
+		<h2>The rules are there when a sentence stops making sense.</h2>
+		<p class="lede">
+			German Basics is the reference shelf behind the daily lesson. You open it
+			because a sentence confused you, read the rule, and go back.
+		</p>
+		<ul class="chips">
+			<li><a href="/basics/pronounsAndSein">Pronouns</a></li>
+			<li><a href="/basics/articles">Articles</a></li>
+			<li><a href="/basics/cases">Cases (Fälle)</a></li>
+			<li><a href="/basics/wordOrder">Word order</a></li>
+			<li><a href="/basics/modalVerbs">Modal verbs</a></li>
+			<li><a href="/basics/verbTenses">Verb tenses</a></li>
+			<li><a href="/basics/negationImpersonal">Negation</a></li>
+			<li><a href="/basics">All eighteen topics →</a></li>
+		</ul>
+	</section>
+
+	<!-- ══ PHILOSOPHY ════════════════════════════════════ -->
+	<section class="band">
+		<p class="label">Our philosophy</p>
+		<h2>Four ideas Mirifer is built on.</h2>
+		<div class="ideas">
+			<div>
+				<h3>You learn a language in sentences, not words.</h3>
+				<p>
+					A word list gives you words. A sentence gives you a word, its
+					gender, its place in the order, and the shape of the thing around
+					it. You learn <em lang="de">ich hätte gern einen Kaffee</em> — not
+					<em>coffee</em>.
+				</p>
+			</div>
+			<div>
+				<h3>Fifteen minutes you repeat beats two hours you do not.</h3>
+				<p>
+					Lessons are capped at six to fifteen minutes on purpose. A short
+					session is one you can start on a bad day, and the only sessions
+					that teach you anything are the ones you actually start.
+				</p>
+			</div>
+			<div>
+				<h3>You speak from the first lesson.</h3>
+				<p>
+					Not after an intro grammar course. On day one you say a German
+					sentence out loud and hear what the app heard — the gap between
+					those two is where the learning happens.
+				</p>
+			</div>
+			<div>
+				<h3>Saying it wrong out loud beats saying it right in your head.</h3>
+				<p>
+					Silent accuracy does not survive contact with a real conversation.
+					Speak, be corrected, speak again. That only works if you make the
+					mistakes.
+				</p>
+			</div>
+		</div>
+	</section>
+
+	<!-- ══ PATH — full-bleed navy ════════════════════════ -->
+	<section class="bleed bleed-navy" id="path">
+		<div class="bleed-inner">
+			<p class="label">Your learning path</p>
+			<h2>One hundred days from zero to holding a conversation.</h2>
+			<p class="lede">
+				No more wondering what to do today. Each day has a name, a scene, and
+				sentences that build on everything before it.
+			</p>
+			<div class="levels">
+				<div class="level">
+					<span class="level-days">Days 1 — 33</span>
+					<h3>A1 · Getting by</h3>
+					<p>
+						Introducing yourself, ordering, asking prices, telling time, and
+						the first hundred verbs in the mouth rather than on a page.
+					</p>
+				</div>
+				<div class="level">
+					<span class="level-days">Days 34 — 67</span>
+					<h3>A2 · Daily life</h3>
+					<p>
+						Shopping, travel, appointments, work, weekends, habits — the
+						situations that fill an ordinary week.
+					</p>
+				</div>
+				<div class="level">
+					<span class="level-days">Days 68 — 100</span>
+					<h3>B1 · Opinions</h3>
+					<p>
+						Explaining, disagreeing, telling a story that happened last year,
+						and handling the conversation when it turns.
+					</p>
+				</div>
+			</div>
+			<a class="pill pill-leaf" href="/try">Begin day 1 — it is free</a>
+		</div>
+	</section>
+
+	<!-- ══ AUDIENCE ══════════════════════════════════════ -->
+	<section class="band">
+		<p class="label">Who it is for</p>
+		<h2>Built for people who actually want to speak.</h2>
+		<p class="lede">
+			Not for collecting streaks or badges. For the moment someone asks you
+			something in German and you answer.
+		</p>
+		<div class="ideas">
+			<div>
+				<h3>Complete beginners</h3>
+				<p>
+					Start at zero. The first days cover greetings, numbers, and the
+					handful of verbs everything else hangs off.
+				</p>
+			</div>
+			<div>
+				<h3>Travellers</h3>
+				<p>
+					Planning a trip? Learn what you will actually need: ordering food,
+					asking directions, and getting a hotel problem fixed.
+				</p>
+			</div>
+			<div>
+				<h3>Expats and new residents</h3>
+				<p>
+					Anmeldung, landlords, Kita places, doctors and the Bürgeramt — the
+					German that decides how your week goes.
+				</p>
+			</div>
+			<div>
+				<h3>Persian speakers</h3>
+				<p>
+					Every sentence carries a full Farsi translation alongside the
+					English one, set right-to-left, plus the sounds Persian does not
+					have. <a href="/fa">فارسی →</a>
+				</p>
+			</div>
+		</div>
+	</section>
+
+	<!-- ══ FAQ ═══════════════════════════════════════════ -->
+	<section class="band faq" id="faq">
+		<p class="label">Common questions</p>
+		<h2>Frequently asked questions</h2>
+		<details>
+			<summary>How long does it take to learn German with Mirifer?</summary>
+			<p>
+				The path is a hundred days from zero to B1-level conversation, at one
+				six-to-fifteen minute session a day. Doing it most days rather than
+				every day simply stretches the same hundred lessons.
+			</p>
+		</details>
+		<details>
+			<summary>Can I learn German for free?</summary>
+			<p>
+				Yes. You can open a lesson and the free placement test without signing
+				up or entering a card.
+			</p>
+		</details>
+		<details>
+			<summary>How is Mirifer different from other language apps?</summary>
+			<p>
+				No streaks, no gems, no tapping words into a slot. Every lesson is a
+				scripted conversation you listen to and say back out loud, and the mic
+				tells you which word slipped.
+			</p>
+		</details>
+		<details>
+			<summary>What level of German does Mirifer teach?</summary>
+			<p>
+				A1 through B1 and a little beyond, with a readiness estimate for the
+				Goethe A1 exam scored per skill.
+			</p>
+		</details>
+		<details>
+			<summary>Do I need a microphone?</summary>
+			<p>
+				Only for speaking practice, and any laptop or phone mic works. Without
+				one you can still listen, read and type.
+			</p>
+		</details>
+		<details>
+			<summary>Is it good for a complete beginner?</summary>
+			<p>
+				Day 1 assumes no German at all. If you already know some, the free
+				placement test skips you ahead to the right day.
+			</p>
+		</details>
+	</section>
+
+	<!-- ══ CTA ═══════════════════════════════════════════ -->
+	<section class="band cta" id="cta">
+		<h2>Ready to speak German?</h2>
+		<p class="lede">
+			Start with day one. Six minutes, one scene, ten sentences you will
+			actually use.
+		</p>
+		<div class="hero-actions center">
+			{#if isAuthenticated}
+				<a href="/home" class="pill pill-solid">Go to my lessons →</a>
+			{:else}
+				<button class="pill pill-solid" onclick={openSignUp}>
+					Create your free account
+				</button>
+				<a href="/try" class="pill pill-outline">See a lesson first</a>
+			{/if}
+		</div>
+		<p class="fine">No credit card · Free during early access</p>
+	</section>
 </main>
 
 <footer class="site-footer">
-	<div class="footer-inner">
-		<div class="footer-brand">
-			<img
-				src="/android-chrome-192x192.png"
-				alt="Mirifer Logo"
-				style="width: 32px; height: 32px; border-radius: 6px; margin-right: 8px;"
-			/>
+	<div class="foot-brand">
+		<span class="brand-mark" aria-hidden="true"></span>
+		<div>
 			<strong>Mirifer</strong>
+			<span>Learn German through real conversation</span>
 		</div>
-		<p>Learn German Through Real Conversations</p>
-
-		<nav class="footer-nav" aria-label="Footer navigation">
-			<a href="#method-section">How It Works</a>
-			<a href="#faq-section">FAQ</a>
-			<a href="/privacy">Privacy Policy</a>
-			<a href="/terms">Terms of Service</a>
-		</nav>
-
-		<p class="footer-sub">
-			Free during early access &nbsp;·&nbsp; Made with ❤️ for language
-			learners
-		</p>
 	</div>
+	<nav class="foot-links" aria-label="Footer">
+		<a href="#session">How it works</a>
+		<a href="#faq">FAQ</a>
+		<a href="/fa" lang="fa" hreflang="fa">فارسی</a>
+		<a href="/privacy">Privacy</a>
+		<a href="/terms">Terms</a>
+	</nav>
 </footer>
 
 <style>
-	/* ── Global overrides ────────────────────────────── */
-	:global(body) {
-		margin: 0;
-		padding: 0;
-		background: var(--paper);
-		overflow-x: hidden;
+	/*
+	 * Landing page — the "Mirifer Landing v2" artboard.
+	 *
+	 * Written against the tokens the redesign added to app.css rather than
+	 * the artboard's raw hexes: those tokens were derived from this very
+	 * design, and hardcoding #0E5240 here would fork the palette the moment
+	 * anything is adjusted centrally. It is also what makes dark mode work
+	 * at all — the artboards are light-only.
+	 *
+	 * The two full-bleed bands (green, navy) are the one place fixed colour
+	 * is correct: they are painted surfaces, not theme-following ones, and
+	 * their text is set against them explicitly.
+	 */
+
+	/* ── Navbar ──────────────────────────────────────── */
+	.navbar {
+		position: sticky;
+		top: 0;
+		z-index: 50;
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: var(--space-5);
+		padding: 18px 40px;
+		background: color-mix(in srgb, var(--paper) 92%, transparent);
+		backdrop-filter: blur(12px);
+		border-bottom: 1px solid transparent;
+		transition: border-color 0.2s, padding 0.2s;
 	}
 
-	/* ── Shared typography helpers ───────────────────── */
-	.grad-text {
-		color: var(--accent-deep);
+	.navbar.scrolled {
+		padding: 12px 40px;
+		border-bottom-color: var(--line);
 	}
 
-	.eyebrow {
-		font-size: 0.8rem;
-		font-weight: 800;
-		letter-spacing: 0.18em;
-		text-transform: uppercase;
-		color: var(--accent-deep);
-		margin-bottom: 14px;
-		text-align: center;
-	}
-
-	.section-h2 {
-		font-family: var(--font-display);
-		font-size: clamp(1.8rem, 4vw, 2.8rem);
-		font-weight: 700;
-		line-height: 1.15;
+	.brand {
+		display: flex;
+		align-items: center;
+		gap: 10px;
+		text-decoration: none;
 		color: var(--ink);
-		margin-bottom: 16px;
-		text-align: center;
+	}
+
+	.brand-mark {
+		inline-size: 26px;
+		block-size: 26px;
+		border-radius: 8px;
+		background: var(--leaf);
+		flex: none;
+	}
+
+	.brand-name {
+		font-family: var(--font-display);
+		font-size: 1.35rem;
+		font-weight: 600;
+		letter-spacing: -0.01em;
+	}
+
+	.nav-links {
+		display: flex;
+		gap: 26px;
+		font-size: 0.92rem;
+	}
+
+	.nav-links a {
+		color: var(--ink-soft);
+		text-decoration: none;
+	}
+
+	.nav-links a:hover {
+		color: var(--accent);
+	}
+
+	.navbar-right {
+		display: flex;
+		align-items: center;
+		gap: 12px;
+	}
+
+	/* Quieter than the sign-in buttons — a way out for the minority who need
+	   it, not a competing call to action. Stays visible on mobile, where
+	   most Iranian traffic is, unlike the primary CTA. */
+	.lang-link {
+		display: inline-flex;
+		align-items: center;
+		min-block-size: 44px;
+		padding: 0 10px;
+		border-radius: var(--radius-control);
+		color: var(--ink-soft);
+		font-weight: 600;
+		font-size: 0.95rem;
+		text-decoration: none;
+		white-space: nowrap;
+	}
+
+	.lang-link:hover {
+		color: var(--accent);
+		background: var(--accent-wash);
+	}
+
+	.btn {
+		font: inherit;
+		font-size: 0.92rem;
+		font-weight: 500;
+		border-radius: var(--radius-pill);
+		padding: 10px 20px;
+		min-block-size: 44px;
+		display: inline-flex;
+		align-items: center;
+		cursor: pointer;
+		text-decoration: none;
+		white-space: nowrap;
+	}
+
+	.btn-primary {
+		background: var(--accent);
+		color: var(--on-accent);
+		border: none;
+	}
+
+	.btn-primary:hover {
+		background: var(--accent-deep);
+	}
+
+	.btn-ghost {
+		background: transparent;
+		border: none;
+		color: var(--ink-soft);
+	}
+
+	.btn-ghost:hover {
+		color: var(--accent);
+	}
+
+	/* ── Shared rhythm ───────────────────────────────── */
+	main {
+		display: block;
+	}
+
+	.band,
+	.hero,
+	.stats,
+	.bleed-inner,
+	.site-footer {
+		max-inline-size: 1180px;
+		margin-inline: auto;
+		padding-inline: 40px;
+	}
+
+	.band {
+		padding-block: 96px;
+	}
+
+	.label {
+		font-family: var(--font-mono);
+		font-size: var(--type-label);
+		letter-spacing: var(--tracking-label);
+		text-transform: uppercase;
+		color: var(--ink-faint);
+		margin: 0 0 14px;
+	}
+
+	h1,
+	h2,
+	h3 {
+		font-family: var(--font-display);
+		font-weight: 500;
+		letter-spacing: -0.02em;
+		line-height: var(--leading-tight);
+		color: var(--ink);
+		margin: 0;
+	}
+
+	.band > h2 {
+		font-size: clamp(1.9rem, 3.6vw, 2.6rem);
+		max-inline-size: 22ch;
+	}
+
+	.lede {
+		font-size: 1.05rem;
+		line-height: var(--leading-body);
+		color: var(--ink-soft);
+		max-inline-size: 62ch;
+		margin: 16px 0 0;
+	}
+
+	/* ── Pills ───────────────────────────────────────── */
+	.pill {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		gap: 8px;
+		font: inherit;
+		font-size: 1rem;
+		font-weight: 500;
+		padding: 15px 28px;
+		min-block-size: 48px;
+		border-radius: var(--radius-pill);
+		text-decoration: none;
+		cursor: pointer;
+		border: 1px solid transparent;
+		white-space: nowrap;
+	}
+
+	.pill-solid {
+		background: var(--accent);
+		color: var(--on-accent);
+	}
+
+	.pill-solid:hover {
+		background: var(--accent-deep);
+	}
+
+	.pill-outline {
+		border-color: var(--control-edge);
+		color: var(--ink);
+		background: transparent;
+	}
+
+	.pill-outline:hover {
+		border-color: var(--accent);
+		color: var(--accent);
+	}
+
+	.pill-leaf {
+		background: var(--leaf);
+		color: #fff;
+	}
+
+	.pill-leaf:hover {
+		background: var(--leaf-deep);
+	}
+
+	/* ── Hero ────────────────────────────────────────── */
+	.hero {
+		display: grid;
+		grid-template-columns: 1.24fr 0.76fr;
+		gap: 72px;
+		align-items: center;
+		padding-block: 96px 72px;
+	}
+
+	.eyebrow-pill {
+		display: inline-flex;
+		align-items: center;
+		gap: 9px;
+		font-family: var(--font-mono);
+		font-size: var(--type-label);
+		letter-spacing: var(--tracking-label);
+		text-transform: uppercase;
+		color: var(--accent);
+		border: 1px solid color-mix(in srgb, var(--accent) 30%, transparent);
+		background: var(--accent-wash);
+		padding: 7px 13px;
+		border-radius: var(--radius-pill);
+	}
+
+	.eyebrow-pill i {
+		inline-size: 6px;
+		block-size: 6px;
+		border-radius: 50%;
+		background: var(--leaf);
+	}
+
+	.hero h1 {
+		font-size: clamp(2.6rem, 5.6vw, 4.35rem);
+		line-height: 1.04;
+		margin: 24px 0 0;
+	}
+
+	.hero h1 em {
+		font-style: italic;
+		color: var(--accent);
+	}
+
+	.hero-lede {
+		font-size: 1.15rem;
+		line-height: 1.55;
+		color: var(--ink-soft);
+		max-inline-size: 47ch;
+		margin: 24px 0 0;
+	}
+
+	.hero-actions {
+		display: flex;
+		gap: 14px;
+		margin-top: 34px;
+		flex-wrap: wrap;
+	}
+
+	.hero-actions.center {
+		justify-content: center;
+	}
+
+	.hero-trust {
+		display: flex;
+		gap: 24px;
+		margin: 28px 0 0;
+		padding: 0;
+		list-style: none;
+		font-size: 0.85rem;
+		color: var(--ink-faint);
+		flex-wrap: wrap;
+	}
+
+	/* ── Hero visual ─────────────────────────────────── */
+	.hero-visual {
+		position: relative;
+		background: var(--paper-sunken);
+		border: 1px solid var(--line);
+		border-radius: 20px;
+		padding: 48px 36px;
+		background-image:
+			linear-gradient(var(--line) 1px, transparent 1px),
+			linear-gradient(90deg, var(--line) 1px, transparent 1px);
+		background-size: 46px 46px;
+	}
+
+	.lesson-card {
+		background: var(--paper-raised);
+		border-radius: 18px;
+		box-shadow: 0 22px 48px -22px rgba(16, 26, 21, 0.32);
+		padding: 24px 24px 20px;
+	}
+
+	.lc-top {
+		display: flex;
+		justify-content: space-between;
+		align-items: flex-start;
+	}
+
+	.lc-level {
+		background: var(--info-wash);
+		color: var(--info);
+		font-family: var(--font-mono);
+		font-size: 0.7rem;
+		font-weight: 500;
+		padding: 4px 9px;
+		border-radius: var(--radius-badge);
+	}
+
+	.lc-star {
+		color: var(--ink-faint);
+	}
+
+	.lc-en {
+		font-size: 1.05rem;
+		color: var(--ink-soft);
+		margin: 14px 0 6px;
+	}
+
+	.lc-de {
+		font-family: var(--font-display);
+		font-size: 1.5rem;
+		font-weight: 500;
+		letter-spacing: -0.01em;
+		margin: 0;
+		color: var(--ink-faint);
+		unicode-bidi: isolate;
+	}
+
+	/* The word already said, marked as understood. */
+	.lc-said {
+		color: var(--accent);
+	}
+
+	.lc-actions {
+		display: flex;
+		gap: 8px;
+		margin-top: 20px;
+		flex-wrap: wrap;
+	}
+
+	.lc-btn {
+		font-size: 0.85rem;
+		font-weight: 500;
+		padding: 9px 17px;
+		border-radius: var(--radius-pill);
+	}
+
+	.lc-ghost {
+		border: 1px solid var(--accent);
+		color: var(--accent);
+		font-family: var(--font-mono);
+	}
+
+	.lc-leaf {
+		background: var(--leaf);
+		color: #fff;
+	}
+
+	.lc-deep {
+		background: var(--accent);
+		color: var(--on-accent);
+	}
+
+	.script-peek {
+		margin-top: 16px;
+		background: var(--paper-raised);
+		border-radius: 14px;
+		padding: 16px 18px;
+		box-shadow: 0 10px 26px -18px rgba(16, 26, 21, 0.3);
+	}
+
+	.sp-head {
+		display: flex;
+		justify-content: space-between;
+		font-family: var(--font-mono);
+		font-size: var(--type-label);
+		letter-spacing: var(--tracking-label);
+		text-transform: uppercase;
+		color: var(--ink-faint);
+		margin-bottom: 10px;
+	}
+
+	.sp-de {
+		font-weight: 600;
+		font-size: 0.92rem;
+		margin: 0;
+		color: var(--ink);
+		unicode-bidi: isolate;
+	}
+
+	.sp-en {
+		font-size: 0.85rem;
+		margin: 2px 0 10px;
+		color: var(--ink-faint);
+	}
+
+	.sp-de.dim,
+	.sp-en.dim {
+		opacity: 0.45;
+	}
+
+	/* ── Stats ───────────────────────────────────────── */
+	.stats {
+		display: grid;
+		grid-template-columns: repeat(4, 1fr);
+		gap: 20px;
+		padding-block: 36px;
+		border-block: 1px solid var(--line);
+	}
+
+	.stats div {
+		display: flex;
+		flex-direction: column;
+		gap: 4px;
+	}
+
+	.stats strong {
+		font-family: var(--font-display);
+		font-size: 2rem;
+		font-weight: 500;
+		color: var(--accent);
 		letter-spacing: -0.02em;
 	}
 
-	.section-lead {
-		font-size: 1.05rem;
+	.stats span {
+		font-size: 0.85rem;
+		color: var(--ink-faint);
+	}
+
+	/* ── Numbered lists ──────────────────────────────── */
+	.numbered,
+	.rules {
+		list-style: none;
+		padding: 0;
+		margin: 40px 0 0;
+		display: grid;
+		gap: 2px;
+	}
+
+	.numbered li,
+	.rules li {
+		display: grid;
+		grid-template-columns: 64px 1fr;
+		gap: 20px;
+		padding: 22px 0;
+		border-top: 1px solid var(--line);
+		align-items: start;
+	}
+
+	.num {
+		font-family: var(--font-mono);
+		font-size: 0.8rem;
+		letter-spacing: var(--tracking-label);
+		color: var(--ink-faint);
+		padding-top: 4px;
+	}
+
+	.numbered h3,
+	.rules h3 {
+		font-size: var(--type-title);
+		margin: 0 0 6px;
+	}
+
+	.numbered p,
+	.rules p {
+		margin: 0;
 		color: var(--ink-soft);
-		max-width: 620px;
-		margin: 0 auto 60px;
-		line-height: 1.7;
+		line-height: var(--leading-body);
+		max-inline-size: 58ch;
+	}
+
+	/* ── Full-bleed bands ────────────────────────────── */
+	/* Painted surfaces, not theme-following ones: the colour IS the design
+	   here, so it is fixed in both themes and the text is set against it
+	   explicitly rather than inheriting an ink token that would invert. */
+	.bleed {
+		padding-block: 112px;
+		margin-block: 0;
+	}
+
+	.bleed-green {
+		background: var(--accent-deep);
+	}
+
+	.bleed-navy {
+		background: #10121f;
+	}
+
+	.bleed h2,
+	.bleed h3 {
+		color: #f7f5f0;
+	}
+
+	.bleed .label {
+		color: rgba(247, 245, 240, 0.6);
+	}
+
+	.bleed .lede,
+	.bleed p {
+		color: rgba(247, 245, 240, 0.76);
+	}
+
+	.bleed .num {
+		color: rgba(247, 245, 240, 0.5);
+	}
+
+	.bleed .rules li {
+		border-top-color: rgba(247, 245, 240, 0.16);
+	}
+
+	.bleed h2 {
+		font-size: clamp(1.9rem, 3.6vw, 2.6rem);
+		max-inline-size: 22ch;
+	}
+
+	.levels {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+		gap: 22px;
+		margin: 44px 0 36px;
+	}
+
+	.level {
+		background: rgba(247, 245, 240, 0.06);
+		border: 1px solid rgba(247, 245, 240, 0.14);
+		border-radius: var(--radius-card);
+		padding: 24px 22px;
+	}
+
+	.level-days {
+		font-family: var(--font-mono);
+		font-size: var(--type-label);
+		letter-spacing: var(--tracking-label);
+		text-transform: uppercase;
+		color: rgba(247, 245, 240, 0.6);
+	}
+
+	.level h3 {
+		font-size: var(--type-title);
+		margin: 8px 0 8px;
+	}
+
+	.level p {
+		margin: 0;
+		font-size: 0.92rem;
+		line-height: var(--leading-body);
+	}
+
+	/* ── Trio ────────────────────────────────────────── */
+	.trio {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+		gap: 22px;
+	}
+
+	.trio-card {
+		background: var(--paper-raised);
+		border: 1px solid var(--line);
+		border-radius: var(--radius-card);
+		padding: 28px 24px;
+	}
+
+	.trio-icon {
+		font-size: 1.6rem;
+		display: block;
+		margin-bottom: 12px;
+	}
+
+	.trio-card h3 {
+		font-size: var(--type-title);
+		margin: 0 0 8px;
+	}
+
+	.trio-card p {
+		margin: 0;
+		color: var(--ink-soft);
+		line-height: var(--leading-body);
+		font-size: 0.95rem;
+	}
+
+	/* ── Split ───────────────────────────────────────── */
+	.split {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		gap: 60px;
+		align-items: start;
+	}
+
+	.split-body p {
+		margin: 0 0 16px;
+		color: var(--ink-soft);
+		line-height: var(--leading-body);
+	}
+
+	/* ── Chips ───────────────────────────────────────── */
+	.chips {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 10px;
+		list-style: none;
+		padding: 0;
+		margin: 32px 0 0;
+	}
+
+	.chips a {
+		display: inline-flex;
+		align-items: center;
+		min-block-size: 44px;
+		padding: 8px 18px;
+		border: 1px solid var(--line);
+		border-radius: var(--radius-pill);
+		background: var(--paper-raised);
+		color: var(--ink);
+		text-decoration: none;
+		font-size: 0.92rem;
+	}
+
+	.chips a:hover {
+		border-color: var(--accent);
+		color: var(--accent);
+	}
+
+	/* ── Ideas grid ──────────────────────────────────── */
+	.ideas {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+		gap: 32px 44px;
+		margin-top: 44px;
+	}
+
+	.ideas h3 {
+		font-size: var(--type-title);
+		margin: 0 0 8px;
+		line-height: 1.35;
+	}
+
+	.ideas p {
+		margin: 0;
+		color: var(--ink-soft);
+		line-height: var(--leading-body);
+	}
+
+	.ideas em {
+		font-style: normal;
+		font-weight: 600;
+		color: var(--ink);
+	}
+
+	.ideas a {
+		color: var(--accent);
+		font-weight: 600;
+	}
+
+	/* ── FAQ ─────────────────────────────────────────── */
+	.faq {
+		max-inline-size: 860px;
+	}
+
+	.faq details {
+		border-top: 1px solid var(--line);
+		padding: 4px 0;
+	}
+
+	.faq details:last-of-type {
+		border-bottom: 1px solid var(--line);
+	}
+
+	.faq summary {
+		list-style: none;
+		cursor: pointer;
+		padding: 20px 34px 20px 0;
+		position: relative;
+		font-size: 1.02rem;
+		font-weight: 600;
+		color: var(--ink);
+	}
+
+	.faq summary::-webkit-details-marker {
+		display: none;
+	}
+
+	.faq summary::after {
+		content: '+';
+		position: absolute;
+		inset-inline-end: 4px;
+		inset-block-start: 18px;
+		font-size: 1.3rem;
+		font-weight: 400;
+		color: var(--ink-faint);
+	}
+
+	.faq details[open] summary::after {
+		content: '−';
+	}
+
+	.faq details p {
+		margin: 0 0 20px;
+		color: var(--ink-soft);
+		line-height: var(--leading-body);
+		max-inline-size: 68ch;
+	}
+
+	/* ── CTA ─────────────────────────────────────────── */
+	.cta {
 		text-align: center;
 	}
 
-	/* ── CTA buttons ─────────────────────────────────── */
-	.cta-btn {
-		display: inline-block;
-		padding: 16px 36px;
-		border-radius: 50px;
-		font-size: 1.05rem;
-		font-weight: 700;
-		cursor: pointer;
-		border: none;
-		text-decoration: none;
-		font-family: inherit;
-		transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+	.cta h2 {
+		max-inline-size: none;
+		font-size: clamp(2rem, 4vw, 2.9rem);
 	}
 
-	.cta-btn.primary {
-		background: var(--accent);
-		color: var(--on-accent);
-		box-shadow: 0 5px 18px rgba(46, 204, 113, 0.3);
+	.cta .lede {
+		margin-inline: auto;
 	}
 
-	.cta-btn.primary:hover {
-		transform: translateY(-3px) scale(1.03);
-		filter: brightness(1.06);
-		box-shadow: 0 10px 28px rgba(46, 204, 113, 0.35);
+	.fine {
+		margin-top: 20px;
+		font-size: 0.85rem;
+		color: var(--ink-faint);
 	}
 
-	.cta-btn.ghost {
-		background: transparent;
-		color: var(--ink);
-		border: 2px solid var(--line);
-	}
-
-	.cta-btn.ghost:hover {
-		border-color: var(--accent);
-		color: var(--ink);
-		background: var(--accent-wash);
-	}
-
-	.cta-btn.large {
-		padding: 20px 52px;
-		font-size: 1.15rem;
-	}
-
-	.cta-btn.inline {
-		margin-top: 32px;
-	}
-
-	/* ── Small nav buttons ───────────────────────────── */
-	.btn {
-		/* 44px minimum touch target. */
-		min-height: 44px;
-		padding: 11px 20px;
-		border-radius: 24px;
-		font-size: 0.88rem;
-		font-weight: 600;
-		cursor: pointer;
-		border: none;
-		transition: all 0.25s ease;
-		text-decoration: none;
-		display: inline-flex;
+	/* ── Footer ──────────────────────────────────────── */
+	.site-footer {
+		display: flex;
 		align-items: center;
-		gap: 6px;
-		font-family: inherit;
+		justify-content: space-between;
+		gap: 24px;
+		flex-wrap: wrap;
+		padding-block: 32px 56px;
+		border-top: 1px solid var(--line);
 	}
 
-	.btn.btn-primary {
-		background: var(--accent);
-		color: var(--on-accent);
-		box-shadow: 0 5px 18px rgba(46, 204, 113, 0.3);
+	.foot-brand {
+		display: flex;
+		align-items: center;
+		gap: 12px;
 	}
 
-	.btn.btn-primary:hover {
-		transform: translateY(-2px);
-		filter: brightness(1.06);
-		box-shadow: 0 8px 24px rgba(46, 204, 113, 0.35);
-	}
-
-	.btn.btn-ghost {
-		background: transparent;
-		border: 1px solid var(--line);
-		color: var(--ink);
-	}
-
-	.btn.btn-ghost:hover {
-		border-color: var(--accent);
-		background: var(--accent-wash);
-	}
-
-	/* ── Toast ───────────────────────────────────────── */
-	.confirm-toast {
-		position: fixed;
-		top: 20px;
-		left: 50%;
-		transform: translateX(-50%) translateY(-120px);
-		background: var(--leaf);
-		color: #fff;
-		padding: 16px 32px;
-		border-radius: 14px;
-		font-size: 1rem;
+	.foot-brand strong {
+		font-family: var(--font-display);
+		font-size: 1.1rem;
 		font-weight: 600;
-		box-shadow: 0 10px 40px rgba(88, 214, 141, 0.35);
-		z-index: 2000;
-		/* visibility keeps the hidden toast out of screen readers, innerText
-		   and search snippets; the delay lets the slide-out finish first. */
-		visibility: hidden;
-		transition:
-			transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275),
-			visibility 0s 0.5s;
+		display: block;
 	}
 
-	.confirm-toast.show {
-		transform: translateX(-50%) translateY(0);
-		visibility: visible;
-		transition-delay: 0s, 0s;
+	.foot-brand span {
+		font-size: 0.85rem;
+		color: var(--ink-faint);
 	}
 
-	/* ── Auth modal ──────────────────────────────────── */
+	.foot-links {
+		display: flex;
+		gap: 22px;
+		flex-wrap: wrap;
+		font-size: 0.9rem;
+	}
+
+	.foot-links a {
+		color: var(--ink-soft);
+		text-decoration: none;
+	}
+
+	.foot-links a:hover {
+		color: var(--accent);
+	}
+
+	/* ── Responsive ──────────────────────────────────── */
+	@media (max-width: 1000px) {
+		.hero,
+		.split {
+			grid-template-columns: 1fr;
+			gap: 44px;
+		}
+
+		.nav-links {
+			display: none;
+		}
+
+		.stats {
+			grid-template-columns: repeat(2, 1fr);
+			gap: 24px;
+		}
+	}
+
+	@media (max-width: 640px) {
+		.navbar,
+		.navbar.scrolled {
+			padding: 12px 18px;
+		}
+
+		.band,
+		.hero,
+		.stats,
+		.bleed-inner,
+		.site-footer {
+			padding-inline: 18px;
+		}
+
+		.band {
+			padding-block: 64px;
+		}
+
+		.bleed {
+			padding-block: 72px;
+		}
+
+		.hero {
+			padding-block: 48px 40px;
+		}
+
+		/* The primary CTA is dropped on phones, so the language link must not
+		   be — most Iranian traffic is phone traffic, which makes the small
+		   screen where it matters most, not least. */
+		.navbar-right .btn-primary {
+			display: none;
+		}
+
+		.lang-link {
+			padding: 0 6px;
+			font-size: 0.9rem;
+		}
+
+		.hero-actions .pill {
+			inline-size: 100%;
+		}
+
+		.numbered li,
+		.rules li {
+			grid-template-columns: 1fr;
+			gap: 6px;
+		}
+
+		.hero-visual {
+			padding: 24px 18px;
+		}
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.navbar {
+			transition: none;
+		}
+	}
+
+	/* ── Auth modal — preserved from the previous design ─────────
+	   The modal is unchanged markup, so its styles come across intact
+	   rather than being reinvented alongside the new page. */
+/* ── Auth modal ──────────────────────────────────── */
 	.auth-overlay {
 		position: fixed;
 		inset: 0;
@@ -1160,7 +1780,7 @@
 		padding: 20px;
 	}
 
-	.auth-modal {
+.auth-modal {
 		background: var(--paper-raised);
 		border-radius: 24px;
 		padding: 48px 40px 40px;
@@ -1171,7 +1791,7 @@
 		box-shadow: var(--paper-shadow);
 	}
 
-	.auth-close {
+.auth-close {
 		position: absolute;
 		top: 16px;
 		right: 20px;
@@ -1185,17 +1805,17 @@
 		transition: color 0.2s;
 	}
 
-	.auth-close:hover {
+.auth-close:hover {
 		color: var(--ink);
 	}
 
-	.auth-logo {
+.auth-logo {
 		text-align: center;
 		font-size: 2.5rem;
 		margin-bottom: 14px;
 	}
 
-	.auth-modal h2 {
+.auth-modal h2 {
 		text-align: center;
 		color: var(--ink);
 		font-family: var(--font-display);
@@ -1203,23 +1823,23 @@
 		margin-bottom: 8px;
 	}
 
-	.auth-subtitle {
+.auth-subtitle {
 		text-align: center;
 		color: var(--ink-soft);
 		font-size: 0.92rem;
 		margin-bottom: 24px;
 	}
 
-	.auth-check-email {
+.auth-check-email {
 		text-align: center;
 	}
 
-	.auth-check-icon {
+.auth-check-icon {
 		font-size: 48px;
 		margin-bottom: 8px;
 	}
 
-	.auth-error {
+.auth-error {
 		background: var(--accent-wash);
 		color: var(--accent-deep);
 		border: 1px solid var(--accent);
@@ -1230,11 +1850,11 @@
 		text-align: center;
 	}
 
-	.auth-field {
+.auth-field {
 		margin-bottom: 14px;
 	}
 
-	.auth-field input {
+.auth-field input {
 		width: 100%;
 		padding: 14px 16px;
 		border-radius: 12px;
@@ -1247,16 +1867,16 @@
 		font-family: inherit;
 	}
 
-	.auth-field input:focus {
+.auth-field input:focus {
 		outline: none;
 		border-color: var(--accent);
 	}
 
-	.auth-field input::placeholder {
+.auth-field input::placeholder {
 		color: var(--ink-faint);
 	}
 
-	.auth-submit {
+.auth-submit {
 		width: 100%;
 		padding: 14px;
 		border-radius: 12px;
@@ -1273,184 +1893,45 @@
 		font-family: inherit;
 	}
 
-	.auth-submit:hover:not(:disabled) {
+.auth-submit:hover:not(:disabled) {
 		filter: brightness(1.06);
 		transform: translateY(-1px);
 	}
 
-	.auth-submit:disabled {
+.auth-submit:disabled {
 		opacity: 0.6;
 		cursor: not-allowed;
 	}
 
-	.auth-forgot {
+.auth-forgot {
 		text-align: center;
 		margin: 12px 0 0;
 		font-size: 0.86rem;
 	}
 
-	.auth-forgot a {
+.auth-forgot a {
 		color: var(--ink-faint);
 		text-decoration: underline;
 	}
 
-	.auth-forgot a:hover {
+.auth-forgot a:hover {
 		color: var(--accent);
 	}
 
-	.auth-toggle {
+.auth-toggle {
 		text-align: center;
 		margin-top: 18px;
 		color: var(--ink-faint);
 		font-size: 0.9rem;
 	}
 
-	.auth-toggle a {
+.auth-toggle a {
 		color: var(--accent-deep);
 		text-decoration: none;
 		font-weight: 700;
 	}
 
-	/* ── Navbar ──────────────────────────────────────── */
-	.navbar {
-		position: fixed;
-		top: 0;
-		left: 0;
-		right: 0;
-		z-index: 100;
-		display: flex;
-		align-items: center;
-		justify-content: space-between;
-		padding: 20px 48px;
-		transition: all 0.35s ease;
-		--install-bg: var(--leaf-wash);
-		--install-border: var(--leaf);
-		--install-fg: var(--leaf);
-	}
-
-	.navbar.scrolled {
-		background: rgba(15, 15, 26, 0.92);
-		backdrop-filter: blur(20px);
-		border-bottom: 1px solid var(--line);
-		padding: 13px 48px;
-		box-shadow: var(--paper-shadow);
-	}
-
-	.brand {
-		display: flex;
-		align-items: center;
-		gap: 10px;
-		min-height: 44px;
-		text-decoration: none;
-	}
-
-	/* The logo used to bob up and down forever (float 3s infinite). Motion
-	   that never stops pulls the eye away from the headline it sits above,
-	   and WCAG 2.2.2 wants a way to stop anything that moves for more than
-	   five seconds. It lifts on hover instead — motion the visitor asks for. */
-	.brand-icon {
-		font-size: 1.9rem;
-		transition: transform 0.25s ease;
-	}
-
-	.brand:hover .brand-icon {
-		transform: translateY(-3px);
-	}
-
-	@media (prefers-reduced-motion: reduce) {
-		.brand-icon {
-			transition: none;
-		}
-		.brand:hover .brand-icon {
-			transform: none;
-		}
-	}
-
-	.brand-name {
-		font-family: var(--font-display);
-		font-size: 1.55rem;
-		font-weight: 700;
-		color: var(--accent-deep);
-	}
-
-	.navbar-right {
-		display: flex;
-		align-items: center;
-		gap: 12px;
-	}
-
-	/* Quieter than the sign-in buttons on purpose — it is a way out for the
-	   minority who need it, not a competing call to action. Still a 44px
-	   target, because on a phone it is the only route to the Persian site. */
-	.lang-link {
-		display: inline-flex;
-		align-items: center;
-		min-height: 44px;
-		padding: 0 10px;
-		border-radius: 8px;
-		color: var(--ink-soft);
-		font-weight: 600;
-		font-size: 0.95rem;
-		text-decoration: none;
-		white-space: nowrap;
-		transition: color 0.15s, background 0.15s;
-	}
-
-	.lang-link:hover {
-		color: var(--accent);
-		background: var(--accent-wash);
-	}
-
-	/* ── Hero ─────────────────────────────────────────── */
-	.hero {
-		min-height: 100vh;
-		display: grid;
-		grid-template-columns: 1fr 1fr;
-		align-items: center;
-		gap: 60px;
-		padding: 110px 80px 80px;
-		position: relative;
-		background: var(--paper);
-		overflow: hidden;
-	}
-
-	/* Ambient blobs */
-	.blob {
-		position: absolute;
-		border-radius: 50%;
-		filter: blur(90px);
-		opacity: 0.55;
-		pointer-events: none;
-	}
-
-	.blob-1 {
-		width: 520px;
-		height: 520px;
-		background: var(--accent-wash);
-		top: -120px;
-		right: -60px;
-		animation: blobDrift 9s ease-in-out infinite;
-	}
-
-	.blob-2 {
-		width: 420px;
-		height: 420px;
-		background: var(--leaf-wash);
-		bottom: -80px;
-		left: 35%;
-		animation: blobDrift 11s ease-in-out infinite reverse;
-	}
-
-	.blob-3 {
-		width: 320px;
-		height: 320px;
-		background: var(--leaf-wash);
-		top: 35%;
-		left: -80px;
-		animation: blobDrift 14s ease-in-out infinite;
-	}
-
-	@keyframes blobDrift {
+@keyframes blobDrift {
 		0%,
 		100% {
 			transform: translate(0, 0) scale(1);
@@ -1463,753 +1944,13 @@
 		}
 	}
 
-	.hero-content {
-		position: relative;
-		z-index: 2;
-	}
-
-	.hero-badge {
-		display: inline-block;
-		padding: 8px 18px;
-		background: var(--accent-wash);
-		border: 1px solid var(--accent);
-		border-radius: 50px;
-		font-size: 0.88rem;
-		font-weight: 600;
-		color: var(--accent-deep);
-		margin-bottom: 26px;
-	}
-
-	.hero-h1 {
-		font-family: var(--font-display);
-		font-size: clamp(2rem, 4.5vw, 3.4rem);
-		font-weight: 700;
-		line-height: 1.15;
-		color: var(--ink);
-		margin-bottom: 22px;
-		letter-spacing: -0.025em;
-	}
-
-	.hero-sub {
-		font-size: 1.12rem;
-		color: var(--ink-soft);
-		line-height: 1.75;
-		margin-bottom: 36px;
-		max-width: 520px;
-	}
-
-	.hero-actions {
-		display: flex;
-		gap: 16px;
-		flex-wrap: wrap;
-		margin-bottom: 28px;
-	}
-
-	.hero-trust {
-		display: flex;
-		gap: 22px;
-		flex-wrap: wrap;
-		color: var(--ink-soft);
-		font-size: 0.84rem;
-	}
-
-
-	/* ── Phone / Chat mockup ──────────────────────────── */
-	.hero-visual {
-		position: relative;
-		z-index: 2;
-		display: flex;
-		justify-content: center;
-		align-items: center;
-	}
-
-	.phone-frame {
-		width: 310px;
-		background: #2a2a3a;
-		border-radius: 40px;
-		border: 8px solid #2a2a3a;
-		box-shadow:
-			0 50px 100px rgba(0, 0, 0, 0.28),
-			0 0 0 1px rgba(0, 0, 0, 0.08);
-		overflow: hidden;
-		animation: phoneFloat 4.5s ease-in-out infinite;
-	}
-
-	@keyframes phoneFloat {
+@keyframes phoneFloat {
 		0%,
 		100% {
 			transform: translateY(0) rotate(-1deg);
 		}
 		50% {
 			transform: translateY(-14px) rotate(1deg);
-		}
-	}
-
-	.phone-notch {
-		width: 100px;
-		height: 24px;
-		background: #2a2a3a;
-		border-radius: 0 0 18px 18px;
-		margin: 0 auto;
-	}
-
-	.phone-screenshot {
-		width: 100%;
-		display: block;
-		border-radius: 0 0 32px 32px;
-	}
-
-	/* ── Stats strip ──────────────────────────────────── */
-	.stats-strip {
-		background: var(--paper-sunken);
-		border-top: 1px solid var(--line);
-		border-bottom: 1px solid var(--line);
-		padding: 44px 20px;
-	}
-
-	.stats-header {
-		text-align: center;
-		font-size: 0.8rem;
-		font-weight: 800;
-		letter-spacing: 0.18em;
-		text-transform: uppercase;
-		color: var(--accent-deep);
-		margin: 0 0 24px;
-		line-height: 1;
-	}
-
-	.stats-inner {
-		max-width: 860px;
-		margin: 0 auto;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-	}
-
-	.stat-item {
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		padding: 0 52px;
-		flex: 1;
-	}
-
-	.stat-num {
-		font-family: var(--font-display);
-		font-size: 2.3rem;
-		font-weight: 700;
-		color: var(--accent-deep);
-		line-height: 1;
-		margin-bottom: 7px;
-	}
-
-	.stat-lbl {
-		font-size: 0.82rem;
-		color: var(--ink-soft);
-		font-weight: 500;
-		text-align: center;
-	}
-
-	.stat-sep {
-		width: 1px;
-		height: 52px;
-		background: var(--line);
-	}
-
-	/* ── Section shell ────────────────────────────────── */
-	.lp-section {
-		padding: 100px 20px;
-		text-align: center;
-	}
-
-	.dark-section {
-		background: var(--paper-sunken);
-	}
-
-	.lp-inner {
-		max-width: 1200px;
-		margin: 0 auto;
-	}
-
-	/* ── How It Works steps ───────────────────────────── */
-	.steps-row {
-		display: flex;
-		align-items: flex-start;
-		justify-content: center;
-		gap: 0;
-		margin-top: 60px;
-	}
-
-	/* Philosophy cards. Two-up rather than the four-across the step row
-	   uses — these are sentences to read, not labels to scan, so they need
-	   the line length. */
-	.phil-grid {
-		display: grid;
-		grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-		gap: 20px;
-		max-width: 900px;
-		margin: 44px auto 0;
-		text-align: left;
-	}
-
-	.phil-card {
-		background: var(--paper-raised);
-		border: 1px solid var(--line);
-		box-shadow: var(--paper-shadow);
-		border-radius: 22px;
-		padding: 28px 26px;
-	}
-
-	.phil-card h3 {
-		margin: 0 0 10px;
-		font-size: 1.08rem;
-		line-height: 1.45;
-		color: var(--ink);
-	}
-
-	.phil-card p {
-		margin: 0;
-		color: var(--ink-soft);
-		line-height: 1.8;
-	}
-
-	.phil-card em {
-		font-style: normal;
-		font-weight: 600;
-		color: var(--ink);
-	}
-
-	/* Numbered rules. The counter is drawn rather than left to the list
-	   marker so it can take the accent and align with the text box. */
-	.rules {
-		list-style: none;
-		counter-reset: rule;
-		padding: 0;
-		margin: 44px auto 0;
-		max-width: 720px;
-		display: grid;
-		gap: 14px;
-		text-align: left;
-	}
-
-	.rules li {
-		counter-increment: rule;
-		position: relative;
-		padding-block: 20px;
-		padding-inline-start: 68px;
-		padding-inline-end: 24px;
-		background: var(--paper-raised);
-		border: 1px solid var(--line);
-		box-shadow: var(--paper-shadow);
-		border-radius: 18px;
-		color: var(--ink-soft);
-		line-height: 1.8;
-	}
-
-	.rules li::before {
-		content: counter(rule);
-		position: absolute;
-		inset-inline-start: 22px;
-		inset-block-start: 19px;
-		inline-size: 32px;
-		block-size: 32px;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		border-radius: 50%;
-		background: var(--accent);
-		color: var(--on-accent);
-		font-weight: 800;
-		font-size: 0.9rem;
-	}
-
-	.rules strong {
-		display: block;
-		color: var(--ink);
-		margin-bottom: 3px;
-	}
-
-	.step-card {
-		flex: 1;
-		max-width: 300px;
-		background: var(--paper-raised);
-		border: 1px solid var(--line);
-		box-shadow: var(--paper-shadow);
-		border-radius: 22px;
-		padding: 36px 26px;
-		text-align: center;
-		transition:
-			transform 0.35s ease,
-			border-color 0.35s ease,
-			box-shadow 0.35s ease;
-	}
-
-	.step-card:hover {
-		transform: translateY(-10px);
-		border-color: var(--accent);
-		box-shadow: 0 24px 60px rgba(0, 0, 0, 0.12);
-	}
-
-	.step-num {
-		display: block;
-		font-size: 0.75rem;
-		font-weight: 800;
-		letter-spacing: 0.12em;
-		color: var(--accent-deep);
-		margin-bottom: 14px;
-	}
-
-	.step-emoji {
-		display: block;
-		font-size: 3rem;
-		margin-bottom: 16px;
-	}
-
-	.step-card h3 {
-		font-size: 1.12rem;
-		font-weight: 700;
-		color: var(--ink);
-		margin-bottom: 12px;
-	}
-
-	.step-card p {
-		color: var(--ink-soft);
-		line-height: 1.65;
-		font-size: 0.93rem;
-	}
-
-	.step-arrow {
-		font-size: 2rem;
-		color: var(--ink-faint);
-		padding: 0 18px;
-		margin-top: 76px;
-		flex-shrink: 0;
-	}
-
-	/* ── Features grid ────────────────────────────────── */
-	.feat-grid {
-		display: grid;
-		grid-template-columns: repeat(2, 1fr);
-		gap: 22px;
-		margin-top: 60px;
-		text-align: left;
-	}
-
-	.feat-card {
-		background: var(--paper-raised);
-		border: 1px solid var(--line);
-		box-shadow: var(--paper-shadow);
-		border-radius: 20px;
-		padding: 30px 26px;
-		transition: all 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-		position: relative;
-		overflow: hidden;
-	}
-
-	.feat-card::after {
-		content: "";
-		position: absolute;
-		inset: 0;
-		background: linear-gradient(
-			135deg,
-			var(--accent-wash),
-			transparent
-		);
-		opacity: 0;
-		transition: opacity 0.3s;
-		border-radius: inherit;
-	}
-
-	.feat-card:hover {
-		transform: translateY(-7px);
-		border-color: var(--accent);
-		box-shadow: 0 24px 60px rgba(0, 0, 0, 0.12);
-	}
-
-	.feat-card:hover::after {
-		opacity: 1;
-	}
-
-	.feat-icon {
-		display: block;
-		font-size: 2.2rem;
-		margin-bottom: 16px;
-	}
-
-	.feat-card h3 {
-		font-size: 1.08rem;
-		font-weight: 700;
-		color: var(--ink);
-		margin-bottom: 10px;
-	}
-
-	.feat-card p {
-		color: var(--ink-soft);
-		line-height: 1.65;
-		font-size: 0.9rem;
-	}
-
-	.diff-line {
-		font-style: italic;
-		color: var(--ink-soft);
-		font-size: 0.95rem;
-	}
-
-	/* ── Journey section ──────────────────────────────── */
-	.journey-list {
-		list-style: none;
-		padding: 0;
-		margin: 0 0 32px;
-		display: flex;
-		flex-direction: column;
-		gap: 20px;
-	}
-
-	.journey-list li {
-		display: flex;
-		align-items: flex-start;
-		gap: 16px;
-	}
-
-	.j-dot {
-		width: 14px;
-		height: 14px;
-		border-radius: 50%;
-		flex-shrink: 0;
-		margin-top: 5px;
-	}
-
-	.j-dot.green {
-		background: var(--leaf);
-		box-shadow: 0 0 10px rgba(88, 214, 141, 0.35);
-	}
-
-	.j-dot.blue {
-		background: #5dade2;
-		box-shadow: 0 0 10px rgba(49, 89, 122, 0.35);
-	}
-
-	.j-dot.purple {
-		background: #a569bd;
-		box-shadow: 0 0 10px rgba(123, 75, 148, 0.35);
-	}
-
-	.journey-list li strong {
-		display: block;
-		color: var(--ink);
-		font-size: 1rem;
-		margin-bottom: 3px;
-	}
-
-	.journey-list li span {
-		color: var(--ink-soft);
-		font-size: 0.9rem;
-	}
-
-	.journey-list.centered {
-		max-width: 480px;
-		margin: 0 auto 32px;
-	}
-
-	/* ── Final CTA box ────────────────────────────────── */
-	.cta-section {
-		padding: 60px 20px 100px;
-	}
-
-	.cta-box {
-		background: var(--accent-wash);
-		border: 1px solid var(--line);
-		border-radius: 32px;
-		padding: 80px 40px;
-		max-width: 680px;
-		margin: 0 auto;
-	}
-
-	.cta-icon {
-		display: block;
-		font-size: 3.5rem;
-		margin-bottom: 20px;
-	}
-
-	.cta-box h2 {
-		font-family: var(--font-display);
-		font-size: clamp(1.6rem, 3.5vw, 2.4rem);
-		font-weight: 700;
-		color: var(--ink);
-		margin-bottom: 14px;
-	}
-
-	.cta-box > p {
-		color: var(--ink-soft);
-		font-size: 1.05rem;
-		margin-bottom: 36px;
-		line-height: 1.65;
-	}
-
-	.cta-fine {
-		margin-top: 18px !important;
-		font-size: 0.84rem !important;
-		color: var(--ink-faint) !important;
-		margin-bottom: 0 !important;
-	}
-
-	/* ── Footer ───────────────────────────────────────── */
-	.site-footer {
-		padding: 52px 20px;
-		background: var(--paper-sunken);
-		border-top: 1px solid var(--line);
-		text-align: center;
-	}
-
-	.footer-inner {
-		max-width: 600px;
-		margin: 0 auto;
-	}
-
-	.footer-brand {
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		gap: 8px;
-		font-size: 1.4rem;
-		margin-bottom: 10px;
-	}
-
-	.footer-brand span {
-		font-size: 1.9rem;
-	}
-
-	.footer-brand strong {
-		font-family: var(--font-display);
-		color: var(--accent-deep);
-		font-weight: 700;
-	}
-
-	.footer-inner > p {
-		color: var(--ink-faint);
-		font-size: 0.9rem;
-		margin-bottom: 6px;
-	}
-
-	.footer-nav {
-		display: flex;
-		justify-content: center;
-		flex-wrap: wrap;
-		gap: 8px 24px;
-		margin: 18px 0 14px;
-	}
-
-	.footer-nav a {
-		/* 24px is the WCAG 2.2 AA minimum for inline links;
-		   44px here would break the footer row. */
-		display: inline-flex;
-		align-items: center;
-		min-height: 24px;
-		padding: 2px 4px;
-		color: var(--ink-soft);
-		text-decoration: none;
-		font-size: 0.85rem;
-		transition: color 0.2s;
-	}
-
-	.footer-nav a:hover {
-		color: var(--accent-deep);
-	}
-
-	.footer-sub {
-		font-size: 0.82rem !important;
-	}
-
-	/* ── Who is Mirifer for grid ─────────────────────── */
-	.audience-grid {
-		display: grid;
-		grid-template-columns: repeat(2, 1fr);
-		gap: 22px;
-		margin-top: 48px;
-		text-align: left;
-	}
-
-	.audience-card {
-		background: var(--paper-raised);
-		border: 1px solid var(--line);
-		box-shadow: var(--paper-shadow);
-		border-radius: 20px;
-		padding: 30px 26px;
-		transition: all 0.35s ease;
-	}
-
-	.audience-card:hover {
-		transform: translateY(-6px);
-		border-color: var(--leaf);
-		box-shadow: 0 20px 50px rgba(0, 0, 0, 0.12);
-	}
-
-	.audience-emoji {
-		display: block;
-		font-size: 2rem;
-		margin-bottom: 14px;
-	}
-
-	.audience-card h3 {
-		font-size: 1.08rem;
-		font-weight: 700;
-		color: var(--ink);
-		margin-bottom: 10px;
-	}
-
-	.audience-card p {
-		color: var(--ink-soft);
-		line-height: 1.65;
-		font-size: 0.9rem;
-	}
-
-	/* ── FAQ ──────────────────────────────────────────── */
-	.faq-list {
-		max-width: 720px;
-		margin: 48px auto 0;
-		text-align: left;
-	}
-
-	.faq-item {
-		background: var(--paper-raised);
-		border: 1px solid var(--line);
-		box-shadow: var(--paper-shadow);
-		border-radius: 16px;
-		margin-bottom: 12px;
-		overflow: hidden;
-		transition: border-color 0.3s;
-	}
-
-	.faq-item[open] {
-		border-color: var(--accent);
-	}
-
-	.faq-item summary {
-		padding: 20px 24px;
-		font-size: 1.02rem;
-		font-weight: 600;
-		color: var(--ink);
-		cursor: pointer;
-		list-style: none;
-		display: flex;
-		align-items: center;
-		justify-content: space-between;
-		gap: 16px;
-	}
-
-	.faq-item summary::-webkit-details-marker {
-		display: none;
-	}
-
-	.faq-item summary::after {
-		content: "+";
-		font-size: 1.3rem;
-		font-weight: 300;
-		color: var(--accent);
-		flex-shrink: 0;
-		transition: transform 0.3s;
-	}
-
-	.faq-item[open] summary::after {
-		transform: rotate(45deg);
-	}
-
-	.faq-item p {
-		padding: 0 24px 20px;
-		color: var(--ink-soft);
-		line-height: 1.7;
-		font-size: 0.94rem;
-		margin: 0;
-	}
-
-	/* ── Responsive ───────────────────────────────────── */
-	@media (max-width: 960px) {
-		.hero {
-			grid-template-columns: 1fr;
-			padding: 100px 36px 70px;
-			text-align: center;
-			gap: 60px;
-		}
-
-		.hero-sub {
-			margin: 0 auto 36px;
-		}
-
-		.hero-actions {
-			justify-content: center;
-		}
-
-		.hero-trust {
-			justify-content: center;
-		}
-
-		.feat-grid {
-			grid-template-columns: repeat(2, 1fr);
-		}
-
-		.steps-row {
-			flex-direction: column;
-			align-items: center;
-		}
-
-		.step-arrow {
-			transform: rotate(90deg);
-			margin-top: 0;
-			padding: 10px 0;
-		}
-
-		.navbar {
-			padding: 16px 24px;
-		}
-
-		.navbar.scrolled {
-			padding: 12px 24px;
-		}
-	}
-
-	@media (max-width: 640px) {
-		.feat-grid,
-		.audience-grid {
-			grid-template-columns: 1fr;
-		}
-
-		.stats-inner {
-			flex-wrap: wrap;
-			gap: 0;
-		}
-
-		.stat-item {
-			padding: 18px 28px;
-			flex: 0 0 50%;
-		}
-
-		.stat-sep {
-			display: none;
-		}
-
-		.phone-frame {
-			width: 270px;
-		}
-
-		.navbar-right .btn-primary {
-			display: none;
-		}
-
-		/* Stays visible on mobile — most Iranian traffic is phone traffic, so
-		   this is exactly where it must not be the thing that gets dropped.
-		   Tightened instead of hidden. */
-		.lang-link {
-			padding: 0 6px;
-			font-size: 0.9rem;
-		}
-
-		.hero-actions {
-			flex-direction: column;
-			align-items: center;
-		}
-
-		.hero-badge {
-			font-size: 0.78rem;
 		}
 	}
 </style>
