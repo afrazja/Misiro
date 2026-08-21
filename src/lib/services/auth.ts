@@ -281,6 +281,32 @@ export async function signInWithGoogle(next = '/home'): Promise<{ error: string 
 }
 
 /** Update password */
+/**
+ * Send a password-reset link.
+ *
+ * There was no way to recover an account at all before this: no UI, no
+ * route, and updatePassword needs a session you cannot get without the
+ * password you have forgotten. The only recourse was an admin resetting it
+ * by hand, which does not scale past the people who know to ask.
+ *
+ * Goes through the auth callback, which already exchanges the code for a
+ * session — the same route email confirmation and Google sign-in take —
+ * and lands on /reset-password to choose the new one.
+ */
+export async function sendPasswordReset(email: string): Promise<{ error: string | null }> {
+	const client = sb();
+	if (!client) return { error: 'Supabase not configured' };
+	try {
+		const { error } = await client.auth.resetPasswordForEmail(email, {
+			redirectTo: window.location.origin + '/proxy/auth/callback?next=/reset-password'
+		});
+		if (error) return { error: error.message };
+		return { error: null };
+	} catch (e: any) {
+		return { error: e.message };
+	}
+}
+
 export async function updatePassword(newPassword: string): Promise<{ error: string | null }> {
 	const client = sb();
 	if (!client) return { error: 'Supabase not configured' };

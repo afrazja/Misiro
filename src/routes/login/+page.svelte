@@ -5,7 +5,9 @@
 	import * as auth from "$services/auth";
 	import * as dataLayer from "$services/data-layer";
 
-	let mode = $state<"signin" | "signup">("signin");
+	let mode = $state<"signin" | "signup" | "reset">("signin");
+	/** Set once a reset mail has gone out, so the form is replaced by advice. */
+	let resetSent = $state(false);
 
 	// Deep link from the guest demo win screen: /login?mode=signup
 	onMount(() => {
@@ -24,9 +26,41 @@
 		mode = mode === "signin" ? "signup" : "signin";
 		error = "";
 		emailSent = false;
+		resetSent = false;
+	}
+
+	function showReset() {
+		mode = "reset";
+		error = "";
+		resetSent = false;
+	}
+
+	/**
+	 * Ask for a reset link.
+	 *
+	 * The reply is deliberately the same whether or not the address has an
+	 * account. Saying "no account with that email" turns this form into a
+	 * way to test which of your users exist, and Supabase does not report
+	 * the difference either.
+	 */
+	async function sendReset() {
+		error = "";
+		if (!email.trim()) {
+			error = "Please enter your email.";
+			return;
+		}
+		loading = true;
+		const res = await auth.sendPasswordReset(email.trim());
+		loading = false;
+		if (res.error) {
+			error = res.error;
+			return;
+		}
+		resetSent = true;
 	}
 
 	async function submit() {
+		if (mode === "reset") return sendReset();
 		error = "";
 		if (!email.trim() || !password) {
 			error = "Please enter email and password.";
@@ -100,12 +134,18 @@
 			</div>
 		{:else}
 			<h1>
-				{mode === "signin" ? "Welcome back" : "Create your account"}
+				{mode === "reset"
+					? "Reset your password"
+					: mode === "signin"
+						? "Welcome back"
+						: "Create your account"}
 			</h1>
 			<p class="subtitle">
-				{mode === "signin"
-					? "Sign in to continue learning German."
-					: "Free during early access — no credit card."}
+				{mode === "reset"
+					? "We'll email you a link to choose a new one."
+					: mode === "signin"
+						? "Sign in to continue learning German."
+						: "Free during early access — no credit card."}
 			</p>
 
 			{#if error}
@@ -126,11 +166,13 @@
 				/placement send people, so the highest-intent signups met
 				nothing but the wall.
 			-->
-			<GoogleSignIn
-				position="above"
-				next="/home"
-				onError={(m) => (error = m)}
-			/>
+			{#if mode !== "reset"}
+				<GoogleSignIn
+					position="above"
+					next="/home"
+					onError={(m) => (error = m)}
+				/>
+			{/if}
 
 			{#if mode === "signup"}
 				<label for="login-name">Name</label>
@@ -154,30 +196,55 @@
 				onkeydown={handleKeydown}
 			/>
 
-			<label for="login-password">Password</label>
-			<input
-				id="login-password"
-				type="password"
-				bind:value={password}
-				placeholder={mode === "signup" ? "Min. 6 characters" : "Password"}
-				autocomplete={mode === "signup"
-					? "new-password"
-					: "current-password"}
-				onkeydown={handleKeydown}
-			/>
+			{#if mode !== "reset"}
+				<label for="login-password">Password</label>
+				<input
+					id="login-password"
+					type="password"
+					bind:value={password}
+					placeholder={mode === "signup" ? "Min. 6 characters" : "Password"}
+					autocomplete={mode === "signup"
+						? "new-password"
+						: "current-password"}
+					onkeydown={handleKeydown}
+				/>
+			{/if}
 
-			<button class="submit-btn" onclick={submit} disabled={loading}>
-				{loading
-					? "…"
-					: mode === "signin"
-						? "Sign In"
-						: "Create Account"}
-			</button>
+			{#if mode === "reset" && resetSent}
+				<!-- Same wording whether or not the address has an account.
+				     Confirming which emails exist would turn this into a user
+				     directory, and Supabase does not distinguish either. -->
+				<p class="sent-note">
+					If there's an account for <strong>{email.trim()}</strong>, a
+					reset link is on its way. It expires after a while and works
+					once — check spam if it doesn't appear.
+				</p>
+			{:else}
+				<button class="submit-btn" onclick={submit} disabled={loading}>
+					{loading
+						? "…"
+						: mode === "reset"
+							? "Send reset link"
+							: mode === "signin"
+								? "Sign In"
+								: "Create Account"}
+				</button>
+			{/if}
+
+			{#if mode === "signin"}
+				<!-- There was no recovery path at all before this: forgetting
+				     your password meant asking an admin to reset it by hand. -->
+				<button class="link-btn" onclick={showReset}>
+					Forgot your password?
+				</button>
+			{/if}
 
 			<button class="ghost-btn" onclick={toggleMode}>
-				{mode === "signin"
-					? "New here? Create a free account"
-					: "Already have an account? Sign in"}
+				{mode === "reset"
+					? "Back to sign in"
+					: mode === "signin"
+						? "New here? Create a free account"
+						: "Already have an account? Sign in"}
 			</button>
 		{/if}
 	</div>
@@ -300,6 +367,32 @@
 	.submit-btn:disabled {
 		opacity: 0.6;
 		cursor: wait;
+	}
+
+	.link-btn {
+		display: block;
+		inline-size: 100%;
+		min-block-size: 44px;
+		background: none;
+		border: none;
+		color: var(--ink-faint);
+		font: inherit;
+		font-size: 0.88rem;
+		text-decoration: underline;
+		cursor: pointer;
+	}
+
+	.link-btn:hover {
+		color: var(--accent);
+	}
+
+	.sent-note {
+		background: var(--paper-sunken);
+		border-radius: 10px;
+		padding: 14px 16px;
+		color: var(--ink-soft);
+		line-height: 1.7;
+		font-size: 0.9rem;
 	}
 
 	.ghost-btn {
