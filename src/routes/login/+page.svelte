@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { goto } from "$app/navigation";
+	import GoogleSignIn from "$components/GoogleSignIn.svelte";
 	import { onMount } from "svelte";
 	import * as auth from "$services/auth";
 	import * as dataLayer from "$services/data-layer";
@@ -110,6 +111,26 @@
 			{#if error}
 				<div class="error">{error}</div>
 			{/if}
+
+			<!--
+				Google leads, the password form follows.
+
+				56 accounts exist and roughly three in four have never signed
+				in — they entered an email, never confirmed it, and were never
+				seen again. Google skips the confirmation round-trip entirely:
+				no password to invent, no inbox to visit, no way to be lost
+				between the two.
+
+				This page had no Google option at all until now, which is the
+				worst place for that gap: it is where the level test and
+				/placement send people, so the highest-intent signups met
+				nothing but the wall.
+			-->
+			<GoogleSignIn
+				position="above"
+				next="/home"
+				onError={(m) => (error = m)}
+			/>
 
 			{#if mode === "signup"}
 				<label for="login-name">Name</label>

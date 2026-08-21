@@ -21,9 +21,18 @@
 		lang?: Language;
 		/** Shown when Google or Supabase refuses. */
 		onError?: (message: string) => void;
+		/**
+		 * Which side of the password form this sits on.
+		 *
+		 * 'below' keeps the divider above the button, reading "…form… or
+		 * [Google]". 'above' flips it, so the button leads and the divider
+		 * separates it from the form underneath. Getting this wrong prints
+		 * a stray "or" as the first thing on the page.
+		 */
+		position?: 'above' | 'below';
 	}
 
-	let { next = '/home', lang = 'en', onError }: Props = $props();
+	let { next = '/home', lang = 'en', onError, position = 'below' }: Props = $props();
 
 	const isFa = $derived(lang === 'fa');
 	let busy = $state(false);
@@ -42,10 +51,14 @@
 	}
 </script>
 
-<div class="gs">
+{#snippet divider()}
 	<div class="gs-or">
 		<span>{isFa ? 'یا' : 'or'}</span>
 	</div>
+{/snippet}
+
+<div class="gs" class:gs-above={position === 'above'}>
+	{#if position === 'below'}{@render divider()}{/if}
 
 	<button class="gs-btn" type="button" onclick={go} disabled={busy}>
 		<!-- Google's mark, inline. A remote image would be one more thing
@@ -79,6 +92,8 @@
 					: 'Continue with Google'}
 		</span>
 	</button>
+
+	{#if position === 'above'}{@render divider()}{/if}
 </div>
 
 <style>
@@ -93,6 +108,17 @@
 		margin-bottom: 12px;
 		color: var(--ink-faint);
 		font-size: 0.82rem;
+	}
+
+	/* Leading the page rather than trailing a form: no gap above, and the
+	   divider below the button instead of over it. */
+	.gs-above {
+		margin-top: 0;
+	}
+
+	.gs-above .gs-or {
+		margin-bottom: 0;
+		margin-top: 14px;
 	}
 
 	.gs-or::before,
