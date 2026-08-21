@@ -407,6 +407,16 @@
 
 			<GoogleSignIn next="/home" onError={(m) => (authError = m)} />
 
+			{#if authMode === "signin"}
+				<!-- This modal is a separate form from /login, so the reset
+				     link added there was invisible to anyone who signed in
+				     from here. Links across rather than duplicating the
+				     flow. -->
+				<p class="auth-forgot">
+					<a href="/login?mode=reset">Forgot your password?</a>
+				</p>
+			{/if}
+
 			<p class="auth-toggle">
 				<span
 					>{authMode === "signin"
@@ -1271,6 +1281,21 @@
 	.auth-submit:disabled {
 		opacity: 0.6;
 		cursor: not-allowed;
+	}
+
+	.auth-forgot {
+		text-align: center;
+		margin: 12px 0 0;
+		font-size: 0.86rem;
+	}
+
+	.auth-forgot a {
+		color: var(--ink-faint);
+		text-decoration: underline;
+	}
+
+	.auth-forgot a:hover {
+		color: var(--accent);
 	}
 
 	.auth-toggle {

@@ -703,6 +703,17 @@
 				lang={language}
 				onError={(m) => (authError = m)}
 			/>
+			{#if authMode === "signin"}
+				<!-- Third separate sign-in form. Links to /login's reset mode
+				     rather than growing its own copy of the flow. -->
+				<p class="auth-forgot">
+					<a href="/login?mode=reset">
+						{language === "fa"
+							? "رمز عبورت را فراموش کرده‌ای؟"
+							: "Forgot your password?"}
+					</a>
+				</p>
+			{/if}
 			<p class="auth-toggle">
 				<span
 					>{authMode === "signin"
@@ -2751,6 +2762,21 @@
 	.auth-submit:disabled {
 		opacity: 0.6;
 		cursor: not-allowed;
+	}
+
+	.auth-forgot {
+		text-align: center;
+		margin: 12px 0 0;
+		font-size: 0.86rem;
+	}
+
+	.auth-forgot a {
+		color: var(--ink-faint);
+		text-decoration: underline;
+	}
+
+	.auth-forgot a:hover {
+		color: var(--accent);
 	}
 
 	.auth-toggle {

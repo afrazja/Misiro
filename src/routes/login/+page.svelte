@@ -9,11 +9,18 @@
 	/** Set once a reset mail has gone out, so the form is replaced by advice. */
 	let resetSent = $state(false);
 
-	// Deep link from the guest demo win screen: /login?mode=signup
+	/**
+	 * Deep links: ?mode=signup from the guest demo win screen, ?mode=reset
+	 * from the sign-in modals on / and /home.
+	 *
+	 * Those modals are separate forms from this page — which is why adding
+	 * "Forgot your password?" here alone left it invisible to anyone who
+	 * signed in from the landing page. They link here rather than each
+	 * growing their own copy of the reset flow.
+	 */
 	onMount(() => {
-		if (new URLSearchParams(location.search).get("mode") === "signup") {
-			mode = "signup";
-		}
+		const m = new URLSearchParams(location.search).get("mode");
+		if (m === "signup" || m === "reset") mode = m;
 	});
 	let email = $state("");
 	let password = $state("");
