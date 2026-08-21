@@ -1,7 +1,13 @@
 <script lang="ts">
-	// Self-hosted brand fonts (no external font CDN — PWA/offline friendly):
-	// Fraunces = display serif; Vazirmatn = Latin+Persian harmonized body.
-	import '@fontsource-variable/fraunces';
+	// Self-hosted brand fonts (no external font CDN — PWA/offline friendly).
+	//
+	// Newsreader = display serif, IBM Plex Sans = body: the two the redesign
+	// specifies. Vazirmatn stays because neither covers Persian — it sits
+	// after them in the stacks so browsers fall back PER GLYPH, giving Latin
+	// the designed face and Persian a real Persian face in the same line.
+	// Dropping it would have left every Persian page on a system fallback.
+	import '@fontsource-variable/newsreader';
+	import '@fontsource-variable/ibm-plex-sans';
 	import '@fontsource-variable/vazirmatn';
 	import '../app.css';
 	import { onMount } from 'svelte';

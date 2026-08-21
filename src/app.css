@@ -129,8 +129,12 @@
 	--on-strip-accent: #4ade80;
 	--field: #e9e3dc;
 	--field-dot: rgba(20, 32, 27, 0.05);
-	--font-display: 'Fraunces Variable', Georgia, 'Iowan Old Style', 'Times New Roman', serif;
-	--font-body: 'Vazirmatn Variable', 'Segoe UI', -apple-system, Tahoma, Geneva, Verdana, sans-serif;
+	/* Vazirmatn trails both Latin faces on purpose: neither Newsreader nor
+	   IBM Plex covers Persian, and per-glyph fallback means one line can
+	   render Latin in the designed face and Persian in a proper Persian
+	   one. Removing it would break every /fa page. */
+	--font-display: 'Newsreader Variable', 'Vazirmatn Variable', Georgia, 'Times New Roman', serif;
+	--font-body: 'IBM Plex Sans Variable', 'Vazirmatn Variable', 'Segoe UI', -apple-system, system-ui, sans-serif;
 	/* Figures and small labels. The redesign leans on monospace to make
 	   numbers scannable — day counts, "5 / 18", "pass 60", playback speeds —
 	   and it is the one typographic move that carries across every screen.
