@@ -2,6 +2,7 @@
 	import { onMount } from "svelte";
 	import AppHeader from "$lib/components/AppHeader.svelte";
 	import { getLanguage, setLanguage, getBasicsCompleted } from "$services/data-layer";
+	import { GROUPS, groupFor, matchesQuery, type GroupId } from "$services/basics-groups";
 	import type { Language } from "$stores/preferences";
 
 	let { data } = $props();
@@ -11,6 +12,10 @@
 	// Topics the learner has worked all the way through, written by
 	// /basics/[category] when its closing checks are finished.
 	let completed = $state(new Set<string>());
+
+	/** Search box and the active filter chip, both from the artboard. */
+	let query = $state("");
+	let filter = $state<GroupId | "all">("all");
 
 	const categories = $derived(
 		(data.categories ?? []).map((cat: any) => ({
@@ -24,6 +29,39 @@
 	);
 
 	const doneCount = $derived(categories.filter((c: any) => c.done).length);
+
+	/** Chips carry their own counts, so an empty filter is visible before it is tapped. */
+	const chips = $derived([
+		{
+			id: "all" as const,
+			label: currentLang === "fa" ? "همه" : "All",
+			count: categories.length,
+		},
+		...GROUPS.map((g) => ({
+			id: g.id,
+			label: currentLang === "fa" ? g.fa : g.en,
+			count: categories.filter((c: any) => groupFor(c.key) === g.id).length,
+		})),
+	]);
+
+	const visible = $derived(
+		categories.filter(
+			(c: any) =>
+				(filter === "all" || groupFor(c.key) === filter) &&
+				matchesQuery(c, query),
+		),
+	);
+
+	/**
+	 * Only groups with something in them, so a filter or a search never
+	 * leaves a bare heading with nothing underneath it.
+	 */
+	const sections = $derived(
+		GROUPS.map((g) => ({
+			...g,
+			topics: visible.filter((c: any) => groupFor(c.key) === g.id),
+		})).filter((g) => g.topics.length > 0),
+	);
 
 	const pageTitle = $derived(
 		currentLang === "fa" ? "مبانی آلمانی" : "German Basics",
@@ -97,27 +135,88 @@
 	<span id="main-content" tabindex="-1" class="sr-only"></span>
 
 
-	{#if doneCount > 0}
-		<p class="topic-progress" dir={currentLang === "fa" ? "rtl" : "ltr"}>
-			{currentLang === "fa"
-				? `${doneCount} از ${categories.length} مبحث تمام شده`
-				: `${doneCount} of ${categories.length} topics complete`}
+	<div class="shelf" dir={currentLang === "fa" ? "rtl" : "ltr"}>
+		<!-- The count is the artboard's "5 / 18 topics finished". Shown from
+		     zero rather than only once something is done: on a first visit it
+		     says how much there is, which is the more useful reading. -->
+		<p class="tally">
+			<strong>{doneCount} / {categories.length}</strong>
+			<span>{currentLang === "fa" ? "مبحث تمام‌شده" : "topics finished"}</span>
 		</p>
-	{/if}
 
-	<div class="categories-grid" id="categories-container">
-		{#each categories as cat (cat.key)}
-			<a href="/basics/{cat.key}" class="category-card" class:done={cat.done}>
-				<div class="category-icon">{cat.icon}</div>
-				<div class="category-title">{cat.title}</div>
-				<div class="category-desc">{cat.description}</div>
-				{#if cat.done}
-					<div class="category-arrow done-tick" aria-label="Completed">✓</div>
-				{:else}
-					<div class="category-arrow">&rarr;</div>
-				{/if}
-			</a>
-		{/each}
+		<div class="finder">
+			<input
+				type="search"
+				class="search"
+				bind:value={query}
+				placeholder={currentLang === "fa"
+					? "جست‌وجو در مبحث‌ها…"
+					: "Search topics…"}
+				aria-label={currentLang === "fa" ? "جست‌وجو" : "Search topics"}
+			/>
+			<div class="chips" role="group" aria-label={currentLang === "fa" ? "دسته‌ها" : "Filter by group"}>
+				{#each chips as c (c.id)}
+					<button
+						type="button"
+						class="chip"
+						class:on={filter === c.id}
+						aria-pressed={filter === c.id}
+						onclick={() => (filter = c.id)}
+					>
+						{c.label}<em>{c.count}</em>
+					</button>
+				{/each}
+			</div>
+		</div>
+
+		{#if sections.length === 0}
+			<div class="empty">
+				<p class="empty-head">
+					{currentLang === "fa" ? "چیزی پیدا نشد." : "Nothing matches that."}
+				</p>
+				<p class="empty-sub">
+					{currentLang === "fa"
+						? "«حالت‌ها»، «ترتیب کلمات» یا «فعل» را امتحان کن، یا جست‌وجو را پاک کن."
+						: "Try “cases”, “word order”, “modal” — or clear the search."}
+				</p>
+				<button class="chip" type="button" onclick={() => { query = ""; filter = "all"; }}>
+					{currentLang === "fa" ? "پاک کردن" : "Clear"}
+				</button>
+			</div>
+		{:else}
+			{#each sections as g (g.id)}
+				<section class="group">
+					<div class="group-head">
+						<h2>{currentLang === "fa" ? g.fa : g.en}</h2>
+						<p>{currentLang === "fa" ? g.noteFa : g.noteEn}</p>
+					</div>
+					<ul class="topics">
+						{#each g.topics as cat (cat.key)}
+							<li>
+								<a href="/basics/{cat.key}" class="topic" class:done={cat.done}>
+									<span class="t-icon" aria-hidden="true">{cat.icon}</span>
+									<span class="t-body">
+										<span class="t-title">{cat.title}</span>
+										<span class="t-desc">{cat.description}</span>
+									</span>
+									<span class="t-status">
+										{#if cat.done}
+											<span class="t-done">
+												✓ {currentLang === "fa" ? "تمام" : "Done"}
+											</span>
+										{:else}
+											<span class="t-open">
+												{currentLang === "fa" ? "باز کن" : "Open"}
+											</span>
+										{/if}
+									</span>
+								</a>
+							</li>
+						{/each}
+					</ul>
+				</section>
+			{/each}
+		{/if}
 	</div>
 </main>
 
@@ -126,11 +225,13 @@
 		background: var(--paper);
 	}
 
+
 	.basics-container {
 		max-width: 900px;
 		margin: 0 auto;
 		padding: 30px 20px;
 	}
+
 
 	.controls select {
 		/* 44px minimum touch target. */
@@ -144,118 +245,226 @@
 		cursor: pointer;
 	}
 
+
 	.controls select option {
 		background: var(--paper-raised);
 		color: var(--ink);
 	}
 
-	.categories-grid {
-		display: grid;
-		grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-		gap: 20px;
-		margin-top: 28px;
+	/* ── The shelf (German Basics artboard) ──────────────── */
+	.shelf {
+		margin-top: 26px;
 	}
 
-	.topic-progress {
-		margin: 22px 0 0;
-		color: var(--ink-soft);
-		font-size: 0.9rem;
-		font-weight: 600;
+	.tally {
+		display: flex;
+		align-items: baseline;
+		gap: 10px;
+		margin: 0 0 22px;
 	}
 
-	.category-card.done {
-		border-color: var(--leaf);
-		background: linear-gradient(145deg, var(--leaf-wash), var(--paper-raised));
+	.tally strong {
+		font-family: var(--font-display);
+		font-size: var(--type-display-lg);
+		font-weight: 500;
+		letter-spacing: -0.02em;
+		color: var(--accent);
+		line-height: 1;
 	}
 
-	.done-tick {
-		color: var(--leaf);
+	.tally span {
+		font-family: var(--font-mono);
+		font-size: var(--type-label);
+		letter-spacing: var(--tracking-label);
+		text-transform: uppercase;
+		color: var(--ink-faint);
 	}
 
-	.category-card {
-		background: var(--paper-raised);
-		border-radius: 20px;
-		padding: 25px;
-		text-decoration: none;
-		color: var(--ink);
-		/* Green outline: the category grid was a wall of white panels. */
-		border: 1.5px solid var(--leaf);
-		box-shadow: var(--paper-shadow);
-		transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+	.finder {
 		display: flex;
 		flex-direction: column;
-		position: relative;
-		overflow: hidden;
+		gap: 12px;
+		margin-bottom: 30px;
 	}
 
-	.category-card::before {
-		content: "";
-		position: absolute;
-		top: 0;
-		left: 0;
-		right: 0;
-		bottom: 0;
-		background: linear-gradient(
-			145deg,
-			var(--leaf-wash),
-			transparent
-		);
-		opacity: 0;
-		transition: opacity 0.3s ease;
+	.search {
+		inline-size: 100%;
+		box-sizing: border-box;
+		min-block-size: 46px;
+		padding: 10px 16px;
+		border: 1px solid var(--control-border);
+		border-radius: var(--radius-control);
+		background: var(--control);
+		color: var(--ink);
+		font: inherit;
 	}
 
-	.category-card:hover {
-		transform: translateY(-8px) scale(1.02);
-		border-color: var(--leaf);
-		box-shadow: 0 15px 40px rgba(88, 214, 141, 0.18);
+	.search:focus {
+		outline: 2px solid var(--accent);
+		outline-offset: 1px;
 	}
 
-	.category-card:hover::before {
-		opacity: 1;
+	.chips {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 8px;
 	}
 
-	.category-icon {
-		font-size: 2.5rem;
-		margin-bottom: 15px;
-		filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.12));
-	}
-
-	.category-title {
-		font-size: 1.3rem;
-		font-weight: 700;
-		font-family: var(--font-display);
-		margin-bottom: 8px;
-		position: relative;
-		z-index: 1;
-	}
-
-	.category-desc {
+	.chip {
+		display: inline-flex;
+		align-items: center;
+		gap: 7px;
+		min-block-size: 44px;
+		padding: 6px 15px;
+		border: 1px solid var(--line);
+		border-radius: var(--radius-pill);
+		background: var(--control);
 		color: var(--ink-soft);
+		font: inherit;
 		font-size: 0.9rem;
+		cursor: pointer;
+	}
+
+	.chip:hover {
+		border-color: var(--accent);
+		color: var(--accent);
+	}
+
+	.chip.on {
+		background: var(--accent);
+		border-color: var(--accent);
+		color: var(--on-accent);
+	}
+
+	/* The count rides inside the chip, so an empty filter is visible
+	   before it is tapped rather than after. */
+	.chip em {
+		font-family: var(--font-mono);
+		font-style: normal;
+		font-size: 0.72rem;
+		opacity: 0.7;
+	}
+
+	.group {
+		margin-bottom: 34px;
+	}
+
+	.group-head {
+		border-block-end: 1px solid var(--line);
+		padding-block-end: 10px;
+		margin-block-end: 4px;
+	}
+
+	.group-head h2 {
+		font-family: var(--font-display);
+		font-size: var(--type-display-md);
+		font-weight: 500;
+		letter-spacing: -0.015em;
+		margin: 0;
+		color: var(--ink);
+	}
+
+	.group-head p {
+		margin: 4px 0 0;
+		font-size: var(--type-small);
+		color: var(--ink-faint);
+	}
+
+	.topics {
+		list-style: none;
+		padding: 0;
+		margin: 0;
+	}
+
+	/* A row, not a card. Eighteen cards is a wall; eighteen rows is a
+	   list you can run your eye down, which is what a reference shelf
+	   is for. */
+	.topic {
+		display: grid;
+		grid-template-columns: 34px minmax(0, 1fr) auto;
+		align-items: center;
+		gap: 14px;
+		padding: 15px 6px;
+		border-block-end: 1px solid var(--line);
+		text-decoration: none;
+		color: var(--ink);
+		min-block-size: 60px;
+	}
+
+	.topic:hover {
+		background: var(--control-hover);
+	}
+
+	.t-icon {
+		font-size: 1.35rem;
+	}
+
+	.t-body {
+		display: flex;
+		flex-direction: column;
+		gap: 2px;
+		min-width: 0;
+	}
+
+	.t-title {
+		font-size: var(--type-title);
+		font-weight: 600;
+		letter-spacing: -0.005em;
+	}
+
+	.t-desc {
+		font-size: var(--type-small);
+		color: var(--ink-faint);
 		line-height: 1.5;
-		position: relative;
-		z-index: 1;
-		flex: 1;
 	}
 
-	.category-arrow {
-		position: absolute;
-		right: 20px;
-		top: 50%;
-		transform: translateY(-50%) translateX(-10px);
-		font-size: 1.3rem;
-		opacity: 0;
-		transition: all 0.3s ease;
+	.t-status {
+		font-family: var(--font-mono);
+		font-size: var(--type-label);
+		letter-spacing: var(--tracking-label);
+		text-transform: uppercase;
+		white-space: nowrap;
 	}
 
-	.category-card:hover .category-arrow {
-		opacity: 1;
-		transform: translateY(-50%) translateX(0);
+	.t-done {
+		color: var(--leaf-deep);
 	}
 
-	@media (max-width: 600px) {
-		.categories-grid {
-			grid-template-columns: 1fr;
+	.t-open {
+		color: var(--ink-faint);
+	}
+
+	.topic.done .t-title {
+		color: var(--ink-soft);
+	}
+
+	.empty {
+		text-align: center;
+		padding: 48px 20px;
+		background: var(--paper-sunken);
+		border-radius: var(--radius-card);
+	}
+
+	.empty-head {
+		font-family: var(--font-display);
+		font-size: var(--type-display-md);
+		margin: 0 0 6px;
+		color: var(--ink);
+	}
+
+	.empty-sub {
+		margin: 0 0 18px;
+		color: var(--ink-soft);
+	}
+
+	@media (max-width: 640px) {
+		.topic {
+			grid-template-columns: 28px minmax(0, 1fr);
+			row-gap: 6px;
+		}
+
+		.t-status {
+			grid-column: 2;
 		}
 	}
 </style>
