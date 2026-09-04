@@ -1,5 +1,12 @@
 import { describe, it, expect } from 'vitest';
-import { highestCompleted, frontierDay, isUnlocked, unlockedBy } from './lesson-access';
+import {
+	highestCompleted,
+	frontierDay,
+	isUnlocked,
+	unlockedBy,
+	weekDays,
+	isWeekUnlocked
+} from './lesson-access';
 
 const done = (days: number[]) => Object.fromEntries(days.map((d) => [String(d), { at: 1 }]));
 
@@ -110,5 +117,49 @@ describe('unlockedBy', () => {
 		// "Finish day 3 first" is actionable; a bare padlock is not.
 		expect(unlockedBy(9, done([1, 2]))).toBe(3);
 		expect(unlockedBy(2, {})).toBe(1);
+	});
+});
+
+describe('isWeekUnlocked', () => {
+	const all = () => true;
+	const upTo = (n: number) => (d: number) => d <= n;
+
+	it('opens a week only once every day in it is finished', () => {
+		expect(isWeekUnlocked(1, done([1, 2, 3, 4, 5, 6]), all)).toBe(false);
+		expect(isWeekUnlocked(1, done([1, 2, 3, 4, 5, 6, 7]), all)).toBe(true);
+	});
+
+	it('waits for the week to be finished, not merely reached', () => {
+		// Arriving at day 8 does not open the week-2 exam: it would test six
+		// days the learner has not met, which is the opposite of its purpose.
+		expect(isWeekUnlocked(2, done([1, 2, 3, 4, 5, 6, 7, 8]), all)).toBe(false);
+	});
+
+	it('counts week 2 as days 8-14', () => {
+		expect(weekDays(2)).toEqual([8, 9, 10, 11, 12, 13, 14]);
+		const first14 = Array.from({ length: 14 }, (_, i) => i + 1);
+		expect(isWeekUnlocked(2, done(first14), all)).toBe(true);
+	});
+
+	it('ignores days the course does not have', () => {
+		// Week 15 spans 99-105 but the course stops at 100. Requiring the
+		// missing five would lock that exam forever.
+		expect(isWeekUnlocked(15, done([99, 100]), upTo(100))).toBe(true);
+	});
+
+	it('locks a week with no lessons at all', () => {
+		// [].every() is true — without the guard every week past the end of
+		// the course would quietly unlock.
+		expect(isWeekUnlocked(30, done([1, 2, 3]), upTo(100))).toBe(false);
+	});
+
+	it('locks everything for a new account', () => {
+		for (const w of [1, 2, 5]) expect(isWeekUnlocked(w, {}, all), `week ${w}`).toBe(false);
+	});
+
+	it('refuses a nonsense week number', () => {
+		for (const w of [0, -1, 1.5, NaN]) {
+			expect(isWeekUnlocked(w as number, done([1, 2, 3]), all), `${w}`).toBe(false);
+		}
 	});
 });

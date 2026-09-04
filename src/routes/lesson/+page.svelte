@@ -5,7 +5,7 @@
 	import { preferencesStore, type Language } from "$stores/preferences";
 	import { lessonStore, type Sentence } from "$stores/lesson";
 	import { examStore } from "$stores/exam";
-	import { isUnlocked } from "$services/lesson-access";
+	import { isUnlocked, isWeekUnlocked } from "$services/lesson-access";
 	import {
 		setCallbacks,
 		initLesson,
@@ -865,15 +865,20 @@
 							</option>
 						{/each}
 						{#if days.length === 7}
-							<option value="exam{weekNum}">
-								{prefs.language === "fa"
+							{@const weekOpen = isWeekUnlocked(
+								Number(weekNum),
+								app.completedLessons,
+								hasLesson,
+							)}
+							<option value="exam{weekNum}" disabled={!weekOpen}>
+								{weekOpen ? "" : "🔒 "}{prefs.language === "fa"
 									? `آزمون هفته ${weekNum}`
 									: `Week ${weekNum} Exam`}
 							</option>
-							<option value="talk{weekNum}">
-								{prefs.language === "fa"
-									? `💬 گفتگوی هفته ${weekNum}`
-									: `💬 Week ${weekNum} Talk`}
+							<option value="talk{weekNum}" disabled={!weekOpen}>
+								{weekOpen ? "💬 " : "🔒 "}{prefs.language === "fa"
+									? `گفتگوی هفته ${weekNum}`
+									: `Week ${weekNum} Talk`}
 							</option>
 						{/if}
 					</optgroup>

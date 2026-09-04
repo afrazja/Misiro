@@ -70,3 +70,39 @@ export function unlockedBy(
 	if (isUnlocked(day, completedLessons)) return null;
 	return frontierDay(completedLessons);
 }
+
+/** Days per week block, matching how the week exams are numbered. */
+export const WEEK_LENGTH = 7;
+
+/** The day numbers week `n` covers, existing or not. */
+export function weekDays(week: number): number[] {
+	if (!Number.isInteger(week) || week < 1) return [];
+	const first = (week - 1) * WEEK_LENGTH + 1;
+	return Array.from({ length: WEEK_LENGTH }, (_, i) => first + i);
+}
+
+/**
+ * Whether a week's exam and Week Talk are open.
+ *
+ * The rule is every day in the week that actually exists, completed. An exam
+ * unlocked on arrival rather than on completion would test material the
+ * learner has not met — the opposite of what it is for — so this waits for
+ * the week to be finished rather than merely reached.
+ *
+ * `hasLesson` is passed in rather than imported so this module stays pure
+ * and the last, partial week works: week 15 spans days 99-105 but only two
+ * of those exist, and requiring the missing five would lock it forever.
+ *
+ * A week with no lessons at all is LOCKED, not open. `[].every()` is true,
+ * which would have quietly unlocked every week past the end of the course.
+ */
+export function isWeekUnlocked(
+	week: number,
+	completedLessons: Record<string | number, unknown> | null | undefined,
+	hasLesson: (day: number) => boolean
+): boolean {
+	const existing = weekDays(week).filter(hasLesson);
+	if (existing.length === 0) return false;
+	const completed = completedLessons ?? {};
+	return existing.every((d) => !!completed[d] || !!completed[String(d)]);
+}

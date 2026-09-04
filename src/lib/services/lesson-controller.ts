@@ -25,7 +25,7 @@ import {
 	resolveResumePoint,
 	getTotalLessons
 } from '$services/lesson-loader';
-import { isUnlocked, unlockedBy } from '$services/lesson-access';
+import { isUnlocked, unlockedBy, isWeekUnlocked } from '$services/lesson-access';
 import { getLanguage, getVoiceSpeed, getCompletedLessons, getProgress, saveProgress, saveCompletedLessons } from '$services/data-layer';
 import { recordSRAttempt, getDueReviewItems, removeFromReview } from '$services/spaced-repetition';
 import {
@@ -757,6 +757,20 @@ async function handleLessonIncorrect(step: Sentence, targetGerman: string, trans
 // ============ EXAM SYSTEM ============
 
 export async function startExam(week: number): Promise<void> {
+	// Same reason changeDay carries this: a disabled <option> is presentation,
+	// and these are exported functions any call site can reach. A week opens
+	// once its lessons are finished, not when the learner arrives at it —
+	// testing material they have not met is the opposite of the point.
+	if (!isWeekUnlocked(week, get(appStore).completedLessons, hasLesson)) {
+		const isFa = get(preferencesStore).language === 'fa';
+		callbacks?.onSystemMessage(
+			isFa
+				? `این بخش هنوز باز نشده — اول درس‌های هفته ${week} را تمام کن.`
+				: `Not open yet — finish the week ${week} lessons first.`
+		);
+		return;
+	}
+
 	const prefs = get(preferencesStore);
 	incrementSession();
 	stopAllAudio();
@@ -1208,6 +1222,20 @@ function deactivateConversation(): void {
 }
 
 export async function startConversation(week: number): Promise<void> {
+	// Same reason changeDay carries this: a disabled <option> is presentation,
+	// and these are exported functions any call site can reach. A week opens
+	// once its lessons are finished, not when the learner arrives at it —
+	// testing material they have not met is the opposite of the point.
+	if (!isWeekUnlocked(week, get(appStore).completedLessons, hasLesson)) {
+		const isFa = get(preferencesStore).language === 'fa';
+		callbacks?.onSystemMessage(
+			isFa
+				? `این بخش هنوز باز نشده — اول درس‌های هفته ${week} را تمام کن.`
+				: `Not open yet — finish the week ${week} lessons first.`
+		);
+		return;
+	}
+
 	const prefs = get(preferencesStore);
 	const isFa = prefs.language === 'fa';
 	incrementSession();
