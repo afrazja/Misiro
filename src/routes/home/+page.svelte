@@ -16,13 +16,10 @@
 		type LessonMeta,
 	} from "$services/lesson-loader";
 	import {
-		levelProgress,
 		tierForDay,
 		TIER_LABELS,
-		type LevelProgress,
 	} from "$services/curriculum";
 	import { lessonMinutes } from "$services/lesson-duration";
-	import { getCheckpointsDone } from "$services/data-layer";
 	import {
 		computeReadiness,
 		READINESS_MODULES,
@@ -64,7 +61,6 @@
 
 	// Goethe hero
 	let readiness = $state<Readiness | null>(null);
-	let roadmap = $state<LevelProgress[]>([]);
 	/** Estimated minutes for today's lesson, from its actual content. */
 	let todayMinutes = $state<number | null>(null);
 
@@ -315,23 +311,9 @@
 		// not-yet-completed day, never a stale revisit).
 		currentDay = resolveResumePoint(progress, completed).day;
 
-		// Cheap and local first. levelProgress is pure and the checkpoint list
-		// is localStorage, so the roadmap can render even if every network
-		// call below hangs — which is the failure mode that would otherwise
-		// make the whole dashboard look unchanged.
-		try {
-			const days = Object.keys(completedLessons || {})
-				.map((k) => Number(k))
-				.filter((n) => Number.isFinite(n));
-			roadmap = levelProgress(days, getCheckpointsDone());
-		} catch {
-			roadmap = [];
-		}
-
 		// The minute estimate needs the lesson itself. Fire-and-forget on
 		// purpose: it is one line of text, and awaiting it here would let a
-		// single slow Supabase read hold up the readiness bars, the roadmap
-		// and the checkpoint card behind it.
+		// single slow Supabase read hold up everything behind it.
 		void loadLesson(currentDay)
 			.then((l) => (todayMinutes = lessonMinutes(l) || null))
 			.catch(() => (todayMinutes = null));
@@ -856,15 +838,6 @@
 					<span aria-hidden="true">★</span>{language === "fa" ? "کلمه‌های ذخیره‌شده" : "Saved words"}
 				</a>
 			</nav>
-			<div class="rail-user">
-				<div class="rail-avatar">
-					{#if avatarUrl}<img src={avatarUrl} alt="" />{:else}{(displayName || "L").charAt(0).toUpperCase()}{/if}
-				</div>
-				<div class="rail-who">
-					<strong>{displayName}</strong>
-					<span>{totalXp} {language === "fa" ? "امتیاز" : "points"}</span>
-				</div>
-			</div>
 		</aside>
 	{/if}
 
@@ -1052,29 +1025,6 @@
 
 	<!-- ── Progress Stats ──────────────────────────────── -->
 	{#if isAuthenticated && !isNewUser}
-		<!-- The course map. A learner on Day 44 was being told their "A1
-		     readiness" with no way to see that A1 ended twenty days ago. -->
-		{#if roadmap.length}
-			<section class="roadmap" aria-label="Course progress">
-				{#each roadmap as lv (lv.level)}
-					<div class="rm-level" class:current={lv.current} class:done={lv.percent === 100}>
-						<div class="rm-head">
-							<span class="rm-name">{lv.level}</span>
-							<span class="rm-count">{lv.daysDone}/{lv.daysTotal}</span>
-						</div>
-						<div class="rm-bar">
-							<div class="rm-fill" style="width:{lv.percent}%"></div>
-						</div>
-						<div class="rm-cps" aria-label="{lv.checkpointsDone} of {lv.checkpointsTotal} checkpoints done">
-							{#each Array(lv.checkpointsTotal) as _, i}
-								<span class="rm-cp" class:passed={i < lv.checkpointsDone}></span>
-							{/each}
-						</div>
-					</div>
-				{/each}
-			</section>
-		{/if}
-
 		<div class="stats-row action-row">
 			<a
 				href="/vocabulary"
@@ -1183,14 +1133,6 @@
 		</div>
 	{/if}
 
-	<!-- ── Footer ──────────────────────────────────────── -->
-	<footer class="home-footer">
-		<p>
-			{language === "fa"
-				? "ساخته‌شده با ❤️ برای زبان‌آموزها"
-				: "Made with ❤️ for language learners"}
-		</p>
-	</footer>
 </main>
 </div>
 
@@ -1204,9 +1146,11 @@
 
 
 
+
 	:global(body) {
 		background: var(--paper);
 	}
+
 
 
 
@@ -1221,9 +1165,11 @@
 
 
 
+
 	.rail {
 		display: none;
 	}
+
 
 
 
@@ -1262,6 +1208,7 @@
 
 
 
+
 	.rail-brand {
 		display: flex;
 		align-items: center;
@@ -1272,6 +1219,7 @@
 		color: var(--ink);
 		text-decoration: none;
 	}
+
 
 
 
@@ -1289,11 +1237,13 @@
 
 
 
+
 	.rail-nav {
 		display: flex;
 		flex-direction: column;
 		gap: 2px;
 	}
+
 
 
 
@@ -1315,6 +1265,7 @@
 
 
 
+
 	.rail-item span {
 		color: var(--ink-faint);
 		font-size: 0.8rem;
@@ -1324,10 +1275,12 @@
 
 
 
+
 	.rail-item:hover {
 		background: var(--control-hover);
 		color: var(--ink);
 	}
+
 
 
 
@@ -1343,9 +1296,11 @@
 
 
 
+
 	.rail-item.is-current span {
 		color: var(--accent);
 	}
+
 
 
 
@@ -1363,79 +1318,6 @@
 		padding: 2px 8px;
 	}
 
-
-
-
-
-	.rail-user {
-		margin-block-start: auto;
-		display: flex;
-		align-items: center;
-		gap: 10px;
-		padding-block-start: var(--space-4);
-		border-block-start: 1px solid var(--line);
-	}
-
-
-
-
-
-	.rail-avatar {
-		inline-size: 34px;
-		block-size: 34px;
-		border-radius: 50%;
-		background: var(--accent);
-		color: var(--on-accent);
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		font-weight: 700;
-		font-size: 0.9rem;
-		overflow: hidden;
-		flex: none;
-	}
-
-
-
-
-
-	.rail-avatar img {
-		inline-size: 100%;
-		block-size: 100%;
-		object-fit: cover;
-	}
-
-
-
-
-
-	.rail-who {
-		display: flex;
-		flex-direction: column;
-		min-width: 0;
-	}
-
-
-
-
-
-	.rail-who strong {
-		font-size: 0.9rem;
-		white-space: nowrap;
-		overflow: hidden;
-		text-overflow: ellipsis;
-	}
-
-
-
-
-
-	.rail-who span {
-		font-family: var(--font-mono);
-		font-size: var(--type-label);
-		letter-spacing: var(--tracking-label);
-		color: var(--ink-faint);
-	}
 
 
 
@@ -1460,9 +1342,11 @@
 
 
 
+
 	.nav-profile {
 		position: relative;
 	}
+
 
 
 
@@ -1489,6 +1373,7 @@
 
 
 
+
 	.nav-profile-brand.static {
 		cursor: default;
 	}
@@ -1497,9 +1382,11 @@
 
 
 
+
 	.nav-profile-brand:hover {
 		opacity: 0.8;
 	}
+
 
 
 
@@ -1516,9 +1403,11 @@
 
 
 
+
 	.brand-caret.open {
 		transform: rotate(180deg);
 	}
+
 
 
 
@@ -1529,6 +1418,7 @@
 			transition: none;
 		}
 	}
+
 
 
 
@@ -1550,6 +1440,7 @@
 		flex-direction: column;
 		gap: 2px;
 	}
+
 
 
 
@@ -1578,10 +1469,12 @@
 
 
 
+
 	.profile-menu-item:hover,
 	.profile-menu-item:focus-visible {
 		background: var(--control-hover);
 	}
+
 
 
 
@@ -1597,10 +1490,12 @@
 
 
 
+
 	.profile-menu-item.danger:hover,
 	.profile-menu-item.danger:focus-visible {
 		background: color-mix(in srgb, var(--miss) 10%, transparent);
 	}
+
 
 
 
@@ -1612,6 +1507,7 @@
 		justify-content: center;
 		font-size: 1rem;
 	}
+
 
 
 
@@ -1636,11 +1532,13 @@
 
 
 
+
 	.brand-avatar img {
 		width: 100%;
 		height: 100%;
 		object-fit: cover;
 	}
+
 
 
 
@@ -1658,11 +1556,13 @@
 
 
 
+
 	.nav-right {
 		display: flex;
 		align-items: center;
 		gap: 10px;
 	}
+
 
 
 
@@ -1686,11 +1586,13 @@
 
 
 
+
 	.nav-text-btn:hover {
 		border-color: var(--accent);
 		color: var(--accent-deep);
 		background: var(--accent-wash);
 	}
+
 
 
 
@@ -1717,10 +1619,12 @@
 
 
 
+
 	.today-session:hover {
 		transform: translateY(-3px);
 		box-shadow: 0 20px 50px rgba(233, 69, 96, 0.45);
 	}
+
 
 
 
@@ -1737,12 +1641,14 @@
 
 
 
+
 	.today-label {
 		font-size: 0.72rem;
 		font-weight: 700;
 		letter-spacing: 2px;
 		opacity: 0.85;
 	}
+
 
 
 
@@ -1758,9 +1664,11 @@
 
 
 
+
 	.today-loading {
 		opacity: 0.7;
 	}
+
 
 
 
@@ -1770,6 +1678,7 @@
 		font-size: 0.85rem;
 		opacity: 0.8;
 	}
+
 
 
 
@@ -1785,6 +1694,7 @@
 		border-radius: 12px;
 		white-space: nowrap;
 	}
+
 
 
 
@@ -1806,6 +1716,7 @@
 
 
 
+
 	.nav-stats {
 		display: flex;
 		align-items: center;
@@ -1818,6 +1729,7 @@
 		border-radius: 12px;
 		border: 1px solid var(--on-strip-accent);
 	}
+
 
 
 
@@ -1841,6 +1753,7 @@
 
 
 
+
 	.nav-stat:hover {
 		background: var(--paper-sunken);
 	}
@@ -1849,9 +1762,11 @@
 
 
 
+
 	.ns-icon {
 		display: inline-flex;
 	}
+
 
 
 
@@ -1870,6 +1785,7 @@
 
 
 
+
 	/* Amber rather than the old --accent-deep: same problem, same fix. */
 	.ns-icon.flame {
 		color: var(--ember);
@@ -1879,9 +1795,11 @@
 
 
 
+
 	.ns-icon {
 		font-size: 1.1rem;
 	}
+
 
 
 
@@ -1899,17 +1817,6 @@
 
 
 
-	/* ── Stats Row ────────────────────────────────────── */
-	/* ── Course roadmap ── */
-	.roadmap {
-		display: grid;
-		grid-template-columns: repeat(3, 1fr);
-		gap: 12px;
-	}
-
-
-
-
 
 	.today-tier {
 		margin-inline-start: 6px;
@@ -1921,133 +1828,10 @@
 
 
 
-	.rm-level {
-		padding: 12px;
-		border: 1.5px solid var(--line);
-		border-radius: 14px;
-		background: var(--paper-raised);
-	}
-
-
-
-
-
-	/* The level being worked through is the one that matters today. */
-	.rm-level.current {
-		border-color: var(--leaf);
-		box-shadow: var(--paper-shadow);
-	}
-
-
-
-
-
-	.rm-head {
-		display: flex;
-		align-items: baseline;
-		justify-content: space-between;
-		gap: 8px;
-		margin-bottom: 8px;
-	}
-
-
-
-
-
-	.rm-name {
-		font-family: var(--font-display);
-		font-size: 1.05rem;
-		font-weight: 700;
-		color: var(--ink);
-	}
-
-
-
-
-
-	.rm-level.current .rm-name {
-		color: var(--leaf);
-	}
-
-
-
-
-
-	.rm-count {
-		font-size: 0.78rem;
-		color: var(--ink-faint);
-		font-variant-numeric: tabular-nums;
-	}
-
-
-
-
-
-	.rm-bar {
-		height: 6px;
-		border-radius: 4px;
-		background: var(--paper-sunken);
-		overflow: hidden;
-	}
-
-
-
-
-
-	.rm-fill {
-		height: 100%;
-		background: var(--leaf);
-		border-radius: 4px;
-	}
-
-
-
-
-
-	/* Three dots per level — the checkpoints, filled as they are passed. */
-	.rm-cps {
-		display: flex;
-		gap: 5px;
-		margin-top: 8px;
-	}
-
-
-
-
-
-	.rm-cp {
-		width: 8px;
-		height: 8px;
-		border-radius: 50%;
-		/* See the mastery dots in /lesson — --control-edge is invisible on a
-		   dark surface when nothing fills the shape. */
-		border: 1.5px solid var(--ink-faint);
-	}
-
-
-
-
-
-	.rm-cp.passed {
-		background: var(--gold);
-		border-color: var(--gold);
-	}
-
-
-
-
 
 	@media (max-width: 520px) {
-		.roadmap {
-			gap: 8px;
-		}
-		.rm-level {
-			padding: 10px 8px;
-		}
-		.rm-name {
-			font-size: 0.95rem;
-		}
 	}
+
 
 
 
@@ -2063,9 +1847,11 @@
 
 
 
+
 	.action-row {
 		grid-template-columns: repeat(2, 1fr);
 	}
+
 
 
 
@@ -2083,12 +1869,14 @@
 
 
 
+
 	.stat-content {
 		display: flex;
 		flex-direction: column;
 		align-items: flex-start;
 		flex: 1;
 	}
+
 
 
 
@@ -2102,10 +1890,12 @@
 
 
 
+
 	.action-card .stat-cta {
 		margin-top: 0;
 		font-size: 0.85rem;
 	}
+
 
 
 
@@ -2131,10 +1921,12 @@
 
 
 
+
 	.stat-card:hover {
 		transform: translateY(-3px);
 		border-color: var(--accent);
 	}
+
 
 
 
@@ -2148,6 +1940,7 @@
 
 
 
+
 	.stat-icon.warm {
 		color: var(--accent);
 	}
@@ -2156,9 +1949,11 @@
 
 
 
+
 	.stat-icon {
 		font-size: 1.6rem;
 	}
+
 
 
 
@@ -2176,11 +1971,13 @@
 
 
 
+
 	.stat-label {
 		font-size: 0.78rem;
 		color: var(--ink-soft);
 		font-weight: 500;
 	}
+
 
 
 
@@ -2199,10 +1996,12 @@
 
 
 
+
 	.stat-sub {
 		font-size: 0.78rem;
 		color: var(--ink-soft);
 	}
+
 
 
 
@@ -2217,12 +2016,14 @@
 
 
 
+
 	/* ── Nav Cards ────────────────────────────────────── */
 	.nav-cards {
 		display: grid;
 		grid-template-columns: repeat(2, 1fr);
 		gap: 24px;
 	}
+
 
 
 
@@ -2251,6 +2052,7 @@
 
 
 
+
 	.card-glow {
 		position: absolute;
 		inset: 0;
@@ -2258,6 +2060,7 @@
 		transition: opacity 0.3s;
 		border-radius: inherit;
 	}
+
 
 
 
@@ -2275,6 +2078,7 @@
 
 
 
+
 	.nav-card.basics .card-glow {
 		background: radial-gradient(
 			circle at 50% 0%,
@@ -2282,6 +2086,7 @@
 			transparent 70%
 		);
 	}
+
 
 
 
@@ -2295,9 +2100,11 @@
 
 
 
+
 	.nav-card:hover {
 		transform: translateY(-6px);
 	}
+
 
 
 
@@ -2311,9 +2118,11 @@
 
 
 
+
 	.nav-card.basics:hover {
 		border-color: var(--leaf);
 	}
+
 
 
 
@@ -2328,6 +2137,7 @@
 
 
 
+
 	.nav-card.lessons .icon {
 		color: var(--accent);
 	}
@@ -2336,9 +2146,11 @@
 
 
 
+
 	.nav-card.basics .icon {
 		color: var(--leaf);
 	}
+
 
 
 
@@ -2357,6 +2169,7 @@
 
 
 
+
 	.nav-card p {
 		color: var(--ink-soft);
 		line-height: 1.6;
@@ -2364,6 +2177,7 @@
 		position: relative;
 		z-index: 1;
 	}
+
 
 
 
@@ -2384,6 +2198,7 @@
 
 
 
+
 	.card-meta.done {
 		background: var(--leaf-wash);
 		color: var(--leaf);
@@ -2393,10 +2208,12 @@
 
 
 
+
 	.card-meta.basics-meta {
 		background: var(--leaf-wash);
 		color: var(--leaf);
 	}
+
 
 
 
@@ -2412,6 +2229,7 @@
 
 
 
+
 	.stat-card-link.has-words {
 		border-color: var(--line);
 		background: var(--accent-wash);
@@ -2421,10 +2239,12 @@
 
 
 
+
 	.stat-card-link.has-words:hover {
 		border-color: var(--accent);
 		box-shadow: 0 8px 24px rgba(46, 204, 113, 0.15);
 	}
+
 
 
 
@@ -2442,9 +2262,11 @@
 
 
 
+
 	.stat-cta.vocab-cta {
 		color: var(--accent-deep);
 	}
+
 
 
 
@@ -2464,12 +2286,14 @@
 
 
 
+
 	.card-progress-fill {
 		height: 100%;
 		background: var(--leaf);
 		border-radius: 3px;
 		transition: width 0.5s ease;
 	}
+
 
 
 
@@ -2489,24 +2313,12 @@
 
 
 
+
 	.nav-card:hover .arrow {
 		opacity: 1;
 		transform: translateX(0);
 	}
 
-
-
-
-
-	/* ── Footer ───────────────────────────────────────── */
-	.home-footer {
-		text-align: center;
-		padding-top: 20px;
-		border-top: 1px solid var(--line);
-		color: var(--ink-faint);
-		font-size: 0.88rem;
-		margin-top: auto;
-	}
 
 
 
@@ -2532,6 +2344,7 @@
 
 
 
+
 	.fs-countdown {
 		background: var(--accent-wash);
 		color: var(--accent-deep);
@@ -2540,6 +2353,7 @@
 		font-weight: 700;
 		font-size: 0.88rem;
 	}
+
 
 
 
@@ -2556,12 +2370,14 @@
 
 
 
+
 	.fs-sub {
 		color: var(--ink-soft);
 		line-height: 1.6;
 		max-width: 460px;
 		margin: 0;
 	}
+
 
 
 
@@ -2583,9 +2399,11 @@
 
 
 
+
 	.fs-primary:hover {
 		background: var(--accent-deep);
 	}
+
 
 
 
@@ -2601,6 +2419,7 @@
 
 
 
+
 	/* On a narrow phone the tag would squeeze the bar itself down to a stub.
 	   Shrink the tag, not the bar — the bar is the thing being read. */
 	@media (max-width: 440px) {
@@ -2611,9 +2430,11 @@
 
 
 
+
 	@media (max-width: 640px) {
 
 	}
+
 
 
 
@@ -2644,11 +2465,13 @@
 
 
 
+
 	.confirm-toast.show {
 		transform: translateX(-50%) translateY(0);
 		visibility: visible;
 		transition-delay: 0s, 0s;
 	}
+
 
 
 
@@ -2671,6 +2494,7 @@
 
 
 
+
 	.auth-modal {
 		background: var(--paper-raised);
 		border-radius: 20px;
@@ -2681,6 +2505,7 @@
 		box-shadow: var(--paper-shadow);
 		position: relative;
 	}
+
 
 
 
@@ -2701,11 +2526,13 @@
 
 
 
+
 	.auth-modal h2 {
 		margin-bottom: 20px;
 		color: var(--ink);
 		font-family: var(--font-display);
 	}
+
 
 
 
@@ -2724,9 +2551,11 @@
 
 
 
+
 	.auth-field {
 		margin-bottom: 15px;
 	}
+
 
 
 
@@ -2748,9 +2577,11 @@
 
 
 
+
 	.auth-field input::placeholder {
 		color: var(--ink-faint);
 	}
+
 
 
 
@@ -2775,10 +2606,12 @@
 
 
 
+
 	.auth-submit:disabled {
 		opacity: 0.6;
 		cursor: not-allowed;
 	}
+
 
 
 
@@ -2794,6 +2627,7 @@
 
 
 
+
 	.auth-forgot a {
 		color: var(--ink-faint);
 		text-decoration: underline;
@@ -2803,9 +2637,11 @@
 
 
 
+
 	.auth-forgot a:hover {
 		color: var(--accent);
 	}
+
 
 
 
@@ -2822,11 +2658,13 @@
 
 
 
+
 	.auth-toggle a {
 		color: var(--accent-deep);
 		text-decoration: none;
 		font-weight: 600;
 	}
+
 
 
 
@@ -2849,6 +2687,7 @@
 
 
 
+
 	.cal-modal {
 		background: var(--paper-raised);
 		border-radius: 24px;
@@ -2861,6 +2700,7 @@
 		max-height: 90vh;
 		overflow-y: auto;
 	}
+
 
 
 
@@ -2885,9 +2725,11 @@
 
 
 
+
 	.cal-close:hover {
 		color: var(--ink);
 	}
+
 
 
 
@@ -2897,6 +2739,7 @@
 		margin-bottom: 18px;
 		padding-right: 36px;
 	}
+
 
 
 
@@ -2914,11 +2757,13 @@
 
 
 
+
 	.cal-header p {
 		font-size: 0.88rem;
 		color: var(--ink-soft);
 		margin: 0;
 	}
+
 
 
 
@@ -2936,11 +2781,13 @@
 
 
 
+
 	.pcal-title {
 		font-size: 0.95rem;
 		font-weight: 700;
 		color: var(--ink-soft);
 	}
+
 
 
 
@@ -2967,11 +2814,13 @@
 
 
 
+
 	.pcal-nav-btn:hover:not(:disabled) {
 		background: var(--accent-wash);
 		border-color: var(--accent);
 		color: var(--ink);
 	}
+
 
 
 
@@ -2986,12 +2835,14 @@
 
 
 
+
 	.pcal-dow {
 		display: grid;
 		grid-template-columns: repeat(7, 1fr);
 		gap: 4px;
 		margin-bottom: 4px;
 	}
+
 
 
 
@@ -3011,12 +2862,14 @@
 
 
 
+
 	.pcal-grid {
 		display: grid;
 		grid-template-columns: repeat(7, 1fr);
 		gap: 4px;
 		margin-bottom: 18px;
 	}
+
 
 
 
@@ -3043,10 +2896,12 @@
 
 
 
+
 	.pcal-empty {
 		background: transparent !important;
 		border-color: transparent !important;
 	}
+
 
 
 
@@ -3063,11 +2918,13 @@
 
 
 
+
 	.pcal-cell.today {
 		border-color: var(--accent);
 		color: var(--accent-deep);
 		font-weight: 700;
 	}
+
 
 
 
@@ -3084,10 +2941,12 @@
 
 
 
+
 	/* ── Mastery Section ──────────────────────────────── */
 	.stats-overview {
 		margin-bottom: 24px;
 	}
+
 
 
 
@@ -3099,6 +2958,7 @@
 		border-radius: 20px;
 		padding: 20px 24px;
 	}
+
 
 
 
@@ -3117,11 +2977,13 @@
 
 
 
+
 	.mastery-grid {
 		display: grid;
 		grid-template-columns: repeat(3, 1fr);
 		gap: 16px;
 	}
+
 
 
 
@@ -3142,10 +3004,12 @@
 
 
 
+
 	.mastery-item:hover {
 		transform: translateY(-2px);
 		background: var(--paper-raised);
 	}
+
 
 
 
@@ -3163,10 +3027,12 @@
 
 
 
+
 	.mastery-item.a1 .m-label {
 		background: rgba(49, 89, 122, 0.12);
 		color: #5dade2;
 	}
+
 
 
 
@@ -3179,10 +3045,12 @@
 
 
 
+
 	.mastery-item.b1 .m-label {
 		background: var(--accent-wash);
 		color: var(--accent-deep);
 	}
+
 
 
 
@@ -3200,12 +3068,14 @@
 
 
 
+
 	.m-sub {
 		font-size: 0.65rem;
 		color: var(--ink-faint);
 		text-transform: uppercase;
 		font-weight: 600;
 	}
+
 
 
 
@@ -3225,6 +3095,7 @@
 
 
 
+
 	.leg-item {
 		display: flex;
 		align-items: center;
@@ -3232,6 +3103,7 @@
 		font-size: 0.75rem;
 		color: var(--ink-soft);
 	}
+
 
 
 
@@ -3248,10 +3120,12 @@
 
 
 
+
 	.practiced-sw {
 		background: rgba(46, 204, 113, 0.25);
 		border: 1px solid rgba(46, 204, 113, 0.5);
 	}
+
 
 
 
@@ -3265,11 +3139,13 @@
 
 
 
+
 	.pcal-month-stat {
 		margin-left: auto;
 		color: var(--leaf);
 		font-weight: 700;
 	}
+
 
 
 
