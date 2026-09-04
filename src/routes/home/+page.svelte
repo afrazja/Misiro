@@ -27,11 +27,9 @@
 	import { probeVerdict, type ProbeState } from "$services/placement-probe";
 	import {
 		computeReadiness,
-		getCheckAvailability,
 		READINESS_MODULES,
 		READINESS_LABELS,
 		type Readiness,
-		type CheckAvailability,
 	} from "$services/readiness";
 	import type { ExamSettings } from "$services/data-layer";
 	import { computeStreak } from "$utils/streak";
@@ -68,7 +66,6 @@
 
 	// Goethe hero
 	let readiness = $state<Readiness | null>(null);
-	let checkGate = $state<CheckAvailability | null>(null);
 	let roadmap = $state<LevelProgress[]>([]);
 	/** Estimated minutes for today's lesson, from its actual content. */
 	let todayMinutes = $state<number | null>(null);
@@ -417,13 +414,6 @@
 			readiness = await computeReadiness();
 		} catch {
 			readiness = null;
-		}
-
-		try {
-			checkGate = await getCheckAvailability();
-		} catch {
-			// The card falls back to the plain CTA rather than a wrong lock.
-			checkGate = null;
 		}
 
 		try {
@@ -925,10 +915,16 @@
 				<a class="rail-item" href="/lesson">
 					<span aria-hidden="true">▸</span>{language === "fa" ? "درس‌های روزانه" : "Daily lessons"}
 				</a>
-				<a class="rail-item" href="/review">
-					<span aria-hidden="true">↻</span>{language === "fa" ? "مرورها" : "Reviews"}
-					{#if dueReviews > 0}<em class="rail-count">{dueReviews}</em>{/if}
-				</a>
+				<!-- Only when there is something to review. A new account has
+				     nothing due, so this link led straight to "No items due for
+				     review" — a dead end that makes the app feel emptier rather
+				     than lighter, on the screen where first impressions are made. -->
+				{#if dueReviews > 0}
+					<a class="rail-item" href="/review">
+						<span aria-hidden="true">↻</span>{language === "fa" ? "مرورها" : "Reviews"}
+						<em class="rail-count">{dueReviews}</em>
+					</a>
+				{/if}
 				<a class="rail-item" href={language === "fa" ? "/fa/basics" : "/basics"}>
 					<span aria-hidden="true">▤</span>{language === "fa" ? "گرامر آلمانی" : "German Basics"}
 				</a>
@@ -1352,31 +1348,6 @@
 
 		<div class="stats-row action-row">
 			<a
-				href="/review"
-				class="stat-card stat-card-link action-card"
-				class:has-due={dueReviews > 0}
-				title="Go to reviews"
-			>
-				<span class="stat-icon leafy"><Icon name="refresh" size={26} /></span>
-				<div class="stat-content">
-					<span class="stat-value">{dueReviews}</span>
-					<span class="stat-label"
-						>{dueReviews === 0
-							? language === "fa"
-								? "همه مرورها انجام شد!"
-								: "All caught up!"
-							: language === "fa"
-								? "مرور آماده"
-								: "Due Reviews"}</span
-					>
-				</div>
-				{#if dueReviews > 0}
-					<span class="stat-cta"
-						>{language === "fa" ? "شروع مرور ←" : "Review now →"}</span
-					>
-				{/if}
-			</a>
-			<a
 				href="/vocabulary"
 				class="stat-card stat-card-link action-card"
 				class:has-words={savedWordCount > 0}
@@ -1396,66 +1367,6 @@
 				{/if}
 			</a>
 
-			<!-- Relocated from the readiness card: these are actions, not
-			     score. The placement test only appears while the score is
-			     still an estimate — once it is real, the card is clutter. -->
-			<!-- Locked shows a countdown rather than disappearing: "3 lessons to
-			     your next check" is a reason to start today's lesson, which is
-			     the only thing that can move the score. -->
-			{#if readiness?.needsPlacement || checkGate}
-				<a
-					href={checkGate && !checkGate.unlocked ? "/lesson" : "/placement"}
-					class="stat-card stat-card-link action-card"
-					class:locked={checkGate && !checkGate.unlocked}
-					title={language === "fa" ? "سنجش سطح" : "Level check"}
-				>
-					<span class="stat-icon aim" aria-hidden="true"
-						>{checkGate && !checkGate.unlocked ? "🔒" : "🎯"}</span
-					>
-					<div class="stat-content">
-						{#if checkGate && !checkGate.unlocked}
-							<span class="stat-label strong">
-								{#if checkGate.lessonsNeeded > 0}
-									{language === "fa"
-										? `${checkGate.lessonsNeeded} درس تا سنجش بعدی`
-										: `${checkGate.lessonsNeeded} ${checkGate.lessonsNeeded === 1 ? "lesson" : "lessons"} to your next check`}
-								{:else}
-									{language === "fa"
-										? `سنجش بعدی تا ${checkGate.hoursNeeded} ساعت`
-										: `Next check in ${checkGate.hoursNeeded}h`}
-								{/if}
-							</span>
-							<span class="stat-sub"
-								>{language === "fa"
-									? "نمره وقتی تغییر می‌کند که آلمانی‌ات تغییر کند"
-									: "Your score moves when your German does"}</span
-							>
-						{:else}
-							<span class="stat-label strong"
-								>{language === "fa"
-									? "سطح واقعی‌ات را بسنج"
-									: "Check your real level"}</span
-							>
-							<span class="stat-sub"
-								>{language === "fa"
-									? readiness?.needsPlacement
-										? "تست تعیین سطح رایگان"
-										: "سؤال‌های تازه"
-									: readiness?.needsPlacement
-										? "Free placement test"
-										: "Fresh questions"}</span
-							>
-						{/if}
-					</div>
-					<span class="stat-cta">
-						{#if checkGate && !checkGate.unlocked}
-							{language === "fa" ? "درس امروز ←" : "Today's lesson →"}
-						{:else}
-							{language === "fa" ? "شروع ←" : "Start →"}
-						{/if}
-					</span>
-				</a>
-			{/if}
 
 			<a
 				href="/drill/sprechen"
@@ -1574,18 +1485,22 @@
 		padding: 0;
 	}
 
+
 	:global(body) {
 		background: var(--paper);
 	}
+
 
 	/* ── Dashboard shell + left rail ─────────────────── */
 	.dash-shell {
 		display: block;
 	}
 
+
 	.rail {
 		display: none;
 	}
+
 
 	/* The rail only earns its width when there is width to spare. Below
 	   this the same destinations are the cards in the page itself, so a
@@ -1616,6 +1531,7 @@
 		}
 	}
 
+
 	.rail-brand {
 		display: flex;
 		align-items: center;
@@ -1627,6 +1543,7 @@
 		text-decoration: none;
 	}
 
+
 	.rail-mark {
 		inline-size: 22px;
 		block-size: 22px;
@@ -1635,11 +1552,13 @@
 		flex: none;
 	}
 
+
 	.rail-nav {
 		display: flex;
 		flex-direction: column;
 		gap: 2px;
 	}
+
 
 	.rail-item {
 		display: flex;
@@ -1653,15 +1572,18 @@
 		font-size: 0.94rem;
 	}
 
+
 	.rail-item span {
 		color: var(--ink-faint);
 		font-size: 0.8rem;
 	}
 
+
 	.rail-item:hover {
 		background: var(--control-hover);
 		color: var(--ink);
 	}
+
 
 	.rail-item.is-current {
 		background: var(--accent-wash);
@@ -1669,9 +1591,11 @@
 		font-weight: 600;
 	}
 
+
 	.rail-item.is-current span {
 		color: var(--accent);
 	}
+
 
 	/* Sits at the end of the row in either direction. */
 	.rail-count {
@@ -1685,6 +1609,7 @@
 		padding: 2px 8px;
 	}
 
+
 	.rail-user {
 		margin-block-start: auto;
 		display: flex;
@@ -1693,6 +1618,7 @@
 		padding-block-start: var(--space-4);
 		border-block-start: 1px solid var(--line);
 	}
+
 
 	.rail-avatar {
 		inline-size: 34px;
@@ -1709,17 +1635,20 @@
 		flex: none;
 	}
 
+
 	.rail-avatar img {
 		inline-size: 100%;
 		block-size: 100%;
 		object-fit: cover;
 	}
 
+
 	.rail-who {
 		display: flex;
 		flex-direction: column;
 		min-width: 0;
 	}
+
 
 	.rail-who strong {
 		font-size: 0.9rem;
@@ -1728,12 +1657,14 @@
 		text-overflow: ellipsis;
 	}
 
+
 	.rail-who span {
 		font-family: var(--font-mono);
 		font-size: var(--type-label);
 		letter-spacing: var(--tracking-label);
 		color: var(--ink-faint);
 	}
+
 
 	.home-container {
 		max-width: 1100px;
@@ -1750,9 +1681,11 @@
 		--install-fg: var(--leaf);
 	}
 
+
 	.nav-profile {
 		position: relative;
 	}
+
 
 	.nav-profile-brand {
 		display: flex;
@@ -1771,13 +1704,16 @@
 		transition: opacity 0.2s;
 	}
 
+
 	.nav-profile-brand.static {
 		cursor: default;
 	}
 
+
 	.nav-profile-brand:hover {
 		opacity: 0.8;
 	}
+
 
 	.brand-caret {
 		color: var(--on-brand-soft);
@@ -1786,15 +1722,18 @@
 		transition: transform 0.18s ease;
 	}
 
+
 	.brand-caret.open {
 		transform: rotate(180deg);
 	}
+
 
 	@media (prefers-reduced-motion: reduce) {
 		.brand-caret {
 			transition: none;
 		}
 	}
+
 
 	/* ── Account menu ── */
 	.profile-menu {
@@ -1812,6 +1751,7 @@
 		flex-direction: column;
 		gap: 2px;
 	}
+
 
 	.profile-menu-item {
 		display: flex;
@@ -1832,10 +1772,12 @@
 		cursor: pointer;
 	}
 
+
 	.profile-menu-item:hover,
 	.profile-menu-item:focus-visible {
 		background: var(--control-hover);
 	}
+
 
 	/* Signing out is the one destructive thing here — it should not look
 	   like the neutral item above it. */
@@ -1843,10 +1785,12 @@
 		color: var(--miss);
 	}
 
+
 	.profile-menu-item.danger:hover,
 	.profile-menu-item.danger:focus-visible {
 		background: color-mix(in srgb, var(--miss) 10%, transparent);
 	}
+
 
 	.pm-glyph {
 		display: inline-flex;
@@ -1854,6 +1798,7 @@
 		justify-content: center;
 		font-size: 1rem;
 	}
+
 
 	.brand-avatar {
 		width: 32px;
@@ -1870,11 +1815,13 @@
 		overflow: hidden;
 	}
 
+
 	.brand-avatar img {
 		width: 100%;
 		height: 100%;
 		object-fit: cover;
 	}
+
 
 	.brand-text {
 		font-weight: 700;
@@ -1884,11 +1831,13 @@
 		color: var(--on-brand);
 	}
 
+
 	.nav-right {
 		display: flex;
 		align-items: center;
 		gap: 10px;
 	}
+
 
 	/* Compact language picker */
 
@@ -1904,11 +1853,13 @@
 		transition: all 0.2s;
 	}
 
+
 	.nav-text-btn:hover {
 		border-color: var(--accent);
 		color: var(--accent-deep);
 		background: var(--accent-wash);
 	}
+
 
 	/* ── Today's Session hero ── */
 	.today-session {
@@ -1927,10 +1878,12 @@
 			box-shadow 0.25s ease;
 	}
 
+
 	.today-session:hover {
 		transform: translateY(-3px);
 		box-shadow: 0 20px 50px rgba(233, 69, 96, 0.45);
 	}
+
 
 	.today-info {
 		display: flex;
@@ -1939,6 +1892,7 @@
 		min-width: 0;
 	}
 
+
 	.today-label {
 		font-size: 0.72rem;
 		font-weight: 700;
@@ -1946,20 +1900,24 @@
 		opacity: 0.85;
 	}
 
+
 	.today-title {
 		font-size: 1.25rem;
 		font-weight: 700;
 		line-height: 1.35;
 	}
 
+
 	.today-loading {
 		opacity: 0.7;
 	}
+
 
 	.today-sub {
 		font-size: 0.85rem;
 		opacity: 0.8;
 	}
+
 
 	.today-btn {
 		flex-shrink: 0;
@@ -1971,6 +1929,7 @@
 		border-radius: 12px;
 		white-space: nowrap;
 	}
+
 
 	@media (max-width: 640px) {
 		.today-session {
@@ -1984,6 +1943,7 @@
 		}
 	}
 
+
 	.nav-stats {
 		display: flex;
 		align-items: center;
@@ -1996,6 +1956,7 @@
 		border-radius: 12px;
 		border: 1px solid var(--on-strip-accent);
 	}
+
 
 	.nav-stat {
 		background: transparent;
@@ -2011,13 +1972,16 @@
 		color: var(--on-brand);
 	}
 
+
 	.nav-stat:hover {
 		background: var(--paper-sunken);
 	}
 
+
 	.ns-icon {
 		display: inline-flex;
 	}
+
 
 	/* Gold, and the same gold for the numeral beside it, so the XP badge
 	   reads as one thing. The star was var(--accent) — deep forest green on
@@ -2028,14 +1992,17 @@
 		color: var(--gold);
 	}
 
+
 	/* Amber rather than the old --accent-deep: same problem, same fix. */
 	.ns-icon.flame {
 		color: var(--ember);
 	}
 
+
 	.ns-icon {
 		font-size: 1.1rem;
 	}
+
 
 	.ns-value {
 		font-size: 0.9rem;
@@ -2045,6 +2012,7 @@
 		color: var(--on-strip-accent);
 	}
 
+
 	/* ── Stats Row ────────────────────────────────────── */
 	/* ── Course roadmap ── */
 	.roadmap {
@@ -2053,11 +2021,13 @@
 		gap: 12px;
 	}
 
+
 	.today-tier {
 		margin-inline-start: 6px;
 		opacity: 0.85;
 		text-transform: capitalize;
 	}
+
 
 	.rm-level {
 		padding: 12px;
@@ -2066,11 +2036,13 @@
 		background: var(--paper-raised);
 	}
 
+
 	/* The level being worked through is the one that matters today. */
 	.rm-level.current {
 		border-color: var(--leaf);
 		box-shadow: var(--paper-shadow);
 	}
+
 
 	.rm-head {
 		display: flex;
@@ -2080,6 +2052,7 @@
 		margin-bottom: 8px;
 	}
 
+
 	.rm-name {
 		font-family: var(--font-display);
 		font-size: 1.05rem;
@@ -2087,15 +2060,18 @@
 		color: var(--ink);
 	}
 
+
 	.rm-level.current .rm-name {
 		color: var(--leaf);
 	}
+
 
 	.rm-count {
 		font-size: 0.78rem;
 		color: var(--ink-faint);
 		font-variant-numeric: tabular-nums;
 	}
+
 
 	.rm-bar {
 		height: 6px;
@@ -2104,11 +2080,13 @@
 		overflow: hidden;
 	}
 
+
 	.rm-fill {
 		height: 100%;
 		background: var(--leaf);
 		border-radius: 4px;
 	}
+
 
 	/* Three dots per level — the checkpoints, filled as they are passed. */
 	.rm-cps {
@@ -2116,6 +2094,7 @@
 		gap: 5px;
 		margin-top: 8px;
 	}
+
 
 	.rm-cp {
 		width: 8px;
@@ -2126,10 +2105,12 @@
 		border: 1.5px solid var(--ink-faint);
 	}
 
+
 	.rm-cp.passed {
 		background: var(--gold);
 		border-color: var(--gold);
 	}
+
 
 	@media (max-width: 520px) {
 		.roadmap {
@@ -2143,15 +2124,18 @@
 		}
 	}
 
+
 	.stats-row {
 		display: grid;
 		grid-template-columns: repeat(4, 1fr);
 		gap: 16px;
 	}
 
+
 	.action-row {
 		grid-template-columns: repeat(2, 1fr);
 	}
+
 
 	.action-card {
 		flex-direction: row !important;
@@ -2161,6 +2145,7 @@
 		text-align: left !important;
 	}
 
+
 	.stat-content {
 		display: flex;
 		flex-direction: column;
@@ -2168,14 +2153,17 @@
 		flex: 1;
 	}
 
+
 	.action-card .stat-icon {
 		font-size: 2rem;
 	}
+
 
 	.action-card .stat-cta {
 		margin-top: 0;
 		font-size: 0.85rem;
 	}
+
 
 	.stat-card {
 		background: var(--paper-raised);
@@ -2193,26 +2181,27 @@
 			border-color 0.25s;
 	}
 
+
 	.stat-card:hover {
 		transform: translateY(-3px);
 		border-color: var(--accent);
 	}
 
+
 	.stat-icon {
 		display: inline-flex;
 	}
 
-	.stat-icon.leafy {
-		color: var(--leaf);
-	}
 
 	.stat-icon.warm {
 		color: var(--accent);
 	}
 
+
 	.stat-icon {
 		font-size: 1.6rem;
 	}
+
 
 	.stat-value {
 		font-family: var(--font-display);
@@ -2222,11 +2211,13 @@
 		line-height: 1;
 	}
 
+
 	.stat-label {
 		font-size: 0.78rem;
 		color: var(--ink-soft);
 		font-weight: 500;
 	}
+
 
 	/* The relocated cards carry a title instead of a big numeral, so the
 	   label has to do the work the number does on the other two. */
@@ -2237,24 +2228,18 @@
 		line-height: 1.25;
 	}
 
+
 	.stat-sub {
 		font-size: 0.78rem;
 		color: var(--ink-soft);
 	}
+
 
 	.stat-icon.aim {
 		font-size: 1.5rem;
 		line-height: 1;
 	}
 
-	/* Muted, not disabled — it is still a live link, just to the lesson. */
-	.action-card.locked {
-		border-style: dashed;
-	}
-
-	.action-card.locked .stat-label.strong {
-		color: var(--ink-soft);
-	}
 
 	/* ── Nav Cards ────────────────────────────────────── */
 	.nav-cards {
@@ -2262,6 +2247,7 @@
 		grid-template-columns: repeat(2, 1fr);
 		gap: 24px;
 	}
+
 
 	.nav-card {
 		background: var(--paper-raised);
@@ -2282,6 +2268,7 @@
 		overflow: hidden;
 	}
 
+
 	.card-glow {
 		position: absolute;
 		inset: 0;
@@ -2289,6 +2276,7 @@
 		transition: opacity 0.3s;
 		border-radius: inherit;
 	}
+
 
 	.nav-card.lessons .card-glow {
 		background: radial-gradient(
@@ -2298,6 +2286,7 @@
 		);
 	}
 
+
 	.nav-card.basics .card-glow {
 		background: radial-gradient(
 			circle at 50% 0%,
@@ -2306,34 +2295,42 @@
 		);
 	}
 
+
 	.nav-card:hover .card-glow {
 		opacity: 1;
 	}
+
 
 	.nav-card:hover {
 		transform: translateY(-6px);
 	}
 
+
 	.nav-card.lessons:hover {
 		border-color: var(--accent);
 	}
 
+
 	.nav-card.basics:hover {
 		border-color: var(--leaf);
 	}
+
 
 	.nav-card .icon {
 		margin-bottom: 16px;
 		z-index: 1;
 	}
 
+
 	.nav-card.lessons .icon {
 		color: var(--accent);
 	}
 
+
 	.nav-card.basics .icon {
 		color: var(--leaf);
 	}
+
 
 	.nav-card h2 {
 		font-family: var(--font-display);
@@ -2344,6 +2341,7 @@
 		z-index: 1;
 	}
 
+
 	.nav-card p {
 		color: var(--ink-soft);
 		line-height: 1.6;
@@ -2351,6 +2349,7 @@
 		position: relative;
 		z-index: 1;
 	}
+
 
 	/* Placement check. Reads as information, not an error — the learner did
 	   nothing wrong, the app's guess was off. Hence the neutral surface
@@ -2366,11 +2365,13 @@
 		text-align: start;
 	}
 
+
 	.placement-check h2 {
 		margin: 0 0 6px;
 		font-size: 1.02rem;
 		color: var(--ink);
 	}
+
 
 	.placement-check p {
 		margin: 0 0 14px;
@@ -2379,11 +2380,13 @@
 		font-size: 0.92rem;
 	}
 
+
 	.pc-actions {
 		display: flex;
 		gap: 10px;
 		flex-wrap: wrap;
 	}
+
 
 	.pc-yes,
 	.pc-no {
@@ -2396,11 +2399,13 @@
 		cursor: pointer;
 	}
 
+
 	.pc-yes {
 		background: var(--accent);
 		color: var(--on-accent);
 		border: none;
 	}
+
 
 	.pc-no {
 		background: var(--control);
@@ -2408,11 +2413,13 @@
 		border: 1px solid var(--control-border);
 	}
 
+
 	.pc-yes:disabled,
 	.pc-no:disabled {
 		opacity: 0.6;
 		cursor: wait;
 	}
+
 
 	/* Quieter than the count it follows — an explanation, not a second
 	   statistic competing with the one that matters. */
@@ -2420,6 +2427,7 @@
 		font-weight: 600;
 		opacity: 0.75;
 	}
+
 
 	.card-meta {
 		margin-top: 14px;
@@ -2432,15 +2440,18 @@
 		z-index: 1;
 	}
 
+
 	.card-meta.done {
 		background: var(--leaf-wash);
 		color: var(--leaf);
 	}
 
+
 	.card-meta.basics-meta {
 		background: var(--leaf-wash);
 		color: var(--leaf);
 	}
+
 
 	/* Clickable stat card for due reviews */
 	.stat-card-link {
@@ -2448,25 +2459,18 @@
 		cursor: pointer;
 	}
 
-	.stat-card-link.has-due {
-		border-color: var(--leaf);
-		background: var(--leaf-wash);
-	}
-
-	.stat-card-link.has-due:hover {
-		border-color: var(--leaf);
-		box-shadow: 0 8px 24px rgba(88, 214, 141, 0.18);
-	}
 
 	.stat-card-link.has-words {
 		border-color: var(--line);
 		background: var(--accent-wash);
 	}
 
+
 	.stat-card-link.has-words:hover {
 		border-color: var(--accent);
 		box-shadow: 0 8px 24px rgba(46, 204, 113, 0.15);
 	}
+
 
 	.stat-cta {
 		font-size: 0.72rem;
@@ -2476,9 +2480,11 @@
 		margin-top: 2px;
 	}
 
+
 	.stat-cta.vocab-cta {
 		color: var(--accent-deep);
 	}
+
 
 	/* ── Card Progress Bar ── */
 	.card-progress-bar {
@@ -2490,12 +2496,14 @@
 		overflow: hidden;
 	}
 
+
 	.card-progress-fill {
 		height: 100%;
 		background: var(--leaf);
 		border-radius: 3px;
 		transition: width 0.5s ease;
 	}
+
 
 	.nav-card .arrow {
 		margin-top: 18px;
@@ -2507,10 +2515,12 @@
 		z-index: 1;
 	}
 
+
 	.nav-card:hover .arrow {
 		opacity: 1;
 		transform: translateX(0);
 	}
+
 
 	/* ── Footer ───────────────────────────────────────── */
 	.home-footer {
@@ -2521,6 +2531,7 @@
 		font-size: 0.88rem;
 		margin-top: auto;
 	}
+
 
 	/* ── Toast ────────────────────────────────────────── */
 	/* ── First Step (day-zero single door) ────────────── */
@@ -2538,6 +2549,7 @@
 		gap: 12px;
 	}
 
+
 	.fs-countdown {
 		background: var(--accent-wash);
 		color: var(--accent-deep);
@@ -2547,6 +2559,7 @@
 		font-size: 0.88rem;
 	}
 
+
 	.fs-title {
 		font-family: var(--font-display);
 		font-size: 1.65rem;
@@ -2554,12 +2567,14 @@
 		margin: 0;
 	}
 
+
 	.fs-sub {
 		color: var(--ink-soft);
 		line-height: 1.6;
 		max-width: 460px;
 		margin: 0;
 	}
+
 
 	.fs-primary {
 		background: var(--accent);
@@ -2573,15 +2588,18 @@
 		transition: background 0.15s;
 	}
 
+
 	.fs-primary:hover {
 		background: var(--accent-deep);
 	}
+
 
 	.fs-secondary {
 		color: var(--ink-faint);
 		font-size: 0.92rem;
 		text-decoration: underline;
 	}
+
 
 	/* ── Goethe A1 Readiness Hero ─────────────────────── */
 	.exam-hero {
@@ -2596,6 +2614,7 @@
 		gap: 14px;
 	}
 
+
 	.exam-hero-top {
 		display: flex;
 		align-items: center;
@@ -2604,11 +2623,13 @@
 		flex-wrap: wrap;
 	}
 
+
 	.exam-hero-title {
 		font-weight: 700;
 		color: var(--ink);
 		font-size: 1.02rem;
 	}
+
 
 	.exam-countdown {
 		background: var(--accent-wash);
@@ -2622,12 +2643,14 @@
 		font-family: inherit;
 	}
 
+
 	/* Soft "ready-by" target — green, calmer than a booked exam. */
 	.exam-countdown.soft {
 		background: var(--leaf-wash);
 		/* --leaf on --leaf-wash measured 4.33:1; darker green gives 9.5:1 */
 		color: var(--accent-deep);
 	}
+
 
 	.exam-set-date {
 		color: var(--accent-deep);
@@ -2641,6 +2664,7 @@
 		font-family: inherit;
 	}
 
+
 	/* Inline date panel — set the exam/target date without leaving /home. */
 	.exam-date-panel {
 		display: flex;
@@ -2653,6 +2677,7 @@
 		padding: 12px 14px;
 	}
 
+
 	.exam-date-input {
 		background: var(--paper-raised);
 		border: 1.5px solid var(--line);
@@ -2663,16 +2688,19 @@
 		color: var(--ink);
 	}
 
+
 	.exam-date-input:focus {
 		border-color: var(--accent);
 		outline: none;
 	}
+
 
 	.exam-date-actions {
 		display: flex;
 		gap: 8px;
 		flex-wrap: wrap;
 	}
+
 
 	.edp-save,
 	.edp-target {
@@ -2685,10 +2713,12 @@
 		font-family: inherit;
 	}
 
+
 	.edp-save {
 		background: var(--accent);
 		color: var(--on-accent);
 	}
+
 
 	.edp-target {
 		background: var(--leaf-wash);
@@ -2696,17 +2726,20 @@
 		border: 1.5px solid var(--leaf);
 	}
 
+
 	.edp-save:disabled,
 	.edp-target:disabled {
 		opacity: 0.5;
 		cursor: default;
 	}
 
+
 	.exam-hero-main {
 		display: flex;
 		align-items: center;
 		gap: 22px;
 	}
+
 
 	.exam-score {
 		display: flex;
@@ -2715,9 +2748,11 @@
 		min-width: 92px;
 	}
 
+
 	.exam-score.good {
 		color: var(--leaf);
 	}
+
 
 	.exam-score strong {
 		font-family: var(--font-display);
@@ -2726,11 +2761,13 @@
 		line-height: 1;
 	}
 
+
 	.exam-score span {
 		color: var(--ink-faint);
 		font-size: 1rem;
 		margin-left: 2px;
 	}
+
 
 	.exam-bars {
 		flex: 1;
@@ -2740,12 +2777,14 @@
 		min-width: 0;
 	}
 
+
 	.exam-bar-row {
 		display: grid;
 		grid-template-columns: 74px 1fr 30px auto;
 		align-items: center;
 		gap: 10px;
 	}
+
 
 	.exam-bar-label {
 		font-size: 0.82rem;
@@ -2754,12 +2793,14 @@
 		white-space: nowrap;
 	}
 
+
 	.exam-bar {
 		height: 8px;
 		background: var(--paper-sunken);
 		border-radius: 6px;
 		overflow: hidden;
 	}
+
 
 	.exam-bar-fill {
 		height: 100%;
@@ -2768,9 +2809,11 @@
 		transition: width 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
 	}
 
+
 	.exam-bar-fill.trained {
 		background: var(--leaf);
 	}
+
 
 	.exam-bar-num {
 		font-size: 0.8rem;
@@ -2778,6 +2821,7 @@
 		text-align: right;
 		font-variant-numeric: tabular-nums;
 	}
+
 
 	/* Says in words what the two bar greens were trying to say on their own. */
 	.exam-bar-tag {
@@ -2792,6 +2836,7 @@
 		color: var(--ink-faint);
 	}
 
+
 	/* Three states, three looks — and each one says its own name, so the
 	   colour is reinforcement rather than the message. */
 	.exam-bar-tag.practice {
@@ -2799,10 +2844,12 @@
 		color: var(--info);
 	}
 
+
 	.exam-bar-tag.tested {
 		background: var(--leaf-wash);
 		color: var(--leaf);
 	}
+
 
 	/* On a narrow phone the tag would squeeze the bar itself down to a stub.
 	   Shrink the tag, not the bar — the bar is the thing being read. */
@@ -2819,6 +2866,7 @@
 		}
 	}
 
+
 	.exam-estimate-note {
 		margin: -4px 0 14px;
 		text-align: center;
@@ -2826,11 +2874,13 @@
 		color: var(--ink-soft);
 	}
 
+
 	.exam-hero-note {
 		color: var(--ink-faint);
 		font-size: 0.82rem;
 		text-align: right;
 	}
+
 
 	.exam-links {
 		display: flex;
@@ -2839,6 +2889,7 @@
 		gap: 10px;
 		flex-wrap: wrap;
 	}
+
 
 	@media (max-width: 640px) {
 		.exam-hero-main {
@@ -2852,6 +2903,7 @@
 			min-width: 0;
 		}
 	}
+
 
 	.confirm-toast {
 		position: fixed;
@@ -2874,11 +2926,13 @@
 			visibility 0s 0.5s;
 	}
 
+
 	.confirm-toast.show {
 		transform: translateX(-50%) translateY(0);
 		visibility: visible;
 		transition-delay: 0s, 0s;
 	}
+
 
 	/* ── Auth Modal ───────────────────────────────────── */
 	.auth-overlay {
@@ -2893,6 +2947,7 @@
 		padding: 20px;
 	}
 
+
 	.auth-modal {
 		background: var(--paper-raised);
 		border-radius: 20px;
@@ -2903,6 +2958,7 @@
 		box-shadow: var(--paper-shadow);
 		position: relative;
 	}
+
 
 	.auth-close {
 		position: absolute;
@@ -2915,11 +2971,13 @@
 		cursor: pointer;
 	}
 
+
 	.auth-modal h2 {
 		margin-bottom: 20px;
 		color: var(--ink);
 		font-family: var(--font-display);
 	}
+
 
 	.auth-error {
 		background: rgba(231, 76, 60, 0.08);
@@ -2930,9 +2988,11 @@
 		font-size: 0.9rem;
 	}
 
+
 	.auth-field {
 		margin-bottom: 15px;
 	}
+
 
 	.auth-field input {
 		width: 100%;
@@ -2946,9 +3006,11 @@
 		font-family: inherit;
 	}
 
+
 	.auth-field input::placeholder {
 		color: var(--ink-faint);
 	}
+
 
 	.auth-submit {
 		width: 100%;
@@ -2965,10 +3027,12 @@
 		font-family: inherit;
 	}
 
+
 	.auth-submit:disabled {
 		opacity: 0.6;
 		cursor: not-allowed;
 	}
+
 
 	.auth-forgot {
 		text-align: center;
@@ -2976,14 +3040,17 @@
 		font-size: 0.86rem;
 	}
 
+
 	.auth-forgot a {
 		color: var(--ink-faint);
 		text-decoration: underline;
 	}
 
+
 	.auth-forgot a:hover {
 		color: var(--accent);
 	}
+
 
 	.auth-toggle {
 		text-align: center;
@@ -2992,11 +3059,13 @@
 		font-size: 0.9rem;
 	}
 
+
 	.auth-toggle a {
 		color: var(--accent-deep);
 		text-decoration: none;
 		font-weight: 600;
 	}
+
 
 	/* ── Calendar flashcard overlay ───────────────────── */
 	.cal-overlay {
@@ -3011,6 +3080,7 @@
 		padding: 20px;
 	}
 
+
 	.cal-modal {
 		background: var(--paper-raised);
 		border-radius: 24px;
@@ -3023,6 +3093,7 @@
 		max-height: 90vh;
 		overflow-y: auto;
 	}
+
 
 	.cal-close {
 		position: absolute;
@@ -3039,14 +3110,17 @@
 		font-family: inherit;
 	}
 
+
 	.cal-close:hover {
 		color: var(--ink);
 	}
+
 
 	.cal-header {
 		margin-bottom: 18px;
 		padding-right: 36px;
 	}
+
 
 	.cal-header h2 {
 		font-size: 1.25rem;
@@ -3056,11 +3130,13 @@
 		margin: 0 0 6px;
 	}
 
+
 	.cal-header p {
 		font-size: 0.88rem;
 		color: var(--ink-soft);
 		margin: 0;
 	}
+
 
 	/* ── Practice Calendar (inside modal) ────────────── */
 	.pcal-header {
@@ -3070,11 +3146,13 @@
 		margin-bottom: 12px;
 	}
 
+
 	.pcal-title {
 		font-size: 0.95rem;
 		font-weight: 700;
 		color: var(--ink-soft);
 	}
+
 
 	.pcal-nav-btn {
 		background: var(--paper-sunken);
@@ -3093,16 +3171,19 @@
 		transition: all 0.2s;
 	}
 
+
 	.pcal-nav-btn:hover:not(:disabled) {
 		background: var(--accent-wash);
 		border-color: var(--accent);
 		color: var(--ink);
 	}
 
+
 	.pcal-nav-btn:disabled {
 		opacity: 0.25;
 		cursor: not-allowed;
 	}
+
 
 	.pcal-dow {
 		display: grid;
@@ -3110,6 +3191,7 @@
 		gap: 4px;
 		margin-bottom: 4px;
 	}
+
 
 	.pcal-dow-cell {
 		text-align: center;
@@ -3121,12 +3203,14 @@
 		letter-spacing: 0.04em;
 	}
 
+
 	.pcal-grid {
 		display: grid;
 		grid-template-columns: repeat(7, 1fr);
 		gap: 4px;
 		margin-bottom: 18px;
 	}
+
 
 	.pcal-cell {
 		aspect-ratio: 1;
@@ -3145,10 +3229,12 @@
 		cursor: default;
 	}
 
+
 	.pcal-empty {
 		background: transparent !important;
 		border-color: transparent !important;
 	}
+
 
 	.pcal-cell.practiced {
 		background: var(--leaf-wash);
@@ -3157,11 +3243,13 @@
 		font-weight: 700;
 	}
 
+
 	.pcal-cell.today {
 		border-color: var(--accent);
 		color: var(--accent-deep);
 		font-weight: 700;
 	}
+
 
 	.pcal-cell.practiced.today {
 		background: var(--leaf-wash);
@@ -3170,10 +3258,12 @@
 		box-shadow: inset 0 0 0 1px var(--accent);
 	}
 
+
 	/* ── Mastery Section ──────────────────────────────── */
 	.stats-overview {
 		margin-bottom: 24px;
 	}
+
 
 	.mastery-section {
 		background: var(--paper-sunken);
@@ -3181,6 +3271,7 @@
 		border-radius: 20px;
 		padding: 20px 24px;
 	}
+
 
 	.mastery-section h3 {
 		font-size: 0.95rem;
@@ -3191,11 +3282,13 @@
 		margin: 0 0 16px;
 	}
 
+
 	.mastery-grid {
 		display: grid;
 		grid-template-columns: repeat(3, 1fr);
 		gap: 16px;
 	}
+
 
 	.mastery-item {
 		display: flex;
@@ -3208,10 +3301,12 @@
 		transition: transform 0.2s;
 	}
 
+
 	.mastery-item:hover {
 		transform: translateY(-2px);
 		background: var(--paper-raised);
 	}
+
 
 	.m-label {
 		font-size: 0.75rem;
@@ -3221,18 +3316,22 @@
 		margin-bottom: 8px;
 	}
 
+
 	.mastery-item.a1 .m-label {
 		background: rgba(49, 89, 122, 0.12);
 		color: #5dade2;
 	}
+
 	.mastery-item.a2 .m-label {
 		background: rgba(123, 75, 148, 0.12);
 		color: #a569bd;
 	}
+
 	.mastery-item.b1 .m-label {
 		background: var(--accent-wash);
 		color: var(--accent-deep);
 	}
+
 
 	.m-value {
 		font-size: 1.5rem;
@@ -3242,12 +3341,14 @@
 		margin-bottom: 4px;
 	}
 
+
 	.m-sub {
 		font-size: 0.65rem;
 		color: var(--ink-faint);
 		text-transform: uppercase;
 		font-weight: 600;
 	}
+
 
 	/* ── Legend ───────────────────────────────────────── */
 	.cal-legend {
@@ -3259,6 +3360,7 @@
 		border-top: 1px solid var(--line);
 	}
 
+
 	.leg-item {
 		display: flex;
 		align-items: center;
@@ -3267,6 +3369,7 @@
 		color: var(--ink-soft);
 	}
 
+
 	.leg-sw {
 		width: 12px;
 		height: 12px;
@@ -3274,20 +3377,24 @@
 		flex-shrink: 0;
 	}
 
+
 	.practiced-sw {
 		background: rgba(46, 204, 113, 0.25);
 		border: 1px solid rgba(46, 204, 113, 0.5);
 	}
+
 	.today-sw {
 		background: transparent;
 		border: 1px solid var(--accent);
 	}
+
 
 	.pcal-month-stat {
 		margin-left: auto;
 		color: var(--leaf);
 		font-weight: 700;
 	}
+
 
 	/* ── Responsive ───────────────────────────────────── */
 	@media (max-width: 700px) {
@@ -3359,5 +3466,4 @@
 		.m-value {
 			font-size: 1.2rem;
 		}
-	}
-</style>
+	}</style>
