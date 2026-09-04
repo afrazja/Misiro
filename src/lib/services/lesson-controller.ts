@@ -25,6 +25,7 @@ import {
 	resolveResumePoint,
 	getTotalLessons
 } from '$services/lesson-loader';
+import { isUnlocked, unlockedBy } from '$services/lesson-access';
 import { getLanguage, getVoiceSpeed, getCompletedLessons, getProgress, saveProgress, saveCompletedLessons } from '$services/data-layer';
 import { recordSRAttempt, getDueReviewItems, removeFromReview } from '$services/spaced-repetition';
 import {
@@ -526,6 +527,19 @@ export async function manualNext(): Promise<void> {
 	processNextStep();
 }
 
+/**
+ * Advance from the completion card to tomorrow's lesson.
+ *
+ * Deliberately NOT behind the isUnlocked guard that changeDay carries, and
+ * it does not need to be: this is only reachable from the completion card,
+ * whose nextDay is currentDay + 1, and handleLessonCompletion has already
+ * written currentDay into completedLessons by the time the card renders. The
+ * frontier has moved before this can be pressed.
+ *
+ * Adding the guard here would be the riskier choice, not the safer one — if
+ * that ordering ever slipped it would block the single button the whole
+ * progression depends on.
+ */
 export async function goToNextDay(nextDay: number): Promise<void> {
 	incrementSession();
 	stopAllAudio();
@@ -563,6 +577,21 @@ export async function jumpToSentence(index: number): Promise<void> {
 export async function changeDay(day: number): Promise<void> {
 	const app = get(appStore);
 	if (day === app.currentDay && !get(examStore).isExamMode) return;
+
+	// A disabled <option> is presentation, not enforcement: the picker can be
+	// bypassed with devtools, and other call sites reach this function
+	// without going through it at all. The rule belongs where the day
+	// actually changes.
+	if (!isUnlocked(day, app.completedLessons)) {
+		const needed = unlockedBy(day, app.completedLessons);
+		const isFa = get(preferencesStore).language === 'fa';
+		callbacks?.onSystemMessage(
+			isFa
+				? `این روز هنوز باز نشده است — اول روز ${needed} را تمام کن.`
+				: `Day ${day} is not open yet — finish day ${needed} first.`
+		);
+		return;
+	}
 
 	incrementSession();
 	stopAllAudio();

@@ -5,6 +5,7 @@
 	import { preferencesStore, type Language } from "$stores/preferences";
 	import { lessonStore, type Sentence } from "$stores/lesson";
 	import { examStore } from "$stores/exam";
+	import { isUnlocked } from "$services/lesson-access";
 	import {
 		setCallbacks,
 		initLesson,
@@ -851,12 +852,14 @@
 								app.completedLessons &&
 								app.completedLessons[meta.day]
 							)}
+							{@const locked = !isUnlocked(meta.day, app.completedLessons)}
 							<option
 								value={meta.day.toString()}
 								selected={meta.day === app.currentDay}
+								disabled={locked}
 							>
-								{isCompleted ? "✅ " : ""}{prefs.language === "fa" &&
-								meta.titleFa
+								{locked ? "🔒 " : isCompleted ? "✅ " : ""}{prefs.language ===
+									"fa" && meta.titleFa
 									? `${meta.day}: ${meta.titleFa}`
 									: meta.title}
 							</option>
@@ -1619,6 +1622,16 @@
 										</div>
 									{/if}
 									{#if completionData.nextDay}
+										<!-- Names the unlock rather than just the
+										     next day. Finishing this lesson is what
+										     produced the next one, and saying so is
+										     the whole reward — there are no streaks
+										     or gems doing that job here. -->
+										<p class="unlock-line">
+											{completionData.language === "fa"
+												? `🔓 روز ${completionData.nextDay} باز شد`
+												: `🔓 Day ${completionData.nextDay} unlocked`}
+										</p>
 										<button
 											class="next-day-btn"
 											onclick={() =>
@@ -2790,6 +2803,16 @@
 		box-shadow: var(--paper-shadow);
 		border-radius: 15px !important;
 		padding: 25px !important;
+	}
+
+	/* The unlock, stated just above the button that acts on it. */
+	.unlock-line {
+		margin: 14px 0 6px;
+		font-family: var(--font-mono);
+		font-size: var(--type-label);
+		letter-spacing: var(--tracking-label);
+		text-transform: uppercase;
+		color: var(--leaf-deep);
 	}
 
 	.next-day-btn {
