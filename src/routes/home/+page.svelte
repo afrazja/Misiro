@@ -95,19 +95,6 @@
 	const minHeroDate = toISO(new Date(Date.now() + 86400000));
 	const maxHeroDate = toISO(new Date(Date.now() + 2 * 365 * 86400000));
 
-	/** Save a date picked inline on the hero — as a booked exam or a target. */
-	async function saveHeroDate(kind: "scheduled" | "planned") {
-		if (!heroDate) return;
-		const settings: ExamSettings =
-			kind === "scheduled"
-				? { goal: "scheduled", examDate: heroDate, targetDate: null }
-				: { goal: "planned", examDate: null, targetDate: heroDate };
-		// Optimistic: hero updates instantly, persistence follows.
-		examSettings = settings;
-		deadline = dataLayer.examDeadline(settings);
-		showDatePanel = false;
-		await dataLayer.setExamSettings(settings);
-	}
 	let totalXp = $state(0);
 	let dueReviews = $state(0);
 	let savedWordCount = $state(0);
@@ -533,12 +520,6 @@
 		}
 	}
 
-	async function onLanguageChange(e: Event) {
-		const select = e.target as HTMLSelectElement;
-		language = select.value as Language;
-		preferencesStore.update((s) => ({ ...s, language }));
-		await dataLayer.setLanguage(language);
-	}
 
 	function handleKeydown(e: KeyboardEvent) {
 		if (e.key === "Escape" && showCalendar) showCalendar = false;
@@ -1106,143 +1087,6 @@
 		</div>
 	{/if}
 
-	<!-- ── Goethe A1 Readiness Hero ────────────────────── -->
-	{#if !isNewUser && isAuthenticated && progressLoaded && readiness && examSettings?.goal !== "none"}
-		<div class="exam-hero">
-			<div class="exam-hero-top">
-				<span class="exam-hero-title"
-					>🎓
-					{language === "fa"
-						? "آمادگی آزمون گوته A1"
-						: "Goethe A1 Readiness"}</span
-				>
-				{#if deadline !== null && deadline.days >= 0}
-					<button
-						class="exam-countdown"
-						class:soft={deadline.kind === "target"}
-						onclick={() => {
-							heroDate =
-								(deadline?.kind === "exam"
-									? examSettings?.examDate
-									: examSettings?.targetDate) ?? "";
-							showDatePanel = !showDatePanel;
-						}}
-						title={language === "fa" ? "تغییر تاریخ" : "Change date"}
-					>
-						{#if deadline.kind === "exam"}
-							{language === "fa"
-								? `${deadline.days} روز تا آزمون`
-								: `${deadline.days} days to exam`}
-						{:else}
-							{language === "fa"
-								? `${deadline.days} روز تا هدفت`
-								: `${deadline.days} days to your target`}
-						{/if}
-					</button>
-				{:else}
-					<button
-						class="exam-set-date"
-						onclick={() => (showDatePanel = !showDatePanel)}
-					>
-						{language === "fa" ? "📅 تعیین تاریخ آزمون" : "📅 Set exam date"}
-					</button>
-				{/if}
-			</div>
-
-			{#if showDatePanel}
-				<div class="exam-date-panel">
-					<input
-						type="date"
-						class="exam-date-input"
-						bind:value={heroDate}
-						min={minHeroDate}
-						max={maxHeroDate}
-					/>
-					<div class="exam-date-actions">
-						<button
-							class="edp-save"
-							disabled={!heroDate}
-							onclick={() => saveHeroDate("scheduled")}
-						>
-							📅 {language === "fa" ? "تاریخ آزمونم است" : "My exam date"}
-						</button>
-						<button
-							class="edp-target"
-							disabled={!heroDate}
-							onclick={() => saveHeroDate("planned")}
-						>
-							🎯 {language === "fa" ? "فقط هدف است" : "Just a target"}
-						</button>
-					</div>
-				</div>
-			{/if}
-
-			<div class="exam-hero-main">
-				<div class="exam-score" class:good={readiness.onTrack}>
-					<strong>{readiness.overall}</strong><span>/100</span>
-				</div>
-
-				<!-- Until something has actually been graded, this number is
-				     inferred from lesson progress. Saying so is the difference
-				     between a score and a guess wearing a score's clothes. -->
-				{#if allEstimated}
-					<p class="exam-estimate-note">
-						{language === "fa"
-							? "تخمینی بر پایهٔ پیشرفت درس‌ها — هنوز سنجیده نشده"
-							: "Estimated from your lesson progress — not measured yet"}
-					</p>
-				{/if}
-
-				<div class="exam-bars">
-					{#each READINESS_MODULES as m (m)}
-						<div class="exam-bar-row">
-							<span class="exam-bar-label"
-								>{READINESS_LABELS[m][
-									language === "fa" ? "fa" : "en"
-								]}</span
-							>
-							<div class="exam-bar">
-								<div
-									class="exam-bar-fill"
-									class:trained={readiness.modules[m].trained}
-									style="width:{readiness.modules[m].score}%"
-								></div>
-							</div>
-							<span class="exam-bar-num">{readiness.modules[m].score}</span>
-							<!-- Estimated vs measured used to be carried by bar
-							     colour alone — two greens, no legend. Nobody
-							     decodes that, and colour alone fails 1.4.1. -->
-							{#if readiness.modules[m].source === "test"}
-								<span class="exam-bar-tag tested">
-									{language === "fa" ? "آزمون" : "tested"}
-								</span>
-							{:else if readiness.modules[m].source === "practice"}
-								<span class="exam-bar-tag practice">
-									{language === "fa" ? "تمرین" : "practice"}
-								</span>
-							{:else}
-								<span class="exam-bar-tag">
-									{language === "fa" ? "تخمینی" : "estimated"}
-								</span>
-							{/if}
-						</div>
-					{/each}
-				</div>
-			</div>
-
-			<!-- The placement test and the Sprechen drill used to hang off the
-			     bottom of this card. This card reports a score; those are
-			     things you go and do, so they live in the action row with the
-			     other two. -->
-			<div class="exam-links">
-				<span class="exam-hero-note">
-					{language === "fa"
-						? "نمره قبولی: ۶۰ از ۱۰۰"
-						: "Pass mark: 60 / 100"}
-				</span>
-			</div>
-		</div>
-	{/if}
 
 	<!-- ── Today's Session (primary daily action) ──────── -->
 	{#if isAuthenticated && !isNewUser}
@@ -1486,9 +1330,13 @@
 	}
 
 
+
+
 	:global(body) {
 		background: var(--paper);
 	}
+
+
 
 
 	/* ── Dashboard shell + left rail ─────────────────── */
@@ -1497,9 +1345,13 @@
 	}
 
 
+
+
 	.rail {
 		display: none;
 	}
+
+
 
 
 	/* The rail only earns its width when there is width to spare. Below
@@ -1532,6 +1384,8 @@
 	}
 
 
+
+
 	.rail-brand {
 		display: flex;
 		align-items: center;
@@ -1544,6 +1398,8 @@
 	}
 
 
+
+
 	.rail-mark {
 		inline-size: 22px;
 		block-size: 22px;
@@ -1553,11 +1409,15 @@
 	}
 
 
+
+
 	.rail-nav {
 		display: flex;
 		flex-direction: column;
 		gap: 2px;
 	}
+
+
 
 
 	.rail-item {
@@ -1573,16 +1433,22 @@
 	}
 
 
+
+
 	.rail-item span {
 		color: var(--ink-faint);
 		font-size: 0.8rem;
 	}
 
 
+
+
 	.rail-item:hover {
 		background: var(--control-hover);
 		color: var(--ink);
 	}
+
+
 
 
 	.rail-item.is-current {
@@ -1592,9 +1458,13 @@
 	}
 
 
+
+
 	.rail-item.is-current span {
 		color: var(--accent);
 	}
+
+
 
 
 	/* Sits at the end of the row in either direction. */
@@ -1610,6 +1480,8 @@
 	}
 
 
+
+
 	.rail-user {
 		margin-block-start: auto;
 		display: flex;
@@ -1618,6 +1490,8 @@
 		padding-block-start: var(--space-4);
 		border-block-start: 1px solid var(--line);
 	}
+
+
 
 
 	.rail-avatar {
@@ -1636,6 +1510,8 @@
 	}
 
 
+
+
 	.rail-avatar img {
 		inline-size: 100%;
 		block-size: 100%;
@@ -1643,11 +1519,15 @@
 	}
 
 
+
+
 	.rail-who {
 		display: flex;
 		flex-direction: column;
 		min-width: 0;
 	}
+
+
 
 
 	.rail-who strong {
@@ -1658,12 +1538,16 @@
 	}
 
 
+
+
 	.rail-who span {
 		font-family: var(--font-mono);
 		font-size: var(--type-label);
 		letter-spacing: var(--tracking-label);
 		color: var(--ink-faint);
 	}
+
+
 
 
 	.home-container {
@@ -1682,9 +1566,13 @@
 	}
 
 
+
+
 	.nav-profile {
 		position: relative;
 	}
+
+
 
 
 	.nav-profile-brand {
@@ -1705,14 +1593,20 @@
 	}
 
 
+
+
 	.nav-profile-brand.static {
 		cursor: default;
 	}
 
 
+
+
 	.nav-profile-brand:hover {
 		opacity: 0.8;
 	}
+
+
 
 
 	.brand-caret {
@@ -1723,9 +1617,13 @@
 	}
 
 
+
+
 	.brand-caret.open {
 		transform: rotate(180deg);
 	}
+
+
 
 
 	@media (prefers-reduced-motion: reduce) {
@@ -1733,6 +1631,8 @@
 			transition: none;
 		}
 	}
+
+
 
 
 	/* ── Account menu ── */
@@ -1751,6 +1651,8 @@
 		flex-direction: column;
 		gap: 2px;
 	}
+
+
 
 
 	.profile-menu-item {
@@ -1773,10 +1675,14 @@
 	}
 
 
+
+
 	.profile-menu-item:hover,
 	.profile-menu-item:focus-visible {
 		background: var(--control-hover);
 	}
+
+
 
 
 	/* Signing out is the one destructive thing here — it should not look
@@ -1786,10 +1692,14 @@
 	}
 
 
+
+
 	.profile-menu-item.danger:hover,
 	.profile-menu-item.danger:focus-visible {
 		background: color-mix(in srgb, var(--miss) 10%, transparent);
 	}
+
+
 
 
 	.pm-glyph {
@@ -1798,6 +1708,8 @@
 		justify-content: center;
 		font-size: 1rem;
 	}
+
+
 
 
 	.brand-avatar {
@@ -1816,11 +1728,15 @@
 	}
 
 
+
+
 	.brand-avatar img {
 		width: 100%;
 		height: 100%;
 		object-fit: cover;
 	}
+
+
 
 
 	.brand-text {
@@ -1832,11 +1748,15 @@
 	}
 
 
+
+
 	.nav-right {
 		display: flex;
 		align-items: center;
 		gap: 10px;
 	}
+
+
 
 
 	/* Compact language picker */
@@ -1854,11 +1774,15 @@
 	}
 
 
+
+
 	.nav-text-btn:hover {
 		border-color: var(--accent);
 		color: var(--accent-deep);
 		background: var(--accent-wash);
 	}
+
+
 
 
 	/* ── Today's Session hero ── */
@@ -1879,10 +1803,14 @@
 	}
 
 
+
+
 	.today-session:hover {
 		transform: translateY(-3px);
 		box-shadow: 0 20px 50px rgba(233, 69, 96, 0.45);
 	}
+
+
 
 
 	.today-info {
@@ -1893,12 +1821,16 @@
 	}
 
 
+
+
 	.today-label {
 		font-size: 0.72rem;
 		font-weight: 700;
 		letter-spacing: 2px;
 		opacity: 0.85;
 	}
+
+
 
 
 	.today-title {
@@ -1908,15 +1840,21 @@
 	}
 
 
+
+
 	.today-loading {
 		opacity: 0.7;
 	}
+
+
 
 
 	.today-sub {
 		font-size: 0.85rem;
 		opacity: 0.8;
 	}
+
+
 
 
 	.today-btn {
@@ -1929,6 +1867,8 @@
 		border-radius: 12px;
 		white-space: nowrap;
 	}
+
+
 
 
 	@media (max-width: 640px) {
@@ -1944,6 +1884,8 @@
 	}
 
 
+
+
 	.nav-stats {
 		display: flex;
 		align-items: center;
@@ -1956,6 +1898,8 @@
 		border-radius: 12px;
 		border: 1px solid var(--on-strip-accent);
 	}
+
+
 
 
 	.nav-stat {
@@ -1973,14 +1917,20 @@
 	}
 
 
+
+
 	.nav-stat:hover {
 		background: var(--paper-sunken);
 	}
 
 
+
+
 	.ns-icon {
 		display: inline-flex;
 	}
+
+
 
 
 	/* Gold, and the same gold for the numeral beside it, so the XP badge
@@ -1993,15 +1943,21 @@
 	}
 
 
+
+
 	/* Amber rather than the old --accent-deep: same problem, same fix. */
 	.ns-icon.flame {
 		color: var(--ember);
 	}
 
 
+
+
 	.ns-icon {
 		font-size: 1.1rem;
 	}
+
+
 
 
 	.ns-value {
@@ -2013,6 +1969,8 @@
 	}
 
 
+
+
 	/* ── Stats Row ────────────────────────────────────── */
 	/* ── Course roadmap ── */
 	.roadmap {
@@ -2022,11 +1980,15 @@
 	}
 
 
+
+
 	.today-tier {
 		margin-inline-start: 6px;
 		opacity: 0.85;
 		text-transform: capitalize;
 	}
+
+
 
 
 	.rm-level {
@@ -2037,11 +1999,15 @@
 	}
 
 
+
+
 	/* The level being worked through is the one that matters today. */
 	.rm-level.current {
 		border-color: var(--leaf);
 		box-shadow: var(--paper-shadow);
 	}
+
+
 
 
 	.rm-head {
@@ -2053,6 +2019,8 @@
 	}
 
 
+
+
 	.rm-name {
 		font-family: var(--font-display);
 		font-size: 1.05rem;
@@ -2061,9 +2029,13 @@
 	}
 
 
+
+
 	.rm-level.current .rm-name {
 		color: var(--leaf);
 	}
+
+
 
 
 	.rm-count {
@@ -2071,6 +2043,8 @@
 		color: var(--ink-faint);
 		font-variant-numeric: tabular-nums;
 	}
+
+
 
 
 	.rm-bar {
@@ -2081,11 +2055,15 @@
 	}
 
 
+
+
 	.rm-fill {
 		height: 100%;
 		background: var(--leaf);
 		border-radius: 4px;
 	}
+
+
 
 
 	/* Three dots per level — the checkpoints, filled as they are passed. */
@@ -2094,6 +2072,8 @@
 		gap: 5px;
 		margin-top: 8px;
 	}
+
+
 
 
 	.rm-cp {
@@ -2106,10 +2086,14 @@
 	}
 
 
+
+
 	.rm-cp.passed {
 		background: var(--gold);
 		border-color: var(--gold);
 	}
+
+
 
 
 	@media (max-width: 520px) {
@@ -2125,6 +2109,8 @@
 	}
 
 
+
+
 	.stats-row {
 		display: grid;
 		grid-template-columns: repeat(4, 1fr);
@@ -2132,9 +2118,13 @@
 	}
 
 
+
+
 	.action-row {
 		grid-template-columns: repeat(2, 1fr);
 	}
+
+
 
 
 	.action-card {
@@ -2146,6 +2136,8 @@
 	}
 
 
+
+
 	.stat-content {
 		display: flex;
 		flex-direction: column;
@@ -2154,15 +2146,21 @@
 	}
 
 
+
+
 	.action-card .stat-icon {
 		font-size: 2rem;
 	}
+
+
 
 
 	.action-card .stat-cta {
 		margin-top: 0;
 		font-size: 0.85rem;
 	}
+
+
 
 
 	.stat-card {
@@ -2182,10 +2180,14 @@
 	}
 
 
+
+
 	.stat-card:hover {
 		transform: translateY(-3px);
 		border-color: var(--accent);
 	}
+
+
 
 
 	.stat-icon {
@@ -2193,14 +2195,20 @@
 	}
 
 
+
+
 	.stat-icon.warm {
 		color: var(--accent);
 	}
 
 
+
+
 	.stat-icon {
 		font-size: 1.6rem;
 	}
+
+
 
 
 	.stat-value {
@@ -2212,11 +2220,15 @@
 	}
 
 
+
+
 	.stat-label {
 		font-size: 0.78rem;
 		color: var(--ink-soft);
 		font-weight: 500;
 	}
+
+
 
 
 	/* The relocated cards carry a title instead of a big numeral, so the
@@ -2229,10 +2241,14 @@
 	}
 
 
+
+
 	.stat-sub {
 		font-size: 0.78rem;
 		color: var(--ink-soft);
 	}
+
+
 
 
 	.stat-icon.aim {
@@ -2241,12 +2257,16 @@
 	}
 
 
+
+
 	/* ── Nav Cards ────────────────────────────────────── */
 	.nav-cards {
 		display: grid;
 		grid-template-columns: repeat(2, 1fr);
 		gap: 24px;
 	}
+
+
 
 
 	.nav-card {
@@ -2269,6 +2289,8 @@
 	}
 
 
+
+
 	.card-glow {
 		position: absolute;
 		inset: 0;
@@ -2276,6 +2298,8 @@
 		transition: opacity 0.3s;
 		border-radius: inherit;
 	}
+
+
 
 
 	.nav-card.lessons .card-glow {
@@ -2287,6 +2311,8 @@
 	}
 
 
+
+
 	.nav-card.basics .card-glow {
 		background: radial-gradient(
 			circle at 50% 0%,
@@ -2296,9 +2322,13 @@
 	}
 
 
+
+
 	.nav-card:hover .card-glow {
 		opacity: 1;
 	}
+
+
 
 
 	.nav-card:hover {
@@ -2306,14 +2336,20 @@
 	}
 
 
+
+
 	.nav-card.lessons:hover {
 		border-color: var(--accent);
 	}
 
 
+
+
 	.nav-card.basics:hover {
 		border-color: var(--leaf);
 	}
+
+
 
 
 	.nav-card .icon {
@@ -2322,14 +2358,20 @@
 	}
 
 
+
+
 	.nav-card.lessons .icon {
 		color: var(--accent);
 	}
 
 
+
+
 	.nav-card.basics .icon {
 		color: var(--leaf);
 	}
+
+
 
 
 	.nav-card h2 {
@@ -2342,6 +2384,8 @@
 	}
 
 
+
+
 	.nav-card p {
 		color: var(--ink-soft);
 		line-height: 1.6;
@@ -2349,6 +2393,8 @@
 		position: relative;
 		z-index: 1;
 	}
+
+
 
 
 	/* Placement check. Reads as information, not an error — the learner did
@@ -2366,11 +2412,15 @@
 	}
 
 
+
+
 	.placement-check h2 {
 		margin: 0 0 6px;
 		font-size: 1.02rem;
 		color: var(--ink);
 	}
+
+
 
 
 	.placement-check p {
@@ -2381,11 +2431,15 @@
 	}
 
 
+
+
 	.pc-actions {
 		display: flex;
 		gap: 10px;
 		flex-wrap: wrap;
 	}
+
+
 
 
 	.pc-yes,
@@ -2400,11 +2454,15 @@
 	}
 
 
+
+
 	.pc-yes {
 		background: var(--accent);
 		color: var(--on-accent);
 		border: none;
 	}
+
+
 
 
 	.pc-no {
@@ -2414,11 +2472,15 @@
 	}
 
 
+
+
 	.pc-yes:disabled,
 	.pc-no:disabled {
 		opacity: 0.6;
 		cursor: wait;
 	}
+
+
 
 
 	/* Quieter than the count it follows — an explanation, not a second
@@ -2427,6 +2489,8 @@
 		font-weight: 600;
 		opacity: 0.75;
 	}
+
+
 
 
 	.card-meta {
@@ -2441,16 +2505,22 @@
 	}
 
 
+
+
 	.card-meta.done {
 		background: var(--leaf-wash);
 		color: var(--leaf);
 	}
 
 
+
+
 	.card-meta.basics-meta {
 		background: var(--leaf-wash);
 		color: var(--leaf);
 	}
+
+
 
 
 	/* Clickable stat card for due reviews */
@@ -2460,16 +2530,22 @@
 	}
 
 
+
+
 	.stat-card-link.has-words {
 		border-color: var(--line);
 		background: var(--accent-wash);
 	}
 
 
+
+
 	.stat-card-link.has-words:hover {
 		border-color: var(--accent);
 		box-shadow: 0 8px 24px rgba(46, 204, 113, 0.15);
 	}
+
+
 
 
 	.stat-cta {
@@ -2481,9 +2557,13 @@
 	}
 
 
+
+
 	.stat-cta.vocab-cta {
 		color: var(--accent-deep);
 	}
+
+
 
 
 	/* ── Card Progress Bar ── */
@@ -2497,12 +2577,16 @@
 	}
 
 
+
+
 	.card-progress-fill {
 		height: 100%;
 		background: var(--leaf);
 		border-radius: 3px;
 		transition: width 0.5s ease;
 	}
+
+
 
 
 	.nav-card .arrow {
@@ -2516,10 +2600,14 @@
 	}
 
 
+
+
 	.nav-card:hover .arrow {
 		opacity: 1;
 		transform: translateX(0);
 	}
+
+
 
 
 	/* ── Footer ───────────────────────────────────────── */
@@ -2531,6 +2619,8 @@
 		font-size: 0.88rem;
 		margin-top: auto;
 	}
+
+
 
 
 	/* ── Toast ────────────────────────────────────────── */
@@ -2550,6 +2640,8 @@
 	}
 
 
+
+
 	.fs-countdown {
 		background: var(--accent-wash);
 		color: var(--accent-deep);
@@ -2560,6 +2652,8 @@
 	}
 
 
+
+
 	.fs-title {
 		font-family: var(--font-display);
 		font-size: 1.65rem;
@@ -2568,12 +2662,16 @@
 	}
 
 
+
+
 	.fs-sub {
 		color: var(--ink-soft);
 		line-height: 1.6;
 		max-width: 460px;
 		margin: 0;
 	}
+
+
 
 
 	.fs-primary {
@@ -2589,9 +2687,13 @@
 	}
 
 
+
+
 	.fs-primary:hover {
 		background: var(--accent-deep);
 	}
+
+
 
 
 	.fs-secondary {
@@ -2601,308 +2703,22 @@
 	}
 
 
-	/* ── Goethe A1 Readiness Hero ─────────────────────── */
-	.exam-hero {
-		background: var(--paper-raised);
-		border: 1px solid var(--line);
-		border-radius: 18px;
-		box-shadow: var(--paper-shadow);
-		padding: 20px 24px;
-		margin-bottom: 16px;
-		display: flex;
-		flex-direction: column;
-		gap: 14px;
-	}
-
-
-	.exam-hero-top {
-		display: flex;
-		align-items: center;
-		justify-content: space-between;
-		gap: 10px;
-		flex-wrap: wrap;
-	}
-
-
-	.exam-hero-title {
-		font-weight: 700;
-		color: var(--ink);
-		font-size: 1.02rem;
-	}
-
-
-	.exam-countdown {
-		background: var(--accent-wash);
-		color: var(--accent-deep);
-		border-radius: 999px;
-		padding: 4px 14px;
-		font-weight: 700;
-		font-size: 0.9rem;
-		border: none;
-		cursor: pointer;
-		font-family: inherit;
-	}
-
-
-	/* Soft "ready-by" target — green, calmer than a booked exam. */
-	.exam-countdown.soft {
-		background: var(--leaf-wash);
-		/* --leaf on --leaf-wash measured 4.33:1; darker green gives 9.5:1 */
-		color: var(--accent-deep);
-	}
-
-
-	.exam-set-date {
-		color: var(--accent-deep);
-		font-weight: 600;
-		font-size: 0.9rem;
-		background: var(--accent-wash);
-		border: 1.5px dashed var(--accent);
-		border-radius: 999px;
-		padding: 4px 14px;
-		cursor: pointer;
-		font-family: inherit;
-	}
-
-
-	/* Inline date panel — set the exam/target date without leaving /home. */
-	.exam-date-panel {
-		display: flex;
-		align-items: center;
-		gap: 10px;
-		flex-wrap: wrap;
-		background: var(--paper-sunken);
-		border: 1px solid var(--line);
-		border-radius: 12px;
-		padding: 12px 14px;
-	}
-
-
-	.exam-date-input {
-		background: var(--paper-raised);
-		border: 1.5px solid var(--line);
-		border-radius: 10px;
-		padding: 9px 12px;
-		font-size: 0.95rem;
-		font-family: var(--font-body);
-		color: var(--ink);
-	}
-
-
-	.exam-date-input:focus {
-		border-color: var(--accent);
-		outline: none;
-	}
-
-
-	.exam-date-actions {
-		display: flex;
-		gap: 8px;
-		flex-wrap: wrap;
-	}
-
-
-	.edp-save,
-	.edp-target {
-		border: none;
-		border-radius: 10px;
-		padding: 9px 14px;
-		font-size: 0.9rem;
-		font-weight: 700;
-		cursor: pointer;
-		font-family: inherit;
-	}
-
-
-	.edp-save {
-		background: var(--accent);
-		color: var(--on-accent);
-	}
-
-
-	.edp-target {
-		background: var(--leaf-wash);
-		color: var(--leaf);
-		border: 1.5px solid var(--leaf);
-	}
-
-
-	.edp-save:disabled,
-	.edp-target:disabled {
-		opacity: 0.5;
-		cursor: default;
-	}
-
-
-	.exam-hero-main {
-		display: flex;
-		align-items: center;
-		gap: 22px;
-	}
-
-
-	.exam-score {
-		display: flex;
-		align-items: baseline;
-		color: var(--accent-deep);
-		min-width: 92px;
-	}
-
-
-	.exam-score.good {
-		color: var(--leaf);
-	}
-
-
-	.exam-score strong {
-		font-family: var(--font-display);
-		font-size: 2.6rem;
-		font-weight: 700;
-		line-height: 1;
-	}
-
-
-	.exam-score span {
-		color: var(--ink-faint);
-		font-size: 1rem;
-		margin-left: 2px;
-	}
-
-
-	.exam-bars {
-		flex: 1;
-		display: flex;
-		flex-direction: column;
-		gap: 7px;
-		min-width: 0;
-	}
-
-
-	.exam-bar-row {
-		display: grid;
-		grid-template-columns: 74px 1fr 30px auto;
-		align-items: center;
-		gap: 10px;
-	}
-
-
-	.exam-bar-label {
-		font-size: 0.82rem;
-		color: var(--ink-soft);
-		font-weight: 600;
-		white-space: nowrap;
-	}
-
-
-	.exam-bar {
-		height: 8px;
-		background: var(--paper-sunken);
-		border-radius: 6px;
-		overflow: hidden;
-	}
-
-
-	.exam-bar-fill {
-		height: 100%;
-		background: var(--accent);
-		border-radius: 6px;
-		transition: width 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
-	}
-
-
-	.exam-bar-fill.trained {
-		background: var(--leaf);
-	}
-
-
-	.exam-bar-num {
-		font-size: 0.8rem;
-		color: var(--ink-faint);
-		text-align: right;
-		font-variant-numeric: tabular-nums;
-	}
-
-
-	/* Says in words what the two bar greens were trying to say on their own. */
-	.exam-bar-tag {
-		font-size: 0.66rem;
-		font-weight: 700;
-		letter-spacing: 0.04em;
-		text-transform: uppercase;
-		white-space: nowrap;
-		padding: 2px 7px;
-		border-radius: 999px;
-		background: var(--paper-sunken);
-		color: var(--ink-faint);
-	}
-
-
-	/* Three states, three looks — and each one says its own name, so the
-	   colour is reinforcement rather than the message. */
-	.exam-bar-tag.practice {
-		background: var(--info-wash);
-		color: var(--info);
-	}
-
-
-	.exam-bar-tag.tested {
-		background: var(--leaf-wash);
-		color: var(--leaf);
-	}
 
 
 	/* On a narrow phone the tag would squeeze the bar itself down to a stub.
 	   Shrink the tag, not the bar — the bar is the thing being read. */
 	@media (max-width: 440px) {
-		.exam-bar-row {
-			grid-template-columns: 62px 1fr 26px auto;
-			gap: 7px;
-		}
 
-		.exam-bar-tag {
-			font-size: 0.6rem;
-			padding: 2px 5px;
-			letter-spacing: 0;
-		}
 	}
 
 
-	.exam-estimate-note {
-		margin: -4px 0 14px;
-		text-align: center;
-		font-size: 0.82rem;
-		color: var(--ink-soft);
-	}
-
-
-	.exam-hero-note {
-		color: var(--ink-faint);
-		font-size: 0.82rem;
-		text-align: right;
-	}
-
-
-	.exam-links {
-		display: flex;
-		align-items: center;
-		justify-content: space-between;
-		gap: 10px;
-		flex-wrap: wrap;
-	}
 
 
 	@media (max-width: 640px) {
-		.exam-hero-main {
-			flex-direction: column;
-			align-items: stretch;
-			gap: 12px;
-		}
 
-		.exam-score {
-			justify-content: center;
-			min-width: 0;
-		}
 	}
+
+
 
 
 	.confirm-toast {
@@ -2927,11 +2743,15 @@
 	}
 
 
+
+
 	.confirm-toast.show {
 		transform: translateX(-50%) translateY(0);
 		visibility: visible;
 		transition-delay: 0s, 0s;
 	}
+
+
 
 
 	/* ── Auth Modal ───────────────────────────────────── */
@@ -2948,6 +2768,8 @@
 	}
 
 
+
+
 	.auth-modal {
 		background: var(--paper-raised);
 		border-radius: 20px;
@@ -2958,6 +2780,8 @@
 		box-shadow: var(--paper-shadow);
 		position: relative;
 	}
+
+
 
 
 	.auth-close {
@@ -2972,11 +2796,15 @@
 	}
 
 
+
+
 	.auth-modal h2 {
 		margin-bottom: 20px;
 		color: var(--ink);
 		font-family: var(--font-display);
 	}
+
+
 
 
 	.auth-error {
@@ -2989,9 +2817,13 @@
 	}
 
 
+
+
 	.auth-field {
 		margin-bottom: 15px;
 	}
+
+
 
 
 	.auth-field input {
@@ -3007,9 +2839,13 @@
 	}
 
 
+
+
 	.auth-field input::placeholder {
 		color: var(--ink-faint);
 	}
+
+
 
 
 	.auth-submit {
@@ -3028,10 +2864,14 @@
 	}
 
 
+
+
 	.auth-submit:disabled {
 		opacity: 0.6;
 		cursor: not-allowed;
 	}
+
+
 
 
 	.auth-forgot {
@@ -3041,15 +2881,21 @@
 	}
 
 
+
+
 	.auth-forgot a {
 		color: var(--ink-faint);
 		text-decoration: underline;
 	}
 
 
+
+
 	.auth-forgot a:hover {
 		color: var(--accent);
 	}
+
+
 
 
 	.auth-toggle {
@@ -3060,11 +2906,15 @@
 	}
 
 
+
+
 	.auth-toggle a {
 		color: var(--accent-deep);
 		text-decoration: none;
 		font-weight: 600;
 	}
+
+
 
 
 	/* ── Calendar flashcard overlay ───────────────────── */
@@ -3081,6 +2931,8 @@
 	}
 
 
+
+
 	.cal-modal {
 		background: var(--paper-raised);
 		border-radius: 24px;
@@ -3093,6 +2945,8 @@
 		max-height: 90vh;
 		overflow-y: auto;
 	}
+
+
 
 
 	.cal-close {
@@ -3111,15 +2965,21 @@
 	}
 
 
+
+
 	.cal-close:hover {
 		color: var(--ink);
 	}
+
+
 
 
 	.cal-header {
 		margin-bottom: 18px;
 		padding-right: 36px;
 	}
+
+
 
 
 	.cal-header h2 {
@@ -3131,11 +2991,15 @@
 	}
 
 
+
+
 	.cal-header p {
 		font-size: 0.88rem;
 		color: var(--ink-soft);
 		margin: 0;
 	}
+
+
 
 
 	/* ── Practice Calendar (inside modal) ────────────── */
@@ -3147,11 +3011,15 @@
 	}
 
 
+
+
 	.pcal-title {
 		font-size: 0.95rem;
 		font-weight: 700;
 		color: var(--ink-soft);
 	}
+
+
 
 
 	.pcal-nav-btn {
@@ -3172,11 +3040,15 @@
 	}
 
 
+
+
 	.pcal-nav-btn:hover:not(:disabled) {
 		background: var(--accent-wash);
 		border-color: var(--accent);
 		color: var(--ink);
 	}
+
+
 
 
 	.pcal-nav-btn:disabled {
@@ -3185,12 +3057,16 @@
 	}
 
 
+
+
 	.pcal-dow {
 		display: grid;
 		grid-template-columns: repeat(7, 1fr);
 		gap: 4px;
 		margin-bottom: 4px;
 	}
+
+
 
 
 	.pcal-dow-cell {
@@ -3204,12 +3080,16 @@
 	}
 
 
+
+
 	.pcal-grid {
 		display: grid;
 		grid-template-columns: repeat(7, 1fr);
 		gap: 4px;
 		margin-bottom: 18px;
 	}
+
+
 
 
 	.pcal-cell {
@@ -3230,10 +3110,14 @@
 	}
 
 
+
+
 	.pcal-empty {
 		background: transparent !important;
 		border-color: transparent !important;
 	}
+
+
 
 
 	.pcal-cell.practiced {
@@ -3244,11 +3128,15 @@
 	}
 
 
+
+
 	.pcal-cell.today {
 		border-color: var(--accent);
 		color: var(--accent-deep);
 		font-weight: 700;
 	}
+
+
 
 
 	.pcal-cell.practiced.today {
@@ -3259,10 +3147,14 @@
 	}
 
 
+
+
 	/* ── Mastery Section ──────────────────────────────── */
 	.stats-overview {
 		margin-bottom: 24px;
 	}
+
+
 
 
 	.mastery-section {
@@ -3271,6 +3163,8 @@
 		border-radius: 20px;
 		padding: 20px 24px;
 	}
+
+
 
 
 	.mastery-section h3 {
@@ -3283,11 +3177,15 @@
 	}
 
 
+
+
 	.mastery-grid {
 		display: grid;
 		grid-template-columns: repeat(3, 1fr);
 		gap: 16px;
 	}
+
+
 
 
 	.mastery-item {
@@ -3302,10 +3200,14 @@
 	}
 
 
+
+
 	.mastery-item:hover {
 		transform: translateY(-2px);
 		background: var(--paper-raised);
 	}
+
+
 
 
 	.m-label {
@@ -3317,20 +3219,28 @@
 	}
 
 
+
+
 	.mastery-item.a1 .m-label {
 		background: rgba(49, 89, 122, 0.12);
 		color: #5dade2;
 	}
+
+
 
 	.mastery-item.a2 .m-label {
 		background: rgba(123, 75, 148, 0.12);
 		color: #a569bd;
 	}
 
+
+
 	.mastery-item.b1 .m-label {
 		background: var(--accent-wash);
 		color: var(--accent-deep);
 	}
+
+
 
 
 	.m-value {
@@ -3342,12 +3252,16 @@
 	}
 
 
+
+
 	.m-sub {
 		font-size: 0.65rem;
 		color: var(--ink-faint);
 		text-transform: uppercase;
 		font-weight: 600;
 	}
+
+
 
 
 	/* ── Legend ───────────────────────────────────────── */
@@ -3361,6 +3275,8 @@
 	}
 
 
+
+
 	.leg-item {
 		display: flex;
 		align-items: center;
@@ -3368,6 +3284,8 @@
 		font-size: 0.75rem;
 		color: var(--ink-soft);
 	}
+
+
 
 
 	.leg-sw {
@@ -3378,10 +3296,14 @@
 	}
 
 
+
+
 	.practiced-sw {
 		background: rgba(46, 204, 113, 0.25);
 		border: 1px solid rgba(46, 204, 113, 0.5);
 	}
+
+
 
 	.today-sw {
 		background: transparent;
@@ -3389,11 +3311,15 @@
 	}
 
 
+
+
 	.pcal-month-stat {
 		margin-left: auto;
 		color: var(--leaf);
 		font-weight: 700;
 	}
+
+
 
 
 	/* ── Responsive ───────────────────────────────────── */
