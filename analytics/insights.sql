@@ -290,3 +290,72 @@ FROM public.events
 WHERE day IS NOT NULL
 GROUP BY day
 ORDER BY day;
+
+
+-- ─────────────────────────────────────────────────────────────────────────────
+-- 12) WHERE PEOPLE LEAVE A LESSON — the sentence-by-sentence drop-off.
+--
+--     This is the question the funnel could never answer. Day 1 turned 26
+--     loads into 6 completions and the other 20 could only be counted, not
+--     located. Giving up on sentence 1 (the microphone permission) and giving
+--     up on sentence 8 (too long) look identical in a completion rate and
+--     need opposite fixes.
+--
+--     Read it as a survival curve: `reached` should fall as `sentence_no`
+--     rises, and the row where it falls off a cliff is the thing to fix.
+--     `pct_of_starters` is against everyone who saw sentence 1, so it starts
+--     at 100 by construction.
+--
+--     Change the day filter to look at any lesson; day 1 is where the money is.
+-- ─────────────────────────────────────────────────────────────────────────────
+WITH progress AS (
+  SELECT
+    user_id,
+    day,
+    (metadata->>'index')::int AS idx,
+    (metadata->>'total')::int AS total
+  FROM public.events
+  WHERE event_name = 'lesson_progress'
+    AND day = 1                          -- ← change the day here
+    AND metadata ? 'index'
+),
+starters AS (
+  SELECT count(DISTINCT user_id) AS n FROM progress WHERE idx = 0
+)
+SELECT
+  p.idx + 1                                     AS sentence_no,
+  max(p.total)                                  AS sentences_in_lesson,
+  count(DISTINCT p.user_id)                     AS reached,
+  round(100.0 * count(DISTINCT p.user_id) / NULLIF((SELECT n FROM starters), 0), 1)
+                                                AS pct_of_starters,
+  -- How many gave up ON this sentence: reached it, never reached the next.
+  count(DISTINCT p.user_id) - COALESCE((
+    SELECT count(DISTINCT q.user_id) FROM progress q WHERE q.idx = p.idx + 1
+  ), 0)                                         AS lost_here
+FROM progress p
+GROUP BY p.idx
+ORDER BY p.idx;
+
+
+-- ─────────────────────────────────────────────────────────────────────────────
+-- 13) THE THREE-STEP ENTRY FUNNEL — page load → pressed Start → finished.
+--
+--     Pairs with 12. This says how many never got past the overlay; 12 says
+--     what happened to the ones who did. Fixing the wrong one is the failure
+--     mode both queries exist to prevent.
+-- ─────────────────────────────────────────────────────────────────────────────
+SELECT
+  day AS lesson_day,
+  count(DISTINCT user_id) FILTER (WHERE event_name = 'lesson_started')   AS loaded_page,
+  count(DISTINCT user_id) FILTER (WHERE event_name = 'lesson_begun')     AS pressed_start,
+  count(DISTINCT user_id) FILTER (WHERE event_name = 'lesson_completed') AS finished,
+  round(100.0 * count(DISTINCT user_id) FILTER (WHERE event_name = 'lesson_begun')
+        / NULLIF(count(DISTINCT user_id) FILTER (WHERE event_name = 'lesson_started'), 0), 1)
+        AS pct_started_the_lesson,
+  round(100.0 * count(DISTINCT user_id) FILTER (WHERE event_name = 'lesson_completed')
+        / NULLIF(count(DISTINCT user_id) FILTER (WHERE event_name = 'lesson_begun'), 0), 1)
+        AS pct_of_those_who_finished
+FROM public.events
+WHERE day IS NOT NULL
+GROUP BY day
+ORDER BY day;

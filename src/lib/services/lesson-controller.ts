@@ -365,6 +365,16 @@ export async function processNextStep(skipAudio = false): Promise<void> {
 	const germanText = currentStep.role === 'received' ? currentStep.audioText! : currentStep.targetText!;
 	const translationText = getTranslation(currentStep, prefs.language);
 
+	// Fired where the sentence is presented rather than where the index
+	// advances, so it records what the learner SAW. The two differ on
+	// resume: reopening a half-finished lesson advances nothing, and someone
+	// who comes back to sentence four and leaves again should still count as
+	// having reached four.
+	void trackEvent('lesson_progress', {
+		day: app.currentDay,
+		metadata: { index: app.currentSentenceIndex, total: lesson.sentences.length }
+	});
+
 	// Highlight script
 	callbacks?.onScriptHighlight(app.currentSentenceIndex);
 

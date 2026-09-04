@@ -29,6 +29,27 @@ export type AnalyticsEvent =
 	 * off the overlay or gave up on sentence four. Those need opposite fixes.
 	 */
 	| 'lesson_begun'
+	/**
+	 * A sentence was put on screen. metadata carries { index, total }, so the
+	 * furthest index a learner reached is the last one they got.
+	 *
+	 * lesson_begun already separates "bounced off the start overlay" from
+	 * "gave up inside the lesson". This is the half that was still blind:
+	 * WHICH sentence. Six of twenty-six who load Day 1 finish it, and until
+	 * now the other twenty could be counted but not located — and giving up
+	 * on sentence one (the mic permission) and sentence eight (too long) need
+	 * opposite fixes.
+	 *
+	 * Fires on every presentation, so a retry or a jump back writes the same
+	 * index twice. That is deliberate — the query counts DISTINCT users per
+	 * index, so duplicates collapse, and recording a re-presentation is more
+	 * honest than pretending the learner only ever saw a sentence once.
+	 *
+	 * Order of ten rows a lesson, more with retries. At six completions a
+	 * week that is nothing; if volume ever makes it noisy, sample it to the
+	 * first few days, which is where the question actually lives.
+	 */
+	| 'lesson_progress'
 	| 'lesson_completed'
 	/**
 	 * The free-response turn: offered after a completed lesson, begun when
