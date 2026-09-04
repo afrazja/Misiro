@@ -13,13 +13,6 @@ export interface ExamQuestion {
 	/** 'meaning' / 'gap': shuffled tap options and the index of the right one. */
 	options?: string[];
 	correctIndex?: number;
-	/**
-	 * A placement probe: a sentence from the range the learner was placed
-	 * past, sampled to check whether that placement was right. Identical to
-	 * a review question to answer — the flag only tells the result handler
-	 * to update the probe tally.
-	 */
-	isProbe?: boolean;
 }
 
 export interface WrongAnswer {

@@ -371,7 +371,6 @@
 			{:else}
 				<a class="btn-primary big" href="/login?mode=signup">Create a free account — track your readiness</a>
 			{/if}
-			<p class="fine"><a href="/placement">Also take the full placement test →</a></p>
 		</section>
 	{/if}
 </main>
@@ -386,6 +385,7 @@
 		padding: 16px;
 	}
 
+
 	.dr-header {
 		width: 100%;
 		max-width: 620px;
@@ -394,6 +394,7 @@
 		align-items: center;
 		padding: 8px 4px 18px;
 	}
+
 
 	.back {
 		/* 44px minimum touch target — this was a bare 26px-tall link. */
@@ -406,11 +407,13 @@
 		font-weight: 600;
 	}
 
+
 	.dr-progress {
 		color: var(--ink-faint);
 		font-weight: 700;
 		font-variant-numeric: tabular-nums;
 	}
+
 
 	.card {
 		width: 100%;
@@ -425,11 +428,13 @@
 		gap: 14px;
 	}
 
+
 	.intro,
 	.results {
 		text-align: center;
 		margin-top: 5vh;
 	}
+
 
 	.badge {
 		align-self: center;
@@ -441,30 +446,31 @@
 		font-weight: 700;
 	}
 
+
 	h1 {
 		font-family: var(--font-display);
 		font-size: 1.7rem;
 		color: var(--ink);
 	}
 
+
 	.results h1 {
 		font-size: 2.4rem;
 		color: var(--leaf);
 	}
+
 
 	.sub {
 		color: var(--ink-soft);
 		line-height: 1.6;
 	}
 
+
 	.fine {
 		color: var(--ink-faint);
 		font-size: 0.85rem;
 	}
 
-	.fine a {
-		color: var(--ink-soft);
-	}
 
 	.station {
 		align-self: flex-start;
@@ -478,22 +484,26 @@
 		padding: 3px 12px;
 	}
 
+
 	.frame {
 		font-size: 1.35rem;
 		font-weight: 700;
 		color: var(--ink);
 	}
 
+
 	.hint {
 		color: var(--ink-soft);
 		font-size: 0.92rem;
 	}
+
 
 	.choice-col {
 		display: flex;
 		flex-direction: column;
 		gap: 8px;
 	}
+
 
 	.btn-choice {
 		background: var(--paper-raised);
@@ -508,10 +518,12 @@
 		font-variant-numeric: tabular-nums;
 	}
 
+
 	.btn-choice:hover {
 		border-color: var(--accent);
 		background: var(--accent-wash);
 	}
+
 
 	.btn-primary {
 		background: var(--accent);
@@ -527,10 +539,12 @@
 		text-align: center;
 	}
 
+
 	.btn-primary.big {
 		font-size: 1.08rem;
 		padding: 14px 26px;
 	}
+
 
 	.btn-ghost {
 		align-self: flex-start;
@@ -543,9 +557,11 @@
 		cursor: pointer;
 	}
 
+
 	.btn-ghost:disabled {
 		opacity: 0.6;
 	}
+
 
 	.btn-mic {
 		background: var(--leaf);
@@ -558,9 +574,11 @@
 		cursor: pointer;
 	}
 
+
 	.btn-mic.listening {
 		animation: pulse 1.2s ease-in-out infinite;
 	}
+
 
 	@keyframes pulse {
 		0%,
@@ -572,10 +590,12 @@
 		}
 	}
 
+
 	.retry {
 		color: var(--accent-deep);
 		font-size: 0.9rem;
 	}
+
 
 	.skip {
 		background: none;
@@ -586,6 +606,7 @@
 		font-size: 0.9rem;
 		align-self: center;
 	}
+
 
 	.feedback {
 		display: flex;
@@ -600,8 +621,8 @@
 		flex-wrap: wrap;
 	}
 
+
 	.feedback.ok {
 		background: var(--leaf-wash);
 		color: var(--leaf);
-	}
-</style>
+	}</style>

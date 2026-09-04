@@ -22,10 +22,16 @@ describe('sitemap', () => {
 		expect(locs).toContain('https://www.mirifer.com/fa');
 	});
 
-	it('lists the free test and both basics indexes', () => {
-		expect(locs).toContain('https://www.mirifer.com/fa/test');
+	it('lists both basics indexes', () => {
 		expect(locs).toContain('https://www.mirifer.com/fa/basics');
 		expect(locs).toContain('https://www.mirifer.com/basics');
+	});
+
+	it('does not advertise routes that no longer exist', () => {
+		// /placement and /fa/test were removed with the evaluation feature.
+		// A sitemap pointing at a 404 is worse than one that omits the page.
+		expect(locs).not.toContain('https://www.mirifer.com/placement');
+		expect(locs).not.toContain('https://www.mirifer.com/fa/test');
 	});
 
 	it('emits both language variants of every category', () => {

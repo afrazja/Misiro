@@ -23,8 +23,6 @@
 	} from "$services/curriculum";
 	import { lessonMinutes } from "$services/lesson-duration";
 	import { getCheckpointsDone } from "$services/data-layer";
-	import { summarizeProgress, type Placement } from "$services/placement";
-	import { probeVerdict, type ProbeState } from "$services/placement-probe";
 	import {
 		computeReadiness,
 		READINESS_MODULES,
@@ -99,10 +97,6 @@
 	let dueReviews = $state(0);
 	let savedWordCount = $state(0);
 	let totalLessons = $state(0);
-	/** Null until loaded, and null for anyone who was never placed. */
-	let placement = $state<Placement | null>(null);
-	let probes = $state<ProbeState | null>(null);
-	let movingBack = $state(false);
 	let completedLessons = $state<
 		Record<number, { completedAt: number; sentenceCount: number }>
 	>({});
@@ -165,51 +159,10 @@
 		return TIER_A2;
 	});
 
-	/**
-	 * Progress through this learner's own course.
-	 *
-	 * A learner placed at day 40 has 61 lessons ahead, not 100. Dividing by
-	 * the full curriculum would show 5 lessons as 5% and imply 95 days of
-	 * work they were explicitly told to skip; counting the skipped days as
-	 * done would hand them 39% for answering twelve questions. Neither is
-	 * the truth, so the denominator is what they were actually assigned.
-	 */
-	const placementSummary = $derived(
-		summarizeProgress(completedLessons, placement?.startDay ?? 1, totalLessons),
+	const progressPercent = $derived(
+		totalLessons > 0 ? Math.round((daysCompleted / totalLessons) * 100) : 0,
 	);
 
-	const progressPercent = $derived(placementSummary.percent);
-
-	/**
-	 * The placement check, once it has enough evidence to mean anything.
-	 *
-	 * Only ever offered — never applied on its own. Twenty samples out of
-	 * ~440 sentences is enough to suspect a bad placement and nowhere near
-	 * enough to be sure, and silently dragging someone back thirty days on
-	 * a suspicion would be worse than the gap it was correcting.
-	 */
-	const verdict = $derived(probes ? probeVerdict(probes) : null);
-
-	async function acceptMoveBack() {
-		if (!verdict?.suggestedDay || movingBack) return;
-		movingBack = true;
-		await dataLayer.setPlacement({
-			startDay: verdict.suggestedDay,
-			source: "manual",
-			placedAt: new Date().toISOString().slice(0, 10),
-		});
-		await dismissMoveBack();
-		await loadProgress();
-		movingBack = false;
-	}
-
-	/** Records that the offer was answered, either way, so it is asked once. */
-	async function dismissMoveBack() {
-		if (!probes) return;
-		const next = { ...probes, resolved: true };
-		await dataLayer.setProbeState(next);
-		probes = next;
-	}
 
 	// ── Practice Calendar ──────────────────────────────
 	let calYear = $state(new Date().getFullYear());
@@ -335,15 +288,11 @@
 
 	async function loadProgress() {
 		// Fault-isolated: one failed fetch must not zero out the others.
-		const [completedRes, progressRes, indexRes, placementRes, probeRes] =
-			await Promise.allSettled([
-				dataLayer.getCompletedLessons(),
-				dataLayer.getProgress(),
-				getLessonIndex(),
-				dataLayer.getPlacement(),
-				dataLayer.getProbeState(),
-			]);
-		probes = probeRes.status === "fulfilled" ? probeRes.value : null;
+		const [completedRes, progressRes, indexRes] = await Promise.allSettled([
+			dataLayer.getCompletedLessons(),
+			dataLayer.getProgress(),
+			getLessonIndex(),
+		]);
 
 		const completed =
 			completedRes.status === "fulfilled" ? completedRes.value : {};
@@ -351,12 +300,6 @@
 		daysCompleted = Object.keys(completed).length;
 		streakCount = computeStreak(completed);
 
-		// Skipped days are assumed-known, never completed — so daysCompleted
-		// and the streak stay a record of work actually done. Only the
-		// denominator changes: progress is measured against this learner's
-		// own course, not the whole curriculum.
-		placement =
-			placementRes.status === "fulfilled" ? placementRes.value : null;
 
 		const progress =
 			progressRes.status === "fulfilled" ? progressRes.value : null;
@@ -912,9 +855,6 @@
 				<a class="rail-item" href="/vocabulary">
 					<span aria-hidden="true">★</span>{language === "fa" ? "کلمه‌های ذخیره‌شده" : "Saved words"}
 				</a>
-				<a class="rail-item" href="/placement">
-					<span aria-hidden="true">◎</span>{language === "fa" ? "آمادگی آزمون" : "Exam readiness"}
-				</a>
 			</nav>
 			<div class="rail-user">
 				<div class="rail-avatar">
@@ -1045,26 +985,6 @@
 						: `${deadline.days} days to your ${deadline.kind === "exam" ? "exam" : "target"}`}
 				</span>
 			{/if}
-			{#if readiness?.needsPlacement}
-				<h2 class="fs-title">
-					{language === "fa"
-						? "قدم اول: سطحت را بسنجیم"
-						: "First step: find your level"}
-				</h2>
-				<p class="fs-sub">
-					{language === "fa"
-						? "۱۲ سؤال در قالب واقعی آزمون گوته — حدود ۸ دقیقه. نوار آمادگی‌ات از همین‌جا ساخته می‌شود."
-						: "12 questions in the real Goethe format — about 8 minutes. Your readiness score starts here."}
-				</p>
-				<a class="fs-primary" href="/placement">
-					🎯 {language === "fa" ? "شروع تست تعیین سطح" : "Take the placement test"}
-				</a>
-				<a class="fs-secondary" href="/lesson">
-					{language === "fa"
-						? "یا مستقیم برو سراغ روز ۱ ←"
-						: "or start Day 1 directly →"}
-				</a>
-			{:else}
 				<h2 class="fs-title">
 					{language === "fa" ? "آماده‌ای؟ درس اول" : "Ready? Your first lesson"}
 				</h2>
@@ -1083,7 +1003,6 @@
 						? "یا تمرین Sprechen ←"
 						: "or the Sprechen drill →"}
 				</a>
-			{/if}
 		</div>
 	{/if}
 
@@ -1129,40 +1048,6 @@
 					: "Start Today's Session"}
 			</span>
 		</a>
-	{/if}
-
-	<!-- ── Placement check ─────────────────────────────── -->
-	<!--
-		Shown only when the probe sample actually says something: at least
-		MIN_SAMPLE probes served and a miss rate over the threshold. It is an
-		offer, never an action — twenty samples out of ~440 sentences is
-		enough to suspect a bad placement and nowhere near enough to move
-		someone thirty days without asking. Either answer resolves it, so it
-		is asked once.
-	-->
-	{#if isAuthenticated && verdict?.tooAggressive && verdict.suggestedDay}
-		<section class="placement-check" aria-live="polite">
-			<h2>
-				{language === "fa"
-					? "به نظر می‌رسد کمی جلوتر شروع کرده‌ای"
-					: "You may have started a little far ahead"}
-			</h2>
-			<p>
-				{language === "fa"
-					? `از چند جمله‌ای که از روزهای ردشده پرسیدیم، بیشترشان را نتوانستی. می‌خواهی از روز ${verdict.suggestedDay} شروع کنی؟ چیزی از پیشرفتت پاک نمی‌شود.`
-					: `Of the sentences we sampled from the days you skipped, most did not come back. Want to start from day ${verdict.suggestedDay} instead? Nothing you have completed is lost.`}
-			</p>
-			<div class="pc-actions">
-				<button class="pc-yes" onclick={acceptMoveBack} disabled={movingBack}>
-					{language === "fa"
-						? `شروع از روز ${verdict.suggestedDay}`
-						: `Start from day ${verdict.suggestedDay}`}
-				</button>
-				<button class="pc-no" onclick={dismissMoveBack} disabled={movingBack}>
-					{language === "fa" ? "همین‌جا خوب است" : "I'm fine where I am"}
-				</button>
-			</div>
-		</section>
 	{/if}
 
 	<!-- ── Progress Stats ──────────────────────────────── -->
@@ -1256,25 +1141,11 @@
 					</div>
 				{:else if daysCompleted > 0}
 					<div class="card-meta">
-						<!-- Denominator is `scheduled`, matching the percent. Showing
-						     "5 of 100 · 8%" would be two numbers that contradict each
-						     other for anyone who was placed forward. -->
 						{#if totalLessons > 0}
 							{#if language === "fa"}
-								{daysCompleted} از {placementSummary.scheduled} روز · ٪{progressPercent}
+								{daysCompleted} از {totalLessons} روز · ٪{progressPercent}
 							{:else}
-								{daysCompleted} of {placementSummary.scheduled} days · {progressPercent}%
-							{/if}
-							{#if placementSummary.assumed > 0}
-								<!-- Named, not hidden. A learner who sees a shorter course
-								     than the 120 days advertised should be told why. -->
-								<span class="skipped-note">
-									{#if language === "fa"}
-										· {placementSummary.assumed} روز با تعیین سطح رد شد
-									{:else}
-										· {placementSummary.assumed} skipped by placement
-									{/if}
-								</span>
+								{daysCompleted} of {totalLessons} days · {progressPercent}%
 							{/if}
 						{:else if language === "fa"}
 							{daysCompleted} روز انجام شده
@@ -1332,9 +1203,11 @@
 
 
 
+
 	:global(body) {
 		background: var(--paper);
 	}
+
 
 
 
@@ -1347,9 +1220,11 @@
 
 
 
+
 	.rail {
 		display: none;
 	}
+
 
 
 
@@ -1386,6 +1261,7 @@
 
 
 
+
 	.rail-brand {
 		display: flex;
 		align-items: center;
@@ -1396,6 +1272,7 @@
 		color: var(--ink);
 		text-decoration: none;
 	}
+
 
 
 
@@ -1411,11 +1288,13 @@
 
 
 
+
 	.rail-nav {
 		display: flex;
 		flex-direction: column;
 		gap: 2px;
 	}
+
 
 
 
@@ -1435,6 +1314,7 @@
 
 
 
+
 	.rail-item span {
 		color: var(--ink-faint);
 		font-size: 0.8rem;
@@ -1443,10 +1323,12 @@
 
 
 
+
 	.rail-item:hover {
 		background: var(--control-hover);
 		color: var(--ink);
 	}
+
 
 
 
@@ -1460,9 +1342,11 @@
 
 
 
+
 	.rail-item.is-current span {
 		color: var(--accent);
 	}
+
 
 
 
@@ -1482,6 +1366,7 @@
 
 
 
+
 	.rail-user {
 		margin-block-start: auto;
 		display: flex;
@@ -1490,6 +1375,7 @@
 		padding-block-start: var(--space-4);
 		border-block-start: 1px solid var(--line);
 	}
+
 
 
 
@@ -1512,6 +1398,7 @@
 
 
 
+
 	.rail-avatar img {
 		inline-size: 100%;
 		block-size: 100%;
@@ -1521,11 +1408,13 @@
 
 
 
+
 	.rail-who {
 		display: flex;
 		flex-direction: column;
 		min-width: 0;
 	}
+
 
 
 
@@ -1540,12 +1429,14 @@
 
 
 
+
 	.rail-who span {
 		font-family: var(--font-mono);
 		font-size: var(--type-label);
 		letter-spacing: var(--tracking-label);
 		color: var(--ink-faint);
 	}
+
 
 
 
@@ -1568,9 +1459,11 @@
 
 
 
+
 	.nav-profile {
 		position: relative;
 	}
+
 
 
 
@@ -1595,6 +1488,7 @@
 
 
 
+
 	.nav-profile-brand.static {
 		cursor: default;
 	}
@@ -1602,9 +1496,11 @@
 
 
 
+
 	.nav-profile-brand:hover {
 		opacity: 0.8;
 	}
+
 
 
 
@@ -1619,9 +1515,11 @@
 
 
 
+
 	.brand-caret.open {
 		transform: rotate(180deg);
 	}
+
 
 
 
@@ -1631,6 +1529,7 @@
 			transition: none;
 		}
 	}
+
 
 
 
@@ -1651,6 +1550,7 @@
 		flex-direction: column;
 		gap: 2px;
 	}
+
 
 
 
@@ -1677,10 +1577,12 @@
 
 
 
+
 	.profile-menu-item:hover,
 	.profile-menu-item:focus-visible {
 		background: var(--control-hover);
 	}
+
 
 
 
@@ -1694,10 +1596,12 @@
 
 
 
+
 	.profile-menu-item.danger:hover,
 	.profile-menu-item.danger:focus-visible {
 		background: color-mix(in srgb, var(--miss) 10%, transparent);
 	}
+
 
 
 
@@ -1708,6 +1612,7 @@
 		justify-content: center;
 		font-size: 1rem;
 	}
+
 
 
 
@@ -1730,11 +1635,13 @@
 
 
 
+
 	.brand-avatar img {
 		width: 100%;
 		height: 100%;
 		object-fit: cover;
 	}
+
 
 
 
@@ -1750,11 +1657,13 @@
 
 
 
+
 	.nav-right {
 		display: flex;
 		align-items: center;
 		gap: 10px;
 	}
+
 
 
 
@@ -1776,11 +1685,13 @@
 
 
 
+
 	.nav-text-btn:hover {
 		border-color: var(--accent);
 		color: var(--accent-deep);
 		background: var(--accent-wash);
 	}
+
 
 
 
@@ -1805,10 +1716,12 @@
 
 
 
+
 	.today-session:hover {
 		transform: translateY(-3px);
 		box-shadow: 0 20px 50px rgba(233, 69, 96, 0.45);
 	}
+
 
 
 
@@ -1823,12 +1736,14 @@
 
 
 
+
 	.today-label {
 		font-size: 0.72rem;
 		font-weight: 700;
 		letter-spacing: 2px;
 		opacity: 0.85;
 	}
+
 
 
 
@@ -1842,9 +1757,11 @@
 
 
 
+
 	.today-loading {
 		opacity: 0.7;
 	}
+
 
 
 
@@ -1853,6 +1770,7 @@
 		font-size: 0.85rem;
 		opacity: 0.8;
 	}
+
 
 
 
@@ -1867,6 +1785,7 @@
 		border-radius: 12px;
 		white-space: nowrap;
 	}
+
 
 
 
@@ -1886,6 +1805,7 @@
 
 
 
+
 	.nav-stats {
 		display: flex;
 		align-items: center;
@@ -1898,6 +1818,7 @@
 		border-radius: 12px;
 		border: 1px solid var(--on-strip-accent);
 	}
+
 
 
 
@@ -1919,6 +1840,7 @@
 
 
 
+
 	.nav-stat:hover {
 		background: var(--paper-sunken);
 	}
@@ -1926,9 +1848,11 @@
 
 
 
+
 	.ns-icon {
 		display: inline-flex;
 	}
+
 
 
 
@@ -1945,6 +1869,7 @@
 
 
 
+
 	/* Amber rather than the old --accent-deep: same problem, same fix. */
 	.ns-icon.flame {
 		color: var(--ember);
@@ -1953,9 +1878,11 @@
 
 
 
+
 	.ns-icon {
 		font-size: 1.1rem;
 	}
+
 
 
 
@@ -1971,6 +1898,7 @@
 
 
 
+
 	/* ── Stats Row ────────────────────────────────────── */
 	/* ── Course roadmap ── */
 	.roadmap {
@@ -1982,11 +1910,13 @@
 
 
 
+
 	.today-tier {
 		margin-inline-start: 6px;
 		opacity: 0.85;
 		text-transform: capitalize;
 	}
+
 
 
 
@@ -2001,11 +1931,13 @@
 
 
 
+
 	/* The level being worked through is the one that matters today. */
 	.rm-level.current {
 		border-color: var(--leaf);
 		box-shadow: var(--paper-shadow);
 	}
+
 
 
 
@@ -2021,12 +1953,14 @@
 
 
 
+
 	.rm-name {
 		font-family: var(--font-display);
 		font-size: 1.05rem;
 		font-weight: 700;
 		color: var(--ink);
 	}
+
 
 
 
@@ -2038,11 +1972,13 @@
 
 
 
+
 	.rm-count {
 		font-size: 0.78rem;
 		color: var(--ink-faint);
 		font-variant-numeric: tabular-nums;
 	}
+
 
 
 
@@ -2057,11 +1993,13 @@
 
 
 
+
 	.rm-fill {
 		height: 100%;
 		background: var(--leaf);
 		border-radius: 4px;
 	}
+
 
 
 
@@ -2072,6 +2010,7 @@
 		gap: 5px;
 		margin-top: 8px;
 	}
+
 
 
 
@@ -2088,10 +2027,12 @@
 
 
 
+
 	.rm-cp.passed {
 		background: var(--gold);
 		border-color: var(--gold);
 	}
+
 
 
 
@@ -2111,6 +2052,7 @@
 
 
 
+
 	.stats-row {
 		display: grid;
 		grid-template-columns: repeat(4, 1fr);
@@ -2120,9 +2062,11 @@
 
 
 
+
 	.action-row {
 		grid-template-columns: repeat(2, 1fr);
 	}
+
 
 
 
@@ -2138,12 +2082,14 @@
 
 
 
+
 	.stat-content {
 		display: flex;
 		flex-direction: column;
 		align-items: flex-start;
 		flex: 1;
 	}
+
 
 
 
@@ -2155,10 +2101,12 @@
 
 
 
+
 	.action-card .stat-cta {
 		margin-top: 0;
 		font-size: 0.85rem;
 	}
+
 
 
 
@@ -2182,10 +2130,12 @@
 
 
 
+
 	.stat-card:hover {
 		transform: translateY(-3px);
 		border-color: var(--accent);
 	}
+
 
 
 
@@ -2197,6 +2147,7 @@
 
 
 
+
 	.stat-icon.warm {
 		color: var(--accent);
 	}
@@ -2204,9 +2155,11 @@
 
 
 
+
 	.stat-icon {
 		font-size: 1.6rem;
 	}
+
 
 
 
@@ -2222,11 +2175,13 @@
 
 
 
+
 	.stat-label {
 		font-size: 0.78rem;
 		color: var(--ink-soft);
 		font-weight: 500;
 	}
+
 
 
 
@@ -2243,10 +2198,12 @@
 
 
 
+
 	.stat-sub {
 		font-size: 0.78rem;
 		color: var(--ink-soft);
 	}
+
 
 
 
@@ -2259,12 +2216,14 @@
 
 
 
+
 	/* ── Nav Cards ────────────────────────────────────── */
 	.nav-cards {
 		display: grid;
 		grid-template-columns: repeat(2, 1fr);
 		gap: 24px;
 	}
+
 
 
 
@@ -2291,6 +2250,7 @@
 
 
 
+
 	.card-glow {
 		position: absolute;
 		inset: 0;
@@ -2298,6 +2258,7 @@
 		transition: opacity 0.3s;
 		border-radius: inherit;
 	}
+
 
 
 
@@ -2313,6 +2274,7 @@
 
 
 
+
 	.nav-card.basics .card-glow {
 		background: radial-gradient(
 			circle at 50% 0%,
@@ -2324,9 +2286,11 @@
 
 
 
+
 	.nav-card:hover .card-glow {
 		opacity: 1;
 	}
+
 
 
 
@@ -2338,6 +2302,7 @@
 
 
 
+
 	.nav-card.lessons:hover {
 		border-color: var(--accent);
 	}
@@ -2345,9 +2310,11 @@
 
 
 
+
 	.nav-card.basics:hover {
 		border-color: var(--leaf);
 	}
+
 
 
 
@@ -2360,6 +2327,7 @@
 
 
 
+
 	.nav-card.lessons .icon {
 		color: var(--accent);
 	}
@@ -2367,9 +2335,11 @@
 
 
 
+
 	.nav-card.basics .icon {
 		color: var(--leaf);
 	}
+
 
 
 
@@ -2386,6 +2356,7 @@
 
 
 
+
 	.nav-card p {
 		color: var(--ink-soft);
 		line-height: 1.6;
@@ -2394,101 +2365,6 @@
 		z-index: 1;
 	}
 
-
-
-
-	/* Placement check. Reads as information, not an error — the learner did
-	   nothing wrong, the app's guess was off. Hence the neutral surface
-	   rather than a warning colour. */
-	.placement-check {
-		margin: 18px auto 0;
-		max-width: 640px;
-		background: var(--paper-raised);
-		border: 1px solid var(--line);
-		border-inline-start: 3px solid var(--accent);
-		border-radius: 14px;
-		padding: 18px 20px;
-		text-align: start;
-	}
-
-
-
-
-	.placement-check h2 {
-		margin: 0 0 6px;
-		font-size: 1.02rem;
-		color: var(--ink);
-	}
-
-
-
-
-	.placement-check p {
-		margin: 0 0 14px;
-		color: var(--ink-soft);
-		line-height: 1.8;
-		font-size: 0.92rem;
-	}
-
-
-
-
-	.pc-actions {
-		display: flex;
-		gap: 10px;
-		flex-wrap: wrap;
-	}
-
-
-
-
-	.pc-yes,
-	.pc-no {
-		font: inherit;
-		font-weight: 700;
-		font-size: 0.9rem;
-		min-height: 44px;
-		padding: 8px 18px;
-		border-radius: 10px;
-		cursor: pointer;
-	}
-
-
-
-
-	.pc-yes {
-		background: var(--accent);
-		color: var(--on-accent);
-		border: none;
-	}
-
-
-
-
-	.pc-no {
-		background: var(--control);
-		color: var(--ink);
-		border: 1px solid var(--control-border);
-	}
-
-
-
-
-	.pc-yes:disabled,
-	.pc-no:disabled {
-		opacity: 0.6;
-		cursor: wait;
-	}
-
-
-
-
-	/* Quieter than the count it follows — an explanation, not a second
-	   statistic competing with the one that matters. */
-	.skipped-note {
-		font-weight: 600;
-		opacity: 0.75;
-	}
 
 
 
@@ -2507,6 +2383,7 @@
 
 
 
+
 	.card-meta.done {
 		background: var(--leaf-wash);
 		color: var(--leaf);
@@ -2515,10 +2392,12 @@
 
 
 
+
 	.card-meta.basics-meta {
 		background: var(--leaf-wash);
 		color: var(--leaf);
 	}
+
 
 
 
@@ -2532,6 +2411,7 @@
 
 
 
+
 	.stat-card-link.has-words {
 		border-color: var(--line);
 		background: var(--accent-wash);
@@ -2540,10 +2420,12 @@
 
 
 
+
 	.stat-card-link.has-words:hover {
 		border-color: var(--accent);
 		box-shadow: 0 8px 24px rgba(46, 204, 113, 0.15);
 	}
+
 
 
 
@@ -2559,9 +2441,11 @@
 
 
 
+
 	.stat-cta.vocab-cta {
 		color: var(--accent-deep);
 	}
+
 
 
 
@@ -2579,12 +2463,14 @@
 
 
 
+
 	.card-progress-fill {
 		height: 100%;
 		background: var(--leaf);
 		border-radius: 3px;
 		transition: width 0.5s ease;
 	}
+
 
 
 
@@ -2602,10 +2488,12 @@
 
 
 
+
 	.nav-card:hover .arrow {
 		opacity: 1;
 		transform: translateX(0);
 	}
+
 
 
 
@@ -2619,6 +2507,7 @@
 		font-size: 0.88rem;
 		margin-top: auto;
 	}
+
 
 
 
@@ -2642,6 +2531,7 @@
 
 
 
+
 	.fs-countdown {
 		background: var(--accent-wash);
 		color: var(--accent-deep);
@@ -2650,6 +2540,7 @@
 		font-weight: 700;
 		font-size: 0.88rem;
 	}
+
 
 
 
@@ -2664,12 +2555,14 @@
 
 
 
+
 	.fs-sub {
 		color: var(--ink-soft);
 		line-height: 1.6;
 		max-width: 460px;
 		margin: 0;
 	}
+
 
 
 
@@ -2689,9 +2582,11 @@
 
 
 
+
 	.fs-primary:hover {
 		background: var(--accent-deep);
 	}
+
 
 
 
@@ -2705,6 +2600,7 @@
 
 
 
+
 	/* On a narrow phone the tag would squeeze the bar itself down to a stub.
 	   Shrink the tag, not the bar — the bar is the thing being read. */
 	@media (max-width: 440px) {
@@ -2714,9 +2610,11 @@
 
 
 
+
 	@media (max-width: 640px) {
 
 	}
+
 
 
 
@@ -2745,11 +2643,13 @@
 
 
 
+
 	.confirm-toast.show {
 		transform: translateX(-50%) translateY(0);
 		visibility: visible;
 		transition-delay: 0s, 0s;
 	}
+
 
 
 
@@ -2770,6 +2670,7 @@
 
 
 
+
 	.auth-modal {
 		background: var(--paper-raised);
 		border-radius: 20px;
@@ -2780,6 +2681,7 @@
 		box-shadow: var(--paper-shadow);
 		position: relative;
 	}
+
 
 
 
@@ -2798,11 +2700,13 @@
 
 
 
+
 	.auth-modal h2 {
 		margin-bottom: 20px;
 		color: var(--ink);
 		font-family: var(--font-display);
 	}
+
 
 
 
@@ -2819,9 +2723,11 @@
 
 
 
+
 	.auth-field {
 		margin-bottom: 15px;
 	}
+
 
 
 
@@ -2841,9 +2747,11 @@
 
 
 
+
 	.auth-field input::placeholder {
 		color: var(--ink-faint);
 	}
+
 
 
 
@@ -2866,10 +2774,12 @@
 
 
 
+
 	.auth-submit:disabled {
 		opacity: 0.6;
 		cursor: not-allowed;
 	}
+
 
 
 
@@ -2883,6 +2793,7 @@
 
 
 
+
 	.auth-forgot a {
 		color: var(--ink-faint);
 		text-decoration: underline;
@@ -2891,9 +2802,11 @@
 
 
 
+
 	.auth-forgot a:hover {
 		color: var(--accent);
 	}
+
 
 
 
@@ -2908,11 +2821,13 @@
 
 
 
+
 	.auth-toggle a {
 		color: var(--accent-deep);
 		text-decoration: none;
 		font-weight: 600;
 	}
+
 
 
 
@@ -2933,6 +2848,7 @@
 
 
 
+
 	.cal-modal {
 		background: var(--paper-raised);
 		border-radius: 24px;
@@ -2945,6 +2861,7 @@
 		max-height: 90vh;
 		overflow-y: auto;
 	}
+
 
 
 
@@ -2967,9 +2884,11 @@
 
 
 
+
 	.cal-close:hover {
 		color: var(--ink);
 	}
+
 
 
 
@@ -2978,6 +2897,7 @@
 		margin-bottom: 18px;
 		padding-right: 36px;
 	}
+
 
 
 
@@ -2993,11 +2913,13 @@
 
 
 
+
 	.cal-header p {
 		font-size: 0.88rem;
 		color: var(--ink-soft);
 		margin: 0;
 	}
+
 
 
 
@@ -3013,11 +2935,13 @@
 
 
 
+
 	.pcal-title {
 		font-size: 0.95rem;
 		font-weight: 700;
 		color: var(--ink-soft);
 	}
+
 
 
 
@@ -3042,11 +2966,13 @@
 
 
 
+
 	.pcal-nav-btn:hover:not(:disabled) {
 		background: var(--accent-wash);
 		border-color: var(--accent);
 		color: var(--ink);
 	}
+
 
 
 
@@ -3059,12 +2985,14 @@
 
 
 
+
 	.pcal-dow {
 		display: grid;
 		grid-template-columns: repeat(7, 1fr);
 		gap: 4px;
 		margin-bottom: 4px;
 	}
+
 
 
 
@@ -3082,12 +3010,14 @@
 
 
 
+
 	.pcal-grid {
 		display: grid;
 		grid-template-columns: repeat(7, 1fr);
 		gap: 4px;
 		margin-bottom: 18px;
 	}
+
 
 
 
@@ -3112,10 +3042,12 @@
 
 
 
+
 	.pcal-empty {
 		background: transparent !important;
 		border-color: transparent !important;
 	}
+
 
 
 
@@ -3130,11 +3062,13 @@
 
 
 
+
 	.pcal-cell.today {
 		border-color: var(--accent);
 		color: var(--accent-deep);
 		font-weight: 700;
 	}
+
 
 
 
@@ -3149,10 +3083,12 @@
 
 
 
+
 	/* ── Mastery Section ──────────────────────────────── */
 	.stats-overview {
 		margin-bottom: 24px;
 	}
+
 
 
 
@@ -3163,6 +3099,7 @@
 		border-radius: 20px;
 		padding: 20px 24px;
 	}
+
 
 
 
@@ -3179,11 +3116,13 @@
 
 
 
+
 	.mastery-grid {
 		display: grid;
 		grid-template-columns: repeat(3, 1fr);
 		gap: 16px;
 	}
+
 
 
 
@@ -3202,10 +3141,12 @@
 
 
 
+
 	.mastery-item:hover {
 		transform: translateY(-2px);
 		background: var(--paper-raised);
 	}
+
 
 
 
@@ -3221,10 +3162,12 @@
 
 
 
+
 	.mastery-item.a1 .m-label {
 		background: rgba(49, 89, 122, 0.12);
 		color: #5dade2;
 	}
+
 
 
 
@@ -3235,10 +3178,12 @@
 
 
 
+
 	.mastery-item.b1 .m-label {
 		background: var(--accent-wash);
 		color: var(--accent-deep);
 	}
+
 
 
 
@@ -3254,12 +3199,14 @@
 
 
 
+
 	.m-sub {
 		font-size: 0.65rem;
 		color: var(--ink-faint);
 		text-transform: uppercase;
 		font-weight: 600;
 	}
+
 
 
 
@@ -3277,6 +3224,7 @@
 
 
 
+
 	.leg-item {
 		display: flex;
 		align-items: center;
@@ -3284,6 +3232,7 @@
 		font-size: 0.75rem;
 		color: var(--ink-soft);
 	}
+
 
 
 
@@ -3298,10 +3247,12 @@
 
 
 
+
 	.practiced-sw {
 		background: rgba(46, 204, 113, 0.25);
 		border: 1px solid rgba(46, 204, 113, 0.5);
 	}
+
 
 
 
@@ -3313,11 +3264,13 @@
 
 
 
+
 	.pcal-month-stat {
 		margin-left: auto;
 		color: var(--leaf);
 		font-weight: 700;
 	}
+
 
 
 

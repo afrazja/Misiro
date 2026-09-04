@@ -466,7 +466,6 @@
 					<a href="/home" class="pill pill-solid">Go to my lessons →</a>
 				{:else}
 					<a href="/try" class="pill pill-solid">Try a lesson now — no signup</a>
-					<a href="/placement" class="pill pill-outline">Take a free level test</a>
 				{/if}
 			</div>
 			<ul class="hero-trust">
@@ -653,7 +652,6 @@
 				Set your exam date and the path reshuffles around it. The sentences
 				you keep missing come back first.
 			</p>
-			<a class="pill pill-outline" href="/placement">See where you would start →</a>
 		</div>
 	</section>
 

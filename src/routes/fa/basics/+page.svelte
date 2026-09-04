@@ -76,7 +76,6 @@
 		</p>
 		<div class="acts">
 			<a class="btn primary" href="/fa">شروع رایگان دوره</a>
-			<a class="btn ghost" href="/fa/test">تست سطح‌سنجی</a>
 		</div>
 	</aside>
 </div>
@@ -90,14 +89,18 @@
 		color: var(--ink);
 	}
 
+
 	.crumbs {
 		font-size: 0.85rem;
 		color: var(--ink-faint);
 		margin-bottom: 16px;
 	}
 
+
 	.crumbs a { color: var(--accent); text-decoration: none; }
+
 	.crumbs a:hover { text-decoration: underline; }
+
 
 	h1 {
 		font-family: var(--font-display);
@@ -106,11 +109,13 @@
 		margin: 0 0 10px;
 	}
 
+
 	.lede {
 		color: var(--ink-soft);
 		line-height: 1.9;
 		margin: 0 0 28px;
 	}
+
 
 	.empty {
 		background: var(--paper-sunken);
@@ -119,6 +124,7 @@
 		color: var(--ink-soft);
 	}
 
+
 	.grid {
 		list-style: none;
 		padding: 0;
@@ -126,6 +132,7 @@
 		display: grid;
 		gap: 10px;
 	}
+
 
 	.grid a {
 		display: flex;
@@ -141,15 +148,20 @@
 		transition: border-color 0.15s, background 0.15s;
 	}
 
+
 	.grid a:hover {
 		border-color: var(--accent);
 		background: var(--control-hover);
 	}
 
+
 	.icon { font-size: 1.5rem; flex: none; }
 
+
 	.text { display: flex; flex-direction: column; gap: 3px; flex: 1; }
+
 	.text strong { font-size: 1.02rem; }
+
 
 	.desc {
 		font-size: 0.88rem;
@@ -157,7 +169,9 @@
 		line-height: 1.6;
 	}
 
+
 	.chev { color: var(--ink-faint); flex: none; }
+
 
 	.cta {
 		background: var(--paper-sunken);
@@ -166,11 +180,13 @@
 		text-align: center;
 	}
 
+
 	.cta h2 {
 		font-family: var(--font-display);
 		font-size: 1.2rem;
 		margin: 0 0 8px;
 	}
+
 
 	.cta p {
 		color: var(--ink-soft);
@@ -178,12 +194,14 @@
 		margin: 0 0 16px;
 	}
 
+
 	.acts {
 		display: flex;
 		gap: 10px;
 		justify-content: center;
 		flex-wrap: wrap;
 	}
+
 
 	.btn {
 		display: inline-flex;
@@ -196,19 +214,13 @@
 		text-decoration: none;
 	}
 
+
 	.primary { background: var(--accent); color: var(--on-accent); }
+
 	.primary:hover { filter: brightness(1.06); }
 
-	.ghost {
-		background: var(--control);
-		color: var(--ink);
-		border: 1px solid var(--control-border);
-	}
-
-	.ghost:hover { background: var(--control-hover); }
 
 	@media (max-width: 640px) {
 		.wrap { padding: 20px 14px 48px; }
 		.acts .btn { inline-size: 100%; }
-	}
-</style>
+	}</style>

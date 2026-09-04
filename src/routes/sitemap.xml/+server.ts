@@ -32,9 +32,7 @@ interface StaticPage {
 const STATIC_PAGES: StaticPage[] = [
 	{ path: '/', priority: '1.0', changefreq: 'weekly' },
 	{ path: '/fa', priority: '1.0', changefreq: 'weekly' },
-	{ path: '/fa/test', priority: '0.9', changefreq: 'monthly' },
 	{ path: '/fa/basics', priority: '0.9', changefreq: 'weekly' },
-	{ path: '/placement', priority: '0.9', changefreq: 'monthly' },
 	{ path: '/try', priority: '0.8', changefreq: 'monthly' },
 	{ path: '/basics', priority: '0.8', changefreq: 'weekly' },
 	{ path: '/drill/sprechen', priority: '0.7', changefreq: 'monthly' },

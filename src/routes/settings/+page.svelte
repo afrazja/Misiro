@@ -2,7 +2,6 @@
 	import { onMount } from "svelte";
 	import { goto } from "$app/navigation";
 	import AppHeader from "$lib/components/AppHeader.svelte";
-	import type { Placement } from "$services/placement";
 	import {
 		isAuthenticated,
 		getUser,
@@ -21,8 +20,6 @@
 		setVoiceSpeed,
 		getExamSettings,
 		setExamSettings,
-		getPlacement,
-		clearPlacement,
 		clearAllLocal,
 		setAvatarUrl as setLocalAvatarUrl,
 		setDisplayName as setLocalDisplayName,
@@ -44,20 +41,6 @@
 	let langStatus = $state<{ text: string; type: "success" | "error" } | null>(
 		null,
 	);
-
-	// Starting point (placement)
-	let placement = $state<Placement | null>(null);
-	let clearingPlacement = $state(false);
-	let placementCleared = $state(false);
-
-	async function resetPlacement() {
-		if (clearingPlacement) return;
-		clearingPlacement = true;
-		await clearPlacement();
-		placement = null;
-		placementCleared = true;
-		clearingPlacement = false;
-	}
 
 	// Goethe exam plan
 	let examGoal = $state<"scheduled" | "planned" | "none">("none");
@@ -356,7 +339,6 @@
 			email = user.email || "";
 		}
 
-		placement = await getPlacement();
 
 		// Load display name
 		const name = await getDisplayName();
@@ -556,29 +538,6 @@
 				</div>
 			{/if}
 		</div>
-
-		<!-- Starting point. Only shown to someone who actually has a
-		     placement — for everyone else there is nothing to undo, and a
-		     control that resets a thing you never set is just confusing. -->
-		{#if placement && placement.startDay > 1}
-			<div class="settings-section">
-				<h3><span class="section-icon">📍</span> Starting Point</h3>
-				<p class="pref-hint">
-					You are starting from <strong>day {placement.startDay}</strong>, so days
-					1–{placement.startDay - 1} are treated as already known. Nothing you have
-					completed is affected either way.
-				</p>
-				<button class="danger-btn" onclick={resetPlacement} disabled={clearingPlacement}>
-					{clearingPlacement ? "Resetting…" : "Start from day 1 instead"}
-				</button>
-				{#if placementCleared}
-					<p class="pref-hint" role="status">
-						Done — your next lesson will pick up from the first day you have not
-						completed.
-					</p>
-				{/if}
-			</div>
-		{/if}
 
 		<!-- Goethe Exam Section -->
 		<div class="settings-section">

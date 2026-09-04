@@ -25,15 +25,7 @@ import {
 	resolveResumePoint,
 	getTotalLessons
 } from '$services/lesson-loader';
-import { getLanguage, getVoiceSpeed, getCompletedLessons, getProgress, saveProgress, saveCompletedLessons, adoptPendingPlacement } from '$services/data-layer';
-import { clampStartDay } from '$services/placement';
-import { getPlacement, getProbeState, setProbeState } from '$services/data-layer';
-import {
-	shouldProbe,
-	pickProbeDay,
-	recordProbe,
-	PROBE_WARMUP_SLOTS
-} from '$services/placement-probe';
+import { getLanguage, getVoiceSpeed, getCompletedLessons, getProgress, saveProgress, saveCompletedLessons } from '$services/data-layer';
 import { recordSRAttempt, getDueReviewItems, removeFromReview } from '$services/spaced-repetition';
 import {
 	computeReadiness,
@@ -259,24 +251,16 @@ export async function initLesson(): Promise<void> {
 
 		// Load index, saved progress, and completed lessons in parallel.
 		// getLessonIndex() must run before hasLesson() — it populates the index cache.
-		const [, savedProgress, completedLessons, placement] = await Promise.all([
+		const [, savedProgress, completedLessons] = await Promise.all([
 			getLessonIndex(),
 			getProgress(),
-			getCompletedLessons(),
-			// Claims a start day chosen by the signed-out free test, if the
-			// learner has since signed up and has no placement of their own.
-			adoptPendingPlacement()
+			getCompletedLessons()
 		]);
 
 		// Determine current day and sentence index. Mid-lesson progress resumes
-		// exactly; otherwise the lowest not-yet-completed day at or after the
-		// learner's placement wins (see resolveResumePoint for the rationale).
-		//
-		// Clamped here rather than at write time: this is the first point at
-		// which the lesson index is loaded, so it is the first point the real
-		// day count is known.
-		const startDay = placement ? clampStartDay(placement.startDay, getTotalLessons()) : 1;
-		const resume = resolveResumePoint(savedProgress, completedLessons, startDay);
+		// exactly; otherwise the lowest not-yet-completed day wins (see
+		// resolveResumePoint for the rationale).
+		const resume = resolveResumePoint(savedProgress, completedLessons);
 		const currentDay = resume.day;
 		let currentSentenceIndex = resume.sentenceIndex;
 		const xp = savedProgress?.xp || 0;
@@ -862,92 +846,23 @@ export async function startExam(week: number): Promise<void> {
 	processNextExamQuestion();
 }
 
-/**
- * Decide whether this session carries a placement probe, and for which day.
- *
- * Returns null for anyone who was never placed forward, and once the sample
- * is spent. Failure here is always null rather than a throw — a probe is a
- * nicety, and it must never be the reason a review session does not open.
- */
-async function pickProbe(): Promise<{ day: number } | null> {
-	try {
-		const placement = await getPlacement();
-		if (!placement) return null;
-		const startDay = clampStartDay(placement.startDay, getTotalLessons());
-		const state = await getProbeState();
-		if (!shouldProbe(startDay, state)) return null;
-		const day = pickProbeDay(startDay, state, hasLesson);
-		return day === null ? null : { day };
-	} catch (e) {
-		logError('lesson-controller:pickProbe', e);
-		return null;
-	}
-}
-
-/** Turn a skipped day into one review question, or null if it has none. */
-function buildProbeQuestion(day: number, language: Language): ExamQuestion | null {
-	const lesson = getLesson(day);
-	const sentences = lesson?.sentences ?? [];
-	if (sentences.length === 0) return null;
-
-	// Prefer a line the learner would speak; those test production rather
-	// than recognition, which is what a placement actually claims.
-	const spoken = sentences.filter((s) => s.role === 'sent');
-	const pool = spoken.length > 0 ? spoken : sentences;
-	const sentence = pool[Math.floor(Math.random() * pool.length)];
-	const isFa = language === 'fa';
-
-	return {
-		type: sentence.role === 'sent' ? 'speak' : 'listen',
-		day,
-		sentenceId: sentence.id,
-		audioText: (sentence.role === 'sent' ? sentence.targetText : sentence.audioText) || '',
-		targetText: (sentence.role === 'sent' ? sentence.targetText : sentence.audioText) || '',
-		translation: isFa ? sentence.translationFa || sentence.translation : sentence.translation,
-		translationFa: sentence.translationFa,
-		isProbe: true
-	};
-}
-
-/**
- * Fold a probe result into the tally.
- *
- * The SR side needs nothing extra: the normal result handler already calls
- * recordSRAttempt for this question, so a missed probe becomes a real card
- * and the day joins the ordinary rotation on its own.
- */
-async function notePlacementProbe(day: number, correct: boolean): Promise<void> {
-	try {
-		const next = recordProbe(await getProbeState(), day, correct);
-		await setProbeState(next);
-	} catch (e) {
-		logError('lesson-controller:notePlacementProbe', e);
-	}
-}
-
 export async function startReviewMode(maxItems = 15): Promise<void> {
 	deactivateConversation();
 	const prefs = get(preferencesStore);
 	const isFa = prefs.language === 'fa';
 
-	// One slot goes to a placement probe when the learner skipped material
-	// and the sample is not yet spent. Real reviews keep the rest, so a
-	// probe never displaces something genuinely due.
-	const probe = await pickProbe();
-	const realBudget = Math.max(1, maxItems - (probe ? PROBE_WARMUP_SLOTS : 0));
-	const dueItems = (await getDueReviewItems()).slice(0, realBudget);
+	const dueItems = (await getDueReviewItems()).slice(0, maxItems);
 
 	console.log('[Review] Due items:', dueItems.length, dueItems.map(i => `day${i.day}:s${i.sentenceId}`));
 
-	if (dueItems.length === 0 && !probe) {
+	if (dueItems.length === 0) {
 		const noMsg = isFa ? '\u0647\u06CC\u0686 \u0645\u0648\u0631\u062F\u06CC \u0628\u0631\u0627\u06CC \u0645\u0631\u0648\u0631 \u0646\u06CC\u0633\u062A!' : 'No items due for review!';
 		callbacks?.onSystemMessage(noMsg);
 		return;
 	}
 
-	// Load needed lessons \u2014 the probe's day is usually not among the due
-	// ones, so it has to be loaded too or its sentence cannot be found.
-	const uniqueDays = [...new Set([...dueItems.map((item) => item.day), ...(probe ? [probe.day] : [])])];
+	// Load needed lessons
+	const uniqueDays = [...new Set(dueItems.map((item) => item.day))];
 	await loadLessons(uniqueDays);
 
 	const questions: ExamQuestion[] = [];
@@ -987,13 +902,6 @@ export async function startReviewMode(maxItems = 15): Promise<void> {
 		}
 	}
 
-	// Probe last, so the session opens with material the learner has met.
-	// Leading with a sentence from a day they were told they could skip
-	// reads as the app going back on its word.
-	if (probe) {
-		const q = buildProbeQuestion(probe.day, prefs.language);
-		if (q) questions.push(q);
-	}
 
 	console.log('[Review] Built', questions.length, 'questions from', dueItems.length, 'due items');
 
@@ -1117,13 +1025,6 @@ const EXAM_MODULE: Record<ExamQuestion['type'], ReadinessModule> = {
 function recordExamPractice(q: ExamQuestion | undefined, correct: boolean): void {
 	const m = q && EXAM_MODULE[q.type];
 	if (m) recordPracticeResult(m, correct ? 1 : 0, 1);
-
-	// Every path that resolves a question passes through here — the tap
-	// answer, the spoken pass, and the spoken fail after its retry — so this
-	// is the one place a probe result cannot be missed. Deliberately not
-	// awaited: the tally is bookkeeping and must not hold up the next
-	// question.
-	if (q?.isProbe && q.day) void notePlacementProbe(q.day, correct);
 }
 
 async function handleExamCorrect(transcript: string): Promise<void> {

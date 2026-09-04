@@ -99,13 +99,6 @@
 					<a class="btn primary" href="/home">رفتن به درس‌ها ←</a>
 				{:else}
 					<a class="btn primary" href="/try">🎙️ یک درس را همین حالا امتحان کن</a>
-					<!-- Was a "start free" link straight to /login. The test earns
-					     the signup instead of asking for it cold: it costs nothing,
-					     ends by naming your level, and the account is what saves
-					     that result. Signup moves to the closing section — this
-					     page has no navbar to hold it, so unlike the English hero's
-					     button it cannot simply be dropped. -->
-					<a class="btn ghost" href="/fa/test">📊 تست رایگان سطح‌سنجی</a>
 				{/if}
 			</div>
 			<p class="note">بدون کارت بانکی · بدون هزینه</p>
