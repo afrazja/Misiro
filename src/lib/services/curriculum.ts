@@ -1,5 +1,5 @@
 /**
- * The CEFR shape of the 100-day course, and where the checkpoints sit.
+ * The CEFR shape of the course, and where the checkpoints sit.
  *
  * 120 days across three levels. A2 gets the biggest share of the twenty days
  * added beyond the original hundred: at 21 days it was far too thin for a
@@ -10,10 +10,11 @@
  * the ceiling stays at 30 deliberately: a daily habit that costs 45 minutes
  * stops being daily.
  *
- * NOTE: the seeded content is still 100 days and tagged A1 1–24 / A2 25–45 /
- * B1 46–70, with 71–100 alternating incoherently. This table is the target
- * shape; twenty new days (mostly A2) and a retag are content work still to
- * come. Until then days beyond the seeded content simply do not exist yet.
+ * NOTE: days 101–120 exist (supabase-lessons-101-120.sql), so the seeded
+ * content now reaches the full 120. The per-day difficulty tags on days
+ * 1–100 are still the old A1 1–24 / A2 25–45 / B1 46–70 scheme and disagree
+ * with this table; the retag is content work still to come. This table, not
+ * the per-row tag, is what the app reads.
  *
  * Checkpoints replace the old "every 5 lessons" rule. A rolling counter tells
  * a learner nothing about where they are; three fixed milestones per level,

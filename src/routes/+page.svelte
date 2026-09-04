@@ -192,7 +192,7 @@
 	>
 	<meta
 		name="description"
-		content="Learn German free with 100+ daily lessons, natural audio, and voice practice. No grammar drills — just real conversations. Start today, no credit card needed."
+		content="Learn German free with 120 daily lessons, natural audio, and voice practice. No grammar drills — just real conversations. Start today, no credit card needed."
 	/>
 	<link rel="canonical" href="https://www.mirifer.com/" />
 	<!-- Must mirror the annotations on /fa. Google discards hreflang that is
@@ -208,7 +208,7 @@
 	/>
 	<meta
 		property="og:description"
-		content="Master German with voice recognition, spaced repetition, and 100+ real-life daily lessons. Free to start — no grammar drills."
+		content="Master German with voice recognition, spaced repetition, and 120 real-life daily lessons. Free to start — no grammar drills."
 	/>
 	<meta property="og:image" content="https://www.mirifer.com/og-image.jpg" />
 	<meta property="og:url" content="https://www.mirifer.com/" />
@@ -223,7 +223,7 @@
 	/>
 	<meta
 		name="twitter:description"
-		content="100+ daily lessons. Voice practice. Spaced repetition. Free access."
+		content="120 daily lessons. Voice practice. Spaced repetition. Free access."
 	/>
 	<meta name="twitter:image" content="https://www.mirifer.com/og-image.jpg" />
 
@@ -248,7 +248,7 @@
 				name: "How long does it take to learn German with Mirifer?",
 				acceptedAnswer: {
 					"@type": "Answer",
-					text: "Mirifer's 100+ lessons take you from complete beginner (A1) to intermediate (B1+). Spending 15–20 minutes a day, most learners complete the full path in about 3 months. Because every lesson uses real conversations, you'll start speaking from day one.",
+					text: "Mirifer's 120 lessons take you from complete beginner (A1) to intermediate (B1+). Spending 15–20 minutes a day, most learners complete the full path in about four months. Because every lesson uses real conversations, you'll start speaking from day one.",
 				},
 			},
 			{
@@ -256,7 +256,7 @@
 				name: "Can I learn German for free?",
 				acceptedAnswer: {
 					"@type": "Answer",
-					text: "Yes. Mirifer is completely free during early access — no credit card, no trial period, no hidden fees. You get full access to all 100+ lessons, voice practice, and spaced repetition flashcards.",
+					text: "Yes. Mirifer is completely free during early access — no credit card, no trial period, no hidden fees. You get full access to all 120 lessons, voice practice, and spaced repetition flashcards.",
 				},
 			},
 			{
@@ -432,7 +432,7 @@
 	<div class="nav-links">
 		<a href="#session">The session</a>
 		<a href="#method">Method</a>
-		<a href="#path">100-day path</a>
+		<a href="#path">120-day path</a>
 		<a href="#faq">FAQ</a>
 	</div>
 
@@ -720,14 +720,14 @@
 	<section class="bleed bleed-navy" id="path">
 		<div class="bleed-inner">
 			<p class="label">Your learning path</p>
-			<h2>One hundred days from zero to holding a conversation.</h2>
+			<h2>One hundred and twenty days from zero to holding a conversation.</h2>
 			<p class="lede">
 				No more wondering what to do today. Each day has a name, a scene, and
 				sentences that build on everything before it.
 			</p>
 			<div class="levels">
 				<div class="level">
-					<span class="level-days">Days 1 — 33</span>
+					<span class="level-days">Days 1 — 30</span>
 					<h3>A1 · Getting by</h3>
 					<p>
 						Introducing yourself, ordering, asking prices, telling time, and
@@ -735,7 +735,7 @@
 					</p>
 				</div>
 				<div class="level">
-					<span class="level-days">Days 34 — 67</span>
+					<span class="level-days">Days 31 — 65</span>
 					<h3>A2 · Daily life</h3>
 					<p>
 						Shopping, travel, appointments, work, weekends, habits — the
@@ -743,7 +743,7 @@
 					</p>
 				</div>
 				<div class="level">
-					<span class="level-days">Days 68 — 100</span>
+					<span class="level-days">Days 66 — 120</span>
 					<h3>B1 · Opinions</h3>
 					<p>
 						Explaining, disagreeing, telling a story that happened last year,
@@ -803,9 +803,10 @@
 		<details>
 			<summary>How long does it take to learn German with Mirifer?</summary>
 			<p>
-				The path is a hundred days from zero to B1-level conversation, at one
-				six-to-fifteen minute session a day. Doing it most days rather than
-				every day simply stretches the same hundred lessons.
+				The path is a hundred and twenty days from zero to B1-level
+				conversation, at one six-to-fifteen minute session a day. Doing it
+				most days rather than every day simply stretches the same hundred
+				and twenty lessons.
 			</p>
 		</details>
 		<details>
