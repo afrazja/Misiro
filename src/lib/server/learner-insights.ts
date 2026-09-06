@@ -5,6 +5,7 @@ import { isAdminEmail } from './admin-auth';
 import { lessonVersion, type LessonContent } from '$lib/analytics/lesson-content';
 import { SentenceRowSchema } from '$lib/schemas/lesson.schema';
 import type { Sentence } from '$stores/lesson';
+import { AssessmentSchema, AcquisitionSchema, ChangeSchema, unavailablePhaseThree, type PhaseThreeData } from '$lib/analytics/phase-three';
 
 /** Advance by rows actually received: Supabase projects can have a smaller API row cap. */
 export async function readAll<T>(query: (from: number, to: number) => PromiseLike<{ data: T[] | null; error: unknown }>, cap = 100_000): Promise<T[]> {
@@ -44,6 +45,16 @@ export async function loadLessonCatalog(db: SupabaseClient): Promise<{ catalog: 
 		return { catalog: [], catalogError: 'Current lesson content could not be loaded completely. Event counts remain available; no sentence text has been matched.' };
 	}
 }
+export async function loadPhaseThree(db: SupabaseClient): Promise<PhaseThreeData> {
+	try {
+		const [assessments, acquisition, changes] = await Promise.all([
+			readAll<Record<string, unknown>>((from, to) => db.from('analytics_assessments').select('*').order('id').range(from, to)),
+			readAll<Record<string, unknown>>((from, to) => db.from('analytics_acquisition').select('*').order('user_id').range(from, to)),
+			readAll<Record<string, unknown>>((from, to) => db.from('analytics_changes').select('*').order('id').range(from, to))
+		]);
+		return { assessments: assessments.map(a => AssessmentSchema.parse(a)), acquisition: acquisition.map(a => AcquisitionSchema.parse(a)), changes: changes.map(c => ChangeSchema.parse(c)), error: null };
+	} catch { return unavailablePhaseThree(); }
+}
 export async function loadInsights(db: SupabaseClient | null, opts: { days: number; includeTests: boolean; selfId: string | null }) {
 	if (!db) return { status: 'unavailable' as const, reason: 'Set SUPABASE_SERVICE_ROLE_KEY in the server environment to enable private, complete reports.', report: null };
 	const now = Date.now();
@@ -51,12 +62,12 @@ export async function loadInsights(db: SupabaseClient | null, opts: { days: numb
 	try {
 		const settings = await db.from('analytics_settings').select('installed_at, schema_version').eq('id', true).single();
 		if (settings.error || settings.data?.schema_version !== 2) throw new Error('Apply supabase-learner-insights.sql to enable version 2 collection and reports.');
-		const [profiles, exclusions, events, legacy, content] = await Promise.all([
+		const [profiles, exclusions, events, legacy, content, phaseThree] = await Promise.all([
 			readAll<{ id: string; is_admin: boolean }>((from, to) => db.from('user_profiles').select('id, is_admin').order('id').range(from, to)),
 			readAll<{ user_id: string }>((from, to) => db.from('analytics_exclusions').select('user_id').order('user_id').range(from, to)),
 			readAll<StoredEvent>((from, to) => db.from('events').select('event_id,user_id,session_id,attempt_id,event_name,day,occurred_at,created_at,schema_version,metadata').eq('schema_version', 2).lte('created_at', snapshot).order('id').range(from, to)),
 			db.from('events').select('id', { count: 'exact', head: true }).or('schema_version.is.null,schema_version.neq.2').lte('created_at', snapshot),
-			loadLessonCatalog(db)
+			loadLessonCatalog(db), loadPhaseThree(db)
 		]);
 		if (legacy.error || legacy.count === null) throw new Error('Historical event coverage could not be checked.');
 		const users: AnalyticsUser[] = [];
@@ -69,7 +80,7 @@ export async function loadInsights(db: SupabaseClient | null, opts: { days: numb
 			if (!result.data.nextPage || !result.data.users.length) break;
 			if (page >= 100) throw new Error('The account query is incomplete; totals are unavailable.');
 		}
-		return { status: 'ready' as const, reason: null, report: buildReport({ ...opts, ...content, now, users, events, exclusions: exclusions.map(e => e.user_id), installedAt: settings.data.installed_at, legacyCount: legacy.count }) };
+		return { status: 'ready' as const, reason: null, report: buildReport({ ...opts, ...content, phaseThree, now, users, events, exclusions: exclusions.map(e => e.user_id), installedAt: settings.data.installed_at, legacyCount: legacy.count }) };
 	} catch (error) {
 		return { status: 'unavailable' as const, reason: error instanceof Error ? error.message : 'Insights could not load. No partial totals are shown.', report: null };
 	}

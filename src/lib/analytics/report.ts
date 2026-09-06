@@ -2,6 +2,8 @@ import { DAY_MS, EVENT_NAMES, OBSTACLES, SCHEMA_VERSION, UUID, safeMetadata, typ
 import { buildLessonReport } from './lesson-report';
 import { buildReturnReport } from './return-report';
 import type { LessonContent } from './lesson-content';
+import { buildPhaseThreeReport } from './phase-three-report';
+import { unavailablePhaseThree, type PhaseThreeData } from './phase-three';
 
 export interface AnalyticsUser { id: string; created_at: string; is_admin: boolean; }
 export interface ReportInput {
@@ -16,6 +18,7 @@ export interface ReportInput {
 	legacyCount: number;
 	catalog?: LessonContent[];
 	catalogError?: string | null;
+	phaseThree?: PhaseThreeData;
 }
 const learningNames = new Set(['answer_submitted', 'free_turn_begun', 'exam_completed']);
 const time = (e: StoredEvent) => Date.parse(e.occurred_at);
@@ -44,6 +47,10 @@ export function buildReport(input: ReportInput) {
 	const starts = new Set(all.filter(e => e.event_name === 'visit_started').map(e => `${e.user_id}:${e.session_id}`));
 	const period = all.filter(e => time(e) >= since && time(e) <= now);
 	const actorIds = new Set(period.map(e => e.user_id));
+	const assessmentActorIds = new Set<string>();
+	for (const assessment of input.phaseThree?.assessments ?? []) {
+		if (allowed.has(assessment.user_id) && [assessment.started_at, assessment.completed_at].some(t => t && Date.parse(t) >= since && Date.parse(t) <= now)) assessmentActorIds.add(assessment.user_id);
+	}
 	const userEvents = new Map<string, StoredEvent[]>();
 	for (const e of all) { const rows = userEvents.get(e.user_id) ?? []; rows.push(e); userEvents.set(e.user_id, rows); }
 	const newUsers = includedUsers.filter(u => Date.parse(u.created_at) >= since && Date.parse(u.created_at) <= now);
@@ -86,7 +93,7 @@ export function buildReport(input: ReportInput) {
 		eligible++;
 		if (learn.some(e => e.session_id !== first.session_id && time(e) >= time(first) + DAY_MS && time(e) <= time(first) + 7 * DAY_MS)) returned++;
 	}
-	const learners = includedUsers.filter(u => actorIds.has(u.id) || newUsers.some(n => n.id === u.id)).map(user => {
+	const learners = includedUsers.filter(u => actorIds.has(u.id) || assessmentActorIds.has(u.id) || newUsers.some(n => n.id === u.id)).map(user => {
 		const events = period.filter(e => e.user_id === user.id);
 		const visits = [...new Set(events.map(e => e.session_id))].map(id => {
 			const rows = events.filter(e => e.session_id === id);
@@ -113,6 +120,7 @@ export function buildReport(input: ReportInput) {
 		funnel, eventual, eligible, returned, learners, obstacles,
 		lessonAnalysis: buildLessonReport(all, input.catalog ?? [], since, now, input.catalogError ?? null),
 		returnVisits: buildReturnReport(all, includedUsers, coverageStart, since, now),
+		phaseThree: buildPhaseThreeReport(input.phaseThree ?? unavailablePhaseThree(), includedUsers, all.filter(e => time(e) <= now), coverageStart, since, now),
 		audioFallbacks: unique(period.filter(e => e.event_name === 'audio_fallback').map(e => e.user_id)),
 		incorrectAnswers: period.filter(e => e.event_name === 'answer_submitted' && e.metadata.correct === false).length,
 		quality: {

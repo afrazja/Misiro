@@ -1,5 +1,6 @@
 import { beforeEach, afterEach, describe, expect, it, vi } from 'vitest';
 import { DAY_MS, VISIT_IDLE_MS } from '$lib/analytics/contract';
+vi.mock('./acquisition', () => ({ collectAcquisition: vi.fn() }));
 let analytics: typeof import('./analytics');
 let sent: any[];
 let fetchMock: ReturnType<typeof vi.fn>;

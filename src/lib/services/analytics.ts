@@ -1,6 +1,7 @@
 import { safeMetadata, SCHEMA_VERSION, VISIT_IDLE_MS, DAY_MS, type AnalyticsEvent, type AnalyticsRecord, type ObstacleCode } from '$lib/analytics/contract';
 import { lessonVersion } from '$lib/analytics/lesson-content';
 import type { Sentence } from '$stores/lesson';
+import { collectAcquisition } from './acquisition';
 export type { AnalyticsEvent } from '$lib/analytics/contract';
 
 interface TrackOptions { day?: number; metadata?: Record<string, unknown>; }
@@ -124,6 +125,7 @@ export function setAnalyticsUser(userId: string | null) {
 /** Events are queued synchronously before any asynchronous work can change their context. */
 export async function trackEvent(event: AnalyticsEvent, opts: TrackOptions = {}): Promise<void> {
 	if (!canTrack()) return;
+	if (event === 'page_viewed') void collectAcquisition(identity!);
 	try {
 		if (event === 'page_hidden' && (!visit || Date.now() - visit.touched >= VISIT_IDLE_MS)) return;
 		touchVisit();

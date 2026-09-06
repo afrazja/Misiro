@@ -1,5 +1,7 @@
 <script lang="ts">
 	import { onMount } from "svelte";
+	import type { PageData } from './$types';
+	let { data }: { data: PageData } = $props();
 	import GoogleSignIn from "$components/GoogleSignIn.svelte";
 	import { page } from "$app/stores";
 	import { goto } from "$app/navigation";
@@ -877,6 +879,13 @@
 	{/if}
 
 
+	{#if isAuthenticated && data.checkIn && data.checkLanguage === 'de'}
+		<aside class="check-in-card">
+			<div><strong>{language === 'fa' ? 'پیشرفتت را با یک سنجش کوتاه دنبال کن' : 'Track your progress with a short check'}</strong>
+			<p>{data.checkIn.due === 0 ? (language === 'fa' ? 'اختیاری · نقطه شروع خودت را ثبت کن و با سنجش‌های بعدی مقایسه کن.' : 'Optional · Record your starting point, then compare later checks.') : data.checkIn.due !== null ? (language === 'fa' ? 'سنجش بعدی اکنون آماده است.' : 'Your next progress check is ready.') : (language === 'fa' ? 'نتایج قبلی و زمان سنجش بعدی را ببین.' : 'View your saved results and next check date.')}</p></div>
+			<a href="/check-in">{language === 'fa' ? 'سنجش پیشرفت ←' : 'Progress check →'}</a>
+		</aside>
+	{/if}
 	<!-- ── Today's Session (primary daily action) ──────── -->
 	{#if isAuthenticated && !isNewUser}
 		<a href="/lesson" class="today-session" title="Start today's session">
@@ -993,6 +1002,11 @@
 </div>
 
 <style>
+	.check-in-card { display:flex; align-items:center; justify-content:space-between; gap:20px; padding:20px 24px; margin:22px 0; border:1px solid #3f5543; border-radius:12px; background:#1b2b20; color:#d8e7d8; }
+	.check-in-card strong { font-size:.95rem; font-weight:500; }
+	.check-in-card p { font-size:.8rem; color:#adbeaf; margin:7px 0 0; line-height:1.6; }
+	.check-in-card a { color:#b6dd94; font-size:.85rem; white-space:nowrap; padding:12px 0; }
+	@media(max-width:600px) { .check-in-card { flex-direction:column; align-items:flex-start; gap:8px; padding:18px; } }
 	.browse-lessons { align-self: flex-end; display: inline-flex; align-items: center; min-height: 44px; padding: 6px 4px; color: var(--accent); font-weight: 600; text-underline-offset: 4px; }
 	.browse-lessons:hover { text-decoration: none; }
 	:global(body) {

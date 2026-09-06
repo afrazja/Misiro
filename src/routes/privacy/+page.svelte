@@ -34,6 +34,7 @@
 
 		<p>For signed-in learners, we also store account-linked visit and lesson events in Supabase to understand where practice stops and identify technical obstacles. These events include lesson positions and content identifiers, answer correctness, hint and answer-reveal actions, replay requests, sampled active lesson time, microphone or playback error categories, coarse device and browser type, and interface language. They do not contain raw voice recordings, transcripts, answer text, or full page URLs. Pending events may be stored in your browser for up to 7 days before delivery. Only administrators can view reports across accounts.</p>
 
+		<p>Optional German progress checks store the question-set identifier, checkpoint dates, listening and reading scores, and skipped-question count. Answer choices are sent to the server for scoring and are not stored. No voice recording is required. For acquisition reporting, we keep an allowlisted source category (such as Google or a friend invitation) and capture dates, linked to your account after sign-in. The first source category may stay in this browser for up to 30 days before sign-in. We do not retain full referrer URLs or arbitrary campaign text in these reports. These pilot checks do not establish a certified language level.</p>
 		<h2>5. Data Storage</h2>
 		<p>Your account data is stored securely on <strong>Supabase</strong> (hosted on AWS). Passwords are hashed and never stored in plain text. All connections use HTTPS encryption.</p>
 

@@ -1,6 +1,6 @@
-# Learner Insights — passes one and two
+# Learner Insights — all three phases
 
-The admin dashboard at `/admin` provides Overview, Learner Journeys, Lesson Analysis, Return Visits, Obstacles, and Data Quality. Lesson editing, users, basics, and glossary management remain in the sidebar.
+The admin dashboard at `/admin` provides Overview, Learner Journeys, Lesson Analysis, Return Visits, Learning Checks, Acquisition Sources, Changes & Results, Obstacles, and Data Quality. Lesson editing, users, basics, and glossary management remain in the sidebar.
 
 ## Enable live collection
 
@@ -25,7 +25,36 @@ Pass two uses the same events table and private server configuration as pass one
 - Return cells use a different learning visit with activity 24 hours through day 7, more than 7 through 14, more than 14 through 21, or more than 21 through 28. Each learner must have the whole observation window before entering its denominator. These are separate windows, not cumulative rates. Time to the second visit includes returns before 24 hours and only learners with an observed second visit; the number without a second visit is also shown.
 - Cross-visit resumption requires the same attempt in an earlier distinct visit. Spaced-review starts are captured after actual review questions load. Empty-transcript timeouts have their own event and do not count as answer attempts or create a learning visit.
 
-Pass three (learning assessments, acquisition sources, and changes/results) is outside this release.
+## Phase three deployment and use
+
+Run `supabase-insights-pass-three.sql` in the **same Supabase project**, then deploy. The additive script creates `analytics_assessments`, `analytics_acquisition`, and `analytics_changes`; it can be run again safely. No new environment variables are required. Data Quality confirms whether all three tables can be read. If any phase-three query fails, those reports show unavailable while earlier reports remain usable.
+
+### Learning Checks
+
+- Signed-in German learners get an optional **Progress check** link on `/home`, opening `/check-in`. It is available before their first lesson and remains optional. Established learners can also record a baseline; the dashboard identifies earlier observed practice.
+- The original pilot protocol `de-check-v1` has 12 multiple-choice items: six listening and six reading. Two forms follow the same everyday-task blueprint (numbers, requests, schedules, frequency, purpose and reasons); the assignment alternates across checkpoints and is balanced by account ID. Keys remain on the server. The authored listening text is used by the existing German TTS endpoint, without displaying a transcript in the check.
+- One server-scored result is stored per account/protocol/checkpoint. Refreshing an unfinished check restarts its questions using the same record. Repeated completed submissions return the original score; a failed save can be retried on the open page. No answers, recordings or learner free text are persisted, only section scores, skip count, form and dates.
+- Follow-ups open 14, 30, 90 and 180 days after the baseline **completion**, within days 14–29, 30–59, 90–119 and 180–209 respectively. Server endpoints enforce these windows. The first checkpoint has 16 days; the others have 30. Missing an earlier window does not block the next one. A completed window cannot be retaken.
+- Playback must finish before answering a listening item. An audio failure shows a retry message and does not become a wrong answer. Skipping after successful playback counts as incorrect. Playback can be repeated; there are no hints or answer reveals.
+- The date filter selects baseline completion dates. Later results are followed through the report snapshot and paired by account, protocol and baseline ID. Score changes use only matched completed pairs. Not-yet-due, due-but-missing and closed-without-result counts remain visible. Separate listening/reading means, total change, sample sizes and baseline-form counts are shown.
+- These are self-administered **pilot comprehension checks**, not validated CEFR assessments. They do not measure speaking or writing, or establish a percentage of a language learned. Forms have not been equated; repeated exposure, outside learning, form difficulty and who chooses to return can change scores. Expert review and trials with real learners are needed before any proficiency claim. This distinction follows the [Council of Europe's assessment guidance](https://www.coe.int/en/web/common-european-framework-reference-languages/assessment) and [test-development guidance](https://www.coe.int/en/web/common-european-framework-reference-languages/developing-tests-examining).
+
+### Acquisition Sources
+
+- First entry is classified locally from an allowlisted `utm_source`, then a recognised external referrer, otherwise direct/no referrer. Only categories and capture dates survive; arbitrary tag values become unknown, and full URLs/referrer hosts are discarded. A browser capture expires after 30 days.
+- After sign-in, the verified server endpoint saves the first category once per account. A signup source requires capture before or within five minutes of account creation and sign-in within seven days of creation. First observations of an older account are labelled established-account entries, not reconstructed signup sources. Switching devices or clearing storage can lose the original source.
+- The source table groups accounts created in the selected period. Missing and unrecognised sources remain unknown. Outcome rates only use accounts created after versioned tracking coverage begins, after a full 24-hour or seven-day follow-up; older untracked accounts do not get invented zero-percent rates.
+- Activation is a practice answer, free spoken turn or exam completion in the first 24 hours after signup. Completion means a lesson attempt finished within seven days of signup. Return is a different learning visit at least 24 hours after the first, but still within seven days **of signup**. This differs from the first-learning-visit clock used by Return Visits. All denominators and pending counts are shown.
+- The source-link builder generates `https://www.mirifer.com/?utm_source=friend` and equivalent links for the other supported categories. It does not send or publish them. The report does not count anonymous landings, visitor conversion, campaign spend or acquisition cost.
+
+### Changes & Results
+
+- An administrator can create, edit, archive and restore a change entry: title, hypothesis, actual rollout time in UTC, signup-window length (7/14/30 days) and main metric. Saving documents a change; it does not modify learner features. The global period filters rollout dates. Archive preserves the entry.
+- Baseline signups span `[rollout − window − 7 days, rollout − 7 days)`; after signups span `[rollout, rollout + window)`. Each signup gets seven days of follow-up, and the entire baseline follow-up finishes before rollout. Metric definitions match Acquisition Sources.
+- Difference in percentage points appears only after both whole windows are covered and mature, with eligible accounts on each side. Before that, the report shows readiness dates, pending accounts or missing coverage. A 7-day enrollment window therefore needs 14 days after rollout before the final comparison.
+- These are descriptive historical comparisons. No random allocation, causal attribution, significance claim or automated winner is produced. Overlapping changes, traffic sources and calendar effects remain possible explanations. Editing an entry recalculates its comparison; it is an editable decision log, not an immutable preregistration.
+
+Phase three also closes the existing lesson exam/review completion-event gap. Finishing an exam now emits one aggregate `exam_completed` event, so it can establish a learning visit. Optional progress checks stay separate from practice-visit rates.
 
 ## Local preview
 
@@ -77,7 +106,7 @@ Actual microphone and cloud collection behavior still requires this check with t
 - Capture and receipt times are separate. All dashboard dates and active-day boundaries use UTC. Client clock skew and delayed offline delivery can affect time-based attribution.
 - Administrator profiles and manually marked test accounts are excluded by default. Private reports require verified server-side authorization; exclusions can only be changed by an administrator.
 - Admin documents skip Clarity, and navigation across the admin boundary reloads the document so a public-page replay cannot continue into it. Vercel telemetry filters admin URLs. Development telemetry is disabled.
-- This release instruments signed-in visits, the main lesson flow, sentence-support actions and spaced-review starts. It does not yet cover anonymous acquisition, every exercise type, formal learning assessments, or prove a language-learning outcome.
+- This release instruments signed-in visits, the main lesson flow, sentence-support actions, spaced-review starts and exam completions. Phase three adds captured signup sources and optional pilot comprehension checks. Anonymous conversion, every exercise type, validated proficiency and causal learning outcomes remain outside these measurements.
 
 ## Verification
 
@@ -87,3 +116,5 @@ Actual microphone and cloud collection behavior still requires this check with t
 - Browser verification exercises the actual Svelte pages with the local fixture: admin/learner sign-in, report tabs, mobile layout, learner drill-down, test exclusions, and opening a lesson → Start → Next → hint/reveal/replay → leave → resume → complete. Delivery of the new action and time events was checked in the fixture and reflected in the private report with one attempt and one visit across a short return.
 - Seven-day and later return windows are verified with timestamped fixtures and boundary tests; newly collected production activity still needs its actual observation window to elapse.
 - Full Vercel packaging on this Windows host can stop at `EPERM` when creating the adapter's `index.func` symbolic link. Production deployment must be confirmed by the normal Linux/Vercel build and live-site verification.
+- Phase-three tests cover checkpoint boundaries, form assignment, server scoring, authentication and ownership, duplicate submissions, failed saves, source filtering and retries, paired-score denominators, pre-tracking exclusions, full before/after windows, and administrator-only change mutations. An isolated PostgreSQL cluster verifies repeatable migration, own-user reads, blocked direct score/attribution writes and private change-log access.
+- Browser verification uses fictional accounts and real Svelte endpoints to create/edit change entries, start a learner check, play all six German prompts through the existing TTS endpoint, answer all twelve items with known choices, recover from injected playback and save failures, and confirm the saved 3/6 listening and 1/6 reading scores in the private report. This is not a test of a user's microphone hardware or evidence that the pilot measures proficiency reliably.

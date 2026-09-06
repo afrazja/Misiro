@@ -47,6 +47,7 @@ vi.mock('$services/audio-context', () => ({
 vi.mock('$utils/wait', () => ({
 	wait: vi.fn().mockResolvedValue(undefined)
 }));
+vi.mock('$services/analytics', async (original) => ({ ...await original<typeof import('$services/analytics')>(), trackEvent: vi.fn().mockResolvedValue(undefined) }));
 
 vi.mock('$utils/i18n', () => ({
 	getTranslation: vi.fn().mockReturnValue('translation text'),
@@ -69,6 +70,7 @@ import {
 import { playTone } from '$services/audio-context';
 import { recordSRAttempt } from '$services/spaced-repetition';
 import { saveProgress } from '$services/data-layer';
+import { trackEvent } from '$services/analytics';
 
 // ─── Helpers ─────────────────────────────────────────────────────────────────
 
@@ -456,6 +458,16 @@ describe('handleVoiceInput (exam mode)', () => {
 		});
 	});
 
+	it('records one exam completion after the final answer, with only aggregate metadata', async () => {
+		vi.useFakeTimers();
+		try {
+			const onExamFinished = vi.fn(); setCallbacks(makeCallbacks({ onExamFinished }));
+			await handleVoiceInput('Guten Morgen'); await vi.advanceTimersByTimeAsync(1000);
+			const completions = vi.mocked(trackEvent).mock.calls.filter(([name]) => name === 'exam_completed');
+			expect(completions).toEqual([['exam_completed', { metadata: { mode:'exam',score:1,total:1,percentage:100,week:1 } }]]);
+			expect(onExamFinished).toHaveBeenCalledTimes(1);
+		} finally { vi.useRealTimers(); }
+	});
 	it('evaluates the transcript against the exam question target, not the lesson sentence', async () => {
 		const onVoiceResult = vi.fn();
 		setCallbacks(makeCallbacks({ onVoiceResult }));

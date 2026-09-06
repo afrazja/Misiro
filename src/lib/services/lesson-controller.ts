@@ -1168,10 +1168,14 @@ async function handleExamIncorrect(targetGerman: string, transcript: string): Pr
 
 async function finishExam(): Promise<void> {
 	const exam = get(examStore);
+	if (!exam.isExamMode) return;
 	const prefs = get(preferencesStore);
 	const wasReview = exam.isReviewMode;
+	// Close synchronously: duplicate transition timers must not record a second completion.
+	examStore.update((s) => ({ ...s, isExamMode: false, isReviewMode: false }));
 	const totalQ = exam.examQuestions.length;
 	const percentage = totalQ > 0 ? Math.round((exam.examScore / totalQ) * 100) : 0;
+	if (totalQ > 0) void trackEvent('exam_completed', { metadata: { mode: wasReview ? 'review' : 'exam', score: exam.examScore, total: totalQ, percentage, week: exam.examWeek } });
 
 	callbacks?.onExamProgress(totalQ, totalQ);
 
@@ -1188,13 +1192,6 @@ async function finishExam(): Promise<void> {
 			heard: w.heard
 		}))
 	});
-
-	// Reset exam state
-	examStore.update((s) => ({
-		...s,
-		isExamMode: false,
-		isReviewMode: false
-	}));
 
 	callbacks?.onExamFinished({
 		score: exam.examScore,

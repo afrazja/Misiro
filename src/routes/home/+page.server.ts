@@ -1,5 +1,7 @@
 import { redirect } from '@sveltejs/kit';
 import type { RequestEvent } from '@sveltejs/kit';
+import { ownAssessments } from '$lib/server/assessments';
+import { checkSchedule } from '$lib/analytics/assessment-schedule';
 
 export async function load({ locals }: RequestEvent) {
 	// Must be signed in. Send to the app login screen — NOT the marketing
@@ -15,5 +17,8 @@ export async function load({ locals }: RequestEvent) {
 		throw redirect(303, '/onboarding');
 	}
 
-	return {};
+	try {
+		const rows = await ownAssessments(locals.supabase, locals.user!.id);
+		return { checkIn: checkSchedule(rows), checkLanguage: targetLang };
+	} catch { return { checkIn: null, checkLanguage: targetLang }; }
 }

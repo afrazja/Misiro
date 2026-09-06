@@ -21,6 +21,7 @@
 	import { initTheme } from '$services/theme';
 	import { getLanguage, applyDocumentLanguage } from '$services/data-layer';
 	import { env } from '$env/dynamic/public';
+	import { captureAcquisition } from '$services/acquisition';
 
 	/**
 	 * Google Search Console ownership token.
@@ -80,10 +81,12 @@
 	});
 
 	afterNavigate(() => {
+		captureAcquisition();
 		if (window.location.pathname !== '/lesson') clearLessonContext();
 		void trackEvent('page_viewed');
 	});
 	onMount(() => {
+		captureAcquisition();
 		const stop = authStore.subscribe(auth => setAnalyticsUser(auth.user?.id ?? null));
 		const cleanup = startAnalyticsListeners();
 		return () => { stop(); cleanup(); };

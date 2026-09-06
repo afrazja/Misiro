@@ -4,6 +4,9 @@
 	import type { StoredEvent } from '$lib/analytics/contract';
 	import LessonAnalysis from '$components/LessonAnalysis.svelte';
 	import ReturnVisits from '$components/ReturnVisits.svelte';
+	import LearningChecks from '$components/LearningChecks.svelte';
+	import AcquisitionSources from '$components/AcquisitionSources.svelte';
+	import ChangesResults from '$components/ChangesResults.svelte';
 	import '$components/insights-analysis.css';
 	let { data, form }: { data: PageData; form: ActionData } = $props();
 	let tab = $state('overview');
@@ -13,7 +16,7 @@
 	const report = $derived(data.insights?.report ?? null);
 	const learners = $derived(report?.learners.filter(u => `${u.label} ${u.id}`.toLowerCase().includes(search.toLowerCase())) ?? []);
 	const selected = $derived(learners.find(u => u.id === selectedId) ?? learners[0]);
-	const tabs = [{ id: 'overview', name: 'Overview' }, { id: 'journeys', name: 'Learner Journeys' }, { id: 'lessons', name: 'Lesson Analysis' }, { id: 'returns', name: 'Return Visits' }, { id: 'obstacles', name: 'Obstacles' }, { id: 'quality', name: 'Data Quality' }];
+	const tabs = [{ id: 'overview', name: 'Overview' }, { id: 'journeys', name: 'Learner Journeys' }, { id: 'lessons', name: 'Lesson Analysis' }, { id: 'returns', name: 'Return Visits' }, { id: 'assessments', name: 'Learning Checks' }, { id: 'sources', name: 'Acquisition Sources' }, { id: 'changes', name: 'Changes & Results' }, { id: 'obstacles', name: 'Obstacles' }, { id: 'quality', name: 'Data Quality' }];
 	const percent = (n: number, d: number) => d ? `${Math.round(n / d * 100)}%` : 'Not available';
 	const date = (value: string | null | undefined) => value ? new Date(value).toLocaleString('en-GB', { timeZone: 'UTC', day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' }) + ' UTC' : 'Not available';
 	const labels: Record<string, string> = { visit_started: 'Visit started', page_viewed: 'Viewed page', page_hidden: 'Page hidden', page_returned: 'Returned to page', lesson_started: 'Opened lesson', lesson_begun: 'Pressed Start', lesson_resumed: 'Resumed lesson', lesson_progress: 'Saw sentence', answer_submitted: 'Submitted answer', step_skipped: 'Skipped sentence', lesson_attempt_completed: 'Finished lesson attempt', lesson_completed: 'First completion of this lesson', mic_requested: 'Requested microphone', mic_ready: 'Microphone ready', obstacle: 'Technical obstacle', audio_fallback: 'Switched to backup audio' };
@@ -113,6 +116,11 @@
 			<LessonAnalysis report={report.lessonAnalysis} inspect={inspect} />
 		{:else if tab === 'returns'}
 			<ReturnVisits report={report.returnVisits} inspect={inspect} />
+		{:else if ['assessments', 'sources', 'changes'].includes(tab)}
+			{#if report.phaseThree.error}<p class="notice error">{report.phaseThree.error}</p>
+			{:else if tab === 'assessments'}<LearningChecks report={report.phaseThree.assessments} {inspect} />
+			{:else if tab === 'sources'}<AcquisitionSources report={report.phaseThree.acquisition} {inspect} />
+			{:else}<ChangesResults changes={report.phaseThree.changes} days={report.days} includeTests={report.includeTests} />{/if}
 		{:else if tab === 'obstacles'}
 			<div class="section-heading"><div><span class="eyebrow">TECHNICAL FRICTION</span><h2>Where practice gets interrupted</h2><p class="muted">Affected learners are counted once per obstacle. Percentages use all {report.visitors} tracked visitors in this period.</p></div></div>
 			<div class="panel table-wrap"><table><thead><tr><th>Obstacle</th><th>Affected learners</th><th>Occurrences</th><th>Inspect a journey</th></tr></thead><tbody>{#each report.obstacles as o}<tr><td>{o.label}</td><td><b>{o.affected} / {report.visitors}</b><small>{percent(o.affected, report.visitors)}</small></td><td>{o.count}</td><td>{#if o.userIds.length}<button class="text-button" onclick={() => inspect(o.userIds[0])}>View learner →</button>{:else}<span class="muted">None recorded</span>{/if}</td></tr>{/each}</tbody></table></div>
@@ -121,10 +129,11 @@
 		{:else}
 			<div class="section-heading"><div><span class="eyebrow">TRUST THE MEASUREMENT</span><h2>Data Quality</h2><p class="muted">Collection health, coverage, and the limits of this report.</p></div><span class="badge">Event schema v2</span></div>
 			<p class="notice">Pass two measurements: {report.lessonAnalysis.firstEnhancedEvent ? `first content-versioned event received for activity at ${date(report.lessonAnalysis.firstEnhancedEvent)}` : 'waiting for the first content-versioned lesson event'}. Hints, reveals, manual replays and active time start with this release. {report.lessonAnalysis.catalogError ?? 'Current lesson catalog loaded completely.'}</p>
+			<p class="notice">Phase three: {report.phaseThree.error ?? 'Assessment, attribution and change-log tables loaded completely. Optional checks are available from the learner home page. New source categories are captured after sign-in.'}</p>
 			<div class="two-col"><section class="panel"><h3>Collection status</h3><dl><div><dt>Migration installed</dt><dd>{date(report.quality.installedAt)}</dd></div><div><dt>First version 2 event</dt><dd>{date(report.quality.firstEvent)}</dd></div><div><dt>Latest received event</dt><dd>{date(report.quality.latestReceived)}</dd></div><div><dt>Latest learner activity</dt><dd>{date(report.quality.latestEvent)}</dd></div><div><dt>Report snapshot</dt><dd>{date(report.snapshot)}</dd></div><div><dt>Cross-user queries</dt><dd>Complete · all pages fetched</dd></div></dl><p class="muted">Freshness includes test events. A quiet collection period can mean no activity or blocked tracking; it cannot establish either by itself.</p></section>
 			<section class="panel"><h3>Coverage checks</h3><dl><div><dt>Version 2 events, all accounts</dt><dd>{report.quality.versionedEvents}</dd></div><div><dt>Included events in period</dt><dd>{report.quality.periodEvents}</dd></div><div><dt>Legacy / unsupported events</dt><dd>{report.quality.legacyCount}</dd></div><div><dt>Invalid events omitted</dt><dd>{report.quality.invalid}</dd></div><div><dt>Duplicate IDs omitted</dt><dd>{report.quality.duplicates}</dd></div><div><dt>Visits missing a start event</dt><dd>{report.quality.missingVisitStart}</dd></div><div><dt>New accounts without events</dt><dd>{report.quality.untrackedNewUsers}</dd></div><div><dt>Events received over 5 minutes late</dt><dd>{report.quality.lateEvents}</dd></div><div><dt>Events without a current account</dt><dd>{report.quality.unknownUsers}</dd></div></dl></section></div>
 			<section class="panel"><h3>Test accounts and measurement rules</h3><p><b>{report.quality.excludedUsers}</b> administrator or marked test accounts. They are {report.includeTests ? 'included in this view' : 'excluded from the metrics'}.</p><p class="muted">To mark yourself or a friend, include test accounts, open Learner Journeys, select the learner, and use the test account button. Administrator accounts are excluded automatically.</p><ul class="rules"><li>A visit starts on a tracked action after 30 minutes without tracked activity. Refreshes and authentication token renewals do not count as new visits.</li><li>Learning activity requires an answer, spoken free turn, or exam completion. Opening a page or playing narration alone does not count.</li><li>A lesson attempt survives a reload and resume on this browser. Restarting via the day picker or advancing to another lesson creates a new attempt. Visits across devices remain separate.</li><li>Page hidden means the tab lost visibility. It does not prove the learner closed the app.</li><li>Retries reuse event IDs. Pending events are kept on this browser for up to 7 days, with a 500-event limit. Lost or blocked events cannot be recovered by the dashboard.</li><li>Analytics stores account IDs, event categories, lesson positions, and coarse browser information. It does not store raw audio, transcripts, answer text, or full URLs.</li></ul></section>
-			<div class="notice">Historical events are kept separately. This release covers signed-in visits and the main lesson flow; it does not yet measure every exercise type, anonymous visitor, or language improvement.</div>
+			<div class="notice">Historical events are kept separately. Reports cover signed-in practice, captured signup sources and optional comprehension checks. Anonymous conversion, speaking and writing gains, and causal effects of app changes are not established by these reports.</div>
 		{/if}
 		{#if report}<footer>Snapshot {date(report.snapshot)} · Dates in UTC · {report.includeTests ? 'Test accounts included' : 'Test accounts excluded'} · <button class="text-button" onclick={() => tab = 'quality'}>Measurement rules</button></footer>{/if}
 	</div>
@@ -153,7 +162,7 @@
 	.status { color:#bdd5ae; display:flex; gap:8px; align-items:center; font-size:.73rem; }
 	.status.waiting { color:#e0c385; }
 	.dot { width:6px; height:6px; background:currentColor; border-radius:50%; }
-	.tabs { display:flex; gap:26px; border-bottom:1px solid var(--line); margin-bottom:26px; overflow-x:auto; }
+	.tabs { display:flex; flex-wrap:wrap; gap:0 24px; border-bottom:1px solid var(--line); margin-bottom:26px; }
 	.tabs button { border:0; border-bottom:2px solid transparent; border-radius:0; background:transparent; color:#a9b4b0; padding:20px 0 15px; white-space:nowrap; font-size:.88rem; }
 	.tabs button.current { color:#b6dd94; border-bottom-color:#b6dd94; }
 	.panel { background:#18231f; border:1px solid #34443e; border-radius:12px; padding:24px; }
