@@ -9,6 +9,7 @@
 	import { getLessonIndex, getTotalLessons } from "$services/lesson-loader";
 	import InstallAppButton from "$lib/components/InstallAppButton.svelte";
 	import LandingLogo from "$lib/components/LandingLogo.svelte";
+	import LandingLessonPreview from "$lib/components/LandingLessonPreview.svelte";
 
 	// Auth modal state
 	let showAuthModal = $state(false);
@@ -507,36 +508,39 @@
 			Every day opens on one scene — rain, a café, a landlord. Ten sentences,
 			spoken by a native voice, with everything you need to take them apart.
 		</p>
-		<ol class="numbered">
-			<li>
-				<span class="num">01</span>
-				<div>
-					<h3>Pick the day, or let it pick you</h3>
-					<p>Day 44: Talking About Habits · about 6 min · middle A2</p>
-				</div>
-			</li>
-			<li>
-				<span class="num">02</span>
-				<div>
-					<h3>Slow the audio to 0.75×</h3>
-					<p>Until the sentence stops being a blur and becomes words.</p>
-				</div>
-			</li>
-			<li>
-				<span class="num">03</span>
-				<div>
-					<h3>Switch on Blind Mode</h3>
-					<p>Text disappears. Only your ears are left.</p>
-				</div>
-			</li>
-			<li>
-				<span class="num">04</span>
-				<div>
-					<h3>Read in English or Persian</h3>
-					<p>Full Farsi translations, right-to-left, for every line.</p>
-				</div>
-			</li>
-		</ol>
+		<div class="session-content">
+			<ol class="numbered">
+				<li>
+					<span class="num">01</span>
+					<div>
+						<h3>Pick the day, or let it pick you</h3>
+						<p>Day 44: Talking About Habits · about 6 min · middle A2</p>
+					</div>
+				</li>
+				<li>
+					<span class="num">02</span>
+					<div>
+						<h3>Slow the audio to 0.75×</h3>
+						<p>Until the sentence stops being a blur and becomes words.</p>
+					</div>
+				</li>
+				<li>
+					<span class="num">03</span>
+					<div>
+						<h3>Switch on Blind Mode</h3>
+						<p>Text disappears. Only your ears are left.</p>
+					</div>
+				</li>
+				<li>
+					<span class="num">04</span>
+					<div>
+						<h3>Read in English or Persian</h3>
+						<p>Full Farsi translations, right-to-left, for every line.</p>
+					</div>
+				</li>
+			</ol>
+			<div class="session-preview"><LandingLessonPreview /></div>
+		</div>
 	</section>
 
 	<!-- ══ METHOD — full-bleed green ═════════════════════ -->
@@ -1251,6 +1255,22 @@
 		color: var(--ink-faint);
 	}
 
+	.session-content {
+		display: grid;
+		grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+		gap: 56px;
+		align-items: center;
+		margin-top: 40px;
+	}
+
+	.session-content .numbered {
+		margin: 0;
+	}
+
+	.session-preview {
+		min-inline-size: 0;
+	}
+
 	/* ── Numbered lists ──────────────────────────────── */
 	.numbered,
 	.rules {
@@ -1586,6 +1606,18 @@
 
 	/* ── Responsive ──────────────────────────────────── */
 	@media (max-width: 1000px) {
+		.session-content {
+			grid-template-columns: minmax(0, 1fr);
+			gap: 32px;
+		}
+
+		.session-preview {
+			order: -1;
+			inline-size: 100%;
+			max-inline-size: 520px;
+			justify-self: center;
+		}
+
 		.hero,
 		.split {
 			grid-template-columns: 1fr;
