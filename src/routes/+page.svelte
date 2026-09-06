@@ -281,9 +281,11 @@
 </svelte:head>
 
 <!-- ── Email Confirmation Toast ─────────────────────────── -->
-<div class="confirm-toast" class:show={showConfirmToast}>
-	✅ Email confirmed! You can now sign in.
-</div>
+{#if showConfirmToast}
+	<div class="confirm-toast" role="status">
+		✅ Email confirmed! You can now sign in.
+	</div>
+{/if}
 
 <!-- ── Auth Modal ──────────────────────────────────────── -->
 {#if showAuthModal}
@@ -881,6 +883,22 @@
 </footer>
 
 <style>
+	.confirm-toast {
+		position: fixed;
+		top: 20px;
+		left: 50%;
+		transform: translateX(-50%);
+		width: max-content;
+		max-width: calc(100% - 32px);
+		padding: 16px 24px;
+		border-radius: 14px;
+		background: var(--leaf);
+		color: var(--on-accent);
+		font-weight: 600;
+		box-shadow: 0 8px 24px rgb(0 0 0 / 12%);
+		z-index: 2000;
+	}
+
 	/*
 	 * Landing page — the "Mirifer Landing v2" artboard.
 	 *
