@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { goto } from "$app/navigation";
 	import GoogleSignIn from "$components/GoogleSignIn.svelte";
+	import BrandLogo from "$lib/components/BrandLogo.svelte";
 	import { onMount } from "svelte";
 	import * as auth from "$services/auth";
 	import * as dataLayer from "$services/data-layer";
@@ -123,8 +124,7 @@
 	<span id="main-content" tabindex="-1" class="sr-only"></span>
 	<div class="login-card">
 		<div class="brand">
-			<img src="/android-chrome-192x192.png" alt="" class="brand-icon" />
-			<span class="brand-name">Mirifer</span>
+			<BrandLogo />
 		</div>
 
 		{#if emailSent}
@@ -298,18 +298,7 @@
 		margin-bottom: 22px;
 	}
 
-	.brand-icon {
-		width: 36px;
-		height: 36px;
-		border-radius: 9px;
-	}
 
-	.brand-name {
-		font-family: var(--font-display);
-		font-size: 1.25rem;
-		font-weight: 700;
-		color: var(--accent-deep);
-	}
 
 	h1 {
 		font-family: var(--font-display);

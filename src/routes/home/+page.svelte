@@ -33,6 +33,7 @@
 	import InstallAppButton from "$lib/components/InstallAppButton.svelte";
 	import Icon from "$lib/components/Icon.svelte";
 	import AppHeader from "$lib/components/AppHeader.svelte";
+	import BrandLogo from "$lib/components/BrandLogo.svelte";
 
 	// Auth modal state
 	let showAuthModal = $state(false);
@@ -542,6 +543,7 @@
 		}}
 	>
 		<div class="auth-modal" bind:this={modalEl}>
+			<div class="auth-brand"><BrandLogo /></div>
 			<button
 				class="auth-close"
 				onclick={toggleAuthModal}
@@ -810,9 +812,8 @@
 <div class="dash-shell">
 	{#if isAuthenticated && !isNewUser}
 		<aside class="rail" aria-label="Dashboard sections">
-			<a class="rail-brand" href="/">
-				<span class="rail-mark" aria-hidden="true"></span>
-				<span>Mirifer</span>
+			<a class="rail-brand" href="/" aria-label="Mirifer home">
+				<BrandLogo />
 			</a>
 			<nav class="rail-nav">
 				<a class="rail-item is-current" href="/home" aria-current="page">
@@ -842,6 +843,9 @@
 	{/if}
 
 <main class="home-container">
+	<a class="dashboard-brand" class:has-rail={isAuthenticated && !isNewUser} href="/" aria-label="Mirifer home">
+		<BrandLogo />
+	</a>
 	{#snippet profileLeading()}
 		{#if isAuthenticated}
 			<!-- Account actions live behind the avatar. They used to sit loose
@@ -1170,6 +1174,19 @@
 		display: none;
 	}
 
+	.dashboard-brand {
+		--brand-logo-width: 160px;
+		display: flex;
+		inline-size: fit-content;
+		margin-bottom: 16px;
+	}
+
+	.auth-brand {
+		display: flex;
+		justify-content: center;
+		margin-bottom: 20px;
+	}
+
 
 
 
@@ -1179,6 +1196,7 @@
 	   this the same destinations are the cards in the page itself, so a
 	   rail would be a third of a phone screen spent repeating them. */
 	@media (min-width: 1080px) {
+		.dashboard-brand.has-rail { display: none; }
 		.dash-shell {
 			display: grid;
 			grid-template-columns: 232px minmax(0, 1fr);
@@ -1225,13 +1243,6 @@
 
 
 
-	.rail-mark {
-		inline-size: 22px;
-		block-size: 22px;
-		border-radius: 7px;
-		background: var(--leaf);
-		flex: none;
-	}
 
 
 

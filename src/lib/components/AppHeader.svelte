@@ -1,5 +1,6 @@
 <script lang="ts">
 	import type { Snippet } from "svelte";
+	import BrandLogo from "./BrandLogo.svelte";
 	import { toggleTheme, resolvedTheme } from "$services/theme";
 
 	let {
@@ -59,8 +60,7 @@
 				</a>
 			{:else}
 				<a class="brand" href="/home" aria-label="Mirifer home">
-					<span class="brand-mark" aria-hidden="true">M</span>
-					<span>Mirifer</span>
+					<BrandLogo tone={variant === "plain" ? "auto" : "light"} />
 				</a>
 			{/if}
 		</div>
@@ -383,16 +383,15 @@
 		border-color: var(--accent);
 	}
 
-	.brand-mark {
-		display: grid;
-		place-items: center;
-		width: 24px;
-		height: 24px;
-		border-radius: 50%;
-		background: var(--accent);
-		color: white;
-		font-family: var(--font-display);
-		font-size: 0.82rem;
+
+	.header-stack .brand,
+	.header-stack .brand:hover {
+		--brand-logo-width: 132px;
+		padding: 0;
+		border: 0;
+		border-radius: 0;
+		background: transparent;
+		box-shadow: none;
 	}
 
 	/* Whatever a page drops into the toolbar slot. This beats the page's own
@@ -446,8 +445,8 @@
 			font-size: 0.8rem;
 		}
 
-		.brand > span:last-child {
-			display: none;
+		.header-stack .brand {
+			--brand-logo-width: 112px;
 		}
 
 	}

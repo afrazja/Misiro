@@ -8,7 +8,7 @@
 	import { initSyncListeners } from "$services/sync-queue";
 	import { getLessonIndex, getTotalLessons } from "$services/lesson-loader";
 	import InstallAppButton from "$lib/components/InstallAppButton.svelte";
-	import LandingLogo from "$lib/components/LandingLogo.svelte";
+	import BrandLogo from "$lib/components/BrandLogo.svelte";
 	import LandingLessonPreview from "$lib/components/LandingLessonPreview.svelte";
 
 	// Auth modal state
@@ -308,7 +308,7 @@
 				aria-label="Close dialog">×</button
 			>
 			<div class="auth-logo">
-				<LandingLogo />
+				<BrandLogo />
 			</div>
 
 			{#if signupEmailSent}
@@ -425,7 +425,7 @@
 <!-- ════════════════════════════════════════════════════════ -->
 <nav class="navbar" class:scrolled>
 	<a href="/" class="brand" aria-label="Mirifer home">
-		<LandingLogo />
+		<BrandLogo />
 	</a>
 
 	<div class="nav-links">
@@ -860,7 +860,7 @@
 <footer class="site-footer">
 	<div class="foot-brand">
 		<a href="/" class="brand" aria-label="Mirifer home">
-			<LandingLogo />
+			<BrandLogo />
 		</a>
 		<span>Learn German through real conversation</span>
 	</div>

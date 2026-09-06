@@ -12,7 +12,7 @@ export default defineConfig({
 			registerType: 'autoUpdate',
 			manifest: false, // We already have a static manifest at static/site.webmanifest
 			workbox: {
-				globPatterns: ['**/*.{js,css,html,ico,png,svg,json,mp3}']
+				globPatterns: ['**/*.{js,css,html,ico,png,svg,webp,json,mp3}']
 			}
 		})
 	]
