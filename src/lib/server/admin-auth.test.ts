@@ -51,6 +51,7 @@ function fakeLocals(opts: {
 		session: userId ? ({ user: { id: userId } } as never) : null,
 		user: userId ? ({ id: userId } as never) : null,
 		supabase: {
+			auth: { getUser: async () => ({ data: { user: userId ? { id: userId } : null }, error: null }) },
 			from: () => ({
 				select: () => ({
 					eq: () => ({
@@ -77,6 +78,14 @@ describe('isAdminEmail', () => {
 });
 
 describe('checkAdminCredentials', () => {
+	it('disables credentials and cookies when configuration is absent', () => {
+		const cookies = fakeCookies(); setAdminCookie(cookies);
+		delete env.ADMIN_PASSWORD; delete env.ADMIN_EMAIL;
+		expect(checkAdminCredentials(EMAIL, PASSWORD)).toBe(false);
+		expect(checkAdminCredentials('', '')).toBe(false);
+		expect(hasValidAdminCookie(cookies)).toBe(false);
+	});
+
 	it('accepts the configured pair', () => {
 		expect(checkAdminCredentials(EMAIL, PASSWORD)).toBe(true);
 	});
@@ -174,6 +183,12 @@ describe('resolveAdmin', () => {
 	it('refuses a signed-in user with no profile row at all', async () => {
 		const locals = fakeLocals({ userId: 'user-3', profile: null });
 
+		expect((await resolveAdmin(locals, fakeCookies())).authorized).toBe(false);
+	});
+
+	it('rejects an unverified session even if its profile claims admin', async () => {
+		const locals = fakeLocals({ userId: 'forged', profile: { is_admin: true, display_name: null } });
+		locals.supabase.auth.getUser = vi.fn().mockResolvedValue({ data: { user: null }, error: new Error('Invalid token') });
 		expect((await resolveAdmin(locals, fakeCookies())).authorized).toBe(false);
 	});
 

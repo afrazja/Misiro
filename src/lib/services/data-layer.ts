@@ -8,6 +8,7 @@
 import { getSupabaseBrowserClient } from '$lib/supabase/client';
 import { isAuthenticated, getUser, updateDisplayName as authUpdateDisplayName } from './auth';
 import { cloudWrite, flushQueue } from './sync-queue';
+import { trackObstacle } from './analytics';
 import { logError, logWarn } from '$utils/error';
 import {
 	UserProfileLanguageRowSchema,
@@ -281,7 +282,10 @@ export async function saveProgress(currentDay: number, currentSentenceIndex: num
 		xp,
 		achievements
 	};
-	localStorage.setItem('mirifer_progress', JSON.stringify(data));
+	try { localStorage.setItem('mirifer_progress', JSON.stringify(data)); } catch (error) {
+		trackObstacle('progress_save_failed');
+		throw error;
+	}
 	await cloudWrite('progress_upsert', 'progress', {
 		current_day: currentDay,
 		current_sentence_index: currentSentenceIndex,
@@ -328,7 +332,10 @@ export async function getCompletedLessons(): Promise<Record<number, any>> {
 }
 
 export async function saveCompletedLessons(completedLessons: Record<number, any>): Promise<void> {
-	localStorage.setItem('mirifer_completed_lessons', JSON.stringify(completedLessons || {}));
+	try { localStorage.setItem('mirifer_completed_lessons', JSON.stringify(completedLessons || {})); } catch (error) {
+		trackObstacle('progress_save_failed');
+		throw error;
+	}
 	await cloudWrite('progress_upsert', 'completed_lessons', {
 		completed_lessons: completedLessons || {}
 	});

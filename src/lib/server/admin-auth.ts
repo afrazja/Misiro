@@ -3,7 +3,7 @@
  *
  * Two ways in:
  *  1. A Supabase-authenticated user whose profile has is_admin = true.
- *  2. The admin email + password below (overridable via ADMIN_EMAIL /
+ *  2. Explicitly configured admin email + password (ADMIN_EMAIL /
  *     ADMIN_PASSWORD env vars), which sets a httpOnly cookie.
  *
  * The password check and the cookie token both live server-side only —
@@ -14,8 +14,8 @@ import { createHash, timingSafeEqual } from 'node:crypto';
 import { env } from '$env/dynamic/private';
 import { error, type Cookies } from '@sveltejs/kit';
 
-const ADMIN_EMAIL = () => env.ADMIN_EMAIL || 'afz.javan@gmail.com';
-const ADMIN_PASSWORD = () => env.ADMIN_PASSWORD || '1234';
+const ADMIN_EMAIL = () => env.ADMIN_EMAIL || '';
+const ADMIN_PASSWORD = () => env.ADMIN_PASSWORD || '';
 
 export const ADMIN_COOKIE = 'mirifer_admin';
 
@@ -38,17 +38,17 @@ function safeEqual(a: string, b: string): boolean {
 
 /** True when `email` is the configured admin account. */
 export function isAdminEmail(email: string | null | undefined): boolean {
-	if (!email) return false;
+	if (!email || !ADMIN_EMAIL()) return false;
 	return email.trim().toLowerCase() === ADMIN_EMAIL().toLowerCase();
 }
 
 export function checkAdminCredentials(email: string, password: string): boolean {
-	return isAdminEmail(email) && safeEqual(password, ADMIN_PASSWORD());
+	return !!ADMIN_PASSWORD() && isAdminEmail(email) && safeEqual(password, ADMIN_PASSWORD());
 }
 
 export function hasValidAdminCookie(cookies: Cookies): boolean {
 	const cookie = cookies.get(ADMIN_COOKIE);
-	return !!cookie && safeEqual(cookie, adminToken());
+	return !!ADMIN_EMAIL() && !!ADMIN_PASSWORD() && !!cookie && safeEqual(cookie, adminToken());
 }
 
 export function setAdminCookie(cookies: Cookies): void {
@@ -86,6 +86,8 @@ export async function resolveAdmin(
 	}
 
 	if (locals.session && selfId) {
+		const { data: { user }, error: authError } = await locals.supabase.auth.getUser();
+		if (authError || user?.id !== selfId) return { authorized: false, displayName: 'Admin', selfId: null };
 		const { data: profile } = await locals.supabase
 			.from('user_profiles')
 			.select('is_admin, display_name')

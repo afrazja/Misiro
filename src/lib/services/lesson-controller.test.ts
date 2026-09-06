@@ -14,7 +14,9 @@ vi.mock('$services/lesson-loader', () => ({
 	getLesson: vi.fn().mockReturnValue(null),
 	getLessonIndex: vi.fn().mockResolvedValue([]),
 	getAllLoadedLessons: vi.fn().mockReturnValue({}),
-	hasLesson: vi.fn().mockReturnValue(false)
+	hasLesson: vi.fn().mockReturnValue(false),
+	resolveResumePoint: vi.fn().mockReturnValue({ day: 1, sentenceIndex: 0, allDone: false }),
+	getTotalLessons: vi.fn().mockReturnValue(100)
 }));
 
 vi.mock('$services/data-layer', () => ({

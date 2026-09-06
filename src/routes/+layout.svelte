@@ -11,6 +11,9 @@
 	import '@fontsource-variable/vazirmatn';
 	import '../app.css';
 	import { onMount } from 'svelte';
+	import { dev } from '$app/environment';
+	import { beforeNavigate, afterNavigate } from '$app/navigation';
+	import { setAnalyticsUser, startAnalyticsListeners, trackEvent, clearLessonContext } from '$services/analytics';
 	import { getSupabaseBrowserClient } from '$lib/supabase/client';
 	import { authStore } from '$stores/auth';
 	import { inject } from '@vercel/analytics';
@@ -32,8 +35,18 @@
 	 */
 	const googleVerification = $derived(env.PUBLIC_GOOGLE_SITE_VERIFICATION ?? '');
 
-	inject({ mode: 'production' });
-	injectSpeedInsights();
+	if (!dev) {
+		inject({ mode: 'production', beforeSend: event => new URL(event.url).pathname.startsWith('/admin') ? null : event });
+		injectSpeedInsights({ beforeSend: event => new URL(event.url).pathname.startsWith('/admin') ? null : event });
+	}
+	// Start a fresh document across the admin boundary so a replay script from
+	// a public page can never continue observing private learner reports.
+	beforeNavigate(({ from, to, cancel }) => {
+		if (from && to && from.url.pathname.startsWith('/admin') !== to.url.pathname.startsWith('/admin')) {
+			cancel();
+			window.location.assign(to.url.href);
+		}
+	});
 
 	// The inline script in app.html already painted the right theme before
 	// first paint; this just syncs the stores so the toggle shows the
@@ -64,6 +77,16 @@
 			.catch(() => {
 				/* stays English */
 			});
+	});
+
+	afterNavigate(() => {
+		if (window.location.pathname !== '/lesson') clearLessonContext();
+		void trackEvent('page_viewed');
+	});
+	onMount(() => {
+		const stop = authStore.subscribe(auth => setAnalyticsUser(auth.user?.id ?? null));
+		const cleanup = startAnalyticsListeners();
+		return () => { stop(); cleanup(); };
 	});
 
 	// Initialize auth store reactively from server-provided data

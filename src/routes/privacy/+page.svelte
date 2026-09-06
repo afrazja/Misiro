@@ -13,7 +13,7 @@
 
 	<article class="legal-content">
 		<h1>Privacy Policy</h1>
-		<p class="legal-date">Last updated: February 24, 2026</p>
+		<p class="legal-date">Last updated: September 6, 2026</p>
 
 		<h2>1. What We Collect</h2>
 		<p>When you create an account, we collect your <strong>email address</strong>, <strong>display name</strong>, and <strong>password</strong> (stored securely via Supabase Auth). We also store your lesson progress, vocabulary review data, and app preferences.</p>
@@ -31,6 +31,8 @@
 
 		<h2>4. Analytics</h2>
 		<p>We use <strong>Vercel Analytics</strong> and <strong>Microsoft Clarity</strong> to understand how visitors use our site. These tools collect anonymous usage data such as page views, device type, and interaction patterns. Clarity may record anonymized session replays to help us improve the user experience. No personally identifiable information is shared with these services.</p>
+
+		<p>For signed-in learners, we also store account-linked visit and lesson events in Supabase to understand where practice stops and identify technical obstacles. These events include lesson positions, answer correctness, microphone or playback error categories, coarse device and browser type, and interface language. They do not contain raw voice recordings, transcripts, answer text, or full page URLs. Pending events may be stored in your browser for up to 7 days before delivery. Only administrators can view reports across accounts.</p>
 
 		<h2>5. Data Storage</h2>
 		<p>Your account data is stored securely on <strong>Supabase</strong> (hosted on AWS). Passwords are hashed and never stored in plain text. All connections use HTTPS encryption.</p>

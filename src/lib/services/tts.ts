@@ -9,6 +9,7 @@
  *   language.
  */
 
+import { trackEvent, trackObstacle } from './analytics';
 import { isMobile } from '$utils/device';
 import { get, writable } from 'svelte/store';
 import { preferencesStore } from '$stores/preferences';
@@ -38,6 +39,11 @@ export function stopAllAudio(): void {
 
 /** Browser speech synthesis fallback */
 function _browserTTS(text: string, lang: string, rate?: number): Promise<void> {
+	if (!window.speechSynthesis || typeof SpeechSynthesisUtterance === 'undefined') {
+		trackObstacle('audio_failed', { engine: 'browser' });
+		return Promise.resolve();
+	}
+	const generation = ttsGeneration;
 	return new Promise((resolve) => {
 		window.speechSynthesis.cancel();
 		const u = new SpeechSynthesisUtterance(text);
@@ -60,7 +66,10 @@ function _browserTTS(text: string, lang: string, rate?: number): Promise<void> {
 		};
 
 		u.onend = done;
-		u.onerror = done;
+		u.onerror = (event) => {
+			if (!resolved && generation === ttsGeneration && !['canceled', 'interrupted'].includes(event.error)) trackObstacle('audio_failed', { engine: 'browser' });
+			done();
+		};
 
 		if (isMobile()) {
 			mobileResumeTimer = setInterval(() => {
@@ -135,6 +144,7 @@ function playWebAudio(
 			// If cancelled while waiting, don't start browser TTS
 			if (myGen !== ttsGeneration) { done = true; resolve(); return; }
 			done = true;
+			void trackEvent('audio_fallback', { metadata: { engine: 'proxy' } });
 			// Stop proxy audio before starting browser TTS to prevent double playback
 			if (currentAudio) {
 				currentAudio.pause();

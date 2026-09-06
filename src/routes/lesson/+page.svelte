@@ -487,6 +487,7 @@
 	}
 
 	async function handleStartWithWarmup() {
+		void trackEvent("lesson_begun", { day: app.currentDay, metadata: { entry: "warmup" } });
 		showOverlay = false;
 		unlockAudioContext();
 		if (!isReady) return;

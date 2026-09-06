@@ -90,6 +90,16 @@ beforeEach(() => {
 
 // ─── enqueue ──────────────────────────────────────────────────────────────────
 
+describe('resolved database errors', () => {
+	it('keeps an unsuccessful progress write queued even when Supabase resolves the promise', async () => {
+		const client = makeSbClient();
+		client.upsert.mockResolvedValue({ error: { code: '42501', message: 'Permission denied' } });
+		vi.mocked(getSupabaseBrowserClient).mockReturnValue(client as any);
+		await cloudWrite('progress_upsert', 'progress', { current_day: 1 });
+		expect(getPendingCount()).toBe(1);
+	});
+});
+
 describe('enqueue', () => {
 	it('adds a new operation to the localStorage queue', () => {
 		enqueue({ type: 'progress_upsert', key: 'progress', data: { current_day: 2 } });

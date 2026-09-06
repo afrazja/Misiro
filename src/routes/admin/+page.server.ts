@@ -1,102 +1,39 @@
+import { env } from '$env/dynamic/private';
 import type { PageServerLoad, Actions } from './$types';
 import { fail, redirect } from '@sveltejs/kit';
 import {
 	checkAdminCredentials,
 	setAdminCookie,
+	requireAdmin,
 	clearAdminCookie
 } from '$lib/server/admin-auth';
+import { loadInsights } from '$lib/server/learner-insights';
+import { UUID } from '$lib/analytics/contract';
 import { serviceClient } from '$lib/server/supabase-admin';
 
-const DAY_MS = 24 * 60 * 60 * 1000;
-
-export const load: PageServerLoad = async ({ parent, locals }) => {
+export const load: PageServerLoad = async ({ parent, locals, url }) => {
 	const { authorized } = await parent();
-	if (!authorized) {
-		return { authorized: false as const };
-	}
-
-	const svc = serviceClient();
-	const db = svc ?? locals.supabase;
-
-	// ── Content stats ────────────────────────────────────────────────
-	const [lessons, sentences, categories, words, glossary] = await Promise.all([
-		locals.supabase.from('lessons').select('*', { count: 'exact', head: true }),
-		locals.supabase.from('sentences').select('*', { count: 'exact', head: true }),
-		locals.supabase.from('basics_categories').select('*', { count: 'exact', head: true }),
-		locals.supabase.from('basics_words').select('*', { count: 'exact', head: true }),
-		locals.supabase.from('glossary').select('*', { count: 'exact', head: true })
-	]);
-
-	// ── Usage stats (needs service role for cross-user visibility) ──
-	const since14 = new Date(Date.now() - 14 * DAY_MS).toISOString();
-	const since7 = Date.now() - 7 * DAY_MS;
-
-	const [usersRes, eventsRes] = await Promise.all([
-		db.from('user_profiles').select('*', { count: 'exact', head: true }),
-		db
-			.from('events')
-			.select('user_id, event_name, created_at')
-			.gte('created_at', since14)
-			.order('created_at', { ascending: false })
-			.limit(10000)
-	]);
-
-	const events = (eventsRes.data ?? []) as Array<{
-		user_id: string;
-		event_name: string;
-		created_at: string;
-	}>;
-
-	const active7 = new Set<string>();
-	let lessonsCompleted7 = 0;
-	let examsCompleted7 = 0;
-	let conversations7 = 0;
-
-	// Events per day for the last 14 days (oldest → newest)
-	const perDay: Array<{ date: string; count: number }> = [];
-	const perDayMap = new Map<string, number>();
-	for (let i = 13; i >= 0; i--) {
-		const d = new Date(Date.now() - i * DAY_MS);
-		const key = d.toISOString().slice(0, 10);
-		perDayMap.set(key, 0);
-	}
-
-	for (const e of events) {
-		const t = new Date(e.created_at).getTime();
-		const dayKey = e.created_at.slice(0, 10);
-		if (perDayMap.has(dayKey)) perDayMap.set(dayKey, (perDayMap.get(dayKey) ?? 0) + 1);
-		if (t >= since7) {
-			active7.add(e.user_id);
-			if (e.event_name === 'lesson_completed') lessonsCompleted7++;
-			if (e.event_name === 'exam_completed') examsCompleted7++;
-			if (e.event_name === 'conversation_started') conversations7++;
-		}
-	}
-	for (const [date, count] of perDayMap) perDay.push({ date, count });
-
-	return {
-		authorized: true as const,
-		serviceRole: !!svc,
-		counts: {
-			lessons: lessons.count ?? 0,
-			sentences: sentences.count ?? 0,
-			categories: categories.count ?? 0,
-			words: words.count ?? 0,
-			glossary: glossary.count ?? 0
-		},
-		usage: {
-			totalUsers: usersRes.count ?? 0,
-			activeUsers7d: active7.size,
-			events14d: events.length,
-			lessonsCompleted7d: lessonsCompleted7,
-			examsCompleted7d: examsCompleted7,
-			conversations7d: conversations7,
-			perDay
-		}
-	};
+	if (!authorized) return { authorized: false as const, insights: null, tab: 'overview' };
+	const days = [7, 14, 30, 90].includes(Number(url.searchParams.get('days'))) ? Number(url.searchParams.get('days')) : 30;
+	const includeTests = url.searchParams.get('tests') === '1';
+	const tab = ['overview', 'journeys', 'obstacles', 'quality'].includes(url.searchParams.get('tab') ?? '') ? url.searchParams.get('tab')! : 'overview';
+	return { authorized: true as const, tab, preview: env.INSIGHTS_PREVIEW === '1', insights: await loadInsights(serviceClient(), { days, includeTests, selfId: locals.user?.id ?? null }) };
 };
 
 export const actions: Actions = {
+	exclude: async ({ request, cookies, locals }) => {
+		await requireAdmin(locals, cookies);
+		const db = serviceClient();
+		if (!db) return fail(503, { error: 'Reporting database is unavailable.' });
+		const form = await request.formData();
+		const userId = String(form.get('user_id') ?? '');
+		if (!UUID.test(userId)) return fail(400, { error: 'Invalid learner ID.' });
+		const result = form.get('exclude') === '1'
+			? await db.from('analytics_exclusions').upsert({ user_id: userId }, { onConflict: 'user_id' })
+			: await db.from('analytics_exclusions').delete().eq('user_id', userId);
+		if (result.error) return fail(503, { error: 'Test account setting could not be saved.' });
+		return { success: 'Test account setting saved.' };
+	},
 	login: async ({ request, cookies }) => {
 		const form = await request.formData();
 		const email = String(form.get('email') ?? '');

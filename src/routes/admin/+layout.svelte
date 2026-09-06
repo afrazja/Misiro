@@ -2,12 +2,12 @@
 	let { children, data } = $props();
 </script>
 
-<div class="admin-shell">
+<div class="admin-shell" dir="ltr">
 	{#if data.authorized}
 		<nav class="admin-nav">
 			<div class="admin-brand">⚙️ Mirifer Admin</div>
 			<div class="admin-user">👤 {data.adminUser.displayName}</div>
-			<a href="/admin" class="nav-link">📊 Dashboard</a>
+			<a href="/admin" class="nav-link">📊 Learner Insights</a>
 			<a href="/admin/users" class="nav-link">👥 Users</a>
 			<a href="/admin/lessons" class="nav-link">📚 Lessons</a>
 			<a href="/admin/basics" class="nav-link">🔤 Basics</a>
@@ -15,7 +15,7 @@
 			<a href="/" class="nav-link nav-back">← Back to App</a>
 		</nav>
 	{/if}
-	<main class="admin-main">
+	<main id="main-content" class="admin-main" dir="ltr">
 		{@render children()}
 	</main>
 </div>
@@ -31,6 +31,9 @@
 	.admin-shell {
 		display: flex;
 		min-height: 100vh;
+		background: #101b16;
+		color: #f0f3ed;
+		font-family: 'IBM Plex Sans Variable', sans-serif;
 	}
 
 	.admin-nav {
@@ -85,11 +88,13 @@
 
 	.admin-main {
 		flex: 1;
+		min-width: 0;
 		padding: 32px;
 		overflow-y: auto;
 	}
 
 	@media (max-width: 700px) {
+		.admin-main { padding: 20px 14px; }
 		.admin-shell { flex-direction: column; }
 		.admin-nav { width: 100%; min-width: unset; flex-direction: row; flex-wrap: wrap; padding: 12px; gap: 4px; }
 		.admin-brand, .admin-user { width: 100%; }

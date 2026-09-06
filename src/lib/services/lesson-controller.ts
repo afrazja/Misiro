@@ -34,7 +34,7 @@ import {
 	type ReadinessModule
 } from '$services/readiness';
 import { removeBookmark } from '$services/data-layer';
-import { trackEvent } from '$services/analytics';
+import { trackEvent, openLessonAttempt, setAnalyticsStep, completeLessonAttempt, trackObstacle } from '$services/analytics';
 import { makeWordHighlighter } from '$utils/word-timing';
 import { playAudioPromise, stopAllAudio } from '$services/tts';
 import { playTone } from '$services/audio-context';
@@ -293,8 +293,10 @@ export async function initLesson(): Promise<void> {
 
 		// Analytics: a lesson session opened (fire-and-forget).
 		lessonStartedAt = Date.now();
-		void trackEvent('lesson_started', { day: currentDay });
+		openLessonAttempt(currentDay, currentSentenceIndex);
+		if (!lesson) trackObstacle('lesson_load_failed');
 	} catch (e) {
+		trackObstacle('lesson_load_failed');
 		logError('lesson-controller:initLesson', e);
 		lessonStore.update((s) => ({ ...s, isLoading: false }));
 		callbacks?.onSystemMessage(
@@ -371,6 +373,7 @@ export async function processNextStep(skipAudio = false): Promise<void> {
 	// resume: reopening a half-finished lesson advances nothing, and someone
 	// who comes back to sentence four and leaves again should still count as
 	// having reached four.
+	setAnalyticsStep(app.currentSentenceIndex);
 	void trackEvent('lesson_progress', {
 		day: app.currentDay,
 		metadata: { index: app.currentSentenceIndex, total: lesson.sentences.length }
@@ -452,6 +455,8 @@ async function handleLessonCompletion(
 	await saveProgress(app.currentDay, app.currentSentenceIndex, app.xp);
 	await saveCompletedLessons(updatedCompleted);
 
+	completeLessonAttempt(app.currentDay, lesson.sentences.length, wasAlreadyCompleted);
+
 	// Analytics: only count the first time a lesson is completed.
 	if (!wasAlreadyCompleted) {
 		// actualSeconds next to estimateMinutes is the whole point: after a
@@ -515,6 +520,8 @@ export async function manualNext(): Promise<void> {
 	// Stop everything
 	stopAllAudio();
 
+	void trackEvent('step_skipped', { day: app.currentDay, metadata: { index: app.currentSentenceIndex, mode: 'lesson' } });
+
 	// Add message bubble for skipped step
 	callbacks?.onMessageBubble(currentStep);
 
@@ -558,7 +565,10 @@ export async function goToNextDay(nextDay: number): Promise<void> {
 	}
 
 	await saveProgress(nextDay, 0, get(appStore).xp);
+	openLessonAttempt(nextDay, 0, true);
+	void trackEvent('lesson_begun', { day: nextDay, metadata: { entry: 'next_day' } });
 	const lesson = await loadLesson(nextDay);
+	if (!lesson) trackObstacle('lesson_load_failed');
 	lessonStore.update((s) => ({ ...s, currentLesson: lesson, isLoading: false }));
 
 	callbacks?.onClearChat();
@@ -606,7 +616,10 @@ export async function changeDay(day: number): Promise<void> {
 	// touches the network, so switching to a day the learner had cached served
 	// the pre-migration copy forever. loadLesson is network-first with the
 	// cache as its offline fallback, which is the behaviour this wants.
+	openLessonAttempt(day, 0, true);
+	void trackEvent('lesson_begun', { day, metadata: { entry: 'day_picker' } });
 	const selectedLesson = await loadLesson(day);
+	if (!selectedLesson) trackObstacle('lesson_load_failed');
 
 	appStore.update((s) => ({
 		...s,
@@ -675,6 +688,10 @@ export async function handleVoiceInput(transcript: string): Promise<void> {
 	// Strict: matching every word is not the same as saying the sentence.
 	// "Ich mochte einen Kaffee" is real German and the wrong answer.
 	const isCorrect = result.isMatch && soundNotes.length === 0;
+	void trackEvent('answer_submitted', { day: app.currentDay, metadata: {
+		index: exam.isExamMode ? exam.currentExamIndex : app.currentSentenceIndex,
+		mode: exam.isExamMode ? (exam.isReviewMode ? 'review' : 'exam') : 'lesson', correct: isCorrect
+	} });
 
 	// Keyed by the written word rather than an index into the normalized
 	// list, so nothing can drift out of alignment when a token normalizes

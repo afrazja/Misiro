@@ -12,6 +12,7 @@
 import { playTone, getAudioContext } from './audio-context';
 import { appStore } from '$stores/app';
 import { stopAllAudio } from './tts';
+import { trackEvent, trackObstacle } from './analytics';
 import { logWarn } from '$utils/error';
 
 export type MicState = 'idle' | 'listening' | 'processing' | 'error';
@@ -117,6 +118,7 @@ export function initSpeechRecognition(): boolean {
 		if (usingFallback) {
 			console.info('Web Speech API unavailable — using server STT fallback');
 		} else {
+			trackObstacle('mic_unavailable');
 			console.warn('No voice input available in this browser');
 		}
 		return usingFallback;
@@ -143,6 +145,7 @@ export function initSpeechRecognition(): boolean {
 	recognition.maxAlternatives = 5;
 
 	recognition.onstart = () => {
+		void trackEvent('mic_ready', { metadata: { engine: 'web_speech' } });
 		resetUtterance();
 		setListening(true);
 		emitState('listening');
@@ -182,6 +185,9 @@ export function initSpeechRecognition(): boolean {
 	};
 
 	recognition.onerror = (event: any) => {
+		if (event.error !== 'no-speech' && event.error !== 'aborted') {
+			trackObstacle(['not-allowed', 'service-not-allowed'].includes(event.error) ? 'mic_denied' : event.error === 'audio-capture' ? 'mic_unavailable' : 'speech_failed', { engine: 'web_speech' });
+		}
 		// 'no-speech' is the learner tapping the mic and saying nothing. It
 		// is not an error worth a tone and a red state.
 		if (event.error === 'no-speech' || event.error === 'aborted') {
@@ -396,9 +402,12 @@ function stopVAD(): void {
 }
 
 async function startFallbackRecording(): Promise<void> {
+	void trackEvent('mic_requested', { metadata: { engine: 'recorder' } });
 	try {
 		mediaStream = await navigator.mediaDevices.getUserMedia({ audio: MIC_CONSTRAINTS });
+		void trackEvent('mic_ready', { metadata: { engine: 'recorder' } });
 	} catch (e) {
+		trackObstacle((e as Error)?.name === 'NotAllowedError' ? 'mic_denied' : 'mic_unavailable', { engine: 'recorder' });
 		logWarn('speech:fallback', `Mic permission denied or unavailable: ${(e as Error)?.message}`);
 		playTone('error');
 		emitState('error');
@@ -451,6 +460,7 @@ async function startFallbackRecording(): Promise<void> {
 				playTone('error');
 			}
 		} catch (e) {
+			trackObstacle('stt_failed', { engine: 'recorder' });
 			logWarn('speech:fallback', `STT request failed: ${(e as Error)?.message}`);
 			playTone('error');
 			emitState('error');
@@ -501,6 +511,7 @@ export function toggleMic(): void {
 	} else {
 		stopAllAudio();
 		try {
+			void trackEvent('mic_requested', { metadata: { engine: 'web_speech' } });
 			recognition.start();
 		} catch (e) {
 			// Already started — ignore
@@ -538,6 +549,7 @@ export function startListening(): void {
 	if (!isListeningNow()) {
 		stopAllAudio();
 		try {
+			void trackEvent('mic_requested', { metadata: { engine: 'web_speech' } });
 			recognition.start();
 		} catch {
 			// Already started

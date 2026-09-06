@@ -7,6 +7,7 @@ import { getSupabaseBrowserClient } from '$lib/supabase/client';
 import { syncStore } from '$stores/sync';
 import type { SyncStatus } from '$stores/sync';
 import { getUser } from './auth';
+import { trackObstacle } from './analytics';
 import { logError, logWarn } from '$utils/error';
 
 const QUEUE_KEY = 'mirifer_sync_queue';
@@ -62,24 +63,29 @@ function scheduleRetry(): void {
 	}, RETRY_DELAY_MS);
 }
 
+async function checkedWrite(request: PromiseLike<{ error: unknown }>): Promise<void> {
+	const result = await request;
+	if (result?.error) throw result.error;
+}
+
 async function executeCloudWrite(uid: string, op: SyncOperation): Promise<void> {
 	const client = getSupabaseBrowserClient();
 
 	switch (op.type) {
 		case 'profile_update':
-			await client
+			await checkedWrite(client
 				.from('user_profiles')
 				.update({ ...op.data, updated_at: new Date().toISOString() })
-				.eq('id', uid);
+				.eq('id', uid));
 			break;
 
 		case 'progress_upsert':
-			await client
+			await checkedWrite(client
 				.from('user_progress')
 				.upsert(
 					{ user_id: uid, ...op.data, updated_at: new Date().toISOString() },
 					{ onConflict: 'user_id' }
-				);
+				));
 			break;
 
 		case 'sr_upsert':
@@ -89,62 +95,62 @@ async function executeCloudWrite(uid: string, op: SyncOperation): Promise<void> 
 					user_id: uid,
 					updated_at: new Date().toISOString()
 				}));
-				await client
+				await checkedWrite(client
 					.from('spaced_repetition')
-					.upsert(rows, { onConflict: 'user_id,day,sentence_id' });
+					.upsert(rows, { onConflict: 'user_id,day,sentence_id' }));
 			}
 			break;
 
 		case 'sr_single':
-			await client
+			await checkedWrite(client
 				.from('spaced_repetition')
 				.upsert(
 					{ user_id: uid, ...op.data, updated_at: new Date().toISOString() },
 					{ onConflict: 'user_id,day,sentence_id' }
-				);
+				));
 			break;
 
 		case 'sr_delete':
-			await client
+			await checkedWrite(client
 				.from('spaced_repetition')
 				.delete()
 				.eq('user_id', uid)
 				.eq('day', op.data.day)
-				.eq('sentence_id', op.data.sentence_id);
+				.eq('sentence_id', op.data.sentence_id));
 			break;
 
 		case 'exam_upsert':
-			await client
+			await checkedWrite(client
 				.from('exam_results')
 				.upsert(
 					{ user_id: uid, ...op.data },
 					{ onConflict: 'user_id,week_number' }
-				);
+				));
 			break;
 
 		case 'vocab_upsert':
-			await client
+			await checkedWrite(client
 				.from('user_vocabulary')
 				.upsert(
 					{ user_id: uid, ...op.data, updated_at: new Date().toISOString() },
 					{ onConflict: 'user_id,word' }
-				);
+				));
 			break;
 
 		case 'vocab_delete':
-			await client
+			await checkedWrite(client
 				.from('user_vocabulary')
 				.delete()
 				.eq('user_id', uid)
-				.eq('word', op.data.word);
+				.eq('word', op.data.word));
 			break;
 
 		case 'vocab_update_known':
-			await client
+			await checkedWrite(client
 				.from('user_vocabulary')
 				.update({ known: op.data.known, updated_at: new Date().toISOString() })
 				.eq('user_id', uid)
-				.eq('word', op.data.word);
+				.eq('word', op.data.word));
 			break;
 
 		default:
@@ -211,6 +217,7 @@ export async function cloudWrite(
 	try {
 		await executeCloudWrite(uid, { type, key, data, retries: 0, createdAt: Date.now() });
 	} catch (e: any) {
+		if (type === 'progress_upsert') trackObstacle('progress_save_failed');
 		logWarn('sync-queue:cloudWrite', `Cloud write failed (${type}), queuing for retry: ${e.message}`);
 		enqueue({ type, key, data });
 	}
