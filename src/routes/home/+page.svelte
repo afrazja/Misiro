@@ -30,7 +30,6 @@
 	import { computeStreak } from "$utils/streak";
 	import Heatmap from "$lib/components/Heatmap.svelte";
 	import TrophyCabinet from "$lib/components/TrophyCabinet.svelte";
-	import InstallAppButton from "$lib/components/InstallAppButton.svelte";
 	import Icon from "$lib/components/Icon.svelte";
 	import AppHeader from "$lib/components/AppHeader.svelte";
 	import BrandLogo from "$lib/components/BrandLogo.svelte";
@@ -912,7 +911,6 @@
 
 	{#snippet homeHeaderActions()}
 		<div class="nav-right">
-			<InstallAppButton />
 			{#if isAuthenticated}
 				<div class="nav-stats">
 					<button

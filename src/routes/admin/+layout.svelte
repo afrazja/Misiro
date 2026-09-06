@@ -2,7 +2,8 @@
 	let { children, data } = $props();
 </script>
 
-<div class="admin-shell">
+<!-- The admin interface stays English and LTR independently of the learner's language. -->
+<div class="admin-shell" lang="en" dir="ltr">
 	{#if data.authorized}
 		<nav class="admin-nav">
 			<div class="admin-brand">⚙️ Mirifer Admin</div>
@@ -21,16 +22,13 @@
 </div>
 
 <style>
-	:global(body) {
-		background: #0f0f1a;
-		color: #fff;
-		font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-		margin: 0;
-	}
-
 	.admin-shell {
 		display: flex;
 		min-height: 100vh;
+		text-align: left;
+		background: #0f0f1a;
+		color: #fff;
+		font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 	}
 
 	.admin-nav {
