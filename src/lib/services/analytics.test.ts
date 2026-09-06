@@ -16,7 +16,7 @@ beforeEach(async () => {
 	vi.stubGlobal('fetch', fetchMock);
 	analytics = await import('./analytics');
 });
-afterEach(() => { analytics.setAnalyticsUser(null); vi.clearAllTimers(); vi.useRealTimers(); vi.unstubAllGlobals(); });
+afterEach(() => { analytics.setAnalyticsUser(null); vi.clearAllTimers(); vi.useRealTimers(); vi.unstubAllGlobals(); vi.restoreAllMocks(); });
 async function signIn(id = 'learner-1') {
 	analytics.setAnalyticsUser(id);
 	await Promise.resolve(); await analytics.flushAnalytics();
@@ -24,6 +24,49 @@ async function signIn(id = 'learner-1') {
 const events = () => sent.flatMap(batch => batch.events);
 
 describe('versioned event collection', () => {
+	it('starts a separate attempt when the authored dialogue changes', async () => {
+		await signIn();
+		const sentences = [{ id: 1, role: 'sent' as const, targetText: 'Hallo.', translation: 'Hello.' }];
+		analytics.openLessonAttempt(1, 0, false, sentences);
+		await analytics.trackEvent('lesson_begun');
+		analytics.openLessonAttempt(1, 0, false, sentences); await analytics.flushAnalytics();
+		analytics.openLessonAttempt(1, 0, false, [{ ...sentences[0], targetText: 'Guten Tag.' }]); await analytics.flushAnalytics();
+		const starts = events().filter(e => e.event_name === 'lesson_started');
+		expect(starts[0].attempt_id).toBe(starts[1].attempt_id);
+		expect(starts[2].attempt_id).not.toBe(starts[0].attempt_id);
+		expect(starts[2].metadata.lesson_version).not.toBe(starts[0].metadata.lesson_version);
+		expect(JSON.stringify(events())).not.toContain('Guten Tag.');
+	});
+	it('caps foreground active time at the inactivity threshold without manufacturing new visits', async () => {
+		vi.spyOn(document, 'hidden', 'get').mockReturnValue(false);
+		vi.spyOn(document, 'hasFocus').mockReturnValue(true);
+		await signIn(); analytics.openLessonAttempt(1, 0); await analytics.trackEvent('lesson_begun'); analytics.setAnalyticsStep(0);
+		const stop = analytics.startAnalyticsListeners();
+		await vi.advanceTimersByTimeAsync(120_000);
+		const active = events().filter(e => e.event_name === 'lesson_active');
+		expect(active.reduce((sum, e) => sum + e.metadata.active_ms, 0)).toBe(60_000);
+		expect(active.every(e => e.metadata.active_ms <= 15_000 && e.metadata.index === 0)).toBe(true);
+		expect(events().filter(e => e.event_name === 'visit_started')).toHaveLength(1);
+		stop();
+	});
+	it('does not attribute background, paused, exam or post-completion time to the dialogue', async () => {
+		let hidden = false;
+		vi.spyOn(document, 'hidden', 'get').mockImplementation(() => hidden);
+		vi.spyOn(document, 'hasFocus').mockReturnValue(true);
+		await signIn(); analytics.openLessonAttempt(1, 0); await analytics.trackEvent('lesson_begun'); analytics.setAnalyticsStep(0);
+		const stop = analytics.startAnalyticsListeners();
+		await vi.advanceTimersByTimeAsync(15_000);
+		hidden = true; document.dispatchEvent(new Event('visibilitychange'));
+		await vi.advanceTimersByTimeAsync(30_000);
+		hidden = false; analytics.pauseLessonAnalytics();
+		await analytics.trackEvent('answer_submitted', { metadata: { mode: 'exam', correct: true } });
+		await vi.advanceTimersByTimeAsync(15_000);
+		expect(events().find(e => e.event_name === 'answer_submitted').attempt_id).toBeNull();
+		analytics.setAnalyticsStep(1); await vi.advanceTimersByTimeAsync(15_000);
+		analytics.completeLessonAttempt(1, 2, false); await vi.advanceTimersByTimeAsync(30_000);
+		expect(events().filter(e => e.event_name === 'lesson_active').reduce((n, e) => n + e.metadata.active_ms, 0)).toBe(30_000);
+		stop();
+	});
 	it('counts one visit across navigation and renewals, then a new visit after inactivity', async () => {
 		await signIn();
 		await analytics.trackEvent('page_viewed');

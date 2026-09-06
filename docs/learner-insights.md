@@ -1,6 +1,6 @@
-# Learner Insights — first release
+# Learner Insights — passes one and two
 
-The admin dashboard at `/admin` now provides Overview, Learner Journeys, Obstacles, and Data Quality. Lessons, users, basics, and glossary management remain in the sidebar.
+The admin dashboard at `/admin` provides Overview, Learner Journeys, Lesson Analysis, Return Visits, Obstacles, and Data Quality. Lesson editing, users, basics, and glossary management remain in the sidebar.
 
 ## Enable live collection
 
@@ -12,11 +12,28 @@ The admin dashboard at `/admin` now provides Overview, Learner Journeys, Obstacl
 
 Environment variables and the database migration must be configured in the production services; they are not supplied by this checkout. Confirm live collection with the test journey after deployment.
 
+## Pass two deployment and interpretation
+
+Pass two uses the same events table and private server configuration as pass one. **No new SQL migration or environment variable is required.** Deploy the code through the linked GitHub/Vercel project. The stored event schema stays at version 2; new clients add `metadata.insights_version = 3` and a bounded authored-dialogue identifier.
+
+- **Lesson Analysis** groups attempts by day and dialogue version. Its date filter selects the first recorded Start; all subsequent events through the snapshot contribute to the attempt outcome. Attempts without a Start are reported separately and excluded from the completion denominator. Recent unfinished attempts are not declared abandoned.
+- Sentence reach counts an observed dialogue sentence or sentence-practice panel. First-answer accuracy uses attempts whose first observed answer has a known result. Retry, skip and obstacle counts show their reached-learner denominator. This is the app's practice answer check, not an independent assessment of proficiency.
+- Hints, reveals and replays use reached attempts carrying the new measurement capability. Reveals include leaving blind mode and requesting an answer in sentence practice. Replay counts cover the main Replay button, excluding automatic narration, word audio and automatic replay after a wrong answer. Older events cannot establish zero use of these controls.
+- Active time samples foreground, focused dialogue intervals every 15 seconds and at sentence/context boundaries. It stops after 60 seconds without interaction and excludes hidden tabs, suspended intervals, exams, reviews, the practice panel and the grammar/completion screen. Missing delivery can lose time. Lesson medians use completed attempts with samples; sentence medians use reached attempts with samples, including unfinished attempts. Sample counts are always shown.
+- The dialogue identifier covers ordered sentence content, roles, translations, hints and difficulty. A changed identifier starts a fresh tracked attempt. Current authored text is matched on the server with the same function. Unknown, mixed, and older versions remain separate; original text is unavailable when the current catalog no longer matches. No learner text is sent as analytics metadata.
+- **Return Visits** groups new tracked accounts by the UTC Monday week of their first learning visit. The selected period filters that first learning visit, whereas Overview filters signup dates. Existing accounts outside that cohort remain visible in practice-frequency and individual-history reports.
+- Return cells use a different learning visit with activity 24 hours through day 7, more than 7 through 14, more than 14 through 21, or more than 21 through 28. Each learner must have the whole observation window before entering its denominator. These are separate windows, not cumulative rates. Time to the second visit includes returns before 24 hours and only learners with an observed second visit; the number without a second visit is also shown.
+- Cross-visit resumption requires the same attempt in an earlier distinct visit. Spaced-review starts are captured after actual review questions load. Empty-transcript timeouts have their own event and do not count as answer attempts or create a learning visit.
+
+Pass three (learning assessments, acquisition sources, and changes/results) is outside this release.
+
 ## Local preview
 
 Run `node scripts/preview-insights.mjs`, then open `http://localhost:5173/admin`.
 
 Local-only login: `preview@mirifer.local` / `local-preview-only`.
+
+For collection verification, the same isolated fixture accepts learner login `learner@mirifer.local` / `local-preview-only` at `/login`. Open `/lesson` after signing in. It supports the real browser → Svelte endpoint → local fixture → private report path. Normal progress reads can fall back to local storage; this fixture is not a production database or speech service. Include test accounts in the admin report when inspecting this learner.
 
 The preview displays a fictional-data banner and supplies a small local Supabase API fixture. It overrides connection settings for its child process, binds to loopback, and does not read production data. Its deliberately small response cap exercises the report's pagination. The preview is for dashboard review, not a working speech service. Stop it with Ctrl+C.
 
@@ -60,12 +77,13 @@ Actual microphone and cloud collection behavior still requires this check with t
 - Capture and receipt times are separate. All dashboard dates and active-day boundaries use UTC. Client clock skew and delayed offline delivery can affect time-based attribution.
 - Administrator profiles and manually marked test accounts are excluded by default. Private reports require verified server-side authorization; exclusions can only be changed by an administrator.
 - Admin documents skip Clarity, and navigation across the admin boundary reloads the document so a public-page replay cannot continue into it. Vercel telemetry filters admin URLs. Development telemetry is disabled.
-- This first release instruments signed-in visits and the main lesson flow. It does not yet cover anonymous acquisition, every exercise type, formal learning assessments, or prove a language-learning outcome.
+- This release instruments signed-in visits, the main lesson flow, sentence-support actions and spaced-review starts. It does not yet cover anonymous acquisition, every exercise type, formal learning assessments, or prove a language-learning outcome.
 
 ## Verification
 
 - Svelte/TypeScript checks: zero errors and warnings.
-- All 655 automated tests pass after integration with the latest app changes. Tests cover visit renewal, resumable attempts, HTTP failures, stable retries, raw-content stripping, account separation, eligibility windows, ordered funnels, exclusions, pagination, ingestion authorization, and admin authorization.
+- The automated suite covers visit renewal, resumable attempts, HTTP failures, stable retries, raw-content stripping, account separation, eligibility windows, ordered funnels, exclusions, pagination, ingestion authorization, and admin authorization. Pass-two tests add version separation, incomplete attempt cohorts, first-answer denominators, sentence timing, weekly return boundaries, old-account exclusions, and active-time suspension/idle limits.
 - An isolated PostgreSQL 17 cluster verified running the migration twice, duplicate insert suppression, own-user access, blocked cross-user reads/writes, private exclusions, and prevention of self-assigned admin privileges.
-- Browser verification exercised the actual Svelte pages with the local fixture, including sign-in, report tabs, mobile layout, and the exclusion form through the real server action.
-- Production client/server bundles compile. Full Vercel packaging on this Windows host stops at `EPERM` creating the adapter's `index.func` symbolic link. Complete the production build on the normal Linux/Vercel build host; this local run does not establish a successful deployment.
+- Browser verification exercises the actual Svelte pages with the local fixture: admin/learner sign-in, report tabs, mobile layout, learner drill-down, test exclusions, and opening a lesson → Start → Next → hint/reveal/replay → leave → resume → complete. Delivery of the new action and time events was checked in the fixture and reflected in the private report with one attempt and one visit across a short return.
+- Seven-day and later return windows are verified with timestamped fixtures and boundary tests; newly collected production activity still needs its actual observation window to elapse.
+- Full Vercel packaging on this Windows host can stop at `EPERM` when creating the adapter's `index.func` symbolic link. Production deployment must be confirmed by the normal Linux/Vercel build and live-site verification.

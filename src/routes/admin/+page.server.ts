@@ -16,7 +16,7 @@ export const load: PageServerLoad = async ({ parent, locals, url }) => {
 	if (!authorized) return { authorized: false as const, insights: null, tab: 'overview' };
 	const days = [7, 14, 30, 90].includes(Number(url.searchParams.get('days'))) ? Number(url.searchParams.get('days')) : 30;
 	const includeTests = url.searchParams.get('tests') === '1';
-	const tab = ['overview', 'journeys', 'obstacles', 'quality'].includes(url.searchParams.get('tab') ?? '') ? url.searchParams.get('tab')! : 'overview';
+	const tab = ['overview', 'journeys', 'lessons', 'returns', 'obstacles', 'quality'].includes(url.searchParams.get('tab') ?? '') ? url.searchParams.get('tab')! : 'overview';
 	return { authorized: true as const, tab, preview: env.INSIGHTS_PREVIEW === '1', insights: await loadInsights(serviceClient(), { days, includeTests, selfId: locals.user?.id ?? null }) };
 };
 

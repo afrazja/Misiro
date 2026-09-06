@@ -6,6 +6,7 @@ export const EVENT_NAMES = [
 	'visit_started', 'page_viewed', 'page_hidden', 'page_returned',
 	'lesson_started', 'lesson_begun', 'lesson_resumed', 'lesson_progress',
 	'answer_submitted', 'step_skipped', 'lesson_attempt_completed', 'lesson_completed',
+	'hint_opened', 'answer_revealed', 'audio_replayed', 'lesson_active', 'sentence_practice_opened', 'answer_timed_out',
 	'mic_requested', 'mic_ready', 'obstacle', 'audio_fallback',
 	'free_turn_offered', 'free_turn_begun', 'free_turn_completed',
 	'exam_completed', 'review_started', 'conversation_started', 'conversation_completed'
@@ -51,7 +52,10 @@ export function safeMetadata(input: unknown): AnalyticsRecord['metadata'] {
 	const output: AnalyticsRecord['metadata'] = {};
 	if (!input || typeof input !== 'object' || Array.isArray(input)) return output;
 	for (const [key, value] of Object.entries(input)) {
-		if (numericKeys.has(key) && typeof value === 'number' && Number.isFinite(value) && value >= 0 && value <= 1_000_000) output[key] = value;
+		if (key === 'lesson_version' && typeof value === 'string' && /^d1-[a-f0-9]{16}$/.test(value)) output[key] = value;
+		else if (key === 'insights_version' && value === 3) output[key] = value;
+		else if (key === 'active_ms' && typeof value === 'number' && Number.isFinite(value) && value > 0 && value <= 15_000) output[key] = Math.round(value);
+		else if (numericKeys.has(key) && typeof value === 'number' && Number.isFinite(value) && value >= 0 && value <= 1_000_000) output[key] = value;
 		else if ((key === 'correct' || key === 'resumed' || key === 'replay') && typeof value === 'boolean') output[key] = value;
 		else if (typeof value === 'string' && choices[key]?.includes(value)) output[key] = value;
 	}

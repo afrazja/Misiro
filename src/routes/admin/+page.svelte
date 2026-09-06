@@ -1,6 +1,10 @@
 <script lang="ts">
 	import type { PageData, ActionData } from './$types';
+	import { tick } from 'svelte';
 	import type { StoredEvent } from '$lib/analytics/contract';
+	import LessonAnalysis from '$components/LessonAnalysis.svelte';
+	import ReturnVisits from '$components/ReturnVisits.svelte';
+	import '$components/insights-analysis.css';
 	let { data, form }: { data: PageData; form: ActionData } = $props();
 	let tab = $state('overview');
 	let selectedId = $state('');
@@ -9,16 +13,22 @@
 	const report = $derived(data.insights?.report ?? null);
 	const learners = $derived(report?.learners.filter(u => `${u.label} ${u.id}`.toLowerCase().includes(search.toLowerCase())) ?? []);
 	const selected = $derived(learners.find(u => u.id === selectedId) ?? learners[0]);
-	const tabs = [{ id: 'overview', name: 'Overview' }, { id: 'journeys', name: 'Learner Journeys' }, { id: 'obstacles', name: 'Obstacles' }, { id: 'quality', name: 'Data Quality' }];
+	const tabs = [{ id: 'overview', name: 'Overview' }, { id: 'journeys', name: 'Learner Journeys' }, { id: 'lessons', name: 'Lesson Analysis' }, { id: 'returns', name: 'Return Visits' }, { id: 'obstacles', name: 'Obstacles' }, { id: 'quality', name: 'Data Quality' }];
 	const percent = (n: number, d: number) => d ? `${Math.round(n / d * 100)}%` : 'Not available';
 	const date = (value: string | null | undefined) => value ? new Date(value).toLocaleString('en-GB', { timeZone: 'UTC', day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' }) + ' UTC' : 'Not available';
 	const labels: Record<string, string> = { visit_started: 'Visit started', page_viewed: 'Viewed page', page_hidden: 'Page hidden', page_returned: 'Returned to page', lesson_started: 'Opened lesson', lesson_begun: 'Pressed Start', lesson_resumed: 'Resumed lesson', lesson_progress: 'Saw sentence', answer_submitted: 'Submitted answer', step_skipped: 'Skipped sentence', lesson_attempt_completed: 'Finished lesson attempt', lesson_completed: 'First completion of this lesson', mic_requested: 'Requested microphone', mic_ready: 'Microphone ready', obstacle: 'Technical obstacle', audio_fallback: 'Switched to backup audio' };
 	function eventLabel(e: StoredEvent) {
+		if (e.event_name === 'lesson_active') return `Active dialogue time · ${Math.round(Number(e.metadata.active_ms ?? 0) / 1000)}s`;
+		const newLabels: Record<string, string> = { hint_opened: 'Opened hint', answer_revealed: 'Revealed answer', audio_replayed: 'Requested audio replay', sentence_practice_opened: 'Opened sentence practice' };
+		if (newLabels[e.event_name]) return newLabels[e.event_name];
 		if (e.event_name === 'obstacle') return report?.obstacles.find(o => o.code === e.metadata.code)?.label ?? 'Technical obstacle';
 		if (e.event_name === 'answer_submitted') return e.metadata.correct === true ? 'Answered correctly' : 'Answer needs another try';
 		return labels[e.event_name] ?? e.event_name.replaceAll('_', ' ');
 	}
-	function inspect(id: string) { selectedId = id; search = ''; tab = 'journeys'; }
+	async function inspect(id: string) {
+		selectedId = id; search = ''; tab = 'journeys';
+		await tick(); document.querySelector('.journey-detail')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+	}
 </script>
 
 <svelte:head><title>Learner Insights · Mirifer Admin</title></svelte:head>
@@ -99,6 +109,10 @@
 					</ol></details>{:else}<p class="muted">This account has no recorded visit in this period. Earlier activity cannot be reconstructed.</p>{/each}
 				</section>
 			{/if}
+		{:else if tab === 'lessons'}
+			<LessonAnalysis report={report.lessonAnalysis} inspect={inspect} />
+		{:else if tab === 'returns'}
+			<ReturnVisits report={report.returnVisits} inspect={inspect} />
 		{:else if tab === 'obstacles'}
 			<div class="section-heading"><div><span class="eyebrow">TECHNICAL FRICTION</span><h2>Where practice gets interrupted</h2><p class="muted">Affected learners are counted once per obstacle. Percentages use all {report.visitors} tracked visitors in this period.</p></div></div>
 			<div class="panel table-wrap"><table><thead><tr><th>Obstacle</th><th>Affected learners</th><th>Occurrences</th><th>Inspect a journey</th></tr></thead><tbody>{#each report.obstacles as o}<tr><td>{o.label}</td><td><b>{o.affected} / {report.visitors}</b><small>{percent(o.affected, report.visitors)}</small></td><td>{o.count}</td><td>{#if o.userIds.length}<button class="text-button" onclick={() => inspect(o.userIds[0])}>View learner →</button>{:else}<span class="muted">None recorded</span>{/if}</td></tr>{/each}</tbody></table></div>
@@ -106,6 +120,7 @@
 			<p class="footnote">An obstacle followed by inactivity is a lead to investigate, not proof of the reason for leaving. Browser or network failures can also prevent an event from reaching the server.</p>
 		{:else}
 			<div class="section-heading"><div><span class="eyebrow">TRUST THE MEASUREMENT</span><h2>Data Quality</h2><p class="muted">Collection health, coverage, and the limits of this report.</p></div><span class="badge">Event schema v2</span></div>
+			<p class="notice">Pass two measurements: {report.lessonAnalysis.firstEnhancedEvent ? `first content-versioned event received for activity at ${date(report.lessonAnalysis.firstEnhancedEvent)}` : 'waiting for the first content-versioned lesson event'}. Hints, reveals, manual replays and active time start with this release. {report.lessonAnalysis.catalogError ?? 'Current lesson catalog loaded completely.'}</p>
 			<div class="two-col"><section class="panel"><h3>Collection status</h3><dl><div><dt>Migration installed</dt><dd>{date(report.quality.installedAt)}</dd></div><div><dt>First version 2 event</dt><dd>{date(report.quality.firstEvent)}</dd></div><div><dt>Latest received event</dt><dd>{date(report.quality.latestReceived)}</dd></div><div><dt>Latest learner activity</dt><dd>{date(report.quality.latestEvent)}</dd></div><div><dt>Report snapshot</dt><dd>{date(report.snapshot)}</dd></div><div><dt>Cross-user queries</dt><dd>Complete · all pages fetched</dd></div></dl><p class="muted">Freshness includes test events. A quiet collection period can mean no activity or blocked tracking; it cannot establish either by itself.</p></section>
 			<section class="panel"><h3>Coverage checks</h3><dl><div><dt>Version 2 events, all accounts</dt><dd>{report.quality.versionedEvents}</dd></div><div><dt>Included events in period</dt><dd>{report.quality.periodEvents}</dd></div><div><dt>Legacy / unsupported events</dt><dd>{report.quality.legacyCount}</dd></div><div><dt>Invalid events omitted</dt><dd>{report.quality.invalid}</dd></div><div><dt>Duplicate IDs omitted</dt><dd>{report.quality.duplicates}</dd></div><div><dt>Visits missing a start event</dt><dd>{report.quality.missingVisitStart}</dd></div><div><dt>New accounts without events</dt><dd>{report.quality.untrackedNewUsers}</dd></div><div><dt>Events received over 5 minutes late</dt><dd>{report.quality.lateEvents}</dd></div><div><dt>Events without a current account</dt><dd>{report.quality.unknownUsers}</dd></div></dl></section></div>
 			<section class="panel"><h3>Test accounts and measurement rules</h3><p><b>{report.quality.excludedUsers}</b> administrator or marked test accounts. They are {report.includeTests ? 'included in this view' : 'excluded from the metrics'}.</p><p class="muted">To mark yourself or a friend, include test accounts, open Learner Journeys, select the learner, and use the test account button. Administrator accounts are excluded automatically.</p><ul class="rules"><li>A visit starts on a tracked action after 30 minutes without tracked activity. Refreshes and authentication token renewals do not count as new visits.</li><li>Learning activity requires an answer, spoken free turn, or exam completion. Opening a page or playing narration alone does not count.</li><li>A lesson attempt survives a reload and resume on this browser. Restarting via the day picker or advancing to another lesson creates a new attempt. Visits across devices remain separate.</li><li>Page hidden means the tab lost visibility. It does not prove the learner closed the app.</li><li>Retries reuse event IDs. Pending events are kept on this browser for up to 7 days, with a 500-event limit. Lost or blocked events cannot be recovered by the dashboard.</li><li>Analytics stores account IDs, event categories, lesson positions, and coarse browser information. It does not store raw audio, transcripts, answer text, or full URLs.</li></ul></section>

@@ -34,7 +34,7 @@ import {
 	type ReadinessModule
 } from '$services/readiness';
 import { removeBookmark } from '$services/data-layer';
-import { trackEvent, openLessonAttempt, setAnalyticsStep, completeLessonAttempt, trackObstacle } from '$services/analytics';
+import { trackEvent, openLessonAttempt, setAnalyticsStep, completeLessonAttempt, trackObstacle, pauseLessonAnalytics } from '$services/analytics';
 import { makeWordHighlighter } from '$utils/word-timing';
 import { playAudioPromise, stopAllAudio } from '$services/tts';
 import { playTone } from '$services/audio-context';
@@ -293,8 +293,8 @@ export async function initLesson(requestedDay?: number): Promise<void> {
 
 		// Analytics: a lesson session opened (fire-and-forget).
 		lessonStartedAt = Date.now();
-		openLessonAttempt(currentDay, currentSentenceIndex);
-		if (!lesson) trackObstacle('lesson_load_failed');
+		openLessonAttempt(currentDay, currentSentenceIndex, false, lesson?.sentences);
+		if (!lesson) trackObstacle('lesson_load_failed', { mode: 'lesson' });
 	} catch (e) {
 		trackObstacle('lesson_load_failed');
 		logError('lesson-controller:initLesson', e);
@@ -340,6 +340,7 @@ export async function processNextStep(skipAudio = false): Promise<void> {
 
 	// Lesson complete?
 	if (app.currentSentenceIndex >= lesson.sentences.length) {
+		pauseLessonAnalytics();
 		// Grammar moment first (once per visit): the learner has just used the
 		// pattern, so this consolidates rather than front-loads. Only when the
 		// lesson has a note and the page can render it.
@@ -376,7 +377,7 @@ export async function processNextStep(skipAudio = false): Promise<void> {
 	setAnalyticsStep(app.currentSentenceIndex);
 	void trackEvent('lesson_progress', {
 		day: app.currentDay,
-		metadata: { index: app.currentSentenceIndex, total: lesson.sentences.length }
+		metadata: { index: app.currentSentenceIndex, total: lesson.sentences.length, mode: 'lesson' }
 	});
 
 	// Highlight script
@@ -565,10 +566,10 @@ export async function goToNextDay(nextDay: number): Promise<void> {
 	}
 
 	await saveProgress(nextDay, 0, get(appStore).xp);
-	openLessonAttempt(nextDay, 0, true);
-	void trackEvent('lesson_begun', { day: nextDay, metadata: { entry: 'next_day' } });
 	const lesson = await loadLesson(nextDay);
-	if (!lesson) trackObstacle('lesson_load_failed');
+	openLessonAttempt(nextDay, 0, true, lesson?.sentences);
+	void trackEvent('lesson_begun', { day: nextDay, metadata: { entry: 'next_day' } });
+	if (!lesson) trackObstacle('lesson_load_failed', { mode: 'lesson' });
 	lessonStore.update((s) => ({ ...s, currentLesson: lesson, isLoading: false }));
 
 	callbacks?.onClearChat();
@@ -616,10 +617,10 @@ export async function changeDay(day: number): Promise<void> {
 	// touches the network, so switching to a day the learner had cached served
 	// the pre-migration copy forever. loadLesson is network-first with the
 	// cache as its offline fallback, which is the behaviour this wants.
-	openLessonAttempt(day, 0, true);
-	void trackEvent('lesson_begun', { day, metadata: { entry: 'day_picker' } });
 	const selectedLesson = await loadLesson(day);
-	if (!selectedLesson) trackObstacle('lesson_load_failed');
+	openLessonAttempt(day, 0, true, selectedLesson?.sentences);
+	void trackEvent('lesson_begun', { day, metadata: { entry: 'day_picker' } });
+	if (!selectedLesson) trackObstacle('lesson_load_failed', { mode: 'lesson' });
 
 	appStore.update((s) => ({
 		...s,
@@ -688,7 +689,7 @@ export async function handleVoiceInput(transcript: string): Promise<void> {
 	// Strict: matching every word is not the same as saying the sentence.
 	// "Ich mochte einen Kaffee" is real German and the wrong answer.
 	const isCorrect = result.isMatch && soundNotes.length === 0;
-	void trackEvent('answer_submitted', { day: app.currentDay, metadata: {
+	void trackEvent(transcript.trim() ? 'answer_submitted' : 'answer_timed_out', { day: app.currentDay, metadata: {
 		index: exam.isExamMode ? exam.currentExamIndex : app.currentSentenceIndex,
 		mode: exam.isExamMode ? (exam.isReviewMode ? 'review' : 'exam') : 'lesson', correct: isCorrect
 	} });
@@ -788,6 +789,7 @@ export async function startExam(week: number): Promise<void> {
 		return;
 	}
 
+	pauseLessonAnalytics();
 	const prefs = get(preferencesStore);
 	incrementSession();
 	stopAllAudio();
@@ -981,6 +983,7 @@ export async function startReviewMode(maxItems = 15): Promise<void> {
 		return;
 	}
 
+	pauseLessonAnalytics();
 	examStore.set({
 		isExamMode: true,
 		isReviewMode: true,
@@ -995,12 +998,14 @@ export async function startReviewMode(maxItems = 15): Promise<void> {
 
 	callbacks?.onClearChat();
 	const title = isFa ? '🔄 مرور فاصله‌دار' : '🔄 Spaced Review';
+	void trackEvent('review_started', { metadata: { mode: 'review', count: questions.length } });
 	callbacks?.onSystemMessage(title);
 
 	processNextExamQuestion();
 }
 
 function processNextExamQuestion(): void {
+	pauseLessonAnalytics();
 	const exam = get(examStore);
 	const prefs = get(preferencesStore);
 
@@ -1253,6 +1258,7 @@ export async function startConversation(week: number): Promise<void> {
 		return;
 	}
 
+	pauseLessonAnalytics();
 	const prefs = get(preferencesStore);
 	const isFa = prefs.language === 'fa';
 	incrementSession();

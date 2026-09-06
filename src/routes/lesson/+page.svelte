@@ -47,7 +47,7 @@
 		MAX_SHOWN,
 		type PronunciationMiss,
 	} from "$services/pronunciation-log";
-	import { trackEvent } from "$services/analytics";
+	import { trackEvent, pauseLessonAnalytics } from "$services/analytics";
 	import { unlockAudioContext, playTone } from "$services/audio-context";
 	import {
 		initSpeechRecognition,
@@ -512,7 +512,7 @@
 	// The retrieval ladder for one sentence, opened from its Practice button.
 	// The lesson keeps running underneath; closing returns to exactly where
 	// the learner was.
-	let practiceSentence = $state<{ german: string; meaning: string } | null>(
+	let practiceSentence = $state<{ german: string; meaning: string; index: number } | null>(
 		null,
 	);
 	let practiceEl = $state<SentencePractice | null>(null);
@@ -553,20 +553,23 @@
 	});
 	let micSupported = $state(false);
 
-	function openPractice(german: string, meaning: string) {
+	function openPractice(german: string, meaning: string, index: number) {
 		if (!german?.trim()) return;
 		stopAllAudio();
 		if (app.isListening) stopListening();
 		// On mobile the script is a drawer over the content — leaving it open
 		// would cover the panel it just launched.
 		showScript = false;
-		practiceSentence = { german, meaning };
+		pauseLessonAnalytics();
+		practiceSentence = { german, meaning, index };
+		if (!exam.isExamMode && !exam.isConversation) void trackEvent('sentence_practice_opened', { day: app.currentDay, metadata: { index, mode: 'lesson' } });
 	}
 
 	function closePractice() {
 		stopAllAudio();
 		if (app.isListening) stopListening();
 		practiceSentence = null;
+		if (!exam.isExamMode && !exam.isConversation && currentTeachStep) pauseLessonAnalytics(false);
 	}
 
 	/**
@@ -593,6 +596,9 @@
 		// A revealed answer is not evidence either way — it says the learner
 		// asked rather than tried.
 		const m = RUNG_MODULE[kind];
+		if (outcome === 'revealed' && practiceSentence && !exam.isExamMode && !exam.isConversation) {
+			void trackEvent('answer_revealed', { day: app.currentDay, metadata: { index: practiceSentence.index, mode: 'lesson' } });
+		}
 		if (m && outcome !== "revealed") {
 			recordPracticeResult(m, outcome === "correct" ? 1 : 0, 1);
 		}
@@ -630,7 +636,15 @@
 
 	function handleBlindModeChange(e: Event) {
 		const checked = (e.target as HTMLInputElement).checked;
+		if (!checked && prefs.blindMode && currentTeachStep && !exam.isExamMode && !exam.isConversation) {
+			void trackEvent('answer_revealed', { day: app.currentDay, metadata: { index: app.currentSentenceIndex, mode: 'lesson' } });
+		}
 		preferencesStore.update((s) => ({ ...s, blindMode: checked }));
+	}
+
+	function handleHintToggle() {
+		showHint = !showHint;
+		if (showHint && !exam.isExamMode && !exam.isConversation) void trackEvent('hint_opened', { day: app.currentDay, metadata: { index: app.currentSentenceIndex, mode: 'lesson' } });
 	}
 
 	function handleSpeakerClick() {
@@ -645,6 +659,7 @@
 		if ($appStore.isListening) stopListening();
 		stopAllAudio();
 		isSpeaking = true;
+		if (!exam.isExamMode && !exam.isConversation) void trackEvent('audio_replayed', { day: app.currentDay, metadata: { index: app.currentSentenceIndex, mode: 'lesson' } });
 		const highlight = makeWordHighlighter(
 			currentTeachStep.germanText,
 			(i) => (spokenWordIndex = i),
@@ -1367,8 +1382,7 @@
 									{#if currentTeachStep.role === "sent" && (currentTeachStep.hint || currentTeachStep.hintFa)}
 										<button
 											class="btn-hint"
-											onclick={() =>
-												(showHint = !showHint)}
+											onclick={handleHintToggle}
 											aria-label="Toggle hint"
 										>
 											💡 {currentTeachStep.language ===
@@ -1945,6 +1959,7 @@
 											openPractice(
 												item.german,
 												item.translation,
+												i,
 											)}
 									>
 										{prefs.language === "fa"

@@ -1,4 +1,7 @@
 import { DAY_MS, EVENT_NAMES, OBSTACLES, SCHEMA_VERSION, UUID, safeMetadata, type StoredEvent } from './contract';
+import { buildLessonReport } from './lesson-report';
+import { buildReturnReport } from './return-report';
+import type { LessonContent } from './lesson-content';
 
 export interface AnalyticsUser { id: string; created_at: string; is_admin: boolean; }
 export interface ReportInput {
@@ -11,6 +14,8 @@ export interface ReportInput {
 	days: number;
 	includeTests: boolean;
 	legacyCount: number;
+	catalog?: LessonContent[];
+	catalogError?: string | null;
 }
 const learningNames = new Set(['answer_submitted', 'free_turn_begun', 'exam_completed']);
 const time = (e: StoredEvent) => Date.parse(e.occurred_at);
@@ -106,6 +111,8 @@ export function buildReport(input: ReportInput) {
 		visits: unique(period.map(e => `${e.user_id}:${e.session_id}`)),
 		affectedUsers: unique(period.filter(e => e.event_name === 'obstacle').map(e => e.user_id)),
 		funnel, eventual, eligible, returned, learners, obstacles,
+		lessonAnalysis: buildLessonReport(all, input.catalog ?? [], since, now, input.catalogError ?? null),
+		returnVisits: buildReturnReport(all, includedUsers, coverageStart, since, now),
 		audioFallbacks: unique(period.filter(e => e.event_name === 'audio_fallback').map(e => e.user_id)),
 		incorrectAnswers: period.filter(e => e.event_name === 'answer_submitted' && e.metadata.correct === false).length,
 		quality: {
