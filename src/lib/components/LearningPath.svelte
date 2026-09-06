@@ -22,8 +22,7 @@
  {#if loading}<p role="status">{language === 'fa' ? 'در حال بارگذاری درس‌ها…' : 'Loading lessons…'}</p>
  {:else if !lessons.length}<p role="status">{language === 'fa' ? 'درس‌ها بارگذاری نشدند. صفحه را تازه کن.' : 'Lessons couldn’t be loaded. Please refresh to try again.'}</p>
  {:else}
-  <!-- svelte-ignore a11y_no_noninteractive_tabindex (Keyboard users need to scroll through locked days too.) -->
-  <div class="lesson-list" tabindex="0" role="region" aria-label={language === 'fa' ? 'همه روزهای درس' : 'All lesson days'}>
+  <div class="lesson-list" role="region" aria-label={language === 'fa' ? 'همه روزهای درس' : 'All lesson days'}>
    <ol>
     {#each sorted as meta (meta.day)}
      {@const available = isUnlocked(meta.day, completed)}
@@ -51,7 +50,7 @@
  h2 { margin:6px 0 8px; color:var(--ink); font-family:var(--font-display); font-size:1.6rem; }
  p { margin:0; color:var(--ink-soft); line-height:1.6; }
  .progress { flex-shrink:0; padding:7px 11px; border-radius:var(--radius-pill); background:var(--accent-wash); color:var(--accent); font-size:.8rem; }
- .lesson-list { max-height:520px; overflow-y:auto; scrollbar-gutter:stable; border-top:1px solid var(--line); }
+ .lesson-list { border-top:1px solid var(--line); }
  ol { list-style:none; padding:0; margin:0; }
  li { border-bottom:1px solid var(--line); }
  li:last-child { border-bottom:0; }

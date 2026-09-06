@@ -32,7 +32,6 @@
 	import TrophyCabinet from "$lib/components/TrophyCabinet.svelte";
 	import Icon from "$lib/components/Icon.svelte";
 	import AppHeader from "$lib/components/AppHeader.svelte";
-	import LearningPath from "$lib/components/LearningPath.svelte";
 	import DashboardSidebar from "$lib/components/DashboardSidebar.svelte";
 	import BrandLogo from "$lib/components/BrandLogo.svelte";
 
@@ -922,6 +921,10 @@
 		</a>
 	{/if}
 
+	{#if isAuthenticated}
+		<a class="browse-lessons" href="/lessons">{language === "fa" ? "دیدن همه درس‌ها ←" : "Browse all lessons →"}</a>
+	{/if}
+
 	<!-- ── Progress Stats ──────────────────────────────── -->
 	{#if isAuthenticated && !isNewUser}
 		<div class="stats-row action-row">
@@ -967,9 +970,6 @@
 		</div>
 	{/if}
 
-	{#if isAuthenticated}
-		<LearningPath lessons={lessonMetaIndex} completed={completedLessons} {currentDay} {language} loading={!progressLoaded} />
-	{/if}
 
 	<!-- ── Nav Cards ───────────────────────────────────── -->
 	{#if !isNewUser}
@@ -993,6 +993,8 @@
 </div>
 
 <style>
+	.browse-lessons { align-self: flex-end; display: inline-flex; align-items: center; min-height: 44px; padding: 6px 4px; color: var(--accent); font-weight: 600; text-underline-offset: 4px; }
+	.browse-lessons:hover { text-decoration: none; }
 	:global(body) {
 		margin: 0;
 		padding: 0;
