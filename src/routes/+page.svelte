@@ -8,6 +8,8 @@
 	import { initSyncListeners } from "$services/sync-queue";
 	import { getLessonIndex, getTotalLessons } from "$services/lesson-loader";
 	import InstallAppButton from "$lib/components/InstallAppButton.svelte";
+	import BrandLogo from "$lib/components/BrandLogo.svelte";
+	import LandingLessonPreview from "$lib/components/LandingLessonPreview.svelte";
 
 	// Auth modal state
 	let showAuthModal = $state(false);
@@ -280,9 +282,11 @@
 </svelte:head>
 
 <!-- ── Email Confirmation Toast ─────────────────────────── -->
-<div class="confirm-toast" class:show={showConfirmToast}>
-	✅ Email confirmed! You can now sign in.
-</div>
+{#if showConfirmToast}
+	<div class="confirm-toast" role="status">
+		✅ Email confirmed! You can now sign in.
+	</div>
+{/if}
 
 <!-- ── Auth Modal ──────────────────────────────────────── -->
 {#if showAuthModal}
@@ -304,11 +308,7 @@
 				aria-label="Close dialog">×</button
 			>
 			<div class="auth-logo">
-				<img
-					src="/android-chrome-192x192.png"
-					alt="Mirifer Logo"
-					style="width: 44px; height: 44px; border-radius: 8px;"
-				/>
+				<BrandLogo />
 			</div>
 
 			{#if signupEmailSent}
@@ -424,9 +424,8 @@
 <!--  NAVBAR                                                  -->
 <!-- ════════════════════════════════════════════════════════ -->
 <nav class="navbar" class:scrolled>
-	<a href="/" class="brand">
-		<span class="brand-mark" aria-hidden="true"></span>
-		<span class="brand-name">Mirifer</span>
+	<a href="/" class="brand" aria-label="Mirifer home">
+		<BrandLogo />
 	</a>
 
 	<div class="nav-links">
@@ -454,7 +453,7 @@
 		<div class="hero-copy">
 			<span class="eyebrow-pill"><i aria-hidden="true"></i>Six minutes a day</span>
 			<h1>
-				Learn German<br />the way you would learn<br />it <em>on the street</em>.
+				Learn German<br />the way you would<br />learn it <em>on the street</em>.
 			</h1>
 			<p class="hero-lede">
 				One short lesson a day, built entirely out of sentences real people
@@ -475,35 +474,22 @@
 			</ul>
 		</div>
 
-		<!-- The lesson card is drawn, not screenshotted: sharp at any density,
-		     nothing to download on a slow connection, and it follows the theme
-		     instead of being a baked-in light-mode picture. -->
-		<div class="hero-visual" aria-hidden="true">
-			<div class="lesson-card">
-				<div class="lc-top">
-					<span class="lc-level">A2</span>
-					<span class="lc-star">☆</span>
-				</div>
-				<p class="lc-en">What do you do when it rains?</p>
-				<p class="lc-de" lang="de">
-					<span class="lc-said">Was</span> machst du, wenn es regnet?
-				</p>
-				<div class="lc-actions">
-					<span class="lc-btn lc-ghost">▮▮▮▮</span>
-					<span class="lc-btn lc-leaf">Say it</span>
-					<span class="lc-btn lc-deep">Next →</span>
-				</div>
-			</div>
-			<div class="script-peek">
-				<div class="sp-head">
-					<span>Lesson script</span><span class="sp-count">1 / 10</span>
-				</div>
-				<p class="sp-de" lang="de">Wenn es regnet, bleibe ich zu Hause.</p>
-				<p class="sp-en">When it rains, I stay home.</p>
-				<p class="sp-de dim" lang="de">Was hast du gemacht, als du ein Kind warst?</p>
-				<p class="sp-en dim">What did you do when you were a child?</p>
-			</div>
-		</div>
+		<figure class="hero-visual">
+			<img
+				class="hero-photo"
+				src="/images/mirifer-cafe-hero.webp"
+				srcset="/images/mirifer-cafe-hero-768.webp 768w, /images/mirifer-cafe-hero.webp 1536w"
+				sizes="(max-width: 640px) calc(100vw - 36px), (max-width: 1000px) calc(100vw - 80px), (max-width: 1280px) calc((100vw - 128px) / 2), 576px"
+				width="1536"
+				height="1024"
+				fetchpriority="high"
+				alt="A young woman and man chatting over coffee at a Berlin street café."
+			/>
+			<figcaption class="hero-speech">
+				<span lang="de">Einen Kaffee, bitte!</span>
+				<span class="hero-translation">A coffee, please.</span>
+			</figcaption>
+		</figure>
 	</section>
 
 	<!-- ══ STATS ═════════════════════════════════════════ -->
@@ -522,36 +508,39 @@
 			Every day opens on one scene — rain, a café, a landlord. Ten sentences,
 			spoken by a native voice, with everything you need to take them apart.
 		</p>
-		<ol class="numbered">
-			<li>
-				<span class="num">01</span>
-				<div>
-					<h3>Pick the day, or let it pick you</h3>
-					<p>Day 44: Talking About Habits · about 6 min · middle A2</p>
-				</div>
-			</li>
-			<li>
-				<span class="num">02</span>
-				<div>
-					<h3>Slow the audio to 0.75×</h3>
-					<p>Until the sentence stops being a blur and becomes words.</p>
-				</div>
-			</li>
-			<li>
-				<span class="num">03</span>
-				<div>
-					<h3>Switch on Blind Mode</h3>
-					<p>Text disappears. Only your ears are left.</p>
-				</div>
-			</li>
-			<li>
-				<span class="num">04</span>
-				<div>
-					<h3>Read in English or Persian</h3>
-					<p>Full Farsi translations, right-to-left, for every line.</p>
-				</div>
-			</li>
-		</ol>
+		<div class="session-content">
+			<ol class="numbered">
+				<li>
+					<span class="num">01</span>
+					<div>
+						<h3>Pick the day, or let it pick you</h3>
+						<p>Day 44: Talking About Habits · about 6 min · middle A2</p>
+					</div>
+				</li>
+				<li>
+					<span class="num">02</span>
+					<div>
+						<h3>Slow the audio to 0.75×</h3>
+						<p>Until the sentence stops being a blur and becomes words.</p>
+					</div>
+				</li>
+				<li>
+					<span class="num">03</span>
+					<div>
+						<h3>Switch on Blind Mode</h3>
+						<p>Text disappears. Only your ears are left.</p>
+					</div>
+				</li>
+				<li>
+					<span class="num">04</span>
+					<div>
+						<h3>Read in English or Persian</h3>
+						<p>Full Farsi translations, right-to-left, for every line.</p>
+					</div>
+				</li>
+			</ol>
+			<div class="session-preview"><LandingLessonPreview /></div>
+		</div>
 	</section>
 
 	<!-- ══ METHOD — full-bleed green ═════════════════════ -->
@@ -870,11 +859,10 @@
 
 <footer class="site-footer">
 	<div class="foot-brand">
-		<span class="brand-mark" aria-hidden="true"></span>
-		<div>
-			<strong>Mirifer</strong>
-			<span>Learn German through real conversation</span>
-		</div>
+		<a href="/" class="brand" aria-label="Mirifer home">
+			<BrandLogo />
+		</a>
+		<span>Learn German through real conversation</span>
 	</div>
 	<nav class="foot-links" aria-label="Footer">
 		<a href="#session">How it works</a>
@@ -886,6 +874,22 @@
 </footer>
 
 <style>
+	.confirm-toast {
+		position: fixed;
+		top: 20px;
+		left: 50%;
+		transform: translateX(-50%);
+		width: max-content;
+		max-width: calc(100% - 32px);
+		padding: 16px 24px;
+		border-radius: 14px;
+		background: var(--leaf);
+		color: var(--on-accent);
+		font-weight: 600;
+		box-shadow: 0 8px 24px rgb(0 0 0 / 12%);
+		z-index: 2000;
+	}
+
 	/*
 	 * Landing page — the "Mirifer Landing v2" artboard.
 	 *
@@ -924,24 +928,8 @@
 	.brand {
 		display: flex;
 		align-items: center;
-		gap: 10px;
-		text-decoration: none;
-		color: var(--ink);
-	}
-
-	.brand-mark {
-		inline-size: 26px;
-		block-size: 26px;
-		border-radius: 8px;
-		background: var(--leaf);
 		flex: none;
-	}
-
-	.brand-name {
-		font-family: var(--font-display);
-		font-size: 1.35rem;
-		font-weight: 600;
-		letter-spacing: -0.01em;
+		text-decoration: none;
 	}
 
 	.nav-links {
@@ -1122,10 +1110,11 @@
 	/* ── Hero ────────────────────────────────────────── */
 	.hero {
 		display: grid;
-		grid-template-columns: 1.24fr 0.76fr;
-		gap: 72px;
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+		gap: 48px;
 		align-items: center;
-		padding-block: 96px 72px;
+		max-inline-size: 1280px;
+		padding-block: 64px 72px;
 	}
 
 	.eyebrow-pill {
@@ -1151,7 +1140,7 @@
 	}
 
 	.hero h1 {
-		font-size: clamp(2.6rem, 5.6vw, 4.35rem);
+		font-size: clamp(2.6rem, 4.8vw, 4.05rem);
 		line-height: 1.04;
 		margin: 24px 0 0;
 	}
@@ -1159,6 +1148,7 @@
 	.hero h1 em {
 		font-style: italic;
 		color: var(--accent);
+		white-space: nowrap;
 	}
 
 	.hero-lede {
@@ -1194,132 +1184,49 @@
 	/* ── Hero visual ─────────────────────────────────── */
 	.hero-visual {
 		position: relative;
-		background: var(--paper-sunken);
-		border: 1px solid var(--line);
-		border-radius: 20px;
-		padding: 48px 36px;
-		background-image:
-			linear-gradient(var(--line) 1px, transparent 1px),
-			linear-gradient(90deg, var(--line) 1px, transparent 1px);
-		background-size: 46px 46px;
+		min-inline-size: 0;
+		margin: 0;
 	}
 
-	.lesson-card {
-		background: var(--paper-raised);
-		border-radius: 18px;
-		box-shadow: 0 22px 48px -22px rgba(16, 26, 21, 0.32);
-		padding: 24px 24px 20px;
+	.hero-photo {
+		display: block;
+		inline-size: 100%;
+		block-size: auto;
+		aspect-ratio: 6 / 5;
+		object-fit: cover;
+		object-position: 50% 50%;
+		border-radius: 26px;
+		box-shadow: 0 20px 48px -28px rgb(16 26 21 / 40%);
 	}
 
-	.lc-top {
-		display: flex;
-		justify-content: space-between;
-		align-items: flex-start;
+	.hero-speech {
+		position: absolute;
+		inset-inline-start: 24px;
+		inset-block-end: 24px;
+		max-inline-size: calc(100% - 48px);
+		padding: 16px 22px;
+		border-radius: 18px 18px 18px 4px;
+		background: #fffaf2;
+		color: #075446;
+		box-shadow: 0 8px 28px rgb(0 0 0 / 14%);
 	}
 
-	.lc-level {
-		background: var(--info-wash);
-		color: var(--info);
-		font-family: var(--font-mono);
-		font-size: 0.7rem;
-		font-weight: 500;
-		padding: 4px 9px;
-		border-radius: var(--radius-badge);
+	.hero-speech > span {
+		display: block;
 	}
 
-	.lc-star {
-		color: var(--ink-faint);
-	}
-
-	.lc-en {
-		font-size: 1.05rem;
-		color: var(--ink-soft);
-		margin: 14px 0 6px;
-	}
-
-	.lc-de {
+	.hero-speech > [lang='de'] {
 		font-family: var(--font-display);
-		font-size: 1.5rem;
+		font-size: clamp(1.2rem, 2vw, 1.65rem);
 		font-weight: 500;
-		letter-spacing: -0.01em;
-		margin: 0;
-		color: var(--ink-faint);
-		unicode-bidi: isolate;
+		line-height: 1.2;
 	}
 
-	/* The word already said, marked as understood. */
-	.lc-said {
-		color: var(--accent);
+	.hero-translation {
+		margin-top: 5px;
+		font-size: 0.8rem;
+		color: #50635a;
 	}
-
-	.lc-actions {
-		display: flex;
-		gap: 8px;
-		margin-top: 20px;
-		flex-wrap: wrap;
-	}
-
-	.lc-btn {
-		font-size: 0.85rem;
-		font-weight: 500;
-		padding: 9px 17px;
-		border-radius: var(--radius-pill);
-	}
-
-	.lc-ghost {
-		border: 1px solid var(--accent);
-		color: var(--accent);
-		font-family: var(--font-mono);
-	}
-
-	.lc-leaf {
-		background: var(--leaf);
-		color: #fff;
-	}
-
-	.lc-deep {
-		background: var(--accent);
-		color: var(--on-accent);
-	}
-
-	.script-peek {
-		margin-top: 16px;
-		background: var(--paper-raised);
-		border-radius: 14px;
-		padding: 16px 18px;
-		box-shadow: 0 10px 26px -18px rgba(16, 26, 21, 0.3);
-	}
-
-	.sp-head {
-		display: flex;
-		justify-content: space-between;
-		font-family: var(--font-mono);
-		font-size: var(--type-label);
-		letter-spacing: var(--tracking-label);
-		text-transform: uppercase;
-		color: var(--ink-faint);
-		margin-bottom: 10px;
-	}
-
-	.sp-de {
-		font-weight: 600;
-		font-size: 0.92rem;
-		margin: 0;
-		color: var(--ink);
-		unicode-bidi: isolate;
-	}
-
-	.sp-en {
-		font-size: 0.85rem;
-		margin: 2px 0 10px;
-		color: var(--ink-faint);
-	}
-
-	.sp-de.dim,
-	.sp-en.dim {
-		opacity: 0.45;
-	}
-
 	/* ── Stats ───────────────────────────────────────── */
 	.stats {
 		display: grid;
@@ -1346,6 +1253,22 @@
 	.stats span {
 		font-size: 0.85rem;
 		color: var(--ink-faint);
+	}
+
+	.session-content {
+		display: grid;
+		grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+		gap: 56px;
+		align-items: center;
+		margin-top: 40px;
+	}
+
+	.session-content .numbered {
+		margin: 0;
+	}
+
+	.session-preview {
+		min-inline-size: 0;
 	}
 
 	/* ── Numbered lists ──────────────────────────────── */
@@ -1653,16 +1576,11 @@
 	}
 
 	.foot-brand {
+		--landing-logo-width: 160px;
 		display: flex;
-		align-items: center;
-		gap: 12px;
-	}
-
-	.foot-brand strong {
-		font-family: var(--font-display);
-		font-size: 1.1rem;
-		font-weight: 600;
-		display: block;
+		flex-direction: column;
+		align-items: flex-start;
+		gap: 8px;
 	}
 
 	.foot-brand span {
@@ -1688,10 +1606,26 @@
 
 	/* ── Responsive ──────────────────────────────────── */
 	@media (max-width: 1000px) {
+		.session-content {
+			grid-template-columns: minmax(0, 1fr);
+			gap: 32px;
+		}
+
+		.session-preview {
+			order: -1;
+			inline-size: 100%;
+			max-inline-size: 520px;
+			justify-self: center;
+		}
+
 		.hero,
 		.split {
 			grid-template-columns: 1fr;
 			gap: 44px;
+		}
+
+		.hero-photo {
+			aspect-ratio: 3 / 2;
 		}
 
 		.nav-links {
@@ -1708,6 +1642,8 @@
 		.navbar,
 		.navbar.scrolled {
 			padding: 12px 18px;
+			gap: 8px;
+			--landing-logo-width: 128px;
 		}
 
 		.band,
@@ -1728,6 +1664,32 @@
 
 		.hero {
 			padding-block: 48px 40px;
+			gap: 0;
+		}
+
+		.hero-copy {
+			display: contents;
+		}
+
+		.hero .eyebrow-pill {
+			justify-self: start;
+			order: 1;
+		}
+
+		.hero h1 {
+			order: 2;
+		}
+
+		.hero-lede {
+			order: 4;
+		}
+
+		.hero .hero-actions {
+			order: 5;
+		}
+
+		.hero-trust {
+			order: 6;
 		}
 
 		/* The primary CTA is dropped on phones, so the language link must not
@@ -1753,7 +1715,20 @@
 		}
 
 		.hero-visual {
-			padding: 24px 18px;
+			order: 3;
+			margin-top: 28px;
+		}
+
+		.hero-photo {
+			aspect-ratio: 4 / 3;
+			border-radius: 20px;
+		}
+
+		.hero-speech {
+			inset-inline-start: 16px;
+			inset-block-end: 16px;
+			max-inline-size: calc(100% - 32px);
+			padding: 12px 16px;
 		}
 	}
 
@@ -1809,8 +1784,8 @@
 	}
 
 .auth-logo {
-		text-align: center;
-		font-size: 2.5rem;
+		display: flex;
+		justify-content: center;
 		margin-bottom: 14px;
 	}
 

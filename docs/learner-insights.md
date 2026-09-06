@@ -10,7 +10,7 @@ The admin dashboard at `/admin` now provides Overview, Learner Journeys, Obstacl
 4. Deploy the release. Leave `INSIGHTS_PREVIEW` unset in production; it only labels the isolated local preview.
 5. Run the test journey below, include test accounts in the dashboard, and confirm that received events appear. Mark the test account so real learner metrics exclude it by default.
 
-These steps have not been applied to the production database or website. This checkout has no live environment configuration.
+Environment variables and the database migration must be configured in the production services; they are not supplied by this checkout. Confirm live collection with the test journey after deployment.
 
 ## Local preview
 
@@ -65,7 +65,7 @@ Actual microphone and cloud collection behavior still requires this check with t
 ## Verification
 
 - Svelte/TypeScript checks: zero errors and warnings.
-- All 643 automated tests pass. Tests cover visit renewal, resumable attempts, HTTP failures, stable retries, raw-content stripping, account separation, eligibility windows, ordered funnels, exclusions, pagination, ingestion authorization, and admin authorization.
+- All 655 automated tests pass after integration with the latest app changes. Tests cover visit renewal, resumable attempts, HTTP failures, stable retries, raw-content stripping, account separation, eligibility windows, ordered funnels, exclusions, pagination, ingestion authorization, and admin authorization.
 - An isolated PostgreSQL 17 cluster verified running the migration twice, duplicate insert suppression, own-user access, blocked cross-user reads/writes, private exclusions, and prevention of self-assigned admin privileges.
 - Browser verification exercised the actual Svelte pages with the local fixture, including sign-in, report tabs, mobile layout, and the exclusion form through the real server action.
 - Production client/server bundles compile. Full Vercel packaging on this Windows host stops at `EPERM` creating the adapter's `index.func` symbolic link. Complete the production build on the normal Linux/Vercel build host; this local run does not establish a successful deployment.

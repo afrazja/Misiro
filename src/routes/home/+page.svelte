@@ -30,9 +30,10 @@
 	import { computeStreak } from "$utils/streak";
 	import Heatmap from "$lib/components/Heatmap.svelte";
 	import TrophyCabinet from "$lib/components/TrophyCabinet.svelte";
-	import InstallAppButton from "$lib/components/InstallAppButton.svelte";
 	import Icon from "$lib/components/Icon.svelte";
 	import AppHeader from "$lib/components/AppHeader.svelte";
+	import DashboardSidebar from "$lib/components/DashboardSidebar.svelte";
+	import BrandLogo from "$lib/components/BrandLogo.svelte";
 
 	// Auth modal state
 	let showAuthModal = $state(false);
@@ -63,6 +64,8 @@
 	let readiness = $state<Readiness | null>(null);
 	/** Estimated minutes for today's lesson, from its actual content. */
 	let todayMinutes = $state<number | null>(null);
+	let todayDescription = $state({ en: "", fa: "" });
+	let isResuming = $state(false);
 
 	/** "middle A2" — where today's day sits, so the level is legible at a glance. */
 	const todayTier = $derived.by(() => {
@@ -109,17 +112,13 @@
 	const todayTitle = $derived.by(() => {
 		const m = lessonMetaIndex.find((meta) => meta.day === currentDay);
 		if (!m) return "";
-		// titleFa is the bare topic ("خرید آنلاین"); title carries the
-		// "82: Online Shopping" prefix — compose fa to match that shape.
-		if (language === "fa" && m.titleFa) return `${m.day}: ${m.titleFa}`;
-		return m.title;
+		const title = language === "fa" && m.titleFa ? m.titleFa : m.title;
+		return `${m.day}: ${title.replace(/^(?:(?:Day|روز)\s*)?[0-9۰-۹٠-٩]+\s*[:.\-–]\s*/i, "")}`;
 	});
 
 	// Badges & Calendar expansion
 	let showCalendar = $state(false);
 	let showBadges = $state(false);
-	let showProfileMenu = $state(false);
-	let profileMenuEl = $state<HTMLDivElement | null>(null);
 	let unlockedBadges = $state<string[]>([]);
 	let unreadBadgesCount = $state(0);
 	let sentenceStats = $state<Record<string, number>>({ A1: 0, A2: 0, B1: 0 });
@@ -155,9 +154,6 @@
 		return TIER_A2;
 	});
 
-	const progressPercent = $derived(
-		totalLessons > 0 ? Math.round((daysCompleted / totalLessons) * 100) : 0,
-	);
 
 
 	// ── Practice Calendar ──────────────────────────────
@@ -270,11 +266,6 @@
 	// i18n content
 	const content = $derived({
 		langLabel: language === "fa" ? "زبان:" : "Language:",
-		lessonsTitle: language === "fa" ? "درس‌های روزانه" : "Daily Lessons",
-		lessonsDesc:
-			language === "fa"
-				? "مکالمات واقعی آلمانی را تمرین کنید. هر روز سناریوهای جدید مثل سفارش در کافه، پرسیدن مسیر و موارد دیگر."
-				: "Practice real-world conversations. Each day brings new scenarios like ordering at a café, asking for directions, and more.",
 		basicsTitle: language === "fa" ? "مبانی آلمانی" : "German Basics",
 		basicsDesc:
 			language === "fa"
@@ -309,13 +300,18 @@
 		// "Today's session" — same rule the lesson page uses, so the card and
 		// the lesson always agree (mid-lesson resumes; otherwise the lowest
 		// not-yet-completed day, never a stale revisit).
-		currentDay = resolveResumePoint(progress, completed).day;
+		const resume = resolveResumePoint(progress, completed);
+		currentDay = resume.day;
+		isResuming = resume.sentenceIndex > 0;
 
 		// The minute estimate needs the lesson itself. Fire-and-forget on
 		// purpose: it is one line of text, and awaiting it here would let a
 		// single slow Supabase read hold up everything behind it.
 		void loadLesson(currentDay)
-			.then((l) => (todayMinutes = lessonMinutes(l) || null))
+			.then((l) => {
+				todayMinutes = lessonMinutes(l) || null;
+				todayDescription = { en: l?.description || "", fa: l?.descriptionFa || "" };
+			})
 			.catch(() => (todayMinutes = null));
 
 		// Goethe hero — exam plan + readiness estimate. Failure just hides
@@ -449,12 +445,6 @@
 	function handleKeydown(e: KeyboardEvent) {
 		if (e.key === "Escape" && showCalendar) showCalendar = false;
 		if (e.key === "Escape" && showAuthModal) toggleAuthModal();
-		if (e.key === "Escape" && showProfileMenu) {
-			showProfileMenu = false;
-			// Send focus back to the trigger, or the tab order restarts at
-			// the top of the page.
-			profileMenuEl?.querySelector("button")?.focus();
-		}
 		if (e.key === "Tab" && showAuthModal && modalEl) {
 			const focusable = modalEl.querySelectorAll<HTMLElement>(
 				'input:not([style*="display:none"]), button, a[href], [tabindex]:not([tabindex="-1"])',
@@ -508,16 +498,7 @@
 	});
 </script>
 
-<svelte:window
-	onkeydown={handleKeydown}
-	onpointerdown={(e) => {
-		// Close on any tap outside. Checking containment first means the
-		// trigger's own click still toggles instead of closing and reopening.
-		if (showProfileMenu && profileMenuEl && !profileMenuEl.contains(e.target as Node)) {
-			showProfileMenu = false;
-		}
-	}}
-/>
+<svelte:window onkeydown={handleKeydown} />
 
 <svelte:head>
 	<title>Mirifer – My Dashboard</title>
@@ -542,6 +523,7 @@
 		}}
 	>
 		<div class="auth-modal" bind:this={modalEl}>
+			<div class="auth-brand"><BrandLogo /></div>
 			<button
 				class="auth-close"
 				onclick={toggleAuthModal}
@@ -799,116 +781,31 @@
 	</div>
 {/if}
 
-<!--
-	Dashboard shell — the redesign's left rail beside the existing content.
-
-	The rail is the one structural addition the artboard makes; everything
-	it links to already existed, scattered across cards further down the
-	page. Desktop only: on a phone the same destinations are the cards
-	themselves, and a rail would cost a third of the screen to repeat them.
--->
-<div class="dash-shell">
-	{#if isAuthenticated && !isNewUser}
-		<aside class="rail" aria-label="Dashboard sections">
-			<a class="rail-brand" href="/">
-				<span class="rail-mark" aria-hidden="true"></span>
-				<span>Mirifer</span>
-			</a>
-			<nav class="rail-nav">
-				<a class="rail-item is-current" href="/home" aria-current="page">
-					<span aria-hidden="true">◆</span>{language === "fa" ? "امروز" : "Today"}
-				</a>
-				<a class="rail-item" href="/lesson">
-					<span aria-hidden="true">▸</span>{language === "fa" ? "درس‌های روزانه" : "Daily lessons"}
-				</a>
-				<!-- Only when there is something to review. A new account has
-				     nothing due, so this link led straight to "No items due for
-				     review" — a dead end that makes the app feel emptier rather
-				     than lighter, on the screen where first impressions are made. -->
-				{#if dueReviews > 0}
-					<a class="rail-item" href="/review">
-						<span aria-hidden="true">↻</span>{language === "fa" ? "مرورها" : "Reviews"}
-						<em class="rail-count">{dueReviews}</em>
-					</a>
-				{/if}
-				<a class="rail-item" href={language === "fa" ? "/fa/basics" : "/basics"}>
-					<span aria-hidden="true">▤</span>{language === "fa" ? "گرامر آلمانی" : "German Basics"}
-				</a>
-				<a class="rail-item" href="/vocabulary">
-					<span aria-hidden="true">★</span>{language === "fa" ? "کلمه‌های ذخیره‌شده" : "Saved words"}
-				</a>
-			</nav>
-		</aside>
+<!-- The same side-menu links serve desktop and mobile users. -->
+<div class="dash-shell" class:has-sidebar={isAuthenticated}>
+	{#if isAuthenticated}
+		<DashboardSidebar {language} {dueReviews} onSignOut={handleSignOut} />
 	{/if}
 
 <main class="home-container">
+	{#if !isAuthenticated}
+		<a class="dashboard-brand" href="/" aria-label="Mirifer home"><BrandLogo /></a>
+	{/if}
 	{#snippet profileLeading()}
-		{#if isAuthenticated}
-			<!-- Account actions live behind the avatar. They used to sit loose
-			     in the toolbar as a gear and a Sign Out button, which put a
-			     destructive action one stray tap away and — because the gear
-			     glyph is a ring of straight rays — read as a second sun next
-			     to the actual theme toggle. -->
-			<div class="nav-profile" bind:this={profileMenuEl}>
-				<button
-					type="button"
-					class="nav-profile-brand"
-					aria-haspopup="menu"
-					aria-expanded={showProfileMenu}
-					onclick={() => (showProfileMenu = !showProfileMenu)}
-				>
-					<div class="brand-avatar">
-						{#if avatarUrl}
-							<img src={avatarUrl} alt="" />
-						{:else}
-							{(displayName || "L").charAt(0).toUpperCase()}
-						{/if}
-					</div>
-					<span class="brand-text">{displayName}</span>
-					<span class="brand-caret" class:open={showProfileMenu} aria-hidden="true"
-						>▾</span
-					>
-				</button>
-
-				{#if showProfileMenu}
-					<div class="profile-menu" role="menu">
-						<a
-							href="/settings"
-							role="menuitem"
-							class="profile-menu-item"
-							onclick={() => (showProfileMenu = false)}
-						>
-							<Icon name="gear" size={17} />
-							<span>{language === "fa" ? "تنظیمات" : "Settings"}</span>
-						</a>
-						<button
-							type="button"
-							role="menuitem"
-							class="profile-menu-item danger"
-							onclick={() => {
-								showProfileMenu = false;
-								handleSignOut();
-							}}
-						>
-							<span class="pm-glyph" aria-hidden="true">⎋</span>
-							<span>{language === "fa" ? "خروج" : "Sign Out"}</span>
-						</button>
-					</div>
+		<div class="nav-profile-brand">
+			<div class="brand-avatar">
+				{#if avatarUrl}
+					<img src={avatarUrl} alt="" />
+				{:else}
+					{(displayName || "L").charAt(0).toUpperCase()}
 				{/if}
 			</div>
-		{:else}
-			<span class="nav-profile-brand static">
-				<div class="brand-avatar">
-					{(displayName || "L").charAt(0).toUpperCase()}
-				</div>
-				<span class="brand-text">{displayName}</span>
-			</span>
-		{/if}
+			<span class="brand-text">{displayName}</span>
+		</div>
 	{/snippet}
 
 	{#snippet homeHeaderActions()}
 		<div class="nav-right">
-			<InstallAppButton />
 			{#if isAuthenticated}
 				<div class="nav-stats">
 					<button
@@ -933,7 +830,7 @@
 					{/if}
 				</div>
 
-				<!-- Settings and Sign Out moved into the avatar menu. -->
+				<!-- Account actions are in DashboardSidebar. -->
 			{:else}
 				<button class="nav-text-btn" onclick={toggleAuthModal}
 					>{language === "fa" ? "ورود" : "Sign In"}</button
@@ -985,7 +882,7 @@
 		<a href="/lesson" class="today-session" title="Start today's session">
 			<div class="today-info">
 				<span class="today-label">
-					{language === "fa" ? "جلسه امروز" : "TODAY'S SESSION"}
+					{language === "fa" ? "از امروز شروع کن" : "START TODAY"}
 				</span>
 				{#if progressLoaded}
 					<!-- No review count here: the lesson no longer starts with a
@@ -998,7 +895,8 @@
 					<!-- Estimated from what the lesson actually contains, so it
 					     cannot drift from the content the way a hardcoded
 					     "~5–10 minutes" on every day of the course did. -->
-					<span class="today-sub">
+					<span class="today-sub">{language === "fa" ? todayDescription.fa || todayDescription.en : todayDescription.en}</span>
+				<span class="today-sub">
 						{#if todayMinutes}
 							{language === "fa"
 								? `حدود ${todayMinutes} دقیقه`
@@ -1017,10 +915,14 @@
 			</div>
 			<span class="today-btn">
 				▶ {language === "fa"
-					? "شروع جلسه امروز"
-					: "Start Today's Session"}
+					? (isResuming ? "ادامه درس" : "شروع درس")
+					: (isResuming ? "Continue lesson" : "Start lesson")}
 			</span>
 		</a>
+	{/if}
+
+	{#if isAuthenticated}
+		<a class="browse-lessons" href="/lessons">{language === "fa" ? "دیدن همه درس‌ها ←" : "Browse all lessons →"}</a>
 	{/if}
 
 	<!-- ── Progress Stats ──────────────────────────────── -->
@@ -1068,56 +970,10 @@
 		</div>
 	{/if}
 
+
 	<!-- ── Nav Cards ───────────────────────────────────── -->
 	{#if !isNewUser}
 		<div class="nav-cards" id="categories-grid">
-		<a href="/lesson" class="nav-card lessons">
-			<div class="card-glow"></div>
-			<div class="icon"><Icon name="book" size={44} /></div>
-			<h2>{content.lessonsTitle}</h2>
-			<p>{content.lessonsDesc}</p>
-			{#if isAuthenticated}
-				{#if totalLessons > 0 && daysCompleted >= totalLessons}
-					<div class="card-meta done">
-						{language === "fa"
-							? `🎉 هر ${totalLessons} روز کامل شد!`
-							: `🎉 All ${totalLessons} days complete!`}
-					</div>
-					<div class="card-progress-bar">
-						<div
-							class="card-progress-fill"
-							style="width: 100%"
-						></div>
-					</div>
-				{:else if daysCompleted > 0}
-					<div class="card-meta">
-						{#if totalLessons > 0}
-							{#if language === "fa"}
-								{daysCompleted} از {totalLessons} روز · ٪{progressPercent}
-							{:else}
-								{daysCompleted} of {totalLessons} days · {progressPercent}%
-							{/if}
-						{:else if language === "fa"}
-							{daysCompleted} روز انجام شده
-						{:else}
-							{daysCompleted} days done
-						{/if}
-					</div>
-					<div class="card-progress-bar">
-						<div
-							class="card-progress-fill"
-							style="width: {progressPercent}%"
-						></div>
-					</div>
-				{:else}
-					<div class="card-meta">
-						{language === "fa" ? "شروع روز ۱ ←" : "Start Day 1 →"}
-					</div>
-				{/if}
-			{/if}
-			<div class="arrow">→</div>
-		</a>
-
 		<a href="/basics" class="nav-card basics">
 			<div class="card-glow"></div>
 			<div class="icon"><Icon name="letters" size={44} /></div>
@@ -1137,6 +993,8 @@
 </div>
 
 <style>
+	.browse-lessons { align-self: flex-end; display: inline-flex; align-items: center; min-height: 44px; padding: 6px 4px; color: var(--accent); font-weight: 600; text-underline-offset: 4px; }
+	.browse-lessons:hover { text-decoration: none; }
 	:global(body) {
 		margin: 0;
 		padding: 0;
@@ -1161,13 +1019,17 @@
 		display: block;
 	}
 
+	.dashboard-brand {
+		--brand-logo-width: 160px;
+		display: flex;
+		inline-size: fit-content;
+		margin-bottom: 16px;
+	}
 
-
-
-
-
-	.rail {
-		display: none;
+	.auth-brand {
+		display: flex;
+		justify-content: center;
+		margin-bottom: 20px;
 	}
 
 
@@ -1175,27 +1037,14 @@
 
 
 
-	/* The rail only earns its width when there is width to spare. Below
-	   this the same destinations are the cards in the page itself, so a
-	   rail would be a third of a phone screen spent repeating them. */
+	/* The sidebar stays visible on desktop; smaller screens use a drawer. */
 	@media (min-width: 1080px) {
-		.dash-shell {
+		.dash-shell.has-sidebar {
 			display: grid;
 			grid-template-columns: 232px minmax(0, 1fr);
 			align-items: start;
 			max-width: 1340px;
 			margin-inline: auto;
-		}
-
-		.rail {
-			display: flex;
-			flex-direction: column;
-			gap: var(--space-6);
-			position: sticky;
-			top: 0;
-			block-size: 100vh;
-			padding: 28px 20px;
-			border-inline-end: 1px solid var(--line);
 		}
 
 		.home-container {
@@ -1209,114 +1058,7 @@
 
 
 
-	.rail-brand {
-		display: flex;
-		align-items: center;
-		gap: 10px;
-		font-family: var(--font-display);
-		font-size: 1.2rem;
-		font-weight: 600;
-		color: var(--ink);
-		text-decoration: none;
-	}
 
-
-
-
-
-
-	.rail-mark {
-		inline-size: 22px;
-		block-size: 22px;
-		border-radius: 7px;
-		background: var(--leaf);
-		flex: none;
-	}
-
-
-
-
-
-
-	.rail-nav {
-		display: flex;
-		flex-direction: column;
-		gap: 2px;
-	}
-
-
-
-
-
-
-	.rail-item {
-		display: flex;
-		align-items: center;
-		gap: 10px;
-		min-block-size: 44px;
-		padding: 0 12px;
-		border-radius: var(--radius-control);
-		color: var(--ink-soft);
-		text-decoration: none;
-		font-size: 0.94rem;
-	}
-
-
-
-
-
-
-	.rail-item span {
-		color: var(--ink-faint);
-		font-size: 0.8rem;
-	}
-
-
-
-
-
-
-	.rail-item:hover {
-		background: var(--control-hover);
-		color: var(--ink);
-	}
-
-
-
-
-
-
-	.rail-item.is-current {
-		background: var(--accent-wash);
-		color: var(--accent);
-		font-weight: 600;
-	}
-
-
-
-
-
-
-	.rail-item.is-current span {
-		color: var(--accent);
-	}
-
-
-
-
-
-
-	/* Sits at the end of the row in either direction. */
-	.rail-count {
-		margin-inline-start: auto;
-		font-family: var(--font-mono);
-		font-size: 0.72rem;
-		font-style: normal;
-		background: var(--attention-wash);
-		color: var(--attention);
-		border-radius: var(--radius-pill);
-		padding: 2px 8px;
-	}
 
 
 
@@ -1343,176 +1085,15 @@
 
 
 
-	.nav-profile {
-		position: relative;
-	}
-
-
-
-
-
-
 	.nav-profile-brand {
 		display: flex;
 		align-items: center;
 		gap: 12px;
 		min-height: 44px;
 		padding: 4px 8px;
-		border: none;
-		border-radius: 12px;
-		background: none;
 		color: inherit;
-		font: inherit;
 		text-align: start;
-		text-decoration: none;
-		cursor: pointer;
-		transition: opacity 0.2s;
 	}
-
-
-
-
-
-
-	.nav-profile-brand.static {
-		cursor: default;
-	}
-
-
-
-
-
-
-	.nav-profile-brand:hover {
-		opacity: 0.8;
-	}
-
-
-
-
-
-
-	.brand-caret {
-		color: var(--on-brand-soft);
-		font-size: 0.95rem;
-		line-height: 1;
-		transition: transform 0.18s ease;
-	}
-
-
-
-
-
-
-	.brand-caret.open {
-		transform: rotate(180deg);
-	}
-
-
-
-
-
-
-	@media (prefers-reduced-motion: reduce) {
-		.brand-caret {
-			transition: none;
-		}
-	}
-
-
-
-
-
-
-	/* ── Account menu ── */
-	.profile-menu {
-		position: absolute;
-		top: calc(100% + 6px);
-		inset-inline-start: 0;
-		z-index: 200;
-		min-width: 190px;
-		padding: 6px;
-		border: 1px solid var(--line);
-		border-radius: 12px;
-		background: var(--paper-raised);
-		box-shadow: var(--paper-shadow);
-		display: flex;
-		flex-direction: column;
-		gap: 2px;
-	}
-
-
-
-
-
-
-	.profile-menu-item {
-		display: flex;
-		align-items: center;
-		gap: 10px;
-		width: 100%;
-		min-height: 44px;
-		padding: 10px 12px;
-		border: none;
-		border-radius: 8px;
-		background: none;
-		color: var(--ink);
-		font: inherit;
-		font-size: 0.9rem;
-		font-weight: 600;
-		text-align: start;
-		text-decoration: none;
-		cursor: pointer;
-	}
-
-
-
-
-
-
-	.profile-menu-item:hover,
-	.profile-menu-item:focus-visible {
-		background: var(--control-hover);
-	}
-
-
-
-
-
-
-	/* Signing out is the one destructive thing here — it should not look
-	   like the neutral item above it. */
-	.profile-menu-item.danger {
-		color: var(--miss);
-	}
-
-
-
-
-
-
-	.profile-menu-item.danger:hover,
-	.profile-menu-item.danger:focus-visible {
-		background: color-mix(in srgb, var(--miss) 10%, transparent);
-	}
-
-
-
-
-
-
-	.pm-glyph {
-		display: inline-flex;
-		width: 17px;
-		justify-content: center;
-		font-size: 1rem;
-	}
-
-
-
-
-
-
 	.brand-avatar {
 		width: 32px;
 		height: 32px;
@@ -2020,7 +1601,7 @@
 	/* ── Nav Cards ────────────────────────────────────── */
 	.nav-cards {
 		display: grid;
-		grid-template-columns: repeat(2, 1fr);
+		grid-template-columns: 1fr;
 		gap: 24px;
 	}
 
@@ -2066,13 +1647,6 @@
 
 
 
-	.nav-card.lessons .card-glow {
-		background: radial-gradient(
-			circle at 50% 0%,
-			var(--accent-wash),
-			transparent 70%
-		);
-	}
 
 
 
@@ -2110,9 +1684,6 @@
 
 
 
-	.nav-card.lessons:hover {
-		border-color: var(--accent);
-	}
 
 
 
@@ -2138,9 +1709,6 @@
 
 
 
-	.nav-card.lessons .icon {
-		color: var(--accent);
-	}
 
 
 
@@ -2199,10 +1767,6 @@
 
 
 
-	.card-meta.done {
-		background: var(--leaf-wash);
-		color: var(--leaf);
-	}
 
 
 
@@ -2273,26 +1837,12 @@
 
 
 	/* ── Card Progress Bar ── */
-	.card-progress-bar {
-		width: 100%;
-		height: 5px;
-		background: var(--paper-sunken);
-		border-radius: 3px;
-		margin-top: 10px;
-		overflow: hidden;
-	}
 
 
 
 
 
 
-	.card-progress-fill {
-		height: 100%;
-		background: var(--leaf);
-		border-radius: 3px;
-		transition: width 0.5s ease;
-	}
 
 
 

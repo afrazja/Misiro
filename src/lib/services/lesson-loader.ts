@@ -8,6 +8,7 @@ import { getSupabaseBrowserClient } from '$lib/supabase/client';
 import type { Lesson, LessonChunk, LessonParagraph, Sentence } from '$stores/lesson';
 import type { Language } from '$stores/preferences';
 import { logError, logWarn } from '$utils/error';
+import { isUnlocked } from '$services/lesson-access';
 import {
 	LessonRowSchema,
 	LessonDetailRowSchema,
@@ -442,9 +443,16 @@ export function getGlossaryMeaning(word: string, language: Language): string | n
  */
 export function resolveResumePoint(
 	savedProgress: { currentDay: number; currentSentenceIndex: number } | null,
-	completedLessons: Record<string | number, unknown> | null | undefined
+	completedLessons: Record<string | number, unknown> | null | undefined,
+	requestedDay?: number
 ): { day: number; sentenceIndex: number; allDone: boolean } {
 	const completed = completedLessons || {};
+	// A path link may select an earned lesson, never bypass the unlock rule.
+	if (requestedDay !== undefined && Number.isInteger(requestedDay) && requestedDay > 0 && hasLesson(requestedDay) && isUnlocked(requestedDay, completed)) {
+		const sentenceIndex = savedProgress?.currentDay === requestedDay && !completed[requestedDay]
+			? savedProgress.currentSentenceIndex ?? 0 : 0;
+		return { day: requestedDay, sentenceIndex, allDone: false };
+	}
 
 	if (savedProgress && hasLesson(savedProgress.currentDay)) {
 		const d = savedProgress.currentDay;
