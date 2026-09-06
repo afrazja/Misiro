@@ -13,6 +13,7 @@ vi.mock('$services/lesson-loader', () => ({
 	loadGlossary: vi.fn().mockResolvedValue({}),
 	getLesson: vi.fn().mockReturnValue(null),
 	getLessonIndex: vi.fn().mockResolvedValue([]),
+	resolveResumePoint: vi.fn().mockReturnValue({ day: 1, sentenceIndex: 0, allDone: false }),
 	getAllLoadedLessons: vi.fn().mockReturnValue({}),
 	hasLesson: vi.fn().mockReturnValue(false)
 }));

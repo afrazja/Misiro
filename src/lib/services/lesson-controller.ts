@@ -233,7 +233,7 @@ export function isDayUnlocked(day: number): boolean {
 
 // ============ INITIALIZATION ============
 
-export async function initLesson(): Promise<void> {
+export async function initLesson(requestedDay?: number): Promise<void> {
 	deactivateConversation(); // stale state from a previous page visit
 	grammarMomentShown = false;
 	warmUpShown = false;
@@ -261,7 +261,7 @@ export async function initLesson(): Promise<void> {
 		// Determine current day and sentence index. Mid-lesson progress resumes
 		// exactly; otherwise the lowest not-yet-completed day wins (see
 		// resolveResumePoint for the rationale).
-		const resume = resolveResumePoint(savedProgress, completedLessons);
+		const resume = resolveResumePoint(savedProgress, completedLessons, requestedDay);
 		const currentDay = resume.day;
 		let currentSentenceIndex = resume.sentenceIndex;
 		const xp = savedProgress?.xp || 0;

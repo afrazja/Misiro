@@ -726,7 +726,8 @@
 			.then((d) => (converseAvailable = !!d?.available))
 			.catch(() => {});
 
-		await initLesson();
+		const requestedDay = new URLSearchParams(window.location.search).get("day");
+		await initLesson(requestedDay === null ? undefined : Number(requestedDay));
 		isReady = true;
 
 		// Load saved vocabulary words

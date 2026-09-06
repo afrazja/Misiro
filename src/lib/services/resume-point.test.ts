@@ -75,3 +75,21 @@ describe('resolveResumePoint', () => {
 		expect(r).toEqual({ day: 100, sentenceIndex: 0, allDone: true });
 	});
 });
+
+describe('lesson links from the learning path', () => {
+ it('opens a completed day for replay from the beginning', () => {
+  expect(resolveResumePoint({currentDay:3,currentSentenceIndex:4}, done([1,2]), 1)).toEqual({day:1,sentenceIndex:0,allDone:false});
+ });
+ it('opens the unlocked next day', () => {
+  expect(resolveResumePoint(null, done([1,2]), 3)).toEqual({day:3,sentenceIndex:0,allDone:false});
+ });
+ it('keeps progress when selecting the lesson already in progress', () => {
+  expect(resolveResumePoint({currentDay:3,currentSentenceIndex:4}, done([1,2]), 3)).toEqual({day:3,sentenceIndex:4,allDone:false});
+ });
+ it.each([4, 100, 999, 0, -1, 1.5, NaN, Infinity])('ignores locked, missing or invalid day %s', day => {
+  expect(resolveResumePoint(null, done([1,2]), day)).toEqual({day:3,sentenceIndex:0,allDone:false});
+ });
+ it('allows replay after finishing the entire course', () => {
+  expect(resolveResumePoint(null, done(ALL), 100)).toEqual({day:100,sentenceIndex:0,allDone:false});
+ });
+});

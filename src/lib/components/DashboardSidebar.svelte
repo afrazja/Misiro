@@ -36,8 +36,8 @@
 		<a class="nav-item current" href="/home" aria-current="page" onclick={closeMenu}>
 			<span aria-hidden="true">◆</span>{language === "fa" ? "امروز" : "Today"}
 		</a>
-		<a class="nav-item" href="/lesson" onclick={closeMenu}>
-			<span aria-hidden="true">▸</span>{language === "fa" ? "درس‌های روزانه" : "Daily lessons"}
+		<a class="nav-item" href="/home#learning-path" onclick={closeMenu}>
+			<span aria-hidden="true">▸</span>{language === "fa" ? "مسیر یادگیری" : "Learning path"}
 		</a>
 		{#if dueReviews > 0}
 			<a class="nav-item" href="/review" onclick={closeMenu}>

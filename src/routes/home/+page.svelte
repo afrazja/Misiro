@@ -32,6 +32,7 @@
 	import TrophyCabinet from "$lib/components/TrophyCabinet.svelte";
 	import Icon from "$lib/components/Icon.svelte";
 	import AppHeader from "$lib/components/AppHeader.svelte";
+	import LearningPath from "$lib/components/LearningPath.svelte";
 	import DashboardSidebar from "$lib/components/DashboardSidebar.svelte";
 	import BrandLogo from "$lib/components/BrandLogo.svelte";
 
@@ -64,6 +65,8 @@
 	let readiness = $state<Readiness | null>(null);
 	/** Estimated minutes for today's lesson, from its actual content. */
 	let todayMinutes = $state<number | null>(null);
+	let todayDescription = $state({ en: "", fa: "" });
+	let isResuming = $state(false);
 
 	/** "middle A2" — where today's day sits, so the level is legible at a glance. */
 	const todayTier = $derived.by(() => {
@@ -110,10 +113,8 @@
 	const todayTitle = $derived.by(() => {
 		const m = lessonMetaIndex.find((meta) => meta.day === currentDay);
 		if (!m) return "";
-		// titleFa is the bare topic ("خرید آنلاین"); title carries the
-		// "82: Online Shopping" prefix — compose fa to match that shape.
-		if (language === "fa" && m.titleFa) return `${m.day}: ${m.titleFa}`;
-		return m.title;
+		const title = language === "fa" && m.titleFa ? m.titleFa : m.title;
+		return `${m.day}: ${title.replace(/^(?:(?:Day|روز)\s*)?[0-9۰-۹٠-٩]+\s*[:.\-–]\s*/i, "")}`;
 	});
 
 	// Badges & Calendar expansion
@@ -154,9 +155,6 @@
 		return TIER_A2;
 	});
 
-	const progressPercent = $derived(
-		totalLessons > 0 ? Math.round((daysCompleted / totalLessons) * 100) : 0,
-	);
 
 
 	// ── Practice Calendar ──────────────────────────────
@@ -269,11 +267,6 @@
 	// i18n content
 	const content = $derived({
 		langLabel: language === "fa" ? "زبان:" : "Language:",
-		lessonsTitle: language === "fa" ? "درس‌های روزانه" : "Daily Lessons",
-		lessonsDesc:
-			language === "fa"
-				? "مکالمات واقعی آلمانی را تمرین کنید. هر روز سناریوهای جدید مثل سفارش در کافه، پرسیدن مسیر و موارد دیگر."
-				: "Practice real-world conversations. Each day brings new scenarios like ordering at a café, asking for directions, and more.",
 		basicsTitle: language === "fa" ? "مبانی آلمانی" : "German Basics",
 		basicsDesc:
 			language === "fa"
@@ -308,13 +301,18 @@
 		// "Today's session" — same rule the lesson page uses, so the card and
 		// the lesson always agree (mid-lesson resumes; otherwise the lowest
 		// not-yet-completed day, never a stale revisit).
-		currentDay = resolveResumePoint(progress, completed).day;
+		const resume = resolveResumePoint(progress, completed);
+		currentDay = resume.day;
+		isResuming = resume.sentenceIndex > 0;
 
 		// The minute estimate needs the lesson itself. Fire-and-forget on
 		// purpose: it is one line of text, and awaiting it here would let a
 		// single slow Supabase read hold up everything behind it.
 		void loadLesson(currentDay)
-			.then((l) => (todayMinutes = lessonMinutes(l) || null))
+			.then((l) => {
+				todayMinutes = lessonMinutes(l) || null;
+				todayDescription = { en: l?.description || "", fa: l?.descriptionFa || "" };
+			})
 			.catch(() => (todayMinutes = null));
 
 		// Goethe hero — exam plan + readiness estimate. Failure just hides
@@ -885,7 +883,7 @@
 		<a href="/lesson" class="today-session" title="Start today's session">
 			<div class="today-info">
 				<span class="today-label">
-					{language === "fa" ? "جلسه امروز" : "TODAY'S SESSION"}
+					{language === "fa" ? "از امروز شروع کن" : "START TODAY"}
 				</span>
 				{#if progressLoaded}
 					<!-- No review count here: the lesson no longer starts with a
@@ -898,7 +896,8 @@
 					<!-- Estimated from what the lesson actually contains, so it
 					     cannot drift from the content the way a hardcoded
 					     "~5–10 minutes" on every day of the course did. -->
-					<span class="today-sub">
+					<span class="today-sub">{language === "fa" ? todayDescription.fa || todayDescription.en : todayDescription.en}</span>
+				<span class="today-sub">
 						{#if todayMinutes}
 							{language === "fa"
 								? `حدود ${todayMinutes} دقیقه`
@@ -917,8 +916,8 @@
 			</div>
 			<span class="today-btn">
 				▶ {language === "fa"
-					? "شروع جلسه امروز"
-					: "Start Today's Session"}
+					? (isResuming ? "ادامه درس" : "شروع درس")
+					: (isResuming ? "Continue lesson" : "Start lesson")}
 			</span>
 		</a>
 	{/if}
@@ -968,56 +967,13 @@
 		</div>
 	{/if}
 
+	{#if isAuthenticated}
+		<LearningPath lessons={lessonMetaIndex} completed={completedLessons} {currentDay} {language} loading={!progressLoaded} />
+	{/if}
+
 	<!-- ── Nav Cards ───────────────────────────────────── -->
 	{#if !isNewUser}
 		<div class="nav-cards" id="categories-grid">
-		<a href="/lesson" class="nav-card lessons">
-			<div class="card-glow"></div>
-			<div class="icon"><Icon name="book" size={44} /></div>
-			<h2>{content.lessonsTitle}</h2>
-			<p>{content.lessonsDesc}</p>
-			{#if isAuthenticated}
-				{#if totalLessons > 0 && daysCompleted >= totalLessons}
-					<div class="card-meta done">
-						{language === "fa"
-							? `🎉 هر ${totalLessons} روز کامل شد!`
-							: `🎉 All ${totalLessons} days complete!`}
-					</div>
-					<div class="card-progress-bar">
-						<div
-							class="card-progress-fill"
-							style="width: 100%"
-						></div>
-					</div>
-				{:else if daysCompleted > 0}
-					<div class="card-meta">
-						{#if totalLessons > 0}
-							{#if language === "fa"}
-								{daysCompleted} از {totalLessons} روز · ٪{progressPercent}
-							{:else}
-								{daysCompleted} of {totalLessons} days · {progressPercent}%
-							{/if}
-						{:else if language === "fa"}
-							{daysCompleted} روز انجام شده
-						{:else}
-							{daysCompleted} days done
-						{/if}
-					</div>
-					<div class="card-progress-bar">
-						<div
-							class="card-progress-fill"
-							style="width: {progressPercent}%"
-						></div>
-					</div>
-				{:else}
-					<div class="card-meta">
-						{language === "fa" ? "شروع روز ۱ ←" : "Start Day 1 →"}
-					</div>
-				{/if}
-			{/if}
-			<div class="arrow">→</div>
-		</a>
-
 		<a href="/basics" class="nav-card basics">
 			<div class="card-glow"></div>
 			<div class="icon"><Icon name="letters" size={44} /></div>
@@ -1643,7 +1599,7 @@
 	/* ── Nav Cards ────────────────────────────────────── */
 	.nav-cards {
 		display: grid;
-		grid-template-columns: repeat(2, 1fr);
+		grid-template-columns: 1fr;
 		gap: 24px;
 	}
 
@@ -1689,13 +1645,6 @@
 
 
 
-	.nav-card.lessons .card-glow {
-		background: radial-gradient(
-			circle at 50% 0%,
-			var(--accent-wash),
-			transparent 70%
-		);
-	}
 
 
 
@@ -1733,9 +1682,6 @@
 
 
 
-	.nav-card.lessons:hover {
-		border-color: var(--accent);
-	}
 
 
 
@@ -1761,9 +1707,6 @@
 
 
 
-	.nav-card.lessons .icon {
-		color: var(--accent);
-	}
 
 
 
@@ -1822,10 +1765,6 @@
 
 
 
-	.card-meta.done {
-		background: var(--leaf-wash);
-		color: var(--leaf);
-	}
 
 
 
@@ -1896,26 +1835,12 @@
 
 
 	/* ── Card Progress Bar ── */
-	.card-progress-bar {
-		width: 100%;
-		height: 5px;
-		background: var(--paper-sunken);
-		border-radius: 3px;
-		margin-top: 10px;
-		overflow: hidden;
-	}
 
 
 
 
 
 
-	.card-progress-fill {
-		height: 100%;
-		background: var(--leaf);
-		border-radius: 3px;
-		transition: width 0.5s ease;
-	}
 
 
 
