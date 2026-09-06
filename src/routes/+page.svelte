@@ -8,6 +8,7 @@
 	import { initSyncListeners } from "$services/sync-queue";
 	import { getLessonIndex, getTotalLessons } from "$services/lesson-loader";
 	import InstallAppButton from "$lib/components/InstallAppButton.svelte";
+	import LandingLogo from "$lib/components/LandingLogo.svelte";
 
 	// Auth modal state
 	let showAuthModal = $state(false);
@@ -304,11 +305,7 @@
 				aria-label="Close dialog">×</button
 			>
 			<div class="auth-logo">
-				<img
-					src="/android-chrome-192x192.png"
-					alt="Mirifer Logo"
-					style="width: 44px; height: 44px; border-radius: 8px;"
-				/>
+				<LandingLogo />
 			</div>
 
 			{#if signupEmailSent}
@@ -424,9 +421,8 @@
 <!--  NAVBAR                                                  -->
 <!-- ════════════════════════════════════════════════════════ -->
 <nav class="navbar" class:scrolled>
-	<a href="/" class="brand">
-		<span class="brand-mark" aria-hidden="true"></span>
-		<span class="brand-name">Mirifer</span>
+	<a href="/" class="brand" aria-label="Mirifer home">
+		<LandingLogo />
 	</a>
 
 	<div class="nav-links">
@@ -870,11 +866,10 @@
 
 <footer class="site-footer">
 	<div class="foot-brand">
-		<span class="brand-mark" aria-hidden="true"></span>
-		<div>
-			<strong>Mirifer</strong>
-			<span>Learn German through real conversation</span>
-		</div>
+		<a href="/" class="brand" aria-label="Mirifer home">
+			<LandingLogo />
+		</a>
+		<span>Learn German through real conversation</span>
 	</div>
 	<nav class="foot-links" aria-label="Footer">
 		<a href="#session">How it works</a>
@@ -924,24 +919,8 @@
 	.brand {
 		display: flex;
 		align-items: center;
-		gap: 10px;
-		text-decoration: none;
-		color: var(--ink);
-	}
-
-	.brand-mark {
-		inline-size: 26px;
-		block-size: 26px;
-		border-radius: 8px;
-		background: var(--leaf);
 		flex: none;
-	}
-
-	.brand-name {
-		font-family: var(--font-display);
-		font-size: 1.35rem;
-		font-weight: 600;
-		letter-spacing: -0.01em;
+		text-decoration: none;
 	}
 
 	.nav-links {
@@ -1653,16 +1632,11 @@
 	}
 
 	.foot-brand {
+		--landing-logo-width: 160px;
 		display: flex;
-		align-items: center;
-		gap: 12px;
-	}
-
-	.foot-brand strong {
-		font-family: var(--font-display);
-		font-size: 1.1rem;
-		font-weight: 600;
-		display: block;
+		flex-direction: column;
+		align-items: flex-start;
+		gap: 8px;
 	}
 
 	.foot-brand span {
@@ -1708,6 +1682,8 @@
 		.navbar,
 		.navbar.scrolled {
 			padding: 12px 18px;
+			gap: 8px;
+			--landing-logo-width: 128px;
 		}
 
 		.band,
@@ -1809,8 +1785,8 @@
 	}
 
 .auth-logo {
-		text-align: center;
-		font-size: 2.5rem;
+		display: flex;
+		justify-content: center;
 		margin-bottom: 14px;
 	}
 
