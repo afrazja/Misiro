@@ -6,7 +6,6 @@
 	import * as auth from "$services/auth";
 	import * as dataLayer from "$services/data-layer";
 	import { initSyncListeners } from "$services/sync-queue";
-	import { getLessonIndex, getTotalLessons } from "$services/lesson-loader";
 	import InstallAppButton from "$lib/components/InstallAppButton.svelte";
 	import BrandLogo from "$lib/components/BrandLogo.svelte";
 	import LandingLessonPreview from "$lib/components/LandingLessonPreview.svelte";
@@ -31,8 +30,6 @@
 	// Navbar scroll effect
 	let scrolled = $state(false);
 
-	// Dynamic lesson count, shown in the stats strip.
-	let totalLessons = $state(0);
 
 	// Refs for focus trap
 	let modalEl: HTMLDivElement | undefined = $state();
@@ -180,9 +177,6 @@
 		}
 		await updateProfileUI();
 
-		// Fetch lesson count for dynamic stats
-		await getLessonIndex();
-		totalLessons = getTotalLessons();
 	});
 </script>
 
@@ -247,10 +241,10 @@
 		mainEntity: [
 			{
 				"@type": "Question",
-				name: "How long does it take to learn German with Mirifer?",
+				name: "How should I work through the lessons?",
 				acceptedAnswer: {
 					"@type": "Answer",
-					text: "Mirifer's 120 lessons take you from complete beginner (A1) to intermediate (B1+). Spending 15–20 minutes a day, most learners complete the full path in about four months. Because every lesson uses real conversations, you'll start speaking from day one.",
+					text: "Mirifer offers a sequence of German conversation lessons from beginner topics to more advanced situations. Work at your own pace and practise speaking from day one.",
 				},
 			},
 			{
@@ -451,7 +445,7 @@
 	<!-- ══ HERO ══════════════════════════════════════════ -->
 	<section class="hero">
 		<div class="hero-copy">
-			<span class="eyebrow-pill"><i aria-hidden="true"></i>Six minutes a day</span>
+			<span class="eyebrow-pill"><i aria-hidden="true"></i>German for real conversations</span>
 			<h1>
 				Learn German<br />the way you would<br />learn it <em>on the street</em>.
 			</h1>
@@ -492,21 +486,14 @@
 		</figure>
 	</section>
 
-	<!-- ══ STATS ═════════════════════════════════════════ -->
-	<section class="stats">
-		<div><strong>{totalLessons || 100}+</strong><span>Daily lessons</span></div>
-		<div><strong>300+</strong><span>Scripted dialogues</span></div>
-		<div><strong>1,500+</strong><span>Practice sentences</span></div>
-		<div><strong>A1 → B1+</strong><span>Levels covered</span></div>
-	</section>
 
 	<!-- ══ THE SESSION ═══════════════════════════════════ -->
 	<section class="band" id="session">
 		<p class="label">What the app actually is</p>
-		<h2>A six-minute session, and a script that talks back.</h2>
+		<h2>A conversation to hear, understand, and say out loud.</h2>
 		<p class="lede">
-			Every day opens on one scene — rain, a café, a landlord. Ten sentences,
-			spoken by a native voice, with everything you need to take them apart.
+			Every day opens on one scene — rain, a café, a landlord. Hear everyday German,
+			understand each sentence, and practise your reply.
 		</p>
 		<div class="session-content">
 			<ol class="numbered">
@@ -514,7 +501,7 @@
 					<span class="num">01</span>
 					<div>
 						<h3>Pick the day, or let it pick you</h3>
-						<p>Day 44: Talking About Habits · about 6 min · middle A2</p>
+						<p>Day 44: Talking About Habits · middle A2</p>
 					</div>
 				</li>
 				<li>
@@ -602,7 +589,7 @@
 				<span class="trio-icon" aria-hidden="true">🎧</span>
 				<h3>Hear natural audio</h3>
 				<p>
-					Native speakers at a natural pace, slowed to 0.75× or 0.5× whenever
+					Native speakers at a natural pace, slowed to 0.75× whenever
 					the sentence outruns you.
 				</p>
 			</div>
@@ -638,7 +625,7 @@
 				see which one is holding you back.
 			</p>
 			<p>
-				Set your exam date and the path reshuffles around it. The sentences
+				The sentences
 				you keep missing come back first.
 			</p>
 		</div>
@@ -679,11 +666,10 @@
 				</p>
 			</div>
 			<div>
-				<h3>Fifteen minutes you repeat beats two hours you do not.</h3>
+				<h3>Regular practice helps you keep moving.</h3>
 				<p>
-					Lessons are capped at six to fifteen minutes on purpose. A short
-					session is one you can start on a bad day, and the only sessions
-					that teach you anything are the ones you actually start.
+					Work through a lesson at your own pace. Listen again when you need
+					to, practise the sentences, and return when you are ready.
 				</p>
 			</div>
 			<div>
@@ -790,19 +776,18 @@
 		<p class="label">Common questions</p>
 		<h2>Frequently asked questions</h2>
 		<details>
-			<summary>How long does it take to learn German with Mirifer?</summary>
+			<summary>How should I work through the lessons?</summary>
 			<p>
-				The path is a hundred and twenty days from zero to B1-level
-				conversation, at one six-to-fifteen minute session a day. Doing it
-				most days rather than every day simply stretches the same hundred
-				and twenty lessons.
+				Start with the first lesson and work through the course at your own
+				pace. Completing a lesson unlocks the next one, and you can revisit
+				completed lessons whenever you want.
 			</p>
 		</details>
 		<details>
 			<summary>Can I learn German for free?</summary>
 			<p>
-				Yes. You can open a lesson and the free placement test without signing
-				up or entering a card.
+				Yes. You can try a lesson without signing up or entering a card.
+				Create a free account to save your progress.
 			</p>
 		</details>
 		<details>
@@ -830,8 +815,8 @@
 		<details>
 			<summary>Is it good for a complete beginner?</summary>
 			<p>
-				Day 1 assumes no German at all. If you already know some, the free
-				placement test skips you ahead to the right day.
+				Day 1 assumes no German at all. Start with greetings and introductions,
+				then build on what you learn as you complete each lesson.
 			</p>
 		</details>
 	</section>
@@ -840,8 +825,8 @@
 	<section class="band cta" id="cta">
 		<h2>Ready to speak German?</h2>
 		<p class="lede">
-			Start with day one. Six minutes, one scene, ten sentences you will
-			actually use.
+			Start with day one. Hear a conversation, understand it, and practise
+			your reply out loud.
 		</p>
 		<div class="hero-actions center">
 			{#if isAuthenticated}
@@ -1015,7 +1000,6 @@
 
 	.band,
 	.hero,
-	.stats,
 	.bleed-inner,
 	.site-footer {
 		max-inline-size: 1180px;
@@ -1228,32 +1212,6 @@
 		color: #50635a;
 	}
 	/* ── Stats ───────────────────────────────────────── */
-	.stats {
-		display: grid;
-		grid-template-columns: repeat(4, 1fr);
-		gap: 20px;
-		padding-block: 36px;
-		border-block: 1px solid var(--line);
-	}
-
-	.stats div {
-		display: flex;
-		flex-direction: column;
-		gap: 4px;
-	}
-
-	.stats strong {
-		font-family: var(--font-display);
-		font-size: 2rem;
-		font-weight: 500;
-		color: var(--accent);
-		letter-spacing: -0.02em;
-	}
-
-	.stats span {
-		font-size: 0.85rem;
-		color: var(--ink-faint);
-	}
 
 	.session-content {
 		display: grid;
@@ -1631,11 +1589,6 @@
 		.nav-links {
 			display: none;
 		}
-
-		.stats {
-			grid-template-columns: repeat(2, 1fr);
-			gap: 24px;
-		}
 	}
 
 	@media (max-width: 640px) {
@@ -1648,7 +1601,6 @@
 
 		.band,
 		.hero,
-		.stats,
 		.bleed-inner,
 		.site-footer {
 			padding-inline: 18px;

@@ -64,16 +64,10 @@ describe('chooseGap', () => {
 });
 
 describe('buildDrills', () => {
-	it('climbs build → gap → speak', () => {
-		expect(buildDrills(S, 'fa').map((d) => d.kind)).toEqual(['build', 'gap', 'speak']);
+	it('offers grammar and speaking without word tiles', () => {
+		expect(buildDrills(S, 'fa').map((d) => d.kind)).toEqual(['gap', 'speak']);
 	});
 
-	it('scrambles the build rung without handing over the answer', () => {
-		const build = buildDrills(S, 'en')[0];
-		expect(build.solution).toEqual(['Ich', 'sehe', 'den', 'Mann.']);
-		expect([...build.tiles!].sort()).toEqual([...build.solution!].sort());
-		expect(build.tiles).not.toEqual(build.solution);
-	});
 
 	it('blanks exactly one token and marks the right option', () => {
 		const gap = buildDrills(S, 'en').find((d) => d.kind === 'gap')!;
@@ -97,13 +91,13 @@ describe('buildDrills', () => {
 		]);
 		// No translation: the only prompt left would be the answer itself.
 		expect(buildDrills({ german: 'Ich sehe den Mann.', meaning: '' }, 'en').map((d) => d.kind))
-			.toEqual(['build', 'gap']);
+			.toEqual(['gap']);
 		expect(buildDrills({ german: '   ', meaning: 'x' }, 'en')).toEqual([]);
 	});
 
 	it('localizes the prompts', () => {
-		expect(buildDrills(S, 'en')[0].prompt).toBe('Put the sentence in order');
-		expect(buildDrills(S, 'fa')[0].prompt).toBe('جمله را بچینید');
+		expect(buildDrills(S, 'en')[0].prompt).toBe('Which article is correct?');
+		expect(buildDrills(S, 'fa')[0].prompt).toBe('کدام حرف تعریف درست است؟');
 	});
 
 	it('is deterministic under a seeded rand', () => {

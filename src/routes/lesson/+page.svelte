@@ -84,7 +84,6 @@
 	import { loadGlossary } from "$services/lesson-loader";
 	import { getTranslation, getTranslationLang } from "$utils/i18n";
 	import { makeWordHighlighter } from "$utils/word-timing";
-	import { computeStreak } from "$utils/streak";
 	import { initSyncListeners } from "$services/sync-queue";
 
 	// ============ STATE ============
@@ -94,7 +93,7 @@
 	let isReady = $state(false);
 	let chatMessages: ChatMessage[] = $state([]);
 	let answerLineHtml = $state(
-		'<span class="placeholder-text">Tap words to reply...</span>',
+		'<span class="placeholder-text">Listen, then say your reply...</span>',
 	);
 	let currentTeachStep: TeachStepData | null = $state(null);
 	let spokenWordIndex = $state(-1); // karaoke: German word currently being read
@@ -580,7 +579,6 @@
 	 * be the sort of made-up number this whole change is meant to remove.
 	 */
 	const RUNG_MODULE: Record<string, ReadinessModule> = {
-		build: "schreiben",
 		gap: "schreiben",
 		speak: "sprechen",
 	};
@@ -1599,14 +1597,7 @@
 											>
 										{/if}
 										{#if app.completedLessons}
-											<span class="comp-stat"
-												>🔥 {computeStreak(
-													app.completedLessons,
-												)}-{completionData.language ===
-												"fa"
-													? "روز"
-													: "day streak"}</span
-											>
+
 											<span class="comp-stat"
 												>📚 {Object.keys(
 													app.completedLessons,

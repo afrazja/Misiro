@@ -2,9 +2,8 @@
  * The retrieval ladder for a single sentence.
  *
  * The daily lesson shows the German while the learner says it, which is
- * reading aloud, not recall. Practice mode climbs three rungs instead:
+ * reading aloud, not recall. Practice mode climbs two rungs instead:
  *
- *   build  — assemble it from scrambled tiles      (word order)
  *   gap    — one article or verb removed           (the grammar)
  *   speak  — from the translation only, German hidden  (production)
  *
@@ -13,7 +12,7 @@
  */
 
 import type { Language } from '$stores/preferences';
-import { tokenizeForBuild, shuffleTiles } from '$services/sentence-build';
+import { tokenizeForBuild } from '$services/sentence-build';
 
 /**
  * How an attempt ended. Lived in word-strength.ts until the mastery meter
@@ -24,7 +23,7 @@ import { tokenizeForBuild, shuffleTiles } from '$services/sentence-build';
  */
 export type Outcome = 'correct' | 'wrong' | 'revealed';
 
-export type DrillKind = 'build' | 'gap' | 'speak';
+export type DrillKind = 'gap' | 'speak';
 
 export interface Drill {
 	kind: DrillKind;
@@ -33,9 +32,6 @@ export interface Drill {
 	/** The full German sentence this rung is about. */
 	german: string;
 
-	/** build */
-	tiles?: string[];
-	solution?: string[];
 
 	/** gap — tokens with the blank left as null */
 	masked?: (string | null)[];
@@ -152,8 +148,7 @@ export interface PracticeSentence {
 
 /**
  * Build the ladder for one sentence. Rungs the data cannot support are
- * dropped, so a one-word sentence gets speaking only rather than a
- * "scramble" of a single tile.
+ * dropped, so a one-word sentence gets speaking only.
  */
 export function buildDrills(
 	sentence: PracticeSentence,
@@ -165,16 +160,6 @@ export function buildDrills(
 	if (!german) return [];
 	const tokens = tokenizeForBuild(german);
 	const drills: Drill[] = [];
-
-	if (tokens.length >= 2) {
-		drills.push({
-			kind: 'build',
-			prompt: isFa ? 'جمله را بچینید' : 'Put the sentence in order',
-			german,
-			solution: tokens,
-			tiles: shuffleTiles(tokens, rand)
-		});
-	}
 
 	const gap = chooseGap(tokens);
 	if (gap) {

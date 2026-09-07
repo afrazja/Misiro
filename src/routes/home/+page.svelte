@@ -29,7 +29,6 @@
 		type Readiness,
 	} from "$services/readiness";
 	import type { ExamSettings } from "$services/data-layer";
-	import { computeStreak } from "$utils/streak";
 	import Heatmap from "$lib/components/Heatmap.svelte";
 	import TrophyCabinet from "$lib/components/TrophyCabinet.svelte";
 	import Icon from "$lib/components/Icon.svelte";
@@ -60,7 +59,6 @@
 	// Progress stats
 	let daysCompleted = $state(0);
 	let currentDay = $state(1);
-	let streakCount = $state(0);
 
 	// Goethe hero
 	let readiness = $state<Readiness | null>(null);
@@ -287,7 +285,6 @@
 			completedRes.status === "fulfilled" ? completedRes.value : {};
 		completedLessons = completed;
 		daysCompleted = Object.keys(completed).length;
-		streakCount = computeStreak(completed);
 
 
 		const progress =
@@ -694,12 +691,10 @@
 				<p>
 					{#if language === "fa"}
 						{daysCompleted} درس کامل شده
-						{#if streakCount > 0}
-							· {streakCount} روز پشت‌سرهم 🔥{/if}
+
 					{:else}
 						{daysCompleted} lesson{daysCompleted === 1 ? "" : "s"} completed
-						{#if streakCount > 0}
-							· {streakCount}-day streak 🔥{/if}
+
 					{/if}
 				</p>
 			</div>
@@ -818,18 +813,7 @@
 						<span class="ns-icon star"><Icon name="star" size={16} /></span>
 						<span class="ns-value">{totalXp}</span>
 					</button>
-					{#if streakCount > 0}
-						<!-- A zeroed flame is a shame counter, not motivation —
-						     show the streak only once there is one. -->
-						<button
-							class="nav-stat streak"
-							onclick={() => (showCalendar = true)}
-							title="View Streak History"
-						>
-							<span class="ns-icon flame"><Icon name="flame" size={16} /></span>
-							<span class="ns-value">{streakCount}</span>
-						</button>
-					{/if}
+					<button class="nav-stat" onclick={() => (showCalendar = true)} title={language === "fa" ? "تقویم تمرین" : "Practice calendar"} aria-label={language === "fa" ? "تقویم تمرین" : "Practice calendar"}><span aria-hidden="true">📅</span></button>
 				</div>
 
 				<!-- Account actions are in DashboardSidebar. -->
@@ -1382,9 +1366,6 @@
 
 
 	/* Amber rather than the old --accent-deep: same problem, same fix. */
-	.ns-icon.flame {
-		color: var(--ember);
-	}
 
 
 

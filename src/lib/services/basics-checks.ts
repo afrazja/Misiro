@@ -14,7 +14,6 @@
  */
 
 import type { Language } from '$stores/preferences';
-import { tokenizeForBuild, shuffleTiles } from '$services/sentence-build';
 
 export interface BasicsWordLike {
 	german: string;
@@ -23,7 +22,7 @@ export interface BasicsWordLike {
 	example?: string;
 }
 
-export type CheckKind = 'article' | 'meaning' | 'order' | 'conjugation';
+export type CheckKind = 'article' | 'meaning' | 'conjugation';
 
 export interface BasicsCheck {
 	kind: CheckKind;
@@ -35,9 +34,6 @@ export interface BasicsCheck {
 	correctIndex: number;
 	/** Marks the subject as German so screen readers pronounce it properly. */
 	subjectLang: 'de' | 'ui';
-	/** Word-order checks only: scrambled tiles and the sentence they rebuild. */
-	tiles?: string[];
-	solution?: string[];
 }
 
 const ARTICLES = ['der', 'die', 'das'];
@@ -82,8 +78,6 @@ export function isWordEntry(german: string): boolean {
 
 /** Up to this many tokens is a word or short phrase ("es gibt"), not a sentence. */
 const WORD_MAX_TOKENS = 3;
-/** Below this, scrambling is trivial; above it, the tray is a wall of tiles. */
-const ORDER_MAX_TOKENS = 9;
 
 /**
  * Build up to `limit` checks for a topic.
@@ -145,40 +139,12 @@ export function buildChecks(
 		}
 	}
 
-	// ── Word-order questions ─────────────────────────────────────────────
-	// The grammar topics are built out of worked example SENTENCES, so they
-	// have no vocabulary to quiz — but rebuilding the sentence from scrambled
-	// tiles is the check those topics actually want. German word order is the
-	// commonest A1/A2 error for Persian speakers, whose L1 puts the verb last.
-	for (const w of shuffle(
-		present.filter((x) => !isWordEntry(x.german)),
-		rand
-	)) {
-		const solution = tokenizeForBuild(w.german);
-		if (solution.length <= WORD_MAX_TOKENS || solution.length > ORDER_MAX_TOKENS) continue;
-		// The prompt is the translation. Without one the only thing left to
-		// show is the German itself, which is the answer.
-		const meaning = meaningOf(w, lang);
-		if (!meaning) continue;
-		checks.push({
-			kind: 'order',
-			prompt: isFa ? 'جمله را بچینید' : 'Put the sentence in order',
-			subject: meaning,
-			subjectLang: 'ui',
-			options: [],
-			correctIndex: -1,
-			tiles: shuffleTiles(solution, rand),
-			solution
-		});
-	}
-
 	// Interleave the kinds so the learner cannot settle into one pattern, then
 	// trim. Whichever kinds a topic produced take turns; a topic that yields
 	// only one kind simply gets that one.
 	return interleave(
 		[
 			checks.filter((c) => c.kind === 'article'),
-			checks.filter((c) => c.kind === 'order'),
 			checks.filter((c) => c.kind === 'meaning')
 		],
 		limit

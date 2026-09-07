@@ -635,7 +635,7 @@
 				</p>
 				<ul class="danger-list">
 					<li>Your profile, display name and photo</li>
-					<li>Your lesson progress and streak</li>
+					<li>Your lesson progress</li>
 					<li>Your review history and word strengths</li>
 					<li>Your test, exam and placement results</li>
 					<li>Your saved words and bookmarks</li>

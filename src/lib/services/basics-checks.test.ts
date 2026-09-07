@@ -144,59 +144,6 @@ describe('buildChecks', () => {
 	});
 });
 
-describe('word-order checks', () => {
-	// Grammar topics have no vocabulary — they are lists of worked sentences.
-	// Rebuilding the sentence is the check they actually want.
-	const SENTENCES = [
-		{ german: 'Heute gehe ich ins Kino.', en: 'Today I go to the cinema.', fa: 'امروز به سینما می‌روم.' },
-		{ german: 'Ich bleibe zu Hause, weil es regnet.', en: 'I stay home because it is raining.' }
-	];
-
-	it('scrambles the sentence and keeps the solution', () => {
-		const checks = buildChecks(SENTENCES, 'en', 5);
-		expect(checks).toHaveLength(2);
-		expect(checks.every((c) => c.kind === 'order')).toBe(true);
-		for (const check of checks) {
-			expect([...check.tiles!].sort()).toEqual([...check.solution!].sort());
-			expect(check.tiles).not.toEqual(check.solution);
-		}
-		const kino = checks.find((c) => c.solution![0] === 'Heute')!;
-		expect(kino.solution).toEqual(['Heute', 'gehe', 'ich', 'ins', 'Kino.']);
-	});
-
-	it('prompts with the translation, never the German being rebuilt', () => {
-		for (const check of buildChecks(SENTENCES, 'en', 5)) {
-			expect(check.subjectLang).toBe('ui');
-			expect(check.subject).toBe(
-				SENTENCES.find((s) => s.german.startsWith(check.solution![0]))!.en
-			);
-			expect(check.subject).not.toContain(check.solution!.join(' '));
-		}
-	});
-
-	it('uses the Persian translation when the interface is Persian', () => {
-		const [check] = buildChecks([SENTENCES[0]], 'fa', 5);
-		expect(check.subject).toBe('امروز به سینما می‌روم.');
-	});
-
-	it('skips a sentence with no translation — the German would be the answer', () => {
-		expect(buildChecks([{ german: 'Heute gehe ich ins Kino.' }], 'en')).toEqual([]);
-	});
-
-	it('skips sentences too short to scramble or too long to be worth it', () => {
-		const out = buildChecks(
-			[
-				{ german: 'Es regnet.', en: 'It is raining.' }, // 2 tokens
-				{ german: 'Heute gehe ich hin.', en: 'I go there today.' }, // 4 — kept
-				{ german: 'a b c d e f g h i j k.', en: 'long' } // 11
-			],
-			'en',
-			5
-		);
-		expect(out.map((c) => c.solution?.length)).toEqual([4]);
-	});
-});
-
 describe('conjugation checks', () => {
 	const GEHEN = {
 		infinitive: { german: 'gehen' },
@@ -309,4 +256,11 @@ describe('collectWords', () => {
 	it('handles a category with neither', () => {
 		expect(collectWords(null, null)).toEqual([]);
 	});
+});
+
+
+describe('removed word tiles', () => {
+ it('does not turn worked example sentences into tile exercises', () => {
+  expect(buildChecks([{german:'Heute gehe ich ins Kino.', en:'Today I go to the cinema.'}], 'en')).toEqual([]);
+ });
 });

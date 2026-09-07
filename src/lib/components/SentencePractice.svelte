@@ -2,7 +2,7 @@
 	/**
 	 * Practice mode for one sentence — the retrieval ladder.
 	 *
-	 * build → gap → speak, each rung harder than the last, ending on
+	 * gap → speak, each rung harder than the last, ending on
 	 * production from the translation alone. Opened from the Practice button
 	 * on any sentence and exited at any point: the lesson is never lost, and
 	 * a learner who bails halfway keeps the credit already earned.
@@ -18,7 +18,6 @@
 		type Outcome,
 		type PracticeSentence
 	} from '$services/practice-drills';
-	import { isBuildCorrect } from '$services/sentence-build';
 	import { bestVoiceMatch } from '$utils/text-matching';
 	import { diagnose, tipFor, type SoundNote } from '$services/pronunciation';
 	import { playAudioPromise, stopAllAudio, ttsIsPlaying } from '$services/tts';
@@ -67,10 +66,6 @@
 	const drill = $derived(drills[index] as Drill | undefined);
 	const finished = $derived(index >= drills.length);
 
-	// ── build rung ──
-	let tray = $state<Array<{ word: string; id: number }>>([]);
-	let answer = $state<Array<{ word: string; id: number }>>([]);
-
 	// ── gap rung ──
 	let picked = $state<number | null>(null);
 
@@ -79,20 +74,16 @@
 
 	// Reset the rung's own state whenever the rung changes.
 	$effect(() => {
-		const d = drills[index];
+		if (!drills[index]) return;
 		verdict = 'none';
 		picked = null;
 		heard = '';
 		soundNotes = [];
-		tray = d?.kind === 'build' ? (d.tiles ?? []).map((word, id) => ({ word, id })) : [];
-		answer = [];
 	});
 
 	const t = $derived({
 		back: isFa ? '→ بازگشت به درس' : '← Back to lesson',
 		rung: isFa ? 'مرحله' : 'Step',
-		tap: isFa ? 'کلمه‌ها را به ترتیب بزنید' : 'Tap the words in order',
-		check: isFa ? 'بررسی' : 'Check',
 		showMe: isFa ? 'جواب را نشان بده' : 'Show me',
 		next: isFa ? 'بعدی' : 'Next',
 		finish: isFa ? 'پایان' : 'Finish',
@@ -111,7 +102,7 @@
 	function record(german: string, outcome: Outcome, guessable = false) {
 		verdict = outcome === 'correct' ? 'right' : 'wrong';
 		if (outcome === 'correct') score += 1;
-		onResult?.(german, outcome, guessable, drill?.kind ?? 'build');
+		onResult?.(german, outcome, guessable, drill?.kind ?? 'speak');
 		playTone(outcome === 'correct' ? 'success' : 'error');
 	}
 
@@ -128,34 +119,6 @@
 	function speak() {
 		if ($ttsIsPlaying) stopAllAudio();
 		else void playAudioPromise(sentence.german, 1, 'de-DE');
-	}
-
-	// ── build ──
-	function place(id: number) {
-		if (verdict !== 'none') return;
-		const i = tray.findIndex((x) => x.id === id);
-		if (i === -1) return;
-		answer = [...answer, tray[i]];
-		tray = tray.filter((_, k) => k !== i);
-	}
-
-	function unplace(id: number) {
-		if (verdict !== 'none') return;
-		const i = answer.findIndex((x) => x.id === id);
-		if (i === -1) return;
-		tray = [...tray, answer[i]];
-		answer = answer.filter((_, k) => k !== i);
-	}
-
-	function checkBuild() {
-		const ok = isBuildCorrect(answer.map((x) => x.word), drill!.solution ?? []);
-		record(sentence.german, ok ? 'correct' : 'wrong');
-	}
-
-	function revealBuild() {
-		answer = (drill!.solution ?? []).map((word, id) => ({ word, id }));
-		tray = [];
-		record(sentence.german, 'revealed');
 	}
 
 	// ── gap ──
@@ -221,37 +184,7 @@
 	{:else if drill}
 		<p class="pr-prompt">{drill.prompt}</p>
 
-		{#if drill.kind === 'build'}
-			<div
-				class="pr-slot"
-				class:right={verdict === 'right'}
-				class:wrong={verdict === 'wrong'}
-				dir="ltr"
-			>
-				{#if answer.length === 0}
-					<span class="pr-hint">{t.tap}</span>
-				{:else}
-					{#each answer as tile (tile.id)}
-						<button
-							class="pr-tile placed"
-							lang="de"
-							disabled={verdict !== 'none'}
-							onclick={() => unplace(tile.id)}>{tile.word}</button
-						>
-					{/each}
-				{/if}
-			</div>
-			{#if tray.length}
-				<div class="pr-tray" dir="ltr">
-					{#each tray as tile (tile.id)}
-						<button class="pr-tile" lang="de" onclick={() => place(tile.id)}
-							>{tile.word}</button
-						>
-					{/each}
-				</div>
-			{/if}
-
-		{:else if drill.kind === 'gap'}
+		{#if drill.kind === 'gap'}
 			<p class="pr-masked" lang="de" dir="ltr">
 				{#each drill.masked ?? [] as tok}
 					{#if tok === null}
@@ -313,14 +246,6 @@
 			{/if}
 		{/if}
 
-		{#if verdict === 'none' && drill.kind === 'build'}
-			<div class="pr-actions">
-				<button class="pr-primary" disabled={tray.length > 0} onclick={checkBuild}>
-					{t.check}
-				</button>
-				<button class="pr-ghost" onclick={revealBuild}>{t.showMe}</button>
-			</div>
-		{/if}
 
 		{#if verdict !== 'none'}
 			<p class="pr-verdict" class:wrong={verdict === 'wrong'}>
@@ -400,62 +325,6 @@
 		color: var(--ink-soft);
 		font-size: 0.95rem;
 		margin: 0 0 14px;
-	}
-
-	.pr-slot {
-		display: flex;
-		flex-wrap: wrap;
-		justify-content: center;
-		align-items: center;
-		gap: 8px;
-		min-height: 60px;
-		padding: 12px;
-		/* Dashed edge is the whole affordance here, and --paper-sunken is
-		   near-black in dark — so the outline needs a mid-tone, not the wall. */
-		border: 2px dashed var(--ink-faint);
-		border-radius: 12px;
-		background: var(--paper-sunken);
-	}
-
-	.pr-slot.right {
-		border-style: solid;
-		border-color: var(--leaf);
-	}
-	.pr-slot.wrong {
-		border-style: solid;
-		border-color: var(--miss);
-	}
-
-	.pr-tray {
-		display: flex;
-		flex-wrap: wrap;
-		justify-content: center;
-		gap: 8px;
-		margin-top: 14px;
-	}
-
-	.pr-tile {
-		min-height: 44px;
-		padding: 10px 16px;
-		border: 2px solid var(--control-edge);
-		border-radius: 10px;
-		background: var(--control);
-		color: var(--ink);
-		font-size: 1rem;
-		font-weight: 600;
-		cursor: pointer;
-		box-shadow: 0 3px 0 var(--control-edge);
-	}
-
-	.pr-tile.placed {
-		background: var(--leaf-wash);
-		border-color: var(--leaf);
-		box-shadow: none;
-	}
-
-	.pr-tile:not(:disabled):active {
-		transform: translateY(3px);
-		box-shadow: none;
 	}
 
 	.pr-masked {
@@ -574,7 +443,6 @@
 		font-size: 0.9rem;
 	}
 
-	.pr-actions,
 	.pr-done-actions {
 		display: flex;
 		justify-content: center;
