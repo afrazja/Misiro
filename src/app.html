@@ -16,10 +16,11 @@
 			(function () {
 				try {
 					var c = localStorage.getItem('mirifer_theme') || 'light';
+					var landing = /^\/(?:fa\/?)?$/.test(window.location.pathname);
 					var dark =
-						c === 'dark' ||
+						!landing && (c === 'dark' ||
 						(c === 'system' &&
-							window.matchMedia('(prefers-color-scheme: dark)').matches);
+							window.matchMedia('(prefers-color-scheme: dark)').matches));
 					document.documentElement.setAttribute('data-theme', dark ? 'dark' : 'light');
 					var m = document.querySelector('meta[name="theme-color"]');
 					if (m) m.setAttribute('content', dark ? '#0f0f1a' : '#0e5c45');

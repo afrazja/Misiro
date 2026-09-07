@@ -11,7 +11,7 @@
  * SAME key and attribute.
  */
 
-import { writable } from 'svelte/store';
+import { get, writable } from 'svelte/store';
 
 export type ThemeChoice = 'light' | 'dark' | 'system';
 
@@ -37,12 +37,21 @@ function resolve(choice: ThemeChoice): 'light' | 'dark' {
 /** Paint a theme without persisting it (used by the system-change listener). */
 function paint(choice: ThemeChoice): void {
 	if (typeof document === 'undefined') return;
-	const actual = resolve(choice);
+	// Public landing pages always use the light brand palette. Keep the
+	// saved choice intact so it still applies when the learner enters the app.
+	// This route check must match the pre-paint script in app.html.
+	const landing = /^\/(?:fa\/?)?$/.test(window.location.pathname);
+	const actual = landing ? 'light' : resolve(choice);
 	document.documentElement.setAttribute('data-theme', actual);
 	resolvedTheme.set(actual);
 	// Keep the mobile browser chrome in step with the page.
 	const meta = document.querySelector('meta[name="theme-color"]');
 	if (meta) meta.setAttribute('content', actual === 'dark' ? '#0f0f1a' : '#0e5c45');
+}
+
+/** Reapply the current choice after client-side navigation. */
+export function refreshTheme(): void {
+	paint(get(themeChoice));
 }
 
 /** Read the stored choice; defaults to light for a first-time visitor. */

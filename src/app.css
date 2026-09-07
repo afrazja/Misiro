@@ -374,6 +374,12 @@ select {
 	color-scheme: dark;
 }
 
+:root[data-theme='light'] input,
+:root[data-theme='light'] textarea,
+:root[data-theme='light'] select {
+	color-scheme: light;
+}
+
 /* ===================== */
 /* 3D BUTTONS            */
 /* ===================== */

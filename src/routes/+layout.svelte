@@ -18,7 +18,7 @@
 	import { authStore } from '$stores/auth';
 	import { inject } from '@vercel/analytics';
 	import { injectSpeedInsights } from '@vercel/speed-insights/sveltekit';
-	import { initTheme } from '$services/theme';
+	import { initTheme, refreshTheme } from '$services/theme';
 	import { getLanguage, applyDocumentLanguage } from '$services/data-layer';
 	import { env } from '$env/dynamic/public';
 	import { captureAcquisition } from '$services/acquisition';
@@ -81,6 +81,7 @@
 	});
 
 	afterNavigate(() => {
+		refreshTheme();
 		captureAcquisition();
 		if (window.location.pathname !== '/lesson') clearLessonContext();
 		void trackEvent('page_viewed');
