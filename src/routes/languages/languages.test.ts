@@ -31,7 +31,7 @@ describe('course entry and persistence', () => {
 		await expect(actions.default(f.event())).rejects.toMatchObject({ location: '/login' });
 		expect(f.supabase.auth.updateUser).not.toHaveBeenCalled();
 	});
-	it('rejects French and unknown courses even when a form is submitted directly', async () => {
+	it('rejects upcoming and unknown courses even when a form is submitted directly', async () => {
 		for (const language of ['fr', 'en', 'xx', '']) {
 			const f = fixture('de'); f.form.set('language', language);
 			expect(await actions.default(f.event())).toMatchObject({ status: 400, data: { error: 'unavailable' } });
@@ -50,8 +50,8 @@ describe('course entry and persistence', () => {
 		await expect(actions.default(f.event())).rejects.toMatchObject({ location: '/home' });
 		expect(f.supabase.auth.updateUser).not.toHaveBeenCalled();
 	});
-	it('repairs an old French selection by updating only the course preference', async () => {
-		const f = fixture('fr');
+	it.each(['fr', 'en'])('repairs an unavailable %s selection by updating only the course preference', async (course) => {
+		const f = fixture(course);
 		await expect(actions.default(f.event())).rejects.toMatchObject({ location: '/home' });
 		expect(f.supabase.auth.updateUser).toHaveBeenCalledExactlyOnceWith({ data: { target_language: 'de' } });
 	});
@@ -63,7 +63,7 @@ describe('course entry and persistence', () => {
 		expect(await actions.default(f.event())).toMatchObject({ status: 503 });
 	});
 	it('routes missing or unavailable course choices to the chooser without opening German content', async () => {
-		for (const target of [undefined, 'fr', 'unknown']) {
+		for (const target of [undefined, 'fr', 'en', 'unknown']) {
 			const f = fixture(target);
 			await expect(home(f.event())).rejects.toMatchObject({ location: '/languages' });
 			await expect(onboarding(f.event())).rejects.toMatchObject({ location: '/languages' });

@@ -1,9 +1,11 @@
 /** Course availability is separate from the English/Persian interface language.
- * French stays unavailable until its content, audio and progress storage are ready.
+ * New courses stay unavailable until their content, audio and progress storage are ready.
  */
 export const COURSES = [
 	{ code: 'de', nativeName: 'Deutsch', name: { en: 'German', fa: 'آلمانی' }, available: true,
 		description: { en: 'Build everyday conversation skills with listening, speaking and daily lessons.', fa: 'با شنیدن، صحبت کردن و درس‌های روزانه، مکالمه‌های روزمره را تمرین کن.' } },
+	{ code: 'en', nativeName: 'English', name: { en: 'English', fa: 'انگلیسی' }, available: false,
+		description: { en: 'English is coming to Mirifer. Lessons are not available yet.', fa: 'انگلیسی به میریفر اضافه خواهد شد. درس‌های آن هنوز آماده نیستند.' } },
 	{ code: 'fr', nativeName: 'Français', name: { en: 'French', fa: 'فرانسوی' }, available: false,
 		description: { en: 'French is coming to Mirifer. Lessons are not available yet.', fa: 'فرانسوی به میریفر اضافه خواهد شد. درس‌های آن هنوز آماده نیستند.' } }
 ] as const;

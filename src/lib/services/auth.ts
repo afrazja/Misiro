@@ -5,7 +5,7 @@
 
 import { getSupabaseBrowserClient } from '$lib/supabase/client';
 import type { SupabaseClient, User } from '@supabase/supabase-js';
-import { getCourse, isAvailableCourse } from '$lib/courses';
+import { getCourse, isAvailableCourse, type TargetLanguage } from '$lib/courses';
 
 function sb(): SupabaseClient | null {
 	try {
@@ -396,10 +396,10 @@ export async function removeAvatar(): Promise<{ error: string | null }> {
 }
 
 /**
- * Get the language the user is learning ('de' | 'fr'), stored in auth metadata.
+ * Get the learning language from the course catalogue, stored in auth metadata.
  * Returns null if not yet set (user needs onboarding).
  */
-export async function getTargetLanguage(): Promise<'de' | 'fr' | null> {
+export async function getTargetLanguage(): Promise<TargetLanguage | null> {
 	const user = await getUser();
 	if (!user) return null;
 	// A different account's browser cache must never complete onboarding.
@@ -409,12 +409,12 @@ export async function getTargetLanguage(): Promise<'de' | 'fr' | null> {
 /**
  * Save both language preferences after onboarding or settings change.
  * - nativeLang: the language the user reads translations in ('en' | 'fa')
- * - targetLang: the language the user is learning ('de' | 'fr')
+ * - targetLang: the language the user is learning
  * target_language is stored in Supabase Auth user metadata (no DB migration needed).
  */
 export async function updateLanguagePreferences(
 	nativeLang: 'en' | 'fa',
-	targetLang: 'de' | 'fr'
+	targetLang: TargetLanguage
 ): Promise<{ error: string | null }> {
 	if (!isAvailableCourse(targetLang)) return { error: 'This course is not available yet.' };
 	const client = sb();

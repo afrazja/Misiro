@@ -54,9 +54,9 @@ describe('learning language preferences', () => {
 		mockClient({ getUser: vi.fn().mockResolvedValue({ data: { user: { id: 'new-user', user_metadata: {} } } }) });
 		expect(await getTargetLanguage()).toBeNull();
 	});
-	it('rejects unavailable courses before any profile or auth writes', async () => {
+	it.each(['fr', 'en'] as const)('rejects unavailable %s before any profile or auth writes', async (course) => {
 		const client = mockClient({ updateUser: vi.fn() });
-		expect(await updateLanguagePreferences('en', 'fr')).toMatchObject({ error: expect.any(String) });
+		expect(await updateLanguagePreferences('en', course)).toMatchObject({ error: expect.any(String) });
 		expect(client.auth.updateUser).not.toHaveBeenCalled();
 	});
 	it('does not mark onboarding complete when the profile preference could not save', async () => {

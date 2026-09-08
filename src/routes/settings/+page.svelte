@@ -353,7 +353,7 @@
 		if (savedLang) currentLang = savedLang;
 
 		const savedTargetLang = await getTargetLanguage();
-		if (savedTargetLang === "de" || savedTargetLang === "fr")
+		if (savedTargetLang)
 			currentTargetLang = savedTargetLang;
 
 		const savedSpeed = await getVoiceSpeed();

@@ -3,13 +3,14 @@
 	import { enhance } from '$app/forms';
 	import type { PageProps } from './$types';
 	import AppHeader from '$lib/components/AppHeader.svelte';
-	import { COURSES, isAvailableCourse } from '$lib/courses';
+	import { COURSES, getCourse, isAvailableCourse } from '$lib/courses';
 	import { applyDocumentLanguage, getLanguage } from '$services/data-layer';
 	let { data, form }: PageProps = $props();
 	let language = $state<'en' | 'fa'>('en');
 	let saving = $state(false);
 	const isFa = $derived(language === 'fa');
 	const canReturn = $derived(isAvailableCourse(data.currentLanguage));
+	const currentCourse = $derived(getCourse(data.currentLanguage));
 	onMount(() => {
 		language = navigator.language.startsWith('fa') ? 'fa' : 'en';
 		void getLanguage().then(saved => {
@@ -32,8 +33,8 @@
 		<p>{isFa ? 'یک زبان انتخاب کن. هر وقت خواستی، از صفحهٔ خانه به اینجا برگرد.' : 'Choose a language to get started. You can return here from your home screen anytime.'}</p>
 	</section>
 
-	{#if data.currentLanguage && !canReturn}
-		<p class="notice" role="status">{isFa ? 'قبلاً فرانسوی را انتخاب کرده‌ای، اما درس‌های آن هنوز آماده نیستند. فعلاً می‌توانی آلمانی را شروع کنی.' : 'You previously chose French, but its lessons are not ready yet. You can start learning German in the meantime.'}</p>
+	{#if currentCourse && !canReturn}
+		<p class="notice" role="status">{isFa ? `قبلاً ${currentCourse.name.fa} را انتخاب کرده‌ای، اما درس‌های آن هنوز آماده نیستند. فعلاً می‌توانی آلمانی را شروع کنی.` : `You previously chose ${currentCourse.name.en}, but its lessons are not ready yet. You can start learning German in the meantime.`}</p>
 	{/if}
 	{#if form?.error}
 		<p class="error" role="alert">{form.error === 'unavailable'
@@ -54,7 +55,7 @@
 			{#each COURSES as course}
 				<article class="course" class:upcoming={!course.available} aria-labelledby={`course-${course.code}`}>
 					<div class="card-top">
-						<span class={`flag flag-${course.code}`} aria-hidden="true"></span>
+						<span class={`flag flag-${course.code}`} aria-hidden="true" dir="ltr">{course.code === 'en' ? 'EN' : ''}</span>
 						<span class="status" class:available={course.available}>{course.available ? (isFa ? 'آمادهٔ شروع' : 'Available now') : (isFa ? 'به‌زودی' : 'Coming soon')}</span>
 					</div>
 					<h2 id={`course-${course.code}`}>{course.name[language]}</h2>
@@ -76,17 +77,18 @@
 </main>
 
 <style>
-	.language-page { max-width: 920px; margin: 0 auto; padding: 24px 24px 64px; color: var(--ink); }
+	.language-page { max-width: 1120px; margin: 0 auto; padding: 24px 24px 64px; color: var(--ink); }
 	.introduction { max-width: 650px; margin: 64px auto 32px; text-align: center; }
 	.eyebrow { color: var(--accent-deep); font-size: .8rem; font-weight: 600; letter-spacing: .12em; margin-bottom: 16px; }
 	h1 { font-family: var(--font-display); font-weight: 500; font-size: clamp(2rem, 5vw, 3.25rem); line-height: 1.15; margin-bottom: 18px; }
 	.introduction > p:last-child, .display-note { color: var(--ink-soft); line-height: 1.6; }
-	.courses { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; }
+	.courses { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); gap: 24px; }
 	.course { display: flex; flex-direction: column; padding: 30px; background: var(--paper-raised); border: 1px solid var(--control-border); border-radius: 20px; box-shadow: var(--paper-shadow); }
 	.upcoming { background: var(--paper-sunken); box-shadow: none; }
 	.card-top { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 28px; }
 	.flag { width: 54px; height: 36px; border-radius: 6px; box-shadow: 0 0 0 1px rgb(0 0 0 / 12%); flex-shrink: 0; }
 	.flag-de { background: linear-gradient(#191919 33.33%, #b62d2b 33.33% 66.66%, #f1c54b 66.66%); }
+	.flag-en { display: grid; place-items: center; background: #21468b; color: #fff; font-size: .9rem; font-weight: 600; letter-spacing: .08em; }
 	.flag-fr { background: linear-gradient(to right, #21468b 33.33%, #fff 33.33% 66.66%, #c73e47 66.66%); }
 	.status { font-size: .8rem; padding: 5px 10px; border-radius: 20px; background: var(--control); color: var(--ink-soft); }
 	.status.available { background: var(--accent-wash); color: var(--accent-deep); }
