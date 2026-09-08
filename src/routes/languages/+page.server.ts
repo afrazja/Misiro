@@ -15,13 +15,13 @@ export const actions: Actions = {
 		const language = (await request.formData()).get('language');
 		if (!isAvailableCourse(language)) return fail(400, { error: 'unavailable' });
 
-		// New learners finish the remaining onboarding questions before we save.
+		// New German learners finish the remaining onboarding questions before we save.
 		// A refresh or a back button must not mark partial onboarding complete.
-		if (!getCourse(user.user_metadata?.target_language)) {
+		if (language !== 'en' && !getCourse(user.user_metadata?.target_language)) {
 			redirect(303, `/onboarding?language=${language}`);
 		}
 
-		if (user.user_metadata.target_language !== language) {
+		if (user.user_metadata?.target_language !== language) {
 			try {
 				const { error: saveError } = await locals.supabase.auth.updateUser({
 					data: { target_language: language }
@@ -30,6 +30,6 @@ export const actions: Actions = {
 			} catch { return fail(503, { error: 'save_failed' }); }
 		}
 		// Selecting a course never resets lessons, reviews, XP or account settings.
-		redirect(303, '/home');
+		redirect(303, language === 'en' ? '/practice/english' : '/home');
 	}
 };

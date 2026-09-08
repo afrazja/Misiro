@@ -39,14 +39,15 @@ export interface StoredEvent extends AnalyticsRecord {
 export const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 const numericKeys = new Set(['sequence', 'index', 'total', 'sentenceCount', 'estimateMinutes', 'actualSeconds', 'secondsOnOverlay', 'score', 'percentage', 'week', 'count']);
 const choices: Record<string, readonly string[]> = {
-	page: ['home', 'languages', 'onboarding', 'lesson', 'review', 'basics', 'vocabulary', 'progress', 'profile', 'settings', 'exam', 'sprechen', 'hoeren', 'lesen', 'schreiben', 'other'],
+	page: ['home', 'languages', 'onboarding', 'practice', 'lesson', 'review', 'basics', 'vocabulary', 'progress', 'profile', 'settings', 'exam', 'sprechen', 'hoeren', 'lesen', 'schreiben', 'other'],
 	device: ['mobile', 'tablet', 'desktop'],
 	browser: ['Chrome', 'Safari', 'Firefox', 'Edge', 'Other'],
 	language: ['en', 'fa', 'other'],
 	mode: ['lesson', 'exam', 'review', 'conversation'],
 	code: Object.keys(OBSTACLES),
 	entry: ['overlay', 'warmup', 'next_day', 'day_picker'],
-	engine: ['web_speech', 'recorder', 'proxy', 'browser']
+	engine: ['web_speech', 'recorder', 'proxy', 'browser'],
+	course: ['en', 'de', 'fr'], scenario: ['hotel-quiet-room-v1']
 };
 export function safeMetadata(input: unknown): AnalyticsRecord['metadata'] {
 	const output: AnalyticsRecord['metadata'] = {};

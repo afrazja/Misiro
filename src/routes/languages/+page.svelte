@@ -56,7 +56,7 @@
 				<article class="course" class:upcoming={!course.available} aria-labelledby={`course-${course.code}`}>
 					<div class="card-top">
 						<span class={`flag flag-${course.code}`} aria-hidden="true" dir="ltr">{course.code === 'en' ? 'EN' : ''}</span>
-						<span class="status" class:available={course.available}>{course.available ? (isFa ? 'آمادهٔ شروع' : 'Available now') : (isFa ? 'به‌زودی' : 'Coming soon')}</span>
+						<span class="status" class:available={course.available}>{course.code === 'en' ? (isFa ? 'درس آزمایشی' : 'Pilot lesson') : course.available ? (isFa ? 'آمادهٔ شروع' : 'Available now') : (isFa ? 'به‌زودی' : 'Coming soon')}</span>
 					</div>
 					<h2 id={`course-${course.code}`}>{course.name[language]}</h2>
 					<p class="native-name" lang={course.code} dir="ltr">{course.nativeName}</p>

@@ -1,6 +1,6 @@
 import { getSupabaseServerClient } from '$lib/supabase/server';
 import { redirect, type Handle } from '@sveltejs/kit';
-import { isAvailableCourse, needsCourse } from '$lib/courses';
+import { courseRedirect } from '$lib/courses';
 
 export const handle: Handle = async ({ event, resolve }) => {
 	const supabase = getSupabaseServerClient(event.cookies);
@@ -15,9 +15,9 @@ export const handle: Handle = async ({ event, resolve }) => {
 
 	event.locals.session = session;
 	event.locals.user = session?.user ?? null;
-	if (event.locals.user && needsCourse(event.url.pathname) &&
-		!isAvailableCourse(event.locals.user.user_metadata?.target_language)) {
-		redirect(303, '/languages');
+	if (event.locals.user) {
+		const destination = courseRedirect(event.url.pathname, event.locals.user.user_metadata?.target_language);
+		if (destination) redirect(303, destination);
 	}
 
 	return resolve(event, {

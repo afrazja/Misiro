@@ -11,6 +11,7 @@ import { cloudWrite, flushQueue } from './sync-queue';
 import { trackObstacle } from './analytics';
 import { logError, logWarn } from '$utils/error';
 import { getCourse, isAvailableCourse } from '$lib/courses';
+export { loadPracticeDraft, savePracticeDraft, clearPracticeDraft } from './practice-draft';
 import {
 	UserProfileLanguageRowSchema,
 	UserProfileVoiceSpeedRowSchema,

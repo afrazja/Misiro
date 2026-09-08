@@ -15,5 +15,7 @@ export async function load({ locals, url }: RequestEvent) {
 	}
 	const language = url.searchParams.get('language');
 	if (!isAvailableCourse(language)) redirect(303, '/languages');
+	// The English pilot starts directly from the chooser, without Goethe setup.
+	if (language === 'en') redirect(303, '/languages');
 	return { targetLanguage: language };
 }

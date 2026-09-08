@@ -54,7 +54,7 @@ describe('learning language preferences', () => {
 		mockClient({ getUser: vi.fn().mockResolvedValue({ data: { user: { id: 'new-user', user_metadata: {} } } }) });
 		expect(await getTargetLanguage()).toBeNull();
 	});
-	it.each(['fr', 'en'] as const)('rejects unavailable %s before any profile or auth writes', async (course) => {
+	it.each(['fr'] as const)('rejects unavailable %s before any profile or auth writes', async (course) => {
 		const client = mockClient({ updateUser: vi.fn() });
 		expect(await updateLanguagePreferences('en', course)).toMatchObject({ error: expect.any(String) });
 		expect(client.auth.updateUser).not.toHaveBeenCalled();

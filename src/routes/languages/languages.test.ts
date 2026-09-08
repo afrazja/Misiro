@@ -2,7 +2,7 @@ import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { actions, load } from './+page.server';
 import { load as onboarding } from '../onboarding/+page.server';
 import { load as home } from '../home/+page.server';
-import { needsCourse } from '$lib/courses';
+import { needsCourse, courseRedirect } from '$lib/courses';
 
 vi.mock('$lib/server/assessments', () => ({ ownAssessments: vi.fn().mockResolvedValue([]) }));
 
@@ -32,7 +32,7 @@ describe('course entry and persistence', () => {
 		expect(f.supabase.auth.updateUser).not.toHaveBeenCalled();
 	});
 	it('rejects upcoming and unknown courses even when a form is submitted directly', async () => {
-		for (const language of ['fr', 'en', 'xx', '']) {
+		for (const language of ['fr', 'xx', '']) {
 			const f = fixture('de'); f.form.set('language', language);
 			expect(await actions.default(f.event())).toMatchObject({ status: 400, data: { error: 'unavailable' } });
 			expect(f.supabase.auth.updateUser).not.toHaveBeenCalled();
@@ -50,7 +50,7 @@ describe('course entry and persistence', () => {
 		await expect(actions.default(f.event())).rejects.toMatchObject({ location: '/home' });
 		expect(f.supabase.auth.updateUser).not.toHaveBeenCalled();
 	});
-	it.each(['fr', 'en'])('repairs an unavailable %s selection by updating only the course preference', async (course) => {
+	it.each(['fr'])('repairs an unavailable %s selection by updating only the course preference', async (course) => {
 		const f = fixture(course);
 		await expect(actions.default(f.event())).rejects.toMatchObject({ location: '/home' });
 		expect(f.supabase.auth.updateUser).toHaveBeenCalledExactlyOnceWith({ data: { target_language: 'de' } });
@@ -63,13 +63,28 @@ describe('course entry and persistence', () => {
 		expect(await actions.default(f.event())).toMatchObject({ status: 503 });
 	});
 	it('routes missing or unavailable course choices to the chooser without opening German content', async () => {
-		for (const target of [undefined, 'fr', 'en', 'unknown']) {
+		for (const target of [undefined, 'fr', 'unknown']) {
 			const f = fixture(target);
 			await expect(home(f.event())).rejects.toMatchObject({ location: '/languages' });
 			await expect(onboarding(f.event())).rejects.toMatchObject({ location: '/languages' });
 		}
 		const f = fixture(); const event = f.event(); event.url.searchParams.set('language', 'fr');
 		await expect(onboarding(event)).rejects.toMatchObject({ location: '/languages' });
+	});
+	it('starts the English pilot without German onboarding or shared progress writes', async () => {
+		for (const target of [undefined, 'de']) {
+			const f = fixture(target); f.form.set('language', 'en');
+			await expect(actions.default(f.event())).rejects.toMatchObject({ location: '/practice/english' });
+			expect(f.supabase.auth.updateUser).toHaveBeenCalledExactlyOnceWith({ data: { target_language: 'en' } });
+		}
+		await expect(home(fixture('en').event())).rejects.toMatchObject({ location: '/practice/english' });
+	});
+	it('isolates English and German learning routes while keeping account and landing pages accessible', () => {
+		for (const path of ['/home', '/lesson', '/lessons', '/review/quiz', '/basics', '/drill/sprechen', '/check-in', '/vocabulary']) expect(courseRedirect(path, 'en')).toBe('/practice/english');
+		for (const path of ['/', '/fa', '/languages', '/settings', '/admin', '/api/analytics', '/practice/english']) expect(courseRedirect(path, 'en')).toBeNull();
+		expect(courseRedirect('/practice/english', 'de')).toBe('/languages');
+		expect(courseRedirect('/practice/english', undefined)).toBe('/languages');
+		expect(courseRedirect('/lesson', 'de')).toBeNull();
 	});
 	it('protects course deep links while leaving the landing page and account pages alone', () => {
 		for (const path of ['/lesson', '/lesson/', '/lessons', '/review/quiz', '/drill/sprechen', '/check-in', '/vocabulary']) expect(needsCourse(path)).toBe(true);

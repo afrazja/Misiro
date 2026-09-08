@@ -5,6 +5,7 @@
 	import { onMount } from "svelte";
 	import * as auth from "$services/auth";
 	import * as dataLayer from "$services/data-layer";
+	import { isAvailableCourse } from '$lib/courses';
 
 	let mode = $state<"signin" | "signup" | "reset">("signin");
 	/** Set once a reset mail has gone out, so the form is replaced by advice. */
@@ -94,7 +95,7 @@
 			} else {
 				const targetLang = result.user?.user_metadata?.target_language;
 				goto(
-					targetLang === "de" || targetLang === "fr"
+					isAvailableCourse(targetLang)
 						? "/home"
 						: "/onboarding",
 				);
