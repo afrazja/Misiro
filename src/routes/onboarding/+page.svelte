@@ -1,18 +1,20 @@
 <script lang="ts">
-	import { onMount, tick } from "svelte";
+	import { onMount } from "svelte";
 	import { goto } from "$app/navigation";
 	import { updateLanguagePreferences, getUser } from "$services/auth";
 	import { preferencesStore } from "$stores/preferences";
 	import type { TargetLanguage } from "$stores/preferences";
 	import * as dataLayer from "$services/data-layer";
 	import { onboardingStrings } from "$services/onboarding-strings";
+	import type { PageData } from './$types';
+	let { data }: { data: PageData } = $props();
 
 	// The flow steps
-	let step = $state(1);
+	let step = $state(2);
 	let maxSteps = $state(6);
 
 	// The collected data
-	let targetLanguage = $state<TargetLanguage>("de");
+	const targetLanguage = $derived<TargetLanguage>(data.targetLanguage);
 	// Seeded from the browser in onMount. Steps 1 and 2 come BEFORE the
 	// learner tells us, so a guess is all we have for those two screens —
 	// and step 2's buttons are 🇬🇧/🇮🇷 flagged, readable either way.
@@ -64,9 +66,8 @@
 
 	function nextStep(
 		val: any,
-		field: "target" | "interface" | "reason" | "examGoal" | "skill" | "goal",
+		field: "interface" | "reason" | "examGoal" | "skill" | "goal",
 	) {
-		if (field === "target") targetLanguage = val;
 		if (field === "interface") applyLanguage(val);
 		if (field === "reason") reason = val;
 		if (field === "examGoal") examGoal = val;
@@ -82,7 +83,9 @@
 	}
 
 	function prevStep() {
-		if (step > 1) {
+		if (step === 2) {
+			goto('/languages');
+		} else if (step > 2) {
 			enterClass = "slide-in-left";
 			showDatePicker = false;
 			showTargetPicker = false;
@@ -143,9 +146,10 @@
 			// Force a hard sync then navigate to the dashboard
 			await dataLayer.syncOnLogin();
 			goto("/home");
-		} catch (e: any) {
-			saveError =
-				e.message || "There was a problem saving your preferences.";
+		} catch {
+			saveError = interfaceLanguage === 'fa'
+				? 'انتخاب‌هایت ذخیره نشد. اتصال اینترنت را بررسی کن و دوباره هدف روزانه‌ات را انتخاب کن.'
+				: 'Your choices could not be saved. Check your connection and choose your daily goal again to retry.';
 			isSaving = false;
 		}
 	}
@@ -161,8 +165,6 @@
 		const browser = navigator.language || "en";
 		if (browser.toLowerCase().startsWith("fa")) applyLanguage("fa");
 
-		// Preload home chunks so transition is smooth
-		fetch("/home");
 	});
 </script>
 
@@ -175,28 +177,31 @@
 	<div class="stars2"></div>
 </div>
 
-<main class="onboarding-layout">
+<main id="main-content" class="onboarding-layout">
 	<!-- Progress Bar -->
 	<div class="progress-bar">
 		<div
 			class="progress-fill"
-			style="width: {(step / maxSteps) * 100}%"
+			style="width: {((step - 1) / (maxSteps - 1)) * 100}%"
 		></div>
 	</div>
 
 	{#if step > 1 && !isSaving}
-		<button class="back-btn" onclick={prevStep} aria-label="Go back"
-			>← Back</button
+		<button class="back-btn" onclick={prevStep} aria-label={isFa ? 'برگشت' : 'Go back'}
+			>{isFa ? '→ برگشت' : '← Back'}</button
 		>
 	{/if}
 
 	<div class="wizard-container">
+		{#if saveError && !isSaving}
+			<div class="error-box" role="alert">{saveError}</div>
+		{/if}
 		{#if isSaving}
 			<div class="wizard-step centered flex-col fade-in">
 				<div class="spinner"></div>
 				<h1 class="save-title">{t.saving}</h1>
 				<p class="save-subtitle">
-					Preparing your daily lessons and review algorithms.
+					{isFa ? 'در حال آماده‌سازی درس‌ها و مرورهای تو.' : 'Getting your lessons and reviews ready.'}
 				</p>
 				{#if saveError}
 					<div class="error-box">
@@ -205,32 +210,6 @@
 						>
 					</div>
 				{/if}
-			</div>
-		{:else if step === 1}
-			<!-- STEP 1: TARGET LANGUAGE -->
-			<div class="wizard-step {enterClass}">
-				<h1 class="q-title">{t.q1}</h1>
-				<p class="q-sub">{t.q1sub}</p>
-
-				<div class="options-grid cols-2">
-					<button
-						class="choice-card"
-						onclick={() => nextStep("de", "target")}
-					>
-						<span class="flag">🇩🇪</span>
-						<span class="lbl">{t.german}</span>
-					</button>
-					<button
-						class="choice-card"
-						onclick={() => nextStep("fr", "target")}
-					>
-						<span class="flag">🇫🇷</span>
-						<span class="lbl">{t.french}</span>
-					</button>
-				</div>
-				<p class="helper-text">
-					You can easily change this later in Settings.
-				</p>
 			</div>
 		{:else if step === 2}
 			<!-- STEP 2: INTERFACE LANGUAGE -->
@@ -414,8 +393,7 @@
 			<!-- STEP 5: CURRENT LEVEL -->
 			<div class="wizard-step {enterClass}">
 				<h1 class="q-title">
-					How much {targetLanguage === "de" ? "German" : "French"} do you
-					already know?
+					{isFa ? 'چقدر آلمانی بلدی؟' : 'How much German do you already know?'}
 				</h1>
 				<p class="q-sub">{t.q5sub}</p>
 
@@ -587,13 +565,6 @@
 		font-size: 1.1rem;
 		color: var(--ink-soft);
 		margin-bottom: 40px;
-	}
-
-	.helper-text {
-		font-size: 0.9rem;
-		color: var(--ink-faint);
-		margin-top: 24px;
-		text-align: center;
 	}
 
 	/* CSS Animations */

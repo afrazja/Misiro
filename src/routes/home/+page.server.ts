@@ -2,6 +2,7 @@ import { redirect } from '@sveltejs/kit';
 import type { RequestEvent } from '@sveltejs/kit';
 import { ownAssessments } from '$lib/server/assessments';
 import { checkSchedule } from '$lib/analytics/assessment-schedule';
+import { isAvailableCourse } from '$lib/courses';
 
 export async function load({ locals }: RequestEvent) {
 	// Must be signed in. Send to the app login screen — NOT the marketing
@@ -13,8 +14,8 @@ export async function load({ locals }: RequestEvent) {
 
 	// Must have completed language onboarding
 	const targetLang = locals.user?.user_metadata?.target_language;
-	if (!targetLang || (targetLang !== 'de' && targetLang !== 'fr')) {
-		throw redirect(303, '/onboarding');
+	if (!isAvailableCourse(targetLang)) {
+		throw redirect(303, '/languages');
 	}
 
 	try {

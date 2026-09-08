@@ -2,6 +2,7 @@
 	import { onMount } from "svelte";
 	import { goto } from "$app/navigation";
 	import AppHeader from "$lib/components/AppHeader.svelte";
+	import CourseSwitcher from "$lib/components/CourseSwitcher.svelte";
 	import {
 		isAuthenticated,
 		getUser,
@@ -26,7 +27,6 @@
 	} from "$services/data-layer";
 	import {
 		getTargetLanguage,
-		updateLanguagePreferences,
 	} from "$services/auth";
 	import type { TargetLanguage } from "$lib/stores/preferences";
 
@@ -219,18 +219,15 @@
 
 	// ============ PREFERENCES ============
 	async function handleLanguageSave() {
-		const { error: err } = await updateLanguagePreferences(
-			currentLang as "en" | "fa",
-			currentTargetLang,
-		);
-		if (err) {
-			showStatus((v) => (langStatus = v), err, "error", false);
-		} else {
+		try {
+			await setLanguage(currentLang);
 			showStatus(
 				(v) => (langStatus = v),
-				"Language preferences saved!",
+				"Display language saved!",
 				"success",
 			);
+		} catch {
+			showStatus((v) => (langStatus = v), 'Could not save your display language. Please try again.', 'error', false);
 		}
 	}
 
@@ -491,25 +488,7 @@
 				</select>
 			</div>
 
-			<div class="pref-row">
-				<label for="pref-target">Learning Language</label>
-				<div class="target-lang-select">
-					<button
-						class="target-btn {currentTargetLang === 'de'
-							? 'active'
-							: ''}"
-						onclick={() => (currentTargetLang = "de")}
-						type="button">🇩🇪 German</button
-					>
-					<button
-						class="target-btn disabled"
-						title="Coming soon"
-						disabled
-						type="button"
-						>🇫🇷 French <span class="soon-badge">Soon</span></button
-					>
-				</div>
-			</div>
+			<CourseSwitcher language={currentLang} targetLanguage={currentTargetLang} />
 
 			<div class="pref-row">
 				<label for="pref-speed">Voice Speed (German audio)</label>
@@ -530,7 +509,7 @@
 			<button
 				class="btn-primary"
 				onclick={handleLanguageSave}
-				style="margin-top:8px;">Save Language Preferences</button
+				style="margin-top:8px;">Save Display Language</button
 			>
 			{#if langStatus}
 				<div class="status-msg {langStatus.type}">
@@ -1033,23 +1012,6 @@
 	.target-btn.active {
 		border-color: var(--accent);
 		background: var(--accent-wash);
-	}
-
-	.target-btn.disabled,
-	.target-btn:disabled {
-		opacity: 0.4;
-		cursor: not-allowed;
-	}
-
-	.soon-badge {
-		font-size: 0.6rem;
-		font-weight: 700;
-		text-transform: uppercase;
-		background: var(--accent-wash);
-		border: 1px solid var(--accent);
-		color: var(--accent-deep);
-		border-radius: 4px;
-		padding: 1px 5px;
 	}
 
 	.account-email {

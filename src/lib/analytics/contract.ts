@@ -39,7 +39,7 @@ export interface StoredEvent extends AnalyticsRecord {
 export const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 const numericKeys = new Set(['sequence', 'index', 'total', 'sentenceCount', 'estimateMinutes', 'actualSeconds', 'secondsOnOverlay', 'score', 'percentage', 'week', 'count']);
 const choices: Record<string, readonly string[]> = {
-	page: ['home', 'lesson', 'review', 'basics', 'vocabulary', 'progress', 'profile', 'settings', 'exam', 'sprechen', 'hoeren', 'lesen', 'schreiben', 'other'],
+	page: ['home', 'languages', 'onboarding', 'lesson', 'review', 'basics', 'vocabulary', 'progress', 'profile', 'settings', 'exam', 'sprechen', 'hoeren', 'lesen', 'schreiben', 'other'],
 	device: ['mobile', 'tablet', 'desktop'],
 	browser: ['Chrome', 'Safari', 'Firefox', 'Edge', 'Other'],
 	language: ['en', 'fa', 'other'],

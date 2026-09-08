@@ -1,7 +1,8 @@
 import { writable } from 'svelte/store';
 
 export type Language = 'en' | 'fa';
-export type TargetLanguage = 'de' | 'fr';
+import type { TargetLanguage } from '$lib/courses';
+export type { TargetLanguage } from '$lib/courses';
 
 export interface PreferencesState {
 	language: Language;

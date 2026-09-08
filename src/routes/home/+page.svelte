@@ -35,6 +35,7 @@
 	import AppHeader from "$lib/components/AppHeader.svelte";
 	import DashboardSidebar from "$lib/components/DashboardSidebar.svelte";
 	import BrandLogo from "$lib/components/BrandLogo.svelte";
+	import CourseSwitcher from "$lib/components/CourseSwitcher.svelte";
 
 	// Auth modal state
 	let showAuthModal = $state(false);
@@ -490,7 +491,7 @@
 			const browserLang = navigator.language || "en";
 			language = browserLang.startsWith("fa") ? "fa" : "en";
 		}
-		preferencesStore.update((s) => ({ ...s, language }));
+		preferencesStore.update((s) => ({ ...s, language, targetLanguage: data.checkLanguage }));
 
 		await updateProfileUI();
 		await loadProgress();
@@ -826,6 +827,7 @@
 	{/snippet}
 
 	<AppHeader leading={profileLeading} actions={homeHeaderActions} variant="dark" />
+	<CourseSwitcher {language} targetLanguage={data.checkLanguage} />
 
 	<!-- Skip-link target: absolutely positioned, so it adds no box. -->
 	<span id="main-content" tabindex="-1" class="sr-only"></span>

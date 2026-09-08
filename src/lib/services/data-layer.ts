@@ -10,6 +10,7 @@ import { isAuthenticated, getUser, updateDisplayName as authUpdateDisplayName } 
 import { cloudWrite, flushQueue } from './sync-queue';
 import { trackObstacle } from './analytics';
 import { logError, logWarn } from '$utils/error';
+import { getCourse, isAvailableCourse } from '$lib/courses';
 import {
 	UserProfileLanguageRowSchema,
 	UserProfileVoiceSpeedRowSchema,
@@ -88,22 +89,21 @@ export async function getTargetLanguage(): Promise<string | null> {
 				localStorage.setItem('mirifer_target_language', tl);
 				return tl;
 			}
+			localStorage.removeItem('mirifer_target_language');
+			return null;
 		} catch (e) {
 			logError('data-layer:getTargetLanguage', e);
 		}
 	}
-	return localStorage.getItem('mirifer_target_language') || null;
+	return getCourse(localStorage.getItem('mirifer_target_language'))?.code ?? null;
 }
 
 export async function setTargetLanguage(lang: string): Promise<void> {
-	localStorage.setItem('mirifer_target_language', lang);
-	try {
-		const { updateLanguagePreferences } = await import('./auth');
-		const client = (await import('$lib/supabase/client')).getSupabaseBrowserClient();
-		await client.auth.updateUser({ data: { target_language: lang } });
-	} catch (e) {
-		logError('data-layer:setTargetLanguage', e);
-	}
+	if (!isAvailableCourse(lang)) throw new Error('This course is not available yet.');
+	const client = getSupabaseBrowserClient();
+	const { error } = await client.auth.updateUser({ data: { target_language: lang } });
+	if (error) throw error;
+	try { localStorage.setItem('mirifer_target_language', lang); } catch { /* Cloud save succeeded. */ }
 }
 
 // ========== GOETHE EXAM SETTINGS (auth metadata + localStorage mirror) ==========

@@ -14,7 +14,9 @@ import {
 	isAuthenticated,
 	signIn,
 	signUp,
-	signOut
+	signOut,
+	getTargetLanguage,
+	updateLanguagePreferences
 } from './auth';
 import { getSupabaseBrowserClient } from '$lib/supabase/client';
 
@@ -27,6 +29,7 @@ function mockClient(authMethods: Record<string, any> = {}) {
 			signInWithPassword: vi.fn(),
 			signUp: vi.fn(),
 			signOut: vi.fn().mockResolvedValue({ error: null }),
+			updateUser: vi.fn(),
 			...authMethods
 		}
 	};
@@ -43,6 +46,28 @@ function mockUnconfigured() {
 
 beforeEach(() => {
 	vi.clearAllMocks();
+});
+
+describe('learning language preferences', () => {
+	it('never reads another account’s cached language for an unconfigured account', async () => {
+		localStorage.setItem('mirifer_target_language', 'de');
+		mockClient({ getUser: vi.fn().mockResolvedValue({ data: { user: { id: 'new-user', user_metadata: {} } } }) });
+		expect(await getTargetLanguage()).toBeNull();
+	});
+	it('rejects unavailable courses before any profile or auth writes', async () => {
+		const client = mockClient({ updateUser: vi.fn() });
+		expect(await updateLanguagePreferences('en', 'fr')).toMatchObject({ error: expect.any(String) });
+		expect(client.auth.updateUser).not.toHaveBeenCalled();
+	});
+	it('does not mark onboarding complete when the profile preference could not save', async () => {
+		const client = mockClient({
+			getUser: vi.fn().mockResolvedValue({ data: { user: { id: 'new-user' } } }),
+			updateUser: vi.fn()
+		}) as any;
+		client.from = vi.fn().mockReturnValue({ update: vi.fn().mockReturnValue({ eq: vi.fn().mockResolvedValue({ error: { message: 'offline' } }) }) });
+		expect(await updateLanguagePreferences('en', 'de')).toEqual({ error: 'offline' });
+		expect(client.auth.updateUser).not.toHaveBeenCalled();
+	});
 });
 
 describe('isConfigured', () => {

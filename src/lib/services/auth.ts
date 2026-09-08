@@ -5,6 +5,7 @@
 
 import { getSupabaseBrowserClient } from '$lib/supabase/client';
 import type { SupabaseClient, User } from '@supabase/supabase-js';
+import { getCourse, isAvailableCourse } from '$lib/courses';
 
 function sb(): SupabaseClient | null {
 	try {
@@ -401,16 +402,8 @@ export async function removeAvatar(): Promise<{ error: string | null }> {
 export async function getTargetLanguage(): Promise<'de' | 'fr' | null> {
 	const user = await getUser();
 	if (!user) return null;
-	const tl = user.user_metadata?.target_language;
-	if (tl === 'de' || tl === 'fr') return tl;
-	// Also check localStorage fallback
-	try {
-		const local = localStorage.getItem('mirifer_target_language');
-		if (local === 'de' || local === 'fr') return local;
-	} catch {
-		// localStorage not available (SSR)
-	}
-	return null;
+	// A different account's browser cache must never complete onboarding.
+	return getCourse(user.user_metadata?.target_language)?.code ?? null;
 }
 
 /**
@@ -423,17 +416,12 @@ export async function updateLanguagePreferences(
 	nativeLang: 'en' | 'fa',
 	targetLang: 'de' | 'fr'
 ): Promise<{ error: string | null }> {
+	if (!isAvailableCourse(targetLang)) return { error: 'This course is not available yet.' };
 	const client = sb();
 	if (!client) return { error: 'Supabase not configured' };
 	try {
 		const user = await getUser();
 		if (!user) return { error: 'Not authenticated' };
-
-		// Save target language in auth metadata
-		const { error: authError } = await client.auth.updateUser({
-			data: { target_language: targetLang }
-		});
-		if (authError) return { error: authError.message };
 
 		// Save native language in user_profiles.language
 		const { error: dbError } = await client
@@ -441,6 +429,13 @@ export async function updateLanguagePreferences(
 			.update({ language: nativeLang, updated_at: new Date().toISOString() })
 			.eq('id', user.id);
 		if (dbError) return { error: dbError.message };
+
+		// Save the course after the profile update succeeds so a failed save
+		// cannot cause the entry route to skip the learner's onboarding.
+		const { error: authError } = await client.auth.updateUser({
+			data: { target_language: targetLang }
+		});
+		if (authError) return { error: authError.message };
 
 		// Cache both in localStorage
 		try {
