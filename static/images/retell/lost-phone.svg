@@ -1,0 +1,142 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 360" width="640" height="360">
+	<defs>
+		<linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+			<stop offset="0" stop-color="#22385a"/>
+			<stop offset="0.4" stop-color="#5a5577"/>
+			<stop offset="0.72" stop-color="#e7a270"/>
+		</linearGradient>
+		<radialGradient id="glow">
+			<stop offset="0" stop-color="#ffd98a" stop-opacity="0.85"/>
+			<stop offset="1" stop-color="#ffd98a" stop-opacity="0"/>
+		</radialGradient>
+		<radialGradient id="screen-glow">
+			<stop offset="0" stop-color="#b8f5d8" stop-opacity="0.9"/>
+			<stop offset="1" stop-color="#b8f5d8" stop-opacity="0"/>
+		</radialGradient>
+		<linearGradient id="hall" x1="0" y1="0" x2="0" y2="1">
+			<stop offset="0" stop-color="#ffe2a3"/>
+			<stop offset="1" stop-color="#f3b866"/>
+		</linearGradient>
+	</defs>
+
+	<!-- Evening sky -->
+	<rect width="640" height="360" fill="url(#sky)"/>
+	<circle cx="566" cy="62" r="20" fill="#f6ecd2"/>
+	<circle cx="575" cy="56" r="18" fill="#2c3f60" opacity="0.55"/>
+	<g fill="#f6ecd2" opacity="0.8">
+		<circle cx="420" cy="40" r="1.6"/><circle cx="486" cy="92" r="1.2"/><circle cx="612" cy="120" r="1.4"/><circle cx="380" cy="86" r="1"/>
+	</g>
+	<!-- Distant houses -->
+	<path d="M330 250 V170 L362 146 L394 170 V250 Z M394 250 V186 H452 V250 Z M452 250 V160 L484 136 L516 160 V250 Z M516 250 V190 H640 V250 Z" fill="#3c3552" opacity="0.8"/>
+	<g fill="#f7c873" opacity="0.8">
+		<rect x="352" y="188" width="10" height="12"/><rect x="470" y="176" width="10" height="12"/><rect x="540" y="208" width="12" height="10"/><rect x="596" y="208" width="12" height="10"/>
+	</g>
+
+	<!-- House front -->
+	<rect x="0" y="36" width="300" height="256" fill="#c98d6c"/>
+	<g stroke="#b3785a" stroke-width="2" opacity="0.6">
+		<path d="M0 70 H300 M0 104 H300 M0 138 H300 M0 172 H300 M0 206 H300 M0 240 H300 M0 274 H300"/>
+	</g>
+	<rect x="0" y="30" width="300" height="12" fill="#8a5a44"/>
+	<!-- Upstairs window -->
+	<rect x="34" y="62" width="76" height="70" rx="3" fill="#6e4636"/>
+	<rect x="40" y="68" width="64" height="58" fill="#ffd98a"/>
+	<path d="M72 68 V126 M40 97 H104" stroke="#6e4636" stroke-width="4"/>
+	<!-- Downstairs window with plant -->
+	<rect x="28" y="168" width="84" height="76" rx="3" fill="#6e4636"/>
+	<rect x="34" y="174" width="72" height="64" fill="#f7c873"/>
+	<path d="M70 174 V238" stroke="#6e4636" stroke-width="4"/>
+	<rect x="24" y="244" width="92" height="7" fill="#8a5a44"/>
+	<path d="M50 244 q-6 -18 4 -26 q2 12 -2 26 M58 244 q8 -16 18 -18 q-6 12 -14 18" fill="#1e7e45"/>
+
+	<!-- Doorway: open door, warm hall light -->
+	<rect x="142" y="134" width="96" height="146" fill="#6e4636"/>
+	<rect x="150" y="142" width="80" height="138" fill="url(#hall)"/>
+	<path d="M150 142 L128 150 V286 L150 280 Z" fill="#0e5c45"/>
+	<path d="M134 160 L146 156 V200 L134 204 Z M134 222 L146 218 V262 L134 266 Z" fill="#0a4433"/>
+	<circle cx="143" cy="214" r="2.4" fill="#fbbf24"/>
+	<!-- Porch lamp -->
+	<circle cx="258" cy="158" r="46" fill="url(#glow)"/>
+	<rect x="252" y="150" width="12" height="18" rx="3" fill="#ffe7a8" stroke="#3b2a20" stroke-width="2"/>
+	<rect x="250" y="146" width="16" height="5" rx="2" fill="#3b2a20"/>
+	<!-- Step -->
+	<rect x="132" y="278" width="118" height="14" fill="#a7998a"/>
+	<rect x="132" y="278" width="118" height="3" fill="#cbbfb0"/>
+
+	<!-- Pavement and road -->
+	<rect x="0" y="292" width="640" height="18" fill="#b8ad9f"/>
+	<rect x="0" y="292" width="640" height="3" fill="#d4cabd"/>
+	<rect x="0" y="310" width="640" height="50" fill="#3a3d45"/>
+	<path d="M20 338 H80 M140 338 H200 M260 338 H320 M380 338 H440 M500 338 H560" stroke="#8b8e96" stroke-width="4" stroke-linecap="round"/>
+
+	<!-- Street lamp -->
+	<circle cx="342" cy="150" r="54" fill="url(#glow)" opacity="0.7"/>
+	<rect x="339" y="150" width="6" height="142" fill="#23272e"/>
+	<path d="M330 150 H354 L348 138 H336 Z" fill="#23272e"/>
+	<rect x="335" y="150" width="14" height="6" fill="#ffe7a8"/>
+
+	<!-- Taxi -->
+	<ellipse cx="495" cy="312" rx="122" ry="6" fill="#1f2127" opacity="0.5"/>
+	<path d="M418 258 L446 222 H540 L574 258 Z" fill="#f2b21b"/>
+	<path d="M430 256 L451 229 H490 V256 Z M496 256 V229 H536 L560 256 Z" fill="#9fc3d6"/>
+	<path d="M438 256 L455 234 H466 L446 256 Z" fill="#d7ebf5" opacity="0.8"/>
+	<rect x="378" y="254" width="238" height="46" rx="14" fill="#fbbf24"/>
+	<rect x="378" y="276" width="238" height="6" fill="#e0a312"/>
+	<g fill="#14201b">
+		<rect x="400" y="266" width="7" height="7"/><rect x="414" y="266" width="7" height="7"/><rect x="428" y="266" width="7" height="7"/><rect x="442" y="266" width="7" height="7"/><rect x="456" y="266" width="7" height="7"/><rect x="470" y="266" width="7" height="7"/>
+		<rect x="407" y="273" width="7" height="3"/><rect x="421" y="273" width="7" height="3"/><rect x="435" y="273" width="7" height="3"/><rect x="449" y="273" width="7" height="3"/><rect x="463" y="273" width="7" height="3"/>
+	</g>
+	<path d="M492 262 V296" stroke="#d99a0e" stroke-width="2"/>
+	<rect x="500" y="264" width="14" height="4" rx="2" fill="#8a6a10"/>
+	<rect x="474" y="206" width="44" height="16" rx="4" fill="#fff7e0" stroke="#14201b" stroke-width="2"/>
+	<text x="496" y="218" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="11" font-weight="700" fill="#14201b" letter-spacing="1">TAXI</text>
+	<circle cx="610" cy="266" r="30" fill="url(#glow)"/>
+	<rect x="604" y="260" width="12" height="10" rx="3" fill="#fff3c4"/>
+	<rect x="378" y="262" width="8" height="10" rx="2" fill="#e04a3a"/>
+	<circle cx="428" cy="298" r="18" fill="#1c1d21"/><circle cx="428" cy="298" r="8" fill="#9aa0a8"/>
+	<circle cx="566" cy="298" r="18" fill="#1c1d21"/><circle cx="566" cy="298" r="8" fill="#9aa0a8"/>
+
+	<!-- Maria in the doorway, holding a coffee -->
+	<g>
+		<rect x="178" y="236" width="11" height="42" rx="4" fill="#2d3a4a"/>
+		<rect x="193" y="236" width="11" height="42" rx="4" fill="#2d3a4a"/>
+		<rect x="175" y="274" width="16" height="6" rx="3" fill="#14201b"/>
+		<rect x="192" y="274" width="16" height="6" rx="3" fill="#14201b"/>
+		<path d="M172 196 Q191 184 210 196 L216 246 H166 Z" fill="#c8553d"/>
+		<path d="M191 190 L184 214 L191 246 L198 214 Z" fill="#f4e6d2"/>
+		<rect x="186" y="178" width="10" height="12" fill="#e2ac85"/>
+		<circle cx="191" cy="170" r="14" fill="#e8b894"/>
+		<path d="M176 170 Q176 152 192 153 Q207 154 206 168 Q198 160 186 164 Q181 172 180 180 Z" fill="#3b2a20"/>
+		<circle cx="180" cy="156" r="7" fill="#3b2a20"/>
+		<circle cx="199" cy="170" r="1.6" fill="#3b2a20"/>
+		<path d="M197 177 q3 2 6 0" stroke="#8a4a36" stroke-width="1.6" fill="none" stroke-linecap="round"/>
+		<path d="M175 202 Q176 222 196 222" stroke="#c8553d" stroke-width="9" fill="none" stroke-linecap="round"/>
+		<path d="M208 202 Q214 220 206 222" stroke="#c8553d" stroke-width="9" fill="none" stroke-linecap="round"/>
+		<rect x="198" y="208" width="13" height="15" rx="2" fill="#ffffff"/>
+		<path d="M211 212 q6 0 6 5 q0 5 -6 5" stroke="#ffffff" stroke-width="2.4" fill="none"/>
+		<circle cx="201" cy="220" r="4" fill="#e8b894"/>
+		<path d="M202 204 q-3 -5 0 -9 M207 204 q-3 -5 0 -9" stroke="#ffffff" stroke-width="1.6" fill="none" stroke-linecap="round" opacity="0.8"/>
+	</g>
+
+	<!-- The driver on the pavement, handing back the phone -->
+	<g>
+		<rect x="272" y="246" width="12" height="44" rx="4" fill="#3b3f46"/>
+		<rect x="288" y="246" width="12" height="44" rx="4" fill="#3b3f46"/>
+		<rect x="266" y="286" width="19" height="7" rx="3" fill="#14201b"/>
+		<rect x="286" y="286" width="19" height="7" rx="3" fill="#14201b"/>
+		<path d="M266 200 Q286 186 306 200 L310 252 H262 Z" fill="#2b5c8a"/>
+		<path d="M286 196 V252" stroke="#23496d" stroke-width="2"/>
+		<rect x="281" y="182" width="10" height="12" fill="#98613f"/>
+		<circle cx="286" cy="174" r="14" fill="#a8714e"/>
+		<path d="M272 172 Q272 156 288 157 Q300 158 301 170 Z" fill="#23303f"/>
+		<path d="M274 168 Q262 168 258 172 H276 Z" fill="#23303f"/>
+		<circle cx="277" cy="175" r="1.6" fill="#1c140f"/>
+		<path d="M274 182 q4 3 8 1" stroke="#5a3522" stroke-width="1.6" fill="none" stroke-linecap="round"/>
+		<path d="M304 204 Q312 228 304 248" stroke="#2b5c8a" stroke-width="10" fill="none" stroke-linecap="round"/>
+		<path d="M270 204 Q256 218 240 216" stroke="#2b5c8a" stroke-width="10" fill="none" stroke-linecap="round"/>
+		<circle cx="234" cy="216" r="26" fill="url(#screen-glow)"/>
+		<rect x="224" y="202" width="13" height="22" rx="3" fill="#14201b"/>
+		<rect x="226" y="205" width="9" height="15" rx="1" fill="#b8f5d8"/>
+		<circle cx="238" cy="217" r="5" fill="#a8714e"/>
+	</g>
+</svg>

@@ -202,10 +202,13 @@
 			{#each RETELL_PIECES as item}
 				{@const best = records[item.id]}
 				<li><button class="piece" onclick={() => open(item)}>
-					<span class="level">{item.level}</span>
-					<strong>{text(item.title)}</strong>
-					<span class="meta">{isFa ? 'شنیدن' : 'Listening'} ≈ {formatDuration(listenSeconds(item))} · {isFa ? 'صحبت تا' : 'You speak up to'} {formatDuration(speakLimit(item))}</span>
-					{#if best}<span class="best">✓ {isFa ? `بهترین: ${best.points} از ${best.total} نکته` : `Best: ${best.points} of ${best.total} key points`}{best.textShown ? (isFa ? ' (با متن)' : ' (with text)') : ''}</span>{/if}
+					<img class="thumb" src={item.picture.src} alt="" width="640" height="360" loading="lazy" />
+					<span class="info">
+						<span class="level">{item.level}</span>
+						<strong>{text(item.title)}</strong>
+						<span class="meta">{isFa ? 'شنیدن' : 'Listening'} ≈ {formatDuration(listenSeconds(item))} · {isFa ? 'صحبت تا' : 'You speak up to'} {formatDuration(speakLimit(item))}</span>
+						{#if best}<span class="best">✓ {isFa ? `بهترین: ${best.points} از ${best.total} نکته` : `Best: ${best.points} of ${best.total} key points`}{best.textShown ? (isFa ? ' (با متن)' : ' (with text)') : ''}</span>{/if}
+					</span>
 				</button></li>
 			{/each}
 		</ul>
@@ -223,6 +226,7 @@
 
 		{#if stage === 'listen'}
 			<section class="panel">
+				<img class="scene" src={piece.picture.src} alt={text(piece.picture.alt)} width="640" height="360" />
 				<p class="rule"><strong>{isFa ? 'سقف صحبت برای این متن:' : 'Speaking limit for this piece:'}</strong> {formatDuration(limit)}. {isFa ? 'حداقلی ندارد.' : 'No minimum.'}</p>
 				<div class="player">
 					<button class="primary" onclick={togglePlay} disabled={!canPlay}>
@@ -307,7 +311,10 @@
 	.how { padding-inline-start: 22px; color: var(--ink-soft); line-height: 1.9; margin-bottom: 18px; }
 	.rule { padding: 12px 14px; border-radius: 10px; background: var(--paper-sunken); border: 1px solid var(--line); font-size: .9rem; }
 	.pieces { list-style: none; padding: 0; margin: 24px 0; display: grid; gap: 12px; }
-	.piece { width: 100%; display: grid; gap: 4px; text-align: start; padding: 18px 20px; border: 1px solid var(--control-border); border-radius: 14px; background: var(--paper-raised); color: var(--ink); }
+	.piece { width: 100%; display: grid; grid-template-columns: 160px 1fr; align-items: center; gap: 18px; text-align: start; padding-block: 12px; padding-inline: 12px 20px; border: 1px solid var(--control-border); border-radius: 14px; background: var(--paper-raised); color: var(--ink); }
+	.piece .info { display: grid; gap: 4px; }
+	.thumb { width: 100%; height: auto; aspect-ratio: 16 / 9; border-radius: 8px; display: block; }
+	.scene { width: 100%; height: auto; aspect-ratio: 16 / 9; border-radius: 12px; display: block; }
 	.piece:hover { border-color: var(--accent); }
 	.piece strong { font-size: 1.1rem; }
 	.level { font-size: .72rem; font-weight: 700; letter-spacing: .1em; color: var(--accent-deep); }
@@ -350,6 +357,7 @@
 		.retell-page { padding: 16px 16px 40px; }
 		.panel { padding: 18px 16px; }
 		.player, .recorder { grid-template-columns: 1fr; }
+		.piece { grid-template-columns: 1fr; gap: 12px; padding: 12px 12px 16px; }
 		.session-heading h1 { font-size: 1.5rem; }
 		.display-control { font-size: 0; } .display-control select { font-size: .85rem; }
 	}

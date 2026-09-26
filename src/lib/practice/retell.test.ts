@@ -1,4 +1,5 @@
 import { describe, it, expect } from 'vitest';
+import { existsSync } from 'node:fs';
 import { RETELL_PIECES, formatDuration, getPiece, listenSeconds, speakLimit } from './retell';
 
 describe('Listen & retell pieces', () => {
@@ -16,6 +17,13 @@ describe('Listen & retell pieces', () => {
 		expect(new Set(RETELL_PIECES.map(speakLimit))).toEqual(new Set([90, 120]));
 		expect(getPiece('lost-phone')?.level).toBe('A2');
 		expect(getPiece('nope')).toBeNull();
+	});
+	it('gives every piece a picture that exists, described in both languages', () => {
+		for (const piece of RETELL_PIECES) {
+			expect(existsSync(`static${piece.picture.src}`)).toBe(true);
+			expect(piece.picture.alt.en.length).toBeGreaterThan(20);
+			expect(piece.picture.alt.fa.length).toBeGreaterThan(20);
+		}
 	});
 	it('formats durations as m:ss', () => {
 		expect(formatDuration(90)).toBe('1:30');

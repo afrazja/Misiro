@@ -22,7 +22,7 @@ The Record answer button uses browser English speech recognition to fill the ans
 
 ## Listen & retell
 
-`/practice/english/retell` (linked from the hotel lesson's intro) offers short pieces in `src/lib/practice/retell.ts`. Each has a level, the text and 4–7 authored key points. The flow:
+`/practice/english/retell` (linked from the hotel lesson's intro) offers short pieces in `src/lib/practice/retell.ts`. Each has a level, a picture, the text and 4–7 authored key points. The pictures are hand-drawn SVG scenes in `static/images/retell/<id>.svg` (16:9, 640×360), shown on the list and above the player; a new piece needs one, with English and Persian alt text (the retell test checks both). The flow:
 1. The learner listens, up to twice. Pausing doesn't use up a play. The piece is narrated by OpenAI `gpt-4o-mini-tts` through `/api/english/voice?piece=<id>` with a narrator direction, and cached like Jamie's lines.
 2. They can show the text; the result is then marked "with text". If the audio fails, the text is the way through.
 3. They retell by recording with `MediaRecorder` at 32 kbps.

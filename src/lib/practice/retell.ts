@@ -16,6 +16,8 @@ export interface RetellPiece {
 	id: string;
 	title: DisplayText;
 	level: 'A2' | 'B1' | 'B2';
+	/** A scene from the story, shown before listening; lives in `static/`. */
+	picture: { src: string; alt: DisplayText };
 	text: string;
 	/** What a complete retelling covers, in plain English. */
 	keyPoints: string[];
@@ -55,6 +57,10 @@ export const RETELL_PIECES: RetellPiece[] = [
 		id: 'lost-phone',
 		title: { en: 'The phone in the taxi', fa: 'گوشی در تاکسی' },
 		level: 'A2',
+		picture: {
+			src: '/images/retell/lost-phone.svg',
+			alt: { en: 'Maria stands at her open front door holding a cup of coffee, while the taxi driver hands back her phone. The taxi waits at the kerb in the evening.', fa: 'ماریا با یک فنجان قهوه جلوی در باز خانه‌اش ایستاده و رانندهٔ تاکسی گوشی‌اش را به او برمی‌گرداند. تاکسی عصر کنار خیابان منتظر است.' }
+		},
 		text: 'Last Friday, Maria took a taxi home from the airport. She was very tired after a long flight, and she fell asleep in the back seat. When she arrived, she paid the driver, took her suitcase and went inside. Ten minutes later, she wanted to call her mother, but her phone wasn’t in her bag. She checked her coat and her suitcase, but it wasn’t there. She was sure it was in the taxi. Maria didn’t know the driver’s name, but she still had the receipt, and there was a phone number on it. She used her neighbour’s phone to call the taxi company. The woman who answered was very kind. She called the driver, and he found the phone under the back seat. An hour later, he brought it to Maria’s door. She wanted to give him some money to say thank you, but he only asked for a cup of coffee.',
 		keyPoints: [
 			'Maria took a taxi home from the airport and fell asleep because she was tired.',
@@ -68,6 +74,10 @@ export const RETELL_PIECES: RetellPiece[] = [
 		id: 'four-day-week',
 		title: { en: 'A shorter working week', fa: 'هفتهٔ کاری کوتاه‌تر' },
 		level: 'B1',
+		picture: {
+			src: '/images/retell/four-day-week.svg',
+			alt: { en: 'A studio with a calendar for this week: Monday to Thursday are ticked and Friday has a sun. A designer paints a landscape at an easel.', fa: 'یک استودیو با تقویم این هفته: دوشنبه تا پنجشنبه تیک خورده و جمعه یک خورشید دارد. یک طراح کنار سه‌پایه منظره‌ای نقاشی می‌کند.' }
+		},
 		text: 'A small design company tried something new last year: its twelve workers stopped working on Fridays, but they kept the same salary. The manager, Tom, was worried at first. He thought clients would be unhappy and the team would not finish their work on time. After six months, the results surprised him. People took fewer sick days, and they were more focused during the week. Instead of long meetings, the team had a short fifteen-minute meeting every morning. They also agreed to check their email only twice a day, so they had more time for real work. Not everything was easy. Some clients wanted answers on Fridays, so the team took turns being available by phone. One designer said the extra day off had changed her life: she started painting again and spent more time with her children. The company has now decided to keep the four-day week, and two other local businesses have asked Tom for advice.',
 		keyPoints: [
 			'A small company gave its workers Fridays off without cutting their pay.',
@@ -82,6 +92,10 @@ export const RETELL_PIECES: RetellPiece[] = [
 		id: 'night-market',
 		title: { en: 'The market that comes out at night', fa: 'بازاری که شب‌ها برپا می‌شود' },
 		level: 'B1',
+		picture: {
+			src: '/images/retell/night-market.svg',
+			alt: { en: 'An evening market in a car park behind the old town hall, with string lights, a bread stall, a jewellery stall, furniture, a guitarist and visitors.', fa: 'بازاری شبانه در پارکینگ پشت ساختمان قدیمی شهرداری، با ریسه‌های چراغ، غرفهٔ نان، غرفهٔ جواهرات، مبلمان، یک گیتاریست و بازدیدکننده‌ها.' }
+		},
 		text: 'Ten years ago, the centre of the small town of Harwick was almost empty in the evenings. Most shops closed at half past five, and people drove to a big shopping centre outside town instead. A local baker called Priya Shah decided to do something about it. Her idea was simple: a market that opened only at night, once a week, in the old car park behind the town hall. She asked ten friends who made food, jewellery and furniture to join her. On the first night, it rained heavily, and only about fifty people came. Priya almost gave up. But the people who came told their friends. By the end of the first summer, more than a thousand visitors were coming every Thursday, and the market had grown from ten stalls to sixty. There was live music, and local schools sold things their students had made. The market also changed the town in ways nobody expected. Cafés and restaurants nearby started staying open later, and three new shops opened on the main street. The town council, which had not helped at first, began paying for better lights and extra rubbish bins. There were problems too. Some people who lived near the car park complained about the noise and the parking. Priya met them and agreed to finish the music at nine o’clock and to ask visitors to park at the train station. After that, most of the complaints stopped. Today the market is run by a small team of volunteers, and Priya spends more time in her bakery again. She says the best thing about the market is not the money it brings to the town. It is that people who have lived on the same street for years finally know each other’s names.',
 		keyPoints: [
 			'The town centre was empty in the evenings because shops closed early and people went to a shopping centre.',
